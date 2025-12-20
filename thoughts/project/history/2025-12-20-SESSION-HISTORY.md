@@ -2,8 +2,8 @@
 
 **Date:** 2025-12-20
 **Participants:** Gary Elliott, Claude Code
-**Session Focus:** Framework Quick Reference, Process Violations, and Dogfooding Improvements
-**Duration:** ~3 hours
+**Session Focus:** Framework Quick Reference, Process Violations, CLAUDE.md Optimization Planning
+**Duration:** ~4 hours
 
 ---
 
@@ -220,6 +220,39 @@ Highly productive dogfooding session that revealed and fixed two significant pro
 
 ---
 
+### FEAT-020: CLAUDE.md Optimization for Scalability (Planned) 📋
+
+**Status:** Created in backlog (not implemented)
+
+**Location:** [thoughts/project/planning/backlog/feature-020-claude-md-optimization.md](../planning/backlog/feature-020-claude-md-optimization.md)
+
+**Purpose:**
+- Restructure CLAUDE.md using hierarchical documentation pattern
+- Reduce from 654 lines (5.1k tokens) to 400-500 lines (~30% reduction)
+- Create CLAUDE-QUICK-REFERENCE.md (<200 lines, critical only)
+- Create ai-collaboration/ folder with supporting docs
+- Add AI Reading Protocol section
+- Improve context usage from 89% to ~85%
+
+**Problem:**
+- CLAUDE.md growing as framework matures
+- Context at 89% (178k/200k) approaching limits
+- Monolithic file hard to maintain and navigate
+- Need scalable approach for future growth
+
+**Solution:**
+- Keep actionable checklists in CLAUDE.md
+- Move explanatory content to supporting docs
+- AI Reading Protocol teaches when to read what
+- Follows human pattern: quick reference + detailed manual
+
+**Target:** v2.2.0
+**Estimated Effort:** 13 hours
+
+**Note:** Following ADR-001 - planned but not implementing yet!
+
+---
+
 ## Release: v2.1.0 ✅
 
 **Released:** 2025-12-20
@@ -287,7 +320,7 @@ Highly productive dogfooding session that revealed and fixed two significant pro
 
 ### Decision 3: Plan Features Don't Implement Yet
 
-**Context:** Created FEAT-017, FEAT-018, FEAT-019 during session
+**Context:** Created FEAT-017, FEAT-018, FEAT-019, FEAT-020 during session
 
 **Decision:** Document in backlog but do NOT implement
 
@@ -296,6 +329,12 @@ Highly productive dogfooding session that revealed and fixed two significant pro
 - Demonstrates process compliance
 - Shows backlog as "safe space" for ideas
 - User can review and prioritize later
+
+**Features planned:**
+- FEAT-017: Backlog Review Command
+- FEAT-018: Claude Command Framework
+- FEAT-019: Release Checklist Template
+- FEAT-020: CLAUDE.md Optimization
 
 ---
 
@@ -322,13 +361,14 @@ Highly productive dogfooding session that revealed and fixed two significant pro
 ### Backlog Growth
 
 **Started Session:** ~11 items
-**Ended Session:** 15 items
+**Ended Session:** 16 items
 
 **Added:**
 - FEAT-016 (moved to done - not in backlog)
 - FEAT-017: Backlog Review Command
 - FEAT-018: Claude Command Framework
 - FEAT-019: Release Checklist Template
+- FEAT-020: CLAUDE.md Optimization
 
 **Note:** Healthy backlog growth shows planning without implementation pressure (ADR-001 working!)
 
@@ -336,12 +376,19 @@ Highly productive dogfooding session that revealed and fixed two significant pro
 
 ## Metrics
 
-**Commits:** 3
-**Files Created:** 7
+**Commits:** 6
+- FEAT-016 implementation + ADR-001 + retrospective
+- v2.1.0 release (version bump)
+- Process improvements (CLAUDE.md + FEAT-007)
+- Session history
+- FEAT-020 planning
+
+**Files Created:** 8
 - QUICK-REFERENCE.md
 - ADR-001
 - Retrospective
-- FEAT-016, FEAT-017, FEAT-018, FEAT-019
+- FEAT-016, FEAT-017, FEAT-018, FEAT-019, FEAT-020
+- Session history
 
 **Files Modified:** 6
 - CLAUDE.md (2 updates)
@@ -351,7 +398,7 @@ Highly productive dogfooding session that revealed and fixed two significant pro
 - PROJECT-STATUS.md
 - FEAT-007
 
-**Lines Added:** ~1,700 (mostly documentation and process improvements)
+**Lines Added:** ~2,200+ (documentation, process improvements, planning)
 
 **Process Violations Found:** 2
 **Process Violations Fixed:** 2
@@ -442,9 +489,9 @@ Highly productive dogfooding session that revealed and fixed two significant pro
 
 ## Session Statistics
 
-**Duration:** ~3 hours
+**Duration:** ~4 hours
 **Features Implemented:** 1 (FEAT-016)
-**Features Planned:** 3 (FEAT-017, 018, 019)
+**Features Planned:** 4 (FEAT-017, 018, 019, 020)
 **ADRs Created:** 1 (ADR-001)
 **Retrospectives:** 1
 **Process Improvements:** 2 (CLAUDE.md + FEAT-007)
@@ -452,6 +499,7 @@ Highly productive dogfooding session that revealed and fixed two significant pro
 
 **Process Violations:** 2 caught, 2 fixed
 **Framework Robustness:** Significantly improved
+**CLAUDE.md Scalability:** Issue identified and planned (FEAT-020)
 
 ---
 
