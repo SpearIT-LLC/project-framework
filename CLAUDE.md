@@ -487,10 +487,32 @@ User Request → Backlog → [CHECKPOINT: User Approval] → Todo → Doing → 
    - Write code, tests, documentation
    - Keep CHANGELOG notes in work item document
 
-9. **Complete**
-   - Move file: `work/doing/` → `work/done/`
-   - Update status in document to "Done"
-   - This triggers release process
+9. **Complete & Release** ⚠️ CRITICAL: Atomic Release Process
+   - Work is done and tested
+   - **STOP - Before committing:** Prepare version updates atomically
+
+   **Version Update Steps (do together):**
+   a. Check version impact from work item metadata (MAJOR/MINOR/PATCH)
+   b. Calculate new version number from current version
+   c. Update PROJECT-STATUS.md:
+      - "Current Version" in header
+      - "Last Updated" date
+      - Add to release history table
+   d. Update CHANGELOG.md:
+      - Move [Unreleased] content to [vX.Y.Z] - YYYY-MM-DD
+      - Copy CHANGELOG notes from work item document
+      - Create fresh [Unreleased] section
+   e. Move file: `work/doing/` → `work/done/`
+   f. Update work item status to "Done" and add completion date
+
+   **Commit & Tag (atomic):**
+   - Commit ALL changes together: `git commit -m "Release: vX.Y.Z - Description"`
+   - Create annotated tag: `git tag -a vX.Y.Z -m "Release notes"`
+   - Push with tags: `git push origin main --tags`
+
+   **Why atomic?** Version number must match implementation commit. Never commit implementation separate from version bump.
+
+   **Reference:** [version-control-workflow.md](project-framework-template/standard/thoughts/framework/process/version-control-workflow.md) lines 101-149 for complete checklist
 
 **Example Interaction:**
 

@@ -51,6 +51,11 @@ Manual review of folder structure and files.
 - [ ] Validate WIP limit files exist and contain valid numbers
 - [ ] Check for stale documentation (Last Updated > 6 months)
 - [ ] Verify git repository exists (if expected)
+- [ ] **Version consistency validation (v2.1.0 dogfooding learning):**
+  - [ ] Version in PROJECT-STATUS.md matches latest git tag
+  - [ ] CHANGELOG.md has section for current version
+  - [ ] No significant [Unreleased] content when version is released
+  - [ ] All work/done/ items have been archived to history/releases/vX.Y.Z/
 - [ ] Generate validation report with issues and warnings
 - [ ] Return exit code 0 (valid) or 1 (issues found)
 
@@ -108,6 +113,31 @@ Manual review of folder structure and files.
 ```
 ⚠ README.md last updated: 2025-01-15 (5 months ago)
 ⚠ PROJECT-STATUS.md last updated: 2024-06-01 (6+ months - STALE)
+```
+
+**Version Consistency (v2.1.0 enhancement):**
+```
+✓ PROJECT-STATUS.md version: v2.1.0
+✓ Latest git tag: v2.1.0 (matches)
+✓ CHANGELOG.md has [2.1.0] section
+✓ [Unreleased] section is empty (good - no uncommitted features)
+✓ work/done/ folder is empty (all items archived)
+```
+
+**Version Consistency Errors:**
+```
+✗ PROJECT-STATUS.md version: v2.0.0
+✗ Latest git tag: v2.1.0 (MISMATCH - update PROJECT-STATUS.md)
+
+✗ CHANGELOG.md missing [2.1.0] section
+  → Add version section to CHANGELOG.md
+
+⚠ [Unreleased] has 3 features listed
+⚠ Latest version dated yesterday
+  → Consider releasing v2.2.0 or move items back to backlog
+
+⚠ work/done/ has 2 items not archived
+  → Move to history/releases/v2.1.0/
 ```
 
 ### Output Format
