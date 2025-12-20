@@ -15,24 +15,18 @@ This document shows the actual structure of the project framework template packa
 
 ```
 project-framework-template/
+├── README.md                       # Package overview and quick start
 ├── README-TEMPLATE-SELECTION.md    # Guide to choosing framework level
 ├── NEW-PROJECT-CHECKLIST.md        # Setup instructions for all levels
 ├── UPGRADE-PATH.md                 # How to upgrade between levels
 ├── STRUCTURE.md                    # This file
 │
-├── minimal/                        # Single script framework
-├── light/                          # Small tool framework
-├── standard/                       # Full application framework
-│
-├── README.md                       # Legacy root template (deprecated - use standard/)
-├── CLAUDE.md                       # Legacy root template (deprecated - use standard/)
-├── PROJECT-STATUS.md               # Legacy root template (deprecated - use standard/)
-├── CHANGELOG.md                    # Legacy root template (deprecated - use standard/)
-├── INDEX.md                        # Legacy root template (deprecated - use standard/)
-└── thoughts/                       # Legacy root templates (deprecated - use standard/)
+├── minimal/                        # Single script framework (2 files)
+├── light/                          # Small tool framework (7 files)
+└── standard/                       # Full application framework (50+ files)
 ```
 
-**Note:** Root-level template files (README.md, CLAUDE.md, etc.) are legacy from before multi-level framework. New projects should use `minimal/`, `light/`, or `standard/` folders.
+**Note:** Guide documents (README-TEMPLATE-SELECTION.md, NEW-PROJECT-CHECKLIST.md, etc.) are at package root. Template files are organized in framework-level folders (minimal/, light/, standard/).
 
 ---
 
@@ -228,20 +222,6 @@ standard/
 - **cmd-wrappers.md** - CMD wrapper pattern
 - **config-management.md** - Configuration pattern
 - **powershell-modules.md** - Module structure pattern
-
----
-
-## Migration from Legacy Root Templates
-
-**If you copied the root-level template files before multi-level framework:**
-
-The root-level files (README.md, CLAUDE.md, etc.) are now considered legacy. They're kept for backward compatibility but new projects should use:
-
-- **Instead of root README.md** → Use `standard/README.md`
-- **Instead of root CLAUDE.md** → Use `standard/CLAUDE.md`
-- **Instead of root thoughts/** → Use `standard/thoughts/`
-
-**Action:** Future cleanup may remove root-level templates entirely.
 
 ---
 

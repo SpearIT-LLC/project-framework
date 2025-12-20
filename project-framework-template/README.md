@@ -1,257 +1,147 @@
-# SpearIT Project Framework Template
+# SpearIT Project Framework Template Package
 
-**Version:** 1.0.0
-**Last Updated:** 2025-12-18
-**Purpose:** Reusable project framework for new projects
+**Version:** 2.0.0
+**Last Updated:** 2025-12-19
+**Purpose:** Reusable project framework templates for new projects
 
 ---
 
 ## What Is This?
 
-This is a complete project framework template package that provides:
+This is the complete **SpearIT Project Framework template package** - a collection of ready-to-use project templates that scale from single scripts to enterprise systems.
 
-✅ **Documentation structure** - README, PROJECT-STATUS, CHANGELOG, INDEX templates
-✅ **Workflow system** - File-based kanban for one-person teams
-✅ **Process documentation** - Version control, release process, documentation standards
-✅ **Work item templates** - Feature, Bugfix, Blocker, Spike, ADR templates
-✅ **Folder structure** - Organized planning, work, reference, and history folders
-✅ **AI integration** - CLAUDE.md templates for working with Claude Code
+**Choose your framework level:**
+- [README-TEMPLATE-SELECTION.md](README-TEMPLATE-SELECTION.md) - **Start here** to determine which framework level you need
+
+**Setup instructions:**
+- [NEW-PROJECT-CHECKLIST.md](NEW-PROJECT-CHECKLIST.md) - Complete setup guide for all levels
+
+---
+
+## Framework Levels
+
+### Minimal Framework ([minimal/](minimal/))
+**For:** Single scripts, throwaway projects, personal automation
+- **Files:** 2 (README.md, .gitignore)
+- **Setup Time:** 10-15 minutes
+- **Use when:** Single file script, one-time use, personal tool
+
+### Light Framework ([light/](light/))
+**For:** Small tools, medium lifespan, handoff expected
+- **Files:** 7 (README, PROJECT-STATUS, CHANGELOG, CLAUDE.md, thoughts/)
+- **Setup Time:** 30-60 minutes
+- **Use when:** 2-10 files, maintained for months, possible collaboration
+
+### Standard Framework ([standard/](standard/))
+**For:** Applications, teams, ongoing projects, critical systems
+- **Files:** 50+ (complete documentation, kanban workflow, 19 templates)
+- **Setup Time:** 2-4 hours
+- **Use when:** 10+ files, team collaboration, formal releases, architecture decisions
+
+### Enterprise Framework (Future)
+**For:** Multi-service systems, large teams, compliance
+- **Status:** Documented for future - customize Standard framework as needed
+- **Use when:** 50+ files, 6+ developers, SOC2/HIPAA/compliance requirements
 
 ---
 
 ## Quick Start
 
-### For New Projects (Greenfield)
+### Step 1: Choose Framework Level
+Read [README-TEMPLATE-SELECTION.md](README-TEMPLATE-SELECTION.md) and answer 3 questions:
+1. **Scope & Complexity** - Script, Tool, Application, or System?
+2. **Lifespan & Evolution** - Throwaway, Short-term, Maintained, or Critical?
+3. **Team & Collaboration** - Solo, Solo+Handoff, Small Team, or Large Team?
 
-1. **Copy this entire folder to your new project location:**
-   ```bash
-   cp -r project-framework-template /path/to/new-project-name
-   cd /path/to/new-project-name
-   ```
+### Step 2: Copy Template
+```bash
+# For single scripts
+cp -r minimal/ /path/to/your-project
 
-2. **Follow the checklist:**
-   - Open `NEW-PROJECT-CHECKLIST.md`
-   - Follow "Greenfield Project Setup" section
-   - Complete all checklist items
+# For small tools
+cp -r light/ /path/to/your-project
 
-3. **Start working:**
-   - Initialize git repository
-   - Customize templates
-   - Create first work item
-   - Begin development
+# For applications
+cp -r standard/ /path/to/your-project
+```
 
-### For Existing Projects (Integration)
-
-1. **Copy framework to existing project:**
-   ```bash
-   # From project root
-   cp -r /path/to/project-framework-template/CLAUDE.md ../
-   cp -r /path/to/project-framework-template/thoughts/framework thoughts/
-   ```
-
-2. **Follow the checklist:**
-   - Open `NEW-PROJECT-CHECKLIST.md`
-   - Follow "Existing Project Integration" section
-   - Complete all checklist items
-
-3. **Migrate work:**
-   - Capture in-progress work
-   - Capture planned work
-   - Create initial roadmap
-   - Continue development with framework
+### Step 3: Follow Checklist
+Open [NEW-PROJECT-CHECKLIST.md](NEW-PROJECT-CHECKLIST.md) and follow the instructions for your framework level.
 
 ---
 
 ## What's Included
 
-### Root Documents (Ready to Use)
+### Guide Documents (This Folder)
+- **[README-TEMPLATE-SELECTION.md](README-TEMPLATE-SELECTION.md)** - Choose your framework level ⭐
+- **[NEW-PROJECT-CHECKLIST.md](NEW-PROJECT-CHECKLIST.md)** - Setup instructions ⭐
+- [UPGRADE-PATH.md](UPGRADE-PATH.md) - Upgrade between framework levels
+- [STRUCTURE.md](STRUCTURE.md) - Template structure reference
+- This README - Package overview
 
-- **NEW-PROJECT-CHECKLIST.md** - Complete setup guide for new and existing projects
-- **README.md** - Project README (customize for your project)
-- **PROJECT-STATUS.md** - Status tracking (customize for your project)
-- **CHANGELOG.md** - Version history (Keep a Changelog format)
-- **INDEX.md** - Documentation navigation (customize for your project)
-- **CLAUDE.md** - Project-specific AI instructions (customize for your project)
-
-**Note:** All root documents are ready to use - just customize with your project details. Reference templates are also available in `thoughts/framework/templates/` if needed.
-
-### Framework (thoughts/framework/)
-
-**Process Documentation:**
-- `process/kanban-workflow.md` - File-based kanban workflow
-- `process/version-control-workflow.md` - Git and release process
-- `process/documentation-standards.md` - Documentation formatting
-
-**Templates:**
-- `templates/FEATURE-TEMPLATE.md` - Feature planning
-- `templates/BUGFIX-TEMPLATE.md` - Bug fix documentation
-- `templates/BLOCKER-TEMPLATE.md` - Blocker tracking
-- `templates/SPIKE-TEMPLATE.md` - Research/investigation
-- `templates/ADR-MAJOR-TEMPLATE.md` - Major architecture decisions
-- `templates/ADR-MINOR-TEMPLATE.md` - Minor architecture decisions
-
-**Patterns:** (if applicable to your project type)
-- `patterns/powershell-modules.md`
-- `patterns/config-management.md`
-- `patterns/cmd-wrappers.md`
-
-### Project Structure (thoughts/project/)
-
-**Empty folder structure ready for your work:**
-```
-thoughts/project/
-├── planning/
-│   ├── roadmap.md (template included)
-│   └── backlog/
-├── work/
-│   ├── todo/ (.limit = 10)
-│   ├── doing/ (.limit = 1)
-│   └── done/
-├── reference/
-├── archive/
-├── research/
-│   └── adr/
-├── retrospectives/
-└── history/
-    ├── releases/
-    └── spikes/
-```
+### Template Folders
+- [minimal/](minimal/) - Minimal framework templates (2 files)
+- [light/](light/) - Light framework templates (7 files)
+- [standard/](standard/) - Standard framework templates (50+ files)
 
 ---
 
-## How to Use
+## Framework Features
 
-### Step 1: Copy Template
+### Multi-Level Scaling
+Start with the right amount of structure. Upgrade as your project grows.
 
-```bash
-# For new project
-cp -r project-framework-template /path/to/new-project-name
+### Research-Driven Development (Standard)
+5 research phase templates help you answer: "Are we recreating the wheel?"
 
-# For existing project (copy pieces)
-cp CLAUDE.md /path/to/existing-project/../
-cp -r thoughts/framework /path/to/existing-project/thoughts/
-```
+### File-Based Kanban Workflow (Standard)
+Simple folder-based work tracking: `planning/backlog → work/todo → work/doing → work/done`
 
-### Step 2: Customize Documents (No Renaming Needed!)
+### AI Integration
+CLAUDE.md templates for working with Claude Code and other AI assistants.
 
-1. Update README.md with project details
-2. Update PROJECT-STATUS.md with initial version
-3. Update CHANGELOG.md with project name
-4. Update CLAUDE.md with project-specific information
-5. Update roadmap.md with project vision
+### Architecture Decision Records (Standard)
+Two-tier ADR system (Major/Minor) for documenting important decisions.
 
-### Step 3: Initialize Git
+### PowerShell CMD Wrappers (Standard)
+4 production-ready CMD wrapper templates for double-click PowerShell execution.
 
-```bash
-git init
-git add .
-git commit -m "Initial project setup from framework template"
-git tag -a v0.1.0 -m "Initial setup"
-```
-
-### Step 4: Start Working
-
-1. Create first feature in `thoughts/project/planning/backlog/`
-2. Move to `thoughts/project/work/todo/`
-3. Move to `thoughts/project/work/doing/`
-4. Begin implementation
+### Upgrade Paths
+Clear migration guides in [UPGRADE-PATH.md](UPGRADE-PATH.md).
 
 ---
 
-## Key Concepts
+## Documentation
 
-### File-Based Kanban
-
-Work items flow through folders:
-```
-planning/backlog → work/todo → work/doing → work/done → history/releases/vX.Y.Z/
-```
-
-**WIP Limits:**
-- doing/ = 1 item (one thing at a time)
-- todo/ = 10 items (committed next work)
-
-### Work Item IDs
-
-Naming convention: `{type}-{id}-{description}.md`
-
-**Examples:**
-- `feature-001-user-authentication.md`
-- `bugfix-101-memory-leak.md`
-- `spike-api-investigation.md`
-
-### Release Process
-
-1. Work item moves to `work/done/`
-2. Update PROJECT-STATUS.md
-3. Update CHANGELOG.md from work item notes
-4. Git commit, tag, push
-5. Archive to `history/releases/vX.Y.Z/`
-
-### Documentation Standards
-
-- **PROJECT-STATUS.md** = Single source of truth for version/status
-- **CHANGELOG.md** = Keep a Changelog format
-- **Session histories** = Daily YYYY-MM-DD-SESSION-HISTORY.md files
-- **Retrospectives** = After major milestones
+| Document | Purpose |
+|----------|---------|
+| [README-TEMPLATE-SELECTION.md](README-TEMPLATE-SELECTION.md) | **Choose framework level** (start here) |
+| [NEW-PROJECT-CHECKLIST.md](NEW-PROJECT-CHECKLIST.md) | **Setup instructions** for each level |
+| [UPGRADE-PATH.md](UPGRADE-PATH.md) | Migrate between framework levels |
+| [STRUCTURE.md](STRUCTURE.md) | Template structure reference |
+| This README | Package overview |
 
 ---
 
-## Customization
+## Migration Note (v1.0.0 → v2.0.0)
 
-### Required Customizations
+**If you copied templates from v1.0.0:**
 
-You MUST customize these for your project:
-- [ ] README.md - Project description, setup, usage
-- [ ] PROJECT-STATUS.md - Initial version, status
-- [ ] CHANGELOG.md - Project name
-- [ ] CLAUDE.md - Project-specific architecture, commands, conventions
-- [ ] roadmap.md - Project vision and goals
+In v1.0.0, template files existed at the root of this folder (README.md, CLAUDE.md, etc.).
 
-### Optional Customizations
+**In v2.0.0:**
+- ✅ Templates moved to framework-level folders (minimal/, light/, standard/)
+- ❌ Root-level templates removed (they were redundant with standard/)
+- ✅ Guide documents remain at root (README-TEMPLATE-SELECTION.md, NEW-PROJECT-CHECKLIST.md, etc.)
 
-You MAY customize these:
-- WIP limits (default: doing/=1, todo/=10)
-- Folder structure (add project-specific folders)
-- Templates (add project-specific fields)
-- Workflows (document deviations in CLAUDE.md)
+**Action Required:**
+- Existing projects using v1.0.0 templates: No action needed - continue using them
+- New projects: Copy from appropriate framework level folder (minimal/, light/, or standard/)
 
-**Document all deviations in CLAUDE.md!**
-
----
-
-## Support for Multiple Projects
-
-If you have multiple projects, you can share the generic CLAUDE.md:
-
-```
-ParentFolder/
-├── CLAUDE.md (generic framework - shared)
-├── Project1/
-│   ├── CLAUDE.md (project-specific - inherits from ../CLAUDE.md)
-│   └── thoughts/framework/ (copy of framework)
-├── Project2/
-│   ├── CLAUDE.md (project-specific - inherits from ../CLAUDE.md)
-│   └── thoughts/framework/ (copy of framework)
-```
-
-Each project-specific CLAUDE.md should reference the parent:
-```markdown
-**Inherits:** [Generic framework guidelines](../CLAUDE.md)
-```
-
----
-
-## What to NOT Copy (Project-Specific)
-
-When using this template, DO NOT copy these from HPC project:
-- ❌ HPC-specific code (scripts/, Jobs/, etc.)
-- ❌ Populated work items (backlog/*.md, work/*/*.md)
-- ❌ History files (history/*.md)
-- ❌ Retrospectives (retrospectives/*.md)
-- ❌ Reference docs (reference/*.md)
-
-These are HPC-specific and should be created fresh for your project.
+**Rationale:**
+- Eliminates confusion about which files to copy
+- Each framework level is self-contained in its own folder
+- Guide documents are clearly separated from templates
 
 ---
 
@@ -259,24 +149,24 @@ These are HPC-specific and should be created fresh for your project.
 
 | Version | Date | Changes |
 |---------|------|---------|
+| 2.0.0 | 2025-12-19 | Multi-level framework system, removed legacy root templates |
 | 1.0.0 | 2025-12-18 | Initial framework template package |
 
----
-
-## Questions?
-
-- Review `NEW-PROJECT-CHECKLIST.md` for step-by-step guidance
-- Read `thoughts/framework/process/kanban-workflow.md` for workflow details
-- Read `thoughts/framework/process/version-control-workflow.md` for release process
-- Check templates in `thoughts/framework/templates/` for work item structure
+See parent [CHANGELOG.md](../CHANGELOG.md) for detailed framework version history.
 
 ---
 
-## License
+## Support
 
-[Same as your project license]
+**Questions?**
+- Review [README-TEMPLATE-SELECTION.md](README-TEMPLATE-SELECTION.md) for framework selection
+- Check [NEW-PROJECT-CHECKLIST.md](NEW-PROJECT-CHECKLIST.md) for setup guidance
+- Read [STRUCTURE.md](STRUCTURE.md) for template structure details
+- See [UPGRADE-PATH.md](UPGRADE-PATH.md) for upgrade guidance
+
+**Maintainer:** Gary Elliott (gary.elliott@spearit.solutions)
+**Organization:** SpearIT, LLC
 
 ---
 
-**Created:** 2025-12-18
-**Maintained By:** [Your Name/Organization]
+**Get Started:** [README-TEMPLATE-SELECTION.md](README-TEMPLATE-SELECTION.md) → [NEW-PROJECT-CHECKLIST.md](NEW-PROJECT-CHECKLIST.md)

@@ -13,27 +13,34 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-### Added
-- PROJECT-STATUS.md for framework project itself (dogfooding)
-- CHANGELOG.md for framework project itself (dogfooding)
-- thoughts/project/ structure for framework development
-- Todo list for tracking framework development work
-
-### Changed
-- Framework now uses its own Standard framework structure
-
 ### Planned
-- INDEX.md for framework project documentation navigation
-- Version strategy documentation
 - Visual diagrams for folder structure and workflow
 - ZIP distribution package
 - Interactive setup script
 - Validation script
-- Legacy template cleanup
 
 ---
 
 ## [2.0.0] - 2025-12-19
+
+### Added
+- **Dogfooding:** Framework now uses its own Standard framework for development
+- PROJECT-STATUS.md for framework project (single source of truth for version)
+- CHANGELOG.md for framework project version history
+- INDEX.md for framework project documentation navigation
+- thoughts/project/ structure for framework development (kanban workflow)
+- thoughts/project/reference/version-strategy.md - Version strategy documentation
+- project-framework-template/README.md - Package overview with migration notes
+
+### Changed
+- **BREAKING:** Removed legacy root templates from project-framework-template/
+  - Removed duplicate README.md, CLAUDE.md, PROJECT-STATUS.md, CHANGELOG.md, INDEX.md, thoughts/
+  - Templates now exclusively in framework-level folders (minimal/, light/, standard/)
+  - Guide documents remain at package root
+- Updated README.md with comprehensive project overview
+- Updated STRUCTURE.md to remove legacy template references
+
+### Previous v2.0.0 Changes
 
 ### Added
 - **Multi-level framework system** - Minimal, Light, Standard, Enterprise
