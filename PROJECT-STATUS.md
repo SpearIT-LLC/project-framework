@@ -1,10 +1,10 @@
 # SpearIT Project Framework - Project Status
 
-**Last Updated:** 2025-12-19
-**Updated By:** Gary Elliott
-**Current Version:** v2.0.0 (2025-12-19)
+**Last Updated:** 2025-12-20
+**Updated By:** Gary Elliott with Claude Code
+**Current Version:** v2.1.0 (2025-12-20)
 **Core Implementation:** Complete and production-ready
-**Ongoing Enhancements:** Planning for distribution, tooling, and samples
+**Ongoing Enhancements:** Quick reference added, AI workflow policy enforced, planning for distribution and tooling
 
 ---
 
@@ -18,13 +18,14 @@ The SpearIT Project Framework is a comprehensive project management framework te
 
 ## Version Information
 
-### Current Release: v2.0.0 (2025-12-19)
+### Current Release: v2.1.0 (2025-12-20)
 
 **Status:** Stable - Production Ready
 
 **Core Features:**
 - ✅ Multi-level framework system (Minimal/Light/Standard/Enterprise) - Complete
 - ✅ Framework selection guide with 3-dimension classification - Complete
+- ✅ Quick Reference Guide for rapid onboarding - Complete (v2.1.0)
 - ✅ Setup checklists for all levels - Complete
 - ✅ Upgrade paths between levels - Complete
 - ✅ 19 templates for work items, decisions, and documentation - Complete
@@ -32,11 +33,14 @@ The SpearIT Project Framework is a comprehensive project management framework te
 - ✅ CMD wrapper templates (4 variants) - Complete
 - ✅ File-based kanban workflow - Complete
 - ✅ AI integration (CLAUDE.md templates) - Complete
-- 🚧 Self-application of framework - In Progress
+- ✅ AI Workflow Checkpoint Policy (ADR-001) - Complete (v2.1.0)
+- ✅ Self-application of framework (dogfooding) - Complete (v2.1.0)
 - 📋 Distribution packaging (ZIP) - Planned
 - 📋 Setup automation script - Planned
 - 📋 Visual diagrams - Planned
 - 📋 Validation tooling - Planned
+- 📋 Backlog review command - Planned (FEAT-017)
+- 📋 Claude command framework - Planned (FEAT-018)
 
 **Legend:**
 - ✅ Complete
@@ -272,7 +276,8 @@ See [roadmap.md](thoughts/project/planning/roadmap.md) for complete roadmap.
 
 | Version | Release Date | Type | Highlights |
 |---------|--------------|------|------------|
-| v2.0.0 | 2025-12-19 | Major | Multi-level framework system, research templates, dogfooding |
+| v2.1.0 | 2025-12-20 | Minor | Quick reference guide, AI workflow checkpoint policy (ADR-001), dogfooding complete |
+| v2.0.0 | 2025-12-19 | Major | Multi-level framework system, research templates, dogfooding started |
 | v1.0.0 | 2025-12-18 | Major | Initial framework template package from HPC project |
 | v0.1.0 | 2025-11-XX | Minor | Extracted from HPC project, initial templates |
 

@@ -1,6 +1,6 @@
 # SpearIT Project Framework - Documentation Index
 
-**Last Updated:** 2025-12-19
+**Last Updated:** 2025-12-20
 **Version:** 2.0.0
 
 This index provides quick navigation to all documentation for the SpearIT Project Framework project.
@@ -271,5 +271,5 @@ This index provides quick navigation to all documentation for the SpearIT Projec
 
 ---
 
-**Last Updated:** 2025-12-19
+**Last Updated:** 2025-12-20
 **Maintained by:** Gary Elliott (gary.elliott@spearit.solutions)

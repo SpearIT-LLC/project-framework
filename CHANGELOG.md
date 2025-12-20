@@ -13,19 +13,51 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-### Added
-- Framework Quick Reference Guide (QUICK-REFERENCE.md)
-  - Bare-bones, get-functional guide for rapid onboarding
-  - Covers all framework levels with quick setup commands
-  - Decision tree for framework selection
-  - Common operations cheat sheet
-  - Links to comprehensive documentation
-
 ### Planned
 - Visual diagrams for folder structure and workflow
 - ZIP distribution package
 - Interactive setup script
 - Validation script
+- Backlog review command (FEAT-017)
+- Claude command framework (FEAT-018)
+
+---
+
+## [2.1.0] - 2025-12-20
+
+### Added
+- **Framework Quick Reference Guide** (QUICK-REFERENCE.md)
+  - Bare-bones, get-functional guide for rapid onboarding
+  - Covers all framework levels with quick setup commands
+  - Decision tree for framework selection (30 seconds)
+  - Common operations cheat sheet
+  - Templates quick reference
+  - Essential links with time estimates
+- **ADR-001: AI Workflow Checkpoint Policy**
+  - Mandatory user approval checkpoint before feature implementation
+  - Explicit workflow: User Request → Backlog → [CHECKPOINT] → Todo → Doing → Done
+  - Prevents runaway AI implementation
+  - 9-step process documented in CLAUDE.md
+- **AI Workflow Checkpoint Policy** section in CLAUDE.md
+  - Explicit step-by-step process for AI feature requests
+  - Example interactions
+  - "What NOT to Do" checklist
+  - Enforces framework workflow compliance
+- **Retrospective system** for dogfooding learnings
+  - thoughts/project/retrospectives/ directory
+  - 2025-12-20-workflow-enforcement-retrospective.md documenting FEAT-016 incident
+- **Planned features** (documented in backlog, not implemented)
+  - FEAT-017: Backlog Review Command (/backlog-review)
+  - FEAT-018: Claude Command Framework
+
+### Changed
+- INDEX.md - Added quick reference to "Quick Links" section
+- README.md - Added quick reference link in "Quick Start" section
+
+### Process Improvements
+- FEAT-016 moved to work/done/ (retroactive workflow compliance)
+- Established pattern: "Fix the process, not just the instance"
+- Dogfooding validation: Framework successfully using its own Standard level
 
 ---
 
