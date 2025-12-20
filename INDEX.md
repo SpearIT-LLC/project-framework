@@ -10,6 +10,7 @@ This index provides quick navigation to all documentation for the SpearIT Projec
 ## Quick Links
 
 ### Getting Started
+- [QUICK-REFERENCE.md](QUICK-REFERENCE.md) - **Bare-bones get-functional guide** ⚡ NEW
 - [README.md](README.md) - Project overview
 - [PROJECT-STATUS.md](PROJECT-STATUS.md) - **Current version and status** ⭐
 - [CHANGELOG.md](CHANGELOG.md) - Version history and changes

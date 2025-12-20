@@ -432,6 +432,112 @@ All projects follow this core workflow, with depth varying by framework level:
 - Research and reference docs are in `thoughts/project/reference`
 - Always ask: "What's the one thing this must accomplish?" before elaborate planning
 
+### AI Workflow Checkpoint Policy (Standard Framework)
+
+**CRITICAL:** When user requests a new feature, you MUST follow this workflow to maintain process integrity.
+
+**The Standard Workflow:**
+```
+User Request → Backlog → [CHECKPOINT: User Approval] → Todo → Doing → Done → Release
+```
+
+**Step-by-Step Process:**
+
+1. **User Requests Feature** (e.g., "Add a quick reference guide")
+   - ✅ DO: Listen and understand the requirement
+   - ❌ DON'T: Start implementing immediately
+
+2. **Brief Research** (30 seconds)
+   - Does this already exist in the project?
+   - Is there a better existing solution?
+   - Quick viability check
+
+3. **Create Backlog Item**
+   - Use appropriate template (FEATURE-TEMPLATE.md, BUGFIX-TEMPLATE.md, etc.)
+   - Place in `thoughts/project/planning/backlog/`
+   - Set status to "Backlog" in the document
+   - ✅ Backlog is a "safe space" - user can add many ideas without implementation pressure
+
+4. **Present Plan to User** ⚠️ MANDATORY CHECKPOINT
+   - Summarize the approach
+   - List files that will be created/modified
+   - Estimate effort/scope
+   - **ASK FOR EXPLICIT APPROVAL:** "Should I proceed with implementing this?"
+   - ❌ DON'T: Move forward without approval
+
+5. **Wait for User Approval**
+   - User says "Yes/Go ahead/Proceed" → Continue to step 6
+   - User says "No/Wait/Not now" → Stop, leave in backlog
+   - User asks questions → Answer, adjust plan, ask again
+
+6. **Check WIP Limits** (Before moving to doing/)
+   - Check `thoughts/project/work/doing/.limit` file
+   - Count files in `thoughts/project/work/doing/`
+   - If at limit → **Stop, complete current work first**
+   - If under limit → Proceed
+
+7. **Move Through Workflow**
+   - Move file: `planning/backlog/` → `work/todo/`
+   - Update status in document to "Todo"
+   - Move file: `work/todo/` → `work/doing/`
+   - Update status in document to "Doing"
+
+8. **Implement**
+   - Follow the plan
+   - Write code, tests, documentation
+   - Keep CHANGELOG notes in work item document
+
+9. **Complete**
+   - Move file: `work/doing/` → `work/done/`
+   - Update status in document to "Done"
+   - This triggers release process
+
+**Example Interaction:**
+
+```
+User: "Add feature X"
+
+Claude: "I understand you want feature X. Let me create a backlog item for this.
+
+[Creates FEAT-NNN in planning/backlog/]
+
+I propose implementing this by:
+- Creating/modifying these files: [list]
+- Approach: [summary]
+- Estimated scope: [hours/complexity]
+
+This would add [functionality description].
+
+Should I proceed with implementing FEAT-NNN?"
+
+User: "Yes, go ahead"
+
+Claude: "Great! Moving FEAT-NNN through the workflow..."
+[Checks WIP limits]
+[Moves backlog → todo → doing]
+[Implements]
+```
+
+**What NOT to Do:**
+
+❌ Jump straight to implementation without creating backlog item
+❌ Create items directly in `work/doing/` folder
+❌ Set item status to "Doing" or "Todo" without user approval
+❌ Implement before moving through the workflow folders
+❌ Exceed WIP limits
+❌ Skip the approval checkpoint
+
+**Rationale:**
+
+This policy ensures:
+- User maintains control over priorities and timing
+- Framework workflow is respected (dogfooding our own process)
+- WIP limits prevent context switching
+- Clear audit trail of what was approved
+- Backlog grows naturally without implementation pressure
+
+**Reference:** See [ADR-001: AI Workflow Checkpoint Policy](thoughts/project/research/adr/001-ai-workflow-checkpoint-policy.md)
+
 
 ## Architecture Decision Records (ADRs)
 

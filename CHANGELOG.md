@@ -13,6 +13,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- Framework Quick Reference Guide (QUICK-REFERENCE.md)
+  - Bare-bones, get-functional guide for rapid onboarding
+  - Covers all framework levels with quick setup commands
+  - Decision tree for framework selection
+  - Common operations cheat sheet
+  - Links to comprehensive documentation
+
 ### Planned
 - Visual diagrams for folder structure and workflow
 - ZIP distribution package

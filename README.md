@@ -17,6 +17,8 @@ The **SpearIT Project Framework** is a comprehensive, multi-level project manage
 
 ## Quick Start
 
+**Want the fastest path?** See [QUICK-REFERENCE.md](QUICK-REFERENCE.md) for a bare-bones, get-functional guide. ⚡
+
 ### For New Projects
 
 1. **Choose your framework level:**
