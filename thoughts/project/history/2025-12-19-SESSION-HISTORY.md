@@ -122,6 +122,7 @@ Major milestone achieved: The SpearIT Project Framework now uses its own Standar
 9. FEAT-012: CONTRIBUTING.md (FUTURE - v2.2.0)
 10. FEAT-013: Migration guide from other frameworks (FUTURE - v2.3.0)
 11. FEAT-014: FAQ document (FUTURE - v2.3.0)
+12. FEAT-015: Executive summary reporting (FUTURE - v2.2.0)
 
 **All feature docs located in:** thoughts/project/planning/backlog/
 
