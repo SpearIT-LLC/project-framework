@@ -563,91 +563,31 @@ This policy ensures:
 
 ## Architecture Decision Records (ADRs)
 
-**Location:** `thoughts/project/research/adr/`
-**Purpose:** Document significant decisions with context, options, and rationale
+**Quick Decision Tree:**
 
-### When to Create an ADR
+Need to document a decision between alternatives?
+```
+├─ YES → Create ADR
+└─ NO → Just implement (or use code comment)
+```
 
-Create an ADR when you:
-- Make a technical choice between alternatives
-- Establish a pattern or standard
-- Choose an algorithm, library, or approach
-- Make architectural decisions
-
-**Don't create ADRs for:**
-- Obvious/trivial choices with no alternatives
-- Temporary workarounds
-- Implementation details (those go in code comments)
-
-### Template Selection: MAJOR vs MINOR
-
-**Use MAJOR template when ANY of these apply:**
-- Affects system architecture or core design
-- Impacts 3+ modules/files
-- Significant trade-offs (performance, security, maintainability)
-- Hard/expensive to change later
-- Will be referenced by future decisions
-- Took significant time to evaluate (>1 hour discussion)
-
-**Use MINOR template when:**
-- Limited scope (1-2 files)
-- Clear winner among options
-- Low risk if changed later
-- Straightforward trade-offs
+Which template?
+```
+├─ Affects 3+ files OR hard to change later OR significant trade-offs → MAJOR
+└─ Simple, 1-2 files, easy to change → MINOR
+```
 
 **When in doubt:** Start with MINOR, upgrade to MAJOR if you discover complexity
 
-### Template Locations
+**Templates:**
 - MAJOR: `thoughts/framework/templates/ADR-MAJOR-TEMPLATE.md`
 - MINOR: `thoughts/framework/templates/ADR-MINOR-TEMPLATE.md`
 
-### Naming Convention
-- Numbered sequentially: `001-decision-title.md`, `002-next-decision.md`
-- Use lowercase with hyphens
-- Both MAJOR and MINOR use same numbering sequence (chronological order)
+**Storage:** `thoughts/project/research/adr/NNN-decision-name.md`
 
-### Upgrading MINOR to MAJOR
+**Examples:**
+- MAJOR: Database choice, authentication architecture, state management
+- MINOR: JSON library, log format, file naming convention
 
-If a MINOR decision becomes more significant:
-1. Create new ADR with next number using MAJOR template
-2. Add `**Supersedes:** ADR-XXX` to new ADR
-3. Add `**Reason for upgrade:**` explanation
-4. Update original ADR status to `Superseded by ADR-YYY`
-5. Link from relevant reference docs
-
-**Upgrade triggers:**
-- Scope expands to 3+ modules
-- Affects system architecture
-- Complex trade-offs discovered
-- Becomes reference point for other decisions
-- Performance/scale becomes critical
-
-### ADR Lifecycle
-
-```
-[Decision Needed]
-    |
-    v
-[Create ADR with Status: Proposed]
-    |
-    v
-[Evaluate options, discuss]
-    |
-    v
-[Update Status: Accepted]
-    |
-    v
-[Implement decision]
-    |
-    v
-[Link from relevant docs]
-    |
-    v
-[If superseded later: Status: Superseded by ADR-XXX]
-```
-
-### Examples
-- MAJOR: Dependency resolution algorithm, state management approach, security model
-- MINOR: JSON library choice, log format, file naming convention
-- See `thoughts/project/research/adr/` for actual examples
+**Full Details:** See [workflow-guide.md](thoughts/project/collaboration/workflow-guide.md#architecture-decision-records-adrs) for complete guidance on when to create, upgrading MINOR to MAJOR, lifecycle, and examples.
 
