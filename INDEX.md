@@ -1,7 +1,7 @@
 # SpearIT Project Framework - Documentation Index
 
-**Last Updated:** 2025-12-20
-**Version:** 2.0.0
+**Last Updated:** 2025-12-22
+**Version:** See [PROJECT-STATUS.md](PROJECT-STATUS.md)
 
 This index provides quick navigation to all documentation for the SpearIT Project Framework project.
 
@@ -10,10 +10,22 @@ This index provides quick navigation to all documentation for the SpearIT Projec
 ## Quick Links
 
 ### Getting Started
-- [QUICK-REFERENCE.md](QUICK-REFERENCE.md) - **Bare-bones get-functional guide** ⚡ NEW
+- [QUICK-REFERENCE.md](QUICK-REFERENCE.md) - **Bare-bones get-functional guide** ⚡
 - [README.md](README.md) - Project overview
 - [PROJECT-STATUS.md](PROJECT-STATUS.md) - **Current version and status** ⭐
 - [CHANGELOG.md](CHANGELOG.md) - Version history and changes
+
+### For AI Assistants
+- [CLAUDE.md](CLAUDE.md) - **AI collaboration contract** (quick reference)
+- [CLAUDE-QUICK-REFERENCE.md](CLAUDE-QUICK-REFERENCE.md) - Critical rules and decision trees
+- [thoughts/project/collaboration/](thoughts/project/collaboration/) - **Detailed collaboration guides** (universal for humans & AI)
+  - [README.md](thoughts/project/collaboration/README.md) - Navigation index
+  - [workflow-guide.md](thoughts/project/collaboration/workflow-guide.md) - Complete workflow process
+  - [code-quality-standards.md](thoughts/project/collaboration/code-quality-standards.md) - Coding standards
+  - [testing-strategy.md](thoughts/project/collaboration/testing-strategy.md) - Testing approach
+  - [security-policy.md](thoughts/project/collaboration/security-policy.md) - Security requirements
+  - [architecture-guide.md](thoughts/project/collaboration/architecture-guide.md) - Framework design
+  - [troubleshooting-guide.md](thoughts/project/collaboration/troubleshooting-guide.md) - Common issues
 
 ### For Users (Applying the Framework)
 - [project-framework-template/README.md](project-framework-template/README.md) - Template package overview
@@ -24,6 +36,7 @@ This index provides quick navigation to all documentation for the SpearIT Projec
 
 ### For Framework Developers
 - [CLAUDE.md](CLAUDE.md) - AI assistant guidelines for framework development
+- [thoughts/project/collaboration/](thoughts/project/collaboration/) - Detailed collaboration guides
 - [CONTRIBUTING.md](CONTRIBUTING.md) - How to contribute *(planned)*
 - [LICENSE](LICENSE) - Project license
 
@@ -124,13 +137,25 @@ This index provides quick navigation to all documentation for the SpearIT Projec
 
 ### 4. Framework Development (This Project)
 
+#### AI Collaboration Documentation
+- [CLAUDE.md](CLAUDE.md) - AI collaboration contract (quick reference)
+- [CLAUDE-QUICK-REFERENCE.md](CLAUDE-QUICK-REFERENCE.md) - Critical rules and decision trees
+- [thoughts/project/collaboration/](thoughts/project/collaboration/) - **Universal collaboration guides** (humans & AI)
+  - [README.md](thoughts/project/collaboration/README.md) - Navigation index (410 lines)
+  - [workflow-guide.md](thoughts/project/collaboration/workflow-guide.md) - Workflow process (961 lines)
+  - [code-quality-standards.md](thoughts/project/collaboration/code-quality-standards.md) - Coding standards (779 lines)
+  - [testing-strategy.md](thoughts/project/collaboration/testing-strategy.md) - Testing strategy (948 lines)
+  - [security-policy.md](thoughts/project/collaboration/security-policy.md) - Security policy (1,028 lines)
+  - [architecture-guide.md](thoughts/project/collaboration/architecture-guide.md) - Architecture (662 lines)
+  - [troubleshooting-guide.md](thoughts/project/collaboration/troubleshooting-guide.md) - Troubleshooting (697 lines)
+
 #### Reference Documentation
-- [CLAUDE.md](CLAUDE.md) - AI guidelines for framework development
 - [thoughts/project/reference/](thoughts/project/reference/) - Framework reference docs *(to be populated)*
 
 #### Research & Decisions
 - [thoughts/project/research/](thoughts/project/research/) - Framework research
 - [thoughts/project/research/adr/](thoughts/project/research/adr/) - Architecture decisions for framework
+  - [001-ai-workflow-checkpoint-policy.md](thoughts/project/research/adr/001-ai-workflow-checkpoint-policy.md) - Mandatory approval checkpoint
 
 #### History & Retrospectives
 - [thoughts/project/history/](thoughts/project/history/) - Daily session histories
@@ -271,5 +296,5 @@ This index provides quick navigation to all documentation for the SpearIT Projec
 
 ---
 
-**Last Updated:** 2025-12-20
+**Last Updated:** 2025-12-22
 **Maintained by:** Gary Elliott (gary.elliott@spearit.solutions)
