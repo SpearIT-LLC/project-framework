@@ -4,7 +4,7 @@
 **Type:** Feature (Documentation Architecture)
 **Version Impact:** MINOR (improves existing capability)
 **Target Version:** v2.2.0
-**Status:** Backlog
+**Status:** Todo
 **Created:** 2025-12-20
 **Completed:** N/A
 **Developer:** TBD
@@ -94,16 +94,21 @@ ProjectRoot/
 ├── CLAUDE-QUICK-REFERENCE.md        # <200 lines (new)
 └── thoughts/
     └── project/
-        └── reference/
-            └── ai-collaboration/    # New folder
-                ├── README.md        # Index of AI collaboration docs
-                ├── workflow-deep-dive.md
-                ├── architecture-deep-dive.md
-                ├── code-quality-standards.md
-                ├── testing-strategy.md
-                ├── security-policy.md
-                └── troubleshooting-guide.md
+        └── collaboration/           # New folder - universal docs
+            ├── README.md            # Index & navigation
+            ├── workflow-guide.md    # Universal workflow details
+            ├── architecture-guide.md # Universal architecture
+            ├── code-quality-standards.md # Universal coding standards
+            ├── testing-strategy.md  # Universal testing approach
+            ├── security-policy.md   # Universal security rules
+            └── troubleshooting-guide.md # Universal debugging
 ```
+
+**Key Design Decision:**
+- Universal documentation (not AI-specific duplicates)
+- Single source of truth - humans and AI read same docs
+- CLAUDE.md provides AI Reading Protocol (when/what to read)
+- Eliminates duplication and maintenance burden
 
 #### CLAUDE.md Restructured (500 lines target)
 
@@ -120,7 +125,7 @@ ProjectRoot/
 - What this project is
 - Key folders and files
 - Architecture at high level
-**Deep Dive:** [architecture-deep-dive.md](...)
+**Deep Dive:** [architecture-guide.md](thoughts/project/collaboration/architecture-guide.md)
 
 ## AI Collaboration Guidelines (200 lines) ⭐ KEEP
 ### AI Workflow Checkpoint Policy
@@ -182,57 +187,78 @@ ProjectRoot/
 
 #### Supporting Documentation
 
-**thoughts/project/reference/ai-collaboration/README.md:**
+**thoughts/project/collaboration/README.md:**
 ```markdown
-# AI Collaboration Documentation
+# Project Collaboration Documentation
 
-Index of detailed AI collaboration guides.
+Universal guides for working on this project (human and AI).
 
 ## Quick Access
-- **Need workflow details?** → [workflow-deep-dive.md](workflow-deep-dive.md)
-- **Need architecture context?** → [architecture-deep-dive.md](architecture-deep-dive.md)
+- **Need workflow details?** → [workflow-guide.md](workflow-guide.md)
+- **Need architecture context?** → [architecture-guide.md](architecture-guide.md)
 - **Need coding standards?** → [code-quality-standards.md](code-quality-standards.md)
 - **Need testing guidance?** → [testing-strategy.md](testing-strategy.md)
 - **Need security rules?** → [security-policy.md](security-policy.md)
 - **System not working?** → [troubleshooting-guide.md](troubleshooting-guide.md)
 
-## Reading Protocol
-See CLAUDE.md "AI Reading Protocol" section for when to read what.
+## For AI Assistants
+See CLAUDE.md "AI Reading Protocol" section for when to proactively read these guides.
+
+## For Humans
+These guides document project standards and decisions. Reference as needed.
 ```
 
 ### Content Migration Plan
 
-**From CLAUDE.md → workflow-deep-dive.md:**
+**Single Source of Truth Principle:**
+- Extract from CLAUDE.md → Create universal collaboration docs
+- NEVER duplicate content between CLAUDE.md and collaboration/
+- CLAUDE.md provides summaries + references
+- collaboration/ provides complete details
+
+**From CLAUDE.md → collaboration/workflow-guide.md:**
 - Research Phase Guidelines (detailed explanations)
-- Planning Guidelines (detailed)
-- Architecture Decision Records (full explanation)
-- Collaboration & Workflow (git details)
+- Planning Guidelines (detailed examples)
+- Architecture Decision Records (when/how to create)
+- Git workflow (branching, commits, PRs)
+- Work item lifecycle (detailed)
 - Examples and use cases
 
-**From CLAUDE.md → code-quality-standards.md:**
+**From CLAUDE.md → collaboration/code-quality-standards.md:**
 - Clean Code Guidelines (detailed examples)
-- Function size rationale
-- DRY principle examples
+- Function size rationale and examples
+- DRY principle with examples
+- Naming conventions
 - Comment philosophy
+- Code review standards
 
-**From CLAUDE.md → security-policy.md:**
-- Input validation (detailed rules)
-- Authentication (detailed implementation)
-- Database safety (detailed examples)
-- XSS & CSRF (detailed prevention)
-- Dependency management (detailed)
+**From CLAUDE.md → collaboration/security-policy.md:**
+- Input validation (detailed rules and examples)
+- Authentication requirements (implementation details)
+- Database safety (parameterized queries, examples)
+- XSS & CSRF prevention (techniques)
+- Dependency management (vetting process)
 
-**From CLAUDE.md → testing-strategy.md:**
-- Testing Instructions (detailed)
-- TDD mindset (with examples)
-- Coverage targets (detailed)
-- Edge case examples
+**From CLAUDE.md → collaboration/testing-strategy.md:**
+- Testing Instructions (detailed approach)
+- TDD mindset (with workflow examples)
+- Coverage targets (by component type)
+- Edge case identification
+- Test structure and naming
 
-**From CLAUDE.md → troubleshooting-guide.md:**
-- Emergency Troubleshooting (expanded)
+**From CLAUDE.md → collaboration/troubleshooting-guide.md:**
+- Emergency Troubleshooting (expanded diagnostics)
 - Common errors (full list with solutions)
 - System diagnostics (detailed commands)
 - Log locations and interpretation
+- Performance debugging
+
+**From CLAUDE.md → collaboration/architecture-guide.md:** (NEW)
+- Project architecture overview
+- Key design decisions
+- Component relationships
+- Data flow
+- Integration points
 
 ### AI Reading Protocol (NEW Section)
 
@@ -249,14 +275,14 @@ See CLAUDE.md "AI Reading Protocol" section for when to read what.
 - Unclear requirements → Use AskUserQuestion tool
 
 **When encountering:**
-- Process question → Grep thoughts/framework/process/ or read workflow-deep-dive.md
+- Process question → Grep thoughts/framework/process/ or read collaboration/workflow-guide.md
 - Template question → Read thoughts/framework/templates/
 - Pattern question → Read thoughts/framework/patterns/
-- Coding standards → Read code-quality-standards.md
-- Security requirement → Read security-policy.md
-- Testing approach → Read testing-strategy.md
-- Architecture context → Read architecture-deep-dive.md
-- System not working → Read troubleshooting-guide.md
+- Coding standards → Read collaboration/code-quality-standards.md
+- Security requirement → Read collaboration/security-policy.md
+- Testing approach → Read collaboration/testing-strategy.md
+- Architecture context → Read collaboration/architecture-guide.md
+- System not working → Read collaboration/troubleshooting-guide.md
 
 **Proactive Reading:**
 - Read work item template BEFORE creating work item
@@ -336,20 +362,20 @@ See CLAUDE.md "AI Reading Protocol" section for when to read what.
 ### Files to Update
 
 - [ ] CLAUDE.md - Complete restructure
-- [ ] INDEX.md - Add CLAUDE-QUICK-REFERENCE.md and ai-collaboration/ folder
-- [ ] STRUCTURE.md - Document new ai-collaboration/ folder
+- [ ] INDEX.md - Add CLAUDE-QUICK-REFERENCE.md and collaboration/ folder
+- [ ] STRUCTURE.md - Document new collaboration/ folder
 - [ ] QUICK-REFERENCE.md - Maybe add reference to CLAUDE-QUICK-REFERENCE.md
 
 ### New Documentation Needed
 
 - [ ] CLAUDE-QUICK-REFERENCE.md
-- [ ] thoughts/project/reference/ai-collaboration/README.md
-- [ ] thoughts/project/reference/ai-collaboration/workflow-deep-dive.md
-- [ ] thoughts/project/reference/ai-collaboration/architecture-deep-dive.md
-- [ ] thoughts/project/reference/ai-collaboration/code-quality-standards.md
-- [ ] thoughts/project/reference/ai-collaboration/testing-strategy.md
-- [ ] thoughts/project/reference/ai-collaboration/security-policy.md
-- [ ] thoughts/project/reference/ai-collaboration/troubleshooting-guide.md
+- [ ] thoughts/project/collaboration/README.md
+- [ ] thoughts/project/collaboration/workflow-guide.md
+- [ ] thoughts/project/collaboration/architecture-guide.md
+- [ ] thoughts/project/collaboration/code-quality-standards.md
+- [ ] thoughts/project/collaboration/testing-strategy.md
+- [ ] thoughts/project/collaboration/security-policy.md
+- [ ] thoughts/project/collaboration/troubleshooting-guide.md
 
 ---
 
@@ -361,14 +387,14 @@ See CLAUDE.md "AI Reading Protocol" section for when to read what.
 - [ ] Design reviewed and approved
 
 ### Phase 2: Supporting Docs
-- [ ] Create ai-collaboration/ folder structure
+- [ ] Create collaboration/ folder structure
 - [ ] Create README.md index
-- [ ] Migrate workflow content → workflow-deep-dive.md
-- [ ] Migrate architecture content → architecture-deep-dive.md
-- [ ] Migrate code quality → code-quality-standards.md
-- [ ] Migrate testing → testing-strategy.md
-- [ ] Migrate security → security-policy.md
-- [ ] Migrate troubleshooting → troubleshooting-guide.md
+- [ ] Extract workflow content → workflow-guide.md (universal)
+- [ ] Extract architecture content → architecture-guide.md (universal)
+- [ ] Extract code quality → code-quality-standards.md (universal)
+- [ ] Extract testing → testing-strategy.md (universal)
+- [ ] Extract security → security-policy.md (universal)
+- [ ] Extract troubleshooting → troubleshooting-guide.md (universal)
 
 ### Phase 3: CLAUDE.md Restructure
 - [ ] Create CLAUDE-QUICK-REFERENCE.md (critical checklists)
@@ -394,12 +420,12 @@ See CLAUDE.md "AI Reading Protocol" section for when to read what.
 
 **Deployment Steps:**
 
-1. **Create supporting docs** (ai-collaboration/ folder)
+1. **Create supporting docs** (collaboration/ folder - universal)
 2. **Create CLAUDE-QUICK-REFERENCE.md**
-3. **Test supporting docs** (verify content complete)
-4. **Restructure CLAUDE.md** (use new outline)
+3. **Test supporting docs** (verify content complete, single source of truth)
+4. **Restructure CLAUDE.md** (use new outline, references not duplication)
 5. **Update cross-references** (ensure all links work)
-6. **Test with AI** (verify guidance findable)
+6. **Test with AI** (verify guidance findable via Reading Protocol)
 7. **Update documentation** (INDEX, STRUCTURE)
 8. **Release in v2.2.0**
 
@@ -458,13 +484,14 @@ If restructure causes issues:
 
 ### Added
 - CLAUDE-QUICK-REFERENCE.md - Critical checklists (<200 lines)
-- thoughts/project/reference/ai-collaboration/ documentation
-  - workflow-deep-dive.md
-  - architecture-deep-dive.md
-  - code-quality-standards.md
-  - testing-strategy.md
-  - security-policy.md
-  - troubleshooting-guide.md
+- thoughts/project/collaboration/ - Universal documentation
+  - README.md (index and navigation)
+  - workflow-guide.md (universal workflow details)
+  - architecture-guide.md (universal architecture)
+  - code-quality-standards.md (universal coding standards)
+  - testing-strategy.md (universal testing approach)
+  - security-policy.md (universal security rules)
+  - troubleshooting-guide.md (universal debugging)
 - AI Reading Protocol section in CLAUDE.md
 ```
 
@@ -476,13 +503,15 @@ If restructure causes issues:
 
 **Key Insight:** Human documentation patterns (quick reference + detailed manual) work for AI too. AI can dynamically read supporting docs when needed using Read tool.
 
+**Single Source of Truth:** Universal collaboration/ docs eliminate duplication. Humans and AI read same documentation, ensuring consistency.
+
 **Critical Requirement:** Must preserve AI Workflow Checkpoint Policy (ADR-001) and Release Process verbatim in CLAUDE.md. These are process-critical.
 
 **Template Impact:** This restructure should also be applied to:
 - project-framework-template/standard/CLAUDE.md (template version)
 - project-framework-template/light/CLAUDE.md (if exists)
 
-**Future Opportunity:** FEAT-018 (Claude Command Framework) could include `/docs` command to search ai-collaboration/ folder.
+**Future Opportunity:** FEAT-018 (Claude Command Framework) could include `/docs` command to search collaboration/ folder.
 
 ---
 
