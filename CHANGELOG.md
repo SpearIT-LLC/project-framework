@@ -23,6 +23,42 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [2.2.0] - 2025-12-29
+
+### Added
+- **Test Type Taxonomy** (ADR-002)
+  - Three-dimensional test classification system
+  - Dimension 1: Test Subject (Process vs Implementation)
+  - Dimension 2: Traditional Type (Functional/Non-Functional/QA)
+  - Dimension 3: Automation Level (Automated/Manual/Hybrid)
+  - AI guidance for detecting ambiguous test types
+  - Supports all test scenarios (Performance, Security, UAT, Unit, Integration, E2E)
+- **Testing Plan Template** (TESTING-PLAN-TEMPLATE.md)
+  - Universal test plan template with test type taxonomy
+  - Test type classification section referencing ADR-002
+  - AI guidance notes for handling ambiguous tests
+  - Complete test execution protocol
+
+### Changed
+- **CLAUDE.md AI Reading Protocol** enhanced
+  - Added "Resuming work or checking status" guidance
+  - AI must check work item completion status before suggesting next actions
+  - Decision tree includes work-in-progress verification
+
+### Fixed
+- **Test 0.0 failure** - AI context awareness when resuming work
+  - AI now reads work items in doing/ to verify completion status
+  - Prevents suggesting actions without understanding current work state
+
+### Testing
+- **FEAT-020 Testing Complete** - 10/11 tests passed (90.9%)
+  - Validated AI Reading Protocol effectiveness
+  - Validated documentation hierarchy understanding
+  - Validated complete workflow integration
+  - Identified and fixed critical context awareness gap
+
+---
+
 ## [2.1.0] - 2025-12-20
 
 ### Added

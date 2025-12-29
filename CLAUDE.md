@@ -74,6 +74,9 @@ ProjectRoot/
 ### Decision Tree
 
 ```
+Resuming work or checking status?
+└─ Read work items in work/doing/ to check completion status
+
 Starting work on project?
 ├─ Need workflow process? → collaboration/workflow-guide.md
 ├─ Need coding standards? → collaboration/code-quality-standards.md
@@ -98,6 +101,13 @@ Not sure which doc?
 ```
 
 ### Proactive Reading Patterns
+
+**When resuming work or checking project status:**
+1. **ALWAYS read work items in `work/doing/` to check completion status**
+2. Check if all tasks/checklists within work items are complete
+3. If incomplete: Offer to continue the work
+4. If complete: Offer to move to `done/` and proceed with release
+5. **NEVER suggest next actions without verifying current work state**
 
 **Before writing ANY code:**
 1. Read [code-quality-standards.md](thoughts/project/collaboration/code-quality-standards.md) for coding standards
