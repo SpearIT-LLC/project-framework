@@ -178,16 +178,19 @@ When releasing FEAT-020 (v2.2.0), we discovered supporting documents left in `do
 7. AI moves todo → work/doing/FEAT-XXX.md
 8. Implementation begins
    - Supporting docs created in doing/ (e.g., FEAT-XXX-MIGRATION-MATRIX.md)
+   - Sub-items may be created (FEAT-XXX.1.md, FEAT-XXX.2.md) if work is subdivided
    - Work progresses
 9. Implementation completes
 10. AI updates version files (PROJECT-STATUS.md, CHANGELOG.md)
 11. AI moves ALL FEAT-XXX docs: doing/ → work/done/
     - Primary: FEAT-XXX.md
+    - Sub-items: FEAT-XXX.1.md, FEAT-XXX.2.md (if exist)
     - Supporting: FEAT-XXX-*.md, feature-XXX-*.md
 12. AI commits atomically with version tag
 13. **[NEW STEP] Immediately after release:**
     - Create history/releases/vX.Y.Z/ if needed
-    - Move ALL done/FEAT-XXX*.md → history/releases/vX.Y.Z/
+    - Move ALL FEAT-XXX* files from done/ → history/releases/vX.Y.Z/
+      - Includes primary, sub-items, and supporting documents
     - Commit: "Archive: vX.Y.Z work items"
 14. doing/ and done/ are now clear
 ```
@@ -196,15 +199,23 @@ When releasing FEAT-020 (v2.2.0), we discovered supporting documents left in `do
 
 **All files related to the work item:**
 - ✅ Primary work item (FEAT-XXX.md, BUGFIX-XXX.md, etc.)
+- ✅ Sub-items (FEAT-XXX.1.md, FEAT-XXX.2.md, etc.)
 - ✅ Supporting documents (FEAT-XXX-*.md, feature-XXX-*.md)
 - ✅ Test plans (FEAT-XXX-TESTING-PLAN.md)
 - ✅ Test results (FEAT-XXX-TEST-RESULTS.md)
 - ✅ Migration matrices, planning docs, any other related files
 
 **Identifying related files:**
-- Filename contains work item ID (FEAT-XXX, feature-XXX)
+- Filename contains work item ID (FEAT-XXX, feature-XXX) with dash or dot separator
+  - FEAT-020.md (primary)
+  - FEAT-020.1.md, FEAT-020.2.md (sub-items)
+  - FEAT-020-TESTING-PLAN.md (supporting)
+  - feature-020-planning.md (supporting, alternate naming)
 - Created during implementation of that work item
 - Referenced in work item documentation
+
+**Why sub-items archive together:**
+Sub-items (FEAT-XXX.1, FEAT-XXX.2) are part of the same logical feature and should stay together in the archive. Breaking up a feature across releases would lose context.
 
 ---
 
