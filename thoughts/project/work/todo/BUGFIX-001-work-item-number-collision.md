@@ -4,7 +4,7 @@
 **Type:** Bugfix
 **Version Impact:** PATCH (backward-compatible fix)
 **Target Version:** v2.2.1
-**Status:** Backlog
+**Status:** Todo
 **Severity:** High
 **Priority:** P1
 **Version Found:** v2.2.0
