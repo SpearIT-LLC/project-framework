@@ -198,21 +198,46 @@ When releasing FEAT-020 (v2.2.0), we discovered supporting documents left in `do
 ### What Moves to Archive?
 
 **All files related to the work item:**
-- ✅ Primary work item (FEAT-XXX.md, BUGFIX-XXX.md, etc.)
-- ✅ Sub-items (FEAT-XXX.1.md, FEAT-XXX.2.md, etc.)
-- ✅ Supporting documents (FEAT-XXX-*.md, feature-XXX-*.md)
+- ✅ Primary work item (FEAT-XXX.md, BUGFIX-XXX.md, BLOCKER-XXX.md, SPIKE-XXX.md)
+- ✅ Sub-items (FEAT-XXX.1.md, BUGFIX-XXX.2.md, etc.)
+- ✅ Supporting documents (FEAT-XXX-*.md, bugfix-XXX-*.md, etc.)
 - ✅ Test plans (FEAT-XXX-TESTING-PLAN.md)
 - ✅ Test results (FEAT-XXX-TEST-RESULTS.md)
 - ✅ Migration matrices, planning docs, any other related files
 
+**Applies to ALL work item types:**
+- FEAT-XXX (features)
+- BUGFIX-XXX (bug fixes)
+- BLOCKER-XXX (blockers)
+- SPIKE-XXX (research spikes)
+
 **Identifying related files:**
-- Filename contains work item ID (FEAT-XXX, feature-XXX) with dash or dot separator
-  - FEAT-020.md (primary)
-  - FEAT-020.1.md, FEAT-020.2.md (sub-items)
-  - FEAT-020-TESTING-PLAN.md (supporting)
-  - feature-020-planning.md (supporting, alternate naming)
-- Created during implementation of that work item
-- Referenced in work item documentation
+- Filename contains work item ID with dash or dot separator
+- Pattern: `{TYPE}-{NUMBER}[.sub][dash-description].md`
+
+**Examples by work item type:**
+
+*Features (FEAT-XXX):*
+- FEAT-020.md (primary)
+- FEAT-020.1.md, FEAT-020.2.md (sub-items)
+- FEAT-020-TESTING-PLAN.md (supporting)
+- feature-020-planning.md (supporting, alternate naming)
+
+*Bug Fixes (BUGFIX-XXX):*
+- BUGFIX-042.md (primary)
+- BUGFIX-042-ROOT-CAUSE-ANALYSIS.md (supporting)
+- bugfix-042-reproduction-steps.md (supporting, alternate)
+
+*Blockers (BLOCKER-XXX):*
+- BLOCKER-005.md (primary)
+- BLOCKER-005-WORKAROUND.md (supporting)
+
+*Spikes (SPIKE-XXX):*
+- SPIKE-013.md (primary)
+- SPIKE-013-FINDINGS.md (supporting)
+- spike-013-comparison-matrix.md (supporting, alternate)
+
+**General rule:** All files created during implementation that reference the work item ID
 
 **Why sub-items archive together:**
 Sub-items (FEAT-XXX.1, FEAT-XXX.2) are part of the same logical feature and should stay together in the archive. Breaking up a feature across releases would lose context.
