@@ -4,7 +4,7 @@
 **Type:** Feature
 **Version Impact:** MINOR (adds new capability)
 **Target Version:** v2.3.0
-**Status:** Backlog
+**Status:** Todo
 **Created:** 2025-12-29
 **Completed:** N/A
 **Developer:** TBD
@@ -364,4 +364,5 @@ Potentially add to CLAUDE.md:
 
 ## Changelog
 
+- 2025-12-30: Moved from backlog/ to todo/ (approved for implementation)
 - 2025-12-29: Initial feature proposal, backlog item created
