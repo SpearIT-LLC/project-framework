@@ -208,7 +208,17 @@ User Request → Backlog → [CHECKPOINT: User Approval] → Todo → Doing → 
    - Create annotated tag: `git tag -a vX.Y.Z -m "Release notes"`
    - Push with tags: `git push origin main --tags`
 
+   **Archive (immediately after release):**
+   - Create `thoughts/project/history/releases/vX.Y.Z/` folder
+   - Move ALL work item files from `work/done/` to release folder
+     - Primary: FEAT-XXX.md, BUGFIX-XXX.md
+     - Supporting: FEAT-XXX-*.md, feature-XXX-*.md (migration matrices, test plans, results)
+   - Commit: `git commit -m "Archive: vX.Y.Z work items"`
+   - Result: done/ folder should be empty
+
    **Why atomic?** Version number must match implementation commit. Never commit implementation separate from version bump.
+
+   **Why archive immediately?** Maintains WIP limits, preserves complete feature history together, clear done/ folder. See ADR-003.
 
 ### Example Interaction
 
