@@ -210,6 +210,130 @@ Make Step 9 start with: "Present work for review, get approval, then release"
 
 ---
 
+## Design Discussion: Review Folder vs AI Prompts
+
+**Question:** Should we add a physical `work/review/` folder to the kanban workflow, or rely on AI prompts to trigger review?
+
+### Option A: Add work/review/ Folder (Physical State)
+
+**Workflow becomes:**
+```
+backlog/ → todo/ → doing/ → review/ → done/ → releases/
+```
+
+**How it works:**
+- After implementing (Step 8), AI moves work item from `doing/` to `review/`
+- Item sits in `review/` folder awaiting user approval
+- User reviews the work item document and/or code changes
+- User manually moves from `review/` to `done/` when approved
+- OR user moves back to `doing/` if changes needed
+
+**Pros:**
+- ✅ **Physical visibility:** Clear which items are awaiting review
+- ✅ **WIP limit separation:** Review items don't count against doing/ WIP limit
+- ✅ **Team workflows:** Multiple reviewers can see review queue
+- ✅ **Audit trail:** Can see how long items spent in review
+- ✅ **Standard pattern:** Matches common kanban boards (To Do, In Progress, Review, Done)
+
+**Cons:**
+- ❌ **Folder complexity:** Adds another folder to structure
+- ❌ **Manual file movement:** User must move files (or AI does after approval)
+- ❌ **Solo developer overhead:** May be overkill for 1-person teams
+- ❌ **Documentation updates:** Need to update all workflow docs with new folder
+
+### Option B: AI Prompts Only (Virtual State)
+
+**Workflow stays:**
+```
+backlog/ → todo/ → doing/ → done/ → releases/
+```
+
+**How it works:**
+- After implementing (Step 8), AI stays in Step 8.5 (virtual review state)
+- Item remains in `doing/` folder
+- AI presents work for review via prompt
+- User reviews and responds in conversation
+- AI only moves from `doing/` to `done/` after approval
+
+**Pros:**
+- ✅ **Simpler structure:** No new folder needed
+- ✅ **Conversational:** Review happens in natural AI-human dialogue
+- ✅ **Solo-friendly:** Works well for single developer workflows
+- ✅ **Less overhead:** No extra file movements
+- ✅ **Backward compatible:** Doesn't break existing folder structure
+
+**Cons:**
+- ❌ **No physical visibility:** Can't see "items in review" by looking at folders
+- ❌ **Session-dependent:** Review state only exists during AI conversation
+- ❌ **Team workflows:** Harder for multiple reviewers to coordinate
+- ❌ **WIP limits:** Review items still count against doing/ limit
+
+### Option C: Hybrid (Folder + Status Flag)
+
+**Workflow:**
+```
+backlog/ → todo/ → doing/ → done/ → releases/
+```
+
+**How it works:**
+- After implementing, AI updates work item status to "Review" but keeps in `doing/`
+- AI presents work for review via prompt
+- User can see items in review by checking status field
+- After approval, AI changes status to "Done" and moves to `done/`
+
+**Pros:**
+- ✅ **Queryable:** Can grep for status:"Review" in doing/
+- ✅ **No new folder:** Keeps structure simple
+- ✅ **Visible in document:** Opening work item shows it's in review
+- ✅ **Best of both:** Physical location + status tracking
+
+**Cons:**
+- ❌ **Less visible:** Must open files or grep to see review status
+- ❌ **WIP limits:** Still counts against doing/ limit
+
+---
+
+### Recommendation & Discussion Points
+
+**For discussion:**
+
+1. **Team size consideration:**
+   - Solo developer: Option B (AI prompts) might be sufficient
+   - Small team (2-5): Option A (review/ folder) provides better visibility
+   - Larger team: Option A definitely needed
+
+2. **WIP limit philosophy:**
+   - Should "items in review" count against doing/ WIP limit?
+   - Or should review be a separate stage with its own limit?
+
+3. **Framework levels:**
+   - Minimal/Light: Probably don't need review/ folder
+   - Standard: Could benefit from it
+   - Full/Enterprise: Likely needs it for team coordination
+
+4. **Current project (Standard framework, solo developer):**
+   - Currently using Option B (AI prompts) and it worked
+   - But discovered the gap because prompt wasn't explicit enough
+   - Would Option A (review/ folder) have prevented the issue?
+
+**Proposed Decision for BUGFIX-002:**
+
+Start with **Option B (AI Prompts)** because:
+- This project is solo developer using Standard framework
+- Simpler to implement (just update CLAUDE.md)
+- Can always add review/ folder later if needed (non-breaking change)
+- Fixes the immediate issue (missing review checkpoint)
+
+**Future consideration (separate work item):**
+- Create FEAT-XXX: Add optional review/ folder for team workflows
+- Document when to use review/ vs staying in doing/
+- Update WIP limit guidance for review stage
+
+**Question for user:**
+Do you prefer Option A (review/ folder), Option B (AI prompts), or Option C (hybrid)? Or should we start with B and revisit later?
+
+---
+
 ## Testing Strategy
 
 ### Test Cases
