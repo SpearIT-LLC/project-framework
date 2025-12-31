@@ -1,14 +1,12 @@
 {
   "permissions": {
+    "defaultMode": "dontAsk",
     "allow": [
       "Read(**)",
       "Glob",
       "Grep",
       "Task",
-      "Bash(ls:*)",
-      "Bash(cat:*)",
-      "Bash(pwd)",
-      "Bash(git status)"
+      "Bash(dir:*)"
     ],
     "deny": [
       "Read(.env)",
