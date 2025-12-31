@@ -355,6 +355,87 @@ User Idea → Backlog → [User Approval] → Todo → Doing → Done → Releas
 
 **For AI assistants:** See CLAUDE.md "AI Workflow Checkpoint Policy" for mandatory approval checkpoints.
 
+### Work Item Numbering
+
+Work item numbers are **sequential and globally unique** across all work item types within a project.
+
+**Format:** `[TYPE]-[NNN]` where:
+- `TYPE` = FEAT, BUGFIX, BLOCKER, SPIKE, RESEARCH, etc.
+- `NNN` = Zero-padded 3-digit number (001-999), then continues naturally (1000+)
+
+**Examples:** `FEAT-021`, `BUGFIX-005`, `BLOCKER-001`, `FEAT-1000`
+
+#### Finding the Next Number
+
+**CRITICAL:** When creating a new work item, you MUST scan **ALL** locations where work items exist, not just the backlog folder.
+
+**Locations to scan:**
+```bash
+thoughts/project/planning/backlog/      # Not yet approved
+thoughts/project/work/todo/             # Approved, not started
+thoughts/project/work/doing/            # In progress
+thoughts/project/work/done/             # Completed, awaiting release
+thoughts/project/history/releases/*/    # Archived after release
+```
+
+**Command to find next FEAT number:**
+```bash
+find thoughts/project/planning/backlog/ \
+     thoughts/project/work/todo/ \
+     thoughts/project/work/doing/ \
+     thoughts/project/work/done/ \
+     thoughts/project/history/releases/ \
+     -name "FEAT-*.md" 2>/dev/null | \
+     grep -oE "FEAT-[0-9]+" | \
+     grep -oE "[0-9]+" | \
+     sort -n | \
+     tail -1
+```
+
+Then increment by 1 for the new number.
+
+**Why scan all locations?**
+- Work items move through lifecycle (backlog → todo → doing → done → archive)
+- If you only scan backlog/, you'll miss items that moved or were archived
+- Creates collision risk: Two different items with same number
+- See BUGFIX-001 for detailed analysis of this issue
+
+**For other types:** Replace `FEAT` with `BUGFIX`, `BLOCKER`, `SPIKE`, etc.
+
+#### Hierarchical Numbering (Sub-Items)
+
+For sub-features or test scenarios that are tightly coupled to a parent:
+
+**Format:** `[TYPE]-[PARENT].[CHILD].[GRANDCHILD]`
+
+**Examples:**
+- `FEAT-020` - Parent feature
+- `FEAT-020.1` - First sub-feature
+- `FEAT-020.2` - Second sub-feature
+- `FEAT-020.2.1` - Grandchild (specific test under FEAT-020.2)
+
+**Maximum depth:** 3 levels (parent.child.grandchild)
+
+**When to use hierarchical numbering:**
+- Sub-item is tightly coupled to parent
+- Sub-item only makes sense in context of parent
+- Test scenarios, migration matrices, detailed test plans
+
+**When to use separate numbering:**
+- Work item can stand alone independently
+- Work item might be reused or referenced elsewhere
+- Work item is a distinct user-facing feature
+
+**WIP Limit Note:** Parent and all children count as **1 item** toward WIP limit. See ADR-003 for details.
+
+#### Number Exhaustion (999+)
+
+After `FEAT-999`, continue naturally to `FEAT-1000`, `FEAT-1001`, etc.
+
+**No special handling required.** Simply increment and drop zero-padding.
+
+If your project reaches 1000+ features, consider whether it should be split into multiple projects, but the numbering system supports any count.
+
 ### Work Item Templates
 
 Located in `thoughts/framework/templates/`:

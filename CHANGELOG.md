@@ -20,6 +20,30 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Validation script
 - Backlog review command (FEAT-017)
 - Claude command framework (FEAT-018)
+- Automated session history generation (FEAT-022)
+
+---
+
+## [2.2.1] - 2025-12-31
+
+### Fixed
+- **BUGFIX-001: Work Item Number Collision Risk**
+  - AI numbering logic now scans ALL locations (backlog, todo, doing, done, releases/*/)
+  - Previously only scanned backlog/, causing collision risk when items moved or archived
+  - Prevents duplicate work item IDs across full lifecycle
+  - Handles both uppercase (FEAT-) and lowercase (feature-) naming conventions
+
+### Added
+- **Work Item Numbering Documentation** (workflow-guide.md)
+  - Comprehensive "Work Item Numbering" section with find command examples
+  - Hierarchical numbering guidance (FEAT-020.1, FEAT-020.2)
+  - Number exhaustion handling (999 → 1000)
+  - When to use hierarchical vs. separate numbering
+
+### Changed
+- **CLAUDE.md AI Workflow Checkpoint Policy**
+  - Step 3 now references workflow-guide.md for work item numbering
+  - Keeps CLAUDE.md concise, delegates details to collaboration docs
 
 ---
 

@@ -1,8 +1,8 @@
 # SpearIT Project Framework - Project Status
 
-**Last Updated:** 2025-12-29
+**Last Updated:** 2025-12-31
 **Updated By:** Gary Elliott with Claude Code
-**Current Version:** v2.2.0 (2025-12-29)
+**Current Version:** v2.2.1 (2025-12-31)
 **Core Implementation:** Complete and production-ready
 **Ongoing Enhancements:** Test type taxonomy added, testing plan template created, AI Reading Protocol enhanced
 
@@ -18,9 +18,14 @@ The SpearIT Project Framework is a comprehensive project management framework te
 
 ## Version Information
 
-### Current Release: v2.2.0 (2025-12-29)
+### Current Release: v2.2.1 (2025-12-31)
 
 **Status:** Stable - Production Ready
+
+**Latest Changes:**
+- 🐛 Fixed work item numbering collision risk (BUGFIX-001)
+- 📝 Added comprehensive work item numbering documentation to workflow-guide.md
+- 📝 Updated CLAUDE.md with work item numbering reference
 
 **Core Features:**
 - ✅ Multi-level framework system (Minimal/Light/Standard/Enterprise) - Complete
@@ -276,6 +281,7 @@ See [roadmap.md](thoughts/project/planning/roadmap.md) for complete roadmap.
 
 | Version | Release Date | Type | Highlights |
 |---------|--------------|------|------------|
+| v2.2.1 | 2025-12-31 | Patch | Fixed work item numbering collision risk, added numbering documentation |
 | v2.2.0 | 2025-12-29 | Minor | Test type taxonomy (ADR-002), testing plan template, AI Reading Protocol enhancements |
 | v2.1.0 | 2025-12-20 | Minor | Quick reference guide, AI workflow checkpoint policy (ADR-001), dogfooding complete |
 | v2.0.0 | 2025-12-19 | Major | Multi-level framework system, research templates, dogfooding started |

@@ -158,6 +158,7 @@ User Request → Backlog → [CHECKPOINT: User Approval] → Todo → Doing → 
 
 **3. Create Backlog Item**
    - Use appropriate template (FEATURE-TEMPLATE.md, BUGFIX-TEMPLATE.md, etc.)
+   - Determine next number by scanning ALL locations (see workflow-guide.md "Work Item Numbering")
    - Place in `thoughts/project/planning/backlog/`
    - Set status to "Backlog" in the document
    - ✅ Backlog is a "safe space" - user can add many ideas without implementation pressure
