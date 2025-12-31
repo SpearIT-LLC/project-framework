@@ -1,0 +1,36 @@
+# Environment variables and secrets
+.env
+.env.*
+!.env.example
+
+# Credentials and keys
+credentials.json
+*.key
+*.pem
+*credentials*
+
+# Cloud provider configs
+.aws/
+.azure/
+.gcloud/
+
+# Secrets directories
+secrets/
+private/
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Temporary files
+*.tmp
+*.temp
+*.log

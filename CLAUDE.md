@@ -556,6 +556,23 @@ mv thoughts/project/work/done/*.md thoughts/project/history/releases/v2.1.0/
 
 **Full Troubleshooting:** [collaboration/troubleshooting-guide.md](thoughts/project/collaboration/troubleshooting-guide.md)
 
+### Claude Code Permissions
+
+**Quick Setup for Non-Destructive Operations:**
+
+The project includes comprehensive permission configuration in `.claude/settings.local.json` that allows all read-only operations without approval prompts:
+
+**Allowed Tools (no prompts):**
+- `Read(**)` - Read any project files
+- `Glob` - Pattern-based file search
+- `Grep` - Content search
+- `Task` - Sub-agents for complex work
+- Safe Bash commands: `ls`, `cat`, `pwd`, `git status`
+
+**Security:** Sensitive files should be in `.gitignore` (`.env`, `secrets/`, credentials, etc.)
+
+**Configuration Location:** `.claude/settings.local.json`
+
 ---
 
 ## Command Center

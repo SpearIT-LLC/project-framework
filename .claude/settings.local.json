@@ -1,7 +1,23 @@
 {
   "permissions": {
     "allow": [
-      "Bash(dir:*)"
+      "Read(**)",
+      "Glob",
+      "Grep",
+      "Task",
+      "Bash(ls:*)",
+      "Bash(cat:*)",
+      "Bash(pwd)",
+      "Bash(git status)"
+    ],
+    "deny": [
+      "Read(.env)",
+      "Read(.env.*)",
+      "Read(secrets/**)",
+      "Read(credentials.json)",
+      "Read(.aws/**)",
+      "Read(.git/config)",
+      "Read(../**)"
     ]
   }
 }
