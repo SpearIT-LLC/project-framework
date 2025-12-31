@@ -334,6 +334,57 @@ Do you prefer Option A (review/ folder), Option B (AI prompts), or Option C (hyb
 
 ---
 
+### Updated Recommendation: Framework-Level Decision
+
+**Better approach:** Tie the review mechanism to team size/framework level:
+
+**Solo Developer (this project):**
+- Use **Option B (AI prompts)** - Simpler, conversational
+- No review/ folder needed
+- AI presents work via Step 8.5 checkpoint
+
+**Team Workflows (2+ developers):**
+- Use **Option A (review/ folder)** - Better visibility and coordination
+- Physical folder makes review queue visible to all team members
+- Clear separation of "in development" vs "awaiting review"
+
+**Implementation Strategy:**
+
+1. **BUGFIX-002 (Immediate fix):**
+   - Add Step 8.5 (Review & Approval) to CLAUDE.md with AI prompts
+   - Works for solo developer workflows
+   - Document this as the Standard framework approach for solo developers
+
+2. **FEAT-XXX (Future enhancement):**
+   - Add optional work/review/ folder for team workflows
+   - Document when to add review/ folder (team size >= 2)
+   - Update workflow-guide.md with both approaches
+   - Add .limit file to review/ if using folder
+
+**Documentation Updates:**
+
+In workflow-guide.md, add guidance:
+```markdown
+### Review Stage (Team Workflows)
+
+**When to use review/ folder:**
+- Team size: 2+ developers
+- Multiple reviewers needed
+- Physical visibility required for coordination
+
+**How it works:**
+- After implementation, move from doing/ to review/
+- Reviewer(s) examine work item and code changes
+- Approved: Move to done/
+- Changes needed: Move back to doing/
+
+**Solo developers:** Skip review/ folder, use AI Step 8.5 checkpoint instead.
+```
+
+**Decision deferred:** We'll implement Option B now, document Option A for teams, let users choose based on their needs.
+
+---
+
 ## Testing Strategy
 
 ### Test Cases
