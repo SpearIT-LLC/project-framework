@@ -3,7 +3,6 @@
 **ID:** FEAT-NNN (e.g., FEAT-001, FEAT-002)
 **Type:** Feature
 **Version Impact:** MINOR (adds new capability)
-**Target Version:** vX.Y.0 (e.g., v1.2.0)
 **Status:** [Backlog | Todo | Doing | Done | Released]
 **Created:** [YYYY-MM-DD]
 **Completed:** [YYYY-MM-DD or N/A]

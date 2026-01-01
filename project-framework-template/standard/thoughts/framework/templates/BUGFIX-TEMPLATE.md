@@ -3,7 +3,6 @@
 **ID:** BUG-NNN (e.g., BUG-101, BUG-102)
 **Type:** Bugfix
 **Version Impact:** PATCH (backward-compatible fix)
-**Target Version:** vX.Y.Z (e.g., v1.2.1)
 **Status:** [Backlog | Todo | Doing | Done | Released]
 **Severity:** [Critical | High | Medium | Low]
 **Priority:** [P0 | P1 | P2 | P3]

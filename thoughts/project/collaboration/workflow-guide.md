@@ -818,6 +818,91 @@ git commit -m "refactor: Extract validation logic to separate module"
 
 ---
 
+## Versioning & Releases
+
+### Version Calculation (Step 9)
+
+**Purpose:** Calculate the next version number at release time based on current version and work item impact.
+
+**Why calculate at release time?**
+- Prevents stale version metadata in work items
+- PROJECT-STATUS.md is the single source of truth
+- Flexible - release order doesn't matter
+- User confirms version before release
+
+**Version Calculation Formula:**
+
+Given current version and Version Impact from work item:
+
+**PATCH (v2.2.4 → v2.2.5):**
+- Backward-compatible bug fixes
+- Documentation updates
+- Internal refactoring with no API changes
+- **Formula:** Increment patch number only
+- **Example:** v2.2.4 + PATCH = v2.2.5
+
+**MINOR (v2.2.4 → v2.3.0):**
+- New features (backward-compatible)
+- New APIs or capabilities
+- Deprecations (but not removals)
+- **Formula:** Increment minor, reset patch to 0
+- **Example:** v2.2.4 + MINOR = v2.3.0
+
+**MAJOR (v2.2.4 → v3.0.0):**
+- Breaking changes
+- API removals or incompatible changes
+- Major architectural shifts
+- **Formula:** Increment major, reset minor and patch to 0
+- **Example:** v2.2.4 + MAJOR = v3.0.0
+
+**Step 9 Process:**
+
+1. **Read current version from PROJECT-STATUS.md:**
+   ```bash
+   grep "Current Version" PROJECT-STATUS.md
+   # Current Version: v2.2.4 (2026-01-01)
+   ```
+
+2. **Read Version Impact from work item:**
+   ```markdown
+   **Version Impact:** PATCH
+   ```
+
+3. **Calculate next version:**
+   - Current: v2.2.4
+   - Impact: PATCH
+   - Next: v2.2.4 + PATCH = v2.2.5
+
+4. **Present to user for confirmation:**
+   ```
+   Current version v2.2.4 + PATCH impact = v2.2.5. Proceed with release v2.2.5?
+   ```
+
+5. **User confirms or corrects:**
+   - User says "yes" → Proceed with v2.2.5
+   - User says "actually make it MINOR" → Recalculate to v2.3.0
+   - User provides specific version → Use that version
+
+**Edge Cases:**
+
+**Multiple work items in single release:**
+- Use the highest impact (MAJOR > MINOR > PATCH)
+- Example: 2 PATCH + 1 MINOR = MINOR release
+
+**User overrides calculated version:**
+- User preference always wins
+- Document the override reason in commit message
+
+**Pre-release versions:**
+- Follow semver: v2.3.0-beta.1, v2.3.0-rc.1
+- Not covered in this framework (extend as needed)
+
+**Note:** Work item templates no longer include "Target Version" field. This field caused staleness and version authority confusion. Version is always calculated at release time from PROJECT-STATUS.md + Version Impact.
+
+**Related:** See CLAUDE.md Step 9 for concise checklist version.
+
+---
+
 ## Architecture Decision Records (ADRs)
 
 ### When to Create an ADR

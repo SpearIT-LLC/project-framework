@@ -210,15 +210,15 @@ User Request → Backlog → [CHECKPOINT: User Approval] → Todo → Doing → 
 
 **9. Complete & Release** ⚠️ CRITICAL: Atomic Release Process
    - Work is done, tested, AND APPROVED
+   - **Calculate next version:** Read PROJECT-STATUS.md current version + work item Version Impact, calculate next version (PATCH increments patch, MINOR increments minor/resets patch, MAJOR increments major/resets minor+patch), confirm with user before proceeding
    - **STOP - Before committing:** Prepare version updates atomically
 
    **Version Update Steps (do together):**
-   - a. Check version impact from work item metadata (MAJOR/MINOR/PATCH)
-   - b. Calculate new version number from current version
-   - c. Update PROJECT-STATUS.md (version, date, history)
-   - d. Update CHANGELOG.md ([Unreleased] → [vX.Y.Z])
-   - e. Move file: `work/doing/` → `work/done/`
-   - f. Update work item status to "Done" and add completion date
+   - a. Use calculated version from above (confirmed by user)
+   - b. Update PROJECT-STATUS.md (version, date, history)
+   - c. Update CHANGELOG.md ([Unreleased] → [vX.Y.Z])
+   - d. Move file: `work/doing/` → `work/done/`
+   - e. Update work item status to "Done" and add completion date
 
    **Commit & Tag (atomic):**
    - Commit ALL changes together: `git commit -m "Release: vX.Y.Z - Description"`

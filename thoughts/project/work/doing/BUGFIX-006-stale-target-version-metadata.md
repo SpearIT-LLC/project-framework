@@ -3,7 +3,7 @@
 **ID:** BUGFIX-006
 **Type:** Bugfix
 **Version Impact:** PATCH (backward-compatible template/documentation fix)
-**Status:** Todo
+**Status:** Doing
 **Severity:** Medium
 **Priority:** P2
 **Version Found:** v2.2.3
@@ -429,3 +429,56 @@ User identified this issue during BUGFIX-002 release when questioning version au
 
 - 2026-01-01: Bug identified by user during BUGFIX-002 release discussion
 - 2026-01-01: BUGFIX-006 created in backlog
+- 2026-01-01: Moved backlog → todo → doing
+- 2026-01-01: Implementation started
+
+---
+
+## Implementation Notes
+
+**Changes Made:**
+
+1. **Work Item Templates (master docs - updated first):**
+   - FEATURE-TEMPLATE.md: Removed "Target Version" line (was line 6)
+   - BUGFIX-TEMPLATE.md: Removed "Target Version" line (was line 6)
+   - BLOCKER-TEMPLATE.md: No "Target Version" field (already correct)
+   - SPIKE-TEMPLATE.md: No "Target Version" field (already correct)
+
+2. **workflow-guide.md - Versioning & Releases (master - added before CLAUDE.md):**
+   - Lines 821-903: Added comprehensive "Versioning & Releases" section
+   - Includes complete version calculation formula (PATCH/MINOR/MAJOR)
+   - Step-by-step process for Step 9
+   - Edge cases (multiple work items, user overrides, pre-release versions)
+   - Rationale for calculating at release time
+   - Note about removing "Target Version" field
+
+3. **CLAUDE.md Step 9 (derived - updated after workflow-guide.md):**
+   - Line 213: Added "Calculate next version" bullet with brief formula
+   - Updated Version Update Steps to reference calculated version
+   - Concise version that references workflow-guide.md for details
+
+4. **BUGFIX-006 work item:**
+   - Updated with implementation notes (this section)
+
+**Files Modified:**
+- [FEATURE-TEMPLATE.md](../../../project-framework-template/standard/thoughts/framework/templates/FEATURE-TEMPLATE.md) - Removed Target Version field
+- [BUGFIX-TEMPLATE.md](../../../project-framework-template/standard/thoughts/framework/templates/BUGFIX-TEMPLATE.md) - Removed Target Version field
+- [workflow-guide.md](../../collaboration/workflow-guide.md) - Lines 821-903 (83 lines added)
+- [CLAUDE.md](../../../CLAUDE.md) - Line 213, updated Version Update Steps
+- [BUGFIX-006-stale-target-version-metadata.md](BUGFIX-006-stale-target-version-metadata.md) - This file
+
+**Implementation followed universal documentation principle:**
+- ✅ Updated master docs FIRST (templates, workflow-guide.md)
+- ✅ Then updated derived doc (CLAUDE.md)
+- ✅ Information flow: detailed → summary
+
+**Testing Status:**
+- ✅ FEATURE-TEMPLATE.md has no "Target Version" field
+- ✅ BUGFIX-TEMPLATE.md has no "Target Version" field
+- ✅ workflow-guide.md has complete version calculation guidance
+- ✅ CLAUDE.md Step 9 has brief version calculation bullet
+- ✅ No other "Target Version" references in workflow-guide.md
+
+**Next Steps:**
+- Present completed work for user review (Step 8.5)
+- After approval, move to done/ and prepare release
