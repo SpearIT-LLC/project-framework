@@ -285,4 +285,242 @@ During BUGFIX-002 design, three options were considered for the review checkpoin
 
 **Session End Time:** ~13:35 (estimated)
 **Total Session Duration:** ~30 minutes
+
+---
+
+## Afternoon Session - 2026-01-01
+
+**Session Start:** ~14:00 (estimated)
+**Continued Work:** Bug fixes, strategic planning
+
+### Work Completed (Afternoon)
+
+#### Released: v2.2.4 - Pre-Implementation Review Checkpoint
+
+**Work Items:**
+- BUGFIX-005: Missing Pre-Implementation Review Checkpoint
+
+**Problem:** Step 8.5 (post-implementation review) existed, but no pre-implementation review. AI could start implementing with stale context or unresolved design decisions from work item.
+
+**Solution:**
+- Added Step 7.5 (Pre-Implementation Review) to AI Workflow Checkpoint Policy
+- AI now reads complete work item and confirms approach before implementing
+- Updated workflow from 10 steps to 11 steps
+- Three checkpoints: Step 4 (approval), 7.5 (pre-implementation), 8.5 (post-implementation)
+
+**Changes:**
+- CLAUDE.md: Added Step 7.5, updated from "The 10 Steps" to "The 11 Steps"
+- workflow-guide.md: Added 77-line "Pre-Implementation Review (Step 7.5)" section
+- workflow-guide.md: Added 57-line "Documentation Update Order (Universal Principle)" section
+
+**Universal Principle Established:**
+- Always update master documentation BEFORE derived summaries
+- 4 hierarchies: collaboration/* → CLAUDE.md, PROJECT-STATUS.md → README.md, ADRs → implementation docs, Templates → instances
+- Prevents duplication and ensures consistency
+
+**Testing:** Validated Step 7.5 prevents premature implementation
+
+**Released:** v2.2.4 (2026-01-01)
+
+---
+
+#### Released: v2.2.5 - Stale Metadata Removal
+
+**Work Items:**
+- BUGFIX-006: Stale Target Version Metadata in Work Item Templates
+
+**Problem:** Work items had "Target Version" field that became stale when items sat in backlog while other releases incremented version. Created confusion about version authority.
+
+**Solution:**
+- Removed "Target Version" field from FEATURE-TEMPLATE.md and BUGFIX-TEMPLATE.md
+- Version now calculated at release time (Step 9) from PROJECT-STATUS.md + Version Impact
+- Added comprehensive "Versioning & Releases" section to workflow-guide.md (83 lines)
+- Added brief version calculation to CLAUDE.md Step 9
+
+**Version Calculation Process:**
+1. Read PROJECT-STATUS.md current version
+2. Read work item Version Impact (PATCH/MINOR/MAJOR)
+3. Calculate next version: PATCH increments patch, MINOR increments minor/resets patch, MAJOR increments major/resets minor+patch
+4. Confirm with user before proceeding
+
+**Additional Cleanup:**
+- Removed redundant "Workflow Phases Quick Reference" from CLAUDE.md (17 lines)
+- Already detailed in workflow-guide.md, keeping CLAUDE.md lean
+
+**Testing:** Verified version calculation formula works (v2.2.4 + PATCH = v2.2.5)
+
+**Released:** v2.2.5 (2026-01-01)
+
+---
+
+#### Planned: FEAT-025 - Manual Setup Process Validation
+
+**Discovery:** During BUGFIX-006, user questioned whether `thoughts/framework/templates/` path actually exists after framework setup. Revealed critical untested implementation gap.
+
+**Risk Assessment:**
+- HIGH risk - Foundational user experience
+- Never validated end-to-end user journey: "download framework → setup project → working structure"
+- Documentation may reference paths that don't exist after setup
+- NEW-PROJECT-CHECKLIST.md never tested
+- Automation (FEAT-005/006) would be built on broken assumptions
+
+**Decision:**
+- Create FEAT-025: Manual Setup Process Validation
+- Focus on Standard framework only (Minimal/Light deferred to FEAT-026)
+- Block FEAT-005 (ZIP distribution) and FEAT-006 (Setup script) until validation complete
+- Manual validation first, automation second
+
+**Approach:**
+- Create `examples/greeter-standard/` by following NEW-PROJECT-CHECKLIST.md exactly
+- Implement trivial "Greeter" PowerShell app (simple Hello World)
+- Test complete framework workflow (work items, ADRs, session history, template copying)
+- Document every issue found
+- Fix documentation based on findings
+- Unblock automation with confidence
+
+**Open Questions Documented (7):**
+1. File structure - Where do examples live?
+2. Archive strategy - What artifacts persist?
+3. Testing validation - What constitutes "done"?
+4. Scope boundaries - Minimum viable validation?
+5. Issue documentation - How to track findings?
+6. Task Timer vs Greeter - Which dummy app? (decided Greeter)
+7. Greeter simplicity - Focus on framework validation?
+
+**Status:** Moved to work/todo/, ready for Step 7.5 review when user wants to implement
+
+---
+
+### Decisions Made (Afternoon)
+
+#### Decision: Universal Documentation Update Principle
+
+**Context:** During BUGFIX-005, initially updated CLAUDE.md before workflow-guide.md, risking duplication.
+
+**Decision:** Established universal principle - Always update master documentation BEFORE derived summaries.
+
+**Impact:** Prevents duplication, ensures consistency, applies to all documentation hierarchies
+
+---
+
+#### Decision: Remove Target Version Field
+
+**Options Considered:**
+- Auto-update at Step 7 (rejected - extra bookkeeping)
+- Keep as informational (rejected - still confusing)
+- Rename to "Initial Target" (rejected - still stale)
+- Remove and calculate at Step 9 (selected)
+
+**Decision:** Remove "Target Version", calculate at release time.
+
+**Rationale:** Single source of truth (PROJECT-STATUS.md), no stale metadata, just-in-time calculation
+
+---
+
+#### Decision: Focus FEAT-025 on Standard Framework Only
+
+**Context:** User suggested focusing on Standard first, pair down to Minimal/Light later.
+
+**Decision:** FEAT-025 validates Standard only. Create FEAT-026 for Minimal/Light if needed.
+
+**Rationale:** Faster to complete, Standard is what most users will use, de-risks automation sooner, pragmatic approach
+
+---
+
+#### Decision: Use "Greeter" vs "Task Timer"
+
+**Context:** Need trivial dummy app to validate framework without distraction.
+
+**Decision:** Use "Greeter" PowerShell application (Hello World style).
+
+**Rationale:**
+- Simpler than Task Timer (no time tracking/persistence complexity)
+- Expandable (easy to add greetings = easy to create work items)
+- Framework-focused (won't get distracted implementing timer logic)
+
+**Example:** `.\Greet.ps1 -Name "Alice"` → "Hello, Alice!"
+
+---
+
+### Issues Encountered (Afternoon)
+
+#### Path Reference Confusion
+
+**Problem:** Documentation references `thoughts/framework/templates/` but path may not exist after setup.
+
+**Context:**
+- This project doesn't have `thoughts/framework/templates/` (framework development project)
+- Templates in `project-framework-template/standard/thoughts/framework/templates/`
+- After user setup, path SHOULD be `thoughts/framework/templates/`
+
+**Resolution:** Identified as validation gap, addressed by FEAT-025. Documentation likely correct for user projects.
+
+---
+
+#### Template File Location Uncertainty
+
+**Problem:** When removing "Target Version", uncertain where templates were located.
+
+**Solution:** Used `find` command to locate exact paths instead of guessing.
+
+**Pattern Established:**
+- Glob: Location known, want pattern matching
+- Grep: Search content within files
+- Read: Exact path known
+- **find: Locate files by name across uncertain directory structure**
+
+---
+
+### Reflections (Full Day)
+
+#### What Went Well
+
+1. **Complete Review Sandwich:** Added Step 7.5, completing three-checkpoint coverage (Step 4 before, 7.5 before coding, 8.5 after)
+2. **Universal Documentation Principle:** Master-first update pattern prevents duplication
+3. **Version Calculation:** Removing stale metadata, calculating at Step 9 eliminates confusion
+4. **Critical Gap Identification:** User's question revealed untested setup process - highest risk item
+5. **Pragmatic Scoping:** Focusing on Standard only gets validation done faster
+6. **Greeter Simplicity:** Keeps focus on framework validation, not app complexity
+
+#### What Could Be Improved
+
+1. **Documentation Verification:** Should have validated path references earlier
+2. **Setup Process Testing:** Should have tested end-to-end user journey earlier
+3. **Template Location Confusion:** Need better mental model of framework vs user project structure
+
+#### Lessons Learned
+
+1. **Manual Before Automation:** Validate setup manually before building automation
+2. **Version Authority:** Single source of truth + calculated values cleaner than stored derived metadata
+3. **Master-First Documentation:** Prevents duplication, ensures consistency
+4. **Validation Gaps:** Framework can appear complete but have critical untested areas
+5. **Pragmatic Scoping:** Validate what matters most first
+
+---
+
+### Session Metrics (Full Day)
+
+**Releases:** 3 (v2.2.3, v2.2.4, v2.2.5)
+**Work Items Completed:** 3 (BUGFIX-002, BUGFIX-005, BUGFIX-006)
+**Work Items Created:** 1 (FEAT-025)
+**Work Items Moved:** 1 (FEAT-025: backlog → todo)
+
+**Documentation Updated:**
+- CLAUDE.md (Step 7.5, version calculation, removed redundancy)
+- workflow-guide.md (Pre-Implementation Review 77 lines, Universal Doc Principle 57 lines, Versioning & Releases 83 lines)
+- Templates (2 updated - removed Target Version)
+- PROJECT-STATUS.md (3 updates for releases)
+- CHANGELOG.md (3 updates for releases)
+
+**Lines Added:** ~250 lines of documentation and guidance
+
+**Git Commits:** 6 total (2 morning + 4 afternoon)
+**Git Tags:** 3 (v2.2.3, v2.2.4, v2.2.5)
+
+---
+
+**Full Session End:** 2026-01-01 late afternoon
+**Framework Version:** v2.2.5
+**Work Items in Doing:** 0
+**Work Items in Todo:** 2 (FEAT-022, FEAT-025)
 **Next Session:** TBD
