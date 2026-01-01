@@ -990,6 +990,141 @@ Prevents AI from inventing conventions or ignoring project standards.
 - Use work item documentation to track complex tasks
 - Reference existing documentation instead of recreating
 
+#### Pre-Implementation Review (Step 7.5)
+
+**When:** After moving a work item to `work/doing/` and before starting implementation.
+
+**Purpose:** Ensure AI has fresh context, identifies open questions, and confirms approach with user.
+
+**What AI Should Do:**
+
+1. **Read the complete work item document thoroughly**
+   - Not just the summary - read the entire document
+   - Pay special attention to design discussions and alternatives
+   - Don't rely on memory from when the item was created
+
+2. **Scan for open items and unresolved decisions:**
+   - Search for keywords: "TODO", "TBD", "Question:", "Decision needed:", "DECIDE:"
+   - Look for sections: "Design Discussion", "Alternatives Considered", "Open Questions"
+   - Identify Option A/B/C patterns indicating multiple approaches
+   - Check for comments like "User should decide..." or "To be determined..."
+
+3. **Review the implementation approach:**
+   - What files will be created or modified?
+   - What is the core strategy?
+   - Are there dependencies on other work items?
+   - Is the approach still valid given current project state?
+
+4. **Present summary to user:**
+   - Brief description of what the work item accomplishes
+   - List of files that will be affected
+   - Any open questions or decisions needed
+   - Recommendation for addressing open items (if any)
+
+5. **Ask for confirmation before implementing:**
+   - Use the standard question from CLAUDE.md Step 7.5
+   - Wait for user response
+   - Update work item document with any new guidance
+
+**Example Patterns to Detect:**
+
+```markdown
+# In work item - these signal open questions:
+"Option A: ... Option B: ... Option C: ..."
+"TODO: Decide which approach to use"
+"Question: Should we use X or Y?"
+"TBD: Database schema design"
+"User should review alternatives before implementation"
+"DECIDE: Migration strategy"
+```
+
+**What to Present:**
+
+```
+Before I begin implementation, I've reviewed WORK-ITEM-ID. Here's what I understand:
+
+**Approach:** [1-2 sentence summary of implementation strategy]
+
+**Files to modify:**
+- file1.md (add Step 7.5 section)
+- file2.md (update references)
+
+**Open questions:**
+[List any TODO/TBD/Options, or state "None identified"]
+
+[If open questions exist:]
+My recommendation: [Proposed approach with brief rationale]
+
+Do you agree with this approach, or would you like to provide additional guidance before I start?
+```
+
+**Benefits:**
+
+- Catches stale context (work item created weeks ago)
+- Surfaces design decisions that need user input
+- Prevents implementing wrong approach
+- Gives user control over implementation direction
+- Complements Step 8.5 (post-implementation review)
+
+**Related:** See CLAUDE.md Step 7.5 for concise checklist version.
+
+**Documentation Update Order (Universal Principle):**
+
+**Rule:** Always update master documentation BEFORE derived summaries or references.
+
+**Common Documentation Hierarchies:**
+
+1. **collaboration/* → CLAUDE.md**
+   - Master: collaboration/workflow-guide.md, code-quality-standards.md, security-policy.md, etc.
+   - Derived: CLAUDE.md (quick reference summaries)
+
+2. **PROJECT-STATUS.md → README.md**
+   - Master: PROJECT-STATUS.md (single source of truth for version, status)
+   - Derived: README.md (may reference or summarize status)
+
+3. **ADRs → implementation docs**
+   - Master: thoughts/project/research/adr/*.md (decision records)
+   - Derived: Code comments, implementation notes referencing decisions
+
+4. **Templates → instances**
+   - Master: thoughts/framework/templates/*.md (never edit directly)
+   - Derived: Work items, documents created from templates
+
+**Update Sequence:**
+
+1. **Update master documentation FIRST**
+   - Write complete detailed guidance
+   - Include examples, rationale, edge cases
+   - Ensure thorough coverage of the topic
+   - Think through implications fully
+
+2. **Then update derived summaries/references**
+   - Extract essential information from master
+   - Summarize into concise format appropriate for context
+   - Reference master for full details
+   - Ensure consistency with master
+
+**Rationale:**
+- Master is the authoritative source
+- Derived documents are summaries or references
+- Information flows: detailed → summary (not summary → detailed)
+- Thinking through detailed guidance first ensures better summaries
+- If interrupted, at least the authoritative source is updated
+- Prevents master and derived getting out of sync
+- Makes it clear which document has authority when conflicts arise
+
+**Example Application:**
+
+When adding Step 7.5 to the workflow:
+- ✅ CORRECT: Update workflow-guide.md (master) → then CLAUDE.md (summary)
+- ❌ INCORRECT: Update CLAUDE.md → then workflow-guide.md (backwards)
+
+When documenting a security policy:
+- ✅ CORRECT: Update security-policy.md (master) → then CLAUDE.md Core Standards summary
+- ❌ INCORRECT: Update CLAUDE.md → then backfill security-policy.md
+
+**This principle applies universally across all framework documentation.**
+
 #### Proactive Clarification
 
 Ask essential questions upfront:

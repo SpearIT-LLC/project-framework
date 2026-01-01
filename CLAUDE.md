@@ -145,7 +145,7 @@ framework/templates/
 User Request → Backlog → [CHECKPOINT: User Approval] → Todo → Doing → Done → Release
 ```
 
-### The 10 Steps
+### The 11 Steps
 
 **1. User Requests Feature** (e.g., "Add a quick reference guide")
    - ✅ DO: Listen and understand the requirement
@@ -187,8 +187,16 @@ User Request → Backlog → [CHECKPOINT: User Approval] → Todo → Doing → 
    - Move file: `work/todo/` → `work/doing/`
    - Update status in document to "Doing"
 
+**7.5. Pre-Implementation Review** ⚠️ CHECKPOINT
+   - AI reads the complete work item document thoroughly
+   - AI identifies open questions, design decisions, and alternatives
+   - AI summarizes the implementation approach and files to modify
+   - **ASK FOR CONFIRMATION:** "Before I begin implementation, I've reviewed [WORK-ITEM-ID]. The approach is [summary]. [Open questions if any]. Do you agree with this approach?"
+   - User confirms or provides additional guidance
+   - ❌ DON'T: Start implementing without reviewing work item and confirming approach
+
 **8. Implement**
-   - Follow the plan
+   - Follow the plan (as confirmed in Step 7.5)
    - Write code, tests, documentation
    - Keep CHANGELOG notes in work item document
 
@@ -262,18 +270,21 @@ Claude: "Great! Moving FEAT-NNN through the workflow..."
 ❌ Set item status to "Doing" or "Todo" without user approval
 ❌ Implement before moving through the workflow folders
 ❌ Exceed WIP limits
-❌ Skip the approval checkpoints (Step 4 and Step 8.5)
+❌ Skip the approval checkpoints (Step 4, Step 7.5, and Step 8.5)
+❌ Start implementing without reviewing work item and confirming approach
 ❌ Move to done/ without user review and approval
 
 ### Rationale
 
 This policy ensures:
 - User maintains control over priorities and timing (Step 4 approval)
+- AI confirms approach with fresh context before implementing (Step 7.5 review)
 - User reviews all work before release (Step 8.5 approval)
 - Framework workflow is respected (dogfooding our own process)
 - WIP limits prevent context switching
 - Clear audit trail of what was approved
 - Backlog grows naturally without implementation pressure
+- Open questions and design decisions are addressed before implementation
 - No surprises - user sees and approves changes before they're released
 
 **Reference:** [ADR-001: AI Workflow Checkpoint Policy](thoughts/project/research/adr/001-ai-workflow-checkpoint-policy.md)

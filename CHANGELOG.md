@@ -24,6 +24,36 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [2.2.4] - 2026-01-01
+
+### Fixed
+- **BUGFIX-005: Missing Pre-Implementation Review Checkpoint**
+  - Added explicit Step 7.5 (Pre-Implementation Review) checkpoint between moving to doing/ and implementation
+  - AI now reads complete work item, identifies open questions, and confirms approach before implementing
+  - Prevents starting implementation with stale context or unresolved design decisions
+  - Updated workflow from 10 steps to 11 steps
+
+### Added
+- **Pre-Implementation Review Guidance** (workflow-guide.md)
+  - Comprehensive 77-line section on how to perform Step 7.5
+  - Details on identifying open questions (TODO, TBD, Option A/B/C patterns)
+  - Standard presentation format for confirming approach with user
+  - Complements Step 8.5 (post-implementation review) for complete coverage
+- **Universal Documentation Update Principle** (workflow-guide.md)
+  - Establishes rule: Always update master documentation BEFORE derived summaries
+  - Documents 4 common hierarchies: collaboration/* → CLAUDE.md, PROJECT-STATUS.md → README.md, ADRs → implementation docs, Templates → instances
+  - Provides concrete examples and rationale
+  - Applies universally across all framework documentation
+
+### Changed
+- CLAUDE.md: AI Workflow Checkpoint Policy updated with Step 7.5
+- CLAUDE.md: "What NOT to Do" section now references all three checkpoints (Step 4, 7.5, 8.5)
+- CLAUDE.md: "Rationale" section includes Step 7.5 benefits
+- Step 8 now references "(as confirmed in Step 7.5)"
+- Workflow now has three checkpoints providing complete coverage: before implementation (Step 4), before coding (Step 7.5), before release (Step 8.5)
+
+---
+
 ## [2.2.3] - 2026-01-01
 
 ### Fixed

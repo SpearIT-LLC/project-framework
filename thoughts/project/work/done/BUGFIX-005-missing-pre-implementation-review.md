@@ -4,13 +4,13 @@
 **Type:** Bugfix
 **Version Impact:** PATCH (backward-compatible documentation fix)
 **Target Version:** v2.2.4
-**Status:** Backlog
+**Status:** Done
 **Severity:** Medium
 **Priority:** P2
 **Version Found:** v2.2.3
-**Version Fixed:** N/A
+**Version Fixed:** v2.2.4
 **Created:** 2026-01-01
-**Fixed:** N/A
+**Fixed:** 2026-01-01
 **Developer:** Claude & User
 
 ---
@@ -449,3 +449,74 @@ Investigation revealed:
 ## Changelog
 
 - 2026-01-01: Bug discovered during BUGFIX-002 implementation, backlog item created
+- 2026-01-01: Moved backlog → todo → doing
+- 2026-01-01: Implementation started
+
+---
+
+## Implementation Notes
+
+**Changes Made:**
+
+1. **CLAUDE.md - AI Workflow Checkpoint Policy:**
+   - Line 148: Changed "The 10 Steps" to "The 11 Steps"
+   - Lines 190-196: Added Step 7.5 (Pre-Implementation Review) checkpoint between Step 7 and Step 8
+   - Line 199: Updated Step 8 to reference "(as confirmed in Step 7.5)"
+   - Line 273: Updated "What NOT to Do" to include Step 7.5 in checkpoint list
+   - Line 274: Added "Start implementing without reviewing work item and confirming approach"
+   - Lines 281, 287: Updated "Rationale" section with Step 7.5 benefits
+
+2. **workflow-guide.md - Collaboration Practices:**
+   - Lines 993-1069: Added comprehensive "Pre-Implementation Review (Step 7.5)" section
+   - Includes: When, Purpose, What AI Should Do (5 steps), Example Patterns, What to Present, Benefits
+   - Provides detailed guidance on identifying open questions and design decisions
+
+3. **BUGFIX-005 work item:**
+   - Updated with implementation notes (this section)
+
+**Files Modified:**
+- [CLAUDE.md](../../../CLAUDE.md) - Lines 148, 190-196, 199, 273-274, 281, 287
+- [workflow-guide.md](../../collaboration/workflow-guide.md) - Lines 993-1069 (77 lines added)
+- [BUGFIX-005-missing-pre-implementation-review.md](BUGFIX-005-missing-pre-implementation-review.md) - This file
+
+**Testing Status:**
+- ✅ Step 7.5 is clearly visible in CLAUDE.md
+- ✅ Checkpoint warning (⚠️ CHECKPOINT) is present
+- ✅ Explicit confirmation question is documented
+- ✅ "DON'T start implementing without review" is clearly stated
+- ✅ Rationale section updated with Step 7.5 benefits
+- ✅ Detailed guidance added to workflow-guide.md
+- ✅ "What NOT to Do" section includes Step 7.5
+
+**Validation:**
+This implementation was validated by following Step 7.5 itself:
+1. AI performed pre-implementation review of BUGFIX-005
+2. AI identified no open questions (approach was clear)
+3. AI presented summary and confirmed approach with user
+4. User approved: "yes"
+5. AI proceeded with implementation
+
+**Post-Implementation Addition (Step 8.5 feedback):**
+
+During Step 8.5 review, user identified that the implementation sequence was suboptimal:
+- Original sequence: Updated CLAUDE.md first, then workflow-guide.md
+- Better sequence: Update workflow-guide.md (master) first, then CLAUDE.md (summary)
+
+User requested making this a universal principle, not just for workflow-guide.md.
+
+**Additional change made:**
+- Lines 1071-1127: Added "Documentation Update Order (Universal Principle)" section to workflow-guide.md
+- Establishes universal rule: Always update master documentation BEFORE derived summaries
+- Documents 4 common hierarchies: collaboration/* → CLAUDE.md, PROJECT-STATUS.md → README.md, ADRs → implementation docs, Templates → instances
+- Provides examples and rationale
+- Information flow principle: detailed → summary (not summary → detailed)
+
+This demonstrates Step 8.5 working correctly:
+1. User reviewed work
+2. User requested improvement
+3. AI made change
+4. AI presents updated work for approval
+
+**Next Steps:**
+- Present updated work for user review (Step 8.5, round 2)
+- After approval, move to done/ and prepare release
