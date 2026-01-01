@@ -145,7 +145,7 @@ framework/templates/
 User Request → Backlog → [CHECKPOINT: User Approval] → Todo → Doing → Done → Release
 ```
 
-### The 9 Steps
+### The 10 Steps
 
 **1. User Requests Feature** (e.g., "Add a quick reference guide")
    - ✅ DO: Listen and understand the requirement
@@ -192,8 +192,16 @@ User Request → Backlog → [CHECKPOINT: User Approval] → Todo → Doing → 
    - Write code, tests, documentation
    - Keep CHANGELOG notes in work item document
 
+**8.5. Review & Approval** ⚠️ CHECKPOINT
+   - AI presents completed work for user review
+   - Summarize changes made (files created/modified)
+   - Present testing results
+   - **ASK FOR EXPLICIT APPROVAL:** "The work is complete and ready for review. Would you like to review the changes before I move to done/ and proceed with release?"
+   - User reviews and approves/requests changes
+   - ❌ DON'T: Move to done/ without approval
+
 **9. Complete & Release** ⚠️ CRITICAL: Atomic Release Process
-   - Work is done and tested
+   - Work is done, tested, AND APPROVED
    - **STOP - Before committing:** Prepare version updates atomically
 
    **Version Update Steps (do together):**
@@ -254,16 +262,19 @@ Claude: "Great! Moving FEAT-NNN through the workflow..."
 ❌ Set item status to "Doing" or "Todo" without user approval
 ❌ Implement before moving through the workflow folders
 ❌ Exceed WIP limits
-❌ Skip the approval checkpoint
+❌ Skip the approval checkpoints (Step 4 and Step 8.5)
+❌ Move to done/ without user review and approval
 
 ### Rationale
 
 This policy ensures:
-- User maintains control over priorities and timing
+- User maintains control over priorities and timing (Step 4 approval)
+- User reviews all work before release (Step 8.5 approval)
 - Framework workflow is respected (dogfooding our own process)
 - WIP limits prevent context switching
 - Clear audit trail of what was approved
 - Backlog grows naturally without implementation pressure
+- No surprises - user sees and approves changes before they're released
 
 **Reference:** [ADR-001: AI Workflow Checkpoint Policy](thoughts/project/research/adr/001-ai-workflow-checkpoint-policy.md)
 

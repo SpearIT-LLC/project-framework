@@ -1,8 +1,8 @@
 # SpearIT Project Framework - Project Status
 
-**Last Updated:** 2025-12-31
+**Last Updated:** 2026-01-01
 **Updated By:** Gary Elliott with Claude Code
-**Current Version:** v2.2.2 (2025-12-31)
+**Current Version:** v2.2.3 (2026-01-01)
 **Core Implementation:** Complete and production-ready
 **Ongoing Enhancements:** Comprehensive Claude Code permissions configured, .gitignore added for security
 
@@ -18,15 +18,15 @@ The SpearIT Project Framework is a comprehensive project management framework te
 
 ## Version Information
 
-### Current Release: v2.2.2 (2025-12-31)
+### Current Release: v2.2.3 (2026-01-01)
 
 **Status:** Stable - Production Ready
 
 **Latest Changes:**
-- ✨ Added comprehensive Claude Code permission configuration (FEAT-023)
-- 🔒 Created .gitignore for sensitive files (env, secrets, credentials)
-- 📝 Added Claude Code Permissions section to CLAUDE.md
-- 📝 Configured non-destructive operations without approval prompts
+- 🐛 Added Step 8.5 (Review & Approval) checkpoint to AI Workflow Checkpoint Policy (BUGFIX-002)
+- 📝 AI now presents completed work for user review before moving to done/
+- 📝 Updated workflow from 9 steps to 10 steps
+- 📝 Prevents premature release of work without user approval
 
 **Core Features:**
 - ✅ Multi-level framework system (Minimal/Light/Standard/Enterprise) - Complete
@@ -282,6 +282,7 @@ See [roadmap.md](thoughts/project/planning/roadmap.md) for complete roadmap.
 
 | Version | Release Date | Type | Highlights |
 |---------|--------------|------|------------|
+| v2.2.3 | 2026-01-01 | Patch | Added Step 8.5 review checkpoint, AI presents work for approval before release |
 | v2.2.2 | 2025-12-31 | Patch | Claude Code permissions config, .gitignore for security, non-destructive ops enabled |
 | v2.2.1 | 2025-12-31 | Patch | Fixed work item numbering collision risk, added numbering documentation |
 | v2.2.0 | 2025-12-29 | Minor | Test type taxonomy (ADR-002), testing plan template, AI Reading Protocol enhancements |

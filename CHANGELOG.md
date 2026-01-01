@@ -24,6 +24,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [2.2.3] - 2026-01-01
+
+### Fixed
+- **BUGFIX-002: Missing Review Step in AI Workflow Checkpoint Policy**
+  - Added explicit Step 8.5 (Review & Approval) checkpoint between implementation and release
+  - AI now presents completed work for user review before moving to done/
+  - Prevents premature release of work without user approval
+  - Updated workflow from 9 steps to 10 steps
+
+### Changed
+- CLAUDE.md: AI Workflow Checkpoint Policy updated with Step 8.5
+- Step 9 now requires work to be "done, tested, AND APPROVED"
+- Updated "What NOT to Do" section to reference both approval checkpoints (Step 4 and Step 8.5)
+- Updated "Rationale" section to include review checkpoint benefits
+
+---
+
 ## [2.2.2] - 2025-12-31
 
 ### Added
