@@ -24,6 +24,32 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [2.2.5] - 2026-01-01
+
+### Fixed
+- **BUGFIX-006: Stale Target Version Metadata in Work Item Templates**
+  - Removed "Target Version" field from work item templates (FEATURE-TEMPLATE.md, BUGFIX-TEMPLATE.md)
+  - Field became stale when items sat in backlog while other releases incremented version
+  - Version now calculated at release time (Step 9) from PROJECT-STATUS.md + Version Impact
+  - Eliminates confusion about version authority and stale metadata
+
+### Added
+- **Versioning & Releases Section** (workflow-guide.md lines 821-903)
+  - Comprehensive 83-line section documenting version calculation process
+  - Explicit formulas for PATCH, MINOR, MAJOR version increments
+  - Step 9 version calculation process with 5 steps
+  - Edge cases: multiple work items, user overrides, pre-release versions
+  - Rationale for calculating at release time vs storing target version
+
+### Changed
+- **CLAUDE.md Step 9**: Added brief version calculation bullet
+  - "Calculate next version: Read PROJECT-STATUS.md current version + work item Version Impact, calculate next version (PATCH increments patch, MINOR increments minor/resets patch, MAJOR increments major/resets minor+patch), confirm with user before proceeding"
+- **CLAUDE.md Streamlined**: Removed redundant "Workflow Phases Quick Reference" section (17 lines)
+  - Already detailed in workflow-guide.md "Development Workflow Phases" section
+  - Keeps CLAUDE.md lean while maintaining functionality
+
+---
+
 ## [2.2.4] - 2026-01-01
 
 ### Fixed

@@ -2,9 +2,9 @@
 
 **Last Updated:** 2026-01-01
 **Updated By:** Gary Elliott with Claude Code
-**Current Version:** v2.2.4 (2026-01-01)
+**Current Version:** v2.2.5 (2026-01-01)
 **Core Implementation:** Complete and production-ready
-**Ongoing Enhancements:** Pre-implementation review checkpoint (Step 7.5) added, universal documentation update principle established
+**Ongoing Enhancements:** Version calculation at release time (Step 9), stale metadata removed from templates
 
 ---
 
@@ -18,16 +18,16 @@ The SpearIT Project Framework is a comprehensive project management framework te
 
 ## Version Information
 
-### Current Release: v2.2.4 (2026-01-01)
+### Current Release: v2.2.5 (2026-01-01)
 
 **Status:** Stable - Production Ready
 
 **Latest Changes:**
-- 🐛 Added Step 7.5 (Pre-Implementation Review) checkpoint to AI Workflow Checkpoint Policy (BUGFIX-005)
-- 📝 AI now reviews work items and confirms approach before implementing
-- 📝 Updated workflow from 10 steps to 11 steps with three checkpoints (Step 4, 7.5, 8.5)
-- 📝 Added universal documentation update principle: Master BEFORE derived
-- 📝 Prevents implementing wrong approach or missing open questions
+- 🐛 Removed stale "Target Version" field from work item templates (BUGFIX-006)
+- 📝 Version now calculated at release time (Step 9) from PROJECT-STATUS.md + Version Impact
+- 📝 Added comprehensive "Versioning & Releases" section to workflow-guide.md
+- 📝 Eliminates version authority confusion and stale metadata
+- 📝 Streamlined CLAUDE.md by removing redundant Workflow Phases Quick Reference
 
 **Core Features:**
 - ✅ Multi-level framework system (Minimal/Light/Standard/Enterprise) - Complete
@@ -283,6 +283,7 @@ See [roadmap.md](thoughts/project/planning/roadmap.md) for complete roadmap.
 
 | Version | Release Date | Type | Highlights |
 |---------|--------------|------|------------|
+| v2.2.5 | 2026-01-01 | Patch | Removed stale Target Version field, added version calculation at release time |
 | v2.2.4 | 2026-01-01 | Patch | Added Step 7.5 pre-implementation review, universal documentation update principle |
 | v2.2.3 | 2026-01-01 | Patch | Added Step 8.5 review checkpoint, AI presents work for approval before release |
 | v2.2.2 | 2025-12-31 | Patch | Claude Code permissions config, .gitignore for security, non-destructive ops enabled |

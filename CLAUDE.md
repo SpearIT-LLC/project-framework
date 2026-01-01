@@ -495,26 +495,6 @@ Which template?
 
 ---
 
-## Workflow Phases Quick Reference
-
-All projects follow this core workflow:
-
-1. **Research/Explore** - Validate the problem and solution space
-2. **Define** - Establish project boundaries and success criteria
-3. **Plan** - Design the implementation approach
-4. **Code** - Implement incrementally (respect WIP limits)
-5. **Commit/Release** - Ship the value (atomic releases)
-
-**Key Principles:**
-- **For complex tasks, output a clear plan first**
-- Research → Define → Plan → Code → Release
-- **User Approval:** Pause for confirmation after major design decisions
-- **Error Recovery:** Backtrack and rethink rather than persisting with broken approach
-
-**Full Details:** [collaboration/workflow-guide.md](thoughts/project/collaboration/workflow-guide.md#development-workflow-phases)
-
----
-
 ## Working with Claude (Collaboration Tips)
 
 ### Mode Clarity

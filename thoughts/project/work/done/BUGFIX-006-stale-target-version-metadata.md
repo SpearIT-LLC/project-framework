@@ -3,13 +3,13 @@
 **ID:** BUGFIX-006
 **Type:** Bugfix
 **Version Impact:** PATCH (backward-compatible template/documentation fix)
-**Status:** Doing
+**Status:** Done
 **Severity:** Medium
 **Priority:** P2
 **Version Found:** v2.2.3
-**Version Fixed:** N/A
+**Version Fixed:** v2.2.5
 **Created:** 2026-01-01
-**Fixed:** N/A
+**Fixed:** 2026-01-01
 **Developer:** Claude & User
 
 ---
@@ -452,10 +452,11 @@ User identified this issue during BUGFIX-002 release when questioning version au
    - Rationale for calculating at release time
    - Note about removing "Target Version" field
 
-3. **CLAUDE.md Step 9 (derived - updated after workflow-guide.md):**
-   - Line 213: Added "Calculate next version" bullet with brief formula
+3. **CLAUDE.md (derived - updated after workflow-guide.md):**
+   - Line 213: Added "Calculate next version" bullet to Step 9 with brief formula
    - Updated Version Update Steps to reference calculated version
-   - Concise version that references workflow-guide.md for details
+   - Removed redundant "Workflow Phases Quick Reference" section (lines 498-514)
+   - Rationale: Already detailed in workflow-guide.md "Development Workflow Phases", keeps CLAUDE.md lean
 
 4. **BUGFIX-006 work item:**
    - Updated with implementation notes (this section)
@@ -477,6 +478,7 @@ User identified this issue during BUGFIX-002 release when questioning version au
 - ✅ BUGFIX-TEMPLATE.md has no "Target Version" field
 - ✅ workflow-guide.md has complete version calculation guidance
 - ✅ CLAUDE.md Step 9 has brief version calculation bullet
+- ✅ CLAUDE.md "Workflow Phases Quick Reference" removed (redundant with workflow-guide.md)
 - ✅ No other "Target Version" references in workflow-guide.md
 
 **Next Steps:**
