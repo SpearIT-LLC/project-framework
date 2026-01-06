@@ -1,6 +1,8 @@
-# SpearIT Project Framework - Quick Reference
+# SpearIT Project Framework - Quick Start
 
-**Version:** 2.1.0 | **Last Updated:** 2025-12-20 | **Need Details?** See [README.md](README.md)
+**Version:** 2.2.x | **Last Updated:** 2026-01-06 | **Need Details?** See [README.md](README.md)
+
+**See It In Action:** Check out [project-hello-world/](project-hello-world/) for a complete working example.
 
 ---
 
@@ -60,17 +62,14 @@ cp -r /path/to/framework/project-framework-template/standard/.gitignore .
 4. Code and update CHANGELOG.md as you go
 
 ### Standard
-1. Complete research phase:
-   - `thoughts/project/research/problem-statement.md`
-   - `thoughts/project/research/landscape-analysis.md`
-   - `thoughts/project/research/feasibility.md`
-   - `thoughts/project/research/project-justification.md`
-2. Define project in `thoughts/project/reference/project-definition.md`
-3. Plan features in `thoughts/project/planning/backlog/`
-4. Move features to `work/todo/` → `work/doing/` → `work/done/`
-5. Update CHANGELOG.md and PROJECT-STATUS.md for releases
+1. Review the example: [project-hello-world/](project-hello-world/)
+2. Complete research phase (use templates from `framework/templates/research/`)
+3. Define project in `thoughts/reference/project-definition.md`
+4. Plan features in `thoughts/work/backlog/`
+5. Move features to `work/todo/` → `work/doing/` → `work/done/`
+6. Update CHANGELOG.md and PROJECT-STATUS.md for releases
 
-**Detailed Workflow:** [kanban-workflow.md](project-framework-template/standard/thoughts/framework/process/kanban-workflow.md)
+**Detailed Workflow:** See framework documentation in [framework/process/](framework/process/)
 
 ---
 
@@ -78,32 +77,28 @@ cp -r /path/to/framework/project-framework-template/standard/.gitignore .
 
 ### Start New Feature (Standard)
 ```bash
-# Copy template
-cp thoughts/framework/templates/FEATURE-TEMPLATE.md \
-   thoughts/project/planning/backlog/feature-NNN-name.md
+# Copy template from framework
+cp framework/templates/work-items/FEAT-NNN-template.md \
+   thoughts/work/backlog/FEAT-NNN-name.md
 # Edit feature file
 # Move to work/todo/ when ready to plan
-# Move to work/doing/ when ready to implement (max 1-2 in doing/)
+# Move to work/doing/ when ready to implement (max 1 in doing/)
 ```
 
 ### Fix a Bug (Standard)
 ```bash
-# Copy template
-cp thoughts/framework/templates/BUGFIX-TEMPLATE.md \
-   thoughts/project/work/doing/bugfix-NNN-name.md
+# Copy template from framework
+cp framework/templates/work-items/BUG-NNN-template.md \
+   thoughts/work/backlog/BUG-NNN-name.md
 # Document bug, implement fix, test
-# Move to work/done/ when complete
+# Move through workflow: backlog → todo → doing → done
 ```
 
 ### Make Architectural Decision (Standard)
 ```bash
-# For major decisions (affects 3+ files, hard to change)
-cp thoughts/framework/templates/ADR-MAJOR-TEMPLATE.md \
-   thoughts/project/research/adr/NNN-decision-name.md
-
-# For minor decisions (1-2 files, easy to change)
-cp thoughts/framework/templates/ADR-MINOR-TEMPLATE.md \
-   thoughts/project/research/adr/NNN-decision-name.md
+# Use ADR template from framework
+cp framework/templates/decisions/ADR-NNNN-template.md \
+   thoughts/research/adr/ADR-NNNN-decision-name.md
 ```
 
 ### Create Release (Light/Standard)
@@ -121,9 +116,9 @@ git push origin main --tags
 
 ### End of Day (Standard)
 ```bash
-# Create session history
-cp thoughts/framework/templates/SESSION-HISTORY-TEMPLATE.md \
-   thoughts/project/history/YYYY-MM-DD-SESSION-HISTORY.md
+# Create session history from framework template
+cp framework/templates/documentation/session-history-template.md \
+   thoughts/history/sessions/YYYY-MM-DD-session-N.md
 # Document what you did, decisions made, blockers
 ```
 
@@ -165,11 +160,12 @@ cp thoughts/framework/templates/SESSION-HISTORY-TEMPLATE.md \
 | What You Need | Document | Time to Read |
 |--------------|----------|--------------|
 | Full overview | [README.md](README.md) | 10 min |
+| Working example | [project-hello-world/](project-hello-world/) | 5 min |
 | Choose framework level | [README-TEMPLATE-SELECTION.md](project-framework-template/README-TEMPLATE-SELECTION.md) | 5 min |
 | Setup instructions | [NEW-PROJECT-CHECKLIST.md](project-framework-template/NEW-PROJECT-CHECKLIST.md) | 15 min |
-| Current version/status | [PROJECT-STATUS.md](PROJECT-STATUS.md) | 2 min |
-| Change history | [CHANGELOG.md](CHANGELOG.md) | 5 min |
-| All documentation | [INDEX.md](INDEX.md) | 3 min |
+| Current version/status | [framework/PROJECT-STATUS.md](framework/PROJECT-STATUS.md) | 2 min |
+| Change history | [framework/CHANGELOG.md](framework/CHANGELOG.md) | 5 min |
+| All documentation | [framework/INDEX.md](framework/INDEX.md) | 3 min |
 | Upgrade/downgrade | [UPGRADE-PATH.md](project-framework-template/UPGRADE-PATH.md) | 10 min |
 | File structure | [STRUCTURE.md](project-framework-template/STRUCTURE.md) | 5 min |
 
@@ -179,20 +175,19 @@ cp thoughts/framework/templates/SESSION-HISTORY-TEMPLATE.md \
 
 | Template | Use When | Location |
 |----------|----------|----------|
-| FEATURE-TEMPLATE | Planning new capability | `thoughts/framework/templates/` |
-| BUGFIX-TEMPLATE | Fixing a bug | `thoughts/framework/templates/` |
-| BLOCKER-TEMPLATE | Stuck on something | `thoughts/framework/templates/` |
-| SPIKE-TEMPLATE | Need to research/investigate | `thoughts/framework/templates/` |
-| ADR-MAJOR-TEMPLATE | Big architectural decision | `thoughts/framework/templates/` |
-| ADR-MINOR-TEMPLATE | Small technical decision | `thoughts/framework/templates/` |
-| SESSION-HISTORY-TEMPLATE | End of coding day | `thoughts/framework/templates/` |
+| FEAT-NNN | Planning new feature | `framework/templates/work-items/` |
+| BUG-NNN | Fixing a bug | `framework/templates/work-items/` |
+| TECH-NNN | Technical improvement | `framework/templates/work-items/` |
+| SPIKE-NNN | Research/investigation | `framework/templates/work-items/` |
+| ADR-NNNN | Architectural decision | `framework/templates/decisions/` |
+| Session history | End of coding day | `framework/templates/documentation/` |
 
-**Research Phase Templates:**
-- PROBLEM-STATEMENT-TEMPLATE - What problem are we solving?
-- LANDSCAPE-ANALYSIS-TEMPLATE - What solutions exist?
-- FEASIBILITY-TEMPLATE - Can/should we build this?
-- PROJECT-JUSTIFICATION-TEMPLATE - BUILD/BUY/ADAPT/ABANDON decision
-- PROJECT-DEFINITION-TEMPLATE - What exactly are we building?
+**Research Phase Templates** (in `framework/templates/research/`):
+- Problem statement - What problem are we solving?
+- Landscape analysis - What solutions exist?
+- Feasibility assessment - Can/should we build this?
+- Project justification - BUILD/BUY/ADAPT/ABANDON decision
+- Project definition - What exactly are we building?
 
 ---
 
@@ -204,23 +199,24 @@ NEW PROJECT:
   │         │        │       │       │
   │         │        │       │       └─ Update CHANGELOG + PROJECT-STATUS
   │         │        │       └───────── Implement in work/doing/
-  │         │        └───────────────── Break into features in planning/backlog/
+  │         │        └───────────────── Break into features in work/backlog/
   │         └────────────────────────── Write project-definition.md
-  └──────────────────────────────────── Complete 5 research templates
+  └──────────────────────────────────── Complete research templates
 
 DAILY WORK:
-  work/todo/ → work/doing/ (max 2) → work/done/ → history/releases/
+  work/backlog/ → work/todo/ → work/doing/ (max 1) → work/done/ → history/releases/
 
-  At end of day: Document in history/YYYY-MM-DD-SESSION-HISTORY.md
+  At end of day: Document in history/sessions/YYYY-MM-DD-session-N.md
 ```
 
 ---
 
 ## 10. Getting Help
 
+- **See working example:** [project-hello-world/](project-hello-world/)
 - **Framework structure questions:** [STRUCTURE.md](project-framework-template/STRUCTURE.md)
-- **Workflow questions:** [kanban-workflow.md](project-framework-template/standard/thoughts/framework/process/kanban-workflow.md)
-- **Complete doc index:** [INDEX.md](INDEX.md)
+- **Workflow questions:** [framework/process/](framework/process/)
+- **Complete doc index:** [framework/INDEX.md](framework/INDEX.md)
 - **Maintainer:** gary.elliott@spearit.solutions
 
 ---

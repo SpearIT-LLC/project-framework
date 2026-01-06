@@ -1,7 +1,7 @@
 # SpearIT Project Framework
 
-**Current Version & Status:** See [PROJECT-STATUS.md](PROJECT-STATUS.md)
-**Last Updated:** 2025-12-19
+**Current Version & Status:** See [framework/PROJECT-STATUS.md](framework/PROJECT-STATUS.md)
+**Last Updated:** 2026-01-06
 **Maintainer:** Gary Elliott (gary.elliott@spearit.solutions)
 **Organization:** SpearIT, LLC
 
@@ -11,13 +11,20 @@
 
 The **SpearIT Project Framework** is a comprehensive, multi-level project management framework designed to bring structure, consistency, and AI integration to software projects of any size.
 
+This repository is organized as a monorepo containing:
+- **framework/** - The Standard Project Framework implementation and documentation
+- **project-hello-world/** - Reference implementation demonstrating framework usage
+- **project-framework-template/** - Template packages for new projects (Minimal, Light, Standard levels)
+
 **Key Innovation:** This framework scales from single scripts to enterprise systems using a 3-dimension classification system that selects the appropriate framework level (Minimal, Light, Standard, or Enterprise) based on your project's scope, lifespan, and team size.
 
 ---
 
 ## Quick Start
 
-**Want the fastest path?** See [QUICK-REFERENCE.md](QUICK-REFERENCE.md) for a bare-bones, get-functional guide. ⚡
+**Want the fastest path?** See [QUICK-START.md](QUICK-START.md) for a bare-bones, get-functional guide. ⚡
+
+**See the framework in action:** Check out [project-hello-world/](project-hello-world/) for a complete reference implementation.
 
 ### For New Projects
 
@@ -119,11 +126,14 @@ Clear migration guides for moving between framework levels as your project evolv
 ### Core Documentation
 - **[README-TEMPLATE-SELECTION.md](project-framework-template/README-TEMPLATE-SELECTION.md)** - Choose your framework level ⭐
 - **[NEW-PROJECT-CHECKLIST.md](project-framework-template/NEW-PROJECT-CHECKLIST.md)** - Setup instructions ⭐
-- **[PROJECT-STATUS.md](PROJECT-STATUS.md)** - Current version and status
-- **[CHANGELOG.md](CHANGELOG.md)** - Version history
-- **[INDEX.md](INDEX.md)** - Complete documentation index
+- **[framework/PROJECT-STATUS.md](framework/PROJECT-STATUS.md)** - Current version and status
+- **[framework/CHANGELOG.md](framework/CHANGELOG.md)** - Version history
+- **[framework/INDEX.md](framework/INDEX.md)** - Complete documentation index
 - [UPGRADE-PATH.md](project-framework-template/UPGRADE-PATH.md) - Migration between levels
 - [STRUCTURE.md](project-framework-template/STRUCTURE.md) - Template structure reference
+
+### Reference Implementation
+- **[project-hello-world/](project-hello-world/)** - Complete working example of Standard framework
 
 ### Template Package
 - [project-framework-template/](project-framework-template/) - Complete template package
@@ -182,10 +192,10 @@ Depth varies by framework level.
 
 ## Project Status
 
-**Current Version:** v2.0.0 (2025-12-19)
+**Current Version:** v2.2.x (2026-01-06)
 **Status:** Production-ready for internal use
 
-See [PROJECT-STATUS.md](PROJECT-STATUS.md) for detailed status.
+See [framework/PROJECT-STATUS.md](framework/PROJECT-STATUS.md) for detailed status.
 
 ### What's Complete
 - ✅ Multi-level framework system (Minimal/Light/Standard/Enterprise)
@@ -201,7 +211,7 @@ See [PROJECT-STATUS.md](PROJECT-STATUS.md) for detailed status.
 - 📋 Validation script
 - 📋 Visual diagrams
 
-See [CHANGELOG.md](CHANGELOG.md) for version history.
+See [framework/CHANGELOG.md](framework/CHANGELOG.md) for version history.
 
 ---
 
@@ -279,7 +289,7 @@ cd project-framework/project-framework-template
 
 **Template Versions:** Inherit framework version unless independently versioned
 
-See [Version Strategy Documentation](thoughts/project/reference/version-strategy.md) *(planned)* for details.
+See [Version Strategy Documentation](framework/thoughts/reference/version-strategy.md) *(planned)* for details.
 
 ---
 
@@ -308,7 +318,7 @@ See [LICENSE](LICENSE) file for details.
 2. **Example** - Real-world example of framework usage
 3. **Improvement** - Surfaces pain points and areas for enhancement
 
-Check [thoughts/project/](thoughts/project/) to see the framework in action on itself.
+Check [framework/thoughts/](framework/thoughts/) to see the framework in action on itself, or [project-hello-world/](project-hello-world/) for a simpler reference implementation.
 
 ---
 
@@ -316,7 +326,7 @@ Check [thoughts/project/](thoughts/project/) to see the framework in action on i
 
 **Maintainer:** Gary Elliott (gary.elliott@spearit.solutions)
 **Organization:** SpearIT, LLC
-**Documentation:** See [INDEX.md](INDEX.md) for complete doc navigation
+**Documentation:** See [framework/INDEX.md](framework/INDEX.md) for complete doc navigation
 
 ---
 
