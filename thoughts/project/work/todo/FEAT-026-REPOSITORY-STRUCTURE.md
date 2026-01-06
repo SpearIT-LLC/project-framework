@@ -5,7 +5,7 @@
 **Last Updated:** 2026-01-06
 **Purpose:** Definitive reference for project-framework repository root structure
 **Location (after migration):** `framework/docs/REPOSITORY-STRUCTURE.md`
-**Location (current):** `thoughts/project/planning/backlog/REPOSITORY-STRUCTURE.md` (migration planning)
+**Location (current):** `thoughts/project/work/todo/FEAT-026-REPOSITORY-STRUCTURE.md` (drops prefix at final location)
 
 ---
 

@@ -562,9 +562,9 @@ framework/docs/
 
 **Current location (pre-migration):**
 ```
-thoughts/project/planning/backlog/
-├── REPOSITORY-STRUCTURE.md          ← Created here for migration planning
-├── PROJECT-STRUCTURE-STANDARD.md    ← Created here for migration planning
+thoughts/project/work/todo/
+├── FEAT-026-REPOSITORY-STRUCTURE.md          ← Migration planning (drops prefix at final location)
+├── FEAT-026-PROJECT-STRUCTURE-STANDARD.md    ← Migration planning (drops prefix at final location)
 ```
 
 **Cross-references:**
