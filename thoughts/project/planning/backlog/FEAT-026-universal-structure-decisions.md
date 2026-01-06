@@ -1,7 +1,7 @@
 # Universal Standard Framework Structure - Decisions Log
 
-**Date:** 2026-01-04 (Session 1), 2026-01-05 (Session 2)
-**Status:** In Progress - Folder Structure Agreed, Additional Decisions Added
+**Date:** 2026-01-04 (Session 1), 2026-01-05 (Session 2), 2026-01-06 (Session 3)
+**Status:** In Progress - Structure Definition Complete, Minor Additions
 **Related:** FEAT-026-structure-migration.md
 
 ---
@@ -363,6 +363,7 @@ project-framework/
 project-framework/                    # REPOSITORY (not a project)
 ├── README.md                         # Repo overview
 ├── QUICK-START.md                    # Fast navigation guide
+├── CLAUDE.md                         # AI navigation hub
 ├── LICENSE                           # Repo-wide license
 ├── .gitignore                        # Repo-wide git ignores
 ├── CONTRIBUTING.md                   # OPTIONAL
@@ -384,11 +385,11 @@ project-framework/                    # REPOSITORY (not a project)
 **Root files (REQUIRED):**
 - README.md - Overview of repo (describes both projects)
 - QUICK-START.md - Fast path to using the repo
+- CLAUDE.md - AI navigation hub (points to project-specific CLAUDE.md files)
 - LICENSE - Legal (applies to all)
 - .gitignore - Repo-level
 
 **Root files (NOT PRESENT):**
-- CLAUDE.md - Each project has its own
 - PROJECT-STATUS.md - Each project has its own
 - CHANGELOG.md - Each project has its own
 - INDEX.md - Each project has its own
@@ -423,6 +424,161 @@ project-framework/                    # REPOSITORY (not a project)
 
 ---
 
+### Folder Visibility Strategy
+
+**DECISION-014: Selective Strategy (Meaningful READMEs + .gitkeep)**
+**Date:** 2026-01-05
+
+**Issue identified:** How to ensure folders exist after git clone?
+
+**Options evaluated:**
+- Option A: .gitkeep everywhere (13 files)
+- Option B: No .gitkeep (folders created on-demand)
+- Option C: Init script creates folders
+- Option D: README files instead of .gitkeep
+- Option E: Selective strategy (meaningful READMEs + .gitkeep for simple folders)
+
+**Decision:** Option E - Selective Strategy
+
+**Meaningful READMEs (9 files across both projects):**
+- Repository root: README.md
+- Each project: README.md, docs/README.md, thoughts/work/README.md, thoughts/research/README.md, thoughts/external-references/README.md
+
+**.gitkeep files (6 per project = 12 total):**
+- `src/.gitkeep`
+- `tests/.gitkeep`
+- `thoughts/work/backlog/.gitkeep`
+- `thoughts/work/todo/.gitkeep`
+- `thoughts/work/doing/.gitkeep`
+- `thoughts/work/done/.gitkeep`
+
+**Retention policy:** Keep .gitkeep forever (don't delete when folder has files)
+
+**Rationale:**
+- ✅ Folders exist after git clone
+- ✅ READMEs where they provide value
+- ✅ Not drowning in README files
+- ✅ Future delivery format flexibility
+
+---
+
+### Repository Root CLAUDE.md
+
+**DECISION-015: Add CLAUDE.md to Repository Root**
+**Date:** 2026-01-06
+
+**Issue identified:** After v3.0.0 migration, AI needs clear navigation to understand monorepo structure and which project-specific CLAUDE.md to read.
+
+**Decision:** Add CLAUDE.md as REQUIRED file at repository root
+
+**Purpose:** AI navigation hub that orients to repository structure and points to project-specific CLAUDE.md files
+
+**Content:**
+```markdown
+# CLAUDE.md - Repository Root
+
+**Repository:** project-framework (monorepo)
+**Contains:** Framework project + Sample projects
+
+---
+
+## Quick Navigation
+
+**Working on the framework itself?**
+→ Read [framework/CLAUDE.md](framework/CLAUDE.md)
+
+**Working on hello-world sample?**
+→ Read [project-hello-world/CLAUDE.md](project-hello-world/CLAUDE.md)
+
+**Not sure which project?**
+→ Ask the user which project you're working on
+
+---
+
+## Repository Structure
+
+This is a monorepo containing multiple projects:
+- `framework/` - The framework itself (reusable, universal)
+- `project-hello-world/` - Sample project (validation/reference)
+
+Each project is self-contained and follows the Standard Framework structure.
+
+---
+
+**When in doubt:** Read the project-specific CLAUDE.md for detailed guidance.
+```
+
+**Rationale:**
+- ✅ **Immediate context** - AI knows it's in a monorepo
+- ✅ **Clear navigation** - Decision tree to correct project CLAUDE.md
+- ✅ **Reduces cognitive load** - No guessing which project we're working on
+- ✅ **Consistency** - Completes the trio (README, QUICK-START, CLAUDE)
+- ✅ **Minimal** - ~20-30 lines, just navigation
+
+**Length:** ~20-30 lines
+
+**Implementation:** Add to FEAT-026 Phase 1 (create with other root files)
+
+---
+
+### Separate Repository Structure Document
+
+**DECISION-016: Create REPOSITORY-STRUCTURE.md**
+**Date:** 2026-01-06
+
+**Issue identified:** Repository root structure currently embedded in PROJECT-STRUCTURE-STANDARD.md will cause duplication when adding LIGHT and MINIMAL project types.
+
+**Problem:**
+- PROJECT-STRUCTURE-STANDARD.md contains both repository root AND project structure
+- When we create PROJECT-STRUCTURE-LIGHT.md and PROJECT-STRUCTURE-MINIMAL.md, we'll need to duplicate repository root section
+- Violates DRY principle
+- Risk of inconsistency (update repo root in 3+ places)
+
+**Decision:** Create separate REPOSITORY-STRUCTURE.md document
+
+**Location:** `framework/docs/REPOSITORY-STRUCTURE.md` (after v3.0.0 migration)
+
+**Separation:**
+- REPOSITORY-STRUCTURE.md = Repository root ONLY (README, QUICK-START, CLAUDE, LICENSE, .gitignore)
+- PROJECT-STRUCTURE-STANDARD.md = Standard Framework project structure ONLY
+- PROJECT-STRUCTURE-LIGHT.md (future) = Light Framework project structure ONLY
+- PROJECT-STRUCTURE-MINIMAL.md (future) = Minimal Framework project structure ONLY
+
+**Benefits:**
+- ✅ Single source of truth for repository root
+- ✅ No duplication across project types
+- ✅ Clean separation (repository ≠ project)
+- ✅ Easy to reference from all project structure docs
+- ✅ Scalable for future project types
+
+**Structure (after v3.0.0 migration):**
+```
+framework/docs/
+├── REPOSITORY-STRUCTURE.md          ← NEW (repo root only)
+├── PROJECT-STRUCTURE-STANDARD.md    (references REPOSITORY-STRUCTURE.md)
+├── PROJECT-STRUCTURE-LIGHT.md       (future, references REPOSITORY-STRUCTURE.md)
+└── PROJECT-STRUCTURE-MINIMAL.md     (future, references REPOSITORY-STRUCTURE.md)
+```
+
+**Current location (pre-migration):**
+```
+thoughts/project/planning/backlog/
+├── REPOSITORY-STRUCTURE.md          ← Created here for migration planning
+├── PROJECT-STRUCTURE-STANDARD.md    ← Created here for migration planning
+```
+
+**Cross-references:**
+- Each PROJECT-STRUCTURE-*.md references REPOSITORY-STRUCTURE.md
+- REPOSITORY-STRUCTURE.md references all PROJECT-STRUCTURE-*.md documents
+
+**Implementation:**
+1. Create REPOSITORY-STRUCTURE.md with repository root content
+2. Update PROJECT-STRUCTURE-STANDARD.md to remove repository root section
+3. Add reference link to REPOSITORY-STRUCTURE.md in PROJECT-STRUCTURE-STANDARD.md
+4. Update FEAT-026 Phase 1 to create both documents
+
+---
+
 ## Next Steps
 
 - [ ] Define FILES for each folder (root files, docs files, thoughts files) - IN PROGRESS
@@ -442,5 +598,5 @@ project-framework/                    # REPOSITORY (not a project)
 ---
 
 **Created:** 2026-01-04
-**Last Updated:** 2026-01-05
-**Status:** Folder structure agreed, additional decisions added (migration strategy, repo vs project, templates), files discussion in progress
+**Last Updated:** 2026-01-06
+**Status:** Structure definition complete, repository root CLAUDE.md added (DECISION-015)

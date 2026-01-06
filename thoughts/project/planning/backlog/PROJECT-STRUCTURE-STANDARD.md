@@ -2,7 +2,7 @@
 
 **Version:** 3.0.0
 **Status:** Draft
-**Last Updated:** 2026-01-05
+**Last Updated:** 2026-01-06
 **Purpose:** Definitive reference for Standard Framework project structure
 
 ---
@@ -17,9 +17,21 @@ This document defines the complete folder and file structure for **Standard Fram
 - Validation of project structure compliance
 
 **Does NOT apply to:**
-- Repository root (meta-level container)
+- Repository root (meta-level container - see [REPOSITORY-STRUCTURE.md](REPOSITORY-STRUCTURE.md))
 - Light Framework level (different structure)
 - Minimal Framework level (different structure)
+
+---
+
+## Repository Root Reference
+
+**For repository root structure, see [REPOSITORY-STRUCTURE.md](REPOSITORY-STRUCTURE.md)**
+
+The project-framework repository is a **monorepo** containing multiple projects (framework/, project-hello-world/). The repository root has minimal files (README, QUICK-START, CLAUDE, LICENSE, .gitignore).
+
+**This document defines PROJECT structure only.**
+
+Standard user projects typically create a single-project repository and follow the structure below directly at root.
 
 ---
 
