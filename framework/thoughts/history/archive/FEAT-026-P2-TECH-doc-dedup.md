@@ -8,7 +8,7 @@
 **Created:** 2026-01-06
 **Cancelled:** 2026-01-07
 **Cancellation Reason:** Superseded by future work item TECH-NNN-dry-docs-principle
-**See:** [FEAT-026-future-enhancements.md](../../backlog/FEAT-026-future-enhancements.md) #2 - Document DRY Principles for Documentation
+**See also:** FEAT-026-future-enhancements #2 - Document DRY Principles for Documentation
 
 ---
 
