@@ -14,7 +14,7 @@ The **SpearIT Project Framework** is a comprehensive, multi-level project manage
 This repository is organized as a monorepo containing:
 - **framework/** - The Standard Project Framework implementation and documentation
 - **project-hello-world/** - Reference implementation demonstrating framework usage
-- **project-framework-template/** - Template packages for new projects (Minimal, Light, Standard levels)
+- **project-templates/** - Template packages for new projects (Minimal, Light, Standard levels)
 
 **Key Innovation:** This framework scales from single scripts to enterprise systems using a 3-dimension classification system that selects the appropriate framework level (Minimal, Light, Standard, or Enterprise) based on your project's scope, lifespan, and team size.
 
@@ -29,24 +29,24 @@ This repository is organized as a monorepo containing:
 ### For New Projects
 
 1. **Choose your framework level:**
-   - Read [README-TEMPLATE-SELECTION.md](project-framework-template/README-TEMPLATE-SELECTION.md)
+   - Read [README-TEMPLATE-SELECTION.md](project-templates/README-TEMPLATE-SELECTION.md)
    - Answer 3 simple questions about your project
    - Get recommended framework level
 
 2. **Copy the appropriate template:**
    ```bash
    # For single scripts
-   cp -r project-framework-template/minimal /path/to/your-project
+   cp -r project-templates/minimal /path/to/your-project
 
    # For small tools
-   cp -r project-framework-template/light /path/to/your-project
+   cp -r project-templates/light /path/to/your-project
 
    # For applications
-   cp -r project-framework-template/standard /path/to/your-project
+   cp -r project-templates/standard /path/to/your-project
    ```
 
 3. **Follow the setup checklist:**
-   - Open [NEW-PROJECT-CHECKLIST.md](project-framework-template/NEW-PROJECT-CHECKLIST.md)
+   - Open [NEW-PROJECT-CHECKLIST.md](project-templates/NEW-PROJECT-CHECKLIST.md)
    - Follow the instructions for your framework level
    - Customize templates with your project details
 
@@ -57,7 +57,7 @@ This repository is organized as a monorepo containing:
    - Choose appropriate framework level
 
 2. **Integrate the framework:**
-   - Follow "Existing Project Integration" section in [NEW-PROJECT-CHECKLIST.md](project-framework-template/NEW-PROJECT-CHECKLIST.md)
+   - Follow "Existing Project Integration" section in [NEW-PROJECT-CHECKLIST.md](project-templates/NEW-PROJECT-CHECKLIST.md)
    - Migrate existing documentation
    - Adopt workflow incrementally
 
@@ -124,22 +124,22 @@ Clear migration guides for moving between framework levels as your project evolv
 ## Documentation
 
 ### Core Documentation
-- **[README-TEMPLATE-SELECTION.md](project-framework-template/README-TEMPLATE-SELECTION.md)** - Choose your framework level ⭐
-- **[NEW-PROJECT-CHECKLIST.md](project-framework-template/NEW-PROJECT-CHECKLIST.md)** - Setup instructions ⭐
+- **[README-TEMPLATE-SELECTION.md](project-templates/README-TEMPLATE-SELECTION.md)** - Choose your framework level ⭐
+- **[NEW-PROJECT-CHECKLIST.md](project-templates/NEW-PROJECT-CHECKLIST.md)** - Setup instructions ⭐
 - **[framework/PROJECT-STATUS.md](framework/PROJECT-STATUS.md)** - Current version and status
 - **[framework/CHANGELOG.md](framework/CHANGELOG.md)** - Version history
 - **[framework/INDEX.md](framework/INDEX.md)** - Complete documentation index
-- [UPGRADE-PATH.md](project-framework-template/UPGRADE-PATH.md) - Migration between levels
-- [STRUCTURE.md](project-framework-template/STRUCTURE.md) - Template structure reference
+- [UPGRADE-PATH.md](project-templates/UPGRADE-PATH.md) - Migration between levels
+- [STRUCTURE.md](project-templates/STRUCTURE.md) - Template structure reference
 
 ### Reference Implementation
 - **[project-hello-world/](project-hello-world/)** - Complete working example of Standard framework
 
 ### Template Package
-- [project-framework-template/](project-framework-template/) - Complete template package
-- [minimal/](project-framework-template/minimal/) - Minimal framework templates
-- [light/](project-framework-template/light/) - Light framework templates
-- [standard/](project-framework-template/standard/) - Standard framework templates
+- [project-templates/](project-templates/) - Complete template package
+- [minimal/](project-templates/minimal/) - Minimal framework templates
+- [light/](project-templates/light/) - Light framework templates
+- [standard/](project-templates/standard/) - Standard framework templates
 
 ---
 
@@ -261,7 +261,7 @@ See [framework/CHANGELOG.md](framework/CHANGELOG.md) for version history.
 **Git Clone:**
 ```bash
 git clone https://github.com/spearit-solutions/project-framework.git
-cd project-framework/project-framework-template
+cd project-framework/project-templates
 # Copy appropriate level to your project
 ```
 
@@ -340,4 +340,4 @@ Check [framework/thoughts/](framework/thoughts/) to see the framework in action 
 
 ---
 
-**Get Started:** [README-TEMPLATE-SELECTION.md](project-framework-template/README-TEMPLATE-SELECTION.md) → [NEW-PROJECT-CHECKLIST.md](project-framework-template/NEW-PROJECT-CHECKLIST.md)
+**Get Started:** [README-TEMPLATE-SELECTION.md](project-templates/README-TEMPLATE-SELECTION.md) → [NEW-PROJECT-CHECKLIST.md](project-templates/NEW-PROJECT-CHECKLIST.md)

@@ -14,7 +14,7 @@ This repository contains multiple related projects:
 project-framework/
 ├── framework/                   # The Standard Project Framework itself
 ├── project-hello-world/         # Reference implementation (example project)
-├── project-framework-template/  # Template packages for new projects
+├── project-templates/           # Template packages for new projects
 ├── README.md                    # Monorepo overview and getting started
 ├── QUICK-START.md              # Quick reference guide
 └── CLAUDE.md                   # This file - Monorepo navigation
@@ -43,7 +43,7 @@ The hello-world project is a reference implementation showing how to use the fra
 
 ### Working on Template Packages?
 
-**Location:** [project-framework-template/](project-framework-template/)
+**Location:** [project-templates/](project-templates/)
 
 This folder contains template packages for creating new projects at different framework levels:
 - Minimal (single scripts)
@@ -60,13 +60,13 @@ These are starter templates that users copy to begin new projects.
 
 - **framework/** = The framework documentation, process, templates, and tracking
 - **project-hello-world/** = An example project that uses the framework
-- **project-framework-template/** = Packages for bootstrapping new projects
+- **project-templates/** = Packages for bootstrapping new projects
 
 ### Where Do Changes Go?
 
 - **Framework improvements** → Work in [framework/](framework/)
 - **Example updates** → Work in [project-hello-world/](project-hello-world/)
-- **Template updates** → Work in [project-framework-template/](project-framework-template/)
+- **Template updates** → Work in [project-templates/](project-templates/)
 
 ### Work Item Tracking
 
@@ -93,7 +93,7 @@ Each project has its own thoughts/ structure:
 - **Framework status:** [framework/PROJECT-STATUS.md](framework/PROJECT-STATUS.md)
 - **Framework changelog:** [framework/CHANGELOG.md](framework/CHANGELOG.md)
 - **Quick start guide:** [QUICK-START.md](QUICK-START.md)
-- **Template selection:** [project-framework-template/README-TEMPLATE-SELECTION.md](project-framework-template/README-TEMPLATE-SELECTION.md)
+- **Template selection:** [project-templates/README-TEMPLATE-SELECTION.md](project-templates/README-TEMPLATE-SELECTION.md)
 
 ---
 
