@@ -1,6 +1,9 @@
 # SpearIT Project Framework - Quick Start
 
-**Version:** 2.2.x | **Last Updated:** 2026-01-06 | **Need Details?** See [README.md](README.md)
+**Purpose:** Comprehensive quick reference for working with the framework.
+**For overview:** See [README.md](README.md) for project introduction and philosophy.
+
+**Version:** 3.0.0 | **Last Updated:** 2026-01-07
 
 **See It In Action:** Check out [project-hello-world/](project-hello-world/) for a complete working example.
 
@@ -58,16 +61,15 @@ cp -r /path/to/framework/project-templates/standard/.gitignore .
 ### Light
 1. Update README.md with project details
 2. Set initial version in PROJECT-STATUS.md
-3. Document your first decision in `thoughts/project/history/`
+3. Document your first decision in `thoughts/history/`
 4. Code and update CHANGELOG.md as you go
 
 ### Standard
 1. Review the example: [project-hello-world/](project-hello-world/)
 2. Complete research phase (use templates from `framework/templates/research/`)
-3. Define project in `thoughts/reference/project-definition.md`
-4. Plan features in `thoughts/work/backlog/`
-5. Move features to `work/todo/` → `work/doing/` → `work/done/`
-6. Update CHANGELOG.md and PROJECT-STATUS.md for releases
+3. Plan features in `thoughts/work/backlog/`
+4. Move features to `work/todo/` → `work/doing/` → `work/done/`
+5. Update CHANGELOG.md and PROJECT-STATUS.md for releases
 
 **Detailed Workflow:** See framework documentation in [framework/process/](framework/process/)
 
