@@ -12,7 +12,7 @@
 
 **New to this project?** Read in this order:
 1. This file (CLAUDE.md) - Critical rules and quick references
-2. [collaboration/README.md](thoughts/project/collaboration/README.md) - Navigation to detailed guides
+2. [collaboration/README.md](docs/collaboration/README.md) - Navigation to detailed guides
 3. Relevant collaboration docs as needed (see AI Reading Protocol below)
 
 ---
@@ -62,8 +62,8 @@ ProjectRoot/
 ```
 
 **Critical Folders:**
-- `thoughts/project/collaboration/` - **Universal collaboration guides** (read these for detailed guidance)
-- `thoughts/framework/templates/` - **Copy-paste starting points** (never edit templates directly)
+- `docs/collaboration/` - **Universal collaboration guides** (read these for detailed guidance)
+- `templates/` - **Copy-paste starting points** (never edit templates directly)
 
 ---
 
@@ -78,26 +78,26 @@ Resuming work or checking status?
 └─ Read work items in work/doing/ to check completion status
 
 Starting work on project?
-├─ Need workflow process? → collaboration/workflow-guide.md
-├─ Need coding standards? → collaboration/code-quality-standards.md
-├─ Need testing guidance? → collaboration/testing-strategy.md
-├─ Need security guidance? → collaboration/security-policy.md
-└─ Need framework understanding? → collaboration/architecture-guide.md
+├─ Need workflow process? → docs/collaboration/workflow-guide.md
+├─ Need coding standards? → docs/collaboration/code-quality-standards.md
+├─ Need testing guidance? → docs/collaboration/testing-strategy.md
+├─ Need security guidance? → docs/collaboration/security-policy.md
+└─ Need framework understanding? → docs/collaboration/architecture-guide.md
 
 Encountering problem?
-└─ collaboration/troubleshooting-guide.md
+└─ docs/collaboration/troubleshooting-guide.md
 
 Making architectural decision?
-├─ Need ADR guidance? → collaboration/workflow-guide.md (ADR section)
-└─ Need framework context? → collaboration/architecture-guide.md
+├─ Need ADR guidance? → docs/collaboration/workflow-guide.md (ADR section)
+└─ Need framework context? → docs/collaboration/architecture-guide.md
 
 Reviewing code?
-├─ collaboration/code-quality-standards.md
-├─ collaboration/security-policy.md
-└─ collaboration/testing-strategy.md
+├─ docs/collaboration/code-quality-standards.md
+├─ docs/collaboration/security-policy.md
+└─ docs/collaboration/testing-strategy.md
 
 Not sure which doc?
-└─ collaboration/README.md (navigation index)
+└─ docs/collaboration/README.md (navigation index)
 ```
 
 ### Proactive Reading Patterns
@@ -110,25 +110,25 @@ Not sure which doc?
 5. **NEVER suggest next actions without verifying current work state**
 
 **Before writing ANY code:**
-1. Read [code-quality-standards.md](thoughts/project/collaboration/code-quality-standards.md) for coding standards
-2. Read [security-policy.md](thoughts/project/collaboration/security-policy.md) if handling user input, auth, or data
-3. Read [testing-strategy.md](thoughts/project/collaboration/testing-strategy.md) for testing approach
+1. Read [code-quality-standards.md](docs/collaboration/code-quality-standards.md) for coding standards
+2. Read [security-policy.md](docs/collaboration/security-policy.md) if handling user input, auth, or data
+3. Read [testing-strategy.md](docs/collaboration/testing-strategy.md) for testing approach
 
 **Before starting feature implementation:**
-1. Read [workflow-guide.md](thoughts/project/collaboration/workflow-guide.md) for workflow process
+1. Read [workflow-guide.md](docs/collaboration/workflow-guide.md) for workflow process
 2. Follow AI Workflow Checkpoint Policy (below)
 
 **When stuck or encountering issues:**
-1. Read [troubleshooting-guide.md](thoughts/project/collaboration/troubleshooting-guide.md) for common issues
+1. Read [troubleshooting-guide.md](docs/collaboration/troubleshooting-guide.md) for common issues
 
 ### Documentation Hierarchy
 
 ```
 CLAUDE.md (This File)
     ↓ Quick references, critical rules
-collaboration/ Guides
+docs/collaboration/ Guides
     ↓ Detailed guidance with examples
-framework/templates/
+templates/
     ↓ Copy-paste starting points
 ```
 
@@ -589,16 +589,16 @@ The project includes comprehensive permission configuration in `.claude/settings
 - [CLAUDE-QUICK-REFERENCE.md](CLAUDE-QUICK-REFERENCE.md) - Critical rules and decision trees (<200 lines)
 
 **Detailed Collaboration Guides:**
-- [collaboration/README.md](thoughts/project/collaboration/README.md) - Navigation index
-- [collaboration/workflow-guide.md](thoughts/project/collaboration/workflow-guide.md) - Complete workflow process
-- [collaboration/code-quality-standards.md](thoughts/project/collaboration/code-quality-standards.md) - Coding standards
-- [collaboration/testing-strategy.md](thoughts/project/collaboration/testing-strategy.md) - Testing approach
-- [collaboration/security-policy.md](thoughts/project/collaboration/security-policy.md) - Security requirements
-- [collaboration/architecture-guide.md](thoughts/project/collaboration/architecture-guide.md) - Framework design
-- [collaboration/troubleshooting-guide.md](thoughts/project/collaboration/troubleshooting-guide.md) - Common issues
+- [collaboration/README.md](docs/collaboration/README.md) - Navigation index
+- [collaboration/workflow-guide.md](docs/collaboration/workflow-guide.md) - Complete workflow process
+- [collaboration/code-quality-standards.md](docs/collaboration/code-quality-standards.md) - Coding standards
+- [collaboration/testing-strategy.md](docs/collaboration/testing-strategy.md) - Testing approach
+- [collaboration/security-policy.md](docs/collaboration/security-policy.md) - Security requirements
+- [collaboration/architecture-guide.md](docs/collaboration/architecture-guide.md) - Framework design
+- [collaboration/troubleshooting-guide.md](docs/collaboration/troubleshooting-guide.md) - Common issues
 
 **Templates:**
-- [thoughts/framework/templates/](thoughts/framework/templates/) - Copy-paste starting points
+- [templates/](templates/) - Copy-paste starting points
 
 **Project Info:**
 - [PROJECT-STATUS.md](PROJECT-STATUS.md) - Current version and status (SINGLE SOURCE OF TRUTH)
