@@ -77,7 +77,7 @@ This repository is organized as a monorepo containing:
 - Change history (CHANGELOG.md)
 - Decision documentation
 
-**Standard Framework** (50+ files, 2-4 hours setup)
+**Standard Framework** (50+ files)
 - For applications, teams, ongoing projects
 - Complete documentation suite
 - File-based kanban workflow
@@ -215,19 +215,16 @@ See [framework/CHANGELOG.md](framework/CHANGELOG.md) for version history.
 ### Scenario 1: Quick Automation Script
 **Project:** Daily backup automation (PowerShell)
 **Framework Level:** Minimal
-**Setup Time:** 10 minutes
 **Files:** 2 (README.md, backup.ps1)
 
 ### Scenario 2: CLI Utility Tool
 **Project:** Data conversion utility
 **Framework Level:** Light
-**Setup Time:** 45 minutes
 **Files:** 7 core docs + tool code
 
 ### Scenario 3: Web Application
 **Project:** Internal dashboard application
 **Framework Level:** Standard
-**Setup Time:** 3 hours
 **Features:** Full planning, kanban workflow, team collaboration
 
 ---

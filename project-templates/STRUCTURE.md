@@ -172,11 +172,11 @@ standard/
 
 ## Template Counts Summary
 
-| Framework Level | Files | Folders | Setup Time |
-|----------------|-------|---------|------------|
-| Minimal | 2 | 1 | 10-15 min |
-| Light | 7 | 4 | 30-60 min |
-| Standard | 50+ | 25+ | 2-4 hours |
+| Framework Level | Files | Folders |
+|----------------|-------|---------|
+| Minimal | 2 | 1 |
+| Light | 7 | 4 |
+| Standard | 50+ | 25+ |
 
 ---
 

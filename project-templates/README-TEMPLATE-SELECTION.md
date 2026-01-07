@@ -72,8 +72,6 @@ Combine your answers using this matrix:
 - No formal planning or kanban
 - No templates
 
-**Setup time:** 10-15 minutes
-
 **When to use:**
 - ✅ Single Python/PowerShell/Bash script
 - ✅ Personal automation
@@ -107,8 +105,6 @@ Combine your answers using this matrix:
 - No full planning structure
 - No complete template library
 - No ADRs
-
-**Setup time:** 30-60 minutes
 
 **When to use:**
 - ✅ CLI utilities
@@ -147,8 +143,6 @@ Combine your answers using this matrix:
 **What you DON'T get:**
 - No compliance documentation
 - No multi-team coordination
-
-**Setup time:** 2-4 hours
 
 **When to use:**
 - ✅ Applications (10+ files)
@@ -208,7 +202,6 @@ START
 | **ADR Templates** | ✗ | ✗ | ✓ |
 | **Pattern Library** | ✗ | ✗ | ✓ |
 | **Compliance Docs** | ✗ | ✗ | ✗ |
-| **Setup Time** | 10-15 min | 30-60 min | 2-4 hours |
 | **Overhead** | Minimal | Low | Medium |
 
 ---

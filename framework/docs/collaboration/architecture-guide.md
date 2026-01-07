@@ -57,7 +57,7 @@ Minimal (2 files) → Light (7 files) → Standard (50+ files)
 
 ### The Four Framework Levels
 
-#### Minimal Framework (2 files, 10-15 minutes)
+#### Minimal Framework (2 files)
 
 **For:** Single scripts, throwaway projects, personal automation
 
@@ -78,7 +78,7 @@ project/
 - Personal automation
 - Proof-of-concepts you'll delete
 
-#### Light Framework (7 files, 30-60 minutes)
+#### Light Framework (7 files)
 
 **For:** Small tools with medium lifespan, solo professional work
 
@@ -105,7 +105,7 @@ project/
 - Solo work that might be handed off
 - Projects needing version control discipline
 
-#### Standard Framework (50+ files, 2-4 hours)
+#### Standard Framework (50+ files)
 
 **For:** Applications, small teams, ongoing maintenance
 

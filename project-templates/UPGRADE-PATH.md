@@ -54,8 +54,6 @@ Projects evolve. What starts as a simple script can grow into a maintained tool 
 
 ### Minimal → Light Upgrade
 
-**Time estimate:** 30-60 minutes
-
 **What you're adding:**
 - PROJECT-STATUS.md - Version tracking
 - CHANGELOG.md - Change history
@@ -124,8 +122,6 @@ Projects evolve. What starts as a simple script can grow into a maintained tool 
 ---
 
 ### Light → Standard Upgrade
-
-**Time estimate:** 2-4 hours
 
 **What you're adding:**
 - Full thoughts/ framework structure

@@ -213,11 +213,11 @@ git commit -m "Archive: Move v2.1.0 items to history"
 
 ## Framework Levels Quick Guide
 
-| Level | Files | Setup Time | Use For |
-|-------|-------|------------|---------|
-| **Minimal** | 2 | 10-15 min | Scripts, throwaway, personal |
-| **Light** | 7 | 30-60 min | Tools, solo professional |
-| **Standard** | 50+ | 2-4 hours | Applications, teams, AI collaboration |
+| Level | Files | Use For |
+|-------|-------|---------|
+| **Minimal** | 2 | Scripts, throwaway, personal |
+| **Light** | 7 | Tools, solo professional |
+| **Standard** | 50+ | Applications, teams, AI collaboration |
 
 **This project uses:** Standard Framework
 

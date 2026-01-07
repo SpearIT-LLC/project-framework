@@ -23,19 +23,16 @@ This is the complete **SpearIT Project Framework template package** - a collecti
 ### Minimal Framework ([minimal/](minimal/))
 **For:** Single scripts, throwaway projects, personal automation
 - **Files:** 2 (README.md, .gitignore)
-- **Setup Time:** 10-15 minutes
 - **Use when:** Single file script, one-time use, personal tool
 
 ### Light Framework ([light/](light/))
 **For:** Small tools, medium lifespan, handoff expected
 - **Files:** 7 (README, PROJECT-STATUS, CHANGELOG, CLAUDE.md, thoughts/)
-- **Setup Time:** 30-60 minutes
 - **Use when:** 2-10 files, maintained for months, possible collaboration
 
 ### Standard Framework ([standard/](standard/))
 **For:** Applications, teams, ongoing projects, critical systems
 - **Files:** 50+ (complete documentation, kanban workflow, 19 templates)
-- **Setup Time:** 2-4 hours
 - **Use when:** 10+ files, team collaboration, formal releases, architecture decisions
 
 ---

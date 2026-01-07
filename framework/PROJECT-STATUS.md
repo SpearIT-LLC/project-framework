@@ -132,7 +132,6 @@ The SpearIT Project Framework is a comprehensive project management framework te
 
 **Status:** Production ready
 **Use Case:** Single scripts, throwaway projects
-**Setup Time:** 10-15 minutes
 
 ### Light Framework (v2.0.0)
 **Files:** 7
@@ -146,7 +145,6 @@ The SpearIT Project Framework is a comprehensive project management framework te
 
 **Status:** Production ready
 **Use Case:** Small tools, maintained utilities
-**Setup Time:** 30-60 minutes
 
 ### Standard Framework (v2.0.0)
 **Files:** 50+
@@ -159,7 +157,6 @@ The SpearIT Project Framework is a comprehensive project management framework te
 
 **Status:** Production ready
 **Use Case:** Applications, teams, ongoing projects
-**Setup Time:** 2-4 hours
 
 ---
 
@@ -222,7 +219,7 @@ See [roadmap.md](thoughts/project/planning/roadmap.md) for complete roadmap.
 - **Projects Using Framework:** 1 (HPC)
 - **Framework Level Used:** Standard
 - **Feedback:** Positive - structure helpful, kanban workflow effective
-- **Pain Points:** Initial setup time (2-4 hours) - addressed with setup script plan
+- **Pain Points:** Initial setup complexity - addressed with setup script plan
 
 ### Template Testing
 - **Status:** All templates reviewed for completeness
