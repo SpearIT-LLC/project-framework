@@ -1,11 +1,10 @@
 # Repository Structure - project-framework
 
 **Version:** 3.0.0
-**Status:** Draft
-**Last Updated:** 2026-01-06
+**Status:** Published
+**Last Updated:** 2026-01-07
+**Published Location:** framework/docs/REPOSITORY-STRUCTURE.md
 **Purpose:** Definitive reference for project-framework repository root structure
-**Location (after migration):** `framework/docs/REPOSITORY-STRUCTURE.md`
-**Location (current):** `thoughts/project/work/todo/FEAT-026-REPOSITORY-STRUCTURE.md` (drops prefix at final location)
 
 ---
 
