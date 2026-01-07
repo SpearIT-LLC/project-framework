@@ -109,8 +109,8 @@ cp framework/templates/decisions/ADR-NNNN-template.md \
 # 2. Update PROJECT-STATUS.md with new version
 # 3. Commit
 git add -A
-git commit -m "Release: v1.2.0"
-git tag v1.2.0
+git commit -m "Release: vX.Y.Z"
+git tag vX.Y.Z
 git push origin main --tags
 
 # 4. (Standard only) Move completed work to history/releases/

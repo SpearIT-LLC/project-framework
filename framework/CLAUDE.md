@@ -459,8 +459,8 @@ cp templates/FEATURE-TEMPLATE.md thoughts/work/backlog/feature-123.md
 
 **5. Forgot to Archive After Release**
 ```bash
-mkdir -p thoughts/history/releases/v2.1.0
-mv thoughts/work/done/*.md thoughts/history/releases/v2.1.0/
+mkdir -p thoughts/history/releases/vX.Y.Z
+mv thoughts/work/done/*.md thoughts/history/releases/vX.Y.Z/
 ```
 
 **Full Troubleshooting:** [collaboration/troubleshooting-guide.md](docs/collaboration/troubleshooting-guide.md)
@@ -516,4 +516,4 @@ The project includes comprehensive permission configuration in `.claude/settings
 ---
 
 **Last Updated:** 2025-12-22
-**Framework Version:** Standard (v2.1.0)
+**Framework Level:** Standard (see [PROJECT-STATUS.md](PROJECT-STATUS.md) for current version)

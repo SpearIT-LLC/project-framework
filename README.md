@@ -200,7 +200,7 @@ See [framework/PROJECT-STATUS.md](framework/PROJECT-STATUS.md) for detailed stat
 - ✅ Complete documentation suite
 - 🚧 Dogfooding (framework using its own Standard framework)
 
-### What's Next (v2.1.0)
+### What's Next
 - 📋 ZIP distribution package
 - 📋 Interactive setup script
 - 📋 Validation script
@@ -261,7 +261,7 @@ cd project-framework/project-templates
 - Download repository as ZIP
 - Extract and copy desired framework level
 
-### Planned (v2.1.0)
+### Planned
 - Pre-packaged ZIP files for each framework level
 - Interactive setup script
 - Automated distribution process
@@ -270,7 +270,7 @@ cd project-framework/project-templates
 
 ## Version Strategy
 
-**Framework Version:** v2.0.0 (tracked in [PROJECT-STATUS.md](PROJECT-STATUS.md))
+**Framework Version:** See [framework/PROJECT-STATUS.md](framework/PROJECT-STATUS.md) for current version
 - Major version for breaking structure changes
 - Minor version for new features/templates
 - Patch version for bug fixes/documentation
@@ -289,7 +289,7 @@ See [Version Strategy Documentation](framework/thoughts/reference/version-strate
 
 **Status:** Framework currently maintained by SpearIT, LLC
 
-**Future:** CONTRIBUTING.md planned for v2.2.0
+**Future:** CONTRIBUTING.md planned for future release
 
 **Feedback Welcome:**
 - Issues, suggestions, and pull requests welcome
@@ -305,7 +305,7 @@ See [LICENSE](LICENSE) file for details.
 
 ## Dogfooding
 
-**Meta Note:** This framework project uses its own Standard framework for development (as of v2.0.0). This serves as:
+**Meta Note:** This framework project uses its own Standard framework for development. This serves as:
 1. **Validation** - Proves framework works for framework development
 2. **Example** - Real-world example of framework usage
 3. **Improvement** - Surfaces pain points and areas for enhancement
