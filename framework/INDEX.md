@@ -15,6 +15,10 @@ This index provides quick navigation to all documentation for the SpearIT Projec
 - [PROJECT-STATUS.md](PROJECT-STATUS.md) - **Current version and status** ⭐
 - [CHANGELOG.md](CHANGELOG.md) - Version history and changes
 
+### Structure References
+- [docs/PROJECT-STRUCTURE-STANDARD.md](docs/PROJECT-STRUCTURE-STANDARD.md) - **Official Standard Framework structure specification** ⭐
+- [docs/REPOSITORY-STRUCTURE.md](docs/REPOSITORY-STRUCTURE.md) - Repository root structure (monorepo)
+
 ### For AI Assistants
 - [CLAUDE.md](CLAUDE.md) - **AI collaboration contract** (quick reference)
 - [CLAUDE-QUICK-REFERENCE.md](CLAUDE-QUICK-REFERENCE.md) - Critical rules and decision trees

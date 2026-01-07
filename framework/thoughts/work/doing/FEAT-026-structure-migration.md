@@ -5,7 +5,7 @@
 **Status:** Doing
 **Created:** 2026-01-02
 **Updated:** 2026-01-06
-**Related:** FEAT-025-brainstorming.md, 2026-01-02-framework-structure-retrospective.md, FEAT-026-universal-structure-decisions.md, PROJECT-STRUCTURE-STANDARD.md
+**Related:** FEAT-025-brainstorming.md, 2026-01-02-framework-structure-retrospective.md, FEAT-026-universal-structure-decisions.md, [PROJECT-STRUCTURE-STANDARD.md](../../docs/PROJECT-STRUCTURE-STANDARD.md), [REPOSITORY-STRUCTURE.md](../../docs/REPOSITORY-STRUCTURE.md)
 **Version Impact:** MAJOR (v3.0.0)
 
 ---
@@ -68,7 +68,8 @@ project-framework/
 ## Target State (v3.0.0)
 
 **For complete structure specification, see:**
-- [FEAT-026-PROJECT-STRUCTURE-STANDARD.md](FEAT-026-PROJECT-STRUCTURE-STANDARD.md) - Universal project structure (SSOT)
+- [PROJECT-STRUCTURE-STANDARD.md](../../docs/PROJECT-STRUCTURE-STANDARD.md) - Universal project structure (SSOT)
+- [REPOSITORY-STRUCTURE.md](../../docs/REPOSITORY-STRUCTURE.md) - Repository root structure
 - [FEAT-026-universal-structure-decisions.md](FEAT-026-universal-structure-decisions.md) - Decision rationale
 
 ### High-Level Overview
@@ -81,13 +82,13 @@ project-framework/                        # Repository root (monorepo)
 ├── .gitignore                           # Repo-wide git ignores
 │
 ├── framework/                           # Framework project
-│   └── [Standard Project Structure]    # See PROJECT-STRUCTURE-STANDARD.md
+│   └── [Standard Project Structure]    # See docs/PROJECT-STRUCTURE-STANDARD.md
 │       ├── templates/                   # Framework-specific deliverable
 │       ├── tools/                       # Framework-specific deliverable
 │       └── docs/                        # Enhanced with process/, patterns/, collaboration/
 │
 └── project-hello-world/                 # Sample project
-    └── [Standard Project Structure]     # See PROJECT-STRUCTURE-STANDARD.md
+    └── [Standard Project Structure]     # See framework/docs/PROJECT-STRUCTURE-STANDARD.md
 ```
 
 **Key architectural decisions:**
@@ -308,7 +309,8 @@ project-framework/                        # Repository root (monorepo)
 ## Structure Definition Complete (2026-01-05)
 
 **Universal structure fully defined:**
-- See [PROJECT-STRUCTURE-STANDARD.md](PROJECT-STRUCTURE-STANDARD.md) for complete reference
+- See [PROJECT-STRUCTURE-STANDARD.md](../../docs/PROJECT-STRUCTURE-STANDARD.md) for complete reference
+- See [REPOSITORY-STRUCTURE.md](../../docs/REPOSITORY-STRUCTURE.md) for repository root structure
 - See [FEAT-026-universal-structure-decisions.md](FEAT-026-universal-structure-decisions.md) for decision log
 
 **Key decisions documented:**
