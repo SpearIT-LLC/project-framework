@@ -154,3 +154,124 @@ Commits: 8622a28, 750bf9a
 ---
 
 **Last Updated:** 2026-01-07
+
+---
+
+## Session 2: Archive Relocation & Cross-Reference Convention
+
+**Focus:** Structure refinement, work item cancellation, cross-reference stability
+
+### DECISION-017: Relocate archive/ to history/archive/
+
+**Issue:** Where should cancelled/outdated/superseded work items be stored?
+
+**Decision:** Move `thoughts/archive/` to `thoughts/history/archive/`
+
+**Rationale:**
+- Archive is inherently historical
+- Cleaner thoughts/ structure (one less top-level folder)
+- Better mental model: "history/ contains all past items"
+
+**New structure:**
+```
+thoughts/
+├── work/
+├── history/
+│   ├── releases/
+│   ├── sessions/
+│   ├── spikes/
+│   └── archive/         # NEW LOCATION
+├── research/
+├── retrospectives/
+└── external-references/
+```
+
+**Implementation:**
+- Updated PROJECT-STRUCTURE-STANDARD.md
+- Created archive/ folders in both framework and project-hello-world
+- Updated all references (INDEX.md, templates, collision analysis)
+- Documented in FEAT-026-universal-structure-decisions.md
+- Commit: 7043dbe
+
+### First Work Item Cancellation
+
+**Cancelled:** FEAT-026-P2-TECH-doc-dedup
+- **Reason:** Superseded by future work item TECH-NNN-dry-docs-principle
+- **See also:** FEAT-026-future-enhancements #2 (DRY documentation principles)
+- **Location:** Moved to framework/thoughts/history/archive/
+
+**Process established:**
+- Update Status to "Cancelled"
+- Add cancellation metadata (date, reason, replacement reference)
+- Move to history/archive/
+- Use ID-only references (stable across folder moves)
+
+### Cross-Reference Convention Established
+
+**Problem discovered:** File-based workflows have limitation - work items move through folders, breaking relative path links.
+
+**Solution:**
+- **Work item references:** Use ID only (no paths)
+  - Format: FEAT-NNN, SPIKE-015 #3, BUGFIX-042
+  - Rationale: IDs are stable, paths change
+
+- **Framework/project docs:** Use absolute paths from repo root
+  - Format: framework/docs/process/workflow-guide.md
+  - Rationale: Docs are stable, don't move
+
+**Created:** TECH-027-cross-reference-convention.md (in backlog)
+- Will update work item templates with convention
+- Will document in collaboration/process guides
+
+**Updated:** FEAT-026-P2-TECH-doc-dedup.md (archived) to use ID-only reference
+
+**Commit:** 05dea46
+
+### Session 2 Commits
+
+1. **7043dbe** - chore(FEAT-026): Relocate archive/ to history/archive/ and cancel doc-dedup
+2. **05dea46** - chore: Establish ID-only cross-reference convention for work items
+
+---
+
+## Updated Metrics (Both Sessions)
+
+**Session 1:**
+- Files Modified: 10+
+- Commits: 7
+- P2 Items Completed: 6
+- Documents Published: 2
+
+**Session 2:**
+- Files Modified: 8
+- Files Created: 2
+- Commits: 2
+- Decisions Documented: 1 (DECISION-017)
+- Work Items Created: 1 (TECH-027)
+- Work Items Cancelled: 1 (doc-dedup)
+
+**Total for 2026-01-07:**
+- Commits: 9
+- P2 Items: 6 completed, 1 cancelled (replaced by future TECH-NNN)
+- Structure Decisions: 1
+- New Workflows: Work item cancellation, cross-reference convention
+
+---
+
+## Updated Status
+
+**Postponed → Cancelled:**
+- ~~FEAT-026-P2-TECH-doc-dedup~~ → Superseded by TECH-NNN-dry-docs-principle (future)
+
+**Next Steps:**
+1. Complete remaining migration checkpoint phases (6-7)
+2. Review FEAT-026-followup for outstanding issues
+3. Prepare for merge to main
+4. Future: TECH-027 (implement cross-reference convention)
+5. Future: TECH-NNN (DRY documentation principles)
+
+**Branch State:** Clean, all changes committed, ready for final migration phases
+
+---
+
+**Updated:** 2026-01-07 (Session 2 complete)
