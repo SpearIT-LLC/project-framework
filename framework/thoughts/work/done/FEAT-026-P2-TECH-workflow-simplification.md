@@ -4,8 +4,9 @@
 **Parent:** FEAT-026-structure-migration
 **Type:** Technical Debt
 **Priority:** P2 (Should fix before merge)
-**Status:** Todo
+**Status:** Done
 **Created:** 2026-01-06
+**Completed:** 2026-01-07
 
 ---
 
@@ -88,14 +89,34 @@ For detailed workflow documentation, see:
 
 ## Completion Criteria
 
-- [ ] CLAUDE.md workflow content reviewed
-- [ ] Duplicated content identified
-- [ ] CLAUDE.md reduced to overview + links
-- [ ] Process docs verified as comprehensive
-- [ ] AI-specific guidance retained in CLAUDE.md
-- [ ] No loss of important information
-- [ ] Changes committed
+- [x] CLAUDE.md workflow content reviewed
+- [x] Duplicated content identified
+- [x] CLAUDE.md reduced to overview + links
+- [x] Process docs verified as comprehensive (workflow-guide.md has complete details)
+- [x] AI-specific guidance retained in CLAUDE.md (checkpoint questions, keywords)
+- [x] No loss of important information (all detail preserved in workflow-guide.md)
+- [x] Changes committed (b5600b7)
 
 ---
 
-**Last Updated:** 2026-01-06
+## Implementation Notes
+
+**Changes made:**
+- Reduced AI Workflow Checkpoint Policy section from ~155 lines to ~66 lines
+- Kept 11-step overview as visual flow diagram
+- Focused on three mandatory AI checkpoints (4, 7.5, 8.5)
+- Consolidated critical rules into concise sections
+- Removed detailed step-by-step procedures (now in workflow-guide.md)
+- Added clear link to workflow-guide.md for full details
+
+**Preserved AI-specific guidance:**
+- Checkpoint questions AI must ask
+- Keywords to search for in work items (TODO, TBD, Question, DECIDE, Option A/B/C)
+- Rationale for checkpoint policy
+- Critical workflow rules
+
+**Commit:** b5600b7
+
+---
+
+**Last Updated:** 2026-01-07
