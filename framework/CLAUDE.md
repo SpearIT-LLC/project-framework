@@ -138,158 +138,70 @@ templates/
 
 ## AI Workflow Checkpoint Policy (CRITICAL - ADR-001)
 
-**MANDATORY:** When user requests a new feature, you MUST follow this workflow to maintain process integrity.
+**MANDATORY:** When user requests a new feature, you MUST follow this workflow with three approval checkpoints.
 
-**The Standard Workflow:**
+**The 11-Step Workflow:**
 ```
-User Request → Backlog → [CHECKPOINT: User Approval] → Todo → Doing → Done → Release
-```
-
-### The 11 Steps
-
-**1. User Requests Feature** (e.g., "Add a quick reference guide")
-   - ✅ DO: Listen and understand the requirement
-   - ❌ DON'T: Start implementing immediately
-
-**2. Brief Research**
-   - Does this already exist in the project?
-   - Is there a better existing solution?
-   - Quick viability check
-
-**3. Create Backlog Item**
-   - Use appropriate template (FEATURE-TEMPLATE.md, BUGFIX-TEMPLATE.md, etc.)
-   - Determine next number by scanning ALL locations (see workflow-guide.md "Work Item Numbering")
-   - Place in `thoughts/work/backlog/`
-   - Set status to "Backlog" in the document
-   - ✅ Backlog is a "safe space" - user can add many ideas without implementation pressure
-
-**4. Present Plan to User** ⚠️ MANDATORY CHECKPOINT
-   - Summarize the approach
-   - List files that will be created/modified
-   - Estimate effort/scope
-   - **ASK FOR EXPLICIT APPROVAL:** "Should I proceed with implementing this?"
-   - ❌ DON'T: Move forward without approval
-
-**5. Wait for User Approval**
-   - User says "Yes/Go ahead/Proceed" → Continue to step 6
-   - User says "No/Wait/Not now" → Stop, leave in backlog
-   - User asks questions → Answer, adjust plan, ask again
-
-**6. Check WIP Limits** (Before moving to doing/)
-   - Check `thoughts/work/doing/.limit` file
-   - Count files in `thoughts/work/doing/`
-   - If at limit → **Stop, complete current work first**
-   - If under limit → Proceed
-
-**7. Move Through Workflow**
-   - Move file: `thoughts/work/backlog/` → `thoughts/work/todo/`
-   - Update status in document to "Todo"
-   - Move file: `thoughts/work/todo/` → `thoughts/work/doing/`
-   - Update status in document to "Doing"
-
-**7.5. Pre-Implementation Review** ⚠️ CHECKPOINT
-   - AI reads the complete work item document thoroughly
-   - AI identifies open questions, design decisions, and alternatives
-   - AI summarizes the implementation approach and files to modify
-   - **ASK FOR CONFIRMATION:** "Before I begin implementation, I've reviewed [WORK-ITEM-ID]. The approach is [summary]. [Open questions if any]. Do you agree with this approach?"
-   - User confirms or provides additional guidance
-   - ❌ DON'T: Start implementing without reviewing work item and confirming approach
-
-**8. Implement**
-   - Follow the plan (as confirmed in Step 7.5)
-   - Write code, tests, documentation
-   - Keep CHANGELOG notes in work item document
-
-**8.5. Review & Approval** ⚠️ CHECKPOINT
-   - AI presents completed work for user review
-   - Summarize changes made (files created/modified)
-   - Present testing results
-   - **ASK FOR EXPLICIT APPROVAL:** "The work is complete and ready for review. Would you like to review the changes before I move to done/ and proceed with release?"
-   - User reviews and approves/requests changes
-   - ❌ DON'T: Move to done/ without approval
-
-**9. Complete & Release** ⚠️ CRITICAL: Atomic Release Process
-   - Work is done, tested, AND APPROVED
-   - **Calculate next version:** Read PROJECT-STATUS.md current version + work item Version Impact, calculate next version (PATCH increments patch, MINOR increments minor/resets patch, MAJOR increments major/resets minor+patch), confirm with user before proceeding
-   - **STOP - Before committing:** Prepare version updates atomically
-
-   **Version Update Steps (do together):**
-   - a. Use calculated version from above (confirmed by user)
-   - b. Update PROJECT-STATUS.md (version, date, history)
-   - c. Update CHANGELOG.md ([Unreleased] → [vX.Y.Z])
-   - d. Move file: `thoughts/work/doing/` → `thoughts/work/done/`
-   - e. Update work item status to "Done" and add completion date
-
-   **Commit & Tag (atomic):**
-   - Commit ALL changes together: `git commit -m "Release: vX.Y.Z - Description"`
-   - Create annotated tag: `git tag -a vX.Y.Z -m "Release notes"`
-   - Push with tags: `git push origin main --tags`
-
-   **Archive (immediately after release):**
-   - Create `thoughts/history/releases/vX.Y.Z/` folder
-   - Move ALL work item files from `thoughts/work/done/` to release folder
-     - Primary: FEAT-XXX.md, BUGFIX-XXX.md
-     - Supporting: FEAT-XXX-*.md, feature-XXX-*.md (migration matrices, test plans, results)
-   - Commit: `git commit -m "Archive: vX.Y.Z work items"`
-   - Result: done/ folder should be empty
-
-   **Why atomic?** Version number must match implementation commit. Never commit implementation separate from version bump.
-
-   **Why archive immediately?** Maintains WIP limits, preserves complete feature history together, clear done/ folder. See ADR-003.
-
-### Example Interaction
-
-```
-User: "Add feature X"
-
-Claude: "I understand you want feature X. Let me create a backlog item for this.
-
-[Creates FEAT-NNN in thoughts/work/backlog/]
-
-I propose implementing this by:
-- Creating/modifying these files: [list]
-- Approach: [summary]
-- Estimated scope: [complexity]
-
-This would add [functionality description].
-
-Should I proceed with implementing FEAT-NNN?"
-
-User: "Yes, go ahead"
-
-Claude: "Great! Moving FEAT-NNN through the workflow..."
-[Checks WIP limits]
-[Moves backlog → todo → doing]
-[Implements]
+1. User Request → 2. Research → 3. Backlog → 4. Present Plan [CHECKPOINT] →
+5. User Approval → 6. Check WIP → 7. Move to Doing → 7.5. Review Approach [CHECKPOINT] →
+8. Implement → 8.5. Review & Approval [CHECKPOINT] → 9. Release → Done
 ```
 
-### What NOT to Do
+### The Three Mandatory Checkpoints
 
-❌ Jump straight to implementation without creating backlog item
-❌ Create items directly in `work/doing/` folder
-❌ Set item status to "Doing" or "Todo" without user approval
-❌ Implement before moving through the workflow folders
-❌ Exceed WIP limits
-❌ Skip the approval checkpoints (Step 4, Step 7.5, and Step 8.5)
-❌ Start implementing without reviewing work item and confirming approach
-❌ Move to done/ without user review and approval
+**Step 4: Present Plan to User** ⚠️ CHECKPOINT
+- After creating backlog item, summarize approach and files affected
+- **ASK FOR EXPLICIT APPROVAL:** "Should I proceed with implementing [WORK-ITEM-ID]?"
+- ❌ DON'T: Move to todo/doing without approval
+
+**Step 7.5: Pre-Implementation Review** ⚠️ CHECKPOINT
+- After moving to doing/ and before coding, read the complete work item thoroughly
+- Identify open questions, design decisions, alternatives (search for: TODO, TBD, Question, DECIDE, Option A/B/C)
+- Summarize approach and files to modify
+- **ASK FOR CONFIRMATION:** "Before I begin implementation, I've reviewed [WORK-ITEM-ID]. The approach is [summary]. [Open questions if any]. Do you agree with this approach?"
+- ❌ DON'T: Start coding without reviewing work item and confirming approach
+
+**Step 8.5: Review & Approval** ⚠️ CHECKPOINT
+- After implementation, present completed work for user review
+- Summarize changes made (files created/modified) and test results
+- **ASK FOR EXPLICIT APPROVAL:** "The work is complete and ready for review. Would you like to review the changes before I move to done/ and proceed with release?"
+- ❌ DON'T: Move to done/ without user approval
+
+### Critical Rules
+
+**Never skip checkpoints:**
+- Step 4 ensures user controls priorities and timing
+- Step 7.5 confirms approach with fresh context before coding
+- Step 8.5 ensures user reviews work before release
+
+**Respect WIP limits:**
+- Check `thoughts/work/doing/.limit` before moving items to doing/
+- If at limit, complete current work first
+
+**Follow kanban flow:**
+- Items move: backlog → todo → doing → done
+- Never jump straight to doing/ without approval
+- Never set status to "Doing" without user approval
+
+**Release atomically (Step 9):**
+- Calculate version: Read PROJECT-STATUS.md + work item Version Impact → calculate next version → confirm with user
+- Update PROJECT-STATUS.md + CHANGELOG.md + move to done/ → commit + tag together
+- Archive immediately: Create `thoughts/history/releases/vX.Y.Z/` → move all work items from done/ → commit
+- Why atomic? Version must match implementation. Why archive? Maintains WIP limits, preserves complete history.
 
 ### Rationale
 
 This policy ensures:
-- User maintains control over priorities and timing (Step 4 approval)
-- AI confirms approach with fresh context before implementing (Step 7.5 review)
+- User maintains control (Step 4 approval)
+- AI confirms approach with fresh context (Step 7.5 review)
 - User reviews all work before release (Step 8.5 approval)
-- Framework workflow is respected (dogfooding our own process)
 - WIP limits prevent context switching
-- Clear audit trail of what was approved
-- Backlog grows naturally without implementation pressure
-- Open questions and design decisions are addressed before implementation
-- No surprises - user sees and approves changes before they're released
+- Open questions addressed before implementation
+- No surprises - user sees and approves changes
 
 **Reference:** [ADR-001: AI Workflow Checkpoint Policy](thoughts/research/adr/001-ai-workflow-checkpoint-policy.md)
 
-**Full Workflow Details:** See [collaboration/workflow-guide.md](docs/collaboration/workflow-guide.md)
+**Full Workflow Details:** See [Workflow Guide](docs/collaboration/workflow-guide.md) for complete 11-step process, work item numbering, templates, and examples.
 
 ---
 
