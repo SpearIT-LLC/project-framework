@@ -25,7 +25,7 @@ The **SpearIT Project Framework** is a comprehensive, multi-level project manage
 
 **Key Innovation:** Scales from single scripts to full applications using a 3-dimension classification system.
 
-**This Project Uses:** Standard Framework Level
+**This Project Uses:** Standard Framework (see Framework Levels Overview below)
 
 ---
 
@@ -40,30 +40,30 @@ ProjectRoot/
 ├── INDEX.md                    # Project specific index of documents
 ├── PROJECT-STATUS.md           # SINGLE SOURCE OF TRUTH for version & status
 ├── README.md                   # Project specific overview and documentation
-└── thoughts/                   # Project documentation and framework
-    ├── project/                # Project specific content
-    │   ├── work/               # Kanban workflow for active work
-    │   │   ├── todo/           # Planned work items (approved, not started)
-    │   │   ├── doing/          # Currently in progress (WIP limit enforced)
-    │   │   │   └── .limit      # WIP limit for doing/ (default: 2)
-    │   │   └── done/           # Completed work items (awaiting release)
-    │   ├── planning/backlog/   # Future work (not approved yet)
-    │   ├── collaboration/      # Universal collaboration guides (humans & AI)
-    │   ├── reference/          # Current project reference docs
-    │   ├── research/           # Project research, ADRs
-    │   ├── retrospectives/     # Project retrospectives
-    │   ├── history/            # Daily session history, releases archive
-    │   └── archive/            # Historical/outdated docs
-    └── framework/              # Reusable across projects
-        ├── process/            # Workflow documentation
-        ├── templates/          # Planning templates (COPY these, don't edit)
-        ├── patterns/           # Implementation patterns
-        └── tools/              # Framework tooling
+├── docs/                       # Project documentation
+│   └── collaboration/          # Universal collaboration guides (humans & AI)
+├── process/                    # Workflow documentation
+├── templates/                  # Planning templates (COPY these, don't edit)
+├── patterns/                   # Implementation patterns
+└── thoughts/                   # Work management and history
+    ├── work/                   # Kanban workflow for active work
+    │   ├── backlog/            # Future work (not approved yet)
+    │   ├── todo/               # Planned work items (approved, not started)
+    │   ├── doing/              # Currently in progress (WIP limit enforced)
+    │   │   └── .limit          # WIP limit for doing/ (default: 2)
+    │   └── done/               # Completed work items (awaiting release)
+    ├── research/               # Project research, ADRs
+    │   └── adr/                # Architecture Decision Records
+    ├── retrospectives/         # Project retrospectives
+    └── history/                # Daily session history, releases archive
+        ├── sessions/           # Daily session logs
+        └── releases/           # Release archives
 ```
 
 **Critical Folders:**
 - `docs/collaboration/` - **Universal collaboration guides** (read these for detailed guidance)
 - `templates/` - **Copy-paste starting points** (never edit templates directly)
+- `thoughts/work/` - **Kanban workflow** (backlog → todo → doing → done)
 
 ---
 
@@ -151,7 +151,7 @@ User Request → Backlog → [CHECKPOINT: User Approval] → Todo → Doing → 
    - ✅ DO: Listen and understand the requirement
    - ❌ DON'T: Start implementing immediately
 
-**2. Brief Research** (30 seconds)
+**2. Brief Research**
    - Does this already exist in the project?
    - Is there a better existing solution?
    - Quick viability check
@@ -159,7 +159,7 @@ User Request → Backlog → [CHECKPOINT: User Approval] → Todo → Doing → 
 **3. Create Backlog Item**
    - Use appropriate template (FEATURE-TEMPLATE.md, BUGFIX-TEMPLATE.md, etc.)
    - Determine next number by scanning ALL locations (see workflow-guide.md "Work Item Numbering")
-   - Place in `thoughts/project/planning/backlog/`
+   - Place in `thoughts/work/backlog/`
    - Set status to "Backlog" in the document
    - ✅ Backlog is a "safe space" - user can add many ideas without implementation pressure
 
@@ -176,15 +176,15 @@ User Request → Backlog → [CHECKPOINT: User Approval] → Todo → Doing → 
    - User asks questions → Answer, adjust plan, ask again
 
 **6. Check WIP Limits** (Before moving to doing/)
-   - Check `thoughts/project/work/doing/.limit` file
-   - Count files in `thoughts/project/work/doing/`
+   - Check `thoughts/work/doing/.limit` file
+   - Count files in `thoughts/work/doing/`
    - If at limit → **Stop, complete current work first**
    - If under limit → Proceed
 
 **7. Move Through Workflow**
-   - Move file: `planning/backlog/` → `work/todo/`
+   - Move file: `thoughts/work/backlog/` → `thoughts/work/todo/`
    - Update status in document to "Todo"
-   - Move file: `work/todo/` → `work/doing/`
+   - Move file: `thoughts/work/todo/` → `thoughts/work/doing/`
    - Update status in document to "Doing"
 
 **7.5. Pre-Implementation Review** ⚠️ CHECKPOINT
@@ -217,7 +217,7 @@ User Request → Backlog → [CHECKPOINT: User Approval] → Todo → Doing → 
    - a. Use calculated version from above (confirmed by user)
    - b. Update PROJECT-STATUS.md (version, date, history)
    - c. Update CHANGELOG.md ([Unreleased] → [vX.Y.Z])
-   - d. Move file: `work/doing/` → `work/done/`
+   - d. Move file: `thoughts/work/doing/` → `thoughts/work/done/`
    - e. Update work item status to "Done" and add completion date
 
    **Commit & Tag (atomic):**
@@ -226,8 +226,8 @@ User Request → Backlog → [CHECKPOINT: User Approval] → Todo → Doing → 
    - Push with tags: `git push origin main --tags`
 
    **Archive (immediately after release):**
-   - Create `thoughts/project/history/releases/vX.Y.Z/` folder
-   - Move ALL work item files from `work/done/` to release folder
+   - Create `thoughts/history/releases/vX.Y.Z/` folder
+   - Move ALL work item files from `thoughts/work/done/` to release folder
      - Primary: FEAT-XXX.md, BUGFIX-XXX.md
      - Supporting: FEAT-XXX-*.md, feature-XXX-*.md (migration matrices, test plans, results)
    - Commit: `git commit -m "Archive: vX.Y.Z work items"`
@@ -244,12 +244,12 @@ User: "Add feature X"
 
 Claude: "I understand you want feature X. Let me create a backlog item for this.
 
-[Creates FEAT-NNN in planning/backlog/]
+[Creates FEAT-NNN in thoughts/work/backlog/]
 
 I propose implementing this by:
 - Creating/modifying these files: [list]
 - Approach: [summary]
-- Estimated scope: [hours/complexity]
+- Estimated scope: [complexity]
 
 This would add [functionality description].
 
@@ -287,9 +287,9 @@ This policy ensures:
 - Open questions and design decisions are addressed before implementation
 - No surprises - user sees and approves changes before they're released
 
-**Reference:** [ADR-001: AI Workflow Checkpoint Policy](thoughts/project/research/adr/001-ai-workflow-checkpoint-policy.md)
+**Reference:** [ADR-001: AI Workflow Checkpoint Policy](thoughts/research/adr/001-ai-workflow-checkpoint-policy.md)
 
-**Full Workflow Details:** See [collaboration/workflow-guide.md](thoughts/project/collaboration/workflow-guide.md)
+**Full Workflow Details:** See [collaboration/workflow-guide.md](docs/collaboration/workflow-guide.md)
 
 ---
 
@@ -338,9 +338,9 @@ Before starting any project, determine the appropriate framework level based on 
 - Production-ready documentation
 - For: Full applications, small teams, moderate to complex architectures
 
-**Setup Guide:** [NEW-PROJECT-CHECKLIST.md](project-framework-template/NEW-PROJECT-CHECKLIST.md)
+**Setup Guide:** See project-templates package
 
-**Full Architecture:** [collaboration/architecture-guide.md](thoughts/project/collaboration/architecture-guide.md)
+**Full Architecture:** [collaboration/architecture-guide.md](docs/collaboration/architecture-guide.md)
 
 ---
 
@@ -366,7 +366,7 @@ function divide(a, b) {
 }
 ```
 
-**Full Details:** [collaboration/code-quality-standards.md](thoughts/project/collaboration/code-quality-standards.md)
+**Full Details:** [collaboration/code-quality-standards.md](docs/collaboration/code-quality-standards.md)
 
 ---
 
@@ -390,7 +390,7 @@ const query = 'SELECT * FROM users WHERE email = ?';
 await db.query(query, [email]);
 ```
 
-**Full Details:** [collaboration/security-policy.md](thoughts/project/collaboration/security-policy.md)
+**Full Details:** [collaboration/security-policy.md](docs/collaboration/security-policy.md)
 
 ---
 
@@ -412,7 +412,7 @@ await db.query(query, [email]);
 - Invalid states
 - Wrong types
 
-**Full Details:** [collaboration/testing-strategy.md](thoughts/project/collaboration/testing-strategy.md)
+**Full Details:** [collaboration/testing-strategy.md](docs/collaboration/testing-strategy.md)
 
 ---
 
@@ -426,14 +426,14 @@ await db.query(query, [email]);
 
 **Session History:**
 - Format: `YYYY-MM-DD-SESSION-HISTORY.md`
-- Location: `thoughts/project/history/`
+- Location: `thoughts/history/sessions/`
 - Content: What was done, decisions made, blockers, next steps
 
 **Work Items:**
-- Use templates from `thoughts/framework/templates/`
-- Location: `thoughts/project/work/` (todo/doing/done)
+- Use templates from `templates/`
+- Location: `thoughts/work/` (backlog/todo/doing/done)
 
-**Full Details:** [collaboration/workflow-guide.md](thoughts/project/collaboration/workflow-guide.md)
+**Full Details:** [collaboration/workflow-guide.md](docs/collaboration/workflow-guide.md)
 
 ---
 
@@ -454,7 +454,7 @@ await db.query(query, [email]);
 - Create annotated git tag
 - Push with --tags
 
-**Full Details:** [collaboration/workflow-guide.md](thoughts/project/collaboration/workflow-guide.md#git-workflow)
+**Full Details:** [collaboration/workflow-guide.md](docs/collaboration/workflow-guide.md#git-workflow)
 
 ---
 
@@ -477,16 +477,16 @@ Which template?
 **When in doubt:** Start with MINOR, upgrade to MAJOR if you discover complexity
 
 **Templates:**
-- MAJOR: `thoughts/framework/templates/ADR-MAJOR-TEMPLATE.md`
-- MINOR: `thoughts/framework/templates/ADR-MINOR-TEMPLATE.md`
+- MAJOR: `templates/ADR-MAJOR-TEMPLATE.md`
+- MINOR: `templates/ADR-MINOR-TEMPLATE.md`
 
-**Storage:** `thoughts/project/research/adr/NNN-decision-name.md`
+**Storage:** `thoughts/research/adr/NNN-decision-name.md`
 
 **Examples:**
 - MAJOR: Database choice, authentication architecture, state management
 - MINOR: JSON library, log format, file naming convention
 
-**Full Details:** [collaboration/workflow-guide.md](thoughts/project/collaboration/workflow-guide.md#architecture-decision-records-adrs) for complete guidance on when to create, upgrading MINOR to MAJOR, lifecycle, and examples.
+**Full Details:** [collaboration/workflow-guide.md](docs/collaboration/workflow-guide.md#architecture-decision-records-adrs) for complete guidance on when to create, upgrading MINOR to MAJOR, lifecycle, and examples.
 
 ---
 
@@ -512,7 +512,7 @@ Which template?
 - "What's the one thing this must accomplish?"
 - "Are there constraints I should know about?"
 
-**Full Details:** [collaboration/workflow-guide.md](thoughts/project/collaboration/workflow-guide.md#collaboration-practices)
+**Full Details:** [collaboration/workflow-guide.md](docs/collaboration/workflow-guide.md#collaboration-practices)
 
 ---
 
@@ -522,8 +522,8 @@ Which template?
 
 **1. WIP Limit Violation**
 ```bash
-cat thoughts/project/work/doing/.limit
-ls thoughts/project/work/doing/*.md | wc -l
+cat thoughts/work/doing/.limit
+ls thoughts/work/doing/*.md | wc -l
 # If count > limit: move items to todo/ or complete to done/
 ```
 
@@ -541,17 +541,17 @@ git describe --tags --abbrev=0
 **4. Modified Template Instead of Instance**
 ```bash
 # CORRECT: Copy template first
-cp thoughts/framework/templates/FEATURE-TEMPLATE.md thoughts/project/planning/backlog/feature-123.md
+cp templates/FEATURE-TEMPLATE.md thoughts/work/backlog/feature-123.md
 # Edit the copy, NOT the template
 ```
 
 **5. Forgot to Archive After Release**
 ```bash
-mkdir -p thoughts/project/history/releases/v2.1.0
-mv thoughts/project/work/done/*.md thoughts/project/history/releases/v2.1.0/
+mkdir -p thoughts/history/releases/v2.1.0
+mv thoughts/work/done/*.md thoughts/history/releases/v2.1.0/
 ```
 
-**Full Troubleshooting:** [collaboration/troubleshooting-guide.md](thoughts/project/collaboration/troubleshooting-guide.md)
+**Full Troubleshooting:** [collaboration/troubleshooting-guide.md](docs/collaboration/troubleshooting-guide.md)
 
 ### Claude Code Permissions
 
