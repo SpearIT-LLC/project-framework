@@ -67,117 +67,34 @@ project-framework/
 
 ## Target State (v3.0.0)
 
-### Proposed Structure
+**For complete structure specification, see:**
+- [FEAT-026-PROJECT-STRUCTURE-STANDARD.md](FEAT-026-PROJECT-STRUCTURE-STANDARD.md) - Universal project structure (SSOT)
+- [FEAT-026-universal-structure-decisions.md](FEAT-026-universal-structure-decisions.md) - Decision rationale
+
+### High-Level Overview
 ```
-project-framework/
-├── .git/                          # Framework's git repo
-├── .gitignore
-├── LICENSE
-├── README.md                      # Overview: framework + hello-world
-├── QUICK-START.md                 # Fast path to getting started
+project-framework/                        # Repository root (monorepo)
+├── README.md                            # Repo overview
+├── QUICK-START.md                       # Fast navigation guide
+├── CLAUDE.md                            # AI navigation hub
+├── LICENSE                              # Repo-wide license
+├── .gitignore                           # Repo-wide git ignores
 │
-├── framework/                     # THE FRAMEWORK (reusable, universal)
-│   ├── CLAUDE.md                 # Framework project guide
-│   ├── PROJECT-STATUS.md         # Framework version tracking
-│   ├── CHANGELOG.md              # Framework changes
-│   ├── INDEX.md                  # Framework documentation index
-│   │
-│   ├── process/                  # Universal process documentation
-│   │   ├── documentation-standards.md
-│   │   ├── kanban-workflow.md
-│   │   └── version-control-workflow.md
-│   │
-│   ├── templates/                # All templates
-│   │   ├── work-items/
-│   │   │   ├── FEATURE-TEMPLATE.md
-│   │   │   ├── BUGFIX-TEMPLATE.md
-│   │   │   ├── BLOCKER-TEMPLATE.md
-│   │   │   └── SPIKE-TEMPLATE.md
-│   │   ├── decisions/
-│   │   │   ├── ADR-MAJOR-TEMPLATE.md
-│   │   │   └── ADR-MINOR-TEMPLATE.md
-│   │   ├── research/
-│   │   │   ├── PROBLEM-STATEMENT-TEMPLATE.md
-│   │   │   ├── PROJECT-JUSTIFICATION-TEMPLATE.md
-│   │   │   ├── PROJECT-DEFINITION-TEMPLATE.md
-│   │   │   ├── FEASIBILITY-TEMPLATE.md
-│   │   │   └── LANDSCAPE-ANALYSIS-TEMPLATE.md
-│   │   ├── documentation/
-│   │   │   ├── README-TEMPLATE.md
-│   │   │   ├── CLAUDE-TEMPLATE.md
-│   │   │   ├── PROJECT-STATUS-TEMPLATE.md
-│   │   │   ├── CHANGELOG-TEMPLATE.md
-│   │   │   ├── INDEX-TEMPLATE.md
-│   │   │   ├── USER-QUICK-START-TEMPLATE.md
-│   │   │   └── ADMIN-QUICK-START-TEMPLATE.md
-│   │   ├── project/
-│   │   │   └── PROJECT-TEMPLATE.md
-│   │   └── wrappers/
-│   │       └── cmd/
-│   │           ├── README.md
-│   │           ├── WRAPPER.cmd
-│   │           ├── WRAPPER-ENHANCED.cmd
-│   │           ├── WRAPPER-PS7.cmd
-│   │           └── WRAPPER-ADMIN.cmd
-│   │
-│   ├── patterns/                 # Implementation patterns
-│   │   ├── cmd-wrappers.md
-│   │   ├── config-management.md
-│   │   └── powershell-modules.md
-│   │
-│   ├── collaboration/            # AI collaboration guides (move from project)
-│   │   ├── README.md
-│   │   ├── architecture-guide.md
-│   │   ├── code-quality-standards.md
-│   │   ├── security-policy.md
-│   │   ├── testing-strategy.md
-│   │   ├── troubleshooting-guide.md
-│   │   └── workflow-guide.md
-│   │
-│   ├── tools/                    # Framework tooling (future)
-│   │   └── .gitkeep
-│   │
-│   └── thoughts/                 # Framework's own project tracking
-│       ├── work/
-│       │   ├── backlog/          # FLATTENED (was planning/backlog)
-│       │   ├── todo/
-│       │   ├── doing/
-│       │   └── done/
-│       ├── history/
-│       │   ├── releases/
-│       │   └── sessions/
-│       ├── research/
-│       │   └── adr/
-│       ├── retrospectives/
-│       ├── reference/
-│       └── archive/
+├── framework/                           # Framework project
+│   └── [Standard Project Structure]    # See PROJECT-STRUCTURE-STANDARD.md
+│       ├── templates/                   # Framework-specific deliverable
+│       ├── tools/                       # Framework-specific deliverable
+│       └── docs/                        # Enhanced with process/, patterns/, collaboration/
 │
-└── project-hello-world/           # Sample project (validation)
-    ├── README.md                  # "See ../framework/ for standards"
-    ├── CLAUDE.md                  # References framework
-    ├── PROJECT-STATUS.md
-    ├── CHANGELOG.md
-    ├── INDEX.md
-    ├── .gitignore
-    │
-    ├── src/                       # Hello world source
-    ├── docs/                      # Project documentation
-    │
-    └── thoughts/                  # Project's own tracking
-        ├── work/
-        │   ├── backlog/           # FLATTENED
-        │   ├── todo/
-        │   ├── doing/
-        │   └── done/
-        ├── history/
-        │   ├── releases/
-        │   └── sessions/
-        ├── research/
-        │   └── adr/
-        ├── retrospectives/
-        ├── reference/
-        └── archive/
+└── project-hello-world/                 # Sample project
+    └── [Standard Project Structure]     # See PROJECT-STRUCTURE-STANDARD.md
 ```
+
+**Key architectural decisions:**
+- **Monorepo with meta-root** - Repository root contains multiple projects
+- **Framework dogfoods itself** - Follows its own Standard structure completely
+- **Structure flattened** - Max 3 levels in thoughts/ (was 4 with planning/backlog/)
+- **Clear separation** - Each project self-contained with own docs, status, tracking
 
 ---
 
