@@ -209,3 +209,56 @@ None.
 **Session Paused:** Phases 1-4 complete, ready to clear context
 **Checkpoint:** FEAT-026-MIGRATION-CHECKPOINT.md created
 **Next Session:** Resume with Phase 5 (hello-world project creation)
+
+---
+
+## Session 2: FEAT-026 P1 Critical Issues
+
+**Session Time:** Late afternoon 2026-01-06
+**Focus:** Address critical P1 bugs discovered during migration
+
+### Work Completed
+
+#### FEAT-026-P1-BUG-root-claude ✅
+- Created missing `/CLAUDE.md` for monorepo navigation
+- Provides context for AI assistants at repository root level
+- Commits: 4a9c952, b46020c
+
+#### FEAT-026-P1-BUG-framework-folder-rename ✅
+- Renamed `project-framework-template/` → `project-templates/`
+- Updated all references in README, CLAUDE, QUICK-START (24 locations)
+- User selected this option for clarity
+- Commits: 04fdcd1, db8a537
+
+#### FEAT-026-P1-BUG-framework-structure ✅
+- Created `framework/docs/` folder structure
+- Moved collaboration/, patterns/, process/ to docs/ subfolders
+- Framework now follows its own Standard Project spec
+- Commits: d1798b3, 6f232cc
+
+#### FEAT-026-P1-BUG-path-audit ✅
+- Updated framework/CLAUDE.md with 30 path reference corrections
+- Updated paths to docs/collaboration/, templates/, etc.
+- Critical AI navigation file now accurate
+- Commits: 450d1aa, 198fa7a
+
+### Statistics (Session 2)
+
+**P1 Items Completed:** 4 of 5 (80%)
+**Commits Made:** 8
+**Files Changed:** 35 files
+**Path References Updated:** ~30 in CLAUDE.md alone
+
+### Remaining Work
+
+**FEAT-026-P1-BUG-quick-start-separation:** Pending
+- Need to clarify README Quick Start vs QUICK-START.md separation
+- Plan: README = brief, QUICK-START.md = comprehensive
+
+**Next session:** Complete final P1 item, then proceed to P2 items
+
+---
+
+**Session End:** 2026-01-06 evening
+**Branch Status:** Clean, all work committed
+**Ready for Next Session:** Yes
