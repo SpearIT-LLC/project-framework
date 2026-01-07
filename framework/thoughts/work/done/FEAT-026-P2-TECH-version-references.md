@@ -4,8 +4,9 @@
 **Parent:** FEAT-026-structure-migration
 **Type:** Technical Debt
 **Priority:** P2 (Should fix before merge)
-**Status:** Todo
+**Status:** Done
 **Created:** 2026-01-06
+**Completed:** 2026-01-07
 
 ---
 
@@ -98,12 +99,45 @@ Hardcoded version numbers in documentation:
 
 ## Completion Criteria
 
-- [ ] All hardcoded version numbers found
-- [ ] Current version refs link to PROJECT-STATUS.md
-- [ ] Future version refs use generic "planned" language
-- [ ] No duplicate version sources of truth
-- [ ] Changes committed
+- [x] All hardcoded version numbers found
+- [x] Current version refs link to PROJECT-STATUS.md
+- [x] Future version refs use generic "planned" language
+- [x] No duplicate version sources of truth
+- [x] Changes committed (185a3c4)
 
 ---
 
-**Last Updated:** 2026-01-06
+## Implementation Notes
+
+**Files Updated:**
+
+**README.md:**
+- "What's Next (v2.1.0)" → "What's Next" (removed version commitment)
+- "Planned (v2.1.0)" → "Planned" (removed version commitment)
+- "Framework Version: v2.0.0 (tracked in...)" → "See framework/PROJECT-STATUS.md for current version"
+- "CONTRIBUTING.md planned for v2.2.0" → "planned for future release"
+- Removed "(as of v2.0.0)" from dogfooding section
+
+**framework/CLAUDE.md:**
+- "Framework Version: Standard (v2.1.0)" → "Framework Level: Standard (see PROJECT-STATUS.md for current version)"
+- Emergency example updated from "v2.1.0" to "vX.Y.Z"
+
+**QUICK-START.md:**
+- Release example updated from "v1.2.0" to "vX.Y.Z"
+
+**Rationale:**
+- PROJECT-STATUS.md is the single source of truth for current version
+- Future version commitments create stale references that require maintenance
+- Generic version placeholders (vX.Y.Z) better for examples and won't become outdated
+- Reduces maintenance burden and eliminates version number drift
+
+**Historical versions preserved in:**
+- framework/CHANGELOG.md (appropriate - historical record)
+- Credits section showing first release dates (appropriate - historical fact)
+- Release history files in thoughts/history/releases/ (appropriate - archives)
+
+**Commit:** 185a3c4
+
+---
+
+**Last Updated:** 2026-01-07
