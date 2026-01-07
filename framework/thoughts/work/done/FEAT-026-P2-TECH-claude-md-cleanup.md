@@ -4,7 +4,7 @@
 **Parent:** FEAT-026-structure-migration
 **Type:** Technical Debt
 **Priority:** P2 (Should fix before merge)
-**Status:** Todo
+**Status:** Done
 **Created:** 2026-01-06
 
 ---
@@ -86,14 +86,32 @@ Review example interactions to not violate workflow.
 
 ## Completion Criteria
 
-- [ ] All folder paths correct
-- [ ] Architecture references current
-- [ ] "Standard Framework Level" defined or removed
-- [ ] Research timeframes removed
-- [ ] Workflow steps reviewed and updated
-- [ ] Example interactions don't violate workflow
-- [ ] Changes committed
+- [x] All folder paths correct
+- [x] Architecture references current
+- [x] "Standard Framework Level" defined or removed
+- [x] Research timeframes removed
+- [x] Workflow steps reviewed and updated
+- [x] Example interactions don't violate workflow
+- [x] Changes committed
+
+## Resolution
+
+**Completed:** 2026-01-07
+**Commit:** 7fadbf2
+
+Successfully cleaned up framework/CLAUDE.md:
+- Fixed undefined "Standard Framework Level" term with clarifying reference
+- Updated architecture section with current folder structure
+- Removed "30 seconds" research timeframe constraint
+- Fixed 20+ path references to match new structure:
+  - `thoughts/project/` → `thoughts/work/` (work folders)
+  - `thoughts/project/collaboration/` → `docs/collaboration/`
+  - `thoughts/project/research/adr/` → `thoughts/research/adr/`
+  - `thoughts/framework/templates/` → `templates/`
+  - `thoughts/project/history/` → `thoughts/history/sessions/` and `thoughts/history/releases/`
+- Removed time estimate from example interaction
+- All paths now accurate to current framework structure
 
 ---
 
-**Last Updated:** 2026-01-06
+**Last Updated:** 2026-01-07
