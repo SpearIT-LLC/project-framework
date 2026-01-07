@@ -120,19 +120,42 @@ This hierarchical sub-item approach is a **prototype**. We're testing it on FEAT
 
 ---
 
-## Git mv Agreement Violation Note
+## Process Improvements Identified
 
-**Important lesson learned:**
+### 1. Git mv Agreement Violation
 
-During FEAT-026 implementation, we agreed to COPY files for safety but used `git mv` instead. This violated our agreement even though it worked out.
+**Issue:** During FEAT-026 implementation, we agreed to COPY files for safety but used `git mv` instead. This violated our agreement even though it worked out.
 
 **Prevention for future:**
 - Critical constraints should be in work item file (not just conversation)
 - Before major operations, explicitly confirm approach
 - Add "Critical Constraints" section to work item template
 
-This has been noted as process improvement for FEAT-021.
+**Noted for:** FEAT-021 process improvement
 
 ---
 
-**Last Updated:** 2026-01-06
+### 2. Work Item Co-location Principle
+
+**Issue:** Support/reference files created for sub-items were initially placed at repo root instead of with the sub-item in doing/.
+
+**Principle established:** **All files associated with a work item MUST be co-located with the work item file.**
+
+**Rules:**
+- Work item support files (references, analysis, checklists) go in same folder as work item
+- Exception: When work item moves to done/, associated files move with it
+- Exception: Generated artifacts (code, docs) go to their proper locations, not with work item
+- Rationale: Keeps related work together, easier to find, cleaner organization
+
+**Example:**
+```
+framework/thoughts/work/doing/
+├── FEAT-026-P2-TECH-remove-enterprise.md
+└── FEAT-026-P2-TECH-remove-enterprise-REFERENCE.md  ← Co-located
+```
+
+**Noted for:** FEAT-021 process improvement
+
+---
+
+**Last Updated:** 2026-01-07

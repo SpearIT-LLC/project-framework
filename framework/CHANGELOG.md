@@ -238,7 +238,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Previous v2.0.0 Changes
 
 ### Added
-- **Multi-level framework system** - Minimal, Light, Standard, Enterprise
+- **Multi-level framework system** - Minimal, Light, Standard
 - **Framework selection guide** (README-TEMPLATE-SELECTION.md) - 3-dimension classification
 - **Setup checklists** (NEW-PROJECT-CHECKLIST.md) - All levels with phase-by-phase instructions
 - **Upgrade paths** (UPGRADE-PATH.md) - Migration guides between framework levels

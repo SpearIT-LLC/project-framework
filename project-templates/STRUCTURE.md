@@ -177,7 +177,6 @@ standard/
 | Minimal | 2 | 1 | 10-15 min |
 | Light | 7 | 4 | 30-60 min |
 | Standard | 50+ | 25+ | 2-4 hours |
-| Enterprise | Custom | Custom | Days-weeks |
 
 ---
 

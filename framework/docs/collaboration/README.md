@@ -192,7 +192,6 @@ Browse the guides below based on what you need. Each guide is comprehensive and 
   - Minimal Framework (2 files, scripts)
   - Light Framework (7 files, small tools)
   - Standard Framework (50+ files, applications)
-  - Enterprise Framework (custom, large systems)
   - Selection matrix
 - Folder Structure Architecture
   - thoughts/ folder concept
@@ -223,7 +222,7 @@ Browse the guides below based on what you need. Each guide is comprehensive and 
   - Separation of concerns
 
 **Key Insights:**
-- Why framework scales from scripts to enterprise
+- Why framework scales from scripts to applications
 - Rationale for file-based workflow
 - How hierarchical documentation optimizes AI context
 - Universal docs vs AI-specific docs decision

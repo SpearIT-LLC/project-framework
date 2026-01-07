@@ -929,7 +929,7 @@ describe('validateEmail', () => {
 - Documented edge case strategy
 - CI/CD integration
 
-### Full/Enterprise Framework
+### Standard Framework (optional features)
 - 90%+ coverage with quality gates
 - Full E2E test suite
 - Performance/load testing

@@ -8,7 +8,7 @@
 
 ## What Is This?
 
-This is the complete **SpearIT Project Framework template package** - a collection of ready-to-use project templates that scale from single scripts to enterprise systems.
+This is the complete **SpearIT Project Framework template package** - a collection of ready-to-use project templates that scale from single scripts to full applications.
 
 **Choose your framework level:**
 - [README-TEMPLATE-SELECTION.md](README-TEMPLATE-SELECTION.md) - **Start here** to determine which framework level you need
@@ -37,11 +37,6 @@ This is the complete **SpearIT Project Framework template package** - a collecti
 - **Files:** 50+ (complete documentation, kanban workflow, 19 templates)
 - **Setup Time:** 2-4 hours
 - **Use when:** 10+ files, team collaboration, formal releases, architecture decisions
-
-### Enterprise Framework (Future)
-**For:** Multi-service systems, large teams, compliance
-- **Status:** Documented for future - customize Standard framework as needed
-- **Use when:** 50+ files, 6+ developers, SOC2/HIPAA/compliance requirements
 
 ---
 

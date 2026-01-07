@@ -218,7 +218,6 @@ git commit -m "Archive: Move v2.1.0 items to history"
 | **Minimal** | 2 | 10-15 min | Scripts, throwaway, personal |
 | **Light** | 7 | 30-60 min | Tools, solo professional |
 | **Standard** | 50+ | 2-4 hours | Applications, teams, AI collaboration |
-| **Enterprise** | Custom | Custom | Large systems, compliance |
 
 **This project uses:** Standard Framework
 

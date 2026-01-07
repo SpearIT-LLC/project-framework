@@ -7,7 +7,7 @@
 
 ## Overview
 
-This checklist guides setup of a new project using the SpearIT project framework. The framework supports multiple levels from single scripts to enterprise systems.
+This checklist guides setup of a new project using the SpearIT project framework. The framework supports multiple levels from single scripts to full applications.
 
 **Start here:** Complete Phase 0 to determine which framework level you need, then follow the appropriate setup path.
 
@@ -52,7 +52,6 @@ Who will work on this project?
 | Script/Tool + Maintained + Solo/Professional | **Light** | [Light Setup](#light-framework-setup) |
 | Tool/Application + Maintained + Solo/Professional or Small Team | **Standard** | [Standard Setup](#standard-framework-setup-new-projects) |
 | Application/System + Maintained/Critical + Any team size | **Full** | [Standard Setup](#standard-framework-setup-new-projects)* |
-| System + Critical + Large Team | **Enterprise** | [Enterprise Note](#enterprise-framework) |
 
 *Full Framework = Standard Framework + enhanced ADRs and governance (customized during project)
 
@@ -306,25 +305,6 @@ Also called "Full Framework" when using comprehensive ADRs and governance.
   - [ ] Check `thoughts/project/work/todo/.limit` contains "10"
 
 **Setup Complete!** Follow the Standard workflow for ongoing development.
-
----
-
-## Enterprise Framework
-
-**For:** Multi-service systems, large teams (6+), critical production systems
-
-**Status:** Enterprise framework is NOT pre-defined. If your project requires this level, you likely need custom governance, compliance, and process documentation beyond what this framework provides.
-
-**Recommendation:**
-- Start with Standard Framework
-- Add enterprise-specific requirements as needed:
-  - Compliance documentation (SOC2, HIPAA, etc.)
-  - Multi-team coordination processes
-  - Formal review boards and approval gates
-  - Security and audit requirements
-  - Cross-service dependency management
-
-**Contact project framework maintainer** if you need guidance on enterprise extensions.
 
 ---
 

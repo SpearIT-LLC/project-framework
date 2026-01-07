@@ -25,7 +25,7 @@
 
 The **SpearIT Project Framework** is a comprehensive, multi-level project management framework designed to bring structure, consistency, and AI integration to software projects of any size.
 
-**Key Innovation:** Scales from single scripts to enterprise systems using a 3-dimension classification system that selects the appropriate framework level based on:
+**Key Innovation:** Scales from single scripts to full applications using a 3-dimension classification system that selects the appropriate framework level based on:
 1. **Scope & Complexity** (Script → Tool → Application → System)
 2. **Lifespan & Evolution** (Throwaway → Short-term → Maintained → Critical)
 3. **Team & Collaboration** (Solo/Personal → Solo/Professional → Small Team → Large Team)
@@ -39,7 +39,7 @@ The **SpearIT Project Framework** is a comprehensive, multi-level project manage
 
 **Solution:** Tiered framework with explicit upgrade paths:
 ```
-Minimal (2 files) → Light (7 files) → Standard (50+ files) → Enterprise (custom)
+Minimal (2 files) → Light (7 files) → Standard (50+ files)
 ```
 
 ### Core Principles
@@ -143,22 +143,6 @@ project/
 - Projects requiring formal planning
 - AI-assisted development
 
-#### Enterprise Framework (Custom)
-
-**For:** Multi-service systems, large teams, compliance requirements
-
-**Philosophy:**
-- Start with Standard framework
-- Add enterprise governance (approval workflows, compliance docs)
-- Custom tooling for scale
-- Documented but not yet implemented
-
-**When to Use:**
-- Large teams (6+ developers)
-- Critical production systems
-- Regulated industries
-- Complex multi-service architectures
-
 ### Selection Matrix
 
 | Scope | Lifespan | Team Size | Framework Level |
@@ -166,8 +150,7 @@ project/
 | Script | Throwaway/Short-term | Solo/Personal | **Minimal** |
 | Script/Tool | Maintained | Solo/Professional | **Light** |
 | Tool/Application | Maintained | Solo/Professional or Small Team | **Standard** |
-| Application/System | Maintained/Critical | Any team size | **Standard** or **Enterprise** |
-| System | Critical | Large Team | **Enterprise** |
+| Application/System | Maintained/Critical | Small team | **Standard** |
 
 ---
 
@@ -568,7 +551,7 @@ AI moves to todo → doing → implementation
 
 ### Decision: Multi-Level Framework Over One-Size-Fits-All
 
-**Context:** Need framework that works for scripts through enterprise systems
+**Context:** Need framework that works for scripts through full applications
 
 **Options:**
 1. Minimal framework for all (too light for complex projects)

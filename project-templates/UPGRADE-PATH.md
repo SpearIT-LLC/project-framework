@@ -48,23 +48,6 @@ Projects evolve. What starts as a simple script can grow into a maintained tool 
 - Single developer, simple coordination
 - Linear development, no complex planning needed
 
-#### Standard → Enterprise
-
-**Upgrade triggers:**
-- Multiple services/components
-- 6+ team members working concurrently
-- Critical production system with SLAs
-- Compliance requirements (SOC2, HIPAA, PCI-DSS, etc.)
-- Cross-team dependencies
-- Formal review boards needed
-- Audit trails required
-
-**Don't upgrade if:**
-- Single application/service
-- Small team (< 6 developers)
-- No compliance requirements
-- Standard governance sufficient
-
 ---
 
 ## Upgrade Process
@@ -239,31 +222,6 @@ Projects evolve. What starts as a simple script can grow into a maintained tool 
 
 ---
 
-### Standard → Enterprise
-
-**Time estimate:** Project-specific, likely days/weeks
-
-**Status:** Enterprise framework is NOT pre-defined.
-
-**Approach:**
-1. Keep Standard Framework as base
-2. Add enterprise-specific requirements incrementally:
-   - Compliance documentation (SOC2, HIPAA, etc.)
-   - Multi-team coordination processes
-   - Formal review boards and approval gates
-   - Security and audit requirements
-   - Cross-service dependency management
-   - Service-level agreements (SLAs) and monitoring
-   - Incident response procedures
-
-3. Document all additions in project-specific CLAUDE.md
-4. Consider creating enterprise-specific templates
-5. May need dedicated DevOps/platform team documentation
-
-**Recommendation:** Consult with project framework maintainer for guidance on enterprise extensions specific to your organization.
-
----
-
 ## Downgrading (Rare)
 
 **When to downgrade:**
@@ -302,14 +260,6 @@ Projects evolve. What starts as a simple script can grow into a maintained tool 
 - [ ] Migrate decisions to ADRs (optional)
 - [ ] Update documentation
 - [ ] Commit and tag upgrade (v2.0.0 - breaking structure change)
-
-### Standard → Enterprise
-- [ ] Assess enterprise requirements
-- [ ] Design custom extensions needed
-- [ ] Implement incrementally
-- [ ] Document all additions
-- [ ] Consider dedicated platform documentation
-- [ ] Consult framework maintainer
 
 ---
 

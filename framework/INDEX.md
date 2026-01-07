@@ -203,14 +203,6 @@ This index provides quick navigation to all documentation for the SpearIT Projec
 
 ---
 
-### Enterprise Framework (Custom)
-**For:** Multi-service systems, large teams, compliance
-- **Status:** Planned for future
-- **Approach:** Customize Standard framework with enterprise requirements
-- **Documentation:** To be created
-
----
-
 ## Special Topics
 
 ### Version Strategy
@@ -221,9 +213,8 @@ This index provides quick navigation to all documentation for the SpearIT Projec
 
 ### Upgrade Paths
 - [UPGRADE-PATH.md](project-templates/UPGRADE-PATH.md) - Complete upgrade guide
-- Minimal → Light (30-60 min)
-- Light → Standard (2-4 hours)
-- Standard → Enterprise (custom)
+- Minimal → Light
+- Light → Standard
 
 ### Distribution
 - **ZIP package:** *(planned)* Pre-packaged framework levels

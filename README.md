@@ -16,7 +16,7 @@ This repository is organized as a monorepo containing:
 - **project-hello-world/** - Reference implementation demonstrating framework usage
 - **project-templates/** - Template packages for new projects (Minimal, Light, Standard levels)
 
-**Key Innovation:** This framework scales from single scripts to enterprise systems using a 3-dimension classification system that selects the appropriate framework level (Minimal, Light, Standard, or Enterprise) based on your project's scope, lifespan, and team size.
+**Key Innovation:** This framework scales from single scripts to full applications using a 3-level system (Minimal, Light, Standard) that adapts to your project's scope, lifespan, and team size.
 
 ---
 
@@ -86,11 +86,6 @@ This repository is organized as a monorepo containing:
 - CMD wrappers for PowerShell scripts (4 variants)
 - AI integration (CLAUDE.md)
 
-**Enterprise Framework** (Custom)
-- For multi-service systems, large teams, compliance requirements
-- Customize Standard framework with enterprise governance
-- *(Documented for future development)*
-
 ---
 
 ## Key Features
@@ -104,7 +99,7 @@ Built-in research phase with 5 templates helps you answer: "Are we recreating th
 ### File-Based Kanban Workflow
 Simple folder-based work tracking:
 ```
-planning/backlog → work/todo → work/doing → work/done → history/releases/
+work/backlog → work/todo → work/doing → work/done → history/releases/
 ```
 
 ### AI Integration
@@ -192,13 +187,13 @@ Depth varies by framework level.
 
 ## Project Status
 
-**Current Version:** v2.2.x (2026-01-06)
-**Status:** Production-ready for internal use
+**Current Version:** v3.0.0 (2026-01-07)
+**Status:** In Development (Migration Branch)
 
 See [framework/PROJECT-STATUS.md](framework/PROJECT-STATUS.md) for detailed status.
 
 ### What's Complete
-- ✅ Multi-level framework system (Minimal/Light/Standard/Enterprise)
+- ✅ Multi-level framework system (Minimal/Light/Standard)
 - ✅ 19 templates including research phase (5 templates)
 - ✅ CMD wrappers (4 variants)
 - ✅ Setup checklists and upgrade paths

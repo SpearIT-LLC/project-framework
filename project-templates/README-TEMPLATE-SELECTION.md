@@ -20,7 +20,7 @@ Not sure which framework level you need? Answer three simple questions to find t
 | Single script, one file | → **Minimal** |
 | Small tool, 2-10 files | → **Light** or **Standard** |
 | Application, 10-50 files | → **Standard** |
-| Large system, 50+ files | → **Standard** or **Enterprise** |
+| Large system, 50+ files | → **Standard** |
 
 ### 2. How Long Will You Maintain It?
 
@@ -29,7 +29,7 @@ Not sure which framework level you need? Answer three simple questions to find t
 | Throwaway, one-time use | → **Minimal** |
 | Few weeks to months | → **Light** |
 | Ongoing, multi-year | → **Standard** |
-| Critical production system | → **Standard** or **Enterprise** |
+| Critical production system | → **Standard** |
 
 ### 3. Who Will Work On It?
 
@@ -38,7 +38,7 @@ Not sure which framework level you need? Answer three simple questions to find t
 | Just me, no handoff | → **Minimal** or **Light** |
 | Me + future-me or colleague | → **Light** or **Standard** |
 | Small team (2-5 people) | → **Standard** |
-| Large team (6+ people) | → **Enterprise** |
+| Large team (6+ people) | → **Standard** (not recommended for large teams use your descression) |
 
 ---
 
@@ -52,7 +52,6 @@ Combine your answers using this matrix:
 | Script/Tool | Maintained | Solo/Professional | **Light** |
 | Tool/App | Maintained | Solo/Small Team | **Standard** |
 | App/System | Critical | Any size | **Standard** (Full) |
-| System | Critical | Large Team | **Enterprise** |
 
 ---
 
@@ -146,7 +145,6 @@ Combine your answers using this matrix:
 - Wrapper templates
 
 **What you DON'T get:**
-- No enterprise-specific governance
 - No compliance documentation
 - No multi-team coordination
 
@@ -172,36 +170,6 @@ Combine your answers using this matrix:
 
 ---
 
-### Enterprise Framework
-
-**Best for:** Multi-service systems, large teams, critical production
-
-**Status:** Not pre-defined - customize Standard Framework for your needs
-
-**What you add to Standard:**
-- Compliance documentation (SOC2, HIPAA, PCI-DSS, etc.)
-- Multi-team coordination processes
-- Formal review boards and approval gates
-- Security and audit requirements
-- Cross-service dependency management
-- SLA and monitoring documentation
-- Incident response procedures
-
-**Setup time:** Project-specific (days to weeks)
-
-**When to use:**
-- ✅ 50+ files, multiple services
-- ✅ 6+ developers
-- ✅ Critical production systems
-- ✅ Compliance requirements
-- ✅ Cross-team dependencies
-
-**Recommendation:** Start with Standard, add enterprise requirements incrementally
-
-**Note:** Contact framework maintainer for guidance on enterprise extensions
-
----
-
 ## Decision Tree
 
 ```
@@ -219,7 +187,6 @@ START
   │             │
   │             └─ Yes → Team project?
   │                      ├─ Yes (2-5 people) → STANDARD
-  │                      ├─ Yes (6+ people) → ENTERPRISE
   │                      └─ No → STANDARD
 ```
 
@@ -227,22 +194,22 @@ START
 
 ## Quick Comparison Table
 
-| Feature | Minimal | Light | Standard | Enterprise |
-|---------|---------|-------|----------|------------|
-| **README** | ✓ Basic | ✓ Detailed | ✓ Complete | ✓ Complete |
-| **PROJECT-STATUS** | ✗ | ✓ | ✓ | ✓ |
-| **CHANGELOG** | Optional | ✓ | ✓ | ✓ |
-| **CLAUDE.md** | ✗ | Optional | ✓ Full | ✓ Extended |
-| **INDEX.md** | ✗ | ✗ | ✓ | ✓ |
-| **Research Templates** | ✗ | Simple | Complete | Complete |
-| **Kanban Workflow** | ✗ | ✗ | ✓ | ✓ |
-| **Planning/Roadmap** | ✗ | ✗ | ✓ | ✓ |
-| **Work Item Templates** | ✗ | ✗ | ✓ | ✓ |
-| **ADR Templates** | ✗ | ✗ | ✓ | ✓ |
-| **Pattern Library** | ✗ | ✗ | ✓ | ✓ |
-| **Compliance Docs** | ✗ | ✗ | ✗ | ✓ Custom |
-| **Setup Time** | 10-15 min | 30-60 min | 2-4 hours | Days-weeks |
-| **Overhead** | Minimal | Low | Medium | High |
+| Feature | Minimal | Light | Standard |
+|---------|---------|-------|----------|
+| **README** | ✓ Basic | ✓ Detailed | ✓ Complete |
+| **PROJECT-STATUS** | ✗ | ✓ | ✓ |
+| **CHANGELOG** | Optional | ✓ | ✓ |
+| **CLAUDE.md** | ✗ | Optional | ✓ Full |
+| **INDEX.md** | ✗ | ✗ | ✓ |
+| **Research Templates** | ✗ | Simple | Complete |
+| **Kanban Workflow** | ✗ | ✗ | ✓ |
+| **Planning/Roadmap** | ✗ | ✗ | ✓ |
+| **Work Item Templates** | ✗ | ✗ | ✓ |
+| **ADR Templates** | ✗ | ✗ | ✓ |
+| **Pattern Library** | ✗ | ✗ | ✓ |
+| **Compliance Docs** | ✗ | ✗ | ✗ |
+| **Setup Time** | 10-15 min | 30-60 min | 2-4 hours |
+| **Overhead** | Minimal | Low | Medium |
 
 ---
 
@@ -270,9 +237,9 @@ START
 
 ### Scenario 4: "Large team, critical system"
 
-**Answer:** Start with **Standard**, plan for **Enterprise**
+**Answer:** Start with **Standard**, extend as needed
 - Standard provides solid foundation
-- Add enterprise requirements incrementally
+- Add new requirements incrementally if needed
 - Customize governance for your organization
 
 ### Scenario 5: "Not sure how big this will get"
@@ -309,8 +276,7 @@ START
 Projects evolve. What starts as a script can become a critical tool. See [UPGRADE-PATH.md](UPGRADE-PATH.md) for:
 
 - **Minimal → Light:** When script gains multiple versions
-- **Light → Standard:** When tool needs team collaboration
-- **Standard → Enterprise:** When system requires governance
+- **Light → Standard:** When tool needs team collaboration or a formal workflow
 
 **Key principle:** Upgrade when current level becomes constraining, not before.
 

@@ -12,7 +12,7 @@
 
 The SpearIT Project Framework is a comprehensive project management framework template system designed to be copied to new or existing projects. It provides standardized structure, documentation, workflows, and AI integration for projects of all sizes.
 
-**Status:** Production-ready for internal use. Multi-level framework system (Minimal/Light/Standard/Enterprise) is complete and tested on HPC project. Currently implementing the framework on itself (dogfooding).
+**Status:** Production-ready for internal use. Multi-level framework system (Minimal/Light/Standard) is complete and tested on HPC project. Currently implementing the framework on itself (dogfooding).
 
 ---
 
@@ -30,7 +30,7 @@ The SpearIT Project Framework is a comprehensive project management framework te
 - 📝 Streamlined CLAUDE.md by removing redundant Workflow Phases Quick Reference
 
 **Core Features:**
-- ✅ Multi-level framework system (Minimal/Light/Standard/Enterprise) - Complete
+- ✅ Multi-level framework system (Minimal/Light/Standard) - Complete
 - ✅ Framework selection guide with 3-dimension classification - Complete
 - ✅ Quick Reference Guide for rapid onboarding - Complete (v2.1.0)
 - ✅ Setup checklists for all levels - Complete
@@ -67,7 +67,6 @@ The SpearIT Project Framework is a comprehensive project management framework te
 | Minimal Framework | ✅ Complete | 100% | v2.0.0 | 2 files, basic README |
 | Light Framework | ✅ Complete | 100% | v2.0.0 | 7 files, basic structure |
 | Standard Framework | ✅ Complete | 100% | v2.0.0 | 50+ files, full structure |
-| Enterprise Framework | 📋 Planned | 0% | Future | Custom extensions only |
 
 ### Phase 2: Documentation - ✅ Complete
 
@@ -161,11 +160,6 @@ The SpearIT Project Framework is a comprehensive project management framework te
 **Status:** Production ready
 **Use Case:** Applications, teams, ongoing projects
 **Setup Time:** 2-4 hours
-
-### Enterprise Framework (Future)
-**Status:** Documented as future work
-**Approach:** Customize Standard framework with enterprise requirements
-**Use Case:** Multi-service systems, large teams, compliance
 
 ---
 

@@ -23,7 +23,7 @@
 
 The **SpearIT Project Framework** is a comprehensive, multi-level project management framework designed to bring structure, consistency, and AI integration to software projects of any size.
 
-**Key Innovation:** Scales from single scripts to enterprise systems using a 3-dimension classification system.
+**Key Innovation:** Scales from single scripts to full applications using a 3-dimension classification system.
 
 **This Project Uses:** Standard Framework Level
 
@@ -316,7 +316,6 @@ Before starting any project, determine the appropriate framework level based on 
 | Script/Tool + Maintained + Solo/Professional | **Light** |
 | Tool/Application + Maintained + Solo/Professional or Small Team | **Standard** |
 | Application/System + Maintained/Critical + Any team size | **Full** |
-| System + Critical + Large Team | **Enterprise** (custom) |
 
 ### Framework Levels Overview
 
@@ -332,16 +331,12 @@ Before starting any project, determine the appropriate framework level based on 
 - For: Small tools, medium lifespan, solo with handoff
 
 **Standard Framework:**
-- Full documentation suite
 - Complete thoughts/ structure with kanban workflow
 - Formal planning and releases
 - For: Applications, ongoing maintenance, small teams
-
-**Full Framework:**
-- Everything in Standard plus enhanced governance
 - Formal ADRs, comprehensive retrospectives
-- Enterprise-ready documentation
-- For: Critical systems, large teams, complex architectures
+- Production-ready documentation
+- For: Full applications, small teams, moderate to complex architectures
 
 **Setup Guide:** [NEW-PROJECT-CHECKLIST.md](project-framework-template/NEW-PROJECT-CHECKLIST.md)
 
