@@ -72,7 +72,7 @@ All target paths are clear. Safe to proceed with migration.
 |--------|--------|--------|
 | `thoughts/project/retrospectives/` | `framework/thoughts/retrospectives/` | ✅ DOES NOT EXIST |
 | `thoughts/project/reference/` | `framework/thoughts/reference/` | ✅ DOES NOT EXIST |
-| `thoughts/project/archive/` | `framework/thoughts/archive/` | ✅ DOES NOT EXIST |
+| `thoughts/project/archive/` | `framework/thoughts/history/archive/` | ✅ DOES NOT EXIST |
 
 **Result:** All targets clear ✓
 

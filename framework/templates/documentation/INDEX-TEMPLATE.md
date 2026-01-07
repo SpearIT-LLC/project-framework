@@ -154,9 +154,9 @@ Location: `thoughts/project/retrospectives/`
 
 ### Archive
 
-Location: `thoughts/project/archive/`
+Location: `thoughts/project/history/archive/`
 
-- **[Old or outdated documentation](thoughts/project/archive/)** - Superseded documents
+- **[Cancelled/outdated/superseded items](thoughts/project/history/archive/)** - Historical reference
 
 ---
 

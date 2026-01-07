@@ -4,8 +4,11 @@
 **Parent:** FEAT-026-structure-migration
 **Type:** Technical Debt
 **Priority:** P2 (Should fix before merge)
-**Status:** Todo
+**Status:** Cancelled
 **Created:** 2026-01-06
+**Cancelled:** 2026-01-07
+**Cancellation Reason:** Superseded by future work item TECH-NNN-dry-docs-principle
+**See:** [FEAT-026-future-enhancements.md](../../backlog/FEAT-026-future-enhancements.md) #2 - Document DRY Principles for Documentation
 
 ---
 

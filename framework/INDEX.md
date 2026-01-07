@@ -164,10 +164,8 @@ This index provides quick navigation to all documentation for the SpearIT Projec
 #### History & Retrospectives
 - [thoughts/project/history/](thoughts/project/history/) - Daily session histories
 - [thoughts/project/history/releases/](thoughts/project/history/releases/) - Release-specific docs
+- [thoughts/project/history/archive/](thoughts/project/history/archive/) - Cancelled/outdated/superseded items
 - [thoughts/project/retrospectives/](thoughts/project/retrospectives/) - Framework retrospectives
-
-#### Archive
-- [thoughts/project/archive/](thoughts/project/archive/) - Historical/outdated framework docs
 
 ---
 

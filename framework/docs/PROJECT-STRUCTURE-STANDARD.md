@@ -89,7 +89,8 @@ Standard user projects typically create a single-project repository and follow t
     ├── history/                      # REQUIRED
     │   ├── releases/                # REQUIRED - Archived work items by version
     │   ├── sessions/                # REQUIRED - Session history files
-    │   └── spikes/                  # REQUIRED - Experimental research
+    │   ├── spikes/                  # REQUIRED - Experimental research
+    │   └── archive/                 # REQUIRED - Cancelled/outdated/superseded items
     │
     ├── research/                     # REQUIRED
     │   ├── README.md                # REQUIRED - Research folder purpose
@@ -97,10 +98,8 @@ Standard user projects typically create a single-project repository and follow t
     │
     ├── retrospectives/               # REQUIRED - Project retrospectives
     │
-    ├── external-references/          # REQUIRED - External reference library
-    │   └── README.md                # REQUIRED - Distinction explanation
-    │
-    └── archive/                      # REQUIRED - Historical/outdated docs
+    └── external-references/          # REQUIRED - External reference library
+        └── README.md                # REQUIRED - Distinction explanation
 ```
 
 ---

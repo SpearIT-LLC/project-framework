@@ -579,6 +579,58 @@ thoughts/project/work/todo/
 
 ---
 
+### Archive Folder Location
+
+**DECISION-017: Move archive/ under history/**
+**Date:** 2026-01-07
+
+**Issue identified:** Where should cancelled/outdated/superseded work items and documents be stored?
+
+**Original structure:** `thoughts/archive/` at top level alongside work/, history/, research/, etc.
+
+**Problem:** Archive is inherently historical. Having it at the same level as history/ creates confusion about purpose and organization.
+
+**Decision:** Move `archive/` to be a subfolder of `history/`
+
+**New structure:**
+```
+thoughts/
+├── work/
+├── history/
+│   ├── releases/
+│   ├── sessions/
+│   ├── spikes/
+│   └── archive/         # NEW LOCATION - Cancelled/outdated/superseded items
+├── research/
+├── retrospectives/
+└── external-references/
+```
+
+**Rationale:**
+- ✅ **Everything in archive IS historical** - Cancelled work items, outdated docs, superseded processes
+- ✅ **history/ is already the "past stuff" container** - Releases, sessions, spikes are all timeline-based
+- ✅ **Simpler mental model** - "History contains the past, including archived items"
+- ✅ **Cleaner thoughts/ root** - One less top-level folder
+- ✅ **Location IS status principle** - archive/ location = archived, file content explains why (cancelled, outdated, superseded)
+
+**archive/ folder purpose:**
+- Cancelled work items (with cancellation note in file)
+- Outdated documentation (superseded by newer versions)
+- Deprecated processes (replaced by better approaches)
+- Superseded decisions (kept for context)
+
+**Status field usage in archive/:**
+The Status field becomes useful again in archived files because archive contains multiple "types":
+- Status: Cancelled (with cancellation reason)
+- Status: Outdated (with replacement reference)
+- Status: Superseded (with link to replacement)
+
+**Implementation:** Updated in FEAT-026 immediately (2026-01-07)
+
+**First use case:** FEAT-026-P2-TECH-doc-dedup.md cancelled and moved to history/archive/
+
+---
+
 ## Next Steps
 
 - [ ] Define FILES for each folder (root files, docs files, thoughts files) - IN PROGRESS
@@ -598,5 +650,5 @@ thoughts/project/work/todo/
 ---
 
 **Created:** 2026-01-04
-**Last Updated:** 2026-01-06
-**Status:** Structure definition complete, repository root CLAUDE.md added (DECISION-015)
+**Last Updated:** 2026-01-07
+**Status:** Structure definition complete, archive/ relocated to history/archive/ (DECISION-017)
