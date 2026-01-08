@@ -303,12 +303,15 @@ This folder contains **project-specific research and decisions**.
 - ✅ Third-party integration investigations
 - ✅ Performance benchmarking results
 - ✅ Security analysis
+- ✅ Idea collections that spawn work items
 
 **Do NOT store here:**
 - ❌ External references (use external-references/)
 - ❌ Active work items (use work/)
 
 **Rule:** If it explains WHY we made a decision, it goes here.
+
+**Idea Collections:** Files containing multiple enhancement ideas or observations that will generate work items. Track created work items in the file, archive when exhausted.
 
 See also: [external-references/README.md](../external-references/README.md) for distinction.
 ```

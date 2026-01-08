@@ -82,8 +82,8 @@ ls framework/thoughts/work/done/FEAT-026-P*
 11. FEAT-026-P2-TECH-workflow-simplification
 12. FEAT-026-P2-TECH-version-references
 
-### Future Work (In backlog)
-See: `framework/thoughts/work/backlog/FEAT-026-future-enhancements.md`
+### Future Work (In research)
+See: `framework/thoughts/research/backlog-ideas-from-feat-026.md`
 
 ---
 
@@ -158,4 +158,35 @@ framework/thoughts/work/doing/
 
 ---
 
-**Last Updated:** 2026-01-07
+### 3. Idea Collection Pattern
+
+**Issue:** Idea collection files (backlog-ideas-from-feat-026.md) were initially placed in work/backlog/ but aren't actually work items.
+
+**Pattern established:** Idea collections that spawn multiple unrelated work items belong in research/, not work/.
+
+**Lifecycle:**
+1. Create in research/ with "Work Items Created" tracking section
+2. Spawn work items as needed (add to tracking section with date)
+3. Archive to history/archive/ when exhausted or no longer relevant
+
+**Rules:**
+- Idea collections go in research/ (not work items)
+- Feedback files stay co-located with parent work item (they ARE associated files)
+- Track what work items were generated
+- Archive when purpose fulfilled
+
+**Example:**
+```
+framework/thoughts/research/
+└── backlog-ideas-from-feat-026.md  ← Not a work item, idea incubator
+```
+
+**Documentation updated:**
+- PROJECT-STRUCTURE-STANDARD.md research/ section
+- framework/thoughts/research/README.md
+
+**Noted for:** FEAT-021 process improvement
+
+---
+
+**Last Updated:** 2026-01-08

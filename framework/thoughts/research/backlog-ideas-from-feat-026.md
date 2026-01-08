@@ -1,14 +1,23 @@
-# FEAT-026 Future Enhancements
+# Backlog Ideas from FEAT-026
 
 **Created:** 2026-01-06
 **Source:** FEAT-026-followup.md discussion
-**Status:** Ideas for future work items
+**Status:** Idea collection (not yet work items)
+**Location:** framework/thoughts/research/ (moved from work/backlog/ on 2026-01-08)
 
 ---
 
 ## Summary
 
 This document captures enhancement ideas and discussion items discovered during FEAT-026 implementation. These are NOT part of FEAT-026 and should become separate work items in the future.
+
+---
+
+## Work Items Created
+
+**Instructions:** As you create work items from the ideas below, add them here with creation date. When all desired items are created, move this file to history/archive/.
+
+*None created yet*
 
 ---
 
@@ -219,16 +228,17 @@ project-hello-world/ uses JavaScript, but PowerShell might be more appropriate.
 
 ---
 
-## Creating Work Items
+## Workflow for This File
 
-When ready to work on these:
+When ready to create work items:
 1. Copy relevant section above
 2. Use appropriate template from framework/templates/work-items/
-3. Create as FEAT-NNN, TECH-NNN, or DECISION-NNN
-4. Add to backlog/
-5. Prioritize and move through workflow
+3. Create as FEAT-NNN, TECH-NNN, or DECISION-NNN in work/backlog/
+4. Add entry to "Work Items Created" section above with date
+5. When all desired items created, move this file to history/archive/
 
 ---
 
-**Last Updated:** 2026-01-06
+**Created:** 2026-01-06
+**Moved to research/:** 2026-01-08
 **Items Captured:** 10 enhancement ideas + additional notes
