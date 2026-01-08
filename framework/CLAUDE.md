@@ -186,7 +186,11 @@ templates/
 **Release atomically (Step 9):**
 - Calculate version: Read PROJECT-STATUS.md + work item Version Impact → calculate next version → confirm with user
 - Update PROJECT-STATUS.md + CHANGELOG.md + move to done/ → commit + tag together
-- Archive immediately: Create `thoughts/history/releases/vX.Y.Z/` → move all work items from done/ → commit
+- Archive immediately: Create `thoughts/history/releases/vX.Y.Z/` → **USE git mv** to move all work items from done/
+  - Command: `git mv thoughts/work/done/WORK-ITEM-* thoughts/history/releases/vX.Y.Z/`
+  - ⚠️ CRITICAL: Use `git mv` (move), NOT `cp` (copy) - prevents duplicates
+  - Commit: `git commit -m "chore: Archive vX.Y.Z work items"`
+- Verify: Check done/ is empty: `ls thoughts/work/done/*.md` (should return empty)
 - Why atomic? Version must match implementation. Why archive? Maintains WIP limits, preserves complete history.
 
 ### Rationale

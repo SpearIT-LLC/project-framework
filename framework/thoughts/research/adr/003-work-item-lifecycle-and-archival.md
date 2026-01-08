@@ -263,6 +263,32 @@ Sub-items (FEAT-XXX.1, FEAT-XXX.2) are part of the same logical feature and shou
 
 ---
 
+## Common Mistakes to Avoid
+
+**Mistake 1: Copying instead of moving**
+- ❌ Wrong: `cp thoughts/work/done/FEAT-*.md thoughts/history/releases/vX.Y.Z/`
+- ✅ Correct: `git mv thoughts/work/done/FEAT-*.md thoughts/history/releases/vX.Y.Z/`
+- **Impact:** Creates duplicates in both done/ and releases/, violates policy
+- **Fix:** Remove duplicates from done/ after copying
+
+**Mistake 2: Forgetting to verify done/ is empty**
+- ❌ Wrong: Archive files and move on without checking
+- ✅ Correct: Run `ls thoughts/work/done/*.md` after archiving
+- **Expected:** Should return empty or "No such file"
+- **If files remain:** You copied instead of moved, or missed some files
+
+**Mistake 3: Archiving only the primary work item**
+- ❌ Wrong: Moving only FEAT-026.md
+- ✅ Correct: Moving ALL FEAT-026*.md files (primary + sub-items + supporting)
+- **Use wildcard:** `git mv thoughts/work/done/FEAT-026*.md ...`
+
+**Mistake 4: Forgetting the archival step entirely**
+- ❌ Wrong: Release and leave files in done/ indefinitely
+- ✅ Correct: Archive immediately after creating release tag
+- **Trigger:** Release tag created → archive happens (atomic with release)
+
+---
+
 ## Validation
 
 **How we verify correctness:**

@@ -191,9 +191,12 @@ Ask this before elaborate planning. Keep planning proportional to project size.
     - Primary work items (FEAT-XXX.md, BUGFIX-XXX.md)
     - Supporting documents (FEAT-XXX-*.md, feature-XXX-*.md)
     - Test plans, results, migration matrices, planning docs
-  - Commit: `git commit -m "Archive: vX.Y.Z work items"`
+  - **Command:** `git mv thoughts/work/done/WORK-ITEM-*.md thoughts/history/releases/vX.Y.Z/`
+  - **CRITICAL:** Use `git mv` (move), NOT `cp` (copy) - prevents duplicates
+  - Commit: `git commit -m "chore: Archive vX.Y.Z work items"`
+  - **Verify:** Check done/ is empty: `ls thoughts/work/done/*.md` (should return empty)
   - Result: done/ folder should be empty after archival
-  - **See ADR-003 for complete archival process**
+  - **See ADR-003 for complete archival process and common mistakes**
 
 **For detailed release process, see CLAUDE.md Step 9 or version-control-workflow.md lines 101-149.**
 
