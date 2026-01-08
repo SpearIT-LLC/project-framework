@@ -1,7 +1,7 @@
 # SpearIT Project Framework
 
-**Current Version & Status:** See [PROJECT-STATUS.md](PROJECT-STATUS.md)
-**Last Updated:** 2025-12-19
+**Current Version & Status:** See [framework/PROJECT-STATUS.md](framework/PROJECT-STATUS.md)
+**Last Updated:** 2026-01-06
 **Maintainer:** Gary Elliott (gary.elliott@spearit.solutions)
 **Organization:** SpearIT, LLC
 
@@ -11,35 +11,42 @@
 
 The **SpearIT Project Framework** is a comprehensive, multi-level project management framework designed to bring structure, consistency, and AI integration to software projects of any size.
 
-**Key Innovation:** This framework scales from single scripts to enterprise systems using a 3-dimension classification system that selects the appropriate framework level (Minimal, Light, Standard, or Enterprise) based on your project's scope, lifespan, and team size.
+This repository is organized as a monorepo containing:
+- **framework/** - The Standard Project Framework implementation and documentation
+- **project-hello-world/** - Reference implementation demonstrating framework usage
+- **project-templates/** - Template packages for new projects (Minimal, Light, Standard levels)
+
+**Key Innovation:** This framework scales from single scripts to full applications using a 3-level system (Minimal, Light, Standard) that adapts to your project's scope, lifespan, and team size.
 
 ---
 
 ## Quick Start
 
-**Want the fastest path?** See [QUICK-REFERENCE.md](QUICK-REFERENCE.md) for a bare-bones, get-functional guide. ⚡
+**Want the fastest path?** See [QUICK-START.md](QUICK-START.md) for a bare-bones, get-functional guide. ⚡
+
+**See the framework in action:** Check out [project-hello-world/](project-hello-world/) for a complete reference implementation.
 
 ### For New Projects
 
 1. **Choose your framework level:**
-   - Read [README-TEMPLATE-SELECTION.md](project-framework-template/README-TEMPLATE-SELECTION.md)
+   - Read [README-TEMPLATE-SELECTION.md](project-templates/README-TEMPLATE-SELECTION.md)
    - Answer 3 simple questions about your project
    - Get recommended framework level
 
 2. **Copy the appropriate template:**
    ```bash
    # For single scripts
-   cp -r project-framework-template/minimal /path/to/your-project
+   cp -r project-templates/minimal /path/to/your-project
 
    # For small tools
-   cp -r project-framework-template/light /path/to/your-project
+   cp -r project-templates/light /path/to/your-project
 
    # For applications
-   cp -r project-framework-template/standard /path/to/your-project
+   cp -r project-templates/standard /path/to/your-project
    ```
 
 3. **Follow the setup checklist:**
-   - Open [NEW-PROJECT-CHECKLIST.md](project-framework-template/NEW-PROJECT-CHECKLIST.md)
+   - Open [NEW-PROJECT-CHECKLIST.md](project-templates/NEW-PROJECT-CHECKLIST.md)
    - Follow the instructions for your framework level
    - Customize templates with your project details
 
@@ -50,7 +57,7 @@ The **SpearIT Project Framework** is a comprehensive, multi-level project manage
    - Choose appropriate framework level
 
 2. **Integrate the framework:**
-   - Follow "Existing Project Integration" section in [NEW-PROJECT-CHECKLIST.md](project-framework-template/NEW-PROJECT-CHECKLIST.md)
+   - Follow "Existing Project Integration" section in [NEW-PROJECT-CHECKLIST.md](project-templates/NEW-PROJECT-CHECKLIST.md)
    - Migrate existing documentation
    - Adopt workflow incrementally
 
@@ -70,7 +77,7 @@ The **SpearIT Project Framework** is a comprehensive, multi-level project manage
 - Change history (CHANGELOG.md)
 - Decision documentation
 
-**Standard Framework** (50+ files, 2-4 hours setup)
+**Standard Framework** (50+ files)
 - For applications, teams, ongoing projects
 - Complete documentation suite
 - File-based kanban workflow
@@ -78,11 +85,6 @@ The **SpearIT Project Framework** is a comprehensive, multi-level project manage
 - Research phase support (5 templates)
 - CMD wrappers for PowerShell scripts (4 variants)
 - AI integration (CLAUDE.md)
-
-**Enterprise Framework** (Custom)
-- For multi-service systems, large teams, compliance requirements
-- Customize Standard framework with enterprise governance
-- *(Documented for future development)*
 
 ---
 
@@ -97,7 +99,7 @@ Built-in research phase with 5 templates helps you answer: "Are we recreating th
 ### File-Based Kanban Workflow
 Simple folder-based work tracking:
 ```
-planning/backlog → work/todo → work/doing → work/done → history/releases/
+work/backlog → work/todo → work/doing → work/done → history/releases/
 ```
 
 ### AI Integration
@@ -117,19 +119,22 @@ Clear migration guides for moving between framework levels as your project evolv
 ## Documentation
 
 ### Core Documentation
-- **[README-TEMPLATE-SELECTION.md](project-framework-template/README-TEMPLATE-SELECTION.md)** - Choose your framework level ⭐
-- **[NEW-PROJECT-CHECKLIST.md](project-framework-template/NEW-PROJECT-CHECKLIST.md)** - Setup instructions ⭐
-- **[PROJECT-STATUS.md](PROJECT-STATUS.md)** - Current version and status
-- **[CHANGELOG.md](CHANGELOG.md)** - Version history
-- **[INDEX.md](INDEX.md)** - Complete documentation index
-- [UPGRADE-PATH.md](project-framework-template/UPGRADE-PATH.md) - Migration between levels
-- [STRUCTURE.md](project-framework-template/STRUCTURE.md) - Template structure reference
+- **[README-TEMPLATE-SELECTION.md](project-templates/README-TEMPLATE-SELECTION.md)** - Choose your framework level ⭐
+- **[NEW-PROJECT-CHECKLIST.md](project-templates/NEW-PROJECT-CHECKLIST.md)** - Setup instructions ⭐
+- **[framework/PROJECT-STATUS.md](framework/PROJECT-STATUS.md)** - Current version and status
+- **[framework/CHANGELOG.md](framework/CHANGELOG.md)** - Version history
+- **[framework/INDEX.md](framework/INDEX.md)** - Complete documentation index
+- [UPGRADE-PATH.md](project-templates/UPGRADE-PATH.md) - Migration between levels
+- [STRUCTURE.md](project-templates/STRUCTURE.md) - Template structure reference
+
+### Reference Implementation
+- **[project-hello-world/](project-hello-world/)** - Complete working example of Standard framework
 
 ### Template Package
-- [project-framework-template/](project-framework-template/) - Complete template package
-- [minimal/](project-framework-template/minimal/) - Minimal framework templates
-- [light/](project-framework-template/light/) - Light framework templates
-- [standard/](project-framework-template/standard/) - Standard framework templates
+- [project-templates/](project-templates/) - Complete template package
+- [minimal/](project-templates/minimal/) - Minimal framework templates
+- [light/](project-templates/light/) - Light framework templates
+- [standard/](project-templates/standard/) - Standard framework templates
 
 ---
 
@@ -182,26 +187,26 @@ Depth varies by framework level.
 
 ## Project Status
 
-**Current Version:** v2.0.0 (2025-12-19)
-**Status:** Production-ready for internal use
+**Current Version:** v3.0.0 (2026-01-07)
+**Status:** In Development (Migration Branch)
 
-See [PROJECT-STATUS.md](PROJECT-STATUS.md) for detailed status.
+See [framework/PROJECT-STATUS.md](framework/PROJECT-STATUS.md) for detailed status.
 
 ### What's Complete
-- ✅ Multi-level framework system (Minimal/Light/Standard/Enterprise)
+- ✅ Multi-level framework system (Minimal/Light/Standard)
 - ✅ 19 templates including research phase (5 templates)
 - ✅ CMD wrappers (4 variants)
 - ✅ Setup checklists and upgrade paths
 - ✅ Complete documentation suite
 - 🚧 Dogfooding (framework using its own Standard framework)
 
-### What's Next (v2.1.0)
+### What's Next
 - 📋 ZIP distribution package
 - 📋 Interactive setup script
 - 📋 Validation script
 - 📋 Visual diagrams
 
-See [CHANGELOG.md](CHANGELOG.md) for version history.
+See [framework/CHANGELOG.md](framework/CHANGELOG.md) for version history.
 
 ---
 
@@ -210,19 +215,16 @@ See [CHANGELOG.md](CHANGELOG.md) for version history.
 ### Scenario 1: Quick Automation Script
 **Project:** Daily backup automation (PowerShell)
 **Framework Level:** Minimal
-**Setup Time:** 10 minutes
 **Files:** 2 (README.md, backup.ps1)
 
 ### Scenario 2: CLI Utility Tool
 **Project:** Data conversion utility
 **Framework Level:** Light
-**Setup Time:** 45 minutes
 **Files:** 7 core docs + tool code
 
 ### Scenario 3: Web Application
 **Project:** Internal dashboard application
 **Framework Level:** Standard
-**Setup Time:** 3 hours
 **Features:** Full planning, kanban workflow, team collaboration
 
 ---
@@ -251,7 +253,7 @@ See [CHANGELOG.md](CHANGELOG.md) for version history.
 **Git Clone:**
 ```bash
 git clone https://github.com/spearit-solutions/project-framework.git
-cd project-framework/project-framework-template
+cd project-framework/project-templates
 # Copy appropriate level to your project
 ```
 
@@ -259,7 +261,7 @@ cd project-framework/project-framework-template
 - Download repository as ZIP
 - Extract and copy desired framework level
 
-### Planned (v2.1.0)
+### Planned
 - Pre-packaged ZIP files for each framework level
 - Interactive setup script
 - Automated distribution process
@@ -268,7 +270,7 @@ cd project-framework/project-framework-template
 
 ## Version Strategy
 
-**Framework Version:** v2.0.0 (tracked in [PROJECT-STATUS.md](PROJECT-STATUS.md))
+**Framework Version:** See [framework/PROJECT-STATUS.md](framework/PROJECT-STATUS.md) for current version
 - Major version for breaking structure changes
 - Minor version for new features/templates
 - Patch version for bug fixes/documentation
@@ -279,7 +281,7 @@ cd project-framework/project-framework-template
 
 **Template Versions:** Inherit framework version unless independently versioned
 
-See [Version Strategy Documentation](thoughts/project/reference/version-strategy.md) *(planned)* for details.
+See [Version Strategy Documentation](framework/thoughts/reference/version-strategy.md) *(planned)* for details.
 
 ---
 
@@ -287,7 +289,7 @@ See [Version Strategy Documentation](thoughts/project/reference/version-strategy
 
 **Status:** Framework currently maintained by SpearIT, LLC
 
-**Future:** CONTRIBUTING.md planned for v2.2.0
+**Future:** CONTRIBUTING.md planned for future release
 
 **Feedback Welcome:**
 - Issues, suggestions, and pull requests welcome
@@ -303,12 +305,12 @@ See [LICENSE](LICENSE) file for details.
 
 ## Dogfooding
 
-**Meta Note:** This framework project uses its own Standard framework for development (as of v2.0.0). This serves as:
+**Meta Note:** This framework project uses its own Standard framework for development. This serves as:
 1. **Validation** - Proves framework works for framework development
 2. **Example** - Real-world example of framework usage
 3. **Improvement** - Surfaces pain points and areas for enhancement
 
-Check [thoughts/project/](thoughts/project/) to see the framework in action on itself.
+Check [framework/thoughts/](framework/thoughts/) to see the framework in action on itself, or [project-hello-world/](project-hello-world/) for a simpler reference implementation.
 
 ---
 
@@ -316,7 +318,7 @@ Check [thoughts/project/](thoughts/project/) to see the framework in action on i
 
 **Maintainer:** Gary Elliott (gary.elliott@spearit.solutions)
 **Organization:** SpearIT, LLC
-**Documentation:** See [INDEX.md](INDEX.md) for complete doc navigation
+**Documentation:** See [framework/INDEX.md](framework/INDEX.md) for complete doc navigation
 
 ---
 
@@ -330,4 +332,4 @@ Check [thoughts/project/](thoughts/project/) to see the framework in action on i
 
 ---
 
-**Get Started:** [README-TEMPLATE-SELECTION.md](project-framework-template/README-TEMPLATE-SELECTION.md) → [NEW-PROJECT-CHECKLIST.md](project-framework-template/NEW-PROJECT-CHECKLIST.md)
+**Get Started:** [README-TEMPLATE-SELECTION.md](project-templates/README-TEMPLATE-SELECTION.md) → [NEW-PROJECT-CHECKLIST.md](project-templates/NEW-PROJECT-CHECKLIST.md)
