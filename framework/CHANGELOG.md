@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Planned
+- Minimal and Light Framework template packages (deferred from v3.0.0)
 - Visual diagrams for folder structure and workflow
 - ZIP distribution package
 - Interactive setup script
@@ -21,6 +22,77 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Backlog review command (FEAT-017)
 - Claude command framework (FEAT-018)
 - Automated session history generation (FEAT-022)
+
+---
+
+## [3.0.0] - 2026-01-08
+
+### BREAKING CHANGES
+- **FEAT-026: Framework Structure Migration**
+  - Reorganized repository into monorepo structure
+  - Framework content moved from root to `framework/` folder
+  - Users must update all references to framework files
+  - Project structure completely redesigned
+
+### Added
+- **Monorepo Structure**
+  - Created `framework/` folder for framework project
+  - Created `project-hello-world/` reference implementation
+  - Root-level `QUICK-START.md` for navigation
+  - Root-level `CLAUDE.md` for repository navigation
+- **Universal Structure Definitions**
+  - `framework/docs/PROJECT-STRUCTURE-STANDARD.md` - Definitive project structure specification
+  - `framework/docs/REPOSITORY-STRUCTURE.md` - Repository root structure specification
+  - `framework/thoughts/research/README.md` - Research folder purpose documentation
+- **Idea Collection Pattern**
+  - Established pattern for idea collections in research/ folder
+  - Documented lifecycle and workflow in FEAT-026-sub-item-strategy.md
+  - Updated structure documentation to include idea collections
+
+### Changed
+- **Framework Dogfooding Complete**
+  - Framework now fully applies its own Standard structure
+  - All framework documentation in framework/
+  - Framework uses its own templates, process, and workflow
+- **Flattened Folder Structure**
+  - Removed `thoughts/project/planning/` level
+  - Moved `planning/backlog/` to `work/backlog/`
+  - Reduced nesting from 4 levels to 3 levels maximum
+- **Template Reorganization**
+  - Categorized 19 templates into subfolders
+  - Created: work-items/, decisions/, research/, documentation/, project/, wrappers/
+  - Easier navigation and clearer organization
+- **Collaboration Guides Location**
+  - Moved from `thoughts/project/collaboration/` to `framework/collaboration/`
+  - Now recognized as universal guides, not project-specific
+
+### Fixed
+- **P1 Critical Bugs (5 fixed)**
+  - Root CLAUDE.md missing (created at repository root)
+  - Invalid file path references throughout documentation
+  - Framework structure didn't match project standard
+  - Quick-start content separation unclear
+  - Framework folder naming inconsistent
+- **P2 High Priority Issues (6 fixed)**
+  - Removed enterprise/large-team references (not applicable yet)
+  - Removed fake/placeholder numbers from documentation
+  - Cleaned up CLAUDE.md (removed stale references)
+  - Aligned step counts across documentation (9 vs 11 steps)
+  - Simplified workflow documentation (reduced duplication)
+  - Fixed version references (removed outdated version numbers)
+
+### Documentation
+- Created comprehensive migration documentation in FEAT-026 work items
+- Documented 14 major structure decisions in FEAT-026-universal-structure-decisions.md
+- Created collision analysis and validation reports
+- Established sub-item strategy for complex features
+- Documented process improvements (co-location principle, idea collections)
+
+### Migration Notes
+- This is a BREAKING CHANGE - repository structure completely reorganized
+- All paths to framework files have changed
+- Users with existing projects are not affected (framework is copied, not referenced)
+- This reorganization positions the framework for future growth and clarity
 
 ---
 
