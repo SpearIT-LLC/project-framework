@@ -401,6 +401,200 @@ All changes pushed to remote:
 
 ---
 
-**Session End Time:** ~2:00 PM PST
-**Session Outcome:** Success - v3.0.0 released, cleanup completed, prevention measures implemented
-**Repository State:** Clean, all changes pushed, ready for next work
+---
+
+## Afternoon Session: Work Item Generation from FEAT-026 Ideas
+
+**Time:** ~3:00 PM - 5:00 PM PST
+**Focus:** Converting backlog ideas into structured work items
+
+### Work Items Generated
+
+Generated 9 work items from backlog-ideas-from-feat-026.md:
+
+**High Priority:**
+1. **TECH-028:** Document DRY Principles for Documentation
+   - Type: Process improvement / Policy documentation
+   - Establishes DRY principles for framework docs
+   - Blocks FEAT-031 and TECH-036
+
+2. **DECISION-029:** License Choice for Framework
+   - Type: Decision (blocking public release)
+   - Choose open source license (MIT, Apache 2.0, or GPL v3)
+   - Comprehensive options analysis included
+
+**Medium Priority:**
+3. **FEAT-030:** Add work/hold/ Folder to Workflow
+   - Handles work items paused due to interruptions
+   - Acknowledges reality of urgent work
+
+4. **FEAT-031:** INDEX.md as Source-of-Truth Registry
+   - Implements tooling to support DRY principles
+   - Requires TECH-028, blocks TECH-036
+
+5. **FEAT-032:** Support Multiple Work Items Per Release
+   - Document grouped release strategy
+   - Handle 3 bug fixes in one version, etc.
+
+**Low Priority:**
+6. **TECH-033:** Review Status Field Redundancy
+   - Folder IS status - is field redundant?
+   - Consider repurposing for sub-status
+
+7. **FEAT-034:** Projects Showcase Documentation
+   - List projects using the framework
+   - Low priority until after public release
+
+8. **DECISION-035:** Root Status Reference Strategy
+   - Decide if root needs separate status document
+   - Recommendation: keep as-is
+
+**New Feature (emerged from discussion):**
+9. **FEAT-037:** Project Configuration File
+   - High priority, comprehensive design
+   - Emerged from TECH-028 categorization discussion
+   - Addresses framework vs. code project context
+
+### Key Insights and Discussions
+
+#### 1. Documentation IS the Product
+**Realization:** In a framework project, documentation/policies ARE the deliverable, not "technical debt"
+
+**Question Raised:** Is there such thing as tech debt in a framework project?
+- Traditional project: Code is product, docs are supporting → Poor docs = debt
+- Framework project: Docs/policies/templates ARE the product → Improvements = features
+
+**Impact on Categorization:**
+- TECH-028 (DRY principles): Really creating framework content (product)
+- TECH-036 (doc refactoring): Really improving framework quality (product)
+- Categories need context-dependent interpretation
+
+#### 2. Project Config File Concept
+**Problem Identified:** AI needs context to interpret work item categories correctly
+- Framework project: TECH = process improvements (not debt)
+- Code project: TECH = technical debt/refactoring
+- Same category, different meaning based on project type
+
+**Solution Proposed:** Lightweight project-config.yaml
+- Provides project context (type, deliverable)
+- Points to policy documents (master policy index)
+- Enables proper category interpretation
+- Allows users to override framework policies
+- Complements INDEX.md (machine-readable vs human-readable)
+
+**Key Question:** How to prevent AI confusion when framework policies (for docs projects) are referenced by code projects?
+**Answer:** Explicit policy scoping in config file
+
+#### 3. DRY Documentation Workflow Established
+**Sequence:** TECH-028 → FEAT-031 → TECH-036
+1. **TECH-028:** Establish DRY policy and principles (what)
+2. **FEAT-031:** Implement INDEX.md registry to track source-of-truth (tooling)
+3. **TECH-036:** Audit and refactor existing documentation (apply)
+
+Clear separation: Policy → Tooling → Implementation
+
+### Decisions Made
+
+**Decision 1: YAML Format for Config**
+- Format: YAML (human-readable, supports comments)
+- Location: Project root as project-config.yaml
+- Decided: 2026-01-08
+
+**Decision 2: Work Item Dependencies Clarified**
+- TECH-028 blocks FEAT-031 and TECH-036
+- FEAT-031 requires TECH-028, blocks TECH-036
+- TECH-036 requires both TECH-028 and FEAT-031
+- Proper workflow sequence established
+
+### Open Questions for Tomorrow
+
+Documented in FEAT-037 for discussion:
+
+1. **INDEX.md Sync Strategy:** How do project-config and INDEX.md work together?
+   - Option A: Independent (allow duplication)
+   - Option B: Config references INDEX.md
+   - Option C: INDEX.md references config
+   - Option D: Separate concerns completely (recommended)
+
+2. **Field Naming Conventions:** Nested vs flat structure?
+   - Nested recommended: `project.type`, `policies.workflow`
+   - Need to align with existing framework terminology
+
+3. **Policy Categorization:** Should policies have formal categories?
+   - Option A: Flat list (simple)
+   - Option B: Categorized by framework structure (organized)
+   - Option C: Essential policies + INDEX.md reference (minimal, recommended)
+   - Need to decide if formal categories add enough value
+
+4. **Category Interpretation:** How to handle framework vs code projects?
+   - Config provides context for AI interpretation
+   - Each project explicitly declares type and deliverable
+   - Categories mean different things based on context
+
+### Files Created
+
+**Work Items (9):**
+- TECH-028-dry-documentation-principles.md
+- DECISION-029-license-choice.md
+- FEAT-030-add-hold-folder.md
+- FEAT-031-index-source-of-truth-registry.md
+- FEAT-032-multiple-items-per-release.md
+- TECH-033-status-field-redundancy.md
+- FEAT-034-projects-showcase.md
+- DECISION-035-root-status-reference.md
+- FEAT-037-project-config-file.md
+
+**Modified:**
+- framework/thoughts/research/backlog-ideas-from-feat-026.md (tracking section updated)
+
+### Statistics
+
+**Work Items Generated:** 9 (from 10 ideas; 2 items noted as overlapping with existing P2 work)
+**Session Duration:** ~2 hours
+**Discussion Topics:** 3 major (tech debt in frameworks, config file design, DRY workflow)
+**Design Decisions:** 2 finalized, 4 open for tomorrow
+**Key Insight:** Documentation is product in framework projects, not supporting material
+
+### Key Learnings
+
+1. **Context Matters for Categories**
+   - Work item categories need project context
+   - Same category means different things in different project types
+   - Config file can provide this context
+
+2. **Not All Ideas Become Work Items**
+   - Items #9 and #10 overlap with existing FEAT-026-P2 work
+   - Noted in tracking but not duplicated
+   - Good practice to check for overlap
+
+3. **Design Discussions Surface Requirements**
+   - FEAT-037 emerged organically from categorization discussion
+   - Real need identified through conversation
+   - Sometimes best work items come from solving immediate problems
+
+4. **Policy → Tooling → Implementation Pattern**
+   - Establish principles first
+   - Build tooling to support them
+   - Apply to existing work last
+   - Clear logical sequence
+
+### Next Steps
+
+**Tomorrow:**
+1. Discuss open questions in FEAT-037
+   - INDEX.md sync strategy
+   - Field naming conventions
+   - Policy categorization approach
+2. Finalize project config design decisions
+3. Potentially begin implementation
+
+**Future Work:**
+- 9 new work items in backlog ready to prioritize
+- DRY documentation workflow ready to execute
+- Project config ready for design finalization
+
+---
+
+**Session End Time:** ~5:00 PM PST
+**Session Outcome:** Success - 9 work items generated, major design discussions captured, clear next steps
+**Repository State:** Ready for commit with work items and session history

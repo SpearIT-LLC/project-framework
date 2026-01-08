@@ -17,7 +17,28 @@ This document captures enhancement ideas and discussion items discovered during 
 
 **Instructions:** As you create work items from the ideas below, add them here with creation date. When all desired items are created, move this file to history/archive/.
 
-*None created yet*
+- **2026-01-08:** TECH-028-dry-documentation-principles.md (Item #2 - Policy)
+- **2026-01-08:** DECISION-029-license-choice.md (Item #6)
+- **2026-01-08:** FEAT-030-add-hold-folder.md (Item #1)
+- **2026-01-08:** FEAT-031-index-source-of-truth-registry.md (Item #3 - Tooling)
+- **2026-01-08:** FEAT-032-multiple-items-per-release.md (Item #4)
+- **2026-01-08:** TECH-033-status-field-redundancy.md (Item #5)
+- **2026-01-08:** FEAT-034-projects-showcase.md (Item #7)
+- **2026-01-08:** DECISION-035-root-status-reference.md (Item #8)
+- **2026-01-08:** TECH-036-refactor-duplicate-documentation.md (Item #2, #3 - Implementation)
+- **2026-01-08:** FEAT-037-project-config-file.md (New - emerged from TECH-028 discussion)
+
+**Workflow for DRY Documentation:**
+- TECH-028: Establish DRY principles (policy)
+- FEAT-031: Implement INDEX.md registry (tooling)
+- TECH-036: Audit and refactor existing docs (implementation)
+
+**New Feature (emerged from discussion):**
+- FEAT-037: Project config file - provides context and master policy index for AI/tooling
+
+**Note:** Items #9 and #10 not created as separate work items:
+- Item #9 (Standard Framework Level definition) - May be addressed by FEAT-026-P2 cleanup work
+- Item #10 (Large team references review) - Overlaps with FEAT-026-P2-TECH-remove-enterprise
 
 ---
 
