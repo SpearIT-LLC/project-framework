@@ -198,8 +198,12 @@ Write-Host "✓ Verified done/ is empty" -ForegroundColor Green
 3. **Consistent results:** Same outcome regardless of who runs it (human or AI)
 4. **Error detection:** Fails fast with clear messages
 5. **Reduces cognitive load:** One command instead of multi-step manual process
-6. **Idempotent:** Safe to run multiple times
-7. **Documentation as code:** Script is living documentation of process
+6. **Saves AI tokens:** Single script call vs reading/interpreting multi-step instructions
+   - Manual process: ~500-1000 tokens (read docs, execute commands, verify)
+   - Script: ~50-100 tokens (call script, check output)
+   - 10x token reduction per release
+7. **Idempotent:** Safe to run multiple times
+8. **Documentation as code:** Script is living documentation of process
 
 ---
 
