@@ -1,8 +1,8 @@
 # SpearIT Project Framework - Project Status
 
-**Last Updated:** 2026-01-08
+**Last Updated:** 2026-01-11
 **Updated By:** Gary Elliott with Claude Code
-**Current Version:** v3.0.0 (2026-01-08)
+**Current Version:** v3.0.1 (2026-01-11)
 **Core Implementation:** Complete and production-ready
 **Ongoing Enhancements:** Monorepo structure established, framework dogfooding itself
 
@@ -18,11 +18,17 @@ The SpearIT Project Framework is a comprehensive project management framework te
 
 ## Version Information
 
-### Current Release: v3.0.0 (2026-01-08)
+### Current Release: v3.0.1 (2026-01-11)
 
 **Status:** Stable - Production Ready
 
-**Latest Changes (FEAT-026 - Structure Migration):**
+**Latest Changes (FEAT-038 - Update v3.0.0 Path References):**
+- 📝 Updated 10 files with v3.0.0 structure path references
+- 📝 Fixed all outdated path references (thoughts/project/planning/ → thoughts/work/)
+- 📝 Updated NEW-PROJECT-CHECKLIST.md to v3.0.0
+- 📝 Aligned all documentation with PROJECT-STRUCTURE-STANDARD.md
+
+**Previous Release (FEAT-026 - Structure Migration):**
 - 🔄 **BREAKING:** Reorganized repository into monorepo structure
 - 📁 Framework content moved to `framework/` folder
 - 📁 Created `project-hello-world/` reference implementation
@@ -282,6 +288,8 @@ See [roadmap.md](thoughts/project/planning/roadmap.md) for complete roadmap.
 
 | Version | Release Date | Type | Highlights |
 |---------|--------------|------|------------|
+| v3.0.1 | 2026-01-11 | Patch | Updated 10 files with v3.0.0 path references, aligned all docs with structure standard |
+| v3.0.0 | 2026-01-08 | Major | Monorepo structure, flattened thoughts/ hierarchy, template reorganization |
 | v2.2.5 | 2026-01-01 | Patch | Removed stale Target Version field, added version calculation at release time |
 | v2.2.4 | 2026-01-01 | Patch | Added Step 7.5 pre-implementation review, universal documentation update principle |
 | v2.2.3 | 2026-01-01 | Patch | Added Step 8.5 review checkpoint, AI presents work for approval before release |

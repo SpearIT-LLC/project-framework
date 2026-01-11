@@ -25,6 +25,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [3.0.1] - 2026-01-11
+
+### Fixed
+- **FEAT-038: Update All v3.0.0 Path References**
+  - Updated 10 files with v3.0.0 structure path references
+  - Process documentation: kanban-workflow.md, workflow-guide.md, troubleshooting-guide.md, architecture-guide.md
+  - Templates: CLAUDE-TEMPLATE.md, INDEX-TEMPLATE.md, PROJECT-STATUS-TEMPLATE.md, README-TEMPLATE.md, PROJECT-DEFINITION-TEMPLATE.md
+  - NEW-PROJECT-CHECKLIST.md updated to v3.0.0
+  - All references changed: thoughts/project/planning/ → thoughts/work/
+  - Fixed template package path: project-framework-template/ → project-templates/
+  - Removed 4-level structure references (now 3-level)
+  - Aligned all documentation with PROJECT-STRUCTURE-STANDARD.md
+
+---
+
 ## [3.0.0] - 2026-01-08
 
 ### BREAKING CHANGES
