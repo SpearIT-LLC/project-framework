@@ -1,6 +1,6 @@
 # Feature: Fix Framework Structure Compliance
 
-**ID:** FEAT-040
+**ID:** 040
 **Type:** Feature (Structure Compliance)
 **Version Impact:** PATCH (fixes structure compliance)
 **Status:** Todo

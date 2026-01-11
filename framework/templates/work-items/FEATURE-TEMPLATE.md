@@ -1,6 +1,6 @@
 # Feature: [Feature Name]
 
-**ID:** FEAT-NNN (e.g., FEAT-001, FEAT-002)
+**ID:** NNN (e.g., 001, 002, 042)
 **Type:** Feature
 **Version Impact:** MINOR (adds new capability)
 **Status:** [Backlog | Todo | Doing | Done | Released]

@@ -1,6 +1,6 @@
 # Feature: Visual Diagrams for Framework Documentation
 
-**ID:** FEAT-004
+**ID:** 004
 **Type:** Feature (Documentation)
 **Version Impact:** PATCH (documentation improvement)
 **Target Version:** v2.0.0

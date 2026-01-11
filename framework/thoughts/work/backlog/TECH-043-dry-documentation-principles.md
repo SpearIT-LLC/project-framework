@@ -1,6 +1,6 @@
-# TECH-028: Document DRY Principles for Documentation
+# Technical: Document DRY Principles for Documentation
 
-**ID:** TECH-028
+**ID:** 043
 **Type:** Technical Debt / Process Improvement
 **Priority:** High
 **Status:** Backlog
@@ -107,9 +107,9 @@ Document DRY principles for framework documentation with clear guidelines.
 
 ## Workflow
 
-**Sequence:** TECH-028 → FEAT-031 → TECH-036
+**Sequence:** TECH-043 → FEAT-031 → TECH-036
 
-1. **TECH-028 (this item):** Establish DRY policy and principles
+1. **TECH-043 (this item):** Establish DRY policy and principles
 2. **FEAT-031:** Implement INDEX.md registry to track source-of-truth
 3. **TECH-036:** Audit and refactor existing documentation to follow policy
 

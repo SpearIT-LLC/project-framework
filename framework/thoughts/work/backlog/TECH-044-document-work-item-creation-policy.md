@@ -1,6 +1,6 @@
 # Technical: Document Work Item Creation Policy
 
-**ID:** TECH-040
+**ID:** 044
 **Type:** Technical (Documentation/Policy)
 **Version Impact:** PATCH (clarifies existing process)
 **Status:** Backlog
@@ -213,7 +213,7 @@ If kanban-workflow.md has a quick reference section, add:
 
 ```markdown
 ### Added
-- **TECH-040: Document Work Item Creation Policy**
+- **TECH-044: Document Work Item Creation Policy**
   - Added explicit policy to kanban-workflow.md
   - Clarified that all new work items start in backlog/ with Status: Backlog
   - Explained when to move from backlog/ to todo/

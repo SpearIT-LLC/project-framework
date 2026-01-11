@@ -5,7 +5,7 @@
 **Priority:** High
 **Status:** Backlog
 **Created:** 2026-01-08
-**Related:** TECH-028, FEAT-031
+**Related:** TECH-043, FEAT-031
 
 ---
 
@@ -19,7 +19,7 @@ Create a lightweight project configuration file that provides contextual paramet
 
 ## Problem Statement
 
-**Issue identified during:** TECH-028 categorization discussion
+**Issue identified during:** TECH-043 categorization discussion
 
 Currently, projects using this framework face several challenges:
 
@@ -480,7 +480,7 @@ Below is the human-organized documentation index...
 
 **Complements:**
 - **FEAT-031:** INDEX.md is human-readable index, config is machine-readable (see above)
-- **TECH-028:** DRY principles can be referenced in config
+- **TECH-043:** DRY principles can be referenced in config
 - **TECH-036:** Config helps identify which policies to apply during refactoring
 
 **Enables:**
@@ -615,9 +615,9 @@ policies:
 
 ## References
 
-- Related: TECH-028 (DRY principles - can be referenced in config)
+- Related: TECH-043 (DRY principles - can be referenced in config)
 - Related: FEAT-031 (INDEX.md registry - human-readable counterpart)
-- Origin: Discussion during TECH-028 categorization review
+- Origin: Discussion during TECH-043 categorization review
 
 ---
 

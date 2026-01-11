@@ -1,6 +1,6 @@
 # Bug Fix: Complete Bash/Write/Edit Permission Configuration
 
-**ID:** BUGFIX-004
+**ID:** 045
 **Type:** Bugfix
 **Version Impact:** PATCH (when fixed)
 **Target Version:** TBD (After VSCode Extension Fix)
@@ -74,7 +74,7 @@ After VSCode extension is fixed, the existing configuration should work:
 
 ## Prerequisites
 
-Before starting work on BUGFIX-004, verify:
+Before starting work on BUGFIX-045, verify:
 
 1. ✅ **Claude Code team has fixed Issue #15921**
    - Check: https://github.com/anthropics/claude-code/issues/15921
@@ -133,7 +133,7 @@ Before starting work on BUGFIX-004, verify:
 - [ ] Verify VSCode extension is updated with fix
 - [ ] Review Issue #15921 for any configuration changes needed
 - [ ] Verify `.claude/settings.local.json` is still correct
-- [ ] Move BUGFIX-004 from backlog → todo → doing
+- [ ] Move BUGFIX-045 from backlog → todo → doing
 
 **Testing:**
 - [ ] Run all test cases above
@@ -142,17 +142,17 @@ Before starting work on BUGFIX-004, verify:
 
 **If Tests Pass:**
 - [ ] Update session history with test results
-- [ ] Update BUGFIX-004 status to "Done"
+- [ ] Update BUGFIX-045 status to "Done"
 - [ ] Determine version impact (likely PATCH for v2.2.3 or v2.3.0)
 - [ ] Update CHANGELOG.md
 - [ ] Update PROJECT-STATUS.md
 - [ ] Commit and tag release
-- [ ] Archive BUGFIX-004
+- [ ] Archive BUGFIX-045
 
 **If Tests Fail:**
 - [ ] Document failure details
 - [ ] Comment on Issue #15921 with new findings
-- [ ] Keep BUGFIX-004 in backlog
+- [ ] Keep BUGFIX-045 in backlog
 - [ ] Continue monitoring upstream fix
 
 ---
@@ -171,7 +171,7 @@ Before starting work on BUGFIX-004, verify:
 
 ```markdown
 ### Fixed
-- **BUGFIX-004: Complete Bash/Write/Edit Permission Configuration**
+- **BUGFIX-045: Complete Bash/Write/Edit Permission Configuration**
   - Verified Bash command permissions work after VSCode extension fix
   - Confirmed Write/Edit operations respect permission configuration
   - Completes FEAT-023 permission configuration goals

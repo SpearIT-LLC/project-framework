@@ -1,6 +1,6 @@
 # Bug Fix: [Brief Description]
 
-**ID:** BUG-NNN (e.g., BUG-101, BUG-102)
+**ID:** NNN (e.g., 004, 101, 102)
 **Type:** Bugfix
 **Version Impact:** PATCH (backward-compatible fix)
 **Status:** [Backlog | Todo | Doing | Done | Released]

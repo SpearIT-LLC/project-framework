@@ -5,16 +5,16 @@
 **Priority:** Medium
 **Status:** Backlog
 **Created:** 2026-01-08
-**Requires:** TECH-028
+**Requires:** TECH-043
 **Blocks:** TECH-036
 
 ---
 
 ## Summary
 
-Enhance INDEX.md to explicitly track which file is the authoritative source-of-truth for each major topic in the framework, providing tooling to support DRY documentation principles established in TECH-028.
+Enhance INDEX.md to explicitly track which file is the authoritative source-of-truth for each major topic in the framework, providing tooling to support DRY documentation principles established in TECH-043.
 
-**Scope:** This work item implements the INDEX.md registry mechanism. Policy is established in TECH-028, and refactoring existing docs happens in TECH-036.
+**Scope:** This work item implements the INDEX.md registry mechanism. Policy is established in TECH-043, and refactoring existing docs happens in TECH-036.
 
 ---
 
@@ -95,7 +95,7 @@ Add "source-of-truth" metadata to INDEX.md entries:
 
 ## Topic: DRY Documentation
 
-**Source of Truth:** TECH-028 (when implemented)
+**Source of Truth:** TECH-043 (when implemented)
 **References:**
 - This INDEX.md (tracking source-of-truth)
 
@@ -129,7 +129,7 @@ Instead of separate "Topic" sections, enhance existing INDEX.md structure:
    source-of-truth for each topic. When updating information:
    - Update the SOURCE OF TRUTH document first
    - Then update any references to maintain consistency
-   - See TECH-028 for DRY documentation principles
+   - See TECH-043 for DRY documentation principles
    ```
 
 2. Add [SOURCE OF TRUTH] tags to key documents
@@ -149,7 +149,7 @@ Instead of separate "Topic" sections, enhance existing INDEX.md structure:
 ## Files to Update
 
 - [ ] framework/INDEX.md - Add registry concept and metadata
-- [ ] TECH-028 - Link to INDEX.md as registry
+- [ ] TECH-043 - Link to INDEX.md as registry
 - [ ] CLAUDE.md - Reference INDEX.md for source-of-truth lookup
 
 ---
@@ -159,7 +159,7 @@ Instead of separate "Topic" sections, enhance existing INDEX.md structure:
 - [ ] INDEX.md includes explanation of source-of-truth concept
 - [ ] Major topics have identified authoritative sources
 - [ ] Format is consistent and maintainable
-- [ ] Documentation updated (TECH-028, CLAUDE.md)
+- [ ] Documentation updated (TECH-043, CLAUDE.md)
 - [ ] Examples provided for future additions
 
 ---
@@ -194,7 +194,7 @@ Instead of separate "Topic" sections, enhance existing INDEX.md structure:
 
 ## References
 
-- Requires: TECH-028 (DRY documentation principles - establishes policy)
+- Requires: TECH-043 (DRY documentation principles - establishes policy)
 - Blocks: TECH-036 (documentation refactoring - needs registry first)
 - Source: framework/thoughts/research/backlog-ideas-from-feat-026.md (Item #3)
 - Origin: FEAT-026-followup.md line 11
@@ -202,9 +202,9 @@ Instead of separate "Topic" sections, enhance existing INDEX.md structure:
 
 ## Workflow
 
-**Sequence:** TECH-028 → FEAT-031 (this item) → TECH-036
+**Sequence:** TECH-043 → FEAT-031 (this item) → TECH-036
 
-1. **TECH-028:** Establish DRY policy and principles (prerequisite)
+1. **TECH-043:** Establish DRY policy and principles (prerequisite)
 2. **FEAT-031 (this item):** Implement INDEX.md registry to track source-of-truth
 3. **TECH-036:** Apply policy by auditing and refactoring existing documentation
 
@@ -218,8 +218,8 @@ Instead of separate "Topic" sections, enhance existing INDEX.md structure:
 - Can expand over time as needed
 - Should help, not burden, maintainers
 
-**Relationship to TECH-028:**
-- TECH-028 establishes DRY principles
+**Relationship to TECH-043:**
+- TECH-043 establishes DRY principles
 - FEAT-031 provides tooling (INDEX.md registry) to support those principles
 - These complement each other
 

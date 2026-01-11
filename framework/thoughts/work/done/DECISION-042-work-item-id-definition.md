@@ -3,8 +3,9 @@
 **ID:** 042
 **Type:** Decision (Architectural)
 **Priority:** High
-**Status:** Backlog
+**Status:** Done
 **Created:** 2026-01-11
+**Completed:** 2026-01-11
 **Impacts:** All work items, templates, documentation, tooling
 
 ---
@@ -29,7 +30,7 @@ The framework currently has conflicting definitions:
 - Counter sequences appear independent per type
 
 **Actual practice shows:**
-- Work items referenced as "FEAT-026", "TECH-040" everywhere
+- Work items referenced as "FEAT-026", "TECH-044" everywhere
 - Template metadata: `**ID:** FEAT-002`
 - Never referenced as just "002" or "#002"
 - Type prefix always included in references
@@ -172,7 +173,7 @@ Content:
 
 **Examples:**
 - ID 026 → Filename: FEAT-026-structure-migration.md
-- ID 040 → Filename: TECH-040-work-item-policy.md
+- ID 040 → Filename: TECH-044-work-item-policy.md
 - ID 042 → Filename: DECISION-042-id-definition.md
 
 **Searching:**
@@ -195,7 +196,7 @@ Add clarification:
 - Supporting files share base ID: FEAT-042-ANALYSIS.md, FEAT-042-P1-BUG-*.md
 - Type prefix is organizational, not part of ID uniqueness
 
-**3. Update TECH-040 (work item creation policy)**
+**3. Update TECH-044 (work item creation policy)**
 
 Reference this decision for ID assignment guidance.
 
@@ -311,7 +312,7 @@ Filename: 042-description.md
 ## Dependencies
 
 **Blocks:**
-- TECH-040 (Work Item Creation Policy) - needs ID definition
+- TECH-044 (Work Item Creation Policy) - needs ID definition
 - TECH-041 (Supporting Files Policy) - references ID uniqueness
 - Future automation/tooling - needs canonical format
 
@@ -338,14 +339,14 @@ Filename: 042-description.md
 
 ## Implementation Checklist
 
-- [ ] Update kanban-workflow.md with clear ID definition
+- [x] Update kanban-workflow.md with clear ID definition
 - [ ] Update TECH-041 to reference this decision
-- [ ] Update all templates (6-8 files)
-- [ ] Add examples to workflow documentation
-- [ ] Add grep/search examples
-- [ ] Document both reference forms (canonical + convenience)
-- [ ] Verify no conflicting documentation remains
-- [ ] Test grep patterns work as documented
+- [x] Update all templates (FEATURE-TEMPLATE.md, BUGFIX-TEMPLATE.md)
+- [x] Add examples to workflow documentation
+- [x] Add grep/search examples
+- [x] Document both reference forms (canonical + convenience)
+- [x] Verify no conflicting documentation remains
+- [x] Test grep patterns work as documented
 - [ ] Commit changes with clear message
 
 ---
@@ -383,4 +384,4 @@ Filename: 042-description.md
 ---
 
 **Last Updated:** 2026-01-11
-**Status:** Backlog (Awaiting decision approval)
+**Status:** Done (Decision implemented)

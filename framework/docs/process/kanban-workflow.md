@@ -18,29 +18,29 @@ A simplified file-based kanban workflow designed for one-person teams. Work item
 
 ```
 thoughts/
-├── roadmap.md                          # High-level vision with feature IDs
+├── roadmap.md                          # High-level vision with work item IDs
 ├── work/
 │   ├── backlog/                        # NOT committed yet
-│   │   ├── feature-NNN-description.md
-│   │   ├── bugfix-NNN-description.md
-│   │   └── spike-description.md
+│   │   ├── FEAT-NNN-description.md
+│   │   ├── BUGFIX-NNN-description.md
+│   │   └── SPIKE-description.md
 │   ├── todo/                           # Committed next (max 10)
 │   │   ├── .limit                      # Contains "10"
-│   │   └── feature-NNN-description.md
+│   │   └── FEAT-NNN-description.md
 │   ├── doing/                          # Active work (WIP limit: 1)
 │   │   ├── .limit                      # Contains "1"
-│   │   └── feature-NNN-description.md  # ONLY ONE
+│   │   └── FEAT-NNN-description.md     # ONLY ONE
 │   └── done/                           # Ready to release
-│       └── feature-NNN-description.md  # Triggers release
+│       └── FEAT-NNN-description.md     # Triggers release
 │
 └── history/
     ├── releases/
     │   ├── v1.0.0/
     │   ├── v1.1.0/
     │   └── v1.2.0/
-    │       └── feature-NNN-description.md
+    │       └── FEAT-NNN-description.md
     └── spikes/
-        └── spike-description-YYYY-MM-DD.md
+        └── SPIKE-description-YYYY-MM-DD.md
 ```
 
 ---
@@ -52,25 +52,25 @@ thoughts/
 ```
 roadmap.md
     ↓ (detail the work)
-work/backlog/feature-NNN-description.md
+work/backlog/FEAT-NNN-description.md
     ↓ (commit to next sprint)
-work/todo/feature-NNN-description.md
+work/todo/FEAT-NNN-description.md
     ↓ (ready to work, WIP limit allows)
-work/doing/feature-NNN-description.md
+work/doing/FEAT-NNN-description.md
     ↓ (implemented, tested, merged)
-work/done/feature-NNN-description.md
+work/done/FEAT-NNN-description.md
     ↓ (TRIGGERS RELEASE PROCESS)
-history/releases/vX.Y.Z/feature-NNN-description.md
+history/releases/vX.Y.Z/FEAT-NNN-description.md
 ```
 
 ### Spike Flow (Research/Investigation)
 
 ```
-work/backlog/spike-description.md
+work/backlog/SPIKE-description.md
     ↓ (ready to investigate)
-work/doing/spike-description.md
+work/doing/SPIKE-description.md
     ↓ (findings documented)
-history/spikes/spike-description-YYYY-MM-DD.md
+history/spikes/SPIKE-description-YYYY-MM-DD.md
 ```
 
 **Note:** Spikes do NOT trigger releases.
@@ -86,27 +86,61 @@ history/spikes/spike-description-YYYY-MM-DD.md
 ```
 
 **Examples:**
-- `feature-001-namespace-system.md`
-- `feature-002-environment-validation.md`
-- `bugfix-101-memory-export.md`
-- `bugfix-102-dependency-resolution.md`
-- `spike-hpc-integration.md` (spikes don't need IDs)
+- `FEAT-001-namespace-system.md`
+- `FEAT-002-environment-validation.md`
+- `BUGFIX-004-memory-export.md`
+- `TECH-040-work-item-policy.md`
+- `SPIKE-hpc-integration.md` (spikes don't need IDs)
 
 ### Type Prefixes
 
 | Type | Prefix | Version Impact | Example |
 |------|--------|----------------|---------|
-| Feature | `feature-` | MINOR (1.1.0 → 1.2.0) | `feature-001-namespace.md` |
-| Bugfix | `bugfix-` | PATCH (1.1.0 → 1.1.1) | `bugfix-101-memory-export.md` |
-| Breaking Change | `breaking-` | MAJOR (1.1.0 → 2.0.0) | `breaking-001-api-redesign.md` |
-| Spike | `spike-` | No release | `spike-hpc-integration.md` |
+| Feature | `FEAT-` | MINOR (1.1.0 → 1.2.0) | `FEAT-001-namespace.md` |
+| Technical | `TECH-` | PATCH (1.1.0 → 1.1.1) | `TECH-040-work-item-policy.md` |
+| Bugfix | `BUGFIX-` | PATCH (1.1.0 → 1.1.1) | `BUGFIX-004-memory-export.md` |
+| Decision | `DECISION-` | Varies | `DECISION-042-id-definition.md` |
+| Breaking Change | `BREAKING-` | MAJOR (1.1.0 → 2.0.0) | `BREAKING-001-api-redesign.md` |
+| Spike | `SPIKE-` | No release | `SPIKE-hpc-integration.md` |
 
-### ID Numbering
+### Work Item IDs
 
-- **Features:** Start at 001, increment sequentially
-- **Bugfixes:** Start at 101, increment sequentially
-- **Breaking Changes:** Start at 001, increment sequentially
-- **Spikes:** No ID required (use descriptive name)
+**ID Definition:** Unique sequential counter across all work item types.
+
+**Format:** `NNN` (001, 002, 003...)
+
+**Assignment:**
+- Start at 001
+- Increment sequentially
+- Shared across ALL types (FEAT, TECH, BUGFIX, DECISION, SPIKE, etc.)
+- Each ID used exactly once per project
+
+**Reference Forms:**
+- **Canonical:** Counter only (042)
+- **Convenience:** Type-prefixed (FEAT-042, TECH-040, BUGFIX-004)
+- Both forms are valid and searchable
+
+**Filename Convention:** `{TYPE}-{NNN}-{description}.md`
+- Example: `FEAT-042-namespace-system.md`
+- Type prefix organizes files by category
+- Counter ensures global uniqueness
+
+**Examples:**
+- ID 026 → Filename: `FEAT-026-structure-migration.md`
+- ID 040 → Filename: `TECH-040-work-item-policy.md`
+- ID 042 → Filename: `DECISION-042-id-definition.md`
+
+**Searching:**
+```bash
+# By ID (canonical)
+grep -r "\b042\b" thoughts/
+
+# By type-prefixed reference (convenience)
+grep -r "FEAT-042" thoughts/
+
+# By filename
+ls thoughts/work/*/FEAT-042*
+```
 
 ---
 
@@ -190,8 +224,8 @@ if ($todoCount -ge $todoLimit) {
 **Backlog → Todo:**
 ```powershell
 # When ready to commit to work
-Move-Item "thoughts/work/backlog/feature-002-namespace.md" `
-          "thoughts/work/todo/feature-002-namespace.md"
+Move-Item "thoughts/work/backlog/FEAT-002-namespace.md" `
+          "thoughts/work/todo/FEAT-002-namespace.md"
 
 # Update roadmap.md: "In backlog" → "In todo"
 ```
@@ -199,8 +233,8 @@ Move-Item "thoughts/work/backlog/feature-002-namespace.md" `
 **Todo → Doing:**
 ```powershell
 # When ready to start work (check WIP limit first!)
-Move-Item "thoughts/work/todo/feature-002-namespace.md" `
-          "thoughts/work/doing/feature-002-namespace.md"
+Move-Item "thoughts/work/todo/FEAT-002-namespace.md" `
+          "thoughts/work/doing/FEAT-002-namespace.md"
 
 # Create git branch
 git checkout -b feature/002-namespace
@@ -211,8 +245,8 @@ git checkout -b feature/002-namespace
 **Doing → Done:**
 ```powershell
 # When implementation complete and tested
-Move-Item "thoughts/work/doing/feature-002-namespace.md" `
-          "thoughts/work/done/feature-002-namespace.md"
+Move-Item "thoughts/work/doing/FEAT-002-namespace.md" `
+          "thoughts/work/done/FEAT-002-namespace.md"
 
 # This TRIGGERS the release process (see version-control-workflow.md)
 ```
@@ -220,8 +254,8 @@ Move-Item "thoughts/work/doing/feature-002-namespace.md" `
 **Done → History (Post-Release):**
 ```powershell
 # After release is tagged and pushed
-Move-Item "thoughts/work/done/feature-002-namespace.md" `
-          "thoughts/history/releases/v1.2.0/feature-002-namespace.md"
+Move-Item "thoughts/work/done/FEAT-002-namespace.md" `
+          "thoughts/history/releases/v1.2.0/FEAT-002-namespace.md"
 ```
 
 ---
@@ -264,8 +298,8 @@ All work items (except spikes) must include this metadata header:
 ```markdown
 # [Type]: [Title]
 
-**ID:** FEAT-002 (or BUG-101, BREAK-001)
-**Type:** Feature | Bugfix | Breaking Change
+**ID:** 042
+**Type:** Feature | Technical | Bugfix | Decision | Breaking Change
 **Version Impact:** MAJOR | MINOR | PATCH
 **Target Version:** v1.2.0
 **Status:** Backlog | Todo | Doing | Done | Released

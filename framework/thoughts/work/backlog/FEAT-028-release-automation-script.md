@@ -1,5 +1,6 @@
-# FEAT-028: Release Automation Script
+# Feature: Release Automation Script
 
+**ID:** 028
 **Type:** Feature (Tooling)
 **Version Impact:** MINOR
 **Status:** Backlog

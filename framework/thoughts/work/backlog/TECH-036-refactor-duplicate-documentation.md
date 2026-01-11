@@ -5,23 +5,23 @@
 **Priority:** Medium
 **Status:** Backlog
 **Created:** 2026-01-08
-**Requires:** TECH-028, FEAT-031
+**Requires:** TECH-043, FEAT-031
 
 ---
 
 ## Summary
 
-Audit existing framework documentation for duplicated content and refactor to follow DRY principles established in TECH-028, using the INDEX.md registry from FEAT-031.
+Audit existing framework documentation for duplicated content and refactor to follow DRY principles established in TECH-043, using the INDEX.md registry from FEAT-031.
 
-**Scope:** This work item focuses on applying the DRY policy to existing documentation. Policy is in TECH-028, tooling is in FEAT-031.
+**Scope:** This work item focuses on applying the DRY policy to existing documentation. Policy is in TECH-043, tooling is in FEAT-031.
 
 ---
 
 ## Problem Statement
 
-**Issue identified during:** TECH-028 and FEAT-031 planning
+**Issue identified during:** TECH-043 and FEAT-031 planning
 
-Once DRY principles are documented (TECH-028) and the INDEX.md registry is implemented (FEAT-031), we need to apply those principles to existing framework documentation:
+Once DRY principles are documented (TECH-043) and the INDEX.md registry is implemented (FEAT-031), we need to apply those principles to existing framework documentation:
 - Audit existing docs for duplicated information
 - Identify source-of-truth for each duplicated topic
 - Refactor duplicates to reference the source instead
@@ -127,7 +127,7 @@ Brief summary (1-2 sentences).
 - [ ] No contradictions remain
 - [ ] References are clear and helpful
 - [ ] INDEX.md accurately reflects sources
-- [ ] Documentation follows TECH-028 principles
+- [ ] Documentation follows TECH-043 principles
 
 ---
 
@@ -164,7 +164,7 @@ Brief summary (1-2 sentences).
 - [ ] No information lost (all content still accessible)
 - [ ] No contradictions remain
 - [ ] Changes committed with clear descriptions
-- [ ] TECH-028 principles followed throughout
+- [ ] TECH-043 principles followed throughout
 
 ---
 
@@ -180,11 +180,11 @@ Brief summary (1-2 sentences).
 ## Dependencies
 
 **Prerequisites:**
-- TECH-028 (DRY principles documented)
+- TECH-043 (DRY principles documented)
 - FEAT-031 (INDEX.md registry implemented)
 
 **Relationship:**
-- This work item APPLIES the policy from TECH-028
+- This work item APPLIES the policy from TECH-043
 - This work item USES the tooling from FEAT-031
 - Cannot start until both prerequisites are complete
 
@@ -201,7 +201,7 @@ Brief summary (1-2 sentences).
 
 ## References
 
-- Requires: TECH-028 (DRY documentation principles)
+- Requires: TECH-043 (DRY documentation principles)
 - Requires: FEAT-031 (INDEX.md source-of-truth registry)
 - Related: framework/thoughts/research/backlog-ideas-from-feat-026.md (Item #2, #3)
 
@@ -209,9 +209,9 @@ Brief summary (1-2 sentences).
 
 ## Workflow
 
-**Sequence:** TECH-028 → FEAT-031 → TECH-036 (this item)
+**Sequence:** TECH-043 → FEAT-031 → TECH-036 (this item)
 
-1. **TECH-028:** Establish DRY policy and principles (prerequisite)
+1. **TECH-043:** Establish DRY policy and principles (prerequisite)
 2. **FEAT-031:** Implement INDEX.md registry to track source-of-truth (prerequisite)
 3. **TECH-036 (this item):** Audit and refactor existing documentation to follow policy
 
@@ -222,12 +222,12 @@ Brief summary (1-2 sentences).
 **Approach:**
 - Start with audit - don't assume we know all duplications
 - Be pragmatic - some duplication may be acceptable (brief summaries)
-- Follow TECH-028 principles for what's acceptable
+- Follow TECH-043 principles for what's acceptable
 - Use INDEX.md (FEAT-031) to track decisions
 
 **Timing:**
-- Can start audit during TECH-028/FEAT-031 work (research)
-- Should not refactor until TECH-028 principles are documented
+- Can start audit during TECH-043/FEAT-031 work (research)
+- Should not refactor until TECH-043 principles are documented
 - Should not finalize until INDEX.md registry exists (FEAT-031)
 
 **Scope management:**

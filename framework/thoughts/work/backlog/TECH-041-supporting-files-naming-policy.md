@@ -5,7 +5,7 @@
 **Priority:** Medium
 **Status:** Backlog
 **Created:** 2026-01-11
-**Related:** TECH-040, kanban-workflow.md
+**Related:** TECH-044, kanban-workflow.md
 
 ---
 
@@ -142,7 +142,7 @@ git mv thoughts/work/todo/FEAT-025* thoughts/work/doing/
 6. Examples from actual framework work items (FEAT-026, FEAT-025)
 
 **Related updates:**
-- TECH-040 may reference this for work item creation guidance
+- TECH-044 may reference this for work item creation guidance
 - CLAUDE.md may reference for AI work item creation
 
 ---
@@ -171,7 +171,7 @@ git mv thoughts/work/todo/FEAT-025* thoughts/work/doing/
 - `thoughts/history/releases/v2.2.0/FEAT-020-*.md` - Testing artifacts
 
 **Related work items:**
-- TECH-040 (Document Work Item Creation Policy) - May reference this
+- TECH-044 (Document Work Item Creation Policy) - May reference this
 - TECH-028 (DRY Documentation Principles) - Applies to preventing duplicate policy statements
 
 ---
