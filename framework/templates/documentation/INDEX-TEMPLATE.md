@@ -81,45 +81,43 @@ Location: `thoughts/framework/patterns/`
 
 ## Project Documentation
 
-Location: `thoughts/project/`
+Location: `thoughts/`
 
 ### Planning
 
-Location: `thoughts/project/planning/`
-
-- **[roadmap.md](thoughts/project/planning/roadmap.md)** - High-level vision and version goals
-- **[backlog/](thoughts/project/planning/backlog/)** - Future work items (not yet committed)
-  - `feature-NNN-*.md` - Feature plans
-  - `bugfix-NNN-*.md` - Bug fix plans
-  - `spike-*.md` - Investigation plans
+- **[roadmap.md](thoughts/roadmap.md)** - High-level vision and version goals
 
 ### Active Work (Kanban)
 
-Location: `thoughts/project/work/`
+Location: `thoughts/work/`
 
-- **[todo/](thoughts/project/work/todo/)** - Committed next work (max 10 items)
-- **[doing/](thoughts/project/work/doing/)** - Active work (WIP limit: 1)
-- **[done/](thoughts/project/work/done/)** - Completed work ready for release
+- **[backlog/](thoughts/work/backlog/)** - Future work items (not yet committed)
+  - `feature-NNN-*.md` - Feature plans
+  - `bugfix-NNN-*.md` - Bug fix plans
+  - `spike-*.md` - Investigation plans
+- **[todo/](thoughts/work/todo/)** - Committed next work (max 10 items)
+- **[doing/](thoughts/work/doing/)** - Active work (WIP limit: 1)
+- **[done/](thoughts/work/done/)** - Completed work ready for release
 
 ### Reference Documentation
 
-Location: `thoughts/project/reference/`
+Location: `thoughts/reference/`
 
 **Core References:**
-- **[system-architecture.md](thoughts/project/reference/system-architecture.md)** - Canonical architecture reference
-- **[coding-standards.md](thoughts/project/reference/coding-standards.md)** - Code quality and style standards
-- **[security-policy.md](thoughts/project/reference/security-policy.md)** - Security approach and guidelines
-- **[terminology-standards.md](thoughts/project/reference/terminology-standards.md)** - Standard terminology
+- **[system-architecture.md](thoughts/reference/system-architecture.md)** - Canonical architecture reference
+- **[coding-standards.md](thoughts/reference/coding-standards.md)** - Code quality and style standards
+- **[security-policy.md](thoughts/reference/security-policy.md)** - Security approach and guidelines
+- **[terminology-standards.md](thoughts/reference/terminology-standards.md)** - Standard terminology
 
 **Additional References:**
 - [Add project-specific reference docs as created]
 
 ### Research
 
-Location: `thoughts/project/research/`
+Location: `thoughts/research/`
 
 **Architecture Decision Records:**
-- **[adr/](thoughts/project/research/adr/)** - Architecture decision records
+- **[adr/](thoughts/research/adr/)** - Architecture decision records
   - `001-decision-title.md`
   - `002-another-decision.md`
 
@@ -128,25 +126,25 @@ Location: `thoughts/project/research/`
 
 ### History
 
-Location: `thoughts/project/history/`
+Location: `thoughts/history/`
 
 **Session Histories:**
-- **[YYYY-MM-DD-SESSION-HISTORY.md](thoughts/project/history/)** - Daily session activity logs
+- **[YYYY-MM-DD-SESSION-HISTORY.md](thoughts/history/)** - Daily session activity logs
 
 **Releases:**
-- **[releases/](thoughts/project/history/releases/)** - Archived work items by version
+- **[releases/](thoughts/history/releases/)** - Archived work items by version
   - `v1.0.0/` - Version 1.0.0 work items
   - `v1.1.0/` - Version 1.1.0 work items
 
 **Spikes:**
-- **[spikes/](thoughts/project/history/spikes/)** - Completed research/investigations
+- **[spikes/](thoughts/history/spikes/)** - Completed research/investigations
   - `spike-description-YYYY-MM-DD.md`
 
 ### Retrospectives
 
-Location: `thoughts/project/retrospectives/`
+Location: `thoughts/retrospectives/`
 
-- **[YYYY-MM-DD-retrospective.md](thoughts/project/retrospectives/)** - Project retrospectives
+- **[YYYY-MM-DD-retrospective.md](thoughts/retrospectives/)** - Project retrospectives
   - What went well
   - What didn't go well
   - Process improvements
@@ -154,9 +152,9 @@ Location: `thoughts/project/retrospectives/`
 
 ### Archive
 
-Location: `thoughts/project/history/archive/`
+Location: `thoughts/history/archive/`
 
-- **[Cancelled/outdated/superseded items](thoughts/project/history/archive/)** - Historical reference
+- **[Cancelled/outdated/superseded items](thoughts/history/archive/)** - Historical reference
 
 ---
 
@@ -215,8 +213,8 @@ Location: `tests/`
 
 ### For Developers
 1. [CLAUDE.md](CLAUDE.md) - Project conventions
-2. [thoughts/project/reference/system-architecture.md](thoughts/project/reference/system-architecture.md) - Architecture
-3. [thoughts/project/reference/coding-standards.md](thoughts/project/reference/coding-standards.md) - Code standards
+2. [thoughts/reference/system-architecture.md](thoughts/reference/system-architecture.md) - Architecture
+3. [thoughts/reference/coding-standards.md](thoughts/reference/coding-standards.md) - Code standards
 4. [thoughts/framework/process/kanban-workflow.md](thoughts/framework/process/kanban-workflow.md) - Workflow
 5. [PROJECT-STATUS.md](PROJECT-STATUS.md) - Current status
 
@@ -229,7 +227,7 @@ Location: `tests/`
 1. [CLAUDE.md](CLAUDE.md) - Primary instructions
 2. [../CLAUDE.md](../CLAUDE.md) - Generic framework (if exists)
 3. [thoughts/framework/](thoughts/framework/) - All framework docs
-4. [thoughts/project/reference/](thoughts/project/reference/) - Project references
+4. [thoughts/reference/](thoughts/reference/) - Project references
 
 ---
 
@@ -269,12 +267,12 @@ grep -r "FEAT-002" thoughts/
 
 **Find all ADRs:**
 ```bash
-ls thoughts/project/research/adr/
+ls thoughts/research/adr/
 ```
 
 **Find recent session histories:**
 ```bash
-ls -t thoughts/project/history/*SESSION-HISTORY.md | head -5
+ls -t thoughts/history/*SESSION-HISTORY.md | head -5
 ```
 
 **Find all TODOs in code:**

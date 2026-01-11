@@ -299,7 +299,7 @@ This document defines WHAT we're building, WHY we're building it, and WHO it's f
 - [Long-term goals]
 - [Timeline]
 
-**Detailed roadmap:** See `thoughts/project/planning/roadmap.md`
+**Detailed roadmap:** See `thoughts/roadmap.md`
 
 ---
 

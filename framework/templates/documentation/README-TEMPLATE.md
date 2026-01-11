@@ -93,24 +93,24 @@ This is a complete project framework template package that provides:
 - `patterns/config-management.md`
 - `patterns/cmd-wrappers.md`
 
-### Project Structure (thoughts/project/)
+### Project Structure (thoughts/)
 
 **Empty folder structure ready for your work:**
 ```
-thoughts/project/
-├── planning/
-│   ├── roadmap.md (template included)
-│   └── backlog/
+thoughts/
+├── roadmap.md (template included)
 ├── work/
+│   ├── backlog/
 │   ├── todo/ (.limit = 10)
 │   ├── doing/ (.limit = 1)
 │   └── done/
 ├── reference/
-├── archive/
 ├── research/
 │   └── adr/
 ├── retrospectives/
 └── history/
+    ├── releases/
+    └── archive/
     ├── releases/
     └── spikes/
 ```
@@ -162,9 +162,9 @@ git tag -a v0.1.0 -m "Initial setup"
 
 ### Step 5: Start Working
 
-1. Create first feature in `thoughts/project/planning/backlog/`
-2. Move to `thoughts/project/work/todo/`
-3. Move to `thoughts/project/work/doing/`
+1. Create first feature in `thoughts/work/backlog/`
+2. Move to `thoughts/work/todo/`
+3. Move to `thoughts/work/doing/`
 4. Begin implementation
 
 ---

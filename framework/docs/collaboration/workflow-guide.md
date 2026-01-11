@@ -53,12 +53,12 @@ All projects follow this core workflow, with depth varying by framework level:
   - Should we defer or cancel?
 
 **Documentation:**
-- **Standard/Full frameworks:** `thoughts/project/research/`
+- **Standard/Full frameworks:** `thoughts/research/`
   - `problem-statement.md` - Clear problem definition
   - `landscape-analysis.md` - Existing solutions review
   - `feasibility.md` - Can/should we build this?
   - `project-justification.md` - Go/no-go decision
-- **Light framework:** `thoughts/project/research/justification.md` (simplified)
+- **Light framework:** `thoughts/research/justification.md` (simplified)
 - **Minimal framework:** Embedded in README.md "Why This Exists" section
 
 **Exit Criteria:**
@@ -90,7 +90,7 @@ All projects follow this core workflow, with depth varying by framework level:
   - What might we do later?
 
 **Documentation:**
-- **Standard/Full:** `thoughts/project/reference/project-definition.md`
+- **Standard/Full:** `thoughts/reference/project-definition.md`
 - **Light:** Brief section in README.md
 - **Minimal:** Embedded in README.md
 
@@ -124,9 +124,9 @@ All projects follow this core workflow, with depth varying by framework level:
   - Resource requirements
 
 **Documentation:**
-- **Standard/Full:** `thoughts/project/planning/`
+- **Standard/Full:** `thoughts/`
   - `roadmap.md` - Version plan
-  - `backlog/` - Features not yet started
+  - `work/backlog/` - Features not yet started
   - `work/todo/` - Committed next work
   - `work/doing/` - Currently in progress (WIP limited)
   - `work/done/` - Completed work
@@ -143,7 +143,7 @@ Ask this before elaborate planning. Keep planning proportional to project size.
 
 **Activities:**
 - One work item at a time (respect WIP limits)
-  - Check `thoughts/project/work/doing/.limit`
+  - Check `thoughts/work/doing/.limit`
   - Default WIP limit: 1-2 items
   - Complete before starting new work
 - Follow coding standards
@@ -186,7 +186,7 @@ Ask this before elaborate planning. Keep planning proportional to project size.
   - **Light/Minimal:** Mark as complete
 - **Archive work items (Standard/Full):**
   - Immediately after release tag is created
-  - Create `thoughts/project/history/releases/vX.Y.Z/` folder
+  - Create `thoughts/history/releases/vX.Y.Z/` folder
   - Move ALL related work item files from done/ to release folder
     - Primary work items (FEAT-XXX.md, BUGFIX-XXX.md)
     - Supporting documents (FEAT-XXX-*.md, feature-XXX-*.md)
@@ -248,7 +248,7 @@ Takes 30 seconds, no dependencies, works for our team.
 
 #### Light Framework
 
-Simple justification document at `thoughts/project/research/justification.md`:
+Simple justification document at `thoughts/research/justification.md`:
 
 **Structure:**
 - Problem statement (1 paragraph)
@@ -283,7 +283,7 @@ Takes ~2 hours to build, solves our specific workflow, no infrastructure.
 
 #### Standard/Full Framework
 
-Complete research documentation in `thoughts/project/research/`:
+Complete research documentation in `thoughts/research/`:
 
 **Required Documents:**
 
@@ -338,8 +338,8 @@ Before leaving research phase:
 Work items flow through folders:
 
 ```
-thoughts/project/
-├── planning/backlog/     # Ideas and future work
+thoughts/
+├── work/backlog/         # Ideas and future work
 ├── work/todo/            # Committed next (prioritized)
 ├── work/doing/           # Currently in progress (WIP limited)
 └── work/done/            # Completed (awaiting release)
@@ -351,7 +351,7 @@ User Idea → Backlog → [User Approval] → Todo → Doing → Done → Releas
 ```
 
 **WIP Limits:**
-- Check `thoughts/project/work/doing/.limit` file
+- Check `thoughts/work/doing/.limit` file
 - Default: 1-2 items maximum in doing/
 - Never exceed WIP limit
 - Complete current work before starting new
@@ -374,20 +374,20 @@ Work item numbers are **sequential and globally unique** across all work item ty
 
 **Locations to scan:**
 ```bash
-thoughts/project/planning/backlog/      # Not yet approved
-thoughts/project/work/todo/             # Approved, not started
-thoughts/project/work/doing/            # In progress
-thoughts/project/work/done/             # Completed, awaiting release
-thoughts/project/history/releases/*/    # Archived after release
+thoughts/work/backlog/          # Not yet approved
+thoughts/work/todo/             # Approved, not started
+thoughts/work/doing/            # In progress
+thoughts/work/done/             # Completed, awaiting release
+thoughts/history/releases/*/    # Archived after release
 ```
 
 **Command to find next FEAT number:**
 ```bash
-find thoughts/project/planning/backlog/ \
-     thoughts/project/work/todo/ \
-     thoughts/project/work/doing/ \
-     thoughts/project/work/done/ \
-     thoughts/project/history/releases/ \
+find thoughts/work/backlog/ \
+     thoughts/work/todo/ \
+     thoughts/work/doing/ \
+     thoughts/work/done/ \
+     thoughts/history/releases/ \
      -name "FEAT-*.md" 2>/dev/null | \
      grep -oE "FEAT-[0-9]+" | \
      grep -oE "[0-9]+" | \
@@ -575,7 +575,7 @@ Every project should have these files in the root:
 
 **Naming:** `YYYY-MM-DD-SESSION-HISTORY.md`
 
-**Location:** `thoughts/project/history/`
+**Location:** `thoughts/history/`
 
 **Purpose:** Capture daily activity, decisions, and context for future reference
 
@@ -654,7 +654,7 @@ function calculateTotal(subtotal, taxRate, discountPercent) {
 - Major features complete
 - After significant issues/failures
 
-**Location:** `thoughts/project/retrospectives/YYYY-MM-DD-retrospective.md`
+**Location:** `thoughts/retrospectives/YYYY-MM-DD-retrospective.md`
 
 **Standard Structure:**
 
@@ -967,11 +967,11 @@ Start with MINOR, upgrade to MAJOR if you discover complexity.
 - Numbered sequentially: `001-decision-title.md`, `002-next-decision.md`
 - Use lowercase with hyphens
 - Both MAJOR and MINOR share same numbering sequence (chronological order)
-- Store in `thoughts/project/research/adr/`
+- Store in `thoughts/research/adr/`
 
 **Examples:**
 ```
-thoughts/project/research/adr/
+thoughts/research/adr/
 ├── 001-ai-workflow-checkpoint-policy.md (MAJOR)
 ├── 002-json-library-selection.md (MINOR)
 ├── 003-authentication-architecture.md (MAJOR)
@@ -1270,6 +1270,6 @@ Better to ask than assume.
 
 ---
 
-**Last Updated:** 2025-12-22
+**Last Updated:** 2026-01-11
 **Version:** 1.0.0
 **Next Review:** After 10 projects use this guide

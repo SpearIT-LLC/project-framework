@@ -27,16 +27,16 @@ Run these commands to verify framework setup:
 
 ```bash
 # Verify folder structure exists
-ls thoughts/project/work/todo
-ls thoughts/project/work/doing
-ls thoughts/project/work/done
+ls thoughts/work/todo
+ls thoughts/work/doing
+ls thoughts/work/done
 ls thoughts/framework/templates
 
 # Check WIP limit configuration
-cat thoughts/project/work/doing/.limit
+cat thoughts/work/doing/.limit
 
 # Count items in doing/ folder
-ls thoughts/project/work/doing/*.md | wc -l
+ls thoughts/work/doing/*.md | wc -l
 
 # Verify git repository
 git status
@@ -87,7 +87,7 @@ ls thoughts/
 cp -r project-framework-template/standard /path/to/your-project
 
 # Or create manually
-mkdir -p thoughts/project/{work/{todo,doing,done},planning/backlog,research,reference,retrospectives,history,archive,collaboration}
+mkdir -p thoughts/{work/{backlog,todo,doing,done},research,reference,retrospectives,history,archive,collaboration}
 mkdir -p thoughts/framework/{templates,process,patterns,tools}
 ```
 
@@ -112,10 +112,10 @@ mkdir -p thoughts/framework/{templates,process,patterns,tools}
 **Diagnosis:**
 ```bash
 # Check WIP limit
-cat thoughts/project/work/doing/.limit
+cat thoughts/work/doing/.limit
 
 # Count items in doing/
-ls thoughts/project/work/doing/*.md | wc -l
+ls thoughts/work/doing/*.md | wc -l
 
 # If count > limit, you're violating WIP
 ```
@@ -125,10 +125,10 @@ ls thoughts/project/work/doing/*.md | wc -l
 **Immediate Fix:**
 ```bash
 # Complete and move items to done/
-mv thoughts/project/work/doing/feature-ABC.md thoughts/project/work/done/
+mv thoughts/work/doing/feature-ABC.md thoughts/work/done/
 
 # Or move back to todo/ if not really started
-mv thoughts/project/work/doing/feature-XYZ.md thoughts/project/work/todo/
+mv thoughts/work/doing/feature-XYZ.md thoughts/work/todo/
 ```
 
 **Long-term Fix:**
@@ -153,7 +153,7 @@ mv thoughts/project/work/doing/feature-XYZ.md thoughts/project/work/todo/
 **Diagnosis:**
 ```bash
 # List all work items with status
-grep -r "Status:" thoughts/project/work/ thoughts/project/planning/
+grep -r "Status:" thoughts/work/ thoughts/work/
 
 # Compare folder location vs status field
 ```
@@ -163,7 +163,7 @@ grep -r "Status:" thoughts/project/work/ thoughts/project/planning/
 **Fix Mismatched Status:**
 ```bash
 # Move to correct folder based on actual status
-mv thoughts/project/planning/backlog/feature-123.md thoughts/project/work/doing/
+mv thoughts/work/backlog/feature-123.md thoughts/work/doing/
 
 # Update status field in document
 # Edit file and change "Status: Backlog" to "Status: Doing"
@@ -203,7 +203,7 @@ mv thoughts/project/planning/backlog/feature-123.md thoughts/project/work/doing/
 3. If implementation is wrong direction, revert and restart with approval
 
 **Process Fix:**
-- Review ADR-001 (thoughts/project/research/adr/001-ai-workflow-checkpoint-policy.md)
+- Review ADR-001 (thoughts/research/adr/001-ai-workflow-checkpoint-policy.md)
 - Ensure AI reads and follows checkpoint policy
 - Update CLAUDE.md if guidance unclear
 
@@ -266,10 +266,10 @@ git push
 **Diagnosis:**
 ```bash
 # Check if done/ folder has old items
-ls thoughts/project/work/done/
+ls thoughts/work/done/
 
 # Check if history/releases/vX.Y.Z/ exists
-ls thoughts/project/history/releases/
+ls thoughts/history/releases/
 ```
 
 **Solutions:**
@@ -277,13 +277,13 @@ ls thoughts/project/history/releases/
 **Retroactive Fix:**
 ```bash
 # Create release folder
-mkdir -p thoughts/project/history/releases/v2.1.0
+mkdir -p thoughts/history/releases/v2.1.0
 
 # Move completed items to release
-mv thoughts/project/work/done/*.md thoughts/project/history/releases/v2.1.0/
+mv thoughts/work/done/*.md thoughts/history/releases/v2.1.0/
 
 # Commit
-git add thoughts/project/history/releases/v2.1.0/
+git add thoughts/history/releases/v2.1.0/
 git commit -m "Archive: Move v2.1.0 completed items to history"
 ```
 
@@ -453,7 +453,7 @@ git checkout HEAD~1 thoughts/framework/templates/FEATURE-TEMPLATE.md
 **Correct Workflow:**
 ```bash
 # CORRECT: Copy template to create instance
-cp thoughts/framework/templates/FEATURE-TEMPLATE.md thoughts/project/planning/backlog/feature-123-new-feature.md
+cp thoughts/framework/templates/FEATURE-TEMPLATE.md thoughts/work/backlog/feature-123-new-feature.md
 
 # Edit the instance (feature-123-new-feature.md), NOT the template
 ```
@@ -478,7 +478,7 @@ cp thoughts/framework/templates/FEATURE-TEMPLATE.md thoughts/project/planning/ba
 **Compare Against Template:**
 ```bash
 # Diff your feature against template
-diff thoughts/framework/templates/FEATURE-TEMPLATE.md thoughts/project/work/doing/feature-123.md
+diff thoughts/framework/templates/FEATURE-TEMPLATE.md thoughts/work/doing/feature-123.md
 
 # Add missing sections
 ```
@@ -693,5 +693,5 @@ git cherry-pick <commit-hash>
 
 ---
 
-**Last Updated:** 2025-12-22
+**Last Updated:** 2026-01-11
 **Maintained By:** Framework Team

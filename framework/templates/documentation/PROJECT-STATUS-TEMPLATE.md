@@ -131,7 +131,7 @@
 - 📋 [FEAT-NNN]: [Description]
 - 📋 [BUG-NNN]: [Description]
 
-See [roadmap.md](thoughts/project/planning/roadmap.md) for complete roadmap.
+See [roadmap.md](thoughts/roadmap.md) for complete roadmap.
 
 ---
 

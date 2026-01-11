@@ -17,15 +17,13 @@ A simplified file-based kanban workflow designed for one-person teams. Work item
 ## Folder Structure
 
 ```
-thoughts/project/
-├── planning/
-│   ├── roadmap.md                      # High-level vision with feature IDs
-│   └── backlog/                        # NOT committed yet
-│       ├── feature-NNN-description.md
-│       ├── bugfix-NNN-description.md
-│       └── spike-description.md
-│
+thoughts/
+├── roadmap.md                          # High-level vision with feature IDs
 ├── work/
+│   ├── backlog/                        # NOT committed yet
+│   │   ├── feature-NNN-description.md
+│   │   ├── bugfix-NNN-description.md
+│   │   └── spike-description.md
 │   ├── todo/                           # Committed next (max 10)
 │   │   ├── .limit                      # Contains "10"
 │   │   └── feature-NNN-description.md
@@ -52,9 +50,9 @@ thoughts/project/
 ### Standard Flow (Features/Bugfixes)
 
 ```
-planning/roadmap.md
+roadmap.md
     ↓ (detail the work)
-planning/backlog/feature-NNN-description.md
+work/backlog/feature-NNN-description.md
     ↓ (commit to next sprint)
 work/todo/feature-NNN-description.md
     ↓ (ready to work, WIP limit allows)
@@ -68,7 +66,7 @@ history/releases/vX.Y.Z/feature-NNN-description.md
 ### Spike Flow (Research/Investigation)
 
 ```
-planning/backlog/spike-description.md
+work/backlog/spike-description.md
     ↓ (ready to investigate)
 work/doing/spike-description.md
     ↓ (findings documented)
@@ -132,16 +130,16 @@ history/spikes/spike-description-YYYY-MM-DD.md
 **Manual Check:**
 ```powershell
 # Check doing/ limit
-$doingLimit = [int](Get-Content "thoughts/project/work/doing/.limit")
-$doingCount = (Get-ChildItem "thoughts/project/work/doing/*.md" -ErrorAction SilentlyContinue).Count
+$doingLimit = [int](Get-Content "thoughts/work/doing/.limit")
+$doingCount = (Get-ChildItem "thoughts/work/doing/*.md" -ErrorAction SilentlyContinue).Count
 
 if ($doingCount -ge $doingLimit) {
     Write-Warning "WIP limit reached in doing/ ($doingCount/$doingLimit). Complete current work first."
 }
 
 # Check todo/ limit
-$todoLimit = [int](Get-Content "thoughts/project/work/todo/.limit")
-$todoCount = (Get-ChildItem "thoughts/project/work/todo/*.md" -ErrorAction SilentlyContinue).Count
+$todoLimit = [int](Get-Content "thoughts/work/todo/.limit")
+$todoCount = (Get-ChildItem "thoughts/work/todo/*.md" -ErrorAction SilentlyContinue).Count
 
 if ($todoCount -ge $todoLimit) {
     Write-Warning "TODO limit reached ($todoCount/$todoLimit). Consider reviewing backlog priorities."
@@ -156,7 +154,7 @@ if ($todoCount -ge $todoLimit) {
 
 ### Roadmap Format
 
-**planning/roadmap.md** tracks high-level version goals and references work items by ID:
+**thoughts/roadmap.md** tracks high-level version goals and references work items by ID:
 
 ```markdown
 ## v1.2.0 - Configuration Enhancements
@@ -192,8 +190,8 @@ if ($todoCount -ge $todoLimit) {
 **Backlog → Todo:**
 ```powershell
 # When ready to commit to work
-Move-Item "thoughts/project/planning/backlog/feature-002-namespace.md" `
-          "thoughts/project/work/todo/feature-002-namespace.md"
+Move-Item "thoughts/work/backlog/feature-002-namespace.md" `
+          "thoughts/work/todo/feature-002-namespace.md"
 
 # Update roadmap.md: "In backlog" → "In todo"
 ```
@@ -201,8 +199,8 @@ Move-Item "thoughts/project/planning/backlog/feature-002-namespace.md" `
 **Todo → Doing:**
 ```powershell
 # When ready to start work (check WIP limit first!)
-Move-Item "thoughts/project/work/todo/feature-002-namespace.md" `
-          "thoughts/project/work/doing/feature-002-namespace.md"
+Move-Item "thoughts/work/todo/feature-002-namespace.md" `
+          "thoughts/work/doing/feature-002-namespace.md"
 
 # Create git branch
 git checkout -b feature/002-namespace
@@ -213,8 +211,8 @@ git checkout -b feature/002-namespace
 **Doing → Done:**
 ```powershell
 # When implementation complete and tested
-Move-Item "thoughts/project/work/doing/feature-002-namespace.md" `
-          "thoughts/project/work/done/feature-002-namespace.md"
+Move-Item "thoughts/work/doing/feature-002-namespace.md" `
+          "thoughts/work/done/feature-002-namespace.md"
 
 # This TRIGGERS the release process (see version-control-workflow.md)
 ```
@@ -222,8 +220,8 @@ Move-Item "thoughts/project/work/doing/feature-002-namespace.md" `
 **Done → History (Post-Release):**
 ```powershell
 # After release is tagged and pushed
-Move-Item "thoughts/project/work/done/feature-002-namespace.md" `
-          "thoughts/project/history/releases/v1.2.0/feature-002-namespace.md"
+Move-Item "thoughts/work/done/feature-002-namespace.md" `
+          "thoughts/history/releases/v1.2.0/feature-002-namespace.md"
 ```
 
 ---
@@ -355,5 +353,5 @@ All work items (except spikes) must include this metadata header:
 
 ---
 
-**Last Updated:** 2025-12-18
+**Last Updated:** 2026-01-11
 **Next Review:** After 5 releases or when process issues arise

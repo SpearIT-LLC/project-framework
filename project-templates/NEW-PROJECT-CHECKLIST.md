@@ -1,7 +1,7 @@
 # New Project Setup Checklist
 
 **Version:** 2.0.0
-**Last Updated:** 2025-12-19
+**Last Updated:** 2026-01-11
 
 ---
 
@@ -268,20 +268,20 @@ Also called "Full Framework" when using comprehensive ADRs and governance.
 **Prerequisites:** Phase 2 complete with GO decision and project definition written
 
 - [ ] **Create initial roadmap**
-  - [ ] Open `thoughts/project/planning/roadmap.md`
+  - [ ] Open `thoughts/roadmap.md`
   - [ ] Define high-level project goals
   - [ ] Identify initial version targets (v0.1.0, v0.2.0, v1.0.0)
   - [ ] List major features/capabilities
 
 - [ ] **Create initial backlog items** (optional - can do as you go)
-  - [ ] Create 2-3 initial feature docs in `thoughts/project/planning/backlog/`
+  - [ ] Create 2-3 initial feature docs in `thoughts/work/backlog/`
   - [ ] Use `feature-NNN-description.md` naming convention
   - [ ] Use FEATURE-TEMPLATE.md for structure
   - [ ] Start IDs at FEAT-001
 
 - [ ] **Move first item to work/todo/**
   - [ ] Select highest priority backlog item
-  - [ ] Move to `thoughts/project/work/todo/`
+  - [ ] Move to `thoughts/work/todo/`
   - [ ] Update roadmap to reflect status
 
 ---
@@ -301,8 +301,8 @@ Also called "Full Framework" when using comprehensive ADRs and governance.
   - [ ] Begin implementation
 
 - [ ] **Verify WIP limits**
-  - [ ] Check `thoughts/project/work/doing/.limit` contains "1"
-  - [ ] Check `thoughts/project/work/todo/.limit` contains "10"
+  - [ ] Check `thoughts/work/doing/.limit` contains "1"
+  - [ ] Check `thoughts/work/todo/.limit` contains "10"
 
 **Setup Complete!** Follow the Standard workflow for ongoing development.
 
@@ -372,13 +372,13 @@ Use this section when adding the framework to a project that's already underway.
 
 - [ ] **Capture in-progress work**
   - [ ] List all current work (what you're actively working on)
-  - [ ] Create feature/bugfix docs in `thoughts/project/work/doing/`
+  - [ ] Create feature/bugfix docs in `thoughts/work/doing/`
   - [ ] Use appropriate templates (FEATURE, BUGFIX, SPIKE)
   - [ ] Assign IDs starting at FEAT-001, BUG-101
 
 - [ ] **Capture planned work**
   - [ ] List all planned features/fixes
-  - [ ] Create docs in `thoughts/project/planning/backlog/`
+  - [ ] Create docs in `thoughts/work/backlog/`
   - [ ] Use appropriate templates
   - [ ] Continue ID sequence from in-progress items
 
@@ -441,8 +441,8 @@ Use this section when adding the framework to a project that's already underway.
 ### Phase 5: Workflow Adoption
 
 - [ ] **Verify WIP limits**
-  - [ ] Check `thoughts/project/work/doing/.limit` contains "1"
-  - [ ] Check `thoughts/project/work/todo/.limit` contains "10"
+  - [ ] Check `thoughts/work/doing/.limit` contains "1"
+  - [ ] Check `thoughts/work/todo/.limit` contains "10"
   - [ ] Adjust if needed based on team size
 
 - [ ] **Review kanban workflow documentation**
@@ -486,17 +486,18 @@ Use this section when adding the framework to a project that's already underway.
   # - ProjectName/CHANGELOG.md
   # - ProjectName/INDEX.md (optional)
   # - ProjectName/thoughts/framework/
-  # - ProjectName/thoughts/project/planning/
-  # - ProjectName/thoughts/project/work/todo/
-  # - ProjectName/thoughts/project/work/doing/
-  # - ProjectName/thoughts/project/work/done/
-  # - ProjectName/thoughts/project/history/
+  # - ProjectName/thoughts/roadmap.md
+  # - ProjectName/thoughts/work/backlog/
+  # - ProjectName/thoughts/work/todo/
+  # - ProjectName/thoughts/work/doing/
+  # - ProjectName/thoughts/work/done/
+  # - ProjectName/thoughts/history/
   ```
 
 - [ ] **Verify .limit files**
   ```bash
-  cat thoughts/project/work/doing/.limit   # Should contain "1"
-  cat thoughts/project/work/todo/.limit    # Should contain "10"
+  cat thoughts/work/doing/.limit   # Should contain "1"
+  cat thoughts/work/todo/.limit    # Should contain "10"
   ```
 
 - [ ] **Verify git setup**

@@ -2,7 +2,7 @@
 
 **Audience:** All contributors (human and AI)
 **Purpose:** Understanding the Project Framework's architecture and design decisions
-**Last Updated:** 2025-12-22
+**Last Updated:** 2026-01-11
 
 ---
 
@@ -193,14 +193,14 @@ thoughts/
 - Enables framework reuse across projects
 
 **Example:**
-- `thoughts/project/work/doing/feature-020.md` - Specific to THIS project
+- `thoughts/work/doing/feature-020.md` - Specific to THIS project
 - `thoughts/framework/templates/FEATURE-TEMPLATE.md` - Reusable for ANY project
 
 ### Collaboration Folder Architecture
 
 **Purpose:** Universal collaboration documentation for humans and AI
 
-**Location:** `thoughts/project/collaboration/`
+**Location:** `thoughts/collaboration/`
 
 **Contents:**
 - `workflow-guide.md` - Complete workflow documentation
@@ -272,7 +272,7 @@ history/releases/vX.Y.Z/
 
 ### WIP Limit Enforcement
 
-**File:** `thoughts/project/work/doing/.limit`
+**File:** `thoughts/work/doing/.limit`
 
 **Content:** Single number (default: 2)
 
@@ -395,7 +395,7 @@ history/releases/vX.Y.Z/
 ```
 CLAUDE.md (Quick Reference)
     ↓ links to
-thoughts/project/collaboration/ (Detailed Guides)
+thoughts/collaboration/ (Detailed Guides)
     ↓ links to
 thoughts/framework/templates/ (Copy-paste Examples)
 ```
@@ -624,7 +624,7 @@ AI moves to todo → doing → implementation
 
 **Context:** How to organize reusable vs project-specific content
 
-**Decision:** Separate `thoughts/framework/` (reusable) from `thoughts/project/` (specific)
+**Decision:** Separate `thoughts/framework/` (reusable) from `thoughts/` (project-specific)
 
 **Rationale:**
 - Framework can be updated independently
@@ -641,5 +641,5 @@ AI moves to todo → doing → implementation
 
 ---
 
-**Last Updated:** 2025-12-22
+**Last Updated:** 2026-01-11
 **Maintained By:** Framework Team

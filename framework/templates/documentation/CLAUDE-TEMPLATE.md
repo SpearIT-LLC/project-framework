@@ -275,7 +275,7 @@ ProjectName/
 > - Session history format (daily YYYY-MM-DD-SESSION-HISTORY.md files)
 > - Work item documentation templates (FEATURE, BUGFIX, BLOCKER, SPIKE)
 > - Code documentation requirements
-> - Work item location (`thoughts/project/work/` todo/doing/done folders)
+> - Work item location (`thoughts/work/` backlog/todo/doing/done folders)
 
 ### [Project]-Specific Documentation
 
@@ -333,7 +333,7 @@ cd /path/to/project
 - [Enhancement description]
 - [Enhancement description]
 
-See [roadmap.md](thoughts/project/planning/roadmap.md) for complete roadmap.
+See [roadmap.md](thoughts/roadmap.md) for complete roadmap.
 
 ---
 
@@ -403,8 +403,8 @@ See [roadmap.md](thoughts/project/planning/roadmap.md) for complete roadmap.
 - [README.md](README.md) - Project overview and getting started guide
 
 **Must Read:**
-- [system-architecture.md](thoughts/project/reference/system-architecture.md) - Canonical architecture reference (if exists)
-- [coding-standards.md](thoughts/project/reference/coding-standards.md) - Code quality standards (if exists)
+- [system-architecture.md](thoughts/reference/system-architecture.md) - Canonical architecture reference (if exists)
+- [coding-standards.md](thoughts/reference/coding-standards.md) - Code quality standards (if exists)
 - [version-control-workflow.md](thoughts/framework/process/version-control-workflow.md) - Git branching, releases, and CHANGELOG discipline
 
 **Framework (Reusable):**
