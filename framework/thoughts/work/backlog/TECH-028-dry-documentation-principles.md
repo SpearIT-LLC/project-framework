@@ -61,6 +61,7 @@ Document DRY principles for framework documentation with clear guidelines.
 - Examples of good vs. bad duplication
 - Process for updating information (update source, verify references)
 - How to handle cross-cutting concerns
+- **Session history location:** Define `thoughts/history/sessions/` as single source of truth for session history file location specification
 
 **Note on INDEX.md:**
 - INDEX.md registry will be implemented in FEAT-031 (separate work item)

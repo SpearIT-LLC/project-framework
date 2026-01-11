@@ -272,7 +272,7 @@ ls thoughts/research/adr/
 
 **Find recent session histories:**
 ```bash
-ls -t thoughts/history/*SESSION-HISTORY.md | head -5
+ls -t thoughts/history/sessions/*SESSION-HISTORY.md | head -5
 ```
 
 **Find all TODOs in code:**
