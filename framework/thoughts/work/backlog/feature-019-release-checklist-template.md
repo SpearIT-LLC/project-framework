@@ -101,6 +101,10 @@ The version-control-workflow.md has a comprehensive Release Checklist (lines 113
 - [ ] Work item moved to work/done/
 - [ ] Work item has CHANGELOG notes section
 - [ ] Implementation complete and tested
+- [ ] Session history updated (thoughts/history/sessions/YYYY-MM-DD-SESSION-HISTORY.md)
+  - Work completed documented
+  - Decisions made recorded
+  - Key learnings captured
 
 ---
 
