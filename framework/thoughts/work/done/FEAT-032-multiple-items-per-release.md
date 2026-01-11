@@ -1,11 +1,13 @@
 # FEAT-032: Support Multiple Work Items Per Release
 
-**ID:** FEAT-032
+**ID:** 032
 **Type:** Feature (Workflow Enhancement)
 **Priority:** Medium
-**Status:** Backlog
+**Status:** Done
 **Created:** 2026-01-08
+**Completed:** 2026-01-11
 **Related:** FEAT-026, FEAT-028
+**Version Impact:** MINOR
 
 ---
 
@@ -204,13 +206,40 @@ When releasing multiple items as one version:
 
 ## Completion Criteria
 
-- [ ] Grouped release process documented
-- [ ] Version bumping strategy defined
-- [ ] CHANGELOG format documented
-- [ ] Examples provided
-- [ ] Templates updated (if needed)
-- [ ] Workflow-guide.md updated
-- [ ] CLAUDE.md updated
+- [x] Grouped release process documented
+- [x] Version bumping strategy defined
+- [x] CHANGELOG format documented
+- [x] Examples provided
+- [x] Templates updated (not needed - existing templates sufficient)
+- [x] Workflow-guide.md updated
+- [x] CLAUDE.md updated
+
+## Implementation Summary
+
+**What was done:**
+
+1. **workflow-guide.md** - Added comprehensive "Releasing Multiple Work Items Together" section:
+   - Version bumping rules (highest impact wins)
+   - Step-by-step grouped release process
+   - CHANGELOG format guidance
+   - Release folder structure examples
+   - When to use single vs grouped releases
+
+2. **CLAUDE.md** - Updated Step 9 with grouped release guidance:
+   - Version calculation for multiple items
+   - CHANGELOG organization
+   - Archive process for grouped releases
+   - Link to detailed documentation
+
+**Files modified:**
+- [framework/docs/collaboration/workflow-guide.md](../../../docs/collaboration/workflow-guide.md#releasing-multiple-work-items-together)
+- [framework/CLAUDE.md](../../../CLAUDE.md) (Step 9)
+
+**Key decisions:**
+- Single release folder contains all work items (simple, clear)
+- Highest Version Impact wins (MAJOR > MINOR > PATCH)
+- CHANGELOG organized by semantic version categories
+- Both single and grouped releases supported (use judgment)
 
 ---
 

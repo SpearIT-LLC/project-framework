@@ -25,6 +25,39 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [3.1.0] - 2026-01-11
+
+### Added
+- **FEAT-032: Support Multiple Work Items Per Release**
+  - Documented grouped release process in workflow-guide.md
+  - Version bumping strategy for grouped releases (highest impact wins)
+  - CHANGELOG format guidance for multiple items per release
+  - Release folder structure examples and guidelines
+  - Updated CLAUDE.md Step 9 with grouped release support
+  - Both single and grouped release patterns now supported
+
+### Changed
+- **DECISION-042: Work Item ID Definition and Reference System**
+  - Clarified ID as unique sequential counter (001, 002, 003...)
+  - Type prefix (FEAT-, TECH-, etc.) is organizational metadata, not part of ID
+  - Both reference forms valid: "042" (canonical) or "FEAT-042" (convenience)
+  - Updated kanban-workflow.md with clear ID specification
+  - Updated all work item templates to use canonical format (**ID:** NNN)
+  - Existing work items remain valid (no retrospective changes)
+
+### Fixed
+- **FEAT-040: Framework Structure Compliance Fixes**
+  - Fixed 4 issues in framework/ folder structure
+  - Moved CLAUDE.md from docs/ to correct location (framework root)
+  - Renamed collaboration/ to docs/collaboration/ per standard
+  - Fixed process/ folder location (framework/docs/process/)
+  - Ensured framework dogfoods own structure standard
+
+### Notes
+This release contains 3 work items grouped together.
+
+---
+
 ## [3.0.1] - 2026-01-11
 
 ### Fixed

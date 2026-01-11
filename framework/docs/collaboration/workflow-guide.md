@@ -904,6 +904,154 @@ Given current version and Version Impact from work item:
 
 **Related:** See CLAUDE.md Step 9 for concise checklist version.
 
+### Releasing Multiple Work Items Together
+
+**Scenario:** You have completed multiple work items (e.g., 3 bug fixes, 2 features) and want to release them together under one version number.
+
+**Why group releases?**
+- Logical grouping (e.g., all security fixes)
+- Sprint or milestone completion
+- Multiple small items don't warrant separate releases
+- Related changes that should ship together
+
+#### Version Bumping for Grouped Releases
+
+**Rule:** Use the **highest semantic version impact** among all items.
+
+**Examples:**
+- 3 PATCH items → PATCH version bump
+  - v2.2.4 + (PATCH + PATCH + PATCH) = v2.2.5
+- 2 PATCH + 1 MINOR → MINOR version bump
+  - v2.2.4 + (PATCH + PATCH + MINOR) = v2.3.0
+- Any MAJOR → MAJOR version bump
+  - v2.2.4 + (PATCH + MINOR + MAJOR) = v3.0.0
+
+#### Grouped Release Process
+
+**Step-by-step:**
+
+1. **Complete all items** - Move all items to `work/done/`
+
+2. **Calculate version number:**
+   - Read current version from PROJECT-STATUS.md
+   - Determine highest version impact among all items
+   - Calculate next version (e.g., v2.2.4 + MINOR = v2.3.0)
+
+3. **Create grouped release folder:**
+   ```bash
+   mkdir -p thoughts/history/releases/v2.3.0
+   ```
+
+4. **Move all items to release folder:**
+   ```bash
+   git mv thoughts/work/done/FEAT-032-*.md thoughts/history/releases/v2.3.0/
+   git mv thoughts/work/done/DECISION-042-*.md thoughts/history/releases/v2.3.0/
+   git mv thoughts/work/done/FEAT-040-*.md thoughts/history/releases/v2.3.0/
+   ```
+
+5. **Update CHANGELOG.md** - Add all items under one version:
+   ```markdown
+   ## [2.3.0] - 2026-01-11
+
+   ### Added
+   - FEAT-032: Support for multiple work items per release
+   - FEAT-040: Framework structure compliance fixes
+
+   ### Changed
+   - DECISION-042: Work item ID definition clarification
+
+   ### Notes
+   This release contains 3 work items grouped together.
+   ```
+
+6. **Update PROJECT-STATUS.md:**
+   ```markdown
+   **Current Version:** v2.3.0 (2026-01-11)
+   ```
+
+7. **Commit and tag:**
+   ```bash
+   git add .
+   git commit -m "chore: Release v2.3.0 (FEAT-032, DECISION-042, FEAT-040)"
+   git tag -a v2.3.0 -m "Release v2.3.0: Multiple work items support"
+   git push && git push --tags
+   ```
+
+8. **Verify done/ is empty:**
+   ```bash
+   ls thoughts/work/done/*.md  # Should return empty
+   ```
+
+#### CHANGELOG Format for Grouped Releases
+
+**Organize by semantic versioning category:**
+
+```markdown
+## [2.3.0] - 2026-01-11
+
+### Added
+- Work items that add new features or capabilities
+
+### Changed
+- Work items that modify existing behavior (backward-compatible)
+
+### Deprecated
+- Work items that deprecate features (not removed yet)
+
+### Removed
+- Work items that remove features (breaking change)
+
+### Fixed
+- Work items that fix bugs
+
+### Security
+- Work items that address security issues
+
+### Notes
+[Optional context about the grouped release]
+```
+
+**Multiple items in same category:**
+```markdown
+### Fixed
+- BUGFIX-101: Authentication token refresh issue
+- BUGFIX-102: Input validation on user forms
+- BUGFIX-103: Logging format for error messages
+```
+
+#### Release History Organization
+
+**Folder structure:**
+```
+thoughts/history/releases/
+├── v2.2.5/
+│   └── BUGFIX-100-auth-fix.md
+├── v2.3.0/                        # Grouped release
+│   ├── FEAT-032-multiple-items.md
+│   ├── DECISION-042-id-definition.md
+│   └── FEAT-040-structure-compliance.md
+└── v2.3.1/
+    └── BUGFIX-104-validation-fix.md
+```
+
+**Each release gets one folder** - whether it contains 1 item or 10 items.
+
+#### Single vs Grouped: When to Use Each
+
+**Use single-item release when:**
+- Critical bug fix needed immediately
+- Major feature ready independently
+- Breaking change that needs its own version
+- Clear logical separation from other work
+
+**Use grouped release when:**
+- Multiple related items complete together
+- Sprint/milestone completion
+- Several small items (PATCH-level changes)
+- Logical thematic grouping
+
+**No wrong answer** - Use judgment. Both patterns are supported.
+
 ---
 
 ## Architecture Decision Records (ADRs)

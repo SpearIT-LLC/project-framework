@@ -2,9 +2,9 @@
 
 **Last Updated:** 2026-01-11
 **Updated By:** Gary Elliott with Claude Code
-**Current Version:** v3.0.1 (2026-01-11)
+**Current Version:** v3.1.0 (2026-01-11)
 **Core Implementation:** Complete and production-ready
-**Ongoing Enhancements:** Monorepo structure established, framework dogfooding itself
+**Ongoing Enhancements:** Monorepo structure established, framework dogfooding itself, grouped releases supported
 
 ---
 
@@ -18,15 +18,18 @@ The SpearIT Project Framework is a comprehensive project management framework te
 
 ## Version Information
 
-### Current Release: v3.0.1 (2026-01-11)
+### Current Release: v3.1.0 (2026-01-11)
 
 **Status:** Stable - Production Ready
 
-**Latest Changes (FEAT-038 - Update v3.0.0 Path References):**
-- 📝 Updated 10 files with v3.0.0 structure path references
-- 📝 Fixed all outdated path references (thoughts/project/planning/ → thoughts/work/)
-- 📝 Updated NEW-PROJECT-CHECKLIST.md to v3.0.0
-- 📝 Aligned all documentation with PROJECT-STRUCTURE-STANDARD.md
+**Latest Changes (Grouped Release: FEAT-032, DECISION-042, FEAT-040):**
+- ✨ Added grouped release process documentation
+- 📝 Clarified work item ID definition and reference system
+- 🐛 Fixed framework structure compliance issues
+- 📖 Updated workflow-guide.md with grouped release process
+- 📋 Updated CLAUDE.md Step 9 with grouped release support
+- 🔢 Work item IDs now use canonical format (042 instead of FEAT-042 in metadata)
+- ✅ Framework fully complies with its own structure standard
 
 **Previous Release (FEAT-026 - Structure Migration):**
 - 🔄 **BREAKING:** Reorganized repository into monorepo structure
@@ -288,6 +291,7 @@ See [roadmap.md](thoughts/project/planning/roadmap.md) for complete roadmap.
 
 | Version | Release Date | Type | Highlights |
 |---------|--------------|------|------------|
+| v3.1.0 | 2026-01-11 | Minor | Grouped releases support, work item ID clarification, structure compliance fixes |
 | v3.0.1 | 2026-01-11 | Patch | Updated 10 files with v3.0.0 path references, aligned all docs with structure standard |
 | v3.0.0 | 2026-01-08 | Major | Monorepo structure, flattened thoughts/ hierarchy, template reorganization |
 | v2.2.5 | 2026-01-01 | Patch | Removed stale Target Version field, added version calculation at release time |
