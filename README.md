@@ -281,7 +281,7 @@ cd project-framework/project-templates
 
 **Template Versions:** Inherit framework version unless independently versioned
 
-See [Version Strategy Documentation](framework/thoughts/reference/version-strategy.md) *(planned)* for details.
+See [Version Strategy Documentation](framework/thoughts/external-references/version-strategy.md) for details.
 
 ---
 

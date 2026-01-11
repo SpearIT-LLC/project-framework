@@ -74,7 +74,7 @@ Completed FEAT-038, updating all documentation and template files to reflect the
 - `thoughts/project/work/doing/` → `thoughts/work/doing/`
 - `thoughts/project/work/done/` → `thoughts/work/done/`
 - `thoughts/project/planning/roadmap.md` → `thoughts/roadmap.md`
-- `thoughts/project/reference/` → `thoughts/reference/`
+- `thoughts/project/reference/` → `thoughts/external-references/`
 - `thoughts/project/research/` → `thoughts/research/`
 - `thoughts/project/history/` → `thoughts/history/`
 

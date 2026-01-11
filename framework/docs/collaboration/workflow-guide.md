@@ -90,7 +90,7 @@ All projects follow this core workflow, with depth varying by framework level:
   - What might we do later?
 
 **Documentation:**
-- **Standard/Full:** `thoughts/reference/project-definition.md`
+- **Standard/Full:** `thoughts/external-references/project-definition.md`
 - **Light:** Brief section in README.md
 - **Minimal:** Embedded in README.md
 

@@ -403,8 +403,8 @@ See [roadmap.md](thoughts/roadmap.md) for complete roadmap.
 - [README.md](README.md) - Project overview and getting started guide
 
 **Must Read:**
-- [system-architecture.md](thoughts/reference/system-architecture.md) - Canonical architecture reference (if exists)
-- [coding-standards.md](thoughts/reference/coding-standards.md) - Code quality standards (if exists)
+- [system-architecture.md](thoughts/external-references/system-architecture.md) - Canonical architecture reference (if exists)
+- [coding-standards.md](thoughts/external-references/coding-standards.md) - Code quality standards (if exists)
 - [version-control-workflow.md](thoughts/framework/process/version-control-workflow.md) - Git branching, releases, and CHANGELOG discipline
 
 **Framework (Reusable):**

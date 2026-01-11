@@ -653,6 +653,24 @@ framework/docs/
 
 These additions are OPTIONAL for user projects (only if project produces templates/tools or needs custom docs).
 
+### Framework-Specific Exceptions
+
+The framework project intentionally deviates from Standard structure:
+
+**Missing Folders:**
+- `src/` - Framework has no executable source code
+- `tests/` - Framework has no code tests currently
+
+**Rationale:** Framework produces templates and documentation, not executable code. It is primarily a documentation and template delivery project.
+
+**Additional Folders:**
+- `templates/` - Framework deliverable templates (19 production templates)
+- `tools/` - Framework deliverable utilities
+- `process/` - Framework workflow documentation
+- `patterns/` - Framework implementation patterns
+
+**Reference:** FEAT-026-P1-BUG-framework-structure.md (v3.0.0 migration decisions)
+
 ---
 
 ## Notes

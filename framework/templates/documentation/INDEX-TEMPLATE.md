@@ -101,13 +101,13 @@ Location: `thoughts/work/`
 
 ### Reference Documentation
 
-Location: `thoughts/reference/`
+Location: `thoughts/external-references/`
 
 **Core References:**
-- **[system-architecture.md](thoughts/reference/system-architecture.md)** - Canonical architecture reference
-- **[coding-standards.md](thoughts/reference/coding-standards.md)** - Code quality and style standards
-- **[security-policy.md](thoughts/reference/security-policy.md)** - Security approach and guidelines
-- **[terminology-standards.md](thoughts/reference/terminology-standards.md)** - Standard terminology
+- **[system-architecture.md](thoughts/external-references/system-architecture.md)** - Canonical architecture reference
+- **[coding-standards.md](thoughts/external-references/coding-standards.md)** - Code quality and style standards
+- **[security-policy.md](thoughts/external-references/security-policy.md)** - Security approach and guidelines
+- **[terminology-standards.md](thoughts/external-references/terminology-standards.md)** - Standard terminology
 
 **Additional References:**
 - [Add project-specific reference docs as created]
@@ -213,8 +213,8 @@ Location: `tests/`
 
 ### For Developers
 1. [CLAUDE.md](CLAUDE.md) - Project conventions
-2. [thoughts/reference/system-architecture.md](thoughts/reference/system-architecture.md) - Architecture
-3. [thoughts/reference/coding-standards.md](thoughts/reference/coding-standards.md) - Code standards
+2. [thoughts/external-references/system-architecture.md](thoughts/external-references/system-architecture.md) - Architecture
+3. [thoughts/external-references/coding-standards.md](thoughts/external-references/coding-standards.md) - Code standards
 4. [thoughts/framework/process/kanban-workflow.md](thoughts/framework/process/kanban-workflow.md) - Workflow
 5. [PROJECT-STATUS.md](PROJECT-STATUS.md) - Current status
 
@@ -227,7 +227,7 @@ Location: `tests/`
 1. [CLAUDE.md](CLAUDE.md) - Primary instructions
 2. [../CLAUDE.md](../CLAUDE.md) - Generic framework (if exists)
 3. [thoughts/framework/](thoughts/framework/) - All framework docs
-4. [thoughts/reference/](thoughts/reference/) - Project references
+4. [thoughts/external-references/](thoughts/external-references/) - Project references
 
 ---
 
