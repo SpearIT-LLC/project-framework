@@ -262,4 +262,311 @@ Completed FEAT-040 (Framework Structure Compliance), fixing the framework's own 
 ---
 
 **Previous Session (Earlier Today):** FEAT-038 completed (v3.0.0 path reference updates)
-**Next Session:** TECH-044 (Work Item Creation Policy), TECH-041 (Supporting Files Policy), or TECH-043 (DRY Documentation Principles)
+
+---
+---
+
+# Session History: 2026-01-11 (Afternoon Session)
+
+**Date:** 2026-01-11
+**Participants:** Gary Elliott, Claude Code
+**Session Focus:** ID Discovery Policy + First Grouped Release (v3.1.0)
+**Duration:** ~2 hours
+
+---
+
+## Summary
+
+Discussed work item ID discovery optimization strategies, created TECH-046 (ID Discovery Policy), implemented FEAT-032 (Grouped Release Support), and executed the framework's first grouped release (v3.1.0) containing three work items: FEAT-032, DECISION-042, and FEAT-040.
+
+---
+
+## Work Completed
+
+### ID Discovery Optimization Discussion
+
+**Topic:** How to efficiently find the next available work item ID
+
+**Initial Proposal:** Maintain `.nextId` state file
+- Pro: O(1) lookup, token savings
+- Con: Sync risk, git conflicts, manual-first friction
+
+**Final Decision:** Scan-based approach with optimizations
+- **Method:** Scan filenames only (no content reads)
+- **Scope:** `{work,releases}/**/{DECISION,FEAT,TECH,SPIKE,POLICY,BUGFIX}-*.md`
+- **Algorithm:** Glob → Parse IDs → Find max → Return max + 1
+- **Benefits:** Always accurate, efficient, simple, git-friendly
+
+**Key Insight:** User clarified to scan `work/` and `releases/` directories comprehensively, eliminating need to special-case subdirectories.
+
+---
+
+### TECH-046: Work Item ID Discovery Policy
+
+**Status:** Created (Todo)
+
+**Purpose:** Document official algorithm for finding next available work item ID
+
+**Content Created:**
+- Scan scope definition (work/ and releases/)
+- Four-step algorithm specification
+- Rationale for approach (accurate, efficient, simple, git-friendly)
+- Why both directories must be scanned
+- Why filename parsing is sufficient
+- Alternatives considered (including .nextId state file)
+
+**Implementation Plan:**
+1. Add ID Discovery section to kanban-workflow.md
+2. Reference in TECH-044 (Work Item Creation Policy)
+3. Update DECISION-042 with cross-reference
+
+**Files Created:** `TECH-046-work-item-id-discovery-policy.md` (~230 lines)
+**Location:** `framework/thoughts/work/todo/`
+**ID Assigned:** 046 (next available after BUGFIX-045)
+
+---
+
+### FEAT-032: Support Multiple Work Items Per Release
+
+**Status:** ✅ Completed
+
+**Problem:** Framework documentation implied one work item per release. Needed clear process for grouped releases (e.g., 3 bug fixes in one version).
+
+**Solution Implemented:**
+
+#### Documentation Added to workflow-guide.md
+
+**New Section: "Releasing Multiple Work Items Together" (~150 lines)**
+
+1. **Version Bumping for Grouped Releases**
+   - Rule: Highest semantic version impact wins
+   - Examples: PATCH+PATCH=PATCH, PATCH+MINOR=MINOR, Any MAJOR=MAJOR
+
+2. **Grouped Release Process (8 steps)**
+   - Complete all items (move to done/)
+   - Calculate version (highest impact)
+   - Create release folder
+   - Move all items to folder
+   - Update CHANGELOG (organized by category)
+   - Update PROJECT-STATUS.md
+   - Commit and tag
+   - Verify done/ is empty
+
+3. **CHANGELOG Format**
+   - Organize by semantic versioning category (Added/Changed/Fixed/etc.)
+   - Multiple items per category supported
+   - Optional notes section
+
+4. **Release History Organization**
+   - Single folder per release (whether 1 or 10 items)
+   - Example folder structure
+
+5. **When to Use Single vs Grouped**
+   - Guidelines for both patterns
+   - "No wrong answer - use judgment"
+
+#### Updates to CLAUDE.md
+
+**Modified Step 9 (Release Atomically)**
+- Added grouped release guidance
+- Version calculation for multiple items
+- CHANGELOG organization notes
+- Archive process for grouped releases
+- Link to detailed workflow-guide.md documentation
+
+**Files Modified:**
+- `framework/docs/collaboration/workflow-guide.md` (+~150 lines)
+- `framework/CLAUDE.md` (~10 lines modified)
+
+**Implementation Summary Added to FEAT-032:**
+- Documented what was done
+- Listed files modified
+- Recorded key decisions
+
+**Status:** Moved to done/
+**Completion Checklist:** All items checked
+
+---
+
+### Release v3.1.0 (Grouped Release)
+
+**Status:** ✅ Completed - Framework's First Grouped Release!
+
+**Release Contents:** 3 work items
+1. **FEAT-032**: Support Multiple Work Items Per Release (MINOR)
+2. **DECISION-042**: Work Item ID Definition and Reference System (MINOR)
+3. **FEAT-040**: Framework Structure Compliance Fixes (PATCH)
+
+**Version Calculation:**
+- Current version: v3.0.1
+- Version impacts: MINOR + MINOR + PATCH
+- Highest impact: MINOR
+- **Next version: v3.1.0** ✓
+
+#### Release Process Executed
+
+**1. CHANGELOG.md Updated**
+- Added v3.1.0 section with all three work items
+- Organized by category:
+  - Added: FEAT-032
+  - Changed: DECISION-042
+  - Fixed: FEAT-040
+- Included "Notes" section: "This release contains 3 work items grouped together"
+
+**2. PROJECT-STATUS.md Updated**
+- Current Version: v3.1.0 (2026-01-11)
+- Latest Changes section updated with all three items
+- Release History table updated
+- Ongoing Enhancements: Added "grouped releases supported"
+
+**3. Git Operations**
+```bash
+# Staged and committed release changes
+git commit -m "feat: Release v3.1.0 - Grouped releases, ID clarification, structure fixes"
+
+# Tagged release
+git tag -a v3.1.0 -m "Release v3.1.0: Grouped releases, ID clarification, structure fixes"
+
+# Archived work items
+git mv thoughts/work/done/*.md thoughts/history/releases/v3.1.0/
+git commit -m "chore: Archive v3.1.0 work items"
+
+# Verified done/ folder empty
+ls thoughts/work/done/*.md  # No files found ✓
+```
+
+**4. Release Folder Structure**
+```
+thoughts/history/releases/v3.1.0/
+├── FEAT-032-multiple-items-per-release.md
+├── DECISION-042-work-item-id-definition.md
+└── FEAT-040-fix-framework-structure-compliance.md
+```
+
+**Commits Created:**
+1. feat: Release v3.1.0 (with Co-Authored-By)
+2. chore: Archive v3.1.0 work items
+
+**Validation:**
+- ✅ All three work items in release folder
+- ✅ done/ folder empty
+- ✅ CHANGELOG properly formatted
+- ✅ PROJECT-STATUS updated
+- ✅ Git tag created
+- ✅ Clean git status
+
+---
+
+## Decisions Made
+
+### ID Discovery Approach
+- **Rejected:** State file approach (sync risk, git conflicts)
+- **Accepted:** Filename scanning with glob pattern
+- **Scope:** Comprehensive (`work/` and `releases/` always)
+- **Rationale:** Accuracy > efficiency, manual-first philosophy
+
+### Grouped Release Version Bumping
+- **Rule:** Highest semantic version impact wins
+- **Applied:** MINOR + MINOR + PATCH = MINOR (v3.1.0)
+- **Documentation:** Clear examples provided for all combinations
+
+### CHANGELOG Organization
+- **Format:** Organize by semantic versioning categories
+- **Multiple items per category:** Supported
+- **Notes section:** Optional context for grouped releases
+
+---
+
+## Blockers Encountered
+
+**None** - All work completed smoothly. The grouped release process worked exactly as documented.
+
+---
+
+## Next Steps
+
+### Immediate Priorities
+1. **TECH-046** - Implement ID Discovery Policy (in todo/)
+2. **TECH-044** - Work Item Creation Policy (in backlog)
+3. **TECH-041** - Supporting Files Naming Policy (in backlog)
+4. **TECH-043** - DRY Documentation Principles (in backlog)
+
+### Ready for Next Session
+- TECH-046 ready to implement (add to kanban-workflow.md)
+- Framework now has complete grouped release support
+- v3.1.0 demonstrates grouped release pattern working
+
+---
+
+## Key Learnings
+
+### Process
+- Grouped release process worked perfectly on first execution
+- Documentation-first approach validated (wrote FEAT-032, then used it immediately)
+- Real-world example (v3.1.0) serves as reference for future releases
+- Todo list tracked 6 tasks across implementation and release
+
+### Technical
+- Version calculation formula clear and unambiguous
+- CHANGELOG organization by category provides excellent readability
+- Single release folder simplifies structure (no special grouping folders needed)
+- Archive process unchanged for grouped releases (same commands)
+
+### Framework Design
+- Grouped releases fill real need (3 related items released together)
+- Both single and grouped patterns now supported (flexibility)
+- Framework successfully dogfoods new grouped release feature
+- ID discovery optimization balances efficiency with reliability
+
+### Meta-Learning
+- Framework documented its own grouped release process
+- Then immediately used that process to release itself
+- This validates both the documentation and the implementation
+- Demonstrates framework maturity (can self-host complex workflows)
+
+---
+
+## Statistics
+
+**Work Items:**
+- Completed: 1 (FEAT-032)
+- Created: 1 (TECH-046)
+- Released: 3 (FEAT-032, DECISION-042, FEAT-040 as v3.1.0)
+
+**Files Changed:**
+- FEAT-032 implementation: 2 files modified
+- TECH-046 creation: 1 file created
+- Release v3.1.0: 4 files modified (CHANGELOG, PROJECT-STATUS, workflow-guide, CLAUDE)
+- Work item archival: 3 files moved
+
+**Release Statistics:**
+- **First grouped release:** v3.1.0
+- **Items in release:** 3
+- **Version bump:** MINOR (v3.0.1 → v3.1.0)
+- **Categories used:** Added (1), Changed (1), Fixed (1)
+
+**Commits:** 2 total
+1. feat: Release v3.1.0 - Grouped releases, ID clarification, structure fixes
+2. chore: Archive v3.1.0 work items
+
+**Git Tags:** 1 (v3.1.0)
+
+**Lines of Documentation Added:**
+- TECH-046 work item: ~230 lines
+- workflow-guide.md section: ~150 lines
+- CLAUDE.md updates: ~10 lines
+- FEAT-032 implementation summary: ~30 lines
+- Total: ~420 lines
+
+---
+
+## Session Outcome
+
+Framework successfully implemented and demonstrated grouped release support. FEAT-032 completed and immediately applied to create v3.1.0 - the framework's first grouped release containing 3 work items. TECH-046 created to document ID discovery policy. Framework now supports both single-item and multi-item releases with clear documentation and a working example.
+
+**Milestone:** Framework v3.1.0 marks the first grouped release, validating the release process works for both patterns.
+
+---
+
+**Previous Session:** Earlier today - FEAT-040, DECISION-042, TECH-041 completed
+**Next Session:** Implement TECH-046 (ID Discovery Policy) or TECH-044 (Work Item Creation Policy)
