@@ -290,6 +290,20 @@ Start simple. Archival is error-prone and mechanical - perfect for automation. F
 
 Explicit commands in docs helped, but I still used `cp` instead of `git mv`. Script would have prevented this entirely.
 
+**Token Usage Statistics:**
+
+Baseline measurements for manual release process:
+
+- **v3.0.1 Release (2026-01-11):** 62.8k tokens consumed
+  - System prompt: 3.2k
+  - System tools: 16.0k
+  - Memory files: 882
+  - Messages: 42.8k (68% of total usage)
+  - Process: Read work item, calculate version, update 3 files (CHANGELOG, PROJECT-STATUS, work item), move files, commit, tag, archive
+  - Time: Full release workflow with documentation reading and verification
+
+This establishes the baseline for comparison once the script is implemented. Expected reduction: 5-10x fewer tokens for the archival portion of the release process.
+
 ---
 
 **Created:** 2026-01-08
