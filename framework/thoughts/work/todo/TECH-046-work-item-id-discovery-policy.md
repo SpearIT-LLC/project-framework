@@ -194,12 +194,16 @@ Provide example implementations in different contexts:
 **AI assistants:**
 - Explicit algorithm to follow
 - Efficient token usage (filename parsing only)
-- No risk of ID collisions
+- No risk of ID collisions in solo developer workflow
 
 **Future automation:**
 - Well-defined algorithm for implementation
 - Clear scope and validation rules
 - Consistent behavior across tools
+
+**Current Limitation:**
+- ⚠️ **Solo developer only** - This algorithm does not handle concurrent ID creation in distributed team environments
+- Small team support requires additional work (see FEAT-047)
 
 ---
 
