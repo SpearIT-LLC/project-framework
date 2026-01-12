@@ -39,7 +39,6 @@ Standard user projects typically create a single-project repository and follow t
 
 ```
 [project-name]/
-├── .gitignore                        # REQUIRED - Git ignore patterns
 ├── LICENSE                           # OPTIONAL - Project license
 ├── README.md                         # REQUIRED - Project overview
 ├── PROJECT-STATUS.md                 # REQUIRED - SSOT for version/status
