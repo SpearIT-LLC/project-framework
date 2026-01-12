@@ -1,11 +1,44 @@
 # DECISION-036: Template Access Strategy for User Projects
 
-**Status:** Proposed
+**Status:** Decided (Resolved by DECISION-050)
 **Date:** 2026-01-10
-**Deciders:** TBD
+**Updated:** 2026-01-12
+**Decided By:** Gary Elliott
 **Impact:** Minor
 **Scope:** User project setup, template access workflow
 **Supersedes:** None
+**Resolved By:** DECISION-050 (Framework Distribution Model)
+
+---
+
+## Resolution (2026-01-12)
+
+**DECISION-050 has been decided:** Framework-as-Dependency Model adopted.
+
+**This resolves DECISION-036 as follows:**
+
+### Template Access Strategy: Embedded Framework
+
+**Decision:** Templates are included in each project's `framework/` copy (Option 1 from original analysis).
+
+**How It Works:**
+1. During setup, user copies template package which includes `framework/` folder
+2. Templates are in `my-project/framework/templates/`
+3. User copies from local framework templates to create work items
+4. User can customize templates (ownership model applies)
+5. Templates update when user updates framework version
+
+**Benefits:**
+- ✅ Self-contained (no external dependencies)
+- ✅ Offline access to all templates
+- ✅ Can customize templates per-project
+- ✅ Simple, predictable location
+
+**Tradeoffs:**
+- Templates duplicated across projects (acceptable for self-containment)
+- Customized templates require manual merge on framework updates
+
+See [DECISION-050-framework-distribution-model.md](DECISION-050-framework-distribution-model.md) for complete details.
 
 ---
 
