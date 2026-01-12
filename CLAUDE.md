@@ -77,6 +77,25 @@ Each project has its own thoughts/ structure:
 
 **Current active work:** Always check `framework/thoughts/work/doing/` for in-progress framework improvements.
 
+### Context Switching (Important!)
+
+**Work items must be created in the correct project:**
+- Issues about the framework itself → `framework/thoughts/work/`
+- Issues about the hello-world example → `project-hello-world/thoughts/work/`
+- Issues about template packages → `project-templates/thoughts/work/`
+
+**To switch project context:**
+1. User explicitly states which project (e.g., "switch to project-hello-world")
+2. AI reads that project's CLAUDE.md and understands context
+3. All subsequent work items go in that project's thoughts/work/ folder
+
+**When referencing work items:**
+- Work item location implies project context
+- "Work on FEAT-039" → Check where FEAT-039 exists → Use that project's context
+- Cross-project references should be explicit: "Create a work item in hello-world for X"
+
+**Note:** A more robust solution using project-config.yaml files is being designed in [framework/thoughts/work/backlog/FEAT-037-project-config-file.md](framework/thoughts/work/backlog/FEAT-037-project-config-file.md). This interim guidance will be superseded when that feature is implemented.
+
 ---
 
 ## First Time in This Repo?
@@ -98,3 +117,7 @@ Each project has its own thoughts/ structure:
 ---
 
 **Remember:** This is a monorepo. Always identify which project you're working on before making changes.
+
+---
+
+**Last Updated:** 2026-01-11

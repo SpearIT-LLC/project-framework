@@ -831,4 +831,210 @@ Completed two work items successfully. FEAT-019 moved pre-release checklist from
 ---
 
 **Previous Session:** Earlier today - FEAT-032, v3.1.0 release
-**Next Session:** Implement TECH-046 (ID Discovery Policy) or address project-hello-world improvements
+
+---
+---
+
+# Session History: 2026-01-11 (Late Evening Session)
+
+**Date:** 2026-01-11
+**Participants:** Gary Elliott, Claude Code
+**Session Focus:** Monorepo Context Switching Discussion
+**Duration:** ~30 minutes
+
+---
+
+## Summary
+
+Identified dogfooding issue where FEAT-039 (project-hello-world validation) was tracked in framework/thoughts/work/ instead of project-hello-world/thoughts/work/. Led to productive discussion about monorepo context switching and extension to FEAT-037 (Project Config File) to address the problem.
+
+---
+
+## Discussion: Monorepo Context Switching
+
+### Problem Identified
+
+While working on FEAT-039 (validating project-hello-world), realized we tracked all issues in framework/thoughts/work/, violating dogfooding principle:
+- FEAT-039 was about validating project-hello-world
+- Work item lived in framework/thoughts/work/done/
+- This is wrong - project-hello-world issues should be tracked in project-hello-world/thoughts/work/
+
+**Core Question:** How do AI and user communicate which project context we're working in within the monorepo?
+
+### Options Explored
+
+1. **Explicit verbal declaration** - User says "switch to project-hello-world"
+   - Simple but easy to forget, tedious over time
+
+2. **Work item namespace inference** - AI infers from work item location
+   - "Work on FEAT-XXX" → check where FEAT-XXX lives → use that project's context
+   - Reinforces correct behavior but requires work items to exist first
+
+3. **Current working directory** - Use `cd` to signal context
+   - Too brittle, conflicts with avoiding `cd` in workflows
+
+4. **Project config as context provider** - Each project's config declares its identity
+   - `workflow.workPath` field tells AI where work items go
+   - AI reads config when switching projects
+   - Provides machine-readable source of truth
+
+### Solution Approach
+
+**Decided:** Combine explicit declaration + config-based context (when FEAT-037 implemented)
+
+Each project would have config:
+```yaml
+# framework/project-config.yaml
+project:
+  name: "Standard Project Framework"
+  workPath: framework/thoughts/work/
+
+# project-hello-world/project-config.yaml
+project:
+  name: "Hello World Example"
+  workPath: project-hello-world/thoughts/work/
+```
+
+**Interim Solution:** Updated monorepo CLAUDE.md with explicit guidance
+
+---
+
+## Work Completed
+
+### FEAT-037 Extended
+
+**Status:** Updated (Still in Backlog)
+
+**Added Discussion Section:** "Monorepo Context Switching (2026-01-11)"
+
+**Content Added:**
+- Problem statement and context
+- All four options explored
+- Proposed config-based solution with examples
+- Open questions:
+  - Monorepo root config vs per-project only?
+  - Config location clarification (project root = each project's root)
+  - Cross-project reference support?
+  - Context loss recovery mechanism?
+- Next steps and related insights
+- Validates need for `workflow.workPath` field
+
+**Files Modified:** `framework/thoughts/work/backlog/FEAT-037-project-config-file.md`
+
+---
+
+### Monorepo CLAUDE.md Updated
+
+**Status:** ✅ Completed
+
+**Added Section:** "Context Switching (Important!)" under "Work Item Tracking"
+
+**Guidance Added:**
+- Work items must be created in correct project
+- Explicit project mapping (framework issues → framework/thoughts/work/, etc.)
+- How to switch project context (explicit declaration)
+- Work item location implies context
+- Cross-project references should be explicit
+- References FEAT-037 as longer-term solution
+
+**Default Project:** Framework (agreed during discussion)
+- At session start, assume framework context unless told otherwise
+- Default work item location: framework/thoughts/work/
+- User must explicitly switch to other projects
+
+**Files Modified:** `CLAUDE.md` (monorepo root)
+**Last Updated:** 2026-01-11
+
+---
+
+## Decisions Made
+
+### Interim Context Switching
+- **Default project:** Framework
+- **Switching mechanism:** Explicit verbal declaration
+- **Work item inference:** Location implies context
+- **Cross-project:** Must be explicit
+
+### FEAT-037 Direction
+- **Monorepo approach:** Per-project configs, no root config needed
+- **Config location:** Each project's root (framework/, project-hello-world/, etc.)
+- **CLAUDE.md role:** Monorepo navigation (already serves this purpose)
+- **Config purpose:** Project identity, work paths, policy references
+
+### Documentation Strategy
+- Interim guidance in CLAUDE.md (working solution)
+- Discussion captured in FEAT-037 (design thinking)
+- Revisit when implementing FEAT-037
+
+---
+
+## Blockers Encountered
+
+**None** - Discussion productive, interim solution documented
+
+---
+
+## Next Steps
+
+### Immediate
+- Use new context switching guidance
+- Be explicit about project context when creating work items
+- Continue FEAT-037 design discussion when ready
+
+### Future (FEAT-037 Implementation)
+- Finalize monorepo config structure
+- Decide on config fields
+- Implement project-config.yaml in all projects
+- Update CLAUDE.md to reference configs
+
+---
+
+## Key Learnings
+
+### Process
+- Dogfooding reveals workflow gaps (we violated our own multi-project principle)
+- Discussion before implementation valuable (avoid premature optimization)
+- Interim solutions acceptable while designing better approach
+- Real pain points drive good feature design
+
+### Framework Design
+- Monorepo structure needs explicit context management
+- Config files complement CLAUDE.md (machine vs human readable)
+- Default project reduces ambiguity
+- Per-project configs cleaner than monorepo root config
+
+### Meta-Learning
+- Framework discovering its own needs through real usage
+- Questions like "what happens when we lose context?" drive design
+- User input critical for validating approach (rejected .nextId-style state)
+
+---
+
+## Statistics
+
+**Work Items:**
+- Extended: 1 (FEAT-037)
+- Discussed but not created: Multiple potential project-hello-world work items
+
+**Files Modified:**
+- FEAT-037 work item: +~90 lines (discussion section)
+- CLAUDE.md: +~20 lines (context switching section)
+
+**Commits:** Pending (session history + CLAUDE.md changes)
+
+**Discussion Duration:** ~30 minutes
+
+---
+
+## Session Outcome
+
+Identified important dogfooding gap in monorepo workflow. Extended FEAT-037 with monorepo context switching requirements. Updated monorepo CLAUDE.md with interim guidance establishing framework as default project and explicit context switching protocol. Design discussion captured for future implementation.
+
+**Key Insight:** Real usage revealed missing workflow element - demonstrates value of dogfooding framework on itself.
+
+---
+
+**Previous Session:** Earlier today - FEAT-019, FEAT-039 completed
+**Next Session:** TBD - Consider implementing project-hello-world fixes or continuing with TECH-046
+
+---

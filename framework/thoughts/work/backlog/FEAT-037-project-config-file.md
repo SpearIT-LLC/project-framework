@@ -641,4 +641,95 @@ policies:
 
 ---
 
-**Last Updated:** 2026-01-08
+## Discussion: Monorepo Context Switching (2026-01-11)
+
+**Context:** While working on FEAT-039 (validating project-hello-world), we discovered a practical issue: how do AI and user communicate which project context we're working in within the monorepo?
+
+**The Problem:**
+- FEAT-039 was a validation task targeting project-hello-world
+- But the work item lived in framework/thoughts/work/
+- This violates dogfooding - project-hello-world issues should be tracked in project-hello-world/thoughts/work/
+- Need a clear mechanism for switching project context
+
+**Options Discussed:**
+
+1. **Explicit verbal declaration** - User says "switch to project-hello-world"
+   - Simple but easy to forget, tedious over time
+
+2. **Work item namespace inference** - AI infers from work item location
+   - "Work on FEAT-XXX" → check where FEAT-XXX lives → use that project's context
+   - Reinforces correct behavior but requires work items to exist first
+
+3. **Current working directory** - Use `cd` to signal context
+   - Too brittle, conflicts with avoiding `cd` in workflows
+
+4. **Project config as context provider** - Each project's config declares its identity
+   - `workflow.workPath` field tells AI where work items go
+   - AI reads config when switching projects
+   - Provides machine-readable source of truth
+
+**Proposed Solution:**
+Combine explicit declaration + config-based context:
+
+```yaml
+# framework/project-config.yaml
+project:
+  name: "Standard Project Framework"
+  type: framework
+
+workflow:
+  workPath: framework/thoughts/work/  # Where work items for THIS project go
+```
+
+```yaml
+# project-hello-world/project-config.yaml
+project:
+  name: "Hello World Example"
+  type: application
+
+workflow:
+  workPath: project-hello-world/thoughts/work/  # Different work path
+```
+
+**Workflow:**
+1. User: "Switch to project-hello-world"
+2. AI reads `project-hello-world/project-config.yaml`
+3. AI knows work items go in `project-hello-world/thoughts/work/`
+4. User: "Create work item for missing README"
+5. AI creates work item in correct location based on active config
+
+**Open Questions:**
+
+1. **Monorepo root config?** Should there be a config at repo root, or just rely on CLAUDE.md + per-project configs?
+   - Option A: Per-project configs only, CLAUDE.md handles monorepo navigation
+   - Option B: Root config + per-project configs (more structure, potential duplication)
+   - **Leaning toward Option A** - CLAUDE.md already serves monorepo navigation purpose
+
+2. **Config location decision conflict:** Line 412 says "Project root" but in monorepo context, which root?
+   - Framework project root: `framework/project-config.yaml`
+   - Hello-world project root: `project-hello-world/project-config.yaml`
+   - Monorepo root: `project-config.yaml` (if we have one)
+   - **Need to clarify:** "project root" = each project's root, not monorepo root
+
+3. **Cross-project references:** User says "create work item in hello-world" while in framework context
+   - Should AI support this? Or require explicit context switch first?
+   - Flexibility vs. clarity tradeoff
+
+4. **Context loss recovery:** What happens when conversation context is lost?
+   - Config provides durable source of truth
+   - But which config to read if context is completely lost?
+   - Fallback to monorepo CLAUDE.md for navigation?
+
+**Next Steps:**
+- Need more discussion on monorepo-specific config structure
+- Interim solution: Add note to monorepo CLAUDE.md about explicit context switching
+- Revisit when ready to implement FEAT-037
+
+**Related Insights:**
+- This validates the need for `workflow.workPath` field
+- Demonstrates real-world use case for config file
+- Shows config complements CLAUDE.md (navigation) vs replaces it
+
+---
+
+**Last Updated:** 2026-01-11
