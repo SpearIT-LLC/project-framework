@@ -205,7 +205,7 @@ Be honest about current scope while maintaining credibility and vision for growt
 ### Might Need Updates:
 - [ ] framework/patterns/ (if any team patterns exist)
 - [ ] framework/collaboration/ guides
-- [ ] project-hello-world/ documentation
+- [ ] examples/hello-world/ documentation
 
 ---
 

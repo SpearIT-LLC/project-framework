@@ -10,7 +10,7 @@
 
 **Overall Assessment:** FEAT-025 requires MAJOR updates before implementation.
 
-The work item was written before FEAT-026 restructured the repository into a monorepo with framework/ and project-hello-world/ folders, and established definitive structure standards. Many references, paths, and structural assumptions in FEAT-025 are now outdated or incorrect.
+The work item was written before FEAT-026 restructured the repository into a monorepo with framework/ and examples/hello-world/ folders, and established definitive structure standards. Many references, paths, and structural assumptions in FEAT-025 are now outdated or incorrect.
 
 **Key Issues:**
 1. ❌ **Structure references outdated** - References old `thoughts/project/planning/backlog/` instead of `thoughts/work/backlog/`
@@ -32,15 +32,15 @@ The work item was written before FEAT-026 restructured the repository into a mon
 - Repository is now a monorepo with minimal root (README, QUICK-START, CLAUDE, LICENSE, .gitignore)
 - Framework lives in `framework/` folder
 - Sample projects live in `project-*/` folders
-- `project-hello-world/` already exists as reference implementation
+- `examples/hello-world/` already exists as reference implementation
 
 **FEAT-025 Current State:**
 - Proposes creating `examples/` at repository root
-- Doesn't acknowledge existing `project-hello-world/`
+- Doesn't acknowledge existing `examples/hello-world/`
 - References old single-project structure
 
 **Required Updates:**
-- [ ] Acknowledge `project-hello-world/` already exists
+- [ ] Acknowledge `examples/hello-world/` already exists
 - [ ] Decide if FEAT-025 is still needed (validation may already be done)
 - [ ] If needed, define scope: validate Minimal/Light levels only?
 - [ ] Remove references to creating Standard example (already exists)
@@ -167,11 +167,11 @@ The work item was written before FEAT-026 restructured the repository into a mon
 - Valid simplification
 
 **FEAT-026 Impact:**
-- `project-hello-world/` exists as Standard reference implementation
+- `examples/hello-world/` exists as Standard reference implementation
 - What application does it implement? (Unknown from this analysis)
 
 **Required Investigation:**
-- [ ] Check what `project-hello-world/` implements
+- [ ] Check what `examples/hello-world/` implements
 - [ ] If already implements simple example, is FEAT-025 still needed?
 - [ ] If FEAT-025 still needed, define unique value vs. project-hello-world
 
@@ -184,12 +184,12 @@ The work item was written before FEAT-026 restructured the repository into a mon
 - Create three example projects
 
 **FEAT-026 Impact:**
-- Standard level already has `project-hello-world/`
+- Standard level already has `examples/hello-world/`
 - Minimal and Light levels NOT yet validated
 
 **Recommended Scope Adjustment:**
 - [ ] Focus FEAT-025 on Minimal and Light validation ONLY
-- [ ] Standard validation = verify `project-hello-world/` matches PROJECT-STRUCTURE-STANDARD.md
+- [ ] Standard validation = verify `examples/hello-world/` matches PROJECT-STRUCTURE-STANDARD.md
 - [ ] Rename to "FEAT-025: Minimal/Light Setup Validation" (Standard already done)
 - [ ] Update success metrics to reflect narrower scope
 
@@ -232,10 +232,10 @@ The work item was written before FEAT-026 restructured the repository into a mon
 
 ### Decision 1: Is FEAT-025 Still Needed?
 
-**Question:** Does `project-hello-world/` already fulfill FEAT-025's validation goals?
+**Question:** Does `examples/hello-world/` already fulfill FEAT-025's validation goals?
 
 **Investigation Needed:**
-- [ ] Review `project-hello-world/` structure
+- [ ] Review `examples/hello-world/` structure
 - [ ] Check if it matches PROJECT-STRUCTURE-STANDARD.md
 - [ ] Determine if it validates the setup process
 - [ ] Assess if Standard level setup is proven
@@ -372,7 +372,7 @@ The work item was written before FEAT-026 restructured the repository into a mon
 - [ ] All paths use v3.0.0 structure (`thoughts/work/backlog/`, not `thoughts/project/planning/backlog/`)
 - [ ] Template references point to correct locations
 - [ ] References PROJECT-STRUCTURE-STANDARD.md as specification
-- [ ] Acknowledges monorepo structure (framework/, project-hello-world/)
+- [ ] Acknowledges monorepo structure (framework/, examples/hello-world/)
 - [ ] No references to removed `planning/` folder level
 
 ### Template Access

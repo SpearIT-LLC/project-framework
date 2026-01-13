@@ -12,7 +12,7 @@
 
 ## Summary
 
-Validate that project-hello-world/ matches PROJECT-STRUCTURE-STANDARD.md specification and fulfills its role as a Standard Framework reference implementation. Document compliance status and any gaps.
+Validate that examples/hello-world/ matches PROJECT-STRUCTURE-STANDARD.md specification and fulfills its role as a Standard Framework reference implementation. Document compliance status and any gaps.
 
 ---
 
@@ -20,7 +20,7 @@ Validate that project-hello-world/ matches PROJECT-STRUCTURE-STANDARD.md specifi
 
 **What problem does this solve?**
 
-project-hello-world/ was created as part of FEAT-026 monorepo restructuring to serve as a reference implementation of the Standard Framework. However, we need to verify:
+examples/hello-world/ was created as part of FEAT-026 monorepo restructuring to serve as a reference implementation of the Standard Framework. However, we need to verify:
 
 1. Does it actually match PROJECT-STRUCTURE-STANDARD.md?
 2. Is it complete or are there missing elements?
@@ -75,7 +75,7 @@ None - we're assuming project-hello-world is correct without verification.
 - `FEAT-039-VALIDATION-REPORT.md` - Compliance validation results (co-located with this work item)
 
 **Files Validated (read-only):**
-- `project-hello-world/**/*` - All files and folders
+- `examples/hello-world/**/*` - All files and folders
 - Comparison against `framework/docs/PROJECT-STRUCTURE-STANDARD.md`
 
 ### Implementation Approach
@@ -242,7 +242,7 @@ Create `FEAT-039-VALIDATION-REPORT.md` documenting:
 ## Dependencies
 
 **Requires:**
-- project-hello-world/ exists (created in FEAT-026)
+- examples/hello-world/ exists (created in FEAT-026)
 - PROJECT-STRUCTURE-STANDARD.md exists (created in FEAT-026)
 
 **Blocks:**
@@ -355,7 +355,7 @@ During FEAT-025 alignment analysis, we realized project-hello-world exists but i
 - [PROJECT-STRUCTURE-STANDARD.md](../../docs/PROJECT-STRUCTURE-STANDARD.md) - Validation specification
 - [FEAT-025-ALIGNMENT-ANALYSIS.md](FEAT-025-ALIGNMENT-ANALYSIS.md) - Context for this work item
 - FEAT-026 Release Notes - project-hello-world creation
-- [project-hello-world/](../../../project-hello-world/) - Subject of validation
+- [examples/hello-world/](../../../examples/hello-world/) - Subject of validation
 
 ---
 

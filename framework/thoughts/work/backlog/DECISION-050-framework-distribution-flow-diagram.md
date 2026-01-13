@@ -145,10 +145,10 @@ graph LR
         end
 
         subgraph "Hello World Project"
-            C[project-hello-world/]
-            C1[project-hello-world/framework/<br/>COPY of framework]
-            C2[project-hello-world/src/]
-            C3[project-hello-world/thoughts/work/]
+            C[examples/hello-world/]
+            C1[examples/hello-world/framework/<br/>COPY of framework]
+            C2[examples/hello-world/src/]
+            C3[examples/hello-world/thoughts/work/]
             C --> C1
             C --> C2
             C --> C3
@@ -180,10 +180,10 @@ graph LR
 
 **Key Points:**
 1. `framework/` = Source project (develops framework itself)
-2. `project-hello-world/framework/` = Dependency copy (uses framework)
+2. `examples/hello-world/framework/` = Dependency copy (uses framework)
 3. Each maintains separate `thoughts/work/` for their own work items
 4. `framework/` work items = framework improvements (FEAT-026, TECH-043)
-5. `project-hello-world/` work items = hello-world features (FEAT-001, etc.)
+5. `examples/hello-world/` work items = hello-world features (FEAT-001, etc.)
 
 ---
 
@@ -208,9 +208,9 @@ graph TB
     end
 
     subgraph "User Project Context"
-        PROJ[project-hello-world/]
-        PROJ_FW[project-hello-world/framework/<br/>dependency copy]
-        PROJ_WORK[project-hello-world/thoughts/work/]
+        PROJ[examples/hello-world/]
+        PROJ_FW[examples/hello-world/framework/<br/>dependency copy]
+        PROJ_WORK[examples/hello-world/thoughts/work/]
         PROJ_FEAT[FEAT-001: Add greeting feature]
         PROJ_BUG[BUGFIX-002: Fix config parsing]
 

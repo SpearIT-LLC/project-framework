@@ -541,7 +541,7 @@ Below is the human-organized documentation index...
    - **Validation:** Ensure gradual adoption is possible
 
 9. **Monorepo structure:** One config or multiple?
-   - **Recommendation:** One per project (framework/, project-hello-world/, etc.)
+   - **Recommendation:** One per project (framework/, examples/hello-world/, etc.)
    - **Open:** Should framework config be "inherited" by other projects?
 
 ---
@@ -648,7 +648,7 @@ policies:
 **The Problem:**
 - FEAT-039 was a validation task targeting project-hello-world
 - But the work item lived in framework/thoughts/work/
-- This violates dogfooding - project-hello-world issues should be tracked in project-hello-world/thoughts/work/
+- This violates dogfooding - project-hello-world issues should be tracked in examples/hello-world/thoughts/work/
 - Need a clear mechanism for switching project context
 
 **Options Discussed:**
@@ -682,19 +682,19 @@ workflow:
 ```
 
 ```yaml
-# project-hello-world/project-config.yaml
+# examples/hello-world/project-config.yaml
 project:
   name: "Hello World Example"
   type: application
 
 workflow:
-  workPath: project-hello-world/thoughts/work/  # Different work path
+  workPath: examples/hello-world/thoughts/work/  # Different work path
 ```
 
 **Workflow:**
 1. User: "Switch to project-hello-world"
-2. AI reads `project-hello-world/project-config.yaml`
-3. AI knows work items go in `project-hello-world/thoughts/work/`
+2. AI reads `examples/hello-world/project-config.yaml`
+3. AI knows work items go in `examples/hello-world/thoughts/work/`
 4. User: "Create work item for missing README"
 5. AI creates work item in correct location based on active config
 
@@ -707,7 +707,7 @@ workflow:
 
 2. **Config location decision conflict:** Line 412 says "Project root" but in monorepo context, which root?
    - Framework project root: `framework/project-config.yaml`
-   - Hello-world project root: `project-hello-world/project-config.yaml`
+   - Hello-world project root: `examples/hello-world/project-config.yaml`
    - Monorepo root: `project-config.yaml` (if we have one)
    - **Need to clarify:** "project root" = each project's root, not monorepo root
 

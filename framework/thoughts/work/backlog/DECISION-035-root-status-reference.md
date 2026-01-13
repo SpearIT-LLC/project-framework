@@ -53,7 +53,7 @@ Root README.md currently includes:
 
 **Rationale:**
 - Framework IS the main project
-- project-hello-world/ is just an example
+- examples/hello-world/ is just an example
 - project-templates/ are derived from framework
 - Framework status represents monorepo status
 
@@ -110,7 +110,7 @@ Root README.md currently includes:
   - Status: See framework/PROJECT-STATUS.md
   - Version: See framework/CHANGELOG.md
 
-- **project-hello-world/** - Reference implementation
+- **examples/hello-world/** - Reference implementation
   - Status: Stable example
   - Purpose: Demonstrate framework usage
 

@@ -303,7 +303,7 @@ If we adopt **Option 1 (Framework-as-Dependency)**, the current monorepo structu
 ```
 project-framework/
 ├── framework/              # THE canonical framework
-├── project-hello-world/    # References ../framework/
+├── examples/hello-world/    # References ../framework/
 └── project-templates/      # Templates for new projects
 ```
 
@@ -311,7 +311,7 @@ project-framework/
 ```
 project-framework/
 ├── framework/                      # SOURCE framework (for development)
-├── project-hello-world/
+├── examples/hello-world/
 │   └── framework/                  # HAS ITS OWN COPY
 │       └── .framework-version      # Tracks version
 └── project-templates/
