@@ -85,7 +85,7 @@ This release contains 3 work items grouped together.
 ### Added
 - **Monorepo Structure**
   - Created `framework/` folder for framework project
-  - Created `project-hello-world/` reference implementation
+  - Created `examples/hello-world/` reference implementation
   - Root-level `QUICK-START.md` for navigation
   - Root-level `CLAUDE.md` for repository navigation
 - **Universal Structure Definitions**

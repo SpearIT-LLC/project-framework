@@ -13,7 +13,7 @@ This repository contains multiple related projects:
 ```
 project-framework/
 ├── framework/                   # The Standard Project Framework itself
-├── project-hello-world/         # Reference implementation (example project)
+├── examples/hello-world/        # Reference implementation (example project)
 ├── project-templates/           # Template packages for new projects
 ├── README.md                    # Monorepo overview and getting started
 ├── QUICK-START.md              # Quick reference guide
@@ -37,7 +37,7 @@ The framework project contains:
 
 ### Working on the Hello World Example?
 
-**Read:** [project-hello-world/CLAUDE.md](project-hello-world/CLAUDE.md)
+**Read:** [examples/hello-world/CLAUDE.md](examples/hello-world/CLAUDE.md)
 
 The hello-world project is a reference implementation showing how to use the framework.
 
@@ -59,13 +59,13 @@ These are starter templates that users copy to begin new projects.
 ### Understanding the Separation
 
 - **framework/** = The framework documentation, process, templates, and tracking
-- **project-hello-world/** = An example project that uses the framework
+- **examples/hello-world/** = An example project that uses the framework
 - **project-templates/** = Packages for bootstrapping new projects
 
 ### Where Do Changes Go?
 
 - **Framework improvements** → Work in [framework/](framework/)
-- **Example updates** → Work in [project-hello-world/](project-hello-world/)
+- **Example updates** → Work in [examples/hello-world/](examples/hello-world/)
 - **Template updates** → Work in [project-templates/](project-templates/)
 
 ### Work Item Tracking
@@ -73,7 +73,7 @@ These are starter templates that users copy to begin new projects.
 Each project has its own thoughts/ structure:
 
 - Framework work items: [framework/thoughts/work/](framework/thoughts/work/)
-- Hello-world work items: [project-hello-world/thoughts/work/](project-hello-world/thoughts/work/)
+- Hello-world work items: [examples/hello-world/thoughts/work/](examples/hello-world/thoughts/work/)
 
 **Current active work:** Always check `framework/thoughts/work/doing/` for in-progress framework improvements.
 
@@ -81,7 +81,7 @@ Each project has its own thoughts/ structure:
 
 **Work items must be created in the correct project:**
 - Issues about the framework itself → `framework/thoughts/work/`
-- Issues about the hello-world example → `project-hello-world/thoughts/work/`
+- Issues about the hello-world example → `examples/hello-world/thoughts/work/`
 - Issues about template packages → `project-templates/thoughts/work/`
 
 **To switch project context:**
@@ -120,4 +120,4 @@ Each project has its own thoughts/ structure:
 
 ---
 
-**Last Updated:** 2026-01-11
+**Last Updated:** 2026-01-13

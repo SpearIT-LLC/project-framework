@@ -39,7 +39,7 @@ project-framework/                    # REPOSITORY (not a project)
 ├── framework/                        # PROJECT (follows Standard Framework structure)
 │   └── [See PROJECT-STRUCTURE-STANDARD.md]
 │
-└── project-hello-world/              # PROJECT (follows Standard Framework structure)
+└── examples/hello-world/              # PROJECT (follows Standard Framework structure)
     └── [See PROJECT-STRUCTURE-STANDARD.md]
 ```
 
@@ -109,7 +109,7 @@ project-framework/                    # REPOSITORY (not a project)
 → Read [framework/CLAUDE.md](framework/CLAUDE.md)
 
 **Working on hello-world sample?**
-→ Read [project-hello-world/CLAUDE.md](project-hello-world/CLAUDE.md)
+→ Read [examples/hello-world/CLAUDE.md](examples/hello-world/CLAUDE.md)
 
 **Not sure which project?**
 → Ask the user which project you're working on
@@ -227,7 +227,7 @@ project-framework/           # Repository root (minimal)
 ├── LICENSE
 ├── .gitignore
 ├── framework/              # Project 1 (complete)
-└── project-hello-world/    # Project 2 (complete)
+└── examples/hello-world/    # Project 2 (complete)
 ```
 
 ### User Projects (Single Project)

@@ -86,7 +86,7 @@ See [../README.md](../README.md) for monorepo structure and getting started.
 3. Follow [../project-templates/NEW-PROJECT-CHECKLIST.md](../project-templates/NEW-PROJECT-CHECKLIST.md)
 
 **For Reference Implementation:**
-See [../project-hello-world/](../project-hello-world/) for a complete Standard framework example.
+See [../examples/hello-world/](../examples/hello-world/) for a complete Standard framework example.
 
 ---
 

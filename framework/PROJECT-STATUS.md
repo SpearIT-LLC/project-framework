@@ -12,7 +12,7 @@
 
 The SpearIT Project Framework is a comprehensive project management framework template system designed to be copied to new or existing projects. It provides standardized structure, documentation, workflows, and AI integration for projects of all sizes.
 
-**Status:** Production-ready for internal use. Standard Framework level is complete and validated. Framework successfully dogfooding itself in monorepo structure with separate framework/ and project-hello-world/ projects.
+**Status:** Production-ready for internal use. Standard Framework level is complete and validated. Framework successfully dogfooding itself in monorepo structure with separate framework/ and examples/hello-world/ projects.
 
 ---
 
@@ -34,7 +34,7 @@ The SpearIT Project Framework is a comprehensive project management framework te
 **Previous Release (FEAT-026 - Structure Migration):**
 - 🔄 **BREAKING:** Reorganized repository into monorepo structure
 - 📁 Framework content moved to `framework/` folder
-- 📁 Created `project-hello-world/` reference implementation
+- 📁 Created `examples/hello-world/` reference implementation
 - 📝 Established universal Standard Project Structure (PROJECT-STRUCTURE-STANDARD.md)
 - 📝 Defined repository root structure (REPOSITORY-STRUCTURE.md)
 - 📝 Framework now fully dogfoods itself
