@@ -258,7 +258,7 @@ Before starting any project, determine the appropriate framework level based on 
 - Production-ready documentation
 - For: Full applications, small teams, moderate to complex architectures
 
-**Setup Guide:** See project-templates package
+**Setup Guide:** See templates package
 
 **Full Architecture:** [collaboration/architecture-guide.md](docs/collaboration/architecture-guide.md)
 

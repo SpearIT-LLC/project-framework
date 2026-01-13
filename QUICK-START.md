@@ -19,7 +19,7 @@ Do you have 3+ files AND ongoing maintenance?
          └─ YES → Standard (50+ files, 3 hr setup)
 ```
 
-**Still unsure?** See [README-TEMPLATE-SELECTION.md](project-templates/README-TEMPLATE-SELECTION.md)
+**Still unsure?** See [README-TEMPLATE-SELECTION.md](templates/README-TEMPLATE-SELECTION.md)
 
 ---
 
@@ -28,26 +28,26 @@ Do you have 3+ files AND ongoing maintenance?
 ### Minimal Framework (Single Scripts)
 ```bash
 cd /path/to/your-project
-cp /path/to/framework/project-templates/minimal/README.md .
+cp /path/to/framework/templates/minimal/README.md .
 # Edit README.md, add your code
 ```
 
 ### Light Framework (Small Tools)
 ```bash
 cd /path/to/your-project
-cp -r /path/to/framework/project-templates/light/* .
+cp -r /path/to/framework/templates/light/* .
 # Edit README.md, PROJECT-STATUS.md, CHANGELOG.md
 ```
 
 ### Standard Framework (Applications)
 ```bash
 cd /path/to/your-project
-cp -r /path/to/framework/project-templates/standard/* .
-cp -r /path/to/framework/project-templates/standard/.gitignore .
+cp -r /path/to/framework/templates/standard/* .
+cp -r /path/to/framework/templates/standard/.gitignore .
 # Follow NEW-PROJECT-CHECKLIST.md
 ```
 
-**Detailed Setup:** [NEW-PROJECT-CHECKLIST.md](project-templates/NEW-PROJECT-CHECKLIST.md)
+**Detailed Setup:** [NEW-PROJECT-CHECKLIST.md](templates/NEW-PROJECT-CHECKLIST.md)
 
 ---
 
@@ -144,7 +144,7 @@ cp framework/templates/documentation/session-history-template.md \
 ## 6. Quick Troubleshooting
 
 **Problem:** "Too much documentation overhead"
-→ **Solution:** You might need a lower framework level. See [UPGRADE-PATH.md](project-templates/UPGRADE-PATH.md) (works both ways)
+→ **Solution:** You might need a lower framework level. See [UPGRADE-PATH.md](templates/UPGRADE-PATH.md) (works both ways)
 
 **Problem:** "Don't know which framework level"
 → **Solution:** Start with Light. Upgrade to Standard when you need planning, downgrade to Minimal if it's overkill.
@@ -163,13 +163,13 @@ cp framework/templates/documentation/session-history-template.md \
 |--------------|----------|--------------|
 | Full overview | [README.md](README.md) | 10 min |
 | Working example | [examples/hello-world/](examples/hello-world/) | 5 min |
-| Choose framework level | [README-TEMPLATE-SELECTION.md](project-templates/README-TEMPLATE-SELECTION.md) | 5 min |
-| Setup instructions | [NEW-PROJECT-CHECKLIST.md](project-templates/NEW-PROJECT-CHECKLIST.md) | 15 min |
+| Choose framework level | [README-TEMPLATE-SELECTION.md](templates/README-TEMPLATE-SELECTION.md) | 5 min |
+| Setup instructions | [NEW-PROJECT-CHECKLIST.md](templates/NEW-PROJECT-CHECKLIST.md) | 15 min |
 | Current version/status | [framework/PROJECT-STATUS.md](framework/PROJECT-STATUS.md) | 2 min |
 | Change history | [framework/CHANGELOG.md](framework/CHANGELOG.md) | 5 min |
 | All documentation | [framework/INDEX.md](framework/INDEX.md) | 3 min |
-| Upgrade/downgrade | [UPGRADE-PATH.md](project-templates/UPGRADE-PATH.md) | 10 min |
-| File structure | [STRUCTURE.md](project-templates/STRUCTURE.md) | 5 min |
+| Upgrade/downgrade | [UPGRADE-PATH.md](templates/UPGRADE-PATH.md) | 10 min |
+| File structure | [STRUCTURE.md](templates/STRUCTURE.md) | 5 min |
 
 ---
 
@@ -216,7 +216,7 @@ DAILY WORK:
 ## 10. Getting Help
 
 - **See working example:** [examples/hello-world/](examples/hello-world/)
-- **Framework structure questions:** [STRUCTURE.md](project-templates/STRUCTURE.md)
+- **Framework structure questions:** [STRUCTURE.md](templates/STRUCTURE.md)
 - **Workflow questions:** [framework/process/](framework/process/)
 - **Complete doc index:** [framework/INDEX.md](framework/INDEX.md)
 - **Maintainer:** gary.elliott@spearit.solutions

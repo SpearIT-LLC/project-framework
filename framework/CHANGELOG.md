@@ -67,7 +67,7 @@ This release contains 3 work items grouped together.
   - Templates: CLAUDE-TEMPLATE.md, INDEX-TEMPLATE.md, PROJECT-STATUS-TEMPLATE.md, README-TEMPLATE.md, PROJECT-DEFINITION-TEMPLATE.md
   - NEW-PROJECT-CHECKLIST.md updated to v3.0.0
   - All references changed: thoughts/project/planning/ → thoughts/work/
-  - Fixed template package path: project-framework-template/ → project-templates/
+  - Fixed template package path: project-framework-template/ → templates/
   - Removed 4-level structure references (now 3-level)
   - Aligned all documentation with PROJECT-STRUCTURE-STANDARD.md
 

@@ -60,7 +60,7 @@ graph TB
 ```mermaid
 sequenceDiagram
     participant User
-    participant Template as project-templates/standard/
+    participant Template as templates/standard/
     participant Framework as framework/
     participant Project as my-project/
 
@@ -155,7 +155,7 @@ graph LR
         end
 
         subgraph "Template Packages"
-            D[project-templates/]
+            D[templates/]
             D1[standard/<br/>includes framework/ copy]
             D --> D1
         end

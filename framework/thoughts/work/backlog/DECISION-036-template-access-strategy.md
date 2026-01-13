@@ -301,7 +301,7 @@ my-project/
 
 **Rollout:**
 - Update NEW-PROJECT-CHECKLIST.md with chosen approach
-- Update template packages in `project-templates/`
+- Update template packages in `templates/`
 - Update documentation (CLAUDE.md, collaboration guides)
 - Implement for FEAT-025 validation
 
@@ -388,7 +388,7 @@ This decision affects:
 
 - [FEAT-025-ALIGNMENT-ANALYSIS.md](FEAT-025-ALIGNMENT-ANALYSIS.md) - Discovered this issue
 - [PROJECT-STRUCTURE-STANDARD.md](../../docs/PROJECT-STRUCTURE-STANDARD.md) - Project structure spec
-- [NEW-PROJECT-CHECKLIST.md](../../../project-templates/NEW-PROJECT-CHECKLIST.md) - Will be updated based on decision
+- [NEW-PROJECT-CHECKLIST.md](../../../templates/NEW-PROJECT-CHECKLIST.md) - Will be updated based on decision
 
 ---
 

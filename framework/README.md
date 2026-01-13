@@ -81,9 +81,9 @@ framework/
 See [../README.md](../README.md) for monorepo structure and getting started.
 
 **For New Projects:**
-1. Read [../project-templates/README-TEMPLATE-SELECTION.md](../project-templates/README-TEMPLATE-SELECTION.md)
+1. Read [../templates/README-TEMPLATE-SELECTION.md](../templates/README-TEMPLATE-SELECTION.md)
 2. Choose your framework level (Minimal, Light, or Standard)
-3. Follow [../project-templates/NEW-PROJECT-CHECKLIST.md](../project-templates/NEW-PROJECT-CHECKLIST.md)
+3. Follow [../templates/NEW-PROJECT-CHECKLIST.md](../templates/NEW-PROJECT-CHECKLIST.md)
 
 **For Reference Implementation:**
 See [../examples/hello-world/](../examples/hello-world/) for a complete Standard framework example.
@@ -158,4 +158,4 @@ Check [thoughts/](thoughts/) to see the framework in action on itself.
 
 ---
 
-**Get Started:** [../README.md](../README.md) → [../project-templates/README-TEMPLATE-SELECTION.md](../project-templates/README-TEMPLATE-SELECTION.md)
+**Get Started:** [../README.md](../README.md) → [../templates/README-TEMPLATE-SELECTION.md](../templates/README-TEMPLATE-SELECTION.md)

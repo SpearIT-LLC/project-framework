@@ -18,7 +18,7 @@ The work item was written before FEAT-026 restructured the repository into a mon
 3. ❌ **Template location misalignment** - Templates are now in `framework/templates/`, not `thoughts/framework/templates/`
 4. ❌ **Scope misalignment** - Proposes creating `examples/` but examples/hello-world already exists
 5. ❌ **Checklist not updated** - NEW-PROJECT-CHECKLIST.md still references old structure
-6. ❌ **Template packages missing** - References `project-framework-template/` but actual location is `project-templates/`
+6. ❌ **Template packages missing** - References `project-framework-template/` but actual location is `templates/`
 
 **Recommendation:** Update FEAT-025 significantly before proceeding. See detailed alignment issues below.
 
@@ -88,7 +88,7 @@ The work item was written before FEAT-026 restructured the repository into a mon
 
 **Required Updates:**
 - [ ] **CRITICAL:** Redefine what FEAT-025 is validating
-  - Are we validating that users can ACCESS framework templates from `project-templates/`?
+  - Are we validating that users can ACCESS framework templates from `templates/`?
   - Are we validating that NEW-PROJECT-CHECKLIST.md works?
   - Are we validating that project structure matches PROJECT-STRUCTURE-STANDARD.md?
 - [ ] Update all template path references
@@ -100,7 +100,7 @@ The work item was written before FEAT-026 restructured the repository into a mon
 ### 4. Template Package Location
 
 **FEAT-026 Decision:**
-- Template packages live in `project-templates/` (not `project-framework-template/`)
+- Template packages live in `templates/` (not `project-framework-template/`)
 - Contains: `minimal/`, `light/`, `standard/`, and support docs
 
 **FEAT-025 Current State:**
@@ -108,9 +108,9 @@ The work item was written before FEAT-026 restructured the repository into a mon
 - References old template package structure
 
 **Required Updates:**
-- [ ] Update all references: `project-framework-template/` → `project-templates/`
+- [ ] Update all references: `project-framework-template/` → `templates/`
 - [ ] Verify template package structure matches expectations
-- [ ] Check if `project-templates/standard/` actually contains what FEAT-025 expects to copy
+- [ ] Check if `templates/standard/` actually contains what FEAT-025 expects to copy
 
 ---
 
@@ -130,7 +130,7 @@ The work item was written before FEAT-026 restructured the repository into a mon
 - [ ] Reference PROJECT-STRUCTURE-STANDARD.md as validation specification
 - [ ] Align validation checklist with published standard
 - [ ] Remove assumptions about user projects having framework-specific folders
-- [ ] Validate that `project-templates/standard/` matches PROJECT-STRUCTURE-STANDARD.md
+- [ ] Validate that `templates/standard/` matches PROJECT-STRUCTURE-STANDARD.md
 
 ---
 
@@ -264,9 +264,9 @@ The work item was written before FEAT-026 restructured the repository into a mon
 - Then validate it works (FEAT-025)
 
 **Option B: Validate Template Packages**
-- Verify `project-templates/minimal/` works
-- Verify `project-templates/light/` works
-- Verify `project-templates/standard/` matches PROJECT-STRUCTURE-STANDARD.md
+- Verify `templates/minimal/` works
+- Verify `templates/light/` works
+- Verify `templates/standard/` matches PROJECT-STRUCTURE-STANDARD.md
 
 **Option C: Validate Complete User Journey**
 - User downloads framework
@@ -349,7 +349,7 @@ The work item was written before FEAT-026 restructured the repository into a mon
 
 **Immediate Updates:**
 - [ ] Update all path references to v3.0.0 structure
-- [ ] Update template package references: `project-framework-template/` → `project-templates/`
+- [ ] Update template package references: `project-framework-template/` → `templates/`
 - [ ] Reference PROJECT-STRUCTURE-STANDARD.md as validation specification
 - [ ] Acknowledge examples/hello-world exists
 - [ ] Redefine scope (all three levels vs. Minimal/Light only)
@@ -461,7 +461,7 @@ The work item was written before FEAT-026 restructured the repository into a mon
 
 1. ❌ **Path structure** - Update all `thoughts/project/planning/backlog/` → `thoughts/work/backlog/`
 2. ❌ **Template location** - Fix `thoughts/framework/templates/` references (incorrect for users)
-3. ❌ **Template package path** - Update `project-framework-template/` → `project-templates/`
+3. ❌ **Template package path** - Update `project-framework-template/` → `templates/`
 4. ❌ **NEW-PROJECT-CHECKLIST.md** - Must be updated BEFORE validation (create FEAT-027)
 
 ### High Priority

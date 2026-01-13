@@ -191,7 +191,7 @@ project-framework/              # Current name
 ├── framework/                  # Canonical framework source
 ├── project-hello-world/        # Example project
 │   └── [references ../framework/]
-└── project-templates/          # Template packages
+└── templates/                  # Template packages (was project-templates/)
 ```
 
 ### Recommended Structure (Based on Industry Patterns)
@@ -220,7 +220,7 @@ spear-framework/                # "Framework source repository"
 | Copied `framework/` | "installed framework" or "local framework copy" | Dependency in projects |
 | `project-hello-world/` | `examples/hello-world/` | Demonstration project |
 | "framework-as-dependency" | "bundled dependency model" | Distribution pattern |
-| Template packages | "starter templates" or "project templates" | Bootstrap packages |
+| `templates/` | "starter templates" or "project templates" | Bootstrap packages |
 
 ---
 
@@ -311,8 +311,8 @@ spear-framework/
 ## Recommendations Summary
 
 ### High Priority (Strong Industry Alignment)
-1. ✅ **Rename** `project-hello-world/` → `examples/hello-world/`
-2. ✅ **Rename** `project-templates/` → `templates/`
+1. ✅ **DONE:** Renamed `project-hello-world/` → `examples/hello-world/`
+2. ✅ **DONE:** Renamed `project-templates/` → `templates/`
 3. ✅ **Terminology:** Use "framework source repository" instead of "monorepo"
 4. ✅ **Terminology:** Use "examples" and "starter templates"
 
