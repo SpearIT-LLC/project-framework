@@ -1,0 +1,177 @@
+./CLAUDE.md:├── project-templates/           # Template packages for new projects
+./CLAUDE.md:**Location:** [project-templates/](project-templates/)
+./CLAUDE.md:- **project-templates/** = Packages for bootstrapping new projects
+./CLAUDE.md:- **Template updates** → Work in [project-templates/](project-templates/)
+./CLAUDE.md:- Issues about template packages → `project-templates/thoughts/work/`
+./CLAUDE.md:- **Template selection:** [project-templates/README-TEMPLATE-SELECTION.md](project-templates/README-TEMPLATE-SELECTION.md)
+./framework/CHANGELOG.md:  - Fixed template package path: project-framework-template/ → project-templates/
+./framework/CLAUDE.md:**Setup Guide:** See project-templates package
+./framework/INDEX.md:- [project-templates/README.md](project-templates/README.md) - Template package overview
+./framework/INDEX.md:- [README-TEMPLATE-SELECTION.md](project-templates/README-TEMPLATE-SELECTION.md) - Choose your framework level ⭐
+./framework/INDEX.md:- [NEW-PROJECT-CHECKLIST.md](project-templates/NEW-PROJECT-CHECKLIST.md) - Setup instructions ⭐
+./framework/INDEX.md:- [UPGRADE-PATH.md](project-templates/UPGRADE-PATH.md) - Migrate between framework levels
+./framework/INDEX.md:- [STRUCTURE.md](project-templates/STRUCTURE.md) - Template structure reference
+./framework/INDEX.md:- [project-templates/](project-templates/) - The complete template package
+./framework/INDEX.md:- [minimal/](project-templates/minimal/) - Single script framework (2 files)
+./framework/INDEX.md:- [light/](project-templates/light/) - Small tool framework (7 files)
+./framework/INDEX.md:- [standard/](project-templates/standard/) - Full application framework (50+ files)
+./framework/INDEX.md:- [README.md](project-templates/standard/README.md) - Template README
+./framework/INDEX.md:- [PROJECT-STATUS.md](project-templates/standard/PROJECT-STATUS.md) - Template status
+./framework/INDEX.md:- [CHANGELOG.md](project-templates/standard/CHANGELOG.md) - Template changelog
+./framework/INDEX.md:- [INDEX.md](project-templates/standard/INDEX.md) - Template index
+./framework/INDEX.md:- [CLAUDE.md](project-templates/standard/CLAUDE.md) - Template AI guidelines
+./framework/INDEX.md:- [kanban-workflow.md](project-templates/standard/thoughts/framework/process/kanban-workflow.md) - Work item lifecycle
+./framework/INDEX.md:- [version-control-workflow.md](project-templates/standard/thoughts/framework/process/version-control-workflow.md) - Git and release process
+./framework/INDEX.md:- [documentation-standards.md](project-templates/standard/thoughts/framework/process/documentation-standards.md) - Doc formatting
+./framework/INDEX.md:- [FEATURE-TEMPLATE.md](project-templates/standard/thoughts/framework/templates/FEATURE-TEMPLATE.md) - Feature planning
+./framework/INDEX.md:- [BUGFIX-TEMPLATE.md](project-templates/standard/thoughts/framework/templates/BUGFIX-TEMPLATE.md) - Bug fix documentation
+./framework/INDEX.md:- [BLOCKER-TEMPLATE.md](project-templates/standard/thoughts/framework/templates/BLOCKER-TEMPLATE.md) - Blocker tracking
+./framework/INDEX.md:- [SPIKE-TEMPLATE.md](project-templates/standard/thoughts/framework/templates/SPIKE-TEMPLATE.md) - Research/investigation
+./framework/INDEX.md:- [ADR-MAJOR-TEMPLATE.md](project-templates/standard/thoughts/framework/templates/ADR-MAJOR-TEMPLATE.md) - Major architectural decisions
+./framework/INDEX.md:- [ADR-MINOR-TEMPLATE.md](project-templates/standard/thoughts/framework/templates/ADR-MINOR-TEMPLATE.md) - Minor technical decisions
+./framework/INDEX.md:- [PROBLEM-STATEMENT-TEMPLATE.md](project-templates/standard/thoughts/framework/templates/PROBLEM-STATEMENT-TEMPLATE.md) - Define the problem
+./framework/INDEX.md:- [LANDSCAPE-ANALYSIS-TEMPLATE.md](project-templates/standard/thoughts/framework/templates/LANDSCAPE-ANALYSIS-TEMPLATE.md) - Analyze existing solutions
+./framework/INDEX.md:- [FEASIBILITY-TEMPLATE.md](project-templates/standard/thoughts/framework/templates/FEASIBILITY-TEMPLATE.md) - Assess feasibility
+./framework/INDEX.md:- [PROJECT-JUSTIFICATION-TEMPLATE.md](project-templates/standard/thoughts/framework/templates/PROJECT-JUSTIFICATION-TEMPLATE.md) - BUILD/BUY/ADAPT/ABANDON
+./framework/INDEX.md:- [PROJECT-DEFINITION-TEMPLATE.md](project-templates/standard/thoughts/framework/templates/PROJECT-DEFINITION-TEMPLATE.md) - Project scope and goals
+./framework/INDEX.md:- [README-TEMPLATE.md](project-templates/standard/thoughts/framework/templates/README-TEMPLATE.md) - README structure
+./framework/INDEX.md:- [PROJECT-STATUS-TEMPLATE.md](project-templates/standard/thoughts/framework/templates/PROJECT-STATUS-TEMPLATE.md) - Status tracking structure
+./framework/INDEX.md:- [CHANGELOG-TEMPLATE.md](project-templates/standard/thoughts/framework/templates/CHANGELOG-TEMPLATE.md) - Changelog structure
+./framework/INDEX.md:- [INDEX-TEMPLATE.md](project-templates/standard/thoughts/framework/templates/INDEX-TEMPLATE.md) - Index structure
+./framework/INDEX.md:- [CLAUDE-TEMPLATE.md](project-templates/standard/thoughts/framework/templates/CLAUDE-TEMPLATE.md) - AI guidelines structure
+./framework/INDEX.md:- [PROJECT-TEMPLATE.md](project-templates/standard/thoughts/framework/templates/PROJECT-TEMPLATE.md) - Generic project template
+./framework/INDEX.md:- [USER-QUICK-START-TEMPLATE.md](project-templates/standard/thoughts/framework/templates/USER-QUICK-START-TEMPLATE.md) - End-user quick start
+./framework/INDEX.md:- [ADMIN-QUICK-START-TEMPLATE.md](project-templates/standard/thoughts/framework/templates/ADMIN-QUICK-START-TEMPLATE.md) - Administrator quick start
+./framework/INDEX.md:- [WRAPPER.cmd](project-templates/standard/thoughts/framework/templates/wrappers/cmd/WRAPPER.cmd) - Basic wrapper
+./framework/INDEX.md:- [WRAPPER-ENHANCED.cmd](project-templates/standard/thoughts/framework/templates/wrappers/cmd/WRAPPER-ENHANCED.cmd) - Enhanced (recommended)
+./framework/INDEX.md:- [WRAPPER-PS7.cmd](project-templates/standard/thoughts/framework/templates/wrappers/cmd/WRAPPER-PS7.cmd) - PowerShell 7 preferred
+./framework/INDEX.md:- [WRAPPER-ADMIN.cmd](project-templates/standard/thoughts/framework/templates/wrappers/cmd/WRAPPER-ADMIN.cmd) - Administrator required
+./framework/INDEX.md:- [wrappers/cmd/README.md](project-templates/standard/thoughts/framework/templates/wrappers/cmd/README.md) - Wrapper documentation
+./framework/INDEX.md:- [powershell-modules.md](project-templates/standard/thoughts/framework/patterns/powershell-modules.md) - PowerShell module patterns
+./framework/INDEX.md:- [config-management.md](project-templates/standard/thoughts/framework/patterns/config-management.md) - Configuration patterns
+./framework/INDEX.md:- [cmd-wrappers.md](project-templates/standard/thoughts/framework/patterns/cmd-wrappers.md) - CMD wrapper patterns
+./framework/INDEX.md:- [minimal/README.md](project-templates/minimal/README.md) - Minimal README template
+./framework/INDEX.md:- [minimal/.gitignore](project-templates/minimal/.gitignore) - Basic gitignore
+./framework/INDEX.md:**Setup:** [NEW-PROJECT-CHECKLIST.md § Minimal Setup](project-templates/NEW-PROJECT-CHECKLIST.md#minimal-framework-setup)
+./framework/INDEX.md:- [light/README.md](project-templates/light/README.md) - Light README template
+./framework/INDEX.md:- [light/PROJECT-STATUS.md](project-templates/light/PROJECT-STATUS.md) - Light status template
+./framework/INDEX.md:- [light/CHANGELOG.md](project-templates/light/CHANGELOG.md) - Light changelog template
+./framework/INDEX.md:- [light/CLAUDE.md](project-templates/light/CLAUDE.md) - Light AI guidelines (optional)
+./framework/INDEX.md:- [light/.gitignore](project-templates/light/.gitignore) - Light gitignore
+./framework/INDEX.md:- [light/thoughts/project/history/](project-templates/light/thoughts/project/history/) - Session histories
+./framework/INDEX.md:- [light/thoughts/project/research/justification-template.md](project-templates/light/thoughts/project/research/justification-template.md) - Simple justification
+./framework/INDEX.md:**Setup:** [NEW-PROJECT-CHECKLIST.md § Light Setup](project-templates/NEW-PROJECT-CHECKLIST.md#light-framework-setup)
+./framework/INDEX.md:- See [STRUCTURE.md](project-templates/STRUCTURE.md) for complete file listing
+./framework/INDEX.md:**Setup:** [NEW-PROJECT-CHECKLIST.md § Standard Setup](project-templates/NEW-PROJECT-CHECKLIST.md#standard-framework-setup-new-projects)
+./framework/INDEX.md:- [UPGRADE-PATH.md](project-templates/UPGRADE-PATH.md) - Complete upgrade guide
+./framework/INDEX.md:1. Start with [README-TEMPLATE-SELECTION.md](project-templates/README-TEMPLATE-SELECTION.md)
+./framework/INDEX.md:2. Follow [NEW-PROJECT-CHECKLIST.md](project-templates/NEW-PROJECT-CHECKLIST.md)
+./framework/README.md:1. Read [../project-templates/README-TEMPLATE-SELECTION.md](../project-templates/README-TEMPLATE-SELECTION.md)
+./framework/README.md:3. Follow [../project-templates/NEW-PROJECT-CHECKLIST.md](../project-templates/NEW-PROJECT-CHECKLIST.md)
+./framework/README.md:**Get Started:** [../README.md](../README.md) → [../project-templates/README-TEMPLATE-SELECTION.md](../project-templates/README-TEMPLATE-SELECTION.md)
+./framework/thoughts/history/releases/v3.0.0/FEAT-026-followup.md:- line 17. We're calling the folder, project-framework-template/ but that name could be confusing but it's really just project-templates/.
+./framework/thoughts/history/releases/v3.0.0/FEAT-026-P1-BUG-framework-folder-rename.md:The folder `project-framework-template/` name could be confusing. Consider renaming to `project-templates/` or similar for clarity.
+./framework/thoughts/history/releases/v3.0.0/FEAT-026-P1-BUG-framework-folder-rename.md:"We're calling the folder, project-framework-template/ but that name could be confusing but it's really just project-templates/."
+./framework/thoughts/history/releases/v3.0.0/FEAT-026-P1-BUG-framework-folder-rename.md:**Option 1: Rename to `project-templates/`**
+./framework/thoughts/history/releases/v3.0.0/FEAT-026-P2-TECH-remove-enterprise-REFERENCE.md:### project-templates/README-TEMPLATE-SELECTION.md
+./framework/thoughts/history/releases/v3.0.0/FEAT-026-P2-TECH-remove-enterprise-REFERENCE.md:### project-templates/NEW-PROJECT-CHECKLIST.md
+./framework/thoughts/history/releases/v3.0.0/FEAT-026-P2-TECH-remove-enterprise-REFERENCE.md:### project-templates/UPGRADE-PATH.md
+./framework/thoughts/history/releases/v3.0.0/FEAT-026-P2-TECH-remove-enterprise-REFERENCE.md:### project-templates/STRUCTURE.md
+./framework/thoughts/history/releases/v3.0.0/FEAT-026-P2-TECH-remove-enterprise-REFERENCE.md:### project-templates/README.md
+./framework/thoughts/history/releases/v3.0.1/FEAT-038-update-v3-path-references.md:10. `project-templates/NEW-PROJECT-CHECKLIST.md`
+./framework/thoughts/history/releases/v3.0.1/FEAT-038-update-v3-path-references.md:- [ ] Fix template package path (`project-framework-template/` → `project-templates/`)
+./framework/thoughts/history/releases/v3.0.1/FEAT-038-update-v3-path-references.md:- `project-templates/NEW-PROJECT-CHECKLIST.md` - Complete path and reference update
+./framework/thoughts/history/releases/v3.0.1/FEAT-038-update-v3-path-references.md:- `project-templates/standard/` - Actual template package structure
+./framework/thoughts/history/releases/v3.0.1/FEAT-038-update-v3-path-references.md:- `project-templates/light/` - Light template structure
+./framework/thoughts/history/releases/v3.0.1/FEAT-038-update-v3-path-references.md:- `project-templates/minimal/` - Minimal template structure
+./framework/thoughts/history/releases/v3.0.1/FEAT-038-update-v3-path-references.md:2. Fix `project-framework-template/` → `project-templates/`
+./framework/thoughts/history/releases/v3.0.1/FEAT-038-update-v3-path-references.md:   grep -r "thoughts/project/planning" framework/docs/process/ framework/docs/collaboration/ framework/templates/ project-templates/NEW-PROJECT-CHECKLIST.md
+./framework/thoughts/history/releases/v3.0.1/FEAT-038-update-v3-path-references.md:- [ ] Compare Standard section against `project-templates/standard/` structure
+./framework/thoughts/history/releases/v3.0.1/FEAT-038-update-v3-path-references.md:- [ ] Compare Light section against `project-templates/light/` structure
+./framework/thoughts/history/releases/v3.0.1/FEAT-038-update-v3-path-references.md:- [ ] Compare Minimal section against `project-templates/minimal/` structure
+./framework/thoughts/history/releases/v3.0.1/FEAT-038-update-v3-path-references.md:- [ ] Template package path correct (`project-templates/`)
+./framework/thoughts/history/releases/v3.0.1/FEAT-038-update-v3-path-references.md:- [x] `project-templates/NEW-PROJECT-CHECKLIST.md` - Primary work item file
+./framework/thoughts/history/releases/v3.0.1/FEAT-038-update-v3-path-references.md:  - Fixed template package path: project-framework-template/ → project-templates/
+./framework/thoughts/history/sessions/2026-01-06-SESSION-HISTORY.md:- Renamed `project-framework-template/` → `project-templates/`
+./framework/thoughts/history/sessions/2026-01-10-SESSION-HISTORY.md:3. Template package location changed (`project-framework-template/` → `project-templates/`)
+./framework/thoughts/history/sessions/2026-01-10-SESSION-HISTORY.md:10. `project-templates/NEW-PROJECT-CHECKLIST.md`
+./framework/thoughts/history/sessions/2026-01-13-SESSION-HISTORY.md:- `project-templates/` → `templates/`
+./framework/thoughts/history/sessions/2026-01-13-SESSION-HISTORY.md:2. Rename `project-templates/` → Fix ALL docs → Validate → User review
+./framework/thoughts/history/sessions/2026-01-13-SESSION-HISTORY.md:- Rename `project-templates/` → `templates/`
+./framework/thoughts/history/sessions/2026-01-13-SESSION-HISTORY.md:- Phase 3: Migrate project-templates/ (rename → fix → validate → review)
+./framework/thoughts/history/sessions/2026-01-13-SESSION-HISTORY.md:- [ ] Phase 3: Migrate project-templates/ (path-by-path)
+./framework/thoughts/research/package-ecosystem-terminology-patterns.md:└── project-templates/          # Template packages
+./framework/thoughts/research/package-ecosystem-terminology-patterns.md:### 3. Use `templates/` (not `project-templates/`)
+./framework/thoughts/research/package-ecosystem-terminology-patterns.md:2. ✅ **Rename** `project-templates/` → `templates/`
+./framework/thoughts/work/backlog/DECISION-035-root-status-reference.md:- project-templates/ are derived from framework
+./framework/thoughts/work/backlog/DECISION-035-root-status-reference.md:- **project-templates/** - Project starter templates
+./framework/thoughts/work/backlog/DECISION-036-template-access-strategy.md:- Update template packages in `project-templates/`
+./framework/thoughts/work/backlog/DECISION-036-template-access-strategy.md:- [NEW-PROJECT-CHECKLIST.md](../../../project-templates/NEW-PROJECT-CHECKLIST.md) - Will be updated based on decision
+./framework/thoughts/work/backlog/DECISION-050-framework-distribution-flow-diagram.md:    participant Template as project-templates/standard/
+./framework/thoughts/work/backlog/DECISION-050-framework-distribution-flow-diagram.md:            D[project-templates/]
+./framework/thoughts/work/backlog/DECISION-050-framework-distribution-model.md:└── project-templates/      # Templates for new projects
+./framework/thoughts/work/backlog/DECISION-050-framework-distribution-model.md:└── project-templates/
+./framework/thoughts/work/backlog/REFACTOR-052-adopt-industry-standard-repo-structure.md:Restructure repository to align with industry-standard package development conventions from npm, pip, and bundler ecosystems. Rename `project-hello-world/` → `examples/hello-world/`, `project-templates/` → `templates/`, and update all documentation to use standard terminology ("framework source repository," "bundled dependency model," etc.).
+./framework/thoughts/work/backlog/REFACTOR-052-adopt-industry-standard-repo-structure.md:└── project-templates/          # Redundant prefix
+./framework/thoughts/work/backlog/REFACTOR-052-adopt-industry-standard-repo-structure.md:2. `project-templates/` - Redundant "project-" prefix
+./framework/thoughts/work/backlog/REFACTOR-052-adopt-industry-standard-repo-structure.md:- [ ] Rename `project-templates/` → `templates/`
+./framework/thoughts/work/backlog/REFACTOR-052-adopt-industry-standard-repo-structure.md:└── project-templates/     →    └── templates/
+./framework/thoughts/work/backlog/REFACTOR-052-adopt-industry-standard-repo-structure.md:grep -r "project-templates" . --include="*.md" > audit-templates.txt
+./framework/thoughts/work/backlog/REFACTOR-052-adopt-industry-standard-repo-structure.md:### Phase 3: Migrate project-templates → templates/
+./framework/thoughts/work/backlog/REFACTOR-052-adopt-industry-standard-repo-structure.md:# Move project-templates to templates
+./framework/thoughts/work/backlog/REFACTOR-052-adopt-industry-standard-repo-structure.md:git mv project-templates templates
+./framework/thoughts/work/backlog/REFACTOR-052-adopt-industry-standard-repo-structure.md:git commit -m "refactor(REFACTOR-052): Rename project-templates → templates
+./framework/thoughts/work/backlog/REFACTOR-052-adopt-industry-standard-repo-structure.md:- [ ] Old directory gone: `ls project-templates` (should error)
+./framework/thoughts/work/backlog/REFACTOR-052-adopt-industry-standard-repo-structure.md:grep -r "project-templates" . --include="*.md"
+./framework/thoughts/work/backlog/REFACTOR-052-adopt-industry-standard-repo-structure.md:grep -r "project-templates" . --include="*.md" > fix-templates-refs.txt
+./framework/thoughts/work/backlog/REFACTOR-052-adopt-industry-standard-repo-structure.md:- `project-templates/` → `templates/`
+./framework/thoughts/work/backlog/REFACTOR-052-adopt-industry-standard-repo-structure.md:git commit -m "docs(REFACTOR-052): Update all project-templates path references
+./framework/thoughts/work/backlog/REFACTOR-052-adopt-industry-standard-repo-structure.md:grep -r "project-templates" . --include="*.md" --exclude-dir="history"
+./framework/thoughts/work/backlog/REFACTOR-052-adopt-industry-standard-repo-structure.md:  - Renamed `project-templates/` → `templates/` (removes redundant prefix)
+./framework/thoughts/work/backlog/REFACTOR-052-adopt-industry-standard-repo-structure.md:   grep -r "project-templates" . --include="*.md" > audit-templates.txt
+./framework/thoughts/work/backlog/REFACTOR-052-adopt-industry-standard-repo-structure.md:    "project-templates",
+./framework/thoughts/work/backlog/REFACTOR-052-adopt-industry-standard-repo-structure.md:- [ ] Run grep for "project-templates" - only expected hits?
+./framework/thoughts/work/backlog/REFACTOR-052-adopt-industry-standard-repo-structure.md:- [ ] Run grep audit for "project-templates"
+./framework/thoughts/work/backlog/REFACTOR-052-adopt-industry-standard-repo-structure.md:### Phase 3: Migrate project-templates → templates/
+./framework/thoughts/work/backlog/REFACTOR-052-adopt-industry-standard-repo-structure.md:- [ ] `git mv project-templates templates`
+./framework/thoughts/work/backlog/REFACTOR-052-adopt-industry-standard-repo-structure.md:- [ ] Grep for "project-templates" references
+./framework/thoughts/work/todo/FEAT-025-ALIGNMENT-ANALYSIS.md:6. ❌ **Template packages missing** - References `project-framework-template/` but actual location is `project-templates/`
+./framework/thoughts/work/todo/FEAT-025-ALIGNMENT-ANALYSIS.md:  - Are we validating that users can ACCESS framework templates from `project-templates/`?
+./framework/thoughts/work/todo/FEAT-025-ALIGNMENT-ANALYSIS.md:- Template packages live in `project-templates/` (not `project-framework-template/`)
+./framework/thoughts/work/todo/FEAT-025-ALIGNMENT-ANALYSIS.md:- [ ] Update all references: `project-framework-template/` → `project-templates/`
+./framework/thoughts/work/todo/FEAT-025-ALIGNMENT-ANALYSIS.md:- [ ] Check if `project-templates/standard/` actually contains what FEAT-025 expects to copy
+./framework/thoughts/work/todo/FEAT-025-ALIGNMENT-ANALYSIS.md:- [ ] Validate that `project-templates/standard/` matches PROJECT-STRUCTURE-STANDARD.md
+./framework/thoughts/work/todo/FEAT-025-ALIGNMENT-ANALYSIS.md:- Verify `project-templates/minimal/` works
+./framework/thoughts/work/todo/FEAT-025-ALIGNMENT-ANALYSIS.md:- Verify `project-templates/light/` works
+./framework/thoughts/work/todo/FEAT-025-ALIGNMENT-ANALYSIS.md:- Verify `project-templates/standard/` matches PROJECT-STRUCTURE-STANDARD.md
+./framework/thoughts/work/todo/FEAT-025-ALIGNMENT-ANALYSIS.md:- [ ] Update template package references: `project-framework-template/` → `project-templates/`
+./framework/thoughts/work/todo/FEAT-025-ALIGNMENT-ANALYSIS.md:3. ❌ **Template package path** - Update `project-framework-template/` → `project-templates/`
+./QUICK-START.md:**Still unsure?** See [README-TEMPLATE-SELECTION.md](project-templates/README-TEMPLATE-SELECTION.md)
+./QUICK-START.md:cp /path/to/framework/project-templates/minimal/README.md .
+./QUICK-START.md:cp -r /path/to/framework/project-templates/light/* .
+./QUICK-START.md:cp -r /path/to/framework/project-templates/standard/* .
+./QUICK-START.md:cp -r /path/to/framework/project-templates/standard/.gitignore .
+./QUICK-START.md:**Detailed Setup:** [NEW-PROJECT-CHECKLIST.md](project-templates/NEW-PROJECT-CHECKLIST.md)
+./QUICK-START.md:→ **Solution:** You might need a lower framework level. See [UPGRADE-PATH.md](project-templates/UPGRADE-PATH.md) (works both ways)
+./QUICK-START.md:| Choose framework level | [README-TEMPLATE-SELECTION.md](project-templates/README-TEMPLATE-SELECTION.md) | 5 min |
+./QUICK-START.md:| Setup instructions | [NEW-PROJECT-CHECKLIST.md](project-templates/NEW-PROJECT-CHECKLIST.md) | 15 min |
+./QUICK-START.md:| Upgrade/downgrade | [UPGRADE-PATH.md](project-templates/UPGRADE-PATH.md) | 10 min |
+./QUICK-START.md:| File structure | [STRUCTURE.md](project-templates/STRUCTURE.md) | 5 min |
+./QUICK-START.md:- **Framework structure questions:** [STRUCTURE.md](project-templates/STRUCTURE.md)
+./README.md:- **project-templates/** - Template packages for new projects (Minimal, Light, Standard levels)
+./README.md:   - Read [README-TEMPLATE-SELECTION.md](project-templates/README-TEMPLATE-SELECTION.md)
+./README.md:   cp -r project-templates/minimal /path/to/your-project
+./README.md:   cp -r project-templates/light /path/to/your-project
+./README.md:   cp -r project-templates/standard /path/to/your-project
+./README.md:   - Open [NEW-PROJECT-CHECKLIST.md](project-templates/NEW-PROJECT-CHECKLIST.md)
+./README.md:   - Follow "Existing Project Integration" section in [NEW-PROJECT-CHECKLIST.md](project-templates/NEW-PROJECT-CHECKLIST.md)
+./README.md:- **[README-TEMPLATE-SELECTION.md](project-templates/README-TEMPLATE-SELECTION.md)** - Choose your framework level ⭐
+./README.md:- **[NEW-PROJECT-CHECKLIST.md](project-templates/NEW-PROJECT-CHECKLIST.md)** - Setup instructions ⭐
+./README.md:- [UPGRADE-PATH.md](project-templates/UPGRADE-PATH.md) - Migration between levels
+./README.md:- [STRUCTURE.md](project-templates/STRUCTURE.md) - Template structure reference
+./README.md:- [project-templates/](project-templates/) - Complete template package
+./README.md:- [minimal/](project-templates/minimal/) - Minimal framework templates
+./README.md:- [light/](project-templates/light/) - Light framework templates
+./README.md:- [standard/](project-templates/standard/) - Standard framework templates
+./README.md:cd project-framework/project-templates
+./README.md:**Get Started:** [README-TEMPLATE-SELECTION.md](project-templates/README-TEMPLATE-SELECTION.md) → [NEW-PROJECT-CHECKLIST.md](project-templates/NEW-PROJECT-CHECKLIST.md)

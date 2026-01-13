@@ -206,7 +206,7 @@ Featured projects using the Standard Project Framework:
 
 ### Phase 2: Add Initial Content
 
-- [ ] Add project-hello-world as example
+- [ ] Add examples/hello-world as example
 - [ ] Add any other known projects
 - [ ] Optional: Add categories
 
@@ -260,7 +260,7 @@ Featured projects using the Standard Project Framework:
 - [ ] Project entry template defined
 - [ ] Quality guidelines established
 - [ ] Contribution process documented in CONTRIBUTING.md
-- [ ] At least one example project added (project-hello-world)
+- [ ] At least one example project added (examples/hello-world)
 - [ ] GitHub topic tagged on this repository
 
 ---

@@ -24,7 +24,7 @@ This project follows the Standard Project Framework. **Always consult the framew
 ### Project Structure
 
 ```
-project-hello-world/
+examples/hello-world/
 ├── src/              # Application source code
 │   └── hello-world.js
 ├── tests/            # Test files

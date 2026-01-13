@@ -243,7 +243,7 @@ This conceptual clarity should inform all future documentation work.
 ### Hello-World Language Choice
 **From:** FEAT-026-followup.md line 54
 
-project-hello-world/ uses JavaScript, but PowerShell might be more appropriate.
+examples/hello-world/ uses JavaScript, but PowerShell might be more appropriate.
 - Don't change now
 - Address in future enhancement to hello-world project
 

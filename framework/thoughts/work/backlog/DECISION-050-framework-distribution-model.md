@@ -321,7 +321,7 @@ project-framework/
 ```
 
 **Changes:**
-1. `project-hello-world` gets its own `framework/` copy
+1. `examples/hello-world` gets its own `framework/` copy
 2. Template packages include `framework/` folder
 3. Source `framework/` becomes "upstream" for updates
 4. Each project tracks its framework version
@@ -402,7 +402,7 @@ framework:
 Should we immediately refactor this monorepo to use the new model?
 
 **Option A: Immediately**
-- Give `project-hello-world` its own framework copy
+- Give `examples/hello-world` its own framework copy
 - Test the model on ourselves
 - Discover issues early
 
@@ -464,7 +464,7 @@ When evaluating options, prioritize:
 3. Update template packages to include framework/
 4. Provide manual update instructions (MVP)
 5. Build `Update-Framework.ps1` if usage validates need
-6. Migrate project-hello-world after FEAT-025 validation
+6. Migrate examples/hello-world after FEAT-025 validation
 
 **Start simple, evolve based on usage.**
 
@@ -516,7 +516,7 @@ When evaluating options, prioritize:
 
 **Complexity vs. Simplicity:** Start with simple documentation-based approach, build tooling only if needed.
 
-**Dogfooding opportunity:** Applying this to project-hello-world will validate the model.
+**Dogfooding opportunity:** Applying this to examples/hello-world will validate the model.
 
 ---
 
@@ -577,7 +577,7 @@ When evaluating options, prioritize:
 **Future Implementation Work Items:**
 
 The following features will implement this decision:
-- **FEAT-XXX: Implement framework-as-dependency for project-hello-world** - Dogfood the model
+- **FEAT-XXX: Implement framework-as-dependency for examples/hello-world** - Dogfood the model
 - **FEAT-XXX: Update template packages** - Include framework/ copy in all templates
 - **FEAT-XXX: Create .framework-version tracking** - Version identification mechanism
 - **FEAT-XXX: Document customization tagging standard** - Update collaboration guides

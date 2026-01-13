@@ -1,0 +1,263 @@
+./CLAUDE.md:├── project-hello-world/         # Reference implementation (example project)
+./CLAUDE.md:**Read:** [project-hello-world/CLAUDE.md](project-hello-world/CLAUDE.md)
+./CLAUDE.md:- **project-hello-world/** = An example project that uses the framework
+./CLAUDE.md:- **Example updates** → Work in [project-hello-world/](project-hello-world/)
+./CLAUDE.md:- Hello-world work items: [project-hello-world/thoughts/work/](project-hello-world/thoughts/work/)
+./CLAUDE.md:- Issues about the hello-world example → `project-hello-world/thoughts/work/`
+./CLAUDE.md:1. User explicitly states which project (e.g., "switch to project-hello-world")
+./framework/CHANGELOG.md:  - Created `project-hello-world/` reference implementation
+./framework/docs/PROJECT-STRUCTURE-STANDARD.md:The project-framework repository is a **monorepo** containing multiple projects (framework/, project-hello-world/). The repository root has minimal files (README, QUICK-START, CLAUDE, LICENSE, .gitignore).
+./framework/docs/REPOSITORY-STRUCTURE.md:└── project-hello-world/              # PROJECT (follows Standard Framework structure)
+./framework/docs/REPOSITORY-STRUCTURE.md:→ Read [project-hello-world/CLAUDE.md](project-hello-world/CLAUDE.md)
+./framework/docs/REPOSITORY-STRUCTURE.md:- `project-hello-world/` - Sample project (validation/reference)
+./framework/docs/REPOSITORY-STRUCTURE.md:└── project-hello-world/    # Project 2 (complete)
+./framework/docs/REPOSITORY-STRUCTURE.md:- [ ] Project folders exist (framework/, project-hello-world/)
+./framework/docs/REPOSITORY-STRUCTURE.md:3. Create project folders (framework/, project-hello-world/)
+./framework/PROJECT-STATUS.md:**Status:** Production-ready for internal use. Standard Framework level is complete and validated. Framework successfully dogfooding itself in monorepo structure with separate framework/ and project-hello-world/ projects.
+./framework/PROJECT-STATUS.md:- 📁 Created `project-hello-world/` reference implementation
+./framework/README.md:See [../project-hello-world/](../project-hello-world/) for a complete Standard framework example.
+./framework/thoughts/history/releases/v3.0.0/FEAT-026-collision-analysis.md:| `project-hello-world/` | ✅ DOES NOT EXIST | Sample project folder |
+./framework/thoughts/history/releases/v3.0.0/FEAT-026-followup.md:**project-hello-world/**
+./framework/thoughts/history/releases/v3.0.0/FEAT-026-MIGRATION-CHECKPOINT.md:- Created `project-hello-world/` with complete Standard Framework structure
+./framework/thoughts/history/releases/v3.0.0/FEAT-026-MIGRATION-CHECKPOINT.md:- **Project complete:** project-hello-world/ now fully compliant with Standard Project structure
+./framework/thoughts/history/releases/v3.0.0/FEAT-026-MIGRATION-CHECKPOINT.md:├── project-hello-world/           # NEW
+./framework/thoughts/history/releases/v3.0.0/FEAT-026-MIGRATION-CHECKPOINT.md:project-hello-world/
+./framework/thoughts/history/releases/v3.0.0/FEAT-026-MIGRATION-CHECKPOINT.md:- `README.md` - Update for monorepo structure (framework/ + project-hello-world/)
+./framework/thoughts/history/releases/v3.0.0/FEAT-026-P1-BUG-framework-folder-rename.md:├── project-hello-world/          # Example project
+./framework/thoughts/history/releases/v3.0.0/FEAT-026-P1-BUG-path-audit.md:- All README.md files (root, framework/, project-hello-world/)
+./framework/thoughts/history/releases/v3.0.0/FEAT-026-P1-BUG-path-audit.md:- CLAUDE.md files (root once created, framework/, project-hello-world/)
+./framework/thoughts/history/releases/v3.0.0/FEAT-026-P1-BUG-quick-start-separation.md:- Points to project-hello-world/ example
+./framework/thoughts/history/releases/v3.0.0/FEAT-026-P1-BUG-root-claude.md:- `project-hello-world/CLAUDE.md` - Project-specific context
+./framework/thoughts/history/releases/v3.0.0/FEAT-026-P1-BUG-root-claude.md:- Navigation to framework/ and project-hello-world/ CLAUDE.md files
+./framework/thoughts/history/releases/v3.0.0/FEAT-026-P1-BUG-root-claude.md:3. Pointer to project-hello-world/CLAUDE.md as example
+./framework/thoughts/history/releases/v3.0.0/FEAT-026-PROJECT-STRUCTURE-STANDARD.md:The project-framework repository is a **monorepo** containing multiple projects (framework/, project-hello-world/). The repository root has minimal files (README, QUICK-START, CLAUDE, LICENSE, .gitignore).
+./framework/thoughts/history/releases/v3.0.0/FEAT-026-REPOSITORY-STRUCTURE.md:└── project-hello-world/              # PROJECT (follows Standard Framework structure)
+./framework/thoughts/history/releases/v3.0.0/FEAT-026-REPOSITORY-STRUCTURE.md:→ Read [project-hello-world/CLAUDE.md](project-hello-world/CLAUDE.md)
+./framework/thoughts/history/releases/v3.0.0/FEAT-026-REPOSITORY-STRUCTURE.md:- `project-hello-world/` - Sample project (validation/reference)
+./framework/thoughts/history/releases/v3.0.0/FEAT-026-REPOSITORY-STRUCTURE.md:└── project-hello-world/    # Project 2 (complete)
+./framework/thoughts/history/releases/v3.0.0/FEAT-026-REPOSITORY-STRUCTURE.md:- [ ] Project folders exist (framework/, project-hello-world/)
+./framework/thoughts/history/releases/v3.0.0/FEAT-026-REPOSITORY-STRUCTURE.md:3. Create project folders (framework/, project-hello-world/)
+./framework/thoughts/history/releases/v3.0.0/FEAT-026-structure-migration.md:└── project-hello-world/                 # Sample project
+./framework/thoughts/history/releases/v3.0.0/FEAT-026-structure-migration.md:| Standard project template | project-hello-world/ | CREATE from template |
+./framework/thoughts/history/releases/v3.0.0/FEAT-026-structure-migration.md:| Sample source code | project-hello-world/src/ | CREATE |
+./framework/thoughts/history/releases/v3.0.0/FEAT-026-structure-migration.md:| Project CLAUDE.md | project-hello-world/CLAUDE.md | CREATE (references framework) |
+./framework/thoughts/history/releases/v3.0.0/FEAT-026-structure-migration.md:| thoughts/project/ | Splitting into framework/thoughts/ and project-hello-world/thoughts/ |
+./framework/thoughts/history/releases/v3.0.0/FEAT-026-structure-migration.md:3. Create `project-hello-world/` folder and subfolders
+./framework/thoughts/history/releases/v3.0.0/FEAT-026-structure-migration.md:4. Create `project-hello-world/thoughts/` structure
+./framework/thoughts/history/releases/v3.0.0/FEAT-026-structure-migration.md:1. Copy framework template structure to project-hello-world/
+./framework/thoughts/history/releases/v3.0.0/FEAT-026-structure-migration.md:3. Create project-hello-world/CLAUDE.md (references ../framework/)
+./framework/thoughts/history/releases/v3.0.0/FEAT-026-structure-migration.md:4. Create project-hello-world/README.md
+./framework/thoughts/history/releases/v3.0.0/FEAT-026-structure-migration.md:5. Create project-hello-world/PROJECT-STATUS.md
+./framework/thoughts/history/releases/v3.0.0/FEAT-026-structure-migration.md:✅ All project content in project-hello-world/ folder
+./framework/thoughts/history/releases/v3.0.0/FEAT-026-universal-structure-decisions.md:└── project-hello-world/     # Sample user project (reference example)
+./framework/thoughts/history/releases/v3.0.0/FEAT-026-universal-structure-decisions.md:2. User reviews `framework/` and `project-hello-world/` as references
+./framework/thoughts/history/releases/v3.0.0/FEAT-026-universal-structure-decisions.md:**Issue identified:** With framework/ and project-hello-world/ as separate folders, what goes at repository root?
+./framework/thoughts/history/releases/v3.0.0/FEAT-026-universal-structure-decisions.md:└── project-hello-world/              # PROJECT (follows universal structure)
+./framework/thoughts/history/releases/v3.0.0/FEAT-026-universal-structure-decisions.md:→ Read [project-hello-world/CLAUDE.md](project-hello-world/CLAUDE.md)
+./framework/thoughts/history/releases/v3.0.0/FEAT-026-universal-structure-decisions.md:- `project-hello-world/` - Sample project (validation/reference)
+./framework/thoughts/history/releases/v3.0.0/FEAT-026-VALIDATION-REPORT.md:├── project-hello-world/             # NEW - Reference implementation
+./framework/thoughts/history/releases/v3.0.0/FEAT-026-VALIDATION-REPORT.md:- **Location:** `project-hello-world/`
+./framework/thoughts/history/releases/v3.0.0/FEAT-026-VALIDATION-REPORT.md:- **Phase 5:** 9 files created (project-hello-world implementation)
+./framework/thoughts/history/releases/v3.0.0/FEAT-026-VALIDATION-REPORT.md:- ✅ References to project-hello-world/ added
+./framework/thoughts/history/releases/v3.0.0/FEAT-026-VALIDATION-REPORT.md:4. **project-hello-world/** → Working example to study
+./framework/thoughts/history/releases/v3.0.0/FEAT-026-VALIDATION-REPORT.md:- Sees reference to project-hello-world/
+./framework/thoughts/history/releases/v3.0.0/FEAT-026-VALIDATION-REPORT.md:- Cross-references between framework/ and project-hello-world/ work
+./framework/thoughts/history/releases/v3.0.0/FEAT-026-VALIDATION-REPORT.md:2. ✅ Reference implementation (project-hello-world) for new users
+./framework/thoughts/history/releases/v3.0.0/RELEASE-NOTES.md:This release represents a fundamental restructuring of the project-framework repository into a monorepo architecture. The framework content has been moved into a dedicated `framework/` folder, and a reference implementation (`project-hello-world/`) has been created. The framework now fully dogfoods itself using the Standard Project Structure.
+./framework/thoughts/history/releases/v3.0.0/RELEASE-NOTES.md:- Created `project-hello-world/` as reference implementation
+./framework/thoughts/history/releases/v3.0.1/FEAT-038-update-v3-path-references.md:- FEAT-039 (Verify project-hello-world) - Both ensure v3.0.0 compliance
+./framework/thoughts/history/releases/v3.1.0/FEAT-040-fix-framework-structure-compliance.md:- FEAT-039 validation (project-hello-world validation blocked)
+./framework/thoughts/history/releases/v3.1.0/FEAT-040-fix-framework-structure-compliance.md:- FEAT-039 (Verify project-hello-world) - Parallel validation work
+./framework/thoughts/history/sessions/2026-01-02-SESSION-HISTORY.md:**Key Outcome:** Decision to reorganize framework structure with framework/ and project-hello-world/ as separate top-level folders, implementing "Framework IS a Project" model.
+./framework/thoughts/history/sessions/2026-01-02-SESSION-HISTORY.md:└── project-hello-world/   # Sample validation project
+./framework/thoughts/history/sessions/2026-01-04-SESSION-HISTORY.md:- Identified that proposed structure showed two different structures (framework vs project-hello-world) without defining the universal base
+./framework/thoughts/history/sessions/2026-01-04-SESSION-HISTORY.md:**Question:** How to handle `.git/` in v3.0.0 structure with framework/ and project-hello-world/?
+./framework/thoughts/history/sessions/2026-01-04-SESSION-HISTORY.md:└── project-hello-world/     # Sample/reference project
+./framework/thoughts/history/sessions/2026-01-05-SESSION-HISTORY.md:**Issue:** With framework/ and project-hello-world/ as separate folders, what goes at repository root?
+./framework/thoughts/history/sessions/2026-01-05-SESSION-HISTORY.md:└── project-hello-world/              # PROJECT (follows universal structure)
+./framework/thoughts/history/sessions/2026-01-05-SESSION-HISTORY.md:**Structure:** framework/ and project-hello-world/ are self-contained projects
+./framework/thoughts/history/sessions/2026-01-06-SESSION-HISTORY.md:- Created `project-hello-world/` folder with Standard Framework structure
+./framework/thoughts/history/sessions/2026-01-07-SESSION-HISTORY.md:- Created archive/ folders in both framework and project-hello-world
+./framework/thoughts/history/sessions/2026-01-10-SESSION-HISTORY.md:4. Scope unclear (project-hello-world/ already exists as Standard reference)
+./framework/thoughts/history/sessions/2026-01-10-SESSION-HISTORY.md:**FEAT-039: Verify project-hello-world Compliance** (P1)
+./framework/thoughts/history/sessions/2026-01-10-SESSION-HISTORY.md:- Purpose: Validate project-hello-world/ matches PROJECT-STRUCTURE-STANDARD.md
+./framework/thoughts/history/sessions/2026-01-10-SESSION-HISTORY.md:- [ ] Complete FEAT-039 (Verify project-hello-world)
+./framework/thoughts/history/sessions/2026-01-10-SESSION-HISTORY.md:- project-hello-world compliance unknown
+./framework/thoughts/history/sessions/2026-01-10-SESSION-HISTORY.md:- FEAT-039: Verify project-hello-world Compliance (P1)
+./framework/thoughts/history/sessions/2026-01-10-SESSION-HISTORY.md:4. FEAT-039 - Verify project-hello-world
+./framework/thoughts/history/sessions/2026-01-10-SESSION-HISTORY.md:4. **Complete FEAT-039** - Verify project-hello-world
+./framework/thoughts/history/sessions/2026-01-11-SESSION-HISTORY.md:5. **FEAT-039** - Verify project-hello-world compliance
+./framework/thoughts/history/sessions/2026-01-11-SESSION-HISTORY.md:**Session Focus:** FEAT-019 Pre-Release Checklist + FEAT-039 project-hello-world Validation
+./framework/thoughts/history/sessions/2026-01-11-SESSION-HISTORY.md:Completed FEAT-019 (Pre-Release Checklist Template) and FEAT-039 (Verify project-hello-world Compliance). FEAT-019 moved pre-release checklist from backlog to production template. FEAT-039 performed comprehensive validation of project-hello-world against PROJECT-STRUCTURE-STANDARD.md, resulting in 83% compliance with minor issues identified.
+./framework/thoughts/history/sessions/2026-01-11-SESSION-HISTORY.md:### FEAT-039: Verify project-hello-world Compliance
+./framework/thoughts/history/sessions/2026-01-11-SESSION-HISTORY.md:**Problem:** project-hello-world created in FEAT-026 as Standard Framework reference, but compliance status unknown. Needed validation before FEAT-025 could determine whether to use it for Standard level validation.
+./framework/thoughts/history/sessions/2026-01-11-SESSION-HISTORY.md:1. Rename `thoughts/reference/` to `thoughts/external-references/` in project-hello-world
+./framework/thoughts/history/sessions/2026-01-11-SESSION-HISTORY.md:- Use project-hello-world for structure validation ✅
+./framework/thoughts/history/sessions/2026-01-11-SESSION-HISTORY.md:- Follow-up work items for project-hello-world improvements
+./framework/thoughts/history/sessions/2026-01-11-SESSION-HISTORY.md:2. feat(FEAT-039): Complete project-hello-world compliance validation
+./framework/thoughts/history/sessions/2026-01-11-SESSION-HISTORY.md:Completed two work items successfully. FEAT-019 moved pre-release checklist from backlog to production templates. FEAT-039 performed comprehensive validation of project-hello-world, finding 83% compliance with excellent structure/content but lacking workflow demonstration. Validation report provides clear roadmap for improvements and informs FEAT-025 scope.
+./framework/thoughts/history/sessions/2026-01-11-SESSION-HISTORY.md:**Key Achievement:** project-hello-world validated as excellent structural reference, with clear path to complete compliance.
+./framework/thoughts/history/sessions/2026-01-11-SESSION-HISTORY.md:Identified dogfooding issue where FEAT-039 (project-hello-world validation) was tracked in framework/thoughts/work/ instead of project-hello-world/thoughts/work/. Led to productive discussion about monorepo context switching and extension to FEAT-037 (Project Config File) to address the problem.
+./framework/thoughts/history/sessions/2026-01-11-SESSION-HISTORY.md:While working on FEAT-039 (validating project-hello-world), realized we tracked all issues in framework/thoughts/work/, violating dogfooding principle:
+./framework/thoughts/history/sessions/2026-01-11-SESSION-HISTORY.md:- FEAT-039 was about validating project-hello-world
+./framework/thoughts/history/sessions/2026-01-11-SESSION-HISTORY.md:- This is wrong - project-hello-world issues should be tracked in project-hello-world/thoughts/work/
+./framework/thoughts/history/sessions/2026-01-11-SESSION-HISTORY.md:1. **Explicit verbal declaration** - User says "switch to project-hello-world"
+./framework/thoughts/history/sessions/2026-01-11-SESSION-HISTORY.md:# project-hello-world/project-config.yaml
+./framework/thoughts/history/sessions/2026-01-11-SESSION-HISTORY.md:  workPath: project-hello-world/thoughts/work/
+./framework/thoughts/history/sessions/2026-01-11-SESSION-HISTORY.md:- **Config location:** Each project's root (framework/, project-hello-world/, etc.)
+./framework/thoughts/history/sessions/2026-01-11-SESSION-HISTORY.md:- Discussed but not created: Multiple potential project-hello-world work items
+./framework/thoughts/history/sessions/2026-01-11-SESSION-HISTORY.md:**Next Session:** TBD - Consider implementing project-hello-world fixes or continuing with TECH-046
+./framework/thoughts/history/sessions/2026-01-12-SESSION-HISTORY.md:1. **Dogfooding:** When to apply framework-as-dependency to project-hello-world?
+./framework/thoughts/history/sessions/2026-01-12-SESSION-HISTORY.md:- FEAT-XXX: Implement framework-as-dependency for project-hello-world (dogfooding)
+./framework/thoughts/history/sessions/2026-01-13-SESSION-HISTORY.md:**Context:** With framework-as-dependency model (DECISION-050), `project-hello-world/` becomes an example, not a peer project.
+./framework/thoughts/history/sessions/2026-01-13-SESSION-HISTORY.md:- `project-hello-world/` → `examples/hello-world/`
+./framework/thoughts/history/sessions/2026-01-13-SESSION-HISTORY.md:1. Rename `project-hello-world/` → Fix ALL docs → Validate → User review
+./framework/thoughts/history/sessions/2026-01-13-SESSION-HISTORY.md:- Rename `project-hello-world/` → `examples/hello-world/`
+./framework/thoughts/history/sessions/2026-01-13-SESSION-HISTORY.md:- Phase 2: Migrate project-hello-world/ (rename → fix → validate → review)
+./framework/thoughts/history/sessions/2026-01-13-SESSION-HISTORY.md:- [ ] Phase 2: Migrate project-hello-world/ (path-by-path)
+./framework/thoughts/research/backlog-ideas-from-feat-026.md:project-hello-world/ uses JavaScript, but PowerShell might be more appropriate.
+./framework/thoughts/research/package-ecosystem-terminology-patterns.md:├── project-hello-world/        # Example project
+./framework/thoughts/research/package-ecosystem-terminology-patterns.md:│   └── hello-world/           # "Example project" (not "project-hello-world")
+./framework/thoughts/research/package-ecosystem-terminology-patterns.md:| `project-hello-world/` | `examples/hello-world/` | Demonstration project |
+./framework/thoughts/research/package-ecosystem-terminology-patterns.md:### 1. Rename `project-hello-world/` → `examples/hello-world/`
+./framework/thoughts/research/package-ecosystem-terminology-patterns.md:1. ✅ **Rename** `project-hello-world/` → `examples/hello-world/`
+./framework/thoughts/work/backlog/DECISION-035-root-status-reference.md:- project-hello-world/ is just an example
+./framework/thoughts/work/backlog/DECISION-035-root-status-reference.md:- **project-hello-world/** - Reference implementation
+./framework/thoughts/work/backlog/DECISION-050-framework-distribution-flow-diagram.md:            C[project-hello-world/]
+./framework/thoughts/work/backlog/DECISION-050-framework-distribution-flow-diagram.md:            C1[project-hello-world/framework/<br/>COPY of framework]
+./framework/thoughts/work/backlog/DECISION-050-framework-distribution-flow-diagram.md:            C2[project-hello-world/src/]
+./framework/thoughts/work/backlog/DECISION-050-framework-distribution-flow-diagram.md:            C3[project-hello-world/thoughts/work/]
+./framework/thoughts/work/backlog/DECISION-050-framework-distribution-flow-diagram.md:    Note2[project-hello-world<br/>has COPY as dependency]
+./framework/thoughts/work/backlog/DECISION-050-framework-distribution-flow-diagram.md:2. `project-hello-world/framework/` = Dependency copy (uses framework)
+./framework/thoughts/work/backlog/DECISION-050-framework-distribution-flow-diagram.md:5. `project-hello-world/` work items = hello-world features (FEAT-001, etc.)
+./framework/thoughts/work/backlog/DECISION-050-framework-distribution-flow-diagram.md:        PROJ[project-hello-world/]
+./framework/thoughts/work/backlog/DECISION-050-framework-distribution-flow-diagram.md:        PROJ_FW[project-hello-world/framework/<br/>dependency copy]
+./framework/thoughts/work/backlog/DECISION-050-framework-distribution-flow-diagram.md:        PROJ_WORK[project-hello-world/thoughts/work/]
+./framework/thoughts/work/backlog/DECISION-050-framework-distribution-model.md:├── project-hello-world/    # References ../framework/
+./framework/thoughts/work/backlog/DECISION-050-framework-distribution-model.md:├── project-hello-world/
+./framework/thoughts/work/backlog/DECISION-050-framework-distribution-model.md:1. `project-hello-world` gets its own `framework/` copy
+./framework/thoughts/work/backlog/DECISION-050-framework-distribution-model.md:- Give `project-hello-world` its own framework copy
+./framework/thoughts/work/backlog/DECISION-050-framework-distribution-model.md:6. Migrate project-hello-world after FEAT-025 validation
+./framework/thoughts/work/backlog/DECISION-050-framework-distribution-model.md:**Dogfooding opportunity:** Applying this to project-hello-world will validate the model.
+./framework/thoughts/work/backlog/DECISION-050-framework-distribution-model.md:- **FEAT-XXX: Implement framework-as-dependency for project-hello-world** - Dogfood the model
+./framework/thoughts/work/backlog/FEAT-034-projects-showcase.md:- [ ] Add project-hello-world as example
+./framework/thoughts/work/backlog/FEAT-034-projects-showcase.md:- [ ] At least one example project added (project-hello-world)
+./framework/thoughts/work/backlog/REFACTOR-052-adopt-industry-standard-repo-structure.md:Restructure repository to align with industry-standard package development conventions from npm, pip, and bundler ecosystems. Rename `project-hello-world/` → `examples/hello-world/`, `project-templates/` → `templates/`, and update all documentation to use standard terminology ("framework source repository," "bundled dependency model," etc.).
+./framework/thoughts/work/backlog/REFACTOR-052-adopt-industry-standard-repo-structure.md:├── project-hello-world/        # Custom naming
+./framework/thoughts/work/backlog/REFACTOR-052-adopt-industry-standard-repo-structure.md:1. `project-hello-world/` - Custom naming, not recognizable
+./framework/thoughts/work/backlog/REFACTOR-052-adopt-industry-standard-repo-structure.md:- [ ] Rename `project-hello-world/` → `examples/hello-world/`
+./framework/thoughts/work/backlog/REFACTOR-052-adopt-industry-standard-repo-structure.md:├── project-hello-world/   →    ├── examples/
+./framework/thoughts/work/backlog/REFACTOR-052-adopt-industry-standard-repo-structure.md:grep -r "project-hello-world" . --include="*.md" > audit-hello-world.txt
+./framework/thoughts/work/backlog/REFACTOR-052-adopt-industry-standard-repo-structure.md:### Phase 2: Migrate project-hello-world → examples/hello-world/
+./framework/thoughts/work/backlog/REFACTOR-052-adopt-industry-standard-repo-structure.md:# Move project-hello-world to examples/hello-world
+./framework/thoughts/work/backlog/REFACTOR-052-adopt-industry-standard-repo-structure.md:git mv project-hello-world examples/hello-world
+./framework/thoughts/work/backlog/REFACTOR-052-adopt-industry-standard-repo-structure.md:git commit -m "refactor(REFACTOR-052): Rename project-hello-world → examples/hello-world
+./framework/thoughts/work/backlog/REFACTOR-052-adopt-industry-standard-repo-structure.md:- [ ] Old directory gone: `ls project-hello-world` (should error)
+./framework/thoughts/work/backlog/REFACTOR-052-adopt-industry-standard-repo-structure.md:grep -r "project-hello-world" . --include="*.md"
+./framework/thoughts/work/backlog/REFACTOR-052-adopt-industry-standard-repo-structure.md:grep -r "project-hello-world" . --include="*.md" > fix-hello-world-refs.txt
+./framework/thoughts/work/backlog/REFACTOR-052-adopt-industry-standard-repo-structure.md:- `project-hello-world/` → `examples/hello-world/`
+./framework/thoughts/work/backlog/REFACTOR-052-adopt-industry-standard-repo-structure.md:git commit -m "docs(REFACTOR-052): Update all project-hello-world path references
+./framework/thoughts/work/backlog/REFACTOR-052-adopt-industry-standard-repo-structure.md:grep -r "project-hello-world" . --include="*.md"
+./framework/thoughts/work/backlog/REFACTOR-052-adopt-industry-standard-repo-structure.md:grep -r "project-hello-world" . --include="*.md" --exclude-dir="history"
+./framework/thoughts/work/backlog/REFACTOR-052-adopt-industry-standard-repo-structure.md:  - Renamed `project-hello-world/` → `examples/hello-world/` (aligns with npm/pip/bundler)
+./framework/thoughts/work/backlog/REFACTOR-052-adopt-industry-standard-repo-structure.md:   grep -r "project-hello-world" . --include="*.md" > audit-hello-world.txt
+./framework/thoughts/work/backlog/REFACTOR-052-adopt-industry-standard-repo-structure.md:    "project-hello-world",
+./framework/thoughts/work/backlog/REFACTOR-052-adopt-industry-standard-repo-structure.md:- [ ] Run grep for "project-hello-world" - only expected hits?
+./framework/thoughts/work/backlog/REFACTOR-052-adopt-industry-standard-repo-structure.md:- [ ] Run grep audit for "project-hello-world"
+./framework/thoughts/work/backlog/REFACTOR-052-adopt-industry-standard-repo-structure.md:### Phase 2: Migrate project-hello-world → examples/hello-world/
+./framework/thoughts/work/backlog/REFACTOR-052-adopt-industry-standard-repo-structure.md:- [ ] `git mv project-hello-world examples/hello-world`
+./framework/thoughts/work/backlog/REFACTOR-052-adopt-industry-standard-repo-structure.md:- [ ] Grep for "project-hello-world" references
+./framework/thoughts/work/backlog/TECH-048-remove-team-references-from-docs.md:- [ ] project-hello-world/ documentation
+./framework/thoughts/work/done/FEAT-039-VALIDATION-REPORT.md:# project-hello-world Validation Report
+./framework/thoughts/work/done/FEAT-039-VALIDATION-REPORT.md:project-hello-world demonstrates excellent structural compliance and content quality but has **minor deviations** from the Standard Framework specification.
+./framework/thoughts/work/done/FEAT-039-VALIDATION-REPORT.md:**Can project-hello-world serve as Standard validation reference for FEAT-025?**
+./framework/thoughts/work/done/FEAT-039-VALIDATION-REPORT.md:- Both `thoughts/reference/` AND `thoughts/external-references/` exist in project-hello-world
+./framework/thoughts/work/done/FEAT-039-VALIDATION-REPORT.md:- project-hello-world has BOTH `thoughts/reference/` AND `thoughts/external-references/`
+./framework/thoughts/work/done/FEAT-039-VALIDATION-REPORT.md:### Question: Can project-hello-world serve as Standard level validation reference?
+./framework/thoughts/work/done/FEAT-039-VALIDATION-REPORT.md:1. **Use project-hello-world for Structure Validation** ✅
+./framework/thoughts/work/done/FEAT-039-VALIDATION-REPORT.md:   - FEAT-025 should add sample work items to project-hello-world OR
+./framework/thoughts/work/done/FEAT-039-VALIDATION-REPORT.md:project-hello-world is **structurally excellent** but **functionally incomplete** as a reference implementation. It validates **structure** but not **workflow**.
+./framework/thoughts/work/done/FEAT-039-VALIDATION-REPORT.md:- ✅ Can use project-hello-world for Standard structure validation
+./framework/thoughts/work/done/FEAT-039-VALIDATION-REPORT.md:- ⚠️ FEAT-025 should enhance project-hello-world OR create separate workflow examples
+./framework/thoughts/work/done/FEAT-039-VALIDATION-REPORT.md:**Current:** Missing from project-hello-world version
+./framework/thoughts/work/done/FEAT-039-VALIDATION-REPORT.md:2. Use project-hello-world for structure validation
+./framework/thoughts/work/done/FEAT-039-VALIDATION-REPORT.md:3. Create work item for adding workflow examples to project-hello-world
+./framework/thoughts/work/done/FEAT-039-VALIDATION-REPORT.md:project-hello-world is an **excellent structural reference** with **high-quality content** but lacks **workflow demonstration**. It validates that the Standard Framework structure is achievable and well-organized, but does not demonstrate the framework in active use.
+./framework/thoughts/work/done/FEAT-039-VALIDATION-REPORT.md:**Key Insight:** A reference implementation should show both **structure** and **usage**. project-hello-world currently shows only structure.
+./framework/thoughts/work/done/FEAT-039-VALIDATION-REPORT.md:**Recommendation:** Enhance project-hello-world with minimal workflow examples (2-3 work items, 1 ADR, 1 session file) to make it a complete reference implementation.
+./framework/thoughts/work/done/FEAT-039-VALIDATION-REPORT.md:**For FEAT-025:** Use project-hello-world for structure validation, but create or enhance examples for workflow validation.
+./framework/thoughts/work/done/FEAT-039-verify-hello-world-compliance.md:# Feature: Verify project-hello-world Compliance
+./framework/thoughts/work/done/FEAT-039-verify-hello-world-compliance.md:Validate that project-hello-world/ matches PROJECT-STRUCTURE-STANDARD.md specification and fulfills its role as a Standard Framework reference implementation. Document compliance status and any gaps.
+./framework/thoughts/work/done/FEAT-039-verify-hello-world-compliance.md:project-hello-world/ was created as part of FEAT-026 monorepo restructuring to serve as a reference implementation of the Standard Framework. However, we need to verify:
+./framework/thoughts/work/done/FEAT-039-verify-hello-world-compliance.md:- project-hello-world is a reliable reference for users
+./framework/thoughts/work/done/FEAT-039-verify-hello-world-compliance.md:- FEAT-025 planning (scope depends on project-hello-world status)
+./framework/thoughts/work/done/FEAT-039-verify-hello-world-compliance.md:- New users looking at project-hello-world as an example
+./framework/thoughts/work/done/FEAT-039-verify-hello-world-compliance.md:None - we're assuming project-hello-world is correct without verification.
+./framework/thoughts/work/done/FEAT-039-verify-hello-world-compliance.md:- `project-hello-world/**/*` - All files and folders
+./framework/thoughts/work/done/FEAT-039-verify-hello-world-compliance.md:   - [ ] Does project-hello-world have actual work items?
+./framework/thoughts/work/done/FEAT-039-verify-hello-world-compliance.md:6. Assessment: Can project-hello-world serve as Standard validation reference?
+./framework/thoughts/work/done/FEAT-039-verify-hello-world-compliance.md:# project-hello-world Validation Report
+./framework/thoughts/work/done/FEAT-039-verify-hello-world-compliance.md:**Question:** Can project-hello-world serve as Standard level validation reference?
+./framework/thoughts/work/done/FEAT-039-verify-hello-world-compliance.md:- project-hello-world/ exists (created in FEAT-026)
+./framework/thoughts/work/done/FEAT-039-verify-hello-world-compliance.md:- FEAT-026 (Framework Structure Migration) - Created project-hello-world
+./framework/thoughts/work/done/FEAT-039-verify-hello-world-compliance.md:- **FEAT-039: Verify project-hello-world Compliance**
+./framework/thoughts/work/done/FEAT-039-verify-hello-world-compliance.md:  - Validated project-hello-world against PROJECT-STRUCTURE-STANDARD.md
+./framework/thoughts/work/done/FEAT-039-verify-hello-world-compliance.md:- Include Standard level validation (if project-hello-world incomplete)
+./framework/thoughts/work/done/FEAT-039-verify-hello-world-compliance.md:- Focus only on Minimal/Light levels (if project-hello-world sufficient)
+./framework/thoughts/work/done/FEAT-039-verify-hello-world-compliance.md:- Complete/fix project-hello-world (if gaps found)
+./framework/thoughts/work/done/FEAT-039-verify-hello-world-compliance.md:1. Is project-hello-world structurally compliant?
+./framework/thoughts/work/done/FEAT-039-verify-hello-world-compliance.md:During FEAT-025 alignment analysis, we realized project-hello-world exists but its compliance status is unknown. Before planning FEAT-025 scope, we need to know what project-hello-world actually provides.
+./framework/thoughts/work/done/FEAT-039-verify-hello-world-compliance.md:- FEAT-026 Release Notes - project-hello-world creation
+./framework/thoughts/work/done/FEAT-039-verify-hello-world-compliance.md:- [project-hello-world/](../../../project-hello-world/) - Subject of validation
+./framework/thoughts/work/todo/FEAT-025-ALIGNMENT-ANALYSIS.md:The work item was written before FEAT-026 restructured the repository into a monorepo with framework/ and project-hello-world/ folders, and established definitive structure standards. Many references, paths, and structural assumptions in FEAT-025 are now outdated or incorrect.
+./framework/thoughts/work/todo/FEAT-025-ALIGNMENT-ANALYSIS.md:4. ❌ **Scope misalignment** - Proposes creating `examples/` but project-hello-world already exists
+./framework/thoughts/work/todo/FEAT-025-ALIGNMENT-ANALYSIS.md:- `project-hello-world/` already exists as reference implementation
+./framework/thoughts/work/todo/FEAT-025-ALIGNMENT-ANALYSIS.md:- Doesn't acknowledge existing `project-hello-world/`
+./framework/thoughts/work/todo/FEAT-025-ALIGNMENT-ANALYSIS.md:- [ ] Acknowledge `project-hello-world/` already exists
+./framework/thoughts/work/todo/FEAT-025-ALIGNMENT-ANALYSIS.md:- `project-hello-world/` exists as Standard reference implementation
+./framework/thoughts/work/todo/FEAT-025-ALIGNMENT-ANALYSIS.md:- [ ] Check what `project-hello-world/` implements
+./framework/thoughts/work/todo/FEAT-025-ALIGNMENT-ANALYSIS.md:- [ ] If FEAT-025 still needed, define unique value vs. project-hello-world
+./framework/thoughts/work/todo/FEAT-025-ALIGNMENT-ANALYSIS.md:- Standard level already has `project-hello-world/`
+./framework/thoughts/work/todo/FEAT-025-ALIGNMENT-ANALYSIS.md:- [ ] Standard validation = verify `project-hello-world/` matches PROJECT-STRUCTURE-STANDARD.md
+./framework/thoughts/work/todo/FEAT-025-ALIGNMENT-ANALYSIS.md:- [ ] Specify which CLAUDE.md (root vs. framework vs. project-hello-world)
+./framework/thoughts/work/todo/FEAT-025-ALIGNMENT-ANALYSIS.md:- Examples kept as permanent reference (project-hello-world)
+./framework/thoughts/work/todo/FEAT-025-ALIGNMENT-ANALYSIS.md:- Keep examples permanently? YES (project-hello-world exists)
+./framework/thoughts/work/todo/FEAT-025-ALIGNMENT-ANALYSIS.md:- [ ] Examples are permanent (project-hello-world proves this)
+./framework/thoughts/work/todo/FEAT-025-ALIGNMENT-ANALYSIS.md:**Question:** Does `project-hello-world/` already fulfill FEAT-025's validation goals?
+./framework/thoughts/work/todo/FEAT-025-ALIGNMENT-ANALYSIS.md:- [ ] Review `project-hello-world/` structure
+./framework/thoughts/work/todo/FEAT-025-ALIGNMENT-ANALYSIS.md:1. **project-hello-world validates Standard** → FEAT-025 focuses on Minimal/Light only
+./framework/thoughts/work/todo/FEAT-025-ALIGNMENT-ANALYSIS.md:2. **project-hello-world is incomplete** → FEAT-025 includes completing it
+./framework/thoughts/work/todo/FEAT-025-ALIGNMENT-ANALYSIS.md:3. **project-hello-world doesn't exist properly** → FEAT-025 creates it
+./framework/thoughts/work/todo/FEAT-025-ALIGNMENT-ANALYSIS.md:**FEAT-039: Verify project-hello-world Compliance**
+./framework/thoughts/work/todo/FEAT-025-ALIGNMENT-ANALYSIS.md:- Validate project-hello-world matches PROJECT-STRUCTURE-STANDARD.md
+./framework/thoughts/work/todo/FEAT-025-ALIGNMENT-ANALYSIS.md:- Determine if project-hello-world fulfills Standard validation needs
+./framework/thoughts/work/todo/FEAT-025-ALIGNMENT-ANALYSIS.md:- [ ] Acknowledge project-hello-world exists
+./framework/thoughts/work/todo/FEAT-025-ALIGNMENT-ANALYSIS.md:- [ ] Acknowledges monorepo structure (framework/, project-hello-world/)
+./framework/thoughts/work/todo/FEAT-025-ALIGNMENT-ANALYSIS.md:- [ ] Defines what FEAT-025 validates (vs. what project-hello-world already validates)
+./framework/thoughts/work/todo/FEAT-025-ALIGNMENT-ANALYSIS.md:- [ ] Lists project-hello-world validation as prerequisite
+./framework/thoughts/work/todo/FEAT-025-ALIGNMENT-ANALYSIS.md:2. **Create FEAT-039: Validate project-hello-world**
+./framework/thoughts/work/todo/FEAT-025-ALIGNMENT-ANALYSIS.md:5. ⚠️ **Scope definition** - Clarify if Standard validation needed (project-hello-world exists)
+./framework/thoughts/work/todo/FEAT-025-ALIGNMENT-ANALYSIS.md:3. Acknowledge project-hello-world
+./framework/thoughts/work/todo/FEAT-037-project-config-file.md:6. Prototype for sample code project (project-hello-world)
+./framework/thoughts/work/todo/FEAT-037-project-config-file.md:1. Add config to project-hello-world
+./framework/thoughts/work/todo/FEAT-037-project-config-file.md:   - **Recommendation:** One per project (framework/, project-hello-world/, etc.)
+./framework/thoughts/work/todo/FEAT-037-project-config-file.md:**Context:** While working on FEAT-039 (validating project-hello-world), we discovered a practical issue: how do AI and user communicate which project context we're working in within the monorepo?
+./framework/thoughts/work/todo/FEAT-037-project-config-file.md:- FEAT-039 was a validation task targeting project-hello-world
+./framework/thoughts/work/todo/FEAT-037-project-config-file.md:- This violates dogfooding - project-hello-world issues should be tracked in project-hello-world/thoughts/work/
+./framework/thoughts/work/todo/FEAT-037-project-config-file.md:1. **Explicit verbal declaration** - User says "switch to project-hello-world"
+./framework/thoughts/work/todo/FEAT-037-project-config-file.md:# project-hello-world/project-config.yaml
+./framework/thoughts/work/todo/FEAT-037-project-config-file.md:  workPath: project-hello-world/thoughts/work/  # Different work path
+./framework/thoughts/work/todo/FEAT-037-project-config-file.md:1. User: "Switch to project-hello-world"
+./framework/thoughts/work/todo/FEAT-037-project-config-file.md:2. AI reads `project-hello-world/project-config.yaml`
+./framework/thoughts/work/todo/FEAT-037-project-config-file.md:3. AI knows work items go in `project-hello-world/thoughts/work/`
+./framework/thoughts/work/todo/FEAT-037-project-config-file.md:   - Hello-world project root: `project-hello-world/project-config.yaml`
+./project-hello-world/CLAUDE.md:project-hello-world/
+./project-hello-world/README.md:project-hello-world/
+./QUICK-START.md:**See It In Action:** Check out [project-hello-world/](project-hello-world/) for a complete working example.
+./QUICK-START.md:1. Review the example: [project-hello-world/](project-hello-world/)
+./QUICK-START.md:| Working example | [project-hello-world/](project-hello-world/) | 5 min |
+./QUICK-START.md:- **See working example:** [project-hello-world/](project-hello-world/)
+./README.md:- **project-hello-world/** - Reference implementation demonstrating framework usage
+./README.md:**See the framework in action:** Check out [project-hello-world/](project-hello-world/) for a complete reference implementation.
+./README.md:- **[project-hello-world/](project-hello-world/)** - Complete working example of Standard framework
+./README.md:Check [framework/thoughts/](framework/thoughts/) to see the framework in action on itself, or [project-hello-world/](project-hello-world/) for a simpler reference implementation.

@@ -19,7 +19,7 @@ npm test
 ## Project Structure
 
 ```
-project-hello-world/
+examples/hello-world/
 ├── src/              # Application source code
 ├── tests/            # Test files
 ├── docs/             # Project documentation

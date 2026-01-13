@@ -16,7 +16,7 @@ The work item was written before FEAT-026 restructured the repository into a mon
 1. ❌ **Structure references outdated** - References old `thoughts/project/planning/backlog/` instead of `thoughts/work/backlog/`
 2. ❌ **Path references incorrect** - References `thoughts/framework/templates/` which doesn't exist in user projects
 3. ❌ **Template location misalignment** - Templates are now in `framework/templates/`, not `thoughts/framework/templates/`
-4. ❌ **Scope misalignment** - Proposes creating `examples/` but project-hello-world already exists
+4. ❌ **Scope misalignment** - Proposes creating `examples/` but examples/hello-world already exists
 5. ❌ **Checklist not updated** - NEW-PROJECT-CHECKLIST.md still references old structure
 6. ❌ **Template packages missing** - References `project-framework-template/` but actual location is `project-templates/`
 
@@ -173,7 +173,7 @@ The work item was written before FEAT-026 restructured the repository into a mon
 **Required Investigation:**
 - [ ] Check what `examples/hello-world/` implements
 - [ ] If already implements simple example, is FEAT-025 still needed?
-- [ ] If FEAT-025 still needed, define unique value vs. project-hello-world
+- [ ] If FEAT-025 still needed, define unique value vs. examples/hello-world
 
 ---
 
@@ -204,7 +204,7 @@ The work item was written before FEAT-026 restructured the repository into a mon
 
 **Required Updates:**
 - [ ] Update all documentation path references
-- [ ] Specify which CLAUDE.md (root vs. framework vs. project-hello-world)
+- [ ] Specify which CLAUDE.md (root vs. framework vs. examples/hello-world)
 - [ ] Update collaboration guide paths to `framework/docs/collaboration/` or `framework/collaboration/`
 
 ---
@@ -214,17 +214,17 @@ The work item was written before FEAT-026 restructured the repository into a mon
 **FEAT-026 Established:**
 - Work items archived to `thoughts/history/releases/vX.Y.Z/`
 - Supporting docs co-located with work items
-- Examples kept as permanent reference (project-hello-world)
+- Examples kept as permanent reference (examples/hello-world)
 
 **FEAT-025 Questions:**
-- Keep examples permanently? YES (project-hello-world exists)
+- Keep examples permanently? YES (examples/hello-world exists)
 - Validation notes? Co-locate with FEAT-025 work item
 - Test results? Include in FEAT-025 work item
 
 **Required Updates:**
 - [ ] Remove Q2 (answered by FEAT-026)
 - [ ] Follow FEAT-026 archival pattern (co-location)
-- [ ] Examples are permanent (project-hello-world proves this)
+- [ ] Examples are permanent (examples/hello-world proves this)
 
 ---
 
@@ -241,9 +241,9 @@ The work item was written before FEAT-026 restructured the repository into a mon
 - [ ] Assess if Standard level setup is proven
 
 **Possible Outcomes:**
-1. **project-hello-world validates Standard** → FEAT-025 focuses on Minimal/Light only
-2. **project-hello-world is incomplete** → FEAT-025 includes completing it
-3. **project-hello-world doesn't exist properly** → FEAT-025 creates it
+1. **examples/hello-world validates Standard** → FEAT-025 focuses on Minimal/Light only
+2. **examples/hello-world is incomplete** → FEAT-025 includes completing it
+3. **examples/hello-world doesn't exist properly** → FEAT-025 creates it
 
 ---
 
@@ -332,11 +332,11 @@ The work item was written before FEAT-026 restructured the repository into a mon
 - Align with PROJECT-STRUCTURE-STANDARD.md
 - Fix template access instructions
 
-**FEAT-039: Verify project-hello-world Compliance**
+**FEAT-039: Verify examples/hello-world Compliance**
 - Priority: P1 (Informs FEAT-025 scope)
-- Validate project-hello-world matches PROJECT-STRUCTURE-STANDARD.md
+- Validate examples/hello-world matches PROJECT-STRUCTURE-STANDARD.md
 - Document any gaps or deviations
-- Determine if project-hello-world fulfills Standard validation needs
+- Determine if examples/hello-world fulfills Standard validation needs
 
 **DECISION-036: Define Template Access Strategy**
 - Priority: P1 (Informs FEAT-025 validation)
@@ -351,7 +351,7 @@ The work item was written before FEAT-026 restructured the repository into a mon
 - [ ] Update all path references to v3.0.0 structure
 - [ ] Update template package references: `project-framework-template/` → `project-templates/`
 - [ ] Reference PROJECT-STRUCTURE-STANDARD.md as validation specification
-- [ ] Acknowledge project-hello-world exists
+- [ ] Acknowledge examples/hello-world exists
 - [ ] Redefine scope (all three levels vs. Minimal/Light only)
 - [ ] Remove or update outdated Open Questions
 - [ ] Update Testing Plan to validate against PROJECT-STRUCTURE-STANDARD.md
@@ -385,7 +385,7 @@ The work item was written before FEAT-026 restructured the repository into a mon
 
 ### Validation Scope
 
-- [ ] Defines what FEAT-025 validates (vs. what project-hello-world already validates)
+- [ ] Defines what FEAT-025 validates (vs. what examples/hello-world already validates)
 - [ ] Scopes to appropriate levels (Minimal/Light or all three)
 - [ ] Clear success criteria
 - [ ] Clear validation checklist
@@ -394,7 +394,7 @@ The work item was written before FEAT-026 restructured the repository into a mon
 ### Dependencies
 
 - [ ] Lists NEW-PROJECT-CHECKLIST.md update as prerequisite
-- [ ] Lists project-hello-world validation as prerequisite
+- [ ] Lists examples/hello-world validation as prerequisite
 - [ ] Lists template access strategy decision as prerequisite
 - [ ] Updates blocking relationship with FEAT-005/006
 
@@ -410,7 +410,7 @@ The work item was written before FEAT-026 restructured the repository into a mon
    - Align with PROJECT-STRUCTURE-STANDARD.md
    - Mark as P0, blocking FEAT-025
 
-2. **Create FEAT-039: Validate project-hello-world**
+2. **Create FEAT-039: Validate examples/hello-world**
    - Check compliance with PROJECT-STRUCTURE-STANDARD.md
    - Document current state
    - Determine validation completeness
@@ -466,7 +466,7 @@ The work item was written before FEAT-026 restructured the repository into a mon
 
 ### High Priority
 
-5. ⚠️ **Scope definition** - Clarify if Standard validation needed (project-hello-world exists)
+5. ⚠️ **Scope definition** - Clarify if Standard validation needed (examples/hello-world exists)
 6. ⚠️ **Template access** - Define and test how users access framework templates
 7. ⚠️ **Validation spec** - Reference PROJECT-STRUCTURE-STANDARD.md as source of truth
 
@@ -486,7 +486,7 @@ The work item's core goal (validate setup process) is still valid and important.
 
 1. Align with v3.0.0 structure
 2. Reference correct paths and templates
-3. Acknowledge project-hello-world
+3. Acknowledge examples/hello-world
 4. Depend on prerequisite work items
 5. Validate against PROJECT-STRUCTURE-STANDARD.md
 

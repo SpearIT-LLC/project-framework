@@ -174,7 +174,7 @@ graph LR
     style C3 fill:#fff3cd
 
     Note1[Framework is SOURCE]
-    Note2[project-hello-world<br/>has COPY as dependency]
+    Note2[examples/hello-world<br/>has COPY as dependency]
     Note3[Each tracks own work items]
 ```
 

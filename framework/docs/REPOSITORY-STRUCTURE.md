@@ -120,7 +120,7 @@ project-framework/                    # REPOSITORY (not a project)
 
 This is a monorepo containing multiple projects:
 - `framework/` - The framework itself (reusable, universal)
-- `project-hello-world/` - Sample project (validation/reference)
+- `examples/hello-world/` - Sample project (validation/reference)
 
 Each project is self-contained and follows the Standard Framework structure.
 
@@ -271,7 +271,7 @@ To verify repository root matches this specification:
 - [ ] `.gitignore` contains security patterns
 
 **Structure validation:**
-- [ ] Project folders exist (framework/, project-hello-world/)
+- [ ] Project folders exist (framework/, examples/hello-world/)
 - [ ] Each project folder follows appropriate PROJECT-STRUCTURE-*.md
 - [ ] No project-specific files at root (PROJECT-STATUS.md, CHANGELOG.md, INDEX.md)
 
@@ -282,7 +282,7 @@ To verify repository root matches this specification:
 **When creating repository:**
 1. Initialize git repository
 2. Create all REQUIRED root files (5 files)
-3. Create project folders (framework/, project-hello-world/)
+3. Create project folders (framework/, examples/hello-world/)
 4. Populate each project following PROJECT-STRUCTURE-STANDARD.md
 5. Commit: `git commit -m "Initial repository setup"`
 

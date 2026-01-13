@@ -85,7 +85,7 @@ Each project has its own thoughts/ structure:
 - Issues about template packages → `project-templates/thoughts/work/`
 
 **To switch project context:**
-1. User explicitly states which project (e.g., "switch to project-hello-world")
+1. User explicitly states which project (e.g., "switch to examples/hello-world")
 2. AI reads that project's CLAUDE.md and understands context
 3. All subsequent work items go in that project's thoughts/work/ folder
 

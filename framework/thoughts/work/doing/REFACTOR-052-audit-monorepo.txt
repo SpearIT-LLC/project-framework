@@ -1,0 +1,135 @@
+./CLAUDE.md:This file provides navigation and context for AI assistants working in this monorepo.
+./CLAUDE.md:**Remember:** This is a monorepo. Always identify which project you're working on before making changes.
+./framework/CHANGELOG.md:  - Reorganized repository into monorepo structure
+./framework/docs/PROJECT-STRUCTURE-STANDARD.md:The project-framework repository is a **monorepo** containing multiple projects (framework/, project-hello-world/). The repository root has minimal files (README, QUICK-START, CLAUDE, LICENSE, .gitignore).
+./framework/docs/README.md:- [REPOSITORY-STRUCTURE.md](REPOSITORY-STRUCTURE.md) - Repository root structure for monorepo organization
+./framework/docs/REPOSITORY-STRUCTURE.md:This document defines the **repository root structure** for the project-framework monorepo.
+./framework/docs/REPOSITORY-STRUCTURE.md:**Purpose:** AI navigation hub - orient to monorepo structure
+./framework/docs/REPOSITORY-STRUCTURE.md:**Repository:** project-framework (monorepo)
+./framework/docs/REPOSITORY-STRUCTURE.md:This is a monorepo containing multiple projects:
+./framework/docs/REPOSITORY-STRUCTURE.md:- ✅ Immediate context - AI knows it's in a monorepo
+./framework/INDEX.md:- [docs/REPOSITORY-STRUCTURE.md](docs/REPOSITORY-STRUCTURE.md) - Repository root structure (monorepo)
+./framework/PROJECT-STATUS.md:**Status:** Production-ready for internal use. Standard Framework level is complete and validated. Framework successfully dogfooding itself in monorepo structure with separate framework/ and project-hello-world/ projects.
+./framework/PROJECT-STATUS.md:- 🔄 **BREAKING:** Reorganized repository into monorepo structure
+./framework/README.md:See [../README.md](../README.md) for monorepo structure and getting started.
+./framework/thoughts/history/releases/v3.0.0/FEAT-026-MIGRATION-CHECKPOINT.md:- Update root README.md for monorepo structure
+./framework/thoughts/history/releases/v3.0.0/FEAT-026-MIGRATION-CHECKPOINT.md:- `README.md` - Update for monorepo structure (framework/ + project-hello-world/)
+./framework/thoughts/history/releases/v3.0.0/FEAT-026-P1-BUG-root-claude.md:The repository root needs a CLAUDE.md file to provide AI context at the monorepo level. Currently, we have:
+./framework/thoughts/history/releases/v3.0.0/FEAT-026-P1-BUG-root-claude.md:- Overview of monorepo structure
+./framework/thoughts/history/releases/v3.0.0/FEAT-026-PROJECT-STRUCTURE-STANDARD.md:The project-framework repository is a **monorepo** containing multiple projects (framework/, project-hello-world/). The repository root has minimal files (README, QUICK-START, CLAUDE, LICENSE, .gitignore).
+./framework/thoughts/history/releases/v3.0.0/FEAT-026-REPOSITORY-STRUCTURE.md:This document defines the **repository root structure** for the project-framework monorepo.
+./framework/thoughts/history/releases/v3.0.0/FEAT-026-REPOSITORY-STRUCTURE.md:**Purpose:** AI navigation hub - orient to monorepo structure
+./framework/thoughts/history/releases/v3.0.0/FEAT-026-REPOSITORY-STRUCTURE.md:**Repository:** project-framework (monorepo)
+./framework/thoughts/history/releases/v3.0.0/FEAT-026-REPOSITORY-STRUCTURE.md:This is a monorepo containing multiple projects:
+./framework/thoughts/history/releases/v3.0.0/FEAT-026-REPOSITORY-STRUCTURE.md:- ✅ Immediate context - AI knows it's in a monorepo
+./framework/thoughts/history/releases/v3.0.0/FEAT-026-structure-migration.md:project-framework/                        # Repository root (monorepo)
+./framework/thoughts/history/releases/v3.0.0/FEAT-026-universal-structure-decisions.md:**Issue identified:** After v3.0.0 migration, AI needs clear navigation to understand monorepo structure and which project-specific CLAUDE.md to read.
+./framework/thoughts/history/releases/v3.0.0/FEAT-026-universal-structure-decisions.md:**Repository:** project-framework (monorepo)
+./framework/thoughts/history/releases/v3.0.0/FEAT-026-universal-structure-decisions.md:This is a monorepo containing multiple projects:
+./framework/thoughts/history/releases/v3.0.0/FEAT-026-universal-structure-decisions.md:- ✅ **Immediate context** - AI knows it's in a monorepo
+./framework/thoughts/history/releases/v3.0.0/FEAT-026-VALIDATION-REPORT.md:All 7 phases of the structure migration completed successfully. The repository has been successfully reorganized into a monorepo structure with clear separation of concerns.
+./framework/thoughts/history/releases/v3.0.0/FEAT-026-VALIDATION-REPORT.md:├── README.md                        # Updated for monorepo
+./framework/thoughts/history/releases/v3.0.0/FEAT-026-VALIDATION-REPORT.md:1. **Root README.md** → Clear overview with monorepo structure
+./framework/thoughts/history/releases/v3.0.0/FEAT-026-VALIDATION-REPORT.md:- **Better:** Intuitive monorepo structure
+./framework/thoughts/history/releases/v3.0.0/RELEASE-NOTES.md:This release represents a fundamental restructuring of the project-framework repository into a monorepo architecture. The framework content has been moved into a dedicated `framework/` folder, and a reference implementation (`project-hello-world/`) has been created. The framework now fully dogfoods itself using the Standard Project Structure.
+./framework/thoughts/history/sessions/2026-01-04-SESSION-HISTORY.md:- Option A: Single monorepo
+./framework/thoughts/history/sessions/2026-01-04-SESSION-HISTORY.md:- **Multi-repo complexity:** Resolved with monorepo development strategy
+./framework/thoughts/history/sessions/2026-01-05-SESSION-HISTORY.md:**Repository ≠ Project in monorepo model**
+./framework/thoughts/history/sessions/2026-01-06-SESSION-HISTORY.md:- Update README.md for new monorepo structure
+./framework/thoughts/history/sessions/2026-01-06-SESSION-HISTORY.md:- Created missing `/CLAUDE.md` for monorepo navigation
+./framework/thoughts/history/sessions/2026-01-07-SESSION-HISTORY.md:- REPOSITORY-STRUCTURE.md - Repository root structure (monorepo)
+./framework/thoughts/history/sessions/2026-01-10-SESSION-HISTORY.md:- Written before FEAT-026 restructured repository into monorepo
+./framework/thoughts/history/sessions/2026-01-10-SESSION-HISTORY.md:- 9 READMEs total across monorepo
+./framework/thoughts/history/sessions/2026-01-11-SESSION-HISTORY.md:- N/A .gitignore - Correctly at repository root (monorepo pattern)
+./framework/thoughts/history/sessions/2026-01-11-SESSION-HISTORY.md:Identified dogfooding issue where FEAT-039 (project-hello-world validation) was tracked in framework/thoughts/work/ instead of project-hello-world/thoughts/work/. Led to productive discussion about monorepo context switching and extension to FEAT-037 (Project Config File) to address the problem.
+./framework/thoughts/history/sessions/2026-01-11-SESSION-HISTORY.md:**Core Question:** How do AI and user communicate which project context we're working in within the monorepo?
+./framework/thoughts/history/sessions/2026-01-11-SESSION-HISTORY.md:**Interim Solution:** Updated monorepo CLAUDE.md with explicit guidance
+./framework/thoughts/history/sessions/2026-01-11-SESSION-HISTORY.md:**Files Modified:** `CLAUDE.md` (monorepo root)
+./framework/thoughts/history/sessions/2026-01-11-SESSION-HISTORY.md:- Finalize monorepo config structure
+./framework/thoughts/history/sessions/2026-01-11-SESSION-HISTORY.md:- Per-project configs cleaner than monorepo root config
+./framework/thoughts/history/sessions/2026-01-11-SESSION-HISTORY.md:Identified important dogfooding gap in monorepo workflow. Extended FEAT-037 with monorepo context switching requirements. Updated monorepo CLAUDE.md with interim guidance establishing framework as default project and explicit context switching protocol. Design discussion captured for future implementation.
+./framework/thoughts/history/sessions/2026-01-12-SESSION-HISTORY.md:- Discussed for monorepo vs standalone projects
+./framework/thoughts/history/sessions/2026-01-12-SESSION-HISTORY.md:- Realized: Projects using the framework ARE in monorepo, not standalone
+./framework/thoughts/history/sessions/2026-01-12-SESSION-HISTORY.md:**Key clarification:** If someone uses this framework, they work IN the monorepo structure. The framework IS the project structure.
+./framework/thoughts/history/sessions/2026-01-12-SESSION-HISTORY.md:- Impact analysis on current monorepo
+./framework/thoughts/history/sessions/2026-01-13-SESSION-HISTORY.md:**Decision:** Adopt "framework source repository" terminology instead of "monorepo"
+./framework/thoughts/history/sessions/2026-01-13-SESSION-HISTORY.md:- Not a monorepo in traditional sense (multiple independent projects)
+./framework/thoughts/history/sessions/2026-01-13-SESSION-HISTORY.md:- Update terminology throughout (monorepo → framework source repository)
+./framework/thoughts/history/sessions/2026-01-13-SESSION-HISTORY.md:- "monorepo" → "framework source repository"
+./framework/thoughts/history/sessions/2026-01-13-SESSION-HISTORY.md:### Q: "Are we still a monorepo after this change?"
+./framework/thoughts/history/sessions/2026-01-13-SESSION-HISTORY.md:**A:** No. Framework-as-dependency model means we're a "framework source repository" with examples, not a traditional monorepo with peer projects.
+./framework/thoughts/history/sessions/2026-01-13-SESSION-HISTORY.md:- Discussion about monorepo terminology led to deeper insights
+./framework/thoughts/research/package-ecosystem-terminology-patterns.md:| "monorepo" | "framework source repository" | Repository type |
+./framework/thoughts/research/package-ecosystem-terminology-patterns.md:3. ✅ **Terminology:** Use "framework source repository" instead of "monorepo"
+./framework/thoughts/work/backlog/DECISION-035-root-status-reference.md:Decide whether the root README.md should reference framework/PROJECT-STATUS.md or have its own root-level status document for the monorepo.
+./framework/thoughts/work/backlog/DECISION-035-root-status-reference.md:- This treats framework/ as the "main" project in the monorepo
+./framework/thoughts/work/backlog/DECISION-035-root-status-reference.md:- Should monorepo have its own status document?
+./framework/thoughts/work/backlog/DECISION-035-root-status-reference.md:- Should we distinguish monorepo status from framework status?
+./framework/thoughts/work/backlog/DECISION-035-root-status-reference.md:- Framework status represents monorepo status
+./framework/thoughts/work/backlog/DECISION-035-root-status-reference.md:- No distinction needed between monorepo and framework
+./framework/thoughts/work/backlog/DECISION-035-root-status-reference.md:- Framework status represents monorepo status
+./framework/thoughts/work/backlog/DECISION-035-root-status-reference.md:- ❌ Could be confusing in true multi-project monorepo
+./framework/thoughts/work/backlog/DECISION-035-root-status-reference.md:- ❌ Doesn't distinguish monorepo from project
+./framework/thoughts/work/backlog/DECISION-035-root-status-reference.md:**Approach:** Create PROJECT-STATUS.md at root for monorepo status
+./framework/thoughts/work/backlog/DECISION-035-root-status-reference.md:- Overall monorepo status
+./framework/thoughts/work/backlog/DECISION-035-root-status-reference.md:- ✅ Clear separation: monorepo vs. project status
+./framework/thoughts/work/backlog/DECISION-035-root-status-reference.md:- ✅ Room for monorepo-level information
+./framework/thoughts/work/backlog/DECISION-035-root-status-reference.md:**Approach:** Create MONOREPO-STATUS.md at root for monorepo-specific info
+./framework/thoughts/work/backlog/DECISION-035-root-status-reference.md:- ✅ Explicit about monorepo structure
+./framework/thoughts/work/backlog/DECISION-035-root-status-reference.md:   - Explain monorepo structure? (secondary)
+./framework/thoughts/work/backlog/DECISION-035-root-status-reference.md:3. **Is monorepo status different from framework status?**
+./framework/thoughts/work/backlog/DECISION-035-root-status-reference.md:   - Maybe monorepo structure decisions
+./framework/thoughts/work/backlog/DECISION-035-root-status-reference.md:- Framework IS the main project in this monorepo
+./framework/thoughts/work/backlog/DECISION-035-root-status-reference.md:- Framework status accurately represents monorepo status
+./framework/thoughts/work/backlog/DECISION-035-root-status-reference.md:3. Is monorepo information distinct from framework info? (no → Option 1)
+./framework/thoughts/work/backlog/DECISION-035-root-status-reference.md:- [ ] Document monorepo structure
+./framework/thoughts/work/backlog/DECISION-035-root-status-reference.md:- If monorepo tracking becomes distinct from framework
+./framework/thoughts/work/backlog/DECISION-036-template-access-strategy.md:- Users reference `../framework/templates/` (if monorepo) or keep separate framework reference
+./framework/thoughts/work/backlog/DECISION-036-template-access-strategy.md:- ❌ Monorepo assumption - Works best in monorepo structure
+./framework/thoughts/work/backlog/DECISION-036-template-access-strategy.md:- Users maintain framework reference copy separately (if not monorepo)
+./framework/thoughts/work/backlog/DECISION-036-template-access-strategy.md:- ✅ Works for any project type - Not monorepo-dependent
+./framework/thoughts/work/backlog/DECISION-036-template-access-strategy.md:- Consider that most users will likely be creating single-project repositories (not monorepos)
+./framework/thoughts/work/backlog/DECISION-050-framework-distribution-model.md:**Problem:** How should user projects relate to the framework? Should they reference a shared framework (monorepo), or should each project have its own framework copy (framework-as-dependency)?
+./framework/thoughts/work/backlog/DECISION-050-framework-distribution-model.md:monorepo/
+./framework/thoughts/work/backlog/DECISION-050-framework-distribution-model.md:- ❌ Not portable - Must maintain monorepo structure
+./framework/thoughts/work/backlog/DECISION-050-framework-distribution-model.md:If we adopt **Option 1 (Framework-as-Dependency)**, the current monorepo structure changes:
+./framework/thoughts/work/backlog/DECISION-050-framework-distribution-model.md:Should we immediately refactor this monorepo to use the new model?
+./framework/thoughts/work/backlog/DECISION-050-framework-distribution-model.md:**This is a paradigm shift** from "shared framework in monorepo" to "framework as dependency for each project."
+./framework/thoughts/work/backlog/REFACTOR-052-adopt-industry-standard-repo-structure.md:project-framework/              # Called "monorepo"
+./framework/thoughts/work/backlog/REFACTOR-052-adopt-industry-standard-repo-structure.md:- [ ] Replace "monorepo" with "framework source repository"
+./framework/thoughts/work/backlog/REFACTOR-052-adopt-industry-standard-repo-structure.md:grep -r "monorepo" . --include="*.md" > audit-monorepo.txt
+./framework/thoughts/work/backlog/REFACTOR-052-adopt-industry-standard-repo-structure.md:### Phase 4: Update Terminology (monorepo → framework source repository)
+./framework/thoughts/work/backlog/REFACTOR-052-adopt-industry-standard-repo-structure.md:# Find all markdown files with "monorepo"
+./framework/thoughts/work/backlog/REFACTOR-052-adopt-industry-standard-repo-structure.md:grep -r "monorepo" . --include="*.md"
+./framework/thoughts/work/backlog/REFACTOR-052-adopt-industry-standard-repo-structure.md:grep -r "monorepo" . --include="*.md" > fix-monorepo-refs.txt
+./framework/thoughts/work/backlog/REFACTOR-052-adopt-industry-standard-repo-structure.md:- "monorepo" → "framework source repository"
+./framework/thoughts/work/backlog/REFACTOR-052-adopt-industry-standard-repo-structure.md:git commit -m "docs(REFACTOR-052): Replace 'monorepo' with 'framework source repository'
+./framework/thoughts/work/backlog/REFACTOR-052-adopt-industry-standard-repo-structure.md:# Grep for "monorepo" - should only find skip list items
+./framework/thoughts/work/backlog/REFACTOR-052-adopt-industry-standard-repo-structure.md:grep -r "monorepo" . --include="*.md" --exclude-dir="history"
+./framework/thoughts/work/backlog/REFACTOR-052-adopt-industry-standard-repo-structure.md:  - Updated terminology: "framework source repository" (not "monorepo")
+./framework/thoughts/work/backlog/REFACTOR-052-adopt-industry-standard-repo-structure.md:   grep -r "monorepo" . --include="*.md" > audit-monorepo.txt
+./framework/thoughts/work/backlog/REFACTOR-052-adopt-industry-standard-repo-structure.md:    "monorepo"
+./framework/thoughts/work/backlog/REFACTOR-052-adopt-industry-standard-repo-structure.md:- [ ] Run grep for "monorepo" - only expected hits?
+./framework/thoughts/work/backlog/REFACTOR-052-adopt-industry-standard-repo-structure.md:- [ ] Run grep audit for "monorepo"
+./framework/thoughts/work/backlog/REFACTOR-052-adopt-industry-standard-repo-structure.md:- [ ] Grep for "monorepo" references
+./framework/thoughts/work/backlog/REFACTOR-052-adopt-industry-standard-repo-structure.md:- [ ] Save to fix-monorepo-refs.txt
+./framework/thoughts/work/backlog/REFACTOR-052-adopt-industry-standard-repo-structure.md:Discussion about DECISION-050 framework distribution model and monorepo terminology (2026-01-13 session).
+./framework/thoughts/work/backlog/TECH-027-cross-reference-convention.md:- ✅ Works from any project in monorepo
+./framework/thoughts/work/backlog/TECH-048-remove-team-references-from-docs.md:1. **README.md (monorepo root)**
+./framework/thoughts/work/done/FEAT-039-VALIDATION-REPORT.md:**Note:** `.gitignore` is at repository root per REPOSITORY-STRUCTURE.md (monorepo pattern)
+./framework/thoughts/work/done/FEAT-039-VALIDATION-REPORT.md:- .gitignore requirement unclear for monorepo
+./framework/thoughts/work/done/FEAT-039-verify-hello-world-compliance.md:project-hello-world/ was created as part of FEAT-026 monorepo restructuring to serve as a reference implementation of the Standard Framework. However, we need to verify:
+./framework/thoughts/work/todo/FEAT-025-ALIGNMENT-ANALYSIS.md:The work item was written before FEAT-026 restructured the repository into a monorepo with framework/ and project-hello-world/ folders, and established definitive structure standards. Many references, paths, and structural assumptions in FEAT-025 are now outdated or incorrect.
+./framework/thoughts/work/todo/FEAT-025-ALIGNMENT-ANALYSIS.md:- Repository is now a monorepo with minimal root (README, QUICK-START, CLAUDE, LICENSE, .gitignore)
+./framework/thoughts/work/todo/FEAT-025-ALIGNMENT-ANALYSIS.md:- User projects reference `../framework/templates/` (if in monorepo)
+./framework/thoughts/work/todo/FEAT-025-ALIGNMENT-ANALYSIS.md:- [ ] Acknowledges monorepo structure (framework/, project-hello-world/)
+./framework/thoughts/work/todo/FEAT-037-project-config-file.md:- Multi-project monorepo support
+./framework/thoughts/work/todo/FEAT-037-project-config-file.md:**Context:** While working on FEAT-039 (validating project-hello-world), we discovered a practical issue: how do AI and user communicate which project context we're working in within the monorepo?
+./framework/thoughts/work/todo/FEAT-037-project-config-file.md:   - Option A: Per-project configs only, CLAUDE.md handles monorepo navigation
+./framework/thoughts/work/todo/FEAT-037-project-config-file.md:   - **Leaning toward Option A** - CLAUDE.md already serves monorepo navigation purpose
+./framework/thoughts/work/todo/FEAT-037-project-config-file.md:2. **Config location decision conflict:** Line 412 says "Project root" but in monorepo context, which root?
+./framework/thoughts/work/todo/FEAT-037-project-config-file.md:   - **Need to clarify:** "project root" = each project's root, not monorepo root
+./framework/thoughts/work/todo/FEAT-037-project-config-file.md:   - Fallback to monorepo CLAUDE.md for navigation?
+./framework/thoughts/work/todo/FEAT-037-project-config-file.md:- Need more discussion on monorepo-specific config structure
+./framework/thoughts/work/todo/FEAT-037-project-config-file.md:- Interim solution: Add note to monorepo CLAUDE.md about explicit context switching
+./README.md:This repository is organized as a monorepo containing:
