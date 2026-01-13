@@ -13,6 +13,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+- **REFACTOR-052: Adopt Industry-Standard Repository Structure**
+  - Renamed `project-hello-world/` → `examples/hello-world/` (aligns with npm/pip/bundler conventions)
+  - Renamed `project-templates/` → `templates/` (removes redundant prefix)
+  - Updated terminology: "framework source repository" replaces "monorepo"
+  - Updated all Tier 1 (critical navigation) and Tier 2 (active work items) documentation
+  - Tier 3 work items (backlog/todo/done) will be updated incrementally as touched
+  - See research: [thoughts/research/package-ecosystem-terminology-patterns.md](thoughts/research/package-ecosystem-terminology-patterns.md)
+  - **Migration Note:** If referencing old paths in external docs, update to new structure
+
 ### Planned
 - Minimal and Light Framework template packages (deferred from v3.0.0)
 - Visual diagrams for folder structure and workflow
