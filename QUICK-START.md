@@ -5,7 +5,7 @@
 
 **Version:** 3.0.0 | **Last Updated:** 2026-01-07
 
-**See It In Action:** Check out [project-hello-world/](project-hello-world/) for a complete working example.
+**See It In Action:** Check out [examples/hello-world/](examples/hello-world/) for a complete working example.
 
 ---
 
@@ -65,7 +65,7 @@ cp -r /path/to/framework/project-templates/standard/.gitignore .
 4. Code and update CHANGELOG.md as you go
 
 ### Standard
-1. Review the example: [project-hello-world/](project-hello-world/)
+1. Review the example: [examples/hello-world/](examples/hello-world/)
 2. Complete research phase (use templates from `framework/templates/research/`)
 3. Plan features in `thoughts/work/backlog/`
 4. Move features to `work/todo/` → `work/doing/` → `work/done/`
@@ -162,7 +162,7 @@ cp framework/templates/documentation/session-history-template.md \
 | What You Need | Document | Time to Read |
 |--------------|----------|--------------|
 | Full overview | [README.md](README.md) | 10 min |
-| Working example | [project-hello-world/](project-hello-world/) | 5 min |
+| Working example | [examples/hello-world/](examples/hello-world/) | 5 min |
 | Choose framework level | [README-TEMPLATE-SELECTION.md](project-templates/README-TEMPLATE-SELECTION.md) | 5 min |
 | Setup instructions | [NEW-PROJECT-CHECKLIST.md](project-templates/NEW-PROJECT-CHECKLIST.md) | 15 min |
 | Current version/status | [framework/PROJECT-STATUS.md](framework/PROJECT-STATUS.md) | 2 min |
@@ -215,7 +215,7 @@ DAILY WORK:
 
 ## 10. Getting Help
 
-- **See working example:** [project-hello-world/](project-hello-world/)
+- **See working example:** [examples/hello-world/](examples/hello-world/)
 - **Framework structure questions:** [STRUCTURE.md](project-templates/STRUCTURE.md)
 - **Workflow questions:** [framework/process/](framework/process/)
 - **Complete doc index:** [framework/INDEX.md](framework/INDEX.md)

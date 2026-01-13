@@ -13,7 +13,7 @@ The **SpearIT Project Framework** is a comprehensive, multi-level project manage
 
 This repository is organized as a monorepo containing:
 - **framework/** - The Standard Project Framework implementation and documentation
-- **project-hello-world/** - Reference implementation demonstrating framework usage
+- **examples/hello-world/** - Reference implementation demonstrating framework usage
 - **project-templates/** - Template packages for new projects (Minimal, Light, Standard levels)
 
 **Key Innovation:** This framework scales from single scripts to full applications using a 3-level system (Minimal, Light, Standard) that adapts to your project's scope, lifespan, and team size.
@@ -24,7 +24,7 @@ This repository is organized as a monorepo containing:
 
 **Want the fastest path?** See [QUICK-START.md](QUICK-START.md) for a bare-bones, get-functional guide. ⚡
 
-**See the framework in action:** Check out [project-hello-world/](project-hello-world/) for a complete reference implementation.
+**See the framework in action:** Check out [examples/hello-world/](examples/hello-world/) for a complete reference implementation.
 
 ### For New Projects
 
@@ -128,7 +128,7 @@ Clear migration guides for moving between framework levels as your project evolv
 - [STRUCTURE.md](project-templates/STRUCTURE.md) - Template structure reference
 
 ### Reference Implementation
-- **[project-hello-world/](project-hello-world/)** - Complete working example of Standard framework
+- **[examples/hello-world/](examples/hello-world/)** - Complete working example of Standard framework
 
 ### Template Package
 - [project-templates/](project-templates/) - Complete template package
@@ -310,7 +310,7 @@ See [LICENSE](LICENSE) file for details.
 2. **Example** - Real-world example of framework usage
 3. **Improvement** - Surfaces pain points and areas for enhancement
 
-Check [framework/thoughts/](framework/thoughts/) to see the framework in action on itself, or [project-hello-world/](project-hello-world/) for a simpler reference implementation.
+Check [framework/thoughts/](framework/thoughts/) to see the framework in action on itself, or [examples/hello-world/](examples/hello-world/) for a simpler reference implementation.
 
 ---
 

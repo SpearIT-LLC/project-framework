@@ -374,7 +374,7 @@ policies:
 3. Define formal policy categories (if needed)
 4. Create config structure and schema
 5. Prototype for framework project
-6. Prototype for sample code project (project-hello-world)
+6. Prototype for sample code project (examples/hello-world)
 7. Test with AI to validate context improvement
 
 ### Phase 2: Integration
@@ -386,7 +386,7 @@ policies:
 
 ### Phase 3: Adoption
 
-1. Add config to project-hello-world
+1. Add config to examples/hello-world
 2. Add to project templates (minimal, light, standard)
 3. Create guide for customizing config
 4. Update workflow documentation
@@ -643,17 +643,17 @@ policies:
 
 ## Discussion: Monorepo Context Switching (2026-01-11)
 
-**Context:** While working on FEAT-039 (validating project-hello-world), we discovered a practical issue: how do AI and user communicate which project context we're working in within the monorepo?
+**Context:** While working on FEAT-039 (validating examples/hello-world), we discovered a practical issue: how do AI and user communicate which project context we're working in within the monorepo?
 
 **The Problem:**
-- FEAT-039 was a validation task targeting project-hello-world
+- FEAT-039 was a validation task targeting examples/hello-world
 - But the work item lived in framework/thoughts/work/
-- This violates dogfooding - project-hello-world issues should be tracked in examples/hello-world/thoughts/work/
+- This violates dogfooding - examples/hello-world issues should be tracked in examples/hello-world/thoughts/work/
 - Need a clear mechanism for switching project context
 
 **Options Discussed:**
 
-1. **Explicit verbal declaration** - User says "switch to project-hello-world"
+1. **Explicit verbal declaration** - User says "switch to examples/hello-world"
    - Simple but easy to forget, tedious over time
 
 2. **Work item namespace inference** - AI infers from work item location
@@ -692,7 +692,7 @@ workflow:
 ```
 
 **Workflow:**
-1. User: "Switch to project-hello-world"
+1. User: "Switch to examples/hello-world"
 2. AI reads `examples/hello-world/project-config.yaml`
 3. AI knows work items go in `examples/hello-world/thoughts/work/`
 4. User: "Create work item for missing README"
