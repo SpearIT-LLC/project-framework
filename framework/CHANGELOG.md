@@ -77,13 +77,13 @@ This release contains 3 work items grouped together.
 
 ### BREAKING CHANGES
 - **FEAT-026: Framework Structure Migration**
-  - Reorganized repository into monorepo structure
+  - Reorganized repository into multi-project structure
   - Framework content moved from root to `framework/` folder
   - Users must update all references to framework files
   - Project structure completely redesigned
 
 ### Added
-- **Monorepo Structure**
+- **Multi-Project Repository Structure**
   - Created `framework/` folder for framework project
   - Created `examples/hello-world/` reference implementation
   - Root-level `QUICK-START.md` for navigation

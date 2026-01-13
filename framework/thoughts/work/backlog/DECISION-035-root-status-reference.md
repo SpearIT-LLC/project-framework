@@ -11,7 +11,7 @@
 
 ## Summary
 
-Decide whether the root README.md should reference framework/PROJECT-STATUS.md or have its own root-level status document for the monorepo.
+Decide whether the root README.md should reference framework/PROJECT-STATUS.md or have its own root-level status document for the repository.
 
 ---
 
@@ -21,13 +21,13 @@ Decide whether the root README.md should reference framework/PROJECT-STATUS.md o
 
 Current structure:
 - Root README.md references `framework/PROJECT-STATUS.md`
-- This treats framework/ as the "main" project in the monorepo
+- This treats framework/ as the "main" project in the repository
 - No root-level status document exists
 
 **Questions:**
 - Is the framework the "main" project? (probably yes)
-- Should monorepo have its own status document?
-- Should we distinguish monorepo status from framework status?
+- Should repository have its own status document?
+- Should we distinguish repository status from framework status?
 
 ---
 
@@ -40,8 +40,8 @@ Root README.md currently includes:
 
 **This implies:**
 - Framework is the primary project
-- Framework status represents monorepo status
-- No distinction needed between monorepo and framework
+- Framework status represents repository status
+- No distinction needed between repository and framework
 
 ---
 
@@ -55,7 +55,7 @@ Root README.md currently includes:
 - Framework IS the main project
 - examples/hello-world/ is just an example
 - templates/ are derived from framework
-- Framework status represents monorepo status
+- Framework status represents repository status
 
 **Pros:**
 - ✅ Already working
@@ -64,23 +64,23 @@ Root README.md currently includes:
 - ✅ Simple and clear
 
 **Cons:**
-- ❌ Could be confusing in true multi-project monorepo
-- ❌ Doesn't distinguish monorepo from project
+- ❌ Could be confusing in true multi-project repository
+- ❌ Doesn't distinguish repository from project
 
 ---
 
 ### Option 2: Add Root-Level PROJECT-STATUS.md
 
-**Approach:** Create PROJECT-STATUS.md at root for monorepo status
+**Approach:** Create PROJECT-STATUS.md at root for repository status
 
 **Content might include:**
-- Overall monorepo status
+- Overall repository status
 - Status of each project (framework, hello-world, templates)
 - Monorepo-level decisions and versions
 
 **Pros:**
-- ✅ Clear separation: monorepo vs. project status
-- ✅ Room for monorepo-level information
+- ✅ Clear separation: repository vs. project status
+- ✅ Room for repository-level information
 - ✅ Better for multi-project structure
 
 **Cons:**
@@ -90,9 +90,9 @@ Root README.md currently includes:
 
 ---
 
-### Option 3: Create MONOREPO-STATUS.md
+### Option 3: Create REPOSITORY-STATUS.md
 
-**Approach:** Create MONOREPO-STATUS.md at root for monorepo-specific info
+**Approach:** Create REPOSITORY-STATUS.md at root for repository-specific info
 
 **Content:**
 - Monorepo structure and purpose
@@ -120,7 +120,7 @@ Root README.md currently includes:
 ```
 
 **Pros:**
-- ✅ Explicit about monorepo structure
+- ✅ Explicit about repository structure
 - ✅ Doesn't duplicate project status
 - ✅ Clear separation of concerns
 
@@ -134,21 +134,21 @@ Root README.md currently includes:
 
 1. **What is the primary purpose of the root README?**
    - Introduce the framework? (yes)
-   - Explain monorepo structure? (secondary)
+   - Explain repository structure? (secondary)
 
 2. **Who is the target audience for root README?**
    - Framework users (primary)
    - Contributors (secondary)
    - Both see root first
 
-3. **Is monorepo status different from framework status?**
+3. **Is repository status different from framework status?**
    - Currently no
    - Could diverge in future
    - Probably won't need distinction
 
 4. **What information would go in root status that isn't in framework status?**
    - Probably very little
-   - Maybe monorepo structure decisions
+   - Maybe repository structure decisions
    - Likely redundant
 
 ---
@@ -158,9 +158,9 @@ Root README.md currently includes:
 **Recommended:** Option 1 (Keep as-is)
 
 **Reasoning:**
-- Framework IS the main project in this monorepo
+- Framework IS the main project in this repository
 - hello-world and templates are supporting projects
-- Framework status accurately represents monorepo status
+- Framework status accurately represents repository status
 - No real need for separate root status document
 - YAGNI (You Ain't Gonna Need It) principle
 
@@ -176,7 +176,7 @@ Root README.md currently includes:
 Choose based on:
 1. Is framework the primary project? (yes → Option 1)
 2. Are other projects independent? (no → Option 1)
-3. Is monorepo information distinct from framework info? (no → Option 1)
+3. Is repository information distinct from framework info? (no → Option 1)
 4. Will we need root-level status tracking? (unlikely → Option 1)
 
 ---
@@ -195,8 +195,8 @@ Choose based on:
 - [ ] Maintain both going forward
 
 **If Option 3:**
-- [ ] Create MONOREPO-STATUS.md
-- [ ] Document monorepo structure
+- [ ] Create REPOSITORY-STATUS.md
+- [ ] Document repository structure
 - [ ] Reference from root README.md
 - [ ] Keep framework/PROJECT-STATUS.md unchanged
 
@@ -233,7 +233,7 @@ Choose based on:
 
 **When to reconsider:**
 - If other projects become independent
-- If monorepo tracking becomes distinct from framework
+- If repository tracking becomes distinct from framework
 - If contributors are confused by current structure
 
 ---

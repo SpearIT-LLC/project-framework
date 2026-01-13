@@ -4,7 +4,7 @@
 **Updated By:** Gary Elliott with Claude Code
 **Current Version:** v3.1.0 (2026-01-11)
 **Core Implementation:** Complete and production-ready
-**Ongoing Enhancements:** Monorepo structure established, framework dogfooding itself, grouped releases supported
+**Ongoing Enhancements:** Multi-project repository structure established, framework dogfooding itself, grouped releases supported
 
 ---
 
@@ -12,7 +12,7 @@
 
 The SpearIT Project Framework is a comprehensive project management framework template system designed to be copied to new or existing projects. It provides standardized structure, documentation, workflows, and AI integration for projects of all sizes.
 
-**Status:** Production-ready for internal use. Standard Framework level is complete and validated. Framework successfully dogfooding itself in monorepo structure with separate framework/ and examples/hello-world/ projects.
+**Status:** Production-ready for internal use. Standard Framework level is complete and validated. Framework successfully dogfooding itself with separate framework/ and examples/hello-world/ projects.
 
 ---
 
@@ -32,7 +32,7 @@ The SpearIT Project Framework is a comprehensive project management framework te
 - ✅ Framework fully complies with its own structure standard
 
 **Previous Release (FEAT-026 - Structure Migration):**
-- 🔄 **BREAKING:** Reorganized repository into monorepo structure
+- 🔄 **BREAKING:** Reorganized repository into multi-project structure
 - 📁 Framework content moved to `framework/` folder
 - 📁 Created `examples/hello-world/` reference implementation
 - 📝 Established universal Standard Project Structure (PROJECT-STRUCTURE-STANDARD.md)
@@ -47,7 +47,7 @@ The SpearIT Project Framework is a comprehensive project management framework te
 
 **Core Features:**
 - ✅ Standard Framework structure - Complete and validated
-- ✅ Monorepo structure with framework/ and projects/ - Complete (v3.0.0)
+- ✅ Multi-project repository structure with framework/ and examples/ - Complete (v3.0.0)
 - ✅ Universal project structure definition - Complete (v3.0.0)
 - ✅ Quick Reference Guide for rapid onboarding - Complete (v2.1.0)
 - ✅ Setup checklists for all levels - Complete
@@ -293,7 +293,7 @@ See [roadmap.md](thoughts/project/planning/roadmap.md) for complete roadmap.
 |---------|--------------|------|------------|
 | v3.1.0 | 2026-01-11 | Minor | Grouped releases support, work item ID clarification, structure compliance fixes |
 | v3.0.1 | 2026-01-11 | Patch | Updated 10 files with v3.0.0 path references, aligned all docs with structure standard |
-| v3.0.0 | 2026-01-08 | Major | Monorepo structure, flattened thoughts/ hierarchy, template reorganization |
+| v3.0.0 | 2026-01-08 | Major | Multi-project repository structure, flattened thoughts/ hierarchy, template reorganization |
 | v2.2.5 | 2026-01-01 | Patch | Removed stale Target Version field, added version calculation at release time |
 | v2.2.4 | 2026-01-01 | Patch | Added Step 7.5 pre-implementation review, universal documentation update principle |
 | v2.2.3 | 2026-01-01 | Patch | Added Step 8.5 review checkpoint, AI presents work for approval before release |

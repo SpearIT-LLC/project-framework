@@ -27,7 +27,7 @@ This document defines the complete folder and file structure for **Standard Fram
 
 **For repository root structure, see [REPOSITORY-STRUCTURE.md](REPOSITORY-STRUCTURE.md)**
 
-The project-framework repository is a **monorepo** containing multiple projects (framework/, examples/hello-world/). The repository root has minimal files (README, QUICK-START, CLAUDE, LICENSE, .gitignore).
+The project-framework repository contains multiple projects (framework/, examples/hello-world/). The repository root has minimal files (README, QUICK-START, CLAUDE, LICENSE, .gitignore).
 
 **This document defines PROJECT structure only.**
 

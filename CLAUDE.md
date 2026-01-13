@@ -1,12 +1,12 @@
-# Claude Context: SpearIT Project Framework (Monorepo)
+# Claude Context: SpearIT Project Framework
 
-This file provides navigation and context for AI assistants working in this monorepo.
+This file provides navigation and context for AI assistants working in this framework source repository.
 
 **Last Updated:** 2026-01-06
 
 ---
 
-## Monorepo Structure
+## Repository Structure
 
 This repository contains multiple related projects:
 
@@ -15,9 +15,9 @@ project-framework/
 ├── framework/                   # The Standard Project Framework itself
 ├── examples/hello-world/        # Reference implementation (example project)
 ├── templates/           # Template packages for new projects
-├── README.md                    # Monorepo overview and getting started
+├── README.md                    # Repository overview and getting started
 ├── QUICK-START.md              # Quick reference guide
-└── CLAUDE.md                   # This file - Monorepo navigation
+└── CLAUDE.md                   # This file - Repository navigation
 ```
 
 ---
@@ -54,7 +54,7 @@ These are starter templates that users copy to begin new projects.
 
 ---
 
-## Monorepo Workflow
+## Repository Workflow
 
 ### Understanding the Separation
 
@@ -116,7 +116,7 @@ Each project has its own thoughts/ structure:
 
 ---
 
-**Remember:** This is a monorepo. Always identify which project you're working on before making changes.
+**Remember:** This repository contains multiple projects. Always identify which project you're working on before making changes.
 
 ---
 

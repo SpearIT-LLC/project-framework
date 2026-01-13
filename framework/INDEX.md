@@ -17,7 +17,7 @@ This index provides quick navigation to all documentation for the SpearIT Projec
 
 ### Structure References
 - [docs/PROJECT-STRUCTURE-STANDARD.md](docs/PROJECT-STRUCTURE-STANDARD.md) - **Official Standard Framework structure specification** ⭐
-- [docs/REPOSITORY-STRUCTURE.md](docs/REPOSITORY-STRUCTURE.md) - Repository root structure (monorepo)
+- [docs/REPOSITORY-STRUCTURE.md](docs/REPOSITORY-STRUCTURE.md) - Repository root structure (multi-project)
 
 ### For AI Assistants
 - [CLAUDE.md](CLAUDE.md) - **AI collaboration contract** (quick reference)

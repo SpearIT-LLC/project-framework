@@ -11,7 +11,7 @@
 
 The **SpearIT Project Framework** is a comprehensive, multi-level project management framework designed to bring structure, consistency, and AI integration to software projects of any size.
 
-This repository is organized as a monorepo containing:
+This repository contains:
 - **framework/** - The Standard Project Framework implementation and documentation
 - **examples/hello-world/** - Reference implementation demonstrating framework usage
 - **templates/** - Template packages for new projects (Minimal, Light, Standard levels)

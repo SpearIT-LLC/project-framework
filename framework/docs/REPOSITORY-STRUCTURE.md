@@ -9,7 +9,7 @@
 
 ## Overview
 
-This document defines the **repository root structure** for the project-framework monorepo.
+This document defines the **repository root structure** for the project-framework repository.
 
 **Important distinction:**
 - This document defines **REPOSITORY** structure (meta-level container)
@@ -90,7 +90,7 @@ project-framework/                    # REPOSITORY (not a project)
 
 ### `CLAUDE.md` (REQUIRED)
 
-**Purpose:** AI navigation hub - orient to monorepo structure
+**Purpose:** AI navigation hub - orient to repository structure
 
 **Target audience:** AI assistants working in the repository
 
@@ -98,8 +98,8 @@ project-framework/                    # REPOSITORY (not a project)
 ```markdown
 # CLAUDE.md - Repository Root
 
-**Repository:** project-framework (monorepo)
-**Contains:** Framework project + Sample projects
+**Repository:** project-framework
+**Contains:** Framework project + Example projects
 
 ---
 
@@ -118,7 +118,7 @@ project-framework/                    # REPOSITORY (not a project)
 
 ## Repository Structure
 
-This is a monorepo containing multiple projects:
+This repository contains multiple projects:
 - `framework/` - The framework itself (reusable, universal)
 - `examples/hello-world/` - Sample project (validation/reference)
 
@@ -132,7 +132,7 @@ Each project is self-contained and follows the Standard Framework structure.
 **Length:** ~20-30 lines
 
 **Rationale:**
-- ✅ Immediate context - AI knows it's in a monorepo
+- ✅ Immediate context - AI knows this repository contains multiple projects
 - ✅ Clear navigation - Decision tree to correct project CLAUDE.md
 - ✅ Reduces cognitive load - No guessing which project we're working on
 - ✅ Consistency - Completes the trio (README, QUICK-START, CLAUDE)
@@ -215,9 +215,9 @@ These files live **inside each project**, not at repository root:
 
 ---
 
-## Monorepo vs Single Project
+## Multi-Project Repository vs Single Project
 
-### This Repository (Monorepo)
+### This Repository (Multi-Project)
 
 ```
 project-framework/           # Repository root (minimal)
@@ -297,7 +297,7 @@ To verify repository root matches this specification:
 - [PROJECT-STRUCTURE-STANDARD.md](PROJECT-STRUCTURE-STANDARD.md) - Standard Framework project structure
 - [FEAT-026-structure-migration.md](FEAT-026-structure-migration.md) - Migration plan
 - [FEAT-026-universal-structure-decisions.md](FEAT-026-universal-structure-decisions.md) - Complete decision log
-  - DECISION-012: Monorepo with Meta-Root
+  - DECISION-012: Multi-Project Repository with Meta-Root
   - DECISION-013: README vs QUICK-START Separation
   - DECISION-015: Add CLAUDE.md to Repository Root
 

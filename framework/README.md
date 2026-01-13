@@ -78,7 +78,7 @@ framework/
 ## Quick Start
 
 **For Repository Overview:**
-See [../README.md](../README.md) for monorepo structure and getting started.
+See [../README.md](../README.md) for repository structure and getting started.
 
 **For New Projects:**
 1. Read [../templates/README-TEMPLATE-SELECTION.md](../templates/README-TEMPLATE-SELECTION.md)
