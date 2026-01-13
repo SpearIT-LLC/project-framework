@@ -253,7 +253,7 @@ See [framework/CHANGELOG.md](framework/CHANGELOG.md) for version history.
 **Git Clone:**
 ```bash
 git clone https://github.com/spearit-solutions/project-framework.git
-cd project-framework/project-templates
+cd project-framework/templates
 # Copy appropriate level to your project
 ```
 
