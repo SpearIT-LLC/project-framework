@@ -2,16 +2,23 @@
 
 This file provides navigation and context for AI assistants working in this framework source repository.
 
-**Last Updated:** 2026-01-14
+**Last Updated:** 2026-01-14 (Added Epistemic Standards section)
+
+---
+
+## Epistemic Standards
+
+**Facts must be verified before stating.** Read the file, run the command, check the source. If you cannot verify, say so explicitly.
+
+**Interpretation and opinions are welcome** but must be clearly labeled ("I believe...", "This suggests...", "My interpretation is...").
+
+**Never present inference as fact.** If a source is referenced, it must have been read. When verification fails (file missing, command errors, etc.), report the failure rather than silently falling back to guessing.
 
 ---
 
 ## Project Configuration
 
-Read `framework.yaml` at the repo root for machine-readable project context:
-- `project.name` - Project name
-- `project.type` - framework | application | library | tool
-- `project.deliverable` - code | documentation | hybrid
+Read `framework.yaml` at the repo root for machine-readable project context. See [framework/tools/framework-schema.yaml](framework/tools/framework-schema.yaml) for valid values and field descriptions.
 
 Use these values to understand project context rather than inferring from structure.
 
@@ -131,4 +138,4 @@ Each project has its own thoughts/ structure:
 
 ---
 
-**Last Updated:** 2026-01-13
+**Last Updated:** 2026-01-14

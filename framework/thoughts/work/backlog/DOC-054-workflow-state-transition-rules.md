@@ -5,7 +5,7 @@
 **Priority:** High
 **Status:** Backlog
 **Created:** 2026-01-13
-**Related:** FEAT-037 (project-config.yaml), TECH-055 (work item move script)
+**Related:** FEAT-037 (project-config.yaml), TECH-055 (work item move script), TECH-056 (workflow doc consolidation)
 
 ---
 
@@ -58,6 +58,7 @@ Add explicit state transition rules to kanban-workflow.md to prevent invalid wor
 - [ ] Clear reasoning for why each transition is forbidden
 - [ ] Examples of correct workflow paths
 - [ ] What to do if invalid transition requested (explain valid path)
+- [ ] Completion criteria validation rule (all checkboxes checked before doing→done)
 
 ### Non-Functional Requirements
 
@@ -124,8 +125,20 @@ AI must check these in order:
 3. ✅ **Transition is valid** - Check table above
 4. ✅ **WIP limits respected** - Target folder has capacity
 5. ✅ **All {TYPE-ID}-* files included** - Move complete work item
+6. ✅ **Completion criteria met (doing→done only)** - All checkboxes in "Completion Criteria" section must be checked before moving to done/
 
 **If any check fails:** Explain issue to user, suggest correct path
+
+### Completion Criteria Validation (doing → done)
+
+**CRITICAL:** Before moving a work item from `doing/` to `done/`:
+
+1. Read the work item's "Completion Criteria" section
+2. Verify ALL checkboxes are checked `[x]`
+3. Items marked "Future" or "Out of Scope" do not block completion
+4. If unchecked items exist, ask user before proceeding
+
+**Gap discovered (2026-01-14):** AI moved FEAT-037 to done/ without verifying completion criteria. The "Future" section had unchecked items that were ambiguously scoped.
 
 ### Invalid Transition Requested
 

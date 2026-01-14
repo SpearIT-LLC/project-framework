@@ -1,0 +1,40 @@
+# framework-schema.yaml
+# Schema definition for framework.yaml configuration files
+# This is the single source of truth for valid values and field descriptions
+
+schema:
+  version: "1.0"
+  description: "Schema for framework.yaml project configuration"
+
+fields:
+  project.name:
+    type: string
+    required: true
+    description: "Human-readable project name"
+    example: "My Web App"
+
+  project.type:
+    type: enum
+    required: true
+    description: "What kind of project this is"
+    values:
+      framework:
+        description: "Process/methodology documentation (like this framework)"
+      application:
+        description: "Standalone software application"
+      library:
+        description: "Reusable code package"
+      tool:
+        description: "Utility script or CLI tool"
+
+  project.deliverable:
+    type: enum
+    required: true
+    description: "Primary output type of the project"
+    values:
+      code:
+        description: "Primary output is source code"
+      documentation:
+        description: "Primary output is documentation"
+      hybrid:
+        description: "Both code and documentation are primary outputs"

@@ -313,4 +313,263 @@ Moved both files to repo root:
 
 ---
 
+## Session 3: Schema Creation and DRY Improvements
+
+**Time:** Later on 2026-01-14
+**Focus:** Eliminating duplication between CLAUDE.md and framework.yaml, creating schema file
+
+### Problem Identified
+
+User identified design issues with current approach:
+1. CLAUDE.md listed valid enum values (`framework | application | library | tool`)
+2. `framework.yaml` is the single source of truth for config values
+3. What happens if yaml contains a value outside the list? (undefined behavior)
+4. As parameters are added to framework.yaml, CLAUDE.md would need manual updates (duplication)
+
+### Solution: Schema File
+
+Created `framework/tools/framework-schema.yaml` as the single source of truth for:
+- Valid field types
+- Required/optional status
+- Enum values and their descriptions
+- Field descriptions and examples
+
+### Changes Made
+
+1. **Created** `framework/tools/framework-schema.yaml` - Schema definition with valid values
+2. **Updated** `CLAUDE.md` - Now references schema file instead of listing values inline
+3. **Updated** `FEAT-037` - Changed from "JSON Schema" to "YAML schema" approach
+
+### Schema Structure
+
+```yaml
+schema:
+  version: "1.0"
+  description: "Schema for framework.yaml project configuration"
+
+fields:
+  project.name:
+    type: string
+    required: true
+    description: "Human-readable project name"
+
+  project.type:
+    type: enum
+    required: true
+    values:
+      framework: { description: "Process/methodology documentation" }
+      application: { description: "Standalone software application" }
+      library: { description: "Reusable code package" }
+      tool: { description: "Utility script or CLI tool" }
+
+  project.deliverable:
+    type: enum
+    required: true
+    values:
+      code: { description: "Primary output is source code" }
+      documentation: { description: "Primary output is documentation" }
+      hybrid: { description: "Both code and documentation" }
+```
+
+### First Schema Validation Test
+
+Validated `framework.yaml` against schema:
+
+| Field | Status |
+|-------|--------|
+| `project.name` | ✓ Valid |
+| `project.type` | ✗ Missing (required) |
+| `project.deliverable` | ✓ Valid |
+
+**Result:** Schema validation caught missing `type` field. Added `type: framework` to fix.
+
+This passes test case E2 (missing required field) - AI identified the issue and offered to fix.
+
+### New Work Item Created
+
+**FEAT-052: Framework YAML Validation Script** - Automate schema validation for CI/CD integration.
+
+### Files Modified
+
+- `framework/tools/framework-schema.yaml` - Created
+- `CLAUDE.md` - Simplified to reference schema
+- `framework/thoughts/work/doing/FEAT-037-project-config-file.md` - Updated for YAML schema
+- `framework.yaml` - Added missing `type: framework` field
+- `framework/thoughts/work/backlog/FEAT-052-framework-yaml-validation-script.md` - Created
+
+### Test Status Update
+
+- E2: Missing required field - PASS (AI identified missing `project.type` and offered to fix)
+
+---
+
+**Session 3 End Status:**
+- Schema file created, eliminating duplication
+- CLAUDE.md simplified
+- framework.yaml now valid against schema
+- E2 test passed
+- E3 (invalid enum value) remaining
+
+---
+
+## Session 4: Final Testing and MVP Completion
+
+**Time:** Later on 2026-01-14
+**Focus:** E3 edge case test, MVP completion, archival
+
+### E3 Test Execution
+
+**Test:** Invalid enum value detection
+
+**Setup:** `framework.yaml` set with `type: banana` (invalid value)
+
+**Prompt:** "What type of project is this?"
+
+**Result:** PASS
+- AI read `framework.yaml` and detected `type: banana`
+- AI read schema and identified valid values: `framework`, `application`, `library`, `tool`
+- AI reported validation error with table showing invalid field
+- AI offered to fix with correct value (`framework`)
+
+### All Tests Complete
+
+| Test | Status |
+|------|--------|
+| T1: Project name | ✅ PASS |
+| T2: Project type | ✅ PASS |
+| T3: Deliverable | ✅ PASS |
+| T4: Config over inference | ✅ PASS |
+| T5: Missing config fallback | ✅ PASS |
+| E1: Malformed YAML | ✅ PASS |
+| E2: Missing required field | ✅ PASS |
+| E3: Invalid enum value | ✅ PASS |
+
+### MVP Completion
+
+All completion criteria met:
+- [x] `framework.yaml` schema defined
+- [x] Config created for this framework project
+- [x] Config created for examples/hello-world
+- [x] Example config added to templates
+- [x] AI successfully reads and uses config
+- [x] CLAUDE.md updated to reference config
+
+### Work Item Archived
+
+- Updated status from "In Progress" to "Completed"
+- Moved from `doing/` to `done/`
+- `framework.yaml` corrected to `type: framework` (valid value)
+
+### Remaining Future Work
+
+Captured in FEAT-037 "Future" section (separate work items):
+- [ ] Workflow section added
+- [ ] Policies section added
+- [ ] FEAT-006 integration complete
+
+---
+
+**Session 4 End Status:**
+- All 8 tests passed
+- MVP complete
+- FEAT-037 archived to `done/`
+- `framework.yaml` validated and corrected
+
+---
+
+## Session 5: Workflow Section Cancellation
+
+**Time:** Later on 2026-01-14
+**Focus:** Reviewing future enhancements, cancelling redundant workflow section
+
+### Discussion: Workflow vs Policies
+
+Reviewed the proposed `workflow:` and `policies:` sections from FEAT-037 future enhancements.
+
+**Key observations:**
+- `workflow:` would contain `workPath` and `wipLimits`
+- `.limit` files already exist and handle WIP limits throughout the framework
+- `workPath` is convention-based (`thoughts/work/`) - no config needed
+- Workflow could be considered a type of policy, creating conceptual overlap
+
+### Decision: Cancel Workflow Section
+
+**Rationale:** No value added over existing mechanisms:
+- `.limit` files handle WIP constraints
+- Path conventions are established
+- Adding `workflow:` to config would duplicate existing functionality
+
+**Updated FEAT-037:** Marked workflow section as CANCELLED with reason documented.
+
+### Remaining Future Work
+
+- [ ] Policies section added (document references for AI guidance)
+- [ ] FEAT-006 integration complete
+
+---
+
+**Session 5 End Status:**
+- Workflow section cancelled (redundant)
+- Policies section remains as valid future enhancement
+- FEAT-037 updated with cancellation reason
+
+---
+
+## Session 6: Workflow Documentation Review and Policy Gap
+
+**Time:** Later on 2026-01-14
+**Focus:** Duplicate workflow docs, completion criteria policy gap
+
+### Duplicate Workflow Documentation Discovered
+
+Identified two documents defining the same workflow with ~40% overlap:
+
+| Document | Location | Lines |
+|----------|----------|-------|
+| `workflow-guide.md` | `collaboration/` | ~1420 |
+| `kanban-workflow.md` | `process/` | ~420 |
+
+**Decision:** Consolidate into single file (`workflow-guide.md`)
+
+**Created:** TECH-056 to track consolidation work
+
+### FEAT-037 Premature Move to done/
+
+**Issue:** AI moved FEAT-037 from `doing/` to `done/` when user said "MVP is complete", without verifying all completion criteria.
+
+**Root cause:** Policy gap — no explicit rule requiring:
+1. All checkboxes in "Completion Criteria" checked before moving to `done/`
+2. Clear distinction between in-scope vs future/out-of-scope items
+
+**Fix:** Moved FEAT-037 back to `doing/` (open items remain: policies section, FEAT-006 integration)
+
+### Policy Gap Documented
+
+Updated DOC-054 (workflow state transition rules) to include:
+- New pre-flight check #6: "Completion criteria met (doing→done only)"
+- New "Completion Criteria Validation" section with explicit rules
+- Reference to this gap discovery
+- Cross-reference to TECH-056
+
+Updated TECH-056 to reference DOC-054 (should be done together)
+
+### Work Items Created/Updated
+
+**Created:**
+- TECH-056: Consolidate workflow documentation
+
+**Updated:**
+- DOC-054: Added completion criteria validation rule, referenced TECH-056
+- TECH-056: Referenced DOC-054
+
+---
+
+**Session 6 End Status:**
+- Duplicate workflow docs identified, TECH-056 created
+- FEAT-037 moved back to `doing/` (premature move)
+- Policy gap documented in DOC-054
+- Both DOC-054 and TECH-056 cross-referenced
+
+---
+
 **Last Updated:** 2026-01-14

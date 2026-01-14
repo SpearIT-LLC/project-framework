@@ -127,8 +127,8 @@ categories:
 
 ### Phase 2: Validation & Schema
 
-1. Create JSON Schema for validation
-2. Add schema reference to YAML files
+1. ~~Create JSON Schema for validation~~ → Created YAML schema at `framework/tools/framework-schema.yaml`
+2. Update CLAUDE.md to reference schema (removes duplication)
 3. Test validation works
 
 ### Phase 3: Setup Script Integration (FEAT-006)
@@ -245,14 +245,14 @@ Manual testing for MVP with explicitly defined expected results. Formal automate
 | E3 | Invalid enum value | `type: banana` | AI notes invalid value, asks for clarification or falls back | |
 
 ### Test Execution
-- [ ] T1: Project name -
-- [ ] T2: Project type -
-- [ ] T3: Deliverable -
-- [ ] T4: Config over inference -
-- [ ] T5: Missing config fallback -
-- [ ] E1: Malformed YAML -
-- [ ] E2: Missing required field -
-- [ ] E3: Invalid enum value -
+- [x] T1: Project name - PASS
+- [x] T2: Project type - PASS
+- [x] T3: Deliverable - PASS
+- [x] T4: Config over inference - PASS
+- [x] T5: Missing config fallback - PASS
+- [x] E1: Malformed YAML - PASS (Read tool returns raw text; AI identified syntax error on line 8 and still extracted valid fields)
+- [x] E2: Missing required field - PASS (AI identified missing `project.type` and offered to fix)
+- [x] E3: Invalid enum value - PASS (AI detected `type: banana` as invalid, reported valid options from schema, offered to fix)
 
 ---
 
@@ -263,12 +263,12 @@ Manual testing for MVP with explicitly defined expected results. Formal automate
 - [x] Config created for this framework project
 - [x] Config created for examples/hello-world (as demonstration)
 - [x] Example config added to templates
-- [ ] AI successfully reads and uses config
+- [x] AI successfully reads and uses config
 - [x] CLAUDE.md updated to reference config
 
 ### Future (Separate Work Items)
-- [ ] JSON Schema for validation
-- [ ] Workflow section added
+- [x] ~~JSON Schema~~ YAML schema for validation (`framework/tools/framework-schema.yaml`)
+- ~~[ ] Workflow section added~~ **CANCELLED** - `.limit` files already handle WIP limits; `workPath` is convention-based. No value added.
 - [ ] Policies section added
 - [ ] FEAT-006 integration complete
 
@@ -298,6 +298,50 @@ project:
 
 ### Alternative 3: Multi-Project Support
 **Rejected (2026-01-14):** Over-engineering. Examples and templates are artifacts of the framework project, not separate projects. Single-project config is sufficient.
+
+---
+
+## Lessons Learned
+
+### What Worked
+
+1. **Minimal MVP approach paid off**
+   - Starting with just 3 fields (`name`, `type`, `deliverable`) proved sufficient
+   - Resisted temptation to add workflow/policies sections upfront
+   - Easier to validate a small schema than a complex one
+
+2. **Explicit CLAUDE.md instruction is essential**
+   - AI doesn't automatically discover or read arbitrary config files
+   - The instruction in CLAUDE.md telling AI to "Read `framework.yaml`" made the difference
+   - Without this instruction, the config file would be ignored
+
+3. **Machine-readable beats prose for context**
+   - When asked "What is this project called?", AI pulled directly from `project.name`
+   - No ambiguity, no inference needed - direct lookup
+   - Faster and more reliable than parsing prose descriptions
+
+4. **YAML format was the right choice**
+   - Human-readable for manual editing
+   - Supports comments for documentation
+   - Standard format that AI models understand well
+
+5. **Nested structure (`project.type` not `projectType`) aids clarity**
+   - Clear namespace for future extensions (workflow, policies)
+   - Self-documenting structure
+   - Easy to reference in instructions: "read `project.type`"
+
+### Why It Worked
+
+- **Single source of truth:** Config file is authoritative, CLAUDE.md just points to it
+- **Declarative over inference:** AI reads explicit values instead of guessing from structure
+- **Instruction + Data pattern:** CLAUDE.md provides the "how" (read the config), framework.yaml provides the "what" (the actual values)
+
+### What to Carry Forward
+
+- When adding AI-readable configuration, always pair it with explicit instructions in CLAUDE.md
+- Start with the smallest useful schema, extend only after validation
+- Keep config files at project root for discoverability
+- Use standard formats (YAML, JSON) that AI models parse reliably
 
 ---
 
