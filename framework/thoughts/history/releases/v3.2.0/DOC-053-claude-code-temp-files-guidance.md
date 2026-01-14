@@ -74,7 +74,7 @@ $env:CLAUDE_CODE_TMPDIR = $env:TEMP
 ```
 
 This is optional - the `.gitignore` pattern prevents them from being committed.
-```
+
 
 ---
 
