@@ -91,6 +91,15 @@ Who will work on this project?
 - [ ] Initial commit: `git add . && git commit -m "Initial commit"`
 - [ ] Tag if sharing: `git tag v1.0`
 
+**Note on Claude Code temp files:** Claude Code may create `tmpclaude-*` temporary files in your working directory. These are already in `.gitignore`, but if you prefer they not appear at all, set the `CLAUDE_CODE_TMPDIR` environment variable to your system temp directory:
+
+```powershell
+# Windows PowerShell (set permanently in environment variables)
+$env:CLAUDE_CODE_TMPDIR = $env:TEMP
+```
+
+This is optional - the `.gitignore` pattern prevents them from being committed.
+
 **Setup Complete!** You're ready to code.
 
 **Future:** If project grows, see [UPGRADE-PATH.md](UPGRADE-PATH.md) for upgrading to Light framework.
@@ -148,6 +157,15 @@ Who will work on this project?
   git commit -m "Initial project setup from Light framework"
   git tag -a v0.1.0 -m "Initial setup"
   ```
+
+**Note on Claude Code temp files:** Claude Code may create `tmpclaude-*` temporary files in your working directory. These are already in `.gitignore`, but if you prefer they not appear at all, set the `CLAUDE_CODE_TMPDIR` environment variable to your system temp directory:
+
+```powershell
+# Windows PowerShell (set permanently in environment variables)
+$env:CLAUDE_CODE_TMPDIR = $env:TEMP
+```
+
+This is optional - the `.gitignore` pattern prevents them from being committed.
 
 **Setup Complete!** Begin development.
 
@@ -294,6 +312,15 @@ Also called "Full Framework" when using comprehensive ADRs and governance.
   git commit -m "Project setup: Initial documentation and framework"
   git tag -a v0.1.0 -m "Initial project setup"
   ```
+
+**Note on Claude Code temp files:** Claude Code may create `tmpclaude-*` temporary files in your working directory. These are already in `.gitignore`, but if you prefer they not appear at all, set the `CLAUDE_CODE_TMPDIR` environment variable to your system temp directory:
+
+```powershell
+# Windows PowerShell (set permanently in environment variables)
+$env:CLAUDE_CODE_TMPDIR = $env:TEMP
+```
+
+This is optional - the `.gitignore` pattern prevents them from being committed.
 
 - [ ] **Start first work item**
   - [ ] Move one item from todo/ to doing/

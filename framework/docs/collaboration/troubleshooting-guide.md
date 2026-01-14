@@ -181,6 +181,44 @@ mv thoughts/work/backlog/feature-123.md thoughts/work/doing/
 
 ---
 
+### Issue: Claude Code Temporary Files in Working Directory
+
+**Symptoms:**
+- Files named `tmpclaude-*` appearing in project directory
+- Files persist across sessions
+- Clutter in file explorer/IDE
+
+**Explanation:**
+Claude Code (v2.1.5+) creates internal temporary files in the current working directory by default. This is normal behavior and these files are already ignored by git (`.gitignore` includes `tmpclaude-*` pattern).
+
+**Solutions:**
+
+**Option 1: Do Nothing (Recommended)**
+- Files are already in `.gitignore` and won't be committed
+- They don't affect project functionality
+- Claude Code manages cleanup automatically
+
+**Option 2: Change Temp Directory Location**
+```powershell
+# Set environment variable to use system temp directory
+# Windows PowerShell (temporary - current session only)
+$env:CLAUDE_CODE_TMPDIR = $env:TEMP
+
+# Or set permanently in Windows Environment Variables:
+# System Properties → Environment Variables → Add user variable
+# Name: CLAUDE_CODE_TMPDIR
+# Value: %TEMP%
+```
+
+**Prevention:**
+- Set `CLAUDE_CODE_TMPDIR` environment variable before first use
+- Include in team setup documentation if team-wide preference
+- Not required - default behavior is acceptable for most users
+
+**See also:** Claude Code release notes v2.1.5 - `CLAUDE_CODE_TMPDIR` feature
+
+---
+
 ## Workflow Problems
 
 ### Issue: Bypassed AI Workflow Checkpoint (ADR-001 Violation)

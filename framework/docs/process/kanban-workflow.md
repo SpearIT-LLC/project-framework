@@ -221,20 +221,35 @@ if ($todoCount -ge $todoLimit) {
 
 ### Moving Items Between Folders
 
+**Critical Rule: Move all `{TYPE-ID}-*` files together**
+
+When moving work items, **all files matching the work item pattern `{TYPE-ID}-*` must move together**, unless specifically moving subtasks incrementally.
+
+**Pattern examples:**
+- `FEAT-002-namespace.md` (main work item)
+- `FEAT-002-implementation-notes.md` (auxiliary file)
+- `FEAT-002-audit-results.txt` (working file)
+- `FEAT-002-subtask-1.md` (subtask - can move independently)
+- `FEAT-002-subtask-2.md` (subtask - can move independently)
+
+**When complete:** All `FEAT-002-*` files must be in the same folder (nothing left behind).
+
+---
+
 **Backlog → Todo:**
-```powershell
-# When ready to commit to work
-Move-Item "thoughts/work/backlog/FEAT-002-namespace.md" `
-          "thoughts/work/todo/FEAT-002-namespace.md"
+```bash
+# Move all files matching the work item ID
+git mv thoughts/work/backlog/FEAT-002-namespace.md thoughts/work/todo/
+git mv thoughts/work/backlog/FEAT-002-*.md thoughts/work/todo/  # If auxiliary files exist
 
 # Update roadmap.md: "In backlog" → "In todo"
 ```
 
 **Todo → Doing:**
-```powershell
+```bash
 # When ready to start work (check WIP limit first!)
-Move-Item "thoughts/work/todo/FEAT-002-namespace.md" `
-          "thoughts/work/doing/FEAT-002-namespace.md"
+git mv thoughts/work/todo/FEAT-002-namespace.md thoughts/work/doing/
+git mv thoughts/work/todo/FEAT-002-*.* thoughts/work/doing/  # Move all related files
 
 # Create git branch
 git checkout -b feature/002-namespace
@@ -243,20 +258,36 @@ git checkout -b feature/002-namespace
 ```
 
 **Doing → Done:**
-```powershell
+```bash
 # When implementation complete and tested
-Move-Item "thoughts/work/doing/FEAT-002-namespace.md" `
-          "thoughts/work/done/FEAT-002-namespace.md"
+# CRITICAL: Move ALL {TYPE-ID}-* files together
+git mv thoughts/work/doing/FEAT-002-*.* thoughts/work/done/
+
+# Verify nothing left behind
+ls thoughts/work/doing/FEAT-002-* 2>/dev/null  # Should return empty
 
 # This TRIGGERS the release process (see version-control-workflow.md)
 ```
 
 **Done → History (Post-Release):**
-```powershell
+```bash
 # After release is tagged and pushed
-Move-Item "thoughts/work/done/FEAT-002-namespace.md" `
-          "thoughts/history/releases/v1.2.0/FEAT-002-namespace.md"
+# Move ALL files for this work item
+git mv thoughts/work/done/FEAT-002-*.* thoughts/history/releases/v1.2.0/
+
+# Verify nothing left behind
+ls thoughts/work/done/FEAT-002-* 2>/dev/null  # Should return empty
 ```
+
+---
+
+### Subtasks and Incremental Movement
+
+**Exception:** Subtasks can move independently if clearly labeled:
+- `FEAT-002-subtask-1.md` can move to done/ while `FEAT-002-subtask-2.md` stays in doing/
+- Once parent item (`FEAT-002-namespace.md`) moves to done/, all subtasks must also be complete
+
+**Rule:** When marking parent as done, verify all subtasks are also done or archived.
 
 ---
 

@@ -732,4 +732,68 @@ workflow:
 
 ---
 
-**Last Updated:** 2026-01-11
+## Discussion: Workflow State Transition Validation (2026-01-13)
+
+**Context:** While working on DOC-053 and REFACTOR-052 closeout, AI violated workflow by moving work item directly from backlog → done, bypassing todo and doing stages.
+
+**The Problem:**
+- No explicit state transition rules documented
+- AI relies on inferring correct workflow from examples
+- No validation mechanism to prevent invalid transitions
+- Results in workflow violations and WIP tracking issues
+
+**Related Work Items Created:**
+
+1. **DOC-054: Document Workflow State Transition Rules**
+   - Add explicit transition rules table to kanban-workflow.md
+   - Define valid/invalid transitions with reasoning
+   - Create pre-flight checklist for AI
+   - High priority (immediate value)
+
+2. **TECH-055: Create Work Item Move Validation Script**
+   - PowerShell script to validate transitions
+   - Checks: transition validity, WIP limits, file patterns
+   - Can be called by AI or used manually
+   - Medium priority (enables automation)
+
+**How This Relates to FEAT-037:**
+
+The project-config.yaml could include workflow validation rules:
+
+```yaml
+workflow:
+  workPath: framework/thoughts/work/
+  wipLimits:
+    doing: 1
+    todo: 10
+
+  # State transition rules (machine-readable)
+  allowedTransitions:
+    backlog: [todo]
+    todo: [doing, backlog]
+    doing: [done, todo]
+    done: [history]
+
+  # Reference to validation script
+  validationScript: framework/scripts/Validate-WorkItemMove.ps1
+```
+
+**Benefits of Config-Based Rules:**
+- Machine-readable (scripts can parse)
+- Single source of truth
+- Easy to customize per project
+- AI reads on session start
+
+**Implementation Path:**
+1. DOC-054: Document rules in markdown (immediate)
+2. TECH-055: Create validation script (uses hardcoded rules initially)
+3. FEAT-037: Move rules to config file (script reads from config)
+
+**Decision:**
+- Start with DOC-054 + TECH-055 (immediate value)
+- FEAT-037 can later centralize these rules in config
+- Config becomes "master source," docs reference config
+
+---
+
+**Last Updated:** 2026-01-13
