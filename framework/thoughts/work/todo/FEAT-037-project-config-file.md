@@ -3,17 +3,18 @@
 **ID:** FEAT-037
 **Type:** Feature
 **Priority:** High
-**Status:** Backlog
+**Status:** Todo
 **Created:** 2026-01-08
-**Related:** TECH-043, FEAT-031
+**Updated:** 2026-01-14
+**Related:** FEAT-006 (setup script)
 
 ---
 
 ## Summary
 
-Create a lightweight project configuration file that provides contextual parameters and policy references to guide AI assistants and tooling, serving as a master index for project-specific policy decisions.
+Create a lightweight `framework.yaml` configuration file that provides project context to AI assistants and tooling.
 
-**Key Insight:** Framework projects (deliverable = documentation) and code projects (deliverable = code) need different interpretations of the same workflow. A config file can provide this context without repeating it everywhere.
+**Approach:** Start with MVP (project metadata only), validate it works, then extend with workflow and policy sections.
 
 ---
 
@@ -21,874 +22,290 @@ Create a lightweight project configuration file that provides contextual paramet
 
 **Issue identified during:** TECH-043 categorization discussion
 
-Currently, projects using this framework face several challenges:
+Currently, projects using this framework face challenges:
 
-1. **Context Ambiguity:** AI must infer project type and interpret work item categories accordingly
-2. **Policy Confusion:** Framework policies (for documentation projects) might not apply to code projects
-3. **Repeated Context:** Project context must be explained in multiple places (CLAUDE.md, README.md, work items)
-4. **Override Difficulty:** Users can't easily override framework policies for their specific project needs
-5. **No Master Index:** Policy locations are documented in INDEX.md, but not machine-readable
-
-**Specific example:**
-- In framework project: TECH = process improvements (not "debt")
-- In code project: TECH = technical debt/refactoring
-- Same category, different meaning based on context
+1. **Context Ambiguity:** AI must infer project type from file structure
+2. **Repeated Context:** Project context explained in multiple places (CLAUDE.md, README.md)
+3. **No Machine-Readable Config:** Tooling can't programmatically understand project type
 
 **Who is affected?**
 - AI assistants (need context to interpret correctly)
-- Contributors (need to understand project type)
 - Tooling/automation (need machine-readable config)
-- Users adopting framework (need to customize policies)
+- Setup scripts (need to generate project-specific configuration)
 
 ---
 
-## Requirements
+## Design Decisions
 
-### Functional Requirements
-
-- [ ] Define minimal set of configuration parameters
-- [ ] Support project type identification (framework, application, library, tool)
-- [ ] Specify primary deliverable (code, documentation, hybrid)
-- [ ] Point to authoritative policy documents (SSoT references)
-- [ ] Allow policy overrides for user projects
-- [ ] Provide category interpretation guidance
-- [ ] Remain machine-readable (JSON, YAML, or TOML)
-- [ ] Stay minimal (not a replacement for documentation)
-
-### Non-Functional Requirements
-
-- [ ] Small file size (< 100 lines for typical project)
-- [ ] Human-readable format
-- [ ] Easy to override in derived projects
-- [ ] Compatible with version control
-- [ ] No build/compilation required
-- [ ] Self-documenting with comments
+| Question | Decision | Date |
+|----------|----------|------|
+| Format | YAML (human-readable, supports comments) | 2026-01-08 |
+| Location | Project root (`framework.yaml`) | 2026-01-08 |
+| Field naming | Nested (`project.type` not `projectType`) | 2026-01-14 |
+| Policy organization | Flat list (simple first) | 2026-01-14 |
+| MVP scope | Project metadata only | 2026-01-14 |
+| INDEX.md relationship | Separate concerns (independent files) | 2026-01-14 |
+| Multi-project support | **Removed** - single-project only | 2026-01-14 |
 
 ---
 
-## Design
-
-### Core Concept: Master Policy Index
-
-The config file serves as the **machine-readable master index** for:
-1. Project context (type, deliverable)
-2. Policy locations (SSoT references)
-3. Interpretation guidelines (category meanings)
-4. Workflow customization (which policies apply)
-
-**Relationship to other work:**
-- INDEX.md (FEAT-031) = Human-readable documentation index
-- project-config = Machine-readable policy index + context
-
----
-
-## Proposed Structure
-
-### Option 1: Minimal YAML
-
-**Example A: Single-Project Repository (typical user project)**
+## MVP Schema
 
 ```yaml
-# framework.yaml (repository root)
-# Project context and policy references for AI assistants and tooling
+# framework.yaml
+# Project configuration for AI assistants and tooling
 
 project:
-  name: "My Awesome Application"
+  name: "My Project"
   type: application  # framework | application | library | tool
   deliverable: code  # code | documentation | hybrid
+```
 
-# Master policy index - points to source-of-truth documents
-policies:
-  workflow: docs/process/workflow-guide.md
-  codingStandards: docs/coding-standards.md
+**That's it for MVP.** Three fields under `project:`.
 
-# Work item category interpretation for this project type
-categories:
-  FEAT: "New features and capabilities"
-  TECH: "Technical debt and code refactoring"
-  BUGFIX: "Bug fixes"
+### Field Definitions
 
-# Workflow configuration
+| Field | Required | Values | Description |
+|-------|----------|--------|-------------|
+| `project.name` | Yes | string | Human-readable project name |
+| `project.type` | Yes | `framework`, `application`, `library`, `tool` | What kind of project |
+| `project.deliverable` | Yes | `code`, `documentation`, `hybrid` | Primary output type |
+
+### Project Types
+
+- **framework** - Process/methodology documentation (like this framework)
+- **application** - Standalone software application
+- **library** - Reusable code package
+- **tool** - Utility script or CLI tool
+
+### Deliverable Types
+
+- **code** - Primary output is source code
+- **documentation** - Primary output is documentation
+- **hybrid** - Both code and documentation are primary outputs
+
+---
+
+## Future Enhancements (Post-MVP)
+
+Once MVP is validated, add these sections:
+
+### Workflow Section
+```yaml
 workflow:
   workPath: thoughts/work/
-  useStandardWorkflow: true
+  wipLimits:
+    doing: 1
+    todo: 10
 ```
 
-**Example B: Multi-Project Repository (framework source repository)**
-
+### Policies Section
 ```yaml
-# framework.yaml (repository root)
-# Repository context and project registry for AI assistants and tooling
-
-repository:
-  name: "SpearIT Project Framework"
-  type: "framework-source"  # Multi-project repository
-
-# Default project when context is unclear
-defaultProject: framework
-
-# Projects in this repository
-projects:
-  framework:
-    name: "Standard Project Framework"
-    type: framework
-    deliverable: documentation
-    workPath: framework/thoughts/work/
-    policies:
-      workflow: framework/docs/process/workflow-guide.md
-      dryPrinciples: framework/docs/collaboration/documentation-dry-principles.md
-    categories:
-      TECH: "Process improvements, not code debt"
-
-  hello-world:
-    name: "Hello World Example"
-    type: application
-    deliverable: code
-    workPath: examples/hello-world/thoughts/work/
-```
-
-### Option 2: JSON with Comments
-
-**Note:** JSON shown for single-project repository. Multi-project repositories follow the structure shown in YAML Example B above.
-
-```json
-{
-  "$schema": "./framework-schema.json",
-  "project": {
-    "name": "My Awesome Application",
-    "type": "application",
-    "deliverable": "code"
-  },
-  "policies": {
-    "_comment": "Master index - points to source-of-truth documents",
-    "workflow": "docs/process/workflow-guide.md",
-    "codingStandards": "docs/coding-standards.md"
-  },
-  "categories": {
-    "_comment": "How to interpret work item types in this project",
-    "FEAT": "New features and capabilities",
-    "TECH": "Technical debt and code refactoring"
-  },
-  "workflow": {
-    "workPath": "thoughts/work/",
-    "standard": true
-  }
-}
-```
-
----
-
-## Addressing the Policy Confusion Problem
-
-**The Challenge:** Will AI get confused referencing framework policies (designed for documentation projects) when working on code projects?
-
-### Solution: Explicit Policy Scope in Config
-
-The config clarifies which policies apply to which type of project:
-
-**Framework source repository (multi-project):**
-```yaml
-# framework.yaml
-repository:
-  name: "SpearIT Project Framework"
-  type: "framework-source"
-
-projects:
-  framework:
-    type: framework
-    deliverable: documentation
-    policies:
-      workflow: framework/docs/process/workflow-guide.md
-      dryPrinciples: framework/docs/collaboration/documentation-dry-principles.md
-    categories:
-      TECH: "Process improvements, not code debt"
-
-  hello-world:
-    type: application
-    deliverable: code
-    policies:
-      workflow: framework/docs/process/workflow-guide.md  # Reuses framework workflow
-    categories:
-      TECH: "Technical debt and code refactoring"
-```
-
-**User's code project (single-project repository):**
-```yaml
-# framework.yaml
-project:
-  type: application
-  deliverable: code
-
 policies:
-  workflow: framework/docs/process/workflow-guide.md  # Reference installed framework
-  codingStandards: docs/coding-standards.md  # Project-specific
+  workflow: framework/docs/process/workflow-guide.md
+  codingStandards: docs/coding-standards.md
+```
 
+### Categories Section (if needed)
+```yaml
 categories:
-  TECH: "Technical debt and code refactoring"
+  TECH: "Technical debt and refactoring"  # Interpretation for this project type
 ```
 
-**Benefits:**
-1. AI reads config first, understands context
-2. Policies explicitly scoped to project type
-3. User can override framework policies
-4. Clear which interpretations apply
+**Note:** These are documented for future reference. Do not implement until MVP is validated.
 
 ---
 
-## Use Cases
+## Implementation Plan
 
-### Use Case 1: AI Assistant Context
+### Phase 1: MVP Implementation
 
-**Scenario:** Claude opens a project for the first time
+1. Create `framework.yaml` for this framework project
+2. Create example `framework.yaml` for templates
+3. Test AI reads and uses the config correctly
+4. Document in CLAUDE.md that AI should read config
 
-**Current behavior:**
-- Reads CLAUDE.md (if exists)
-- Infers project type from file structure
-- Guesses category interpretations
+### Phase 2: Validation & Schema
 
-**With config:**
-- Reads framework.yaml first
-- Knows project type explicitly
-- Applies correct category interpretations
-- References correct policy documents
+1. Create JSON Schema for validation
+2. Add schema reference to YAML files
+3. Test validation works
+
+### Phase 3: Setup Script Integration (FEAT-006)
+
+1. Update FEAT-006 to generate `framework.yaml`
+2. Setup script asks for project name, type, deliverable
+3. Setup script writes config with user values
 
 ---
 
-### Use Case 2: User Overriding Framework Policy
+## Relationship to FEAT-006 (Setup Script)
 
-**Scenario:** User wants different DRY principles for their code project
+**FEAT-037** defines WHAT `framework.yaml` looks like.
+**FEAT-006** implements HOW it gets created.
 
-**Current approach:**
-- User must understand framework structure
-- Create their own policy document
-- Update multiple references manually
-- Risk confusion with framework policies
+The setup script (FEAT-006) will:
+- Ask user for project name, type, deliverable
+- Generate `framework.yaml` with user-provided values
+- Handle path resolution for policy references (future)
 
-**With config:**
+Templates should include a placeholder `framework.yaml` that the setup script customizes, OR the setup script generates it fresh.
+
+---
+
+## Example Configurations
+
+### This Framework Project
 ```yaml
+# framework.yaml
 project:
-  type: application
-  deliverable: code
-
-policies:
-  workflow: framework/docs/process/workflow-guide.md  # Keep framework workflow
-  dryPrinciples: docs/my-dry-principles.md  # Override with project-specific
-  codingStandards: docs/coding-standards.md  # Add new policy
-```
-
-Clean, explicit, easy to understand.
-
----
-
-### Use Case 3: Tooling and Automation
-
-**Scenario:** Build script needs to know project structure
-
-**Current approach:**
-- Parse multiple markdown files
-- Hard-code assumptions
-- Break when structure changes
-
-**With config:**
-```javascript
-const config = yaml.load('framework.yaml');
-const workPath = config.workflow.workPath;
-const policies = config.policies;
-// Machine-readable, stable interface
-```
-
----
-
-## Design Decisions Needed
-
-### 1. Field Naming Conventions
-
-**Question:** What naming style should we use?
-
-**Options:**
-
-**A. Nested Structure (Recommended)**
-```yaml
-project:
-  name: "Framework Name"
+  name: "SpearIT Project Framework"
   type: framework
   deliverable: documentation
-
-policies:
-  workflow: path/to/workflow.md
-  dryPrinciples: path/to/dry.md
 ```
-- Pros: Organized, scalable, clear grouping
-- Cons: More verbose
 
-**B. Flat Structure**
+### Typical User Application
 ```yaml
-projectName: "Framework Name"
-projectType: framework
-projectDeliverable: documentation
-policyWorkflow: path/to/workflow.md
-policyDryPrinciples: path/to/dry.md
+# framework.yaml
+project:
+  name: "My Web App"
+  type: application
+  deliverable: code
 ```
-- Pros: Simple, direct access
-- Cons: Namespace pollution, less organized
 
-**Recommendation:** Nested (Option A) - better organization as config grows
+### Library/Package
+```yaml
+# framework.yaml
+project:
+  name: "my-utils"
+  type: library
+  deliverable: code
+```
 
-**Terminology alignment:**
-- Match existing framework terms where possible
-- Review framework/ documentation for established terminology
-- Ensure names are intuitive for new users
+### CLI Tool
+```yaml
+# framework.yaml
+project:
+  name: "deploy-helper"
+  type: tool
+  deliverable: code
+```
 
 ---
 
-### 2. Policy Categorization
+## CLAUDE.md Instruction Requirement
 
-**Question:** Should policies have formal categories?
+For AI to read `framework.yaml`, CLAUDE.md must contain an explicit instruction.
 
-**Current framework organization:**
-```
-framework/
-├── docs/
-│   ├── process/          # Workflow, release procedures
-│   ├── collaboration/    # AI guides, team workflows
-│   └── patterns/         # Reusable patterns
-├── templates/            # Work items, documents
-└── thoughts/             # Work tracking
-```
-
-**Config Option A: Flat Policy List**
-```yaml
-policies:
-  workflow: framework/docs/process/workflow-guide.md
-  dryPrinciples: framework/docs/collaboration/documentation-dry-principles.md
-  featureTemplate: framework/templates/work-items/FEATURE-TEMPLATE.md
-  releaseProcess: framework/docs/process/release-process.md
-```
-- Pros: Simple, direct
-- Cons: Could get long, no organization
-
-**Config Option B: Categorized Policies**
-```yaml
-policies:
-  process:
-    workflow: framework/docs/process/workflow-guide.md
-    release: framework/docs/process/release-process.md
-  collaboration:
-    dryPrinciples: framework/docs/collaboration/documentation-dry-principles.md
-    aiWorkflow: framework/docs/collaboration/ai-workflow-guide.md
-  templates:
-    workItems: framework/templates/work-items/
-```
-- Pros: Organized, mirrors framework structure
-- Cons: More complex, requires formal categories
-
-**Config Option C: Essential + Index Reference**
-```yaml
-policies:
-  # Essential policies referenced frequently by AI/tooling
-  workflow: framework/docs/process/workflow-guide.md
-  workItemTemplates: framework/templates/work-items/
-
-  # Complete policy list in INDEX.md
-  index: framework/INDEX.md
-```
-- Pros: Minimal config, points to complete list
-- Cons: Machines must parse markdown for complete list
-
-**Recommendation to Discuss:**
-- Start with Option C (Essential + Index) for minimal config
-- Can expand to Option B (Categorized) if needed
-- Formal categories would require documentation of category system
-
-**Action Items:**
-1. Review existing framework docs for established policy categories
-2. List "essential" policies that AI/tooling needs most
-3. Decide if formal categorization adds enough value
-4. Document category system if we implement it
-
----
-
-## Implementation Approach
-
-### Phase 1: Design and Prototype
-
-1. Finalize field naming conventions (nested vs flat)
-2. Decide policy organization (flat, categorized, or essential+index)
-3. Define formal policy categories (if needed)
-4. Create config structure and schema
-5. Prototype for framework project
-6. Prototype for sample code project (examples/hello-world)
-7. Test with AI to validate context improvement
-
-### Phase 2: Integration
-
-1. Add config file to framework root
-2. Update CLAUDE.md to reference config
-3. Update AI instructions to read config first
-4. Document config format and usage
-
-### Phase 3: Adoption
-
-1. Add config to examples/hello-world
-2. Add to project templates (minimal, light, standard)
-3. Create guide for customizing config
-4. Update workflow documentation
-
----
-
-## Config File Location
-
-**Options:**
-
-1. **Project root:** `framework.yaml`
-   - Pros: Easy to find, standard location
-   - Cons: Adds clutter to root
-
-2. **Framework folder:** `framework/framework.yaml`
-   - Pros: Keeps framework concerns together
-   - Cons: Less discoverable
-
-3. **Hidden dot-file:** `.framework.yaml`
-   - Pros: Keeps root clean
-   - Cons: Harder to discover, less standard
-
-**Decision:** Repository root (`framework.yaml`) ✓
-- **Filename:** `framework.yaml` (not `project-config.yaml`, not `.framework.yaml`)
-  - Framework-branded but not organization-specific
-  - Unique enough to avoid collisions with user code
-  - Visible for discoverability (not a hidden dotfile)
-  - Follows pattern of package managers (short, descriptive)
-- **Location:** Repository root
-- Standard location for repository-wide configuration
-- Immediately visible to tools and AI
-- Consistent with package managers (package.json, pyproject.toml, Cargo.toml, etc.)
-- Works for both multi-project repositories (framework source) and single-project repositories (user projects)
-- In multi-project repos: describes repository metadata and can list/reference projects
-- In single-project repos: repository root = project root, so config describes the project directly
-- Complements existing CLAUDE.md (human navigation) with machine-readable equivalent
-- Decided: 2026-01-08, clarified 2026-01-13 (after v3.2.0 structure review), filename decided 2026-01-13
-
----
-
-## Relationship to INDEX.md (FEAT-031)
-
-**Key Question:** How do framework.yaml and INDEX.md work together?
-
-### Similarities (Overlap)
-Both reference policy document locations:
-- INDEX.md: Human-readable list for browsing
-- project-config: Machine-readable references for tooling
-
-### Differences (Complementary)
-- **INDEX.md:** Complete documentation index, organized for humans
-- **project-config:** Project context + essential policy pointers for machines
-
-### Sync Strategy Options
-
-**Option A: Independent (Allow Duplication)**
-- Both maintain their own policy references
-- Accept some duplication as acceptable
-- Pros: Each optimized for its audience, no coupling
-- Cons: Must update both when policies move
-
-**Option B: Config References INDEX.md**
-```yaml
-policies:
-  indexFile: framework/INDEX.md  # Master list
-  workflow: framework/docs/process/workflow-guide.md  # Essential policies only
-```
-- Config has minimal policies, points to INDEX.md for complete list
-- Pros: Less duplication, single source for complete list
-- Cons: Machines must parse markdown INDEX.md
-
-**Option C: INDEX.md References Config**
+**Required instruction (add to CLAUDE.md):**
 ```markdown
-## Master Policy Index
+## Project Configuration
 
-See [framework.yaml](../framework.yaml) for machine-readable policy references.
+Read `framework.yaml` at the project root for machine-readable project context:
+- `project.name` - Project name
+- `project.type` - framework | application | library | tool
+- `project.deliverable` - code | documentation | hybrid
 
-Below is the human-organized documentation index...
+Use these values to understand project context rather than inferring from structure.
 ```
-- INDEX.md acknowledges config exists
-- Both maintain their own structures
-- Pros: Clear that both exist, minimal coupling
-- Cons: Still duplication
 
-**Option D: Separate Concerns Completely**
-- project-config: Essential context + key policies only
-- INDEX.md: Complete documentation navigation
-- Overlap is minimal and acceptable
-- Pros: Each serves its purpose well
-- Cons: Some duplication inevitable
-
-**Recommendation to Discuss:** Option D (Separate Concerns)
-- Config focuses on context and interpretation guidance
-- INDEX.md focuses on complete documentation organization
-- Some policy references overlap but serve different purposes
-- DRY principle applies within each, not across them
+**Validation requirement for FEAT-006:**
+- Setup script should either auto-update CLAUDE.md with this instruction, OR provide copy/paste instruction
+- A `-check` flag (or separate validation script) should verify this instruction exists in CLAUDE.md
+- Warn user if `framework.yaml` exists but CLAUDE.md doesn't reference it
 
 ---
 
-## Relationship to Other Work Items
+## Test Plan
 
-**Complements:**
-- **FEAT-031:** INDEX.md is human-readable index, config is machine-readable (see above)
-- **TECH-043:** DRY principles can be referenced in config
-- **TECH-036:** Config helps identify which policies to apply during refactoring
+### Test Approach
+Manual testing for MVP with explicitly defined expected results. Formal automated testing deferred to future work item.
 
-**Enables:**
-- Clearer AI context and interpretation
-- Easier policy customization for users
-- Foundation for tooling/automation
-- Multi-project framework source repository support
+### Prerequisites
+1. `framework.yaml` created at project root
+2. CLAUDE.md contains instruction to read config
+3. Fresh Claude session (no prior context about project)
 
----
+### Test Cases
 
-## Questions to Resolve
+| ID | Test | Setup | Prompt | Expected Result | Pass/Fail |
+|----|------|-------|--------|-----------------|-----------|
+| T1 | Reads project name | `name: "SpearIT Project Framework"` | "What is this project called?" | Response includes "SpearIT Project Framework" from config | |
+| T2 | Reads project type | `type: framework` | "What type of project is this?" | Response identifies as "framework" type | |
+| T3 | Reads deliverable | `deliverable: documentation` | "What is the primary deliverable?" | Response identifies "documentation" as deliverable | |
+| T4 | Uses config over inference | `type: framework` (but has code files) | "Is this a code project?" | Response clarifies it's a documentation/framework project per config | |
+| T5 | Missing config fallback | Delete `framework.yaml` | "What type of project is this?" | AI infers from structure, doesn't error | |
 
-1. **Format choice:** YAML vs. JSON vs. TOML?
-   - ✓ **Decision:** YAML (human-readable, supports comments) - 2026-01-08
+### Edge Case Tests
 
-2. **File location:** Root, framework folder, or hidden?
-   - ✓ **Decision:** Project root (framework.yaml) - 2026-01-08
+| ID | Test | Setup | Expected Result | Pass/Fail |
+|----|------|-------|-----------------|-----------|
+| E1 | Malformed YAML | Invalid syntax in `framework.yaml` | AI reports error, falls back to inference | |
+| E2 | Missing required field | Remove `project.type` | AI uses available fields, notes missing data | |
+| E3 | Invalid enum value | `type: banana` | AI notes invalid value, asks for clarification or falls back | |
 
-3. **Relationship to INDEX.md:** How do they work together?
-   - ❓ **Open:** Do they need to be kept in sync, or are they independent?
-   - **Discussion:**
-     - INDEX.md = Human-readable documentation index (for browsing)
-     - project-config = Machine-readable policy index (for tooling/AI)
-     - Overlap: Both reference policy locations
-     - Question: Is duplication acceptable? Or should one reference the other?
-     - Potential: Config could point to INDEX.md as the human-readable version?
-
-4. **Field naming conventions:** What makes sense?
-   - ❓ **Open:** Need to discuss and standardize field names
-   - **Considerations:**
-     - `project.type` vs `projectType` (nested vs flat)
-     - `policies.workflow` vs `policies.workflowGuide` (brief vs descriptive)
-     - `deliverable` vs `primaryArtifact` vs `output` (terminology)
-     - Should match existing framework terminology where possible
-   - **Action:** Review existing framework terminology and propose standard naming
-
-5. **Policy categorization:** Do we need formal categories?
-   - ❓ **Open:** Should policies have formal categories for referencing in config?
-   - **Example current categories:**
-     - Process (workflow, release)
-     - Collaboration (AI guides, team guides)
-     - Templates (work items, documents)
-     - Patterns (code/doc patterns)
-   - **Question:** Should config use these categories? Or just list individual policies?
-   - **Benefit:** Formal categories enable `policies.process.workflow` structure
-   - **Tradeoff:** More structure vs. simplicity
-
-6. **Required vs. optional fields:** What's minimum viable config?
-   - **Recommendation:** Only project.type and project.deliverable required
-   - **Open:** Validate this is sufficient for AI context
-
-7. **Schema validation:** Should we provide JSON schema?
-   - **Recommendation:** Yes, but optional (helps tooling)
-   - **Open:** When to implement (Phase 1 or later)?
-
-8. **Backwards compatibility:** How to handle projects without config?
-   - **Recommendation:** AI falls back to current behavior (infer from CLAUDE.md)
-   - **Validation:** Ensure gradual adoption is possible
-
-9. ✅ **Framework source repository structure:** One config or multiple? **RESOLVED 2026-01-13**
-   - **Decision:** Single config at repository root
-   - Lists all projects in multi-project repositories
-   - In single-project repositories, root config describes the project directly
-   - Future possibility: Per-project configs could complement root config if needed
+### Test Execution
+- [ ] T1: Project name -
+- [ ] T2: Project type -
+- [ ] T3: Deliverable -
+- [ ] T4: Config over inference -
+- [ ] T5: Missing config fallback -
+- [ ] E1: Malformed YAML -
+- [ ] E2: Missing required field -
+- [ ] E3: Invalid enum value -
 
 ---
 
 ## Completion Criteria
 
-- [ ] Config file format and structure defined
-- [ ] Schema documentation created
-- [ ] Example configs created (framework, code project)
-- [ ] Framework project config implemented
+### MVP (This Work Item)
+- [ ] `framework.yaml` schema defined (done - see above)
+- [ ] Config created for this framework project
+- [ ] Config created for examples/hello-world (as demonstration)
+- [ ] Example config added to templates
+- [ ] AI successfully reads and uses config
 - [ ] CLAUDE.md updated to reference config
-- [ ] AI workflow updated to read config first
-- [ ] Usage guide documented
-- [ ] Templates updated with config files
-- [ ] Tested with AI assistant (confirms correct interpretation)
+
+### Future (Separate Work Items)
+- [ ] JSON Schema for validation
+- [ ] Workflow section added
+- [ ] Policies section added
+- [ ] FEAT-006 integration complete
 
 ---
 
 ## Success Metrics
 
-- AI correctly interprets project context from config
-- Users can easily override framework policies
-- Reduced ambiguity in category interpretation
-- Foundation established for tooling integration
-- Clear separation between framework and user project policies
+- AI correctly identifies project type from config
+- Config is simpler than current CLAUDE.md context sections
+- Foundation established for future tooling integration
 
 ---
 
 ## Alternatives Considered
 
-### Alternative 1: Extend CLAUDE.md with Structured Frontmatter
-
+### Alternative 1: Extend CLAUDE.md with Frontmatter
 ```markdown
 ---
 project:
   type: framework
-  deliverable: documentation
-policies:
-  workflow: framework/docs/process/workflow-guide.md
 ---
-
-# Claude Context: Framework Project
-...
 ```
+**Rejected:** Mixes concerns, less machine-readable.
 
-**Pros:** No new file, markdown ecosystem
-**Cons:** Less machine-readable, mixes concerns
-**Decision:** Separate config file is cleaner
+### Alternative 2: Multiple Config Files
+**Rejected:** Single file is simpler.
 
----
-
-### Alternative 2: Multiple Small Config Files
-
-- `.project-type` (just the type)
-- `.policies` (policy references)
-- `.workflow-config` (workflow settings)
-
-**Pros:** Very modular
-**Cons:** Too many files, harder to understand holistically
-**Decision:** Single config file is simpler
-
----
-
-### Alternative 3: Do Nothing (Status Quo)
-
-**Pros:** No work required
-**Cons:** Doesn't solve the problems identified
-**Decision:** Config provides significant value, worth implementing
+### Alternative 3: Multi-Project Support
+**Rejected (2026-01-14):** Over-engineering. Examples and templates are artifacts of the framework project, not separate projects. Single-project config is sufficient.
 
 ---
 
 ## References
 
-- Related: TECH-043 (DRY principles - can be referenced in config)
-- Related: FEAT-031 (INDEX.md registry - human-readable counterpart)
+- Related: FEAT-006 (setup script will generate config)
 - Origin: Discussion during TECH-043 categorization review
 
 ---
 
-## Notes
-
-**Design Philosophy:**
-- Keep minimal - only what provides context or points to policies
-- Machine-readable first, human-readable second
-- Support customization without complexity
-- Serve as master policy index
-
-**Future Possibilities:**
-- Tooling that validates config
-- Scripts that read config for automation
-- IDE plugins that understand project context
-- Config inheritance (project extends framework config)
-
-**Critical Success Factor:**
-- Must actually help AI understand context better
-- Test with real AI interactions to validate
-
----
-
-## Discussion: Framework Source Repository Context Switching (2026-01-11)
-
-**Context:** While working on FEAT-039 (validating examples/hello-world), we discovered a practical issue: how do AI and user communicate which project context we're working in within the framework source repository?
-
-**The Problem:**
-- FEAT-039 was a validation task targeting examples/hello-world
-- But the work item lived in framework/thoughts/work/
-- This violates dogfooding - examples/hello-world issues should be tracked in examples/hello-world/thoughts/work/
-- Need a clear mechanism for switching project context
-
-**Options Discussed:**
-
-1. **Explicit verbal declaration** - User says "switch to examples/hello-world"
-   - Simple but easy to forget, tedious over time
-
-2. **Work item namespace inference** - AI infers from work item location
-   - "Work on FEAT-XXX" → check where FEAT-XXX lives → use that project's context
-   - Reinforces correct behavior but requires work items to exist first
-
-3. **Current working directory** - Use `cd` to signal context
-   - Too brittle, conflicts with avoiding `cd` in workflows
-
-4. **Project config as context provider** - Each project's config declares its identity
-   - `workflow.workPath` field tells AI where work items go
-   - AI reads config when switching projects
-   - Provides machine-readable source of truth
-
-**Proposed Solution:**
-Combine explicit declaration + config-based context:
-
-```yaml
-# framework.yaml (repository root)
-repository:
-  name: "SpearIT Project Framework"
-  type: "framework-source"  # Multi-project repository
-
-# Default project when context is unclear
-defaultProject: framework
-
-# Projects in this repository
-projects:
-  framework:
-    name: "Standard Project Framework"
-    path: framework/
-    type: framework
-    deliverable: documentation
-    workPath: framework/thoughts/work/
-  hello-world:
-    name: "Hello World Example"
-    path: examples/hello-world/
-    type: application
-    deliverable: code
-    workPath: examples/hello-world/thoughts/work/
-```
-
-**Workflow:**
-1. User: "Switch to examples/hello-world"
-2. AI reads repository root `framework.yaml`
-3. AI finds `projects.hello-world` section
-4. AI knows work items go in `examples/hello-world/thoughts/work/`
-5. User: "Create work item for missing README"
-6. AI creates work item in correct location based on active project context
-
-**Open Questions:**
-
-1. ✅ **Config location:** Repository root vs per-project configs? **RESOLVED 2026-01-13**
-   - **Decision:** Repository root (`framework.yaml`)
-   - In multi-project repos: config describes repository and can reference projects
-   - In single-project repos: repository root = project root, config describes project
-   - See line 413-421 for complete rationale
-   - Per-project configs (e.g., `framework/framework.yaml`) remain possible for future if needed
-
-3. **Cross-project references:** User says "create work item in hello-world" while in framework context
-   - Should AI support this? Or require explicit context switch first?
-   - Flexibility vs. clarity tradeoff
-
-4. **Context loss recovery:** What happens when conversation context is lost?
-   - Config provides durable source of truth
-   - But which config to read if context is completely lost?
-   - Fallback to repository root CLAUDE.md for navigation?
-
-**Next Steps:**
-- Need more discussion on framework source repository-specific config structure
-- Interim solution: Add note to repository root CLAUDE.md about explicit context switching
-- Revisit when ready to implement FEAT-037
-
-**Related Insights:**
-- This validates the need for `workflow.workPath` field
-- Demonstrates real-world use case for config file
-- Shows config complements CLAUDE.md (navigation) vs replaces it
-
----
-
-## Discussion: Workflow State Transition Validation (2026-01-13)
-
-**Context:** While working on DOC-053 and REFACTOR-052 closeout, AI violated workflow by moving work item directly from backlog → done, bypassing todo and doing stages.
-
-**The Problem:**
-- No explicit state transition rules documented
-- AI relies on inferring correct workflow from examples
-- No validation mechanism to prevent invalid transitions
-- Results in workflow violations and WIP tracking issues
-
-**Related Work Items Created:**
-
-1. **DOC-054: Document Workflow State Transition Rules**
-   - Add explicit transition rules table to kanban-workflow.md
-   - Define valid/invalid transitions with reasoning
-   - Create pre-flight checklist for AI
-   - High priority (immediate value)
-
-2. **TECH-055: Create Work Item Move Validation Script**
-   - PowerShell script to validate transitions
-   - Checks: transition validity, WIP limits, file patterns
-   - Can be called by AI or used manually
-   - Medium priority (enables automation)
-
-**How This Relates to FEAT-037:**
-
-The framework.yaml could include workflow validation rules:
-
-```yaml
-workflow:
-  workPath: framework/thoughts/work/
-  wipLimits:
-    doing: 1
-    todo: 10
-
-  # State transition rules (machine-readable)
-  allowedTransitions:
-    backlog: [todo]
-    todo: [doing, backlog]
-    doing: [done, todo]
-    done: [history]
-
-  # Reference to validation script
-  validationScript: framework/scripts/Validate-WorkItemMove.ps1
-```
-
-**Benefits of Config-Based Rules:**
-- Machine-readable (scripts can parse)
-- Single source of truth
-- Easy to customize per project
-- AI reads on session start
-
-**Implementation Path:**
-1. DOC-054: Document rules in markdown (immediate)
-2. TECH-055: Create validation script (uses hardcoded rules initially)
-3. FEAT-037: Move rules to config file (script reads from config)
-
-**Decision:**
-- Start with DOC-054 + TECH-055 (immediate value)
-- FEAT-037 can later centralize these rules in config
-- Config becomes "master source," docs reference config
-
----
-
-## Updates for v3.2.0 (2026-01-13)
-
-**Changes made to align with REFACTOR-052 (Industry-Standard Repository Structure):**
-
-0. **Filename Decision:**
-   - Changed from `project-config.yaml` to `framework.yaml`
-   - Rationale: Framework-branded, unique enough to avoid collisions, follows package manager patterns
-   - Visible file (not `.framework.yaml`) for discoverability
-   - Decided: 2026-01-13
-
-1. **Path Updates:**
-   - All policy paths updated: `framework/process/` → `framework/docs/process/`
-   - All policy paths updated: `framework/collaboration/` → `framework/docs/collaboration/`
-   - Framework structure diagram updated to reflect v3.2.0 organization
-
-2. **Terminology Updates:**
-   - "Monorepo" → "Framework source repository" (throughout document)
-   - Aligns with industry-standard package development terminology
-
-3. **Config Location Decision:**
-   - Clarified repository root (`framework.yaml`) as standard location
-   - Works for both multi-project repositories (framework source) and single-project repositories (user projects)
-   - Updated examples to show both multi-project and single-project scenarios
-   - Resolved Open Questions #1 and #9
-
-4. **Examples Updated:**
-   - Main YAML example now shows both scenarios (single-project vs multi-project)
-   - Framework Source Repository Context Switching example updated to use repository root config
-   - Policy confusion examples updated to reflect repository root approach
-
-**Key Insight:** Repository root config provides:
-- Standard, discoverable location (like package.json, pyproject.toml)
-- Works seamlessly for both repository types
-- In multi-project repos: describes repository and lists projects
-- In single-project repos: repository root = project root, so config describes project directly
-
----
-
-**Last Updated:** 2026-01-13
+**Last Updated:** 2026-01-14
