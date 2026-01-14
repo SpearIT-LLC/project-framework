@@ -3,7 +3,7 @@
 **ID:** FEAT-037
 **Type:** Feature
 **Priority:** High
-**Status:** In Progress
+**Status:** Done
 **Created:** 2026-01-08
 **Updated:** 2026-01-14
 **Related:** FEAT-006 (setup script)

@@ -229,6 +229,30 @@ Browse the guides below based on what you need. Each guide is comprehensive and 
 
 ---
 
+### [Documentation DRY Principles](documentation-dry-principles.md)
+**~150 lines | Avoiding duplication in documentation**
+
+**When to read:**
+- Creating new documentation
+- Updating existing documentation
+- Deciding where to document something
+- Resolving contradictions between documents
+
+**Contents:**
+- Core DRY Principles (single source of truth, reference don't duplicate)
+- What Is a Source of Truth (identification, characteristics)
+- Acceptable vs Problematic Duplication (examples)
+- Update Process (step-by-step)
+- Cross-Cutting Concerns (handling overlapping topics)
+- Implementation Guidance (for new and existing docs)
+
+**Key Insights:**
+- Brief summaries with links are OK; full duplication is not
+- Every topic needs ONE authoritative location
+- CLAUDE.md is quick reference, not comprehensive source
+
+---
+
 ### [Troubleshooting Guide](troubleshooting-guide.md)
 **547 lines | Common issues and solutions**
 
@@ -393,8 +417,9 @@ Reviewing code?
 | Testing Strategy | 639 | TDD, coverage, edge cases |
 | Security Policy | 758 | Input validation, auth, vulnerabilities |
 | Architecture Guide | 548 | Framework design, decisions |
+| Documentation DRY Principles | ~150 | Avoiding duplication, sources of truth |
 | Troubleshooting Guide | 547 | Diagnostics, recovery, solutions |
-| **Total** | **3,971 lines** | **Comprehensive collaboration documentation** |
+| **Total** | **~4,120 lines** | **Comprehensive collaboration documentation** |
 
 ---
 
@@ -405,5 +430,5 @@ Reviewing code?
 
 ---
 
-**Last Updated:** 2025-12-22
+**Last Updated:** 2026-01-14
 **Maintained By:** Framework Team
