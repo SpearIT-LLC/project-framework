@@ -1,9 +1,9 @@
 # Session History: 2026-01-13
 
 **Date:** 2026-01-13
-**Duration:** Morning session
+**Duration:** Full day (morning through evening sessions)
 **Participants:** Gary Elliott, Claude (Sonnet 4.5)
-**Focus:** Repository structure refactoring and industry alignment
+**Focus:** Repository structure refactoring, industry alignment, compliance validation, and v3.2.0 release
 
 ---
 
@@ -676,4 +676,320 @@ Using `git mv` for all renames successfully preserved complete file history, ena
 
 ---
 
-**Last Updated:** 2026-01-13 (evening - session complete)
+## Afternoon Session: DOC-053, Workflow Gap Analysis, Work Item Creation
+
+**Duration:** Afternoon session
+**Focus:** Complete DOC-053, close out REFACTOR-052, identify and document workflow gaps
+
+### Work Completed
+
+**1. DOC-053: Claude Code Temp Files Guidance - COMPLETE ✅**
+
+*Documentation additions:*
+- Added temp file note to `templates/NEW-PROJECT-CHECKLIST.md` in 3 locations:
+  - Minimal Framework Git Setup (line ~94)
+  - Light Framework Git Setup (line ~152)
+  - Standard Framework Git Setup (line ~298)
+- Added troubleshooting section to `framework/docs/collaboration/troubleshooting-guide.md` (line 184-219)
+  - Symptoms, explanation, two solution options, prevention guidance
+  - References Claude Code v2.1.5 `CLAUDE_CODE_TMPDIR` feature
+
+*Status updated:*
+- Changed from Backlog → Completed
+- Added completion date: 2026-01-13
+- Moved to work/done/
+
+**2. REFACTOR-052 Closeout - COMPLETE ✅**
+
+*Verification performed:*
+- Confirmed all 6 phases complete (audit, research, two directory migrations, terminology, CHANGELOG)
+- Validated 0 old path references in active docs (excluding historical archives)
+- Confirmed 30 "monorepo" references remain in Tier 3 backlog items (expected per plan)
+
+*File cleanup:*
+- Updated work item status: Backlog → Completed
+- Added completion date: 2026-01-13
+- Moved all `REFACTOR-052-*` files to done/ (5 files):
+  - Main work item (.md)
+  - Audit report (.md)
+  - Three audit data files (.txt)
+
+*Result:* doing/ folder now empty (WIP: 0/1)
+
+**3. Workflow Pattern Documentation**
+
+*Added to kanban-workflow.md (line 220-276):*
+- **Critical Rule:** All `{TYPE-ID}-*` files must move together
+- Pattern examples (main work item, auxiliary files, subtasks)
+- "When complete" rule: Nothing left behind
+- Updated commands from PowerShell `Move-Item` to cross-platform `git mv`
+- Added verification steps: `ls thoughts/work/{folder}/{TYPE-ID}-* 2>/dev/null` (should be empty after move)
+- Subtask exception: Can move independently, but parent completion requires all subtasks complete
+
+**4. Workflow Gap Analysis & Work Item Creation**
+
+*Test conducted:*
+- User provided intentionally vague instruction: "work on DOC-053"
+- AI violated workflow: moved backlog → done directly (bypassing todo and doing)
+- Successfully exposed systemic gaps in workflow enforcement
+
+*Root cause identified:*
+- State transition rules not explicitly documented
+- `{TYPE-ID}-*` file pattern not documented (now fixed)
+- No validation mechanism
+- AI relies on inferring rules from examples (error-prone)
+
+*Work items created:*
+
+**DOC-054: Document Workflow State Transition Rules** (High priority)
+- Location: framework/thoughts/work/backlog/
+- Purpose: Add explicit valid/invalid transition table to kanban-workflow.md
+- Content: Pre-flight checklist, transition rules table, invalid transition handling
+- Estimated time: ~30 minutes
+- Blocks: Prevents future AI workflow violations
+
+**TECH-055: Create Work Item Move Validation Script** (Medium priority)
+- Location: framework/thoughts/work/backlog/
+- Purpose: PowerShell script to validate transitions before moves
+- Features: Check transition validity, WIP limits, file patterns
+- Usage: Can be called by AI or used manually
+- Estimated time: ~2 hours
+- Enables: Automated validation, foundation for CI/CD checks
+
+*FEAT-037 updated:*
+- Added "Discussion: Workflow State Transition Validation (2026-01-13)" section
+- Documented how transition rules fit into project-config.yaml design
+- Implementation path: DOC-054 (docs) → TECH-055 (script) → FEAT-037 (config)
+- Shows config file becomes "master source" for validation rules
+
+### Key Insights
+
+**1. Intentional Testing Reveals Gaps**
+User's deliberately vague instruction successfully exposed workflow enforcement gap. Demonstrates value of proactive testing.
+
+**2. Multiple Layers of Defense Needed**
+- Layer 1: Documentation (DOC-054 - explicit rules)
+- Layer 2: Validation script (TECH-055 - programmatic check)
+- Layer 3: Config-based enforcement (FEAT-037 - machine-readable source)
+
+**3. `{TYPE-ID}-*` Pattern Is Critical**
+All files prefixed with work item ID must move together as a unit:
+- Ensures complete work artifacts stay together
+- Accurately reflects WIP limits
+- Clean folder organization
+- Exception: Subtasks can move independently during incremental work
+
+**4. FEAT-037 Becomes More Valuable**
+Today's gaps reinforce need for project-config.yaml:
+- Workflow validation rules (allowedTransitions)
+- WIP limits (wipLimits.doing, wipLimits.todo)
+- Validation script reference
+- Machine-readable, single source of truth
+
+### Commits Made
+
+No commits yet - changes staged for review:
+- DOC-053 moved to done/
+- REFACTOR-052 and all auxiliary files moved to done/
+- kanban-workflow.md updated with `{TYPE-ID}-*` pattern
+- troubleshooting-guide.md updated with temp file guidance
+- NEW-PROJECT-CHECKLIST.md updated with temp file notes (3 locations)
+- FEAT-037 updated with workflow validation discussion
+- DOC-054 created in backlog/
+- TECH-055 created in backlog/
+
+### Metrics
+
+**Work items completed:** 2 (DOC-053, REFACTOR-052)
+**Work items created:** 2 (DOC-054, TECH-055)
+**Documentation updated:** 3 files (kanban-workflow.md, troubleshooting-guide.md, NEW-PROJECT-CHECKLIST.md)
+**Work items updated:** 1 (FEAT-037)
+**doing/ status:** Empty (0/1) ✅
+**Workflow violations exposed:** 1 (led to systematic improvement)
+
+### Success Criteria
+
+**DOC-053:**
+✅ Temp file guidance added to NEW-PROJECT-CHECKLIST.md (3 locations)
+✅ Troubleshooting section added to troubleshooting-guide.md
+✅ Tone is informational, not alarming
+✅ Work item moved to done/
+
+**REFACTOR-052:**
+✅ All phases (0-6) verified complete
+✅ All auxiliary files moved with main work item
+✅ doing/ folder cleared
+✅ Status updated to Completed
+
+**Workflow Documentation:**
+✅ `{TYPE-ID}-*` pattern explicitly documented
+✅ Move-all-together rule clearly stated
+✅ Verification steps provided
+✅ Subtask exception documented
+
+**Gap Analysis:**
+✅ Workflow violation identified and analyzed
+✅ Root causes documented
+✅ Two remediation work items created
+✅ Integration with FEAT-037 planned
+
+### Process Observations
+
+**What Worked Well:**
+- Deliberate testing exposed real gaps
+- Creating work items to address gaps (not just fixing ad-hoc)
+- Linking related work (DOC-054 → TECH-055 → FEAT-037)
+- Documenting patterns as discovered
+
+**What Needs Improvement:**
+- AI needs to proactively check workflow rules before acting
+- State transition rules should be explicit, not inferred
+- Validation mechanisms needed for critical workflows
+
+**Lessons Learned:**
+- Gap identification through testing is valuable
+- Multiple work items OK if they build on each other
+- Pattern documentation prevents future issues
+- Config file design validated by real-world needs
+
+### Next Steps
+
+**Immediate (Next Session):**
+1. Commit all changes from this session
+2. Consider working on DOC-054 (high priority, quick win)
+
+**Short-term:**
+1. Complete DOC-054 (document transition rules)
+2. Complete TECH-055 (validation script)
+3. Update AI guidance to reference rules
+
+**Long-term:**
+1. FEAT-037 implementation (incorporate lessons learned)
+2. Consider git hooks for validation
+3. Expand validation to other workflow aspects
+
+---
+
+**Session End Status:**
+- DOC-053: ✅ COMPLETE (moved to done/)
+- REFACTOR-052: ✅ COMPLETE (moved to done/)
+- DOC-054: Created in backlog/ (High priority)
+- TECH-055: Created in backlog/ (Medium priority)
+- FEAT-037: Updated with workflow validation discussion
+- doing/: Empty (0/1)
+- Changes staged but not committed (awaiting user review)
+
+---
+
+## Evening Session: v3.2.0 Release
+
+**Duration:** Evening session
+**Focus:** Release v3.2.0 with REFACTOR-052, FEAT-039, and DOC-053
+
+### Work Completed
+
+**1. Release Preparation**
+
+*CHANGELOG.md updated:*
+- Added v3.2.0 release section (2026-01-13)
+- Documented REFACTOR-052 (Changed): Repository structure refactoring
+- Documented FEAT-039 (Added): Hello-world compliance validation
+- Documented DOC-053 (Documentation): Claude Code temp file guidance
+- Added release notes explaining grouped release of 3 work items
+
+*PROJECT-STATUS.md updated:*
+- Updated version: v3.1.0 → v3.2.0
+- Updated "Last Updated": 2026-01-13
+- Updated "Ongoing Enhancements" description
+- Updated "Current Release" section with new changes summary
+- Added v3.2.0 to Release History table
+
+**2. Work Item Archival**
+
+*Created release folder:*
+- `framework/thoughts/history/releases/v3.2.0/`
+
+*Archived work items (using git mv):*
+- REFACTOR-052-adopt-industry-standard-repo-structure.md
+- REFACTOR-052-AUDIT-REPORT.md
+- REFACTOR-052-audit-hello-world.txt
+- REFACTOR-052-audit-monorepo.txt
+- REFACTOR-052-audit-templates.txt
+- FEAT-039-verify-hello-world-compliance.md
+- FEAT-039-VALIDATION-REPORT.md
+- DOC-053-claude-code-temp-files-guidance.md
+
+*Result:*
+- done/ folder now clean (only .gitkeep)
+- All completed work items archived in v3.2.0 release folder
+- Git history preserved for all moves
+
+**3. Session History Updated**
+- Added this release section to session history
+- Documented release process and archival
+
+### Release Summary
+
+**Version:** v3.2.0
+**Release Date:** 2026-01-13
+**Type:** Minor release (new features, non-breaking changes to structure)
+**Work Items:** 3 (REFACTOR-052, FEAT-039, DOC-053)
+
+**Breaking Changes:**
+- Repository structure renamed (project-hello-world/ → examples/hello-world/, project-templates/ → templates/)
+- Terminology updated ("monorepo" → "framework source repository")
+
+**Highlights:**
+- Industry-standard repository structure adopted
+- Hello-world reference implementation validated (100% compliant)
+- Claude Code temporary file configuration documented
+
+### Metrics - v3.2.0 Release
+
+**Work items released:** 3
+**Total commits in release:** ~15 (including cleanup commits)
+**Directories renamed:** 2 (with git history preserved)
+**Documentation files updated:** 35+
+**Validation work:** 1 comprehensive audit (FEAT-039)
+**Documentation enhancements:** 4 files (checklist + troubleshooting guide)
+**Release artifacts:** 8 files archived in v3.2.0 folder
+
+### Process Observations
+
+**Release Process:**
+- Followed grouped release pattern from FEAT-032
+- Updated CHANGELOG first, then PROJECT-STATUS
+- Created release folder and archived all work items together
+- Maintained git history for all operations
+
+**Quality:**
+- All three work items fully complete before release
+- Comprehensive CHANGELOG entries with context
+- Clear migration notes for breaking changes
+- Professional release notes format
+
+**Success Factors:**
+- Path-by-path migration strategy (REFACTOR-052)
+- Comprehensive validation (FEAT-039)
+- Clear documentation (DOC-053)
+- Disciplined workflow adherence
+
+### Commits to Make
+
+Ready to commit:
+1. CHANGELOG.md updated with v3.2.0 release
+2. PROJECT-STATUS.md updated with v3.2.0 version
+3. Work items archived in v3.2.0 release folder (git mv)
+4. Session history updated with release section
+
+---
+
+**Session End Status:**
+- v3.2.0: ✅ RELEASED
+- done/ folder: Clean (only .gitkeep)
+- v3.2.0 release folder: 8 archived files
+- Ready to commit and push
+
+---
+
+**Last Updated:** 2026-01-13 (evening session - v3.2.0 released)

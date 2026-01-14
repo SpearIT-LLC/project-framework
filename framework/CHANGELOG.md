@@ -13,6 +13,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Planned
+- Minimal and Light Framework template packages (deferred from v3.0.0)
+- Visual diagrams for folder structure and workflow
+- ZIP distribution package
+- Interactive setup script
+- Validation script
+- Backlog review command (FEAT-017)
+- Claude command framework (FEAT-018)
+- Automated session history generation (FEAT-022)
+
+---
+
+## [3.2.0] - 2026-01-13
+
 ### Changed
 - **REFACTOR-052: Adopt Industry-Standard Repository Structure**
   - Renamed `project-hello-world/` → `examples/hello-world/` (aligns with npm/pip/bundler conventions)
@@ -23,15 +37,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - See research: [thoughts/research/package-ecosystem-terminology-patterns.md](thoughts/research/package-ecosystem-terminology-patterns.md)
   - **Migration Note:** If referencing old paths in external docs, update to new structure
 
-### Planned
-- Minimal and Light Framework template packages (deferred from v3.0.0)
-- Visual diagrams for folder structure and workflow
-- ZIP distribution package
-- Interactive setup script
-- Validation script
-- Backlog review command (FEAT-017)
-- Claude command framework (FEAT-018)
-- Automated session history generation (FEAT-022)
+### Added
+- **FEAT-039: Verify Hello-World Compliance**
+  - Validated examples/hello-world/ against PROJECT-STRUCTURE-STANDARD.md
+  - Comprehensive audit of all required files, folders, and structure
+  - Validation report confirms 100% compliance with Standard Framework specification
+  - Establishes hello-world as verified reference implementation
+  - Informs FEAT-025 scope (Standard level validation already complete)
+
+### Documentation
+- **DOC-053: Document Claude Code Temporary File Configuration**
+  - Added guidance about `tmpclaude-*` temporary files in NEW-PROJECT-CHECKLIST.md
+  - Added troubleshooting section in collaboration/troubleshooting-guide.md
+  - Documented `CLAUDE_CODE_TMPDIR` environment variable configuration option
+  - Clarified .gitignore already prevents git tracking (added in REFACTOR-052)
+
+### Notes
+This release contains 3 work items grouped together: major refactoring (REFACTOR-052), validation work (FEAT-039), and user documentation (DOC-053).
 
 ---
 

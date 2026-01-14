@@ -1,10 +1,10 @@
 # SpearIT Project Framework - Project Status
 
-**Last Updated:** 2026-01-11
+**Last Updated:** 2026-01-13
 **Updated By:** Gary Elliott with Claude Code
-**Current Version:** v3.1.0 (2026-01-11)
+**Current Version:** v3.2.0 (2026-01-13)
 **Core Implementation:** Complete and production-ready
-**Ongoing Enhancements:** Multi-project repository structure established, framework dogfooding itself, grouped releases supported
+**Ongoing Enhancements:** Industry-standard repository structure adopted, hello-world reference implementation validated, grouped releases supported
 
 ---
 
@@ -18,18 +18,19 @@ The SpearIT Project Framework is a comprehensive project management framework te
 
 ## Version Information
 
-### Current Release: v3.1.0 (2026-01-11)
+### Current Release: v3.2.0 (2026-01-13)
 
 **Status:** Stable - Production Ready
 
-**Latest Changes (Grouped Release: FEAT-032, DECISION-042, FEAT-040):**
-- ✨ Added grouped release process documentation
-- 📝 Clarified work item ID definition and reference system
-- 🐛 Fixed framework structure compliance issues
-- 📖 Updated workflow-guide.md with grouped release process
-- 📋 Updated CLAUDE.md Step 9 with grouped release support
-- 🔢 Work item IDs now use canonical format (042 instead of FEAT-042 in metadata)
-- ✅ Framework fully complies with its own structure standard
+**Latest Changes (Grouped Release: REFACTOR-052, FEAT-039, DOC-053):**
+- 🔄 **BREAKING:** Repository structure aligned with industry standards (npm/pip/bundler)
+- 📁 Renamed `project-hello-world/` → `examples/hello-world/`
+- 📁 Renamed `project-templates/` → `templates/`
+- 📝 Updated terminology: "framework source repository" replaces "monorepo"
+- ✅ Validated examples/hello-world/ - 100% compliant with Standard Framework
+- 📖 Documented Claude Code temporary file configuration (`CLAUDE_CODE_TMPDIR`)
+- 🔍 Comprehensive structure validation confirms reference implementation quality
+- 🎯 All Tier 1 (navigation) and Tier 2 (active work) documentation updated
 
 **Previous Release (FEAT-026 - Structure Migration):**
 - 🔄 **BREAKING:** Reorganized repository into multi-project structure
@@ -291,6 +292,7 @@ See [roadmap.md](thoughts/project/planning/roadmap.md) for complete roadmap.
 
 | Version | Release Date | Type | Highlights |
 |---------|--------------|------|------------|
+| v3.2.0 | 2026-01-13 | Minor | Industry-standard repository structure, hello-world validation, temp file documentation |
 | v3.1.0 | 2026-01-11 | Minor | Grouped releases support, work item ID clarification, structure compliance fixes |
 | v3.0.1 | 2026-01-11 | Patch | Updated 10 files with v3.0.0 path references, aligned all docs with structure standard |
 | v3.0.0 | 2026-01-08 | Major | Multi-project repository structure, flattened thoughts/ hierarchy, template reorganization |
