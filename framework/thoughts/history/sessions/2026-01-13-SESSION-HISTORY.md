@@ -992,4 +992,168 @@ Ready to commit:
 
 ---
 
-**Last Updated:** 2026-01-13 (evening session - v3.2.0 released)
+---
+
+## Late Evening Session: FEAT-037 v3.2.0 Alignment and Config Filename Decision
+
+**Duration:** Late evening session
+**Focus:** Update FEAT-037 for v3.2.0 structure, decide config filename
+
+### Work Completed
+
+**1. FEAT-037 Review and v3.2.0 Alignment**
+
+*Work item reviewed:*
+- Read complete FEAT-037 (project config file design)
+- Identified needed updates for v3.2.0 structure changes
+- Reviewed decisions and open questions
+
+*High priority updates made:*
+- **Path Updates:** All policy paths updated throughout document (9 instances)
+  - `framework/process/` → `framework/docs/process/`
+  - `framework/collaboration/` → `framework/docs/collaboration/`
+- **Terminology Updates:** Replaced "monorepo" with "framework source repository" (7 instances)
+- **Structure Diagram Updated:** Framework organization diagram (lines 307-315) reflects v3.2.0
+- **Examples Updated:** All YAML/JSON examples use correct v3.2.0 paths
+
+**2. Config Location Decision Resolved**
+
+*Question:* Repository root vs per-project configs?
+
+*Analysis conducted:*
+- Reviewed REPOSITORY-STRUCTURE.md (multi-project vs single-project patterns)
+- Reviewed PROJECT-STRUCTURE-STANDARD.md (project root definition)
+- Reviewed repository root CLAUDE.md (navigation patterns)
+
+*Decision: Repository root (`framework.yaml`)*
+- Works for both multi-project repos (framework source) and single-project repos (user projects)
+- In multi-project repos: describes repository and lists projects
+- In single-project repos: repository root = project root, so config describes project
+- Follows package manager patterns (package.json, pyproject.toml, etc.)
+
+*Open Questions resolved:*
+- Question #1: Config location (repository root vs per-project) ✅ RESOLVED
+- Question #9: One config or multiple ✅ RESOLVED
+
+**3. Config Filename Decision**
+
+*Options discussed:*
+- `config.yaml` - Too generic, collision risk
+- `project-config.yaml` - Original proposal, descriptive
+- `spearit.yaml` - Brand-specific
+- `spearit_config.yaml` - Verbose
+- `framework.yaml` - Framework-branded, concise
+- `.framework.yaml` - Hidden dotfile version
+
+*Analysis:*
+- Package manager precedent favors visible, descriptive config files
+- Framework-branded but not organization-specific
+- Unique enough to avoid collisions
+- Discoverable (visible, not hidden)
+- Short and memorable
+
+*Decision: `framework.yaml` (visible)*
+- Framework-branded but not organization-specific
+- Unique enough to avoid user code collisions
+- Visible for discoverability (not hidden dotfile)
+- Follows package manager pattern (short, descriptive)
+- Schema file: `framework-schema.json`
+
+*Document updates:*
+- All 22 references changed from `project-config.yaml` to `framework.yaml`
+- Schema reference updated to `framework-schema.json`
+- Examples updated throughout (YAML and JSON)
+- Decision rationale documented (lines 455-469)
+
+**4. Examples Restructured**
+
+*Multi-project vs single-project clarity:*
+- Main YAML examples now show BOTH scenarios
+- Example A: Single-project repository (typical user project)
+- Example B: Multi-project repository (framework source)
+- Context switching example updated to use repository root config
+- Policy confusion examples show both patterns
+
+**5. Documentation Summary Added**
+
+*New section created:*
+- "Updates for v3.2.0" section (lines 850-878)
+- Documents all changes made to align with v3.2.0
+- Explains filename decision rationale
+- Summarizes path updates and terminology changes
+
+### Key Decisions Made
+
+**1. Config Filename: `framework.yaml`**
+- Rationale: Framework-branded, unique, discoverable, follows industry patterns
+- Not `.framework.yaml` (hidden files less discoverable)
+- Not `project-config.yaml` (generic, less distinctive)
+
+**2. Config Location: Repository Root**
+- Works seamlessly for both repository types
+- Multi-project: lists projects, provides defaults
+- Single-project: root = project root, describes project directly
+- Complements CLAUDE.md (human navigation)
+
+**3. Examples Should Show Both Scenarios**
+- Single-project (typical user): Simple, direct project config
+- Multi-project (framework source): Repository-level with project registry
+- Helps users understand which pattern applies to them
+
+### Metrics
+
+**FEAT-037 updates:**
+- Path updates: 18 occurrences
+- Terminology updates: 7 occurrences
+- Filename changes: 22 occurrences (project-config.yaml → framework.yaml)
+- Examples restructured: 4 major sections
+- Open questions resolved: 2 (questions #1 and #9)
+- New documentation section: 1 (v3.2.0 updates summary)
+
+**Total changes:** ~50 updates across 30+ code examples and explanatory text
+
+### Success Criteria
+
+**FEAT-037 v3.2.0 alignment:**
+✅ All policy paths use v3.2.0 structure
+✅ All terminology uses "framework source repository"
+✅ Framework structure diagram accurate
+✅ Config location decision finalized and documented
+✅ Filename decision finalized and documented
+✅ Examples show both repository types
+✅ Open questions resolved
+✅ Ready for Phase 1 implementation
+
+### Process Observations
+
+**What Worked Well:**
+- Systematic review caught all needed updates
+- Structure document review validated repository root decision
+- Discussing naming options led to clear consensus
+- Examples for both scenarios improve clarity
+
+**Key Insights:**
+- Repository root works for both multi-project and single-project patterns
+- Visible config files are more discoverable than hidden dotfiles
+- Framework-branded filename strikes balance (unique but not org-specific)
+- v3.2.0 structure changes simplified config path references
+
+**Quality Notes:**
+- FEAT-037 is comprehensive and well-designed
+- Multiple discussion sections show evolution of thinking
+- Repository root decision aligns perfectly with v3.2.0 structure
+- Ready for implementation without further design work
+
+### Commits Ready
+
+Changes staged for commit:
+1. FEAT-037 updated with v3.2.0 paths, terminology, and examples
+2. Config filename changed to `framework.yaml` throughout
+3. Config location decision documented
+4. Session history updated
+
+**Next Session:** Commit changes, consider starting FEAT-037 Phase 1 or working on DOC-054
+
+---
+
+**Last Updated:** 2026-01-13 (late evening - FEAT-037 v3.2.0 alignment complete)

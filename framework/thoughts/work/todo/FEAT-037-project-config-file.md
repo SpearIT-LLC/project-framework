@@ -86,60 +86,91 @@ The config file serves as the **machine-readable master index** for:
 
 ### Option 1: Minimal YAML
 
+**Example A: Single-Project Repository (typical user project)**
+
 ```yaml
-# project-config.yaml
+# framework.yaml (repository root)
 # Project context and policy references for AI assistants and tooling
 
 project:
-  name: "Standard Project Framework"
-  type: framework  # framework | application | library | tool
-  deliverable: documentation  # code | documentation | hybrid
+  name: "My Awesome Application"
+  type: application  # framework | application | library | tool
+  deliverable: code  # code | documentation | hybrid
 
 # Master policy index - points to source-of-truth documents
 policies:
-  workflow: framework/process/workflow-guide.md
-  dryPrinciples: framework/collaboration/documentation-dry-principles.md
-  workItemTemplates: framework/templates/work-items/
-  codingStandards: null  # Not applicable for documentation project
+  workflow: docs/process/workflow-guide.md
+  codingStandards: docs/coding-standards.md
 
 # Work item category interpretation for this project type
 categories:
-  FEAT: "New framework content, capabilities, or documentation"
-  TECH: "Process, tooling, and infrastructure improvements (not debt)"
-  BUGFIX: "Corrections to existing framework content"
-  DECISION: "Architectural or policy decisions requiring documentation"
-  SPIKE: "Research and investigation"
+  FEAT: "New features and capabilities"
+  TECH: "Technical debt and code refactoring"
+  BUGFIX: "Bug fixes"
 
 # Workflow configuration
 workflow:
-  workPath: framework/thoughts/work/
+  workPath: thoughts/work/
   useStandardWorkflow: true
-  customSteps: null  # Override workflow steps if needed
+```
+
+**Example B: Multi-Project Repository (framework source repository)**
+
+```yaml
+# framework.yaml (repository root)
+# Repository context and project registry for AI assistants and tooling
+
+repository:
+  name: "SpearIT Project Framework"
+  type: "framework-source"  # Multi-project repository
+
+# Default project when context is unclear
+defaultProject: framework
+
+# Projects in this repository
+projects:
+  framework:
+    name: "Standard Project Framework"
+    type: framework
+    deliverable: documentation
+    workPath: framework/thoughts/work/
+    policies:
+      workflow: framework/docs/process/workflow-guide.md
+      dryPrinciples: framework/docs/collaboration/documentation-dry-principles.md
+    categories:
+      TECH: "Process improvements, not code debt"
+
+  hello-world:
+    name: "Hello World Example"
+    type: application
+    deliverable: code
+    workPath: examples/hello-world/thoughts/work/
 ```
 
 ### Option 2: JSON with Comments
 
+**Note:** JSON shown for single-project repository. Multi-project repositories follow the structure shown in YAML Example B above.
+
 ```json
 {
-  "$schema": "./project-config-schema.json",
+  "$schema": "./framework-schema.json",
   "project": {
-    "name": "Standard Project Framework",
-    "type": "framework",
-    "deliverable": "documentation"
+    "name": "My Awesome Application",
+    "type": "application",
+    "deliverable": "code"
   },
   "policies": {
     "_comment": "Master index - points to source-of-truth documents",
-    "workflow": "framework/process/workflow-guide.md",
-    "dryPrinciples": "framework/collaboration/documentation-dry-principles.md",
-    "workItemTemplates": "framework/templates/work-items/"
+    "workflow": "docs/process/workflow-guide.md",
+    "codingStandards": "docs/coding-standards.md"
   },
   "categories": {
     "_comment": "How to interpret work item types in this project",
-    "FEAT": "New framework content, capabilities, or documentation",
-    "TECH": "Process, tooling, and infrastructure improvements"
+    "FEAT": "New features and capabilities",
+    "TECH": "Technical debt and code refactoring"
   },
   "workflow": {
-    "workPath": "framework/thoughts/work/",
+    "workPath": "thoughts/work/",
     "standard": true
   }
 }
@@ -153,32 +184,43 @@ workflow:
 
 ### Solution: Explicit Policy Scope in Config
 
-Each project's config clarifies which policies apply:
+The config clarifies which policies apply to which type of project:
 
-**Framework project config:**
+**Framework source repository (multi-project):**
 ```yaml
-project:
-  type: framework
-  deliverable: documentation
+# framework.yaml
+repository:
+  name: "SpearIT Project Framework"
+  type: "framework-source"
 
-policies:
-  workflow: framework/process/workflow-guide.md
-  dryPrinciples: framework/collaboration/documentation-dry-principles.md
-  # Applies to framework documentation
+projects:
+  framework:
+    type: framework
+    deliverable: documentation
+    policies:
+      workflow: framework/docs/process/workflow-guide.md
+      dryPrinciples: framework/docs/collaboration/documentation-dry-principles.md
+    categories:
+      TECH: "Process improvements, not code debt"
 
-categories:
-  TECH: "Process improvements, not code debt"
+  hello-world:
+    type: application
+    deliverable: code
+    policies:
+      workflow: framework/docs/process/workflow-guide.md  # Reuses framework workflow
+    categories:
+      TECH: "Technical debt and code refactoring"
 ```
 
-**User code project config:**
+**User's code project (single-project repository):**
 ```yaml
+# framework.yaml
 project:
   type: application
   deliverable: code
 
 policies:
-  workflow: framework/process/workflow-guide.md  # Reuse framework workflow
-  dryPrinciples: null  # DRY code principles, not doc principles
+  workflow: framework/docs/process/workflow-guide.md  # Reference installed framework
   codingStandards: docs/coding-standards.md  # Project-specific
 
 categories:
@@ -205,7 +247,7 @@ categories:
 - Guesses category interpretations
 
 **With config:**
-- Reads project-config.yaml first
+- Reads framework.yaml first
 - Knows project type explicitly
 - Applies correct category interpretations
 - References correct policy documents
@@ -229,7 +271,7 @@ project:
   deliverable: code
 
 policies:
-  workflow: framework/process/workflow-guide.md  # Keep framework workflow
+  workflow: framework/docs/process/workflow-guide.md  # Keep framework workflow
   dryPrinciples: docs/my-dry-principles.md  # Override with project-specific
   codingStandards: docs/coding-standards.md  # Add new policy
 ```
@@ -249,7 +291,7 @@ Clean, explicit, easy to understand.
 
 **With config:**
 ```javascript
-const config = yaml.load('project-config.yaml');
+const config = yaml.load('framework.yaml');
 const workPath = config.workflow.workPath;
 const policies = config.policies;
 // Machine-readable, stable interface
@@ -306,20 +348,21 @@ policyDryPrinciples: path/to/dry.md
 **Current framework organization:**
 ```
 framework/
-├── process/          # Workflow, release procedures
-├── collaboration/    # AI guides, team workflows
-├── templates/        # Work items, documents
-├── patterns/         # Reusable patterns
-└── docs/            # Other documentation
+├── docs/
+│   ├── process/          # Workflow, release procedures
+│   ├── collaboration/    # AI guides, team workflows
+│   └── patterns/         # Reusable patterns
+├── templates/            # Work items, documents
+└── thoughts/             # Work tracking
 ```
 
 **Config Option A: Flat Policy List**
 ```yaml
 policies:
-  workflow: framework/process/workflow-guide.md
-  dryPrinciples: framework/collaboration/documentation-dry-principles.md
+  workflow: framework/docs/process/workflow-guide.md
+  dryPrinciples: framework/docs/collaboration/documentation-dry-principles.md
   featureTemplate: framework/templates/work-items/FEATURE-TEMPLATE.md
-  releaseProcess: framework/process/release-process.md
+  releaseProcess: framework/docs/process/release-process.md
 ```
 - Pros: Simple, direct
 - Cons: Could get long, no organization
@@ -328,11 +371,11 @@ policies:
 ```yaml
 policies:
   process:
-    workflow: framework/process/workflow-guide.md
-    release: framework/process/release-process.md
+    workflow: framework/docs/process/workflow-guide.md
+    release: framework/docs/process/release-process.md
   collaboration:
-    dryPrinciples: framework/collaboration/documentation-dry-principles.md
-    aiWorkflow: framework/collaboration/ai-workflow.md
+    dryPrinciples: framework/docs/collaboration/documentation-dry-principles.md
+    aiWorkflow: framework/docs/collaboration/ai-workflow-guide.md
   templates:
     workItems: framework/templates/work-items/
 ```
@@ -343,7 +386,7 @@ policies:
 ```yaml
 policies:
   # Essential policies referenced frequently by AI/tooling
-  workflow: framework/process/workflow-guide.md
+  workflow: framework/docs/process/workflow-guide.md
   workItemTemplates: framework/templates/work-items/
 
   # Complete policy list in INDEX.md
@@ -397,29 +440,39 @@ policies:
 
 **Options:**
 
-1. **Project root:** `project-config.yaml`
+1. **Project root:** `framework.yaml`
    - Pros: Easy to find, standard location
    - Cons: Adds clutter to root
 
-2. **Framework folder:** `framework/project-config.yaml`
+2. **Framework folder:** `framework/framework.yaml`
    - Pros: Keeps framework concerns together
    - Cons: Less discoverable
 
-3. **Hidden dot-file:** `.project-config.yaml`
+3. **Hidden dot-file:** `.framework.yaml`
    - Pros: Keeps root clean
    - Cons: Harder to discover, less standard
 
-**Decision:** Project root (`project-config.yaml`) ✓
-- Standard location for config files
+**Decision:** Repository root (`framework.yaml`) ✓
+- **Filename:** `framework.yaml` (not `project-config.yaml`, not `.framework.yaml`)
+  - Framework-branded but not organization-specific
+  - Unique enough to avoid collisions with user code
+  - Visible for discoverability (not a hidden dotfile)
+  - Follows pattern of package managers (short, descriptive)
+- **Location:** Repository root
+- Standard location for repository-wide configuration
 - Immediately visible to tools and AI
-- Consistent with other projects (package.json, etc.)
-- Decided: 2026-01-08
+- Consistent with package managers (package.json, pyproject.toml, Cargo.toml, etc.)
+- Works for both multi-project repositories (framework source) and single-project repositories (user projects)
+- In multi-project repos: describes repository metadata and can list/reference projects
+- In single-project repos: repository root = project root, so config describes the project directly
+- Complements existing CLAUDE.md (human navigation) with machine-readable equivalent
+- Decided: 2026-01-08, clarified 2026-01-13 (after v3.2.0 structure review), filename decided 2026-01-13
 
 ---
 
 ## Relationship to INDEX.md (FEAT-031)
 
-**Key Question:** How do project-config.yaml and INDEX.md work together?
+**Key Question:** How do framework.yaml and INDEX.md work together?
 
 ### Similarities (Overlap)
 Both reference policy document locations:
@@ -442,7 +495,7 @@ Both reference policy document locations:
 ```yaml
 policies:
   indexFile: framework/INDEX.md  # Master list
-  workflow: framework/process/workflow-guide.md  # Essential policies only
+  workflow: framework/docs/process/workflow-guide.md  # Essential policies only
 ```
 - Config has minimal policies, points to INDEX.md for complete list
 - Pros: Less duplication, single source for complete list
@@ -452,7 +505,7 @@ policies:
 ```markdown
 ## Master Policy Index
 
-See [project-config.yaml](../project-config.yaml) for machine-readable policy references.
+See [framework.yaml](../framework.yaml) for machine-readable policy references.
 
 Below is the human-organized documentation index...
 ```
@@ -487,7 +540,7 @@ Below is the human-organized documentation index...
 - Clearer AI context and interpretation
 - Easier policy customization for users
 - Foundation for tooling/automation
-- Multi-project monorepo support
+- Multi-project framework source repository support
 
 ---
 
@@ -497,7 +550,7 @@ Below is the human-organized documentation index...
    - ✓ **Decision:** YAML (human-readable, supports comments) - 2026-01-08
 
 2. **File location:** Root, framework folder, or hidden?
-   - ✓ **Decision:** Project root (project-config.yaml) - 2026-01-08
+   - ✓ **Decision:** Project root (framework.yaml) - 2026-01-08
 
 3. **Relationship to INDEX.md:** How do they work together?
    - ❓ **Open:** Do they need to be kept in sync, or are they independent?
@@ -540,9 +593,11 @@ Below is the human-organized documentation index...
    - **Recommendation:** AI falls back to current behavior (infer from CLAUDE.md)
    - **Validation:** Ensure gradual adoption is possible
 
-9. **Monorepo structure:** One config or multiple?
-   - **Recommendation:** One per project (framework/, examples/hello-world/, etc.)
-   - **Open:** Should framework config be "inherited" by other projects?
+9. ✅ **Framework source repository structure:** One config or multiple? **RESOLVED 2026-01-13**
+   - **Decision:** Single config at repository root
+   - Lists all projects in multi-project repositories
+   - In single-project repositories, root config describes the project directly
+   - Future possibility: Per-project configs could complement root config if needed
 
 ---
 
@@ -580,7 +635,7 @@ project:
   type: framework
   deliverable: documentation
 policies:
-  workflow: framework/process/workflow-guide.md
+  workflow: framework/docs/process/workflow-guide.md
 ---
 
 # Claude Context: Framework Project
@@ -641,9 +696,9 @@ policies:
 
 ---
 
-## Discussion: Monorepo Context Switching (2026-01-11)
+## Discussion: Framework Source Repository Context Switching (2026-01-11)
 
-**Context:** While working on FEAT-039 (validating examples/hello-world), we discovered a practical issue: how do AI and user communicate which project context we're working in within the monorepo?
+**Context:** While working on FEAT-039 (validating examples/hello-world), we discovered a practical issue: how do AI and user communicate which project context we're working in within the framework source repository?
 
 **The Problem:**
 - FEAT-039 was a validation task targeting examples/hello-world
@@ -672,44 +727,46 @@ policies:
 Combine explicit declaration + config-based context:
 
 ```yaml
-# framework/project-config.yaml
-project:
-  name: "Standard Project Framework"
-  type: framework
+# framework.yaml (repository root)
+repository:
+  name: "SpearIT Project Framework"
+  type: "framework-source"  # Multi-project repository
 
-workflow:
-  workPath: framework/thoughts/work/  # Where work items for THIS project go
-```
+# Default project when context is unclear
+defaultProject: framework
 
-```yaml
-# examples/hello-world/project-config.yaml
-project:
-  name: "Hello World Example"
-  type: application
-
-workflow:
-  workPath: examples/hello-world/thoughts/work/  # Different work path
+# Projects in this repository
+projects:
+  framework:
+    name: "Standard Project Framework"
+    path: framework/
+    type: framework
+    deliverable: documentation
+    workPath: framework/thoughts/work/
+  hello-world:
+    name: "Hello World Example"
+    path: examples/hello-world/
+    type: application
+    deliverable: code
+    workPath: examples/hello-world/thoughts/work/
 ```
 
 **Workflow:**
 1. User: "Switch to examples/hello-world"
-2. AI reads `examples/hello-world/project-config.yaml`
-3. AI knows work items go in `examples/hello-world/thoughts/work/`
-4. User: "Create work item for missing README"
-5. AI creates work item in correct location based on active config
+2. AI reads repository root `framework.yaml`
+3. AI finds `projects.hello-world` section
+4. AI knows work items go in `examples/hello-world/thoughts/work/`
+5. User: "Create work item for missing README"
+6. AI creates work item in correct location based on active project context
 
 **Open Questions:**
 
-1. **Monorepo root config?** Should there be a config at repo root, or just rely on CLAUDE.md + per-project configs?
-   - Option A: Per-project configs only, CLAUDE.md handles monorepo navigation
-   - Option B: Root config + per-project configs (more structure, potential duplication)
-   - **Leaning toward Option A** - CLAUDE.md already serves monorepo navigation purpose
-
-2. **Config location decision conflict:** Line 412 says "Project root" but in monorepo context, which root?
-   - Framework project root: `framework/project-config.yaml`
-   - Hello-world project root: `examples/hello-world/project-config.yaml`
-   - Monorepo root: `project-config.yaml` (if we have one)
-   - **Need to clarify:** "project root" = each project's root, not monorepo root
+1. ✅ **Config location:** Repository root vs per-project configs? **RESOLVED 2026-01-13**
+   - **Decision:** Repository root (`framework.yaml`)
+   - In multi-project repos: config describes repository and can reference projects
+   - In single-project repos: repository root = project root, config describes project
+   - See line 413-421 for complete rationale
+   - Per-project configs (e.g., `framework/framework.yaml`) remain possible for future if needed
 
 3. **Cross-project references:** User says "create work item in hello-world" while in framework context
    - Should AI support this? Or require explicit context switch first?
@@ -718,11 +775,11 @@ workflow:
 4. **Context loss recovery:** What happens when conversation context is lost?
    - Config provides durable source of truth
    - But which config to read if context is completely lost?
-   - Fallback to monorepo CLAUDE.md for navigation?
+   - Fallback to repository root CLAUDE.md for navigation?
 
 **Next Steps:**
-- Need more discussion on monorepo-specific config structure
-- Interim solution: Add note to monorepo CLAUDE.md about explicit context switching
+- Need more discussion on framework source repository-specific config structure
+- Interim solution: Add note to repository root CLAUDE.md about explicit context switching
 - Revisit when ready to implement FEAT-037
 
 **Related Insights:**
@@ -758,7 +815,7 @@ workflow:
 
 **How This Relates to FEAT-037:**
 
-The project-config.yaml could include workflow validation rules:
+The framework.yaml could include workflow validation rules:
 
 ```yaml
 workflow:
@@ -793,6 +850,44 @@ workflow:
 - Start with DOC-054 + TECH-055 (immediate value)
 - FEAT-037 can later centralize these rules in config
 - Config becomes "master source," docs reference config
+
+---
+
+## Updates for v3.2.0 (2026-01-13)
+
+**Changes made to align with REFACTOR-052 (Industry-Standard Repository Structure):**
+
+0. **Filename Decision:**
+   - Changed from `project-config.yaml` to `framework.yaml`
+   - Rationale: Framework-branded, unique enough to avoid collisions, follows package manager patterns
+   - Visible file (not `.framework.yaml`) for discoverability
+   - Decided: 2026-01-13
+
+1. **Path Updates:**
+   - All policy paths updated: `framework/process/` → `framework/docs/process/`
+   - All policy paths updated: `framework/collaboration/` → `framework/docs/collaboration/`
+   - Framework structure diagram updated to reflect v3.2.0 organization
+
+2. **Terminology Updates:**
+   - "Monorepo" → "Framework source repository" (throughout document)
+   - Aligns with industry-standard package development terminology
+
+3. **Config Location Decision:**
+   - Clarified repository root (`framework.yaml`) as standard location
+   - Works for both multi-project repositories (framework source) and single-project repositories (user projects)
+   - Updated examples to show both multi-project and single-project scenarios
+   - Resolved Open Questions #1 and #9
+
+4. **Examples Updated:**
+   - Main YAML example now shows both scenarios (single-project vs multi-project)
+   - Framework Source Repository Context Switching example updated to use repository root config
+   - Policy confusion examples updated to reflect repository root approach
+
+**Key Insight:** Repository root config provides:
+- Standard, discoverable location (like package.json, pyproject.toml)
+- Works seamlessly for both repository types
+- In multi-project repos: describes repository and lists projects
+- In single-project repos: repository root = project root, so config describes project directly
 
 ---
 
