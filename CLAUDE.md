@@ -2,7 +2,18 @@
 
 This file provides navigation and context for AI assistants working in this framework source repository.
 
-**Last Updated:** 2026-01-06
+**Last Updated:** 2026-01-14
+
+---
+
+## Project Configuration
+
+Read `framework.yaml` at the repo root for machine-readable project context:
+- `project.name` - Project name
+- `project.type` - framework | application | library | tool
+- `project.deliverable` - code | documentation | hybrid
+
+Use these values to understand project context rather than inferring from structure.
 
 ---
 

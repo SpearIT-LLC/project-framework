@@ -7,6 +7,17 @@
 
 ---
 
+## Project Configuration
+
+Read `framework.yaml` at the project root for machine-readable project context:
+- `project.name` - Project name
+- `project.type` - framework | application | library | tool
+- `project.deliverable` - code | documentation | hybrid
+
+Use these values to understand project context rather than inferring from structure.
+
+---
+
 ## What This Is
 
 [2-3 sentence description of what this tool does]

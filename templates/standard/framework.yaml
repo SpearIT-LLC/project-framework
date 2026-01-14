@@ -1,0 +1,8 @@
+# framework.yaml
+# Project configuration for AI assistants and tooling
+# Update these values for your project
+
+project:
+  name: "{{PROJECT_NAME}}"
+  type: application  # framework | application | library | tool
+  deliverable: code  # code | documentation | hybrid

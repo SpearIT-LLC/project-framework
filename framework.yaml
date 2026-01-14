@@ -1,0 +1,7 @@
+# framework.yaml
+# Project configuration for AI assistants and tooling
+
+project:
+  name: "SpearIT Project Framework"
+  type: framework
+  deliverable: documentation

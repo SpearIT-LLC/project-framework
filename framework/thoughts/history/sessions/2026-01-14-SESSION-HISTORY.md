@@ -239,4 +239,78 @@ Key realization: Without explicit CLAUDE.md instruction, AI won't know to read `
 
 ---
 
+## Session 2: FEAT-037 Testing and File Location Fix
+
+**Time:** Later on 2026-01-14
+**Focus:** Running T1-T3 tests, discovering file location issue, fixing it
+
+### Testing Began
+
+Started running test cases T1-T3 with prompts:
+- T1: "What is this project called?"
+- T2: "What type of project is this?"
+- T3: "What is the deliverable?"
+
+### Key Discovery: File Location Problem
+
+**Issue:** Claude answered correctly but got the information from the wrong source.
+
+**What happened:**
+- User had `FEAT-037-project-config-file.md` work item open in IDE
+- Claude read the work item (which contained example configs) instead of reading `framework.yaml` directly
+- Test T3 was answered correctly, but by "cheating" - reading examples from documentation rather than the actual config file
+
+**Root cause identified:**
+- `framework.yaml` was placed at `framework/framework.yaml` (framework subfolder)
+- CLAUDE.md instruction was in `framework/CLAUDE.md` (framework subfolder)
+- But root `CLAUDE.md` is what Claude Code loads automatically at session start
+- The instruction to read `framework.yaml` was never seen unless Claude navigated to `framework/CLAUDE.md`
+
+### Design Decision Clarification
+
+**Original decision:** "Location | Project root (`framework.yaml`)"
+
+**Problem:** "Project root" is ambiguous in this repo because:
+- The repo has nested structure (framework is in a subfolder)
+- For typical user projects, "project root" = "repo root"
+- For this framework source repo, they're different
+
+### Fix Applied
+
+Moved both files to repo root:
+
+1. **Created** `framework.yaml` at repo root
+2. **Added** Project Configuration section to root `CLAUDE.md` (lines 9-16)
+3. **Deleted** `framework/framework.yaml`
+4. **Removed** redundant Project Configuration section from `framework/CLAUDE.md`
+5. **Changed** wording from "project root" to "repo root" for clarity
+
+### Files Modified
+
+- `framework.yaml` - Created at repo root (moved from `framework/`)
+- `CLAUDE.md` (root) - Added Project Configuration section
+- `framework/CLAUDE.md` - Removed redundant Project Configuration section
+- `framework/framework.yaml` - Deleted
+
+### Test Status
+
+- T1-T3: Need re-testing in fresh session after fix
+- User will retest to validate the fix works
+
+### Key Insight
+
+**For framework source repo vs user projects:**
+- User projects: `framework.yaml` and instruction both at project root (simple)
+- Framework source repo: Must be at repo root, not in `framework/` subfolder
+- The instruction in CLAUDE.md must be in the file that Claude Code auto-loads
+
+---
+
+**Session 2 End Status:**
+- File location issue identified and fixed
+- Ready for user to retest T1-T3 in fresh session
+- Wording clarified: "repo root" instead of "project root"
+
+---
+
 **Last Updated:** 2026-01-14

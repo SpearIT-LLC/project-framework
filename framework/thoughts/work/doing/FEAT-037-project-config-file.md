@@ -3,7 +3,7 @@
 **ID:** FEAT-037
 **Type:** Feature
 **Priority:** High
-**Status:** Todo
+**Status:** In Progress
 **Created:** 2026-01-08
 **Updated:** 2026-01-14
 **Related:** FEAT-006 (setup script)
@@ -259,12 +259,12 @@ Manual testing for MVP with explicitly defined expected results. Formal automate
 ## Completion Criteria
 
 ### MVP (This Work Item)
-- [ ] `framework.yaml` schema defined (done - see above)
-- [ ] Config created for this framework project
-- [ ] Config created for examples/hello-world (as demonstration)
-- [ ] Example config added to templates
+- [x] `framework.yaml` schema defined (done - see above)
+- [x] Config created for this framework project
+- [x] Config created for examples/hello-world (as demonstration)
+- [x] Example config added to templates
 - [ ] AI successfully reads and uses config
-- [ ] CLAUDE.md updated to reference config
+- [x] CLAUDE.md updated to reference config
 
 ### Future (Separate Work Items)
 - [ ] JSON Schema for validation
