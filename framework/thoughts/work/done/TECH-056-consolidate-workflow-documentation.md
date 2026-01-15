@@ -211,7 +211,7 @@ grep -r "kanban-workflow" --include="*.md" | grep -v "history/" | grep -v "CHANG
 - [x] All backlog work items updated
 - [x] Unnecessary references removed
 - [x] Grep verification passes (no active references remain)
-- [ ] Changes committed
+- [x] Changes committed
 
 ---
 
