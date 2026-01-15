@@ -358,6 +358,55 @@ User Idea → Backlog → [User Approval] → Todo → Doing → Done → Releas
 
 **For AI assistants:** See CLAUDE.md "AI Workflow Checkpoint Policy" for mandatory approval checkpoints.
 
+### Spike Flow (Research/Investigation)
+
+Spikes follow a different workflow than features/bugfixes:
+
+```
+work/backlog/SPIKE-description.md
+    ↓ (ready to investigate)
+work/doing/SPIKE-description.md
+    ↓ (findings documented)
+history/spikes/SPIKE-description-YYYY-MM-DD.md
+```
+
+**Key differences from standard flow:**
+- Spikes do NOT go through `todo/` (they're time-boxed investigations)
+- Spikes do NOT trigger releases
+- Spikes archive to `history/spikes/`, not `history/releases/`
+- Spikes don't require IDs (use descriptive names)
+
+**When to use a spike:**
+- Need to investigate unknowns before planning solution
+- Research question with time-boxed investigation
+- Technology evaluation or proof-of-concept
+
+### Roadmap Integration
+
+**Location:** `thoughts/roadmap.md`
+
+**Purpose:** Track high-level version goals and reference work items by ID.
+
+**Example format:**
+```markdown
+## v1.2.0 - Configuration Enhancements
+
+**Status:** In Progress
+
+**Planned Features:**
+- [x] FEAT-001: Manifest defaults - RELEASED v1.1.0
+- [ ] FEAT-002: Namespace system - In doing
+- [ ] FEAT-003: Environment validation - In backlog
+
+**Current Work:**
+- 🔄 FEAT-002: Namespace system - In doing
+```
+
+**Loose coupling principle:**
+- Roadmap references work items by ID (FEAT-002), not file path
+- Work items move between folders without breaking roadmap links
+- Grep-friendly: `grep -r "FEAT-002"` finds all references
+
 ### Work Item Numbering
 
 Work item numbers are **sequential and globally unique** across all work item types within a project.
