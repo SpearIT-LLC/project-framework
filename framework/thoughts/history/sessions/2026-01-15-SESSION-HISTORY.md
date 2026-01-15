@@ -117,10 +117,60 @@ Executed the 9-phase implementation plan:
 
 ---
 
+### 8. Consolidated DOC-054 and FEAT-057 into DOC-058
+
+Identified significant overlap between:
+- **DOC-054** (State Transition Rules) - focused on valid/invalid transitions
+- **FEAT-057** (Workflow Transition Checklists) - focused on per-transition checklists
+
+Both addressed workflow transition problems from different angles. Merged into single work item:
+- **DOC-058** (Workflow Transitions Documentation) - combines transition matrix + checklists + framework.yaml policy reference
+
+**Files created:**
+- `framework/thoughts/work/todo/DOC-058-workflow-transitions-documentation.md`
+
+**Files deleted:**
+- `framework/thoughts/work/backlog/DOC-054-workflow-state-transition-rules.md`
+- `framework/thoughts/work/todo/FEAT-057-workflow-transition-checklists.md`
+
+---
+
+### 9. Completed FEAT-052 - Framework YAML Validation Script
+
+Created PowerShell script to validate `framework.yaml` against `framework-schema.yaml`.
+
+**File created:**
+- `framework/tools/validate-framework.ps1`
+
+**Features:**
+- Validates required fields are present
+- Validates enum values match schema
+- Clear error messages with valid values shown
+- Exit codes: 0 = valid, 1 = invalid
+- PowerShell 5.1 compatible (tested)
+- Inline documentation via Get-Help
+
+**Test results:**
+```
+# Valid file
+OK framework.yaml is valid
+
+# Invalid enum
+X framework.yaml validation failed:
+  - Invalid value for project.type: "banana"
+    Valid values: framework, application, library, tool
+
+# Missing fields
+X framework.yaml validation failed:
+  - Missing required field: project.deliverable
+  - Missing required field: project.type
+```
+
+---
+
 ## Next Steps
 
-1. **FEAT-057** (Workflow Transition Checklists) - Now in todo/
-2. **DOC-054** (State Transition Rules) - Could be worked on to add explicit doing→done validation rules
+1. **DOC-058** (Workflow Transitions Documentation) - Ready in todo/
 
 ---
 
@@ -132,6 +182,8 @@ Executed the 9-phase implementation plan:
 4. `chore(TECH-056): Plan workflow documentation consolidation`
 5. `refactor(TECH-056): Consolidate workflow documentation`
 6. `chore(TECH-056): Move work item to done`
+7. `docs: Update session history for TECH-056 completion`
+8. `feat(FEAT-052): Add framework.yaml validation script`
 
 ---
 
@@ -140,11 +192,12 @@ Executed the 9-phase implementation plan:
 - TECH-056 complete: kanban-workflow.md deleted, 26 files updated
 - Historical files (CHANGELOG, session histories, archived releases) left untouched
 - workflow-guide.md is now the single source of truth for workflow documentation
-- Discussed DOC-054 which has detailed doing→done transition rules ready to implement
+- DOC-054 + FEAT-057 consolidated into DOC-058
+- FEAT-052 complete: validate-framework.ps1 created
 
 ---
 
-**Session End:** TECH-056 complete
+**Session End:** FEAT-052 complete
 
 ---
 
