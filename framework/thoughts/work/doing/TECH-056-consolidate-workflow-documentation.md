@@ -3,7 +3,7 @@
 **ID:** TECH-056
 **Type:** Technical
 **Priority:** Medium
-**Status:** Doing
+**Status:** Done
 **Created:** 2026-01-14
 **Version Impact:** PATCH
 **Related:** DOC-054, FEAT-057
@@ -204,13 +204,13 @@ grep -r "kanban-workflow" --include="*.md" | grep -v "history/" | grep -v "CHANG
 
 ## Completion Criteria
 
-- [ ] kanban-workflow.md deleted
-- [ ] workflow-guide.md has no reference to kanban-workflow.md
-- [ ] version-control-workflow.md references workflow-guide.md
-- [ ] All templates updated
-- [ ] All backlog work items updated
-- [ ] Unnecessary references removed
-- [ ] Grep verification passes (no active references remain)
+- [x] kanban-workflow.md deleted
+- [x] workflow-guide.md has no reference to kanban-workflow.md
+- [x] version-control-workflow.md references workflow-guide.md
+- [x] All templates updated
+- [x] All backlog work items updated
+- [x] Unnecessary references removed
+- [x] Grep verification passes (no active references remain)
 - [ ] Changes committed
 
 ---

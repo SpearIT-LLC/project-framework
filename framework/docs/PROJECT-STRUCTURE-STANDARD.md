@@ -240,7 +240,7 @@ Standard user projects typically create a single-project repository and follow t
 
 This folder manages work items using a Kanban workflow.
 
-See [docs/process/kanban-workflow.md](../../docs/process/kanban-workflow.md) for complete workflow specification.
+See [workflow-guide.md](../../docs/collaboration/workflow-guide.md) for complete workflow specification.
 
 ## WIP Limits
 
@@ -248,8 +248,8 @@ See [docs/process/kanban-workflow.md](../../docs/process/kanban-workflow.md) for
 - `doing/.limit` - Maximum items in doing/ (default: 1)
 ```
 
-**Framework project:** Links to `../../docs/process/kanban-workflow.md`
-**User projects:** Links to `../../../framework/docs/process/kanban-workflow.md`
+**Framework project:** Links to `../../docs/collaboration/workflow-guide.md`
+**User projects:** Links to `../../../framework/docs/collaboration/workflow-guide.md`
 
 ---
 

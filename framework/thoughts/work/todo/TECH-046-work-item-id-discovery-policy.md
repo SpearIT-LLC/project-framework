@@ -5,7 +5,7 @@
 **Priority:** Medium
 **Status:** Backlog
 **Created:** 2026-01-11
-**Related:** DECISION-042, TECH-044, kanban-workflow.md
+**Related:** DECISION-042, TECH-044, workflow-guide.md
 
 ---
 
@@ -116,7 +116,7 @@ ls {work,releases}/**/{DECISION,FEAT,TECH,SPIKE,POLICY,BUGFIX}-*.md
 
 ### Phase 1: Documentation
 
-**1. Add ID Discovery section to kanban-workflow.md**
+**1. Add ID Discovery section to workflow-guide.md**
 
 Location: After the "Work Item IDs" section
 
@@ -177,7 +177,7 @@ Provide example implementations in different contexts:
 
 ### Success Criteria
 
-- [ ] kanban-workflow.md includes ID discovery algorithm
+- [ ] workflow-guide.md includes ID discovery algorithm
 - [ ] TECH-044 references this policy
 - [ ] DECISION-042 updated with cross-reference
 - [ ] Clear examples provided for all use cases
@@ -257,7 +257,7 @@ Provide example implementations in different contexts:
 **Related:**
 - DECISION-042 - Defines what work item IDs are
 - TECH-044 - Work item creation policy needs ID discovery
-- kanban-workflow.md - Primary specification document
+- workflow-guide.md - Primary specification document
 
 **Blocks:**
 - Future automation tools
@@ -284,7 +284,7 @@ Provide example implementations in different contexts:
 **Priority:** Medium - Important for consistency but not blocking current work
 
 **Effort estimate:** 1-2 hours
-- kanban-workflow.md updates: 30 min
+- workflow-guide.md updates: 30 min
 - DECISION-042 cross-reference: 15 min
 - TECH-044 reference: 15 min
 - Examples and validation: 30 min

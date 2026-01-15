@@ -472,8 +472,8 @@ Use this section when adding the framework to a project that's already underway.
   - [ ] Check `thoughts/work/todo/.limit` contains "10"
   - [ ] Adjust if needed based on team size
 
-- [ ] **Review kanban workflow documentation**
-  - [ ] Read `thoughts/framework/process/kanban-workflow.md`
+- [ ] **Review workflow documentation**
+  - [ ] Read `thoughts/framework/collaboration/workflow-guide.md`
   - [ ] Understand folder structure and flow
   - [ ] Review work item naming conventions
 
@@ -629,7 +629,7 @@ Use this section when adding the framework to a project that's already underway.
 
 ## Related Documents
 
-- [kanban-workflow.md](thoughts/framework/process/kanban-workflow.md) - Work item lifecycle
+- [workflow-guide.md](thoughts/framework/collaboration/workflow-guide.md) - Work item lifecycle
 - [version-control-workflow.md](thoughts/framework/process/version-control-workflow.md) - Release process
 - [documentation-standards.md](thoughts/framework/process/documentation-standards.md) - Doc formatting
 

@@ -2,7 +2,7 @@
 
 This folder manages work items using a Kanban workflow.
 
-See [../../process/kanban-workflow.md](../../process/kanban-workflow.md) for complete workflow specification.
+See [workflow-guide.md](../../docs/collaboration/workflow-guide.md) for complete workflow specification.
 
 ## WIP Limits
 

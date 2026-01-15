@@ -92,8 +92,8 @@ This index provides quick navigation to all documentation for the SpearIT Projec
 - [CLAUDE.md](templates/standard/CLAUDE.md) - Template AI guidelines
 
 #### Process Documentation
-- [kanban-workflow.md](templates/standard/thoughts/framework/process/kanban-workflow.md) - Work item lifecycle
-- [version-control-workflow.md](templates/standard/thoughts/framework/process/version-control-workflow.md) - Git and release process
+- [workflow-guide.md](docs/collaboration/workflow-guide.md) - Work item lifecycle and workflow
+- [version-control-workflow.md](docs/process/version-control-workflow.md) - Git and release process
 - [documentation-standards.md](templates/standard/thoughts/framework/process/documentation-standards.md) - Doc formatting
 
 #### Work Item Templates

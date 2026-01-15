@@ -271,7 +271,6 @@ Remove command documentation from CLAUDE.md - no code to rollback
 ## References
 
 - [ADR-001: AI Workflow Checkpoint Policy](../../research/adr/001-ai-workflow-checkpoint-policy.md)
-- [kanban-workflow.md](../../../project-framework-template/standard/thoughts/framework/process/kanban-workflow.md)
 - [CLAUDE.md](../../../CLAUDE.md)
 - Related: FEAT-018 (Claude Command Framework)
 

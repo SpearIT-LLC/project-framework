@@ -131,7 +131,7 @@ grep -r "multi-user" framework/ --include="*.md"
 - Clarify current scope
 - Add "Future: Team Workflows" section referencing FEAT-047
 
-**kanban-workflow.md:**
+**workflow-guide.md:**
 - Ensure ID discovery (TECH-046) caveat is clear
 - No false team workflow claims
 

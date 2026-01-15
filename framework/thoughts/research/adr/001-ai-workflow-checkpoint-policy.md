@@ -117,7 +117,7 @@ When users request new features during AI-assisted development sessions, there i
 
 **Implementation Location:**
 - `CLAUDE.md` - Add "AI Workflow Checkpoint Policy" section
-- `thoughts/framework/process/kanban-workflow.md` - Reference AI checkpoint policy
+- `docs/collaboration/workflow-guide.md` - Reference AI checkpoint policy
 - Future: `/backlog-review` command (FEAT-017)
 
 ---
@@ -237,7 +237,7 @@ AI: "Creating FEAT-016 in backlog/...
 
 ## References
 
-- [kanban-workflow.md](../../thoughts/framework/process/kanban-workflow.md) - Workflow specification
+- [workflow-guide.md](../../docs/collaboration/workflow-guide.md) - Workflow specification
 - [CLAUDE.md](../../../CLAUDE.md) - AI behavior guidelines
 - FEAT-016 incident - Process violation that triggered this ADR
 - Related: FEAT-017 (Backlog Review Command) - Will make this policy easier to follow

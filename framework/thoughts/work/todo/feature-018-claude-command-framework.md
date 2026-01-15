@@ -329,7 +329,6 @@ Remove command documentation from CLAUDE.md - no code to rollback in Phase 1
 ## References
 
 - [ADR-001: AI Workflow Checkpoint Policy](../../research/adr/001-ai-workflow-checkpoint-policy.md)
-- [kanban-workflow.md](../../../project-framework-template/standard/thoughts/framework/process/kanban-workflow.md)
 - [CLAUDE.md](../../../CLAUDE.md)
 - Related: FEAT-017 (Backlog Review Command) - First command using this framework
 

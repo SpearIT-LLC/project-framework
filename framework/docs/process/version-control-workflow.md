@@ -10,7 +10,7 @@
 
 **ONE work item at a time.** Work on a single feature, bugfix, or blocker from planning through release.
 
-**Workflow Integration:** This document describes the git/release process. See [kanban-workflow.md](kanban-workflow.md) for the complete work item lifecycle (planning → backlog → todo → doing → done → release → archive).
+**Workflow Integration:** This document describes the git/release process. See [workflow-guide.md](../collaboration/workflow-guide.md) for the complete work item lifecycle (planning → backlog → todo → doing → done → release → archive).
 
 ---
 
@@ -490,7 +490,7 @@ git rebase main  # Incorporates the hotfix
 
 ## Related Documents
 
-- [kanban-workflow.md](kanban-workflow.md) - Work item lifecycle and kanban process
+- [workflow-guide.md](../collaboration/workflow-guide.md) - Work item lifecycle and kanban process
 - [CHANGELOG.md](../../CHANGELOG.md) - Version history
 - [PROJECT-STATUS.md](../../PROJECT-STATUS.md) - Current status
 - [coding-standards.md](coding-standards.md) - Code quality standards

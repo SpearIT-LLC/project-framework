@@ -1462,11 +1462,10 @@ Better to ask than assume.
 - [code-quality-standards.md](code-quality-standards.md) - Coding standards
 - [security-policy.md](security-policy.md) - Security requirements
 - [testing-strategy.md](testing-strategy.md) - Testing approach
-- [version-control-workflow.md](../../framework/process/version-control-workflow.md) - Git and release process
-- [kanban-workflow.md](../../framework/process/kanban-workflow.md) - Work item lifecycle
+- [version-control-workflow.md](../process/version-control-workflow.md) - Git and release process
 
 ---
 
-**Last Updated:** 2026-01-11
+**Last Updated:** 2026-01-15
 **Version:** 1.0.0
 **Next Review:** After 10 projects use this guide

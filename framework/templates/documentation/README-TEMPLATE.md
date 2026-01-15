@@ -76,7 +76,7 @@ This is a complete project framework template package that provides:
 ### Framework (thoughts/framework/)
 
 **Process Documentation:**
-- `process/kanban-workflow.md` - File-based kanban workflow
+- `collaboration/workflow-guide.md` - Work item lifecycle and workflow
 - `process/version-control-workflow.md` - Git and release process
 - `process/documentation-standards.md` - Documentation formatting
 
@@ -277,7 +277,7 @@ These are HPC-specific and should be created fresh for your project.
 ## Questions?
 
 - Review `NEW-PROJECT-CHECKLIST.md` for step-by-step guidance
-- Read `thoughts/framework/process/kanban-workflow.md` for workflow details
+- Read `thoughts/framework/collaboration/workflow-guide.md` for workflow details
 - Read `thoughts/framework/process/version-control-workflow.md` for release process
 - Check templates in `thoughts/framework/templates/` for work item structure
 

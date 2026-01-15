@@ -11,7 +11,7 @@
 
 ## Summary
 
-Add explicit state transition rules to kanban-workflow.md to prevent invalid work item movements (e.g., backlog → doing, backlog → done). These rules will be enforceable by AI and provide clear validation logic.
+Add explicit state transition rules to workflow-guide.md to prevent invalid work item movements (e.g., backlog → doing, backlog → done). These rules will be enforceable by AI and provide clear validation logic.
 
 **Context:** During DOC-053 work, AI violated workflow by moving item directly from backlog → done, bypassing todo and doing stages. Need explicit, enforceable rules to prevent this.
 
@@ -19,7 +19,7 @@ Add explicit state transition rules to kanban-workflow.md to prevent invalid wor
 
 ## Problem Statement
 
-**Issue:** Current kanban-workflow.md documents how to move items between folders but doesn't explicitly forbid invalid transitions. AI can accidentally move items through invalid state transitions.
+**Issue:** Current workflow-guide.md documents how to move items between folders but doesn't explicitly forbid invalid transitions. AI can accidentally move items through invalid state transitions.
 
 **Examples of invalid transitions:**
 - backlog → doing (must go through todo first)
@@ -45,7 +45,7 @@ Add explicit state transition rules to kanban-workflow.md to prevent invalid wor
 
 ### Functional Requirements
 
-**Add to kanban-workflow.md:**
+**Add to workflow-guide.md:**
 - [ ] Create "State Transition Rules (ENFORCED)" section
 - [ ] Table showing all possible transitions with Valid/Invalid
 - [ ] Reason for each invalid transition
@@ -73,7 +73,7 @@ Add explicit state transition rules to kanban-workflow.md to prevent invalid wor
 
 ### Proposed Section Location
 
-Add after "Moving Items Between Folders" section in kanban-workflow.md (around line 276)
+Add after "Moving Items Between Folders" section in workflow-guide.md (around line 276)
 
 ### Proposed Content Structure
 
@@ -163,7 +163,7 @@ Would you like me to move it to todo first?"
 - Add pre-flight checklist
 - Add example invalid transition handling
 
-### Step 2: Add to kanban-workflow.md
+### Step 2: Add to workflow-guide.md
 - Insert after "Moving Items Between Folders" section
 - Update table of contents if exists
 - Cross-reference from troubleshooting-guide.md
@@ -197,7 +197,7 @@ Would you like me to move it to todo first?"
 
 **Requires:**
 - `{TYPE-ID}-*` pattern already documented ✓ (just added)
-- kanban-workflow.md exists ✓
+- workflow-guide.md exists ✓
 
 **Enables:**
 - TECH-055 (validation script - uses these rules)

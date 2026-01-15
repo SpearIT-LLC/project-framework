@@ -261,7 +261,7 @@ Both push to remote → filename collision → git merge conflict
    - Updating cross-references
    - Example walkthrough with screenshots
 
-2. **Update kanban-workflow.md:**
+2. **Update workflow-guide.md:**
    - Add "Team Workflow" section
    - Document collision resolution process
    - Provide examples
@@ -406,7 +406,7 @@ In a 3-person team creating ~5 work items/week each, collisions might happen 1-2
 ### Added
 - **FEAT-047: Small Team ID Collision Support**
   - Documented collision resolution process for distributed teams
-  - Added team workflow section to kanban-workflow.md
+  - Added team workflow section to workflow-guide.md
   - Framework now supports 2-5 developer teams (previously solo only)
   - Created collision resolution guide with examples
   - Optional helper script for automated conflict resolution

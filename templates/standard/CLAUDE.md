@@ -420,7 +420,7 @@ See [roadmap.md](thoughts/project/planning/roadmap.md) for complete roadmap.
 
 **Framework (Reusable):**
 - [FRAMEWORK-CHANGELOG.md](thoughts/framework/FRAMEWORK-CHANGELOG.md) - Process evolution tracking
-- [kanban-workflow.md](thoughts/framework/process/kanban-workflow.md) - Work item lifecycle
+- [workflow-guide.md](thoughts/framework/collaboration/workflow-guide.md) - Work item lifecycle
 
 ---
 

@@ -12,7 +12,7 @@
 
 ## Summary
 
-Add explicit policy to kanban-workflow.md stating that all new work items must be created in `thoughts/work/backlog/` with Status: Backlog, and only move to todo/ when committed to work on soon.
+Add explicit policy to workflow-guide.md stating that all new work items must be created in `thoughts/work/backlog/` with Status: Backlog, and only move to todo/ when committed to work on soon.
 
 ---
 
@@ -23,7 +23,7 @@ Add explicit policy to kanban-workflow.md stating that all new work items must b
 The kanban workflow documentation shows work items flowing through backlog → todo → doing → done, but doesn't explicitly state WHERE new work items should be created. This led to confusion during FEAT-038, FEAT-039, and DECISION-036 creation where work items were initially created in todo/ instead of backlog/.
 
 **Current State:**
-- kanban-workflow.md shows the flow but doesn't state the creation policy
+- workflow-guide.md shows the flow but doesn't state the creation policy
 - Work items were created in wrong location (todo/ instead of backlog/)
 - Policy is implied but not documented
 
@@ -43,7 +43,7 @@ Manual correction after creation, or verbal instruction.
 
 ### Functional Requirements
 
-- [ ] Add explicit policy statement to kanban-workflow.md
+- [ ] Add explicit policy statement to workflow-guide.md
 - [ ] Clarify that new work items START in backlog/
 - [ ] Explain when to move from backlog/ to todo/
 - [ ] Update workflow diagram/description if needed
@@ -62,7 +62,7 @@ Manual correction after creation, or verbal instruction.
 ### Architecture Impact
 
 **Files Modified:**
-- `framework/docs/process/kanban-workflow.md` - Add explicit policy section
+- `framework/docs/process/workflow-guide.md` - Add explicit policy section
 
 **Possible Files Modified (if needed):**
 - `framework/docs/collaboration/workflow-guide.md` - Reference policy if mentioned
@@ -71,7 +71,7 @@ Manual correction after creation, or verbal instruction.
 
 **Option 1: Add Policy Section (Recommended)**
 
-Add a new "Work Item Creation Policy" section near the beginning of kanban-workflow.md:
+Add a new "Work Item Creation Policy" section near the beginning of workflow-guide.md:
 
 ```markdown
 ## Work Item Creation Policy
@@ -114,7 +114,7 @@ Move to todo/ only when committed to work on it soon.
 
 **Option 3: Add to Quick Reference**
 
-If kanban-workflow.md has a quick reference section, add:
+If workflow-guide.md has a quick reference section, add:
 
 ```markdown
 - ✅ Create new work items in backlog/
@@ -134,7 +134,7 @@ If kanban-workflow.md has a quick reference section, add:
 **Option B: Document in multiple places**
 - Pros: Higher visibility
 - Cons: Duplication, maintenance burden
-- Decision: Partial - main policy in kanban-workflow.md, brief reference elsewhere if needed
+- Decision: Partial - main policy in workflow-guide.md, brief reference elsewhere if needed
 
 **Option C: Create automated check**
 - Pros: Enforces policy automatically
@@ -146,13 +146,13 @@ If kanban-workflow.md has a quick reference section, add:
 ## Dependencies
 
 **Requires:**
-- kanban-workflow.md exists (yes)
+- workflow-guide.md exists (yes)
 
 **Blocks:**
 - None (informational only)
 
 **Related:**
-- FEAT-038 (Update v3.0.0 Path References) - Will update kanban-workflow.md anyway, can include this
+- FEAT-038 (Update v3.0.0 Path References) - Will update workflow-guide.md anyway, can include this
 
 ---
 
@@ -180,10 +180,10 @@ If kanban-workflow.md has a quick reference section, add:
 
 ## Implementation Checklist
 
-- [ ] Review kanban-workflow.md current structure
+- [ ] Review workflow-guide.md current structure
 - [ ] Decide on placement (new section vs. enhance existing)
 - [ ] Write policy statement
-- [ ] Add to kanban-workflow.md
+- [ ] Add to workflow-guide.md
 - [ ] Update "Last Updated" date
 - [ ] Verify clarity with test read
 - [ ] Check if workflow-guide.md needs update
@@ -195,7 +195,7 @@ If kanban-workflow.md has a quick reference section, add:
 
 **How do we know this is successful?**
 
-1. ✅ Policy explicitly documented in kanban-workflow.md
+1. ✅ Policy explicitly documented in workflow-guide.md
 2. ✅ Clear statement: "Create new work items in backlog/"
 3. ✅ Future work items created in correct location
 4. ✅ No confusion about where to start new work items
@@ -214,7 +214,7 @@ If kanban-workflow.md has a quick reference section, add:
 ```markdown
 ### Added
 - **TECH-044: Document Work Item Creation Policy**
-  - Added explicit policy to kanban-workflow.md
+  - Added explicit policy to workflow-guide.md
   - Clarified that all new work items start in backlog/ with Status: Backlog
   - Explained when to move from backlog/ to todo/
   - Prevents confusion about work item creation location
@@ -230,7 +230,7 @@ If kanban-workflow.md has a quick reference section, add:
 During creation of FEAT-038, FEAT-039, and DECISION-036, work items were initially placed in todo/ instead of backlog/. This revealed that the policy is implied by the workflow but never explicitly stated.
 
 **Can be combined with FEAT-038:**
-Since FEAT-038 is already updating kanban-workflow.md for path references, this policy addition could be included in that work item to minimize the number of updates to the file.
+Since FEAT-038 is already updating workflow-guide.md for path references, this policy addition could be included in that work item to minimize the number of updates to the file.
 
 **Alternative:** If keeping separate, mark as dependent on FEAT-038 to avoid merge conflicts.
 
@@ -238,7 +238,7 @@ Since FEAT-038 is already updating kanban-workflow.md for path references, this 
 
 ## References
 
-- [kanban-workflow.md](../../docs/process/kanban-workflow.md) - File to be updated
+- [workflow-guide.md](../../docs/process/workflow-guide.md) - File to be updated
 - [workflow-guide.md](../../docs/collaboration/workflow-guide.md) - May need reference
 - This issue discovered during FEAT-038, FEAT-039, DECISION-036 creation
 

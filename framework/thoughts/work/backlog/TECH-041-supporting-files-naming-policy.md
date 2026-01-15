@@ -5,7 +5,7 @@
 **Priority:** Medium
 **Status:** Backlog
 **Created:** 2026-01-11
-**Related:** TECH-044, kanban-workflow.md
+**Related:** TECH-044, workflow-guide.md
 
 ---
 
@@ -19,7 +19,7 @@ Document the policy for supporting files and sub-documents that share a parent w
 
 **Current situation:**
 
-The framework has a stated policy that work item IDs should be unique and sequential (kanban-workflow.md:104-109), but actual practice shows complex work items often have multiple supporting documents sharing the same base ID:
+The framework has a stated policy that work item IDs should be unique and sequential (workflow-guide.md:104-109), but actual practice shows complex work items often have multiple supporting documents sharing the same base ID:
 
 **Examples found:**
 - `FEAT-026-universal-structure-decisions.md` (main work item)
@@ -129,7 +129,7 @@ git mv thoughts/work/todo/FEAT-025* thoughts/work/doing/
 
 ## Implementation Approach
 
-**Location:** Update `framework/docs/process/kanban-workflow.md`
+**Location:** Update `framework/docs/process/workflow-guide.md`
 
 **Section to add:** "Supporting Files and Sub-Documents" (after ID Numbering section)
 
@@ -149,21 +149,21 @@ git mv thoughts/work/todo/FEAT-025* thoughts/work/doing/
 
 ## Completion Criteria
 
-- [ ] Supporting files policy documented in kanban-workflow.md
+- [ ] Supporting files policy documented in workflow-guide.md
 - [ ] Standard suffix table provided with guidance
 - [ ] Decision criteria documented (supporting file vs. new work item)
 - [ ] Unique ID policy clarified to address supporting files
 - [ ] Workflow movement examples provided
 - [ ] Real examples referenced (FEAT-026, FEAT-025)
 - [ ] Changes committed
-- [ ] kanban-workflow.md "Last Updated" date updated
+- [ ] workflow-guide.md "Last Updated" date updated
 
 ---
 
 ## References
 
 **Current policy:**
-- [kanban-workflow.md](../../docs/process/kanban-workflow.md) - ID Numbering section (lines 104-109)
+- [workflow-guide.md](../../docs/process/workflow-guide.md) - ID Numbering section (lines 104-109)
 
 **Examples demonstrating current practice:**
 - `thoughts/history/releases/v3.0.0/FEAT-026-*.md` - 22 supporting files

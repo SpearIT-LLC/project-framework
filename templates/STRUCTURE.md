@@ -86,9 +86,11 @@ standard/
     ├── framework/                      # Reusable framework (shared across projects)
     │   ├── FRAMEWORK-CHANGELOG.md      # Framework evolution tracking
     │   │
+    │   ├── collaboration/              # Workflow and collaboration guides
+    │   │   └── workflow-guide.md
+    │   │
     │   ├── process/                    # How-to-work documentation
     │   │   ├── documentation-standards.md
-    │   │   ├── kanban-workflow.md
     │   │   └── version-control-workflow.md
     │   │
     │   ├── templates/                  # Document and code templates
@@ -213,8 +215,8 @@ standard/
 - **WRAPPER-ADMIN.cmd** - Administrator required wrapper
 
 ### Process Documentation (Standard Only)
+- **workflow-guide.md** - Work item lifecycle and workflow
 - **version-control-workflow.md** - Git branching and releases
-- **kanban-workflow.md** - Work item lifecycle
 - **documentation-standards.md** - Doc formatting standards
 
 ### Pattern Documentation (Standard Only)

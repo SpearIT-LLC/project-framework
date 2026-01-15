@@ -47,7 +47,7 @@ Location: `thoughts/framework/`
 
 Location: `thoughts/framework/process/`
 
-- **[kanban-workflow.md](thoughts/framework/process/kanban-workflow.md)** - File-based kanban workflow for work items
+- **[workflow-guide.md](thoughts/framework/collaboration/workflow-guide.md)** - Work item lifecycle and workflow
 - **[version-control-workflow.md](thoughts/framework/process/version-control-workflow.md)** - Git workflow and release process
 - **[documentation-standards.md](thoughts/framework/process/documentation-standards.md)** - Documentation formatting standards
 
@@ -215,7 +215,7 @@ Location: `tests/`
 1. [CLAUDE.md](CLAUDE.md) - Project conventions
 2. [thoughts/external-references/system-architecture.md](thoughts/external-references/system-architecture.md) - Architecture
 3. [thoughts/external-references/coding-standards.md](thoughts/external-references/coding-standards.md) - Code standards
-4. [thoughts/framework/process/kanban-workflow.md](thoughts/framework/process/kanban-workflow.md) - Workflow
+4. [thoughts/framework/collaboration/workflow-guide.md](thoughts/framework/collaboration/workflow-guide.md) - Workflow
 5. [PROJECT-STATUS.md](PROJECT-STATUS.md) - Current status
 
 ### For Contributors

@@ -184,7 +184,7 @@ Complete current work before starting FEAT-042
 
 ### Phase 4: Documentation
 - [ ] Add help text to script (`Get-Help Validate-WorkItemMove`)
-- [ ] Document in kanban-workflow.md
+- [ ] Document in workflow-guide.md
 - [ ] Add usage examples
 - [ ] Update AI guidance to use script
 

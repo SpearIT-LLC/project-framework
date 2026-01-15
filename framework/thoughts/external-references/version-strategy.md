@@ -205,7 +205,7 @@ Templates within the framework package inherit the framework version **unless th
 - See UPGRADE-PATH.md for migration instructions
 ```
 
-**kanban-workflow.md:**
+**workflow-guide.md:**
 ```markdown
 **Last Updated:** 2026-01-15
 **Version:** 3.0.0  ← Explicit version for major process change
