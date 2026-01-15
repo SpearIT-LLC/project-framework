@@ -3,7 +3,7 @@
 **ID:** FEAT-052
 **Type:** Feature
 **Priority:** Medium
-**Status:** Backlog
+**Status:** Done
 **Created:** 2026-01-14
 **Related:** FEAT-037 (project config file)
 
@@ -57,27 +57,24 @@ Create a validation script that:
 
 ---
 
-## Implementation Options
+## Implementation
 
-| Option | Pros | Cons |
-|--------|------|------|
-| Python script | Widely available, good YAML support | Requires Python installed |
-| Node.js script | Good for JS-heavy projects | Requires Node installed |
-| Shell + yq | Minimal dependencies | yq not always installed |
-| PowerShell | Native on Windows | Not cross-platform |
+**Language:** PowerShell (native on Windows, cross-platform via PowerShell Core)
 
-**Recommendation:** Python - most portable and has built-in YAML support via PyYAML.
+**Location:** `framework/tools/validate-framework.ps1`
+
+**Approach:** Parse YAML manually (simple key-value extraction) to avoid external dependencies.
 
 ---
 
 ## Acceptance Criteria
 
-- [ ] Script validates required fields are present
-- [ ] Script validates enum values are valid
-- [ ] Script provides clear error messages
-- [ ] Script returns appropriate exit codes (0 = valid, 1 = invalid)
-- [ ] Script can be run from project root
-- [ ] Documentation for usage
+- [x] Script validates required fields are present
+- [x] Script validates enum values are valid
+- [x] Script provides clear error messages
+- [x] Script returns appropriate exit codes (0 = valid, 1 = invalid)
+- [x] Script can be run from project root
+- [x] Documentation for usage (inline help via Get-Help)
 
 ---
 
@@ -89,4 +86,4 @@ Create a validation script that:
 
 ---
 
-**Last Updated:** 2026-01-14
+**Last Updated:** 2026-01-15
