@@ -168,9 +168,73 @@ X framework.yaml validation failed:
 
 ---
 
+### 10. Completed DOC-058 - Workflow Transitions Documentation
+
+Added comprehensive workflow transitions section to workflow-guide.md.
+
+**Files modified:**
+- `framework/docs/collaboration/workflow-guide.md` - Added "Workflow Transitions" section with:
+  - Valid/invalid transition matrix (11 transitions)
+  - Per-transition checklists for each target folder
+  - Invalid transition handling example
+  - Policy reference section
+  - Updated Table of Contents
+- `framework.yaml` - Added `policies` section with `workflow` and `onTransition` references
+- `framework/tools/framework-schema.yaml` - Added schema for `policies` object and fields
+- `framework/CLAUDE.md` - Added workflow transitions instruction under kanban flow rules
+
+**Chain of responsibility established:**
+```
+CLAUDE.md (instruction to check framework.yaml on transitions)
+    ↓
+framework.yaml (points to onTransition policy location)
+    ↓
+workflow-guide.md#workflow-transitions (rules + checklists)
+```
+
+---
+
+### 11. Created FEAT-059 - Context-Aware AI Roles
+
+**Origin:** Workflow transition policy test failure - AI moved work item directly from backlog to doing without checking onTransition policy.
+
+**Root cause analysis:**
+- The policy existed and was documented correctly
+- AI failed to recognize "move X to doing" as a trigger requiring policy lookup
+- The issue was trigger recognition, not missing documentation
+
+**Solution designed:** Context-aware AI roles in `framework.yaml`
+
+**Key design decisions:**
+
+1. **Role + Mindset fields:**
+   - `role`: Quick frame of reference (e.g., "scrum-master")
+   - `mindset`: Actionable instructions (e.g., "Process guardian. On any work item move: read onTransition policy, check validity matrix, push back if invalid.")
+   - Both needed: Role sets the frame, mindset provides explicit behavioral guidance
+
+2. **Conversational triggering (not automatic path matching):**
+   - AI asks "What kind of work are we doing?" at session start
+   - User declares context → AI looks up role → adopts mindset and policies
+   - Mid-session: AI asks for clarification when context seems to shift
+   - Benefits: Explicit over implicit, user stays in control, natural checkpoint
+
+3. **Why NOT role-per-document:**
+   - Work items pass through multiple phases, each requiring different roles
+   - Creation (scrum master) → Implementation (developer) → Release (release manager)
+   - Role is tied to *activities*, not *documents*
+   - Document-based roles would risk bypassing workflow policy
+
+**Files created:**
+- `framework/thoughts/work/backlog/FEAT-059-context-aware-ai-roles.md`
+
+**Significance:** This may be the key that unlocks the entire framework - transforms AI from generic executor to role-aware collaborator.
+
+---
+
 ## Next Steps
 
-1. **DOC-058** (Workflow Transitions Documentation) - Ready in todo/
+1. Meditate on FEAT-059 design before implementation
+2. Release DOC-058 when ready
 
 ---
 
@@ -194,10 +258,12 @@ X framework.yaml validation failed:
 - workflow-guide.md is now the single source of truth for workflow documentation
 - DOC-054 + FEAT-057 consolidated into DOC-058
 - FEAT-052 complete: validate-framework.ps1 created
+- DOC-058 complete: Workflow transitions documentation added
+- FEAT-059 created: Context-aware AI roles - potentially transformative feature
 
 ---
 
-**Session End:** FEAT-052 complete
+**Session End:** FEAT-059 designed and documented in backlog
 
 ---
 

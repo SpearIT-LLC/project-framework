@@ -5,3 +5,7 @@ project:
   name: "SpearIT Project Framework"
   type: framework
   deliverable: documentation
+
+policies:
+  workflow: framework/docs/collaboration/workflow-guide.md
+  onTransition: framework/docs/collaboration/workflow-guide.md#workflow-transitions

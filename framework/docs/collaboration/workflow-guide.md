@@ -18,11 +18,12 @@ For quick reference, see [CLAUDE.md](../../../CLAUDE.md) for summaries and check
 
 1. [Development Workflow Phases](#development-workflow-phases)
 2. [Research Phase](#research-phase)
-3. [Planning Guidelines](#planning-guidelines)
-4. [Documentation Standards](#documentation-standards)
-5. [Git Workflow](#git-workflow)
-6. [Architecture Decision Records (ADRs)](#architecture-decision-records-adrs)
-7. [Collaboration Practices](#collaboration-practices)
+3. [Workflow Transitions](#workflow-transitions)
+4. [Planning Guidelines](#planning-guidelines)
+5. [Documentation Standards](#documentation-standards)
+6. [Git Workflow](#git-workflow)
+7. [Architecture Decision Records (ADRs)](#architecture-decision-records-adrs)
+8. [Collaboration Practices](#collaboration-practices)
 
 ---
 
@@ -328,6 +329,91 @@ Before leaving research phase:
 - [ ] If "go", project definition created
 
 **Anti-pattern:** Jumping to planning/coding without research because "we already know what to build." Research validates assumptions and often reveals better approaches.
+
+---
+
+## Workflow Transitions
+
+When moving work items between workflow folders, follow these rules and checklists.
+
+### Transition Validity Matrix
+
+Not all transitions are valid. Use this matrix to determine if a transition is allowed:
+
+| From | To | Valid? | Reason |
+|------|----|----|--------|
+| backlog | todo | ✅ | Standard flow - committing to work |
+| backlog | doing | ❌ | Must commit to work (todo) first |
+| backlog | done | ❌ | Must be worked on |
+| todo | doing | ✅ | Starting work |
+| todo | backlog | ✅ | Deprioritizing |
+| todo | done | ❌ | Must actually do the work (doing first) |
+| doing | done | ✅ | Completing work |
+| doing | todo | ✅ | Pausing work |
+| doing | backlog | ❌ | Use todo as intermediate state |
+| done | history | ✅ | Post-release archival |
+| done | * | ❌ | No reopening (create new work item) |
+
+**Invalid Transition Handling:**
+
+If you attempt an invalid transition:
+1. Stop immediately
+2. Identify the correct intermediate state
+3. Follow the valid path (e.g., backlog → todo → doing, not backlog → doing)
+
+**Example - Invalid Request:**
+```
+User: "Move FEAT-042 from backlog directly to doing"
+AI: "I cannot move directly from backlog to doing. The valid path is:
+     1. backlog → todo (commit to work)
+     2. todo → doing (start work)
+     Should I move FEAT-042 to todo first?"
+```
+
+### Per-Transition Checklists
+
+When moving a work item, complete the checklist for the target folder:
+
+#### → backlog/
+- [ ] Work item created from template
+- [ ] ID assigned (scan ALL work/ locations and history/releases/ first)
+
+#### → todo/
+- [ ] Transition is valid (check matrix above)
+- [ ] User has approved the work
+- [ ] Priority set
+
+#### → doing/
+- [ ] Transition is valid (check matrix above)
+- [ ] WIP limit not exceeded (check `doing/.limit`)
+- [ ] Read ENTIRE work item document
+- [ ] Identify open questions (search for: TODO, TBD, DECIDE, Question, Option A/B/C)
+- [ ] Present pre-implementation summary to user
+- [ ] Wait for user confirmation before implementing
+
+#### → done/
+- [ ] Transition is valid (check matrix above)
+- [ ] All completion criteria in work item are checked
+- [ ] Status field updated to "Done"
+- [ ] User has approved the completed work
+
+#### → history/releases/vX.Y.Z/
+- [ ] Transition is valid (check matrix above)
+- [ ] Work has been released (version tagged)
+- [ ] Use `git mv` (not `cp`) to move files
+- [ ] Verify done/ is empty after archival
+
+### Policy Reference
+
+The workflow transition rules are referenced in `framework.yaml`:
+
+```yaml
+policies:
+  workflow: framework/docs/collaboration/workflow-guide.md
+  onTransition: framework/docs/collaboration/workflow-guide.md#workflow-transitions
+```
+
+**AI assistants:** When moving work items between folders, read and follow the `onTransition` policy before proceeding.
 
 ---
 

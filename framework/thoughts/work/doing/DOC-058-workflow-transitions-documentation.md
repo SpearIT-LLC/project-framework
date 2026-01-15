@@ -3,7 +3,7 @@
 **ID:** DOC-058
 **Type:** Documentation
 **Priority:** High
-**Status:** Todo
+**Status:** Done
 **Created:** 2026-01-15
 **Consolidates:** DOC-054, FEAT-057
 
@@ -139,14 +139,14 @@ workflow-guide.md#workflow-transitions (rules + checklists)
 
 ## Completion Criteria
 
-- [ ] workflow-guide.md has "Workflow Transitions" section with:
-  - [ ] Valid/invalid transition matrix
-  - [ ] Per-transition checklists
-  - [ ] Invalid transition handling example
-- [ ] framework.yaml has `policies.onTransition` reference
-- [ ] framework-schema.yaml updated for policies section
-- [ ] framework/CLAUDE.md has workflow transitions instruction
-- [ ] Tested: AI follows rules when moving item
+- [x] workflow-guide.md has "Workflow Transitions" section with:
+  - [x] Valid/invalid transition matrix
+  - [x] Per-transition checklists
+  - [x] Invalid transition handling example
+- [x] framework.yaml has `policies.onTransition` reference
+- [x] framework-schema.yaml updated for policies section
+- [x] framework/CLAUDE.md has workflow transitions instruction
+- [x] Tested: AI follows rules when moving item (this work item transition: todo → doing)
 - [ ] Changes committed
 
 ---

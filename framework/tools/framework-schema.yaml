@@ -38,3 +38,20 @@ fields:
         description: "Primary output is documentation"
       hybrid:
         description: "Both code and documentation are primary outputs"
+
+  policies:
+    type: object
+    required: false
+    description: "References to policy documents that govern project workflows"
+
+  policies.workflow:
+    type: string
+    required: false
+    description: "Path to the main workflow policy document"
+    example: "framework/docs/collaboration/workflow-guide.md"
+
+  policies.onTransition:
+    type: string
+    required: false
+    description: "Path (with optional anchor) to workflow transition rules. AI assistants should read this before moving work items between folders."
+    example: "framework/docs/collaboration/workflow-guide.md#workflow-transitions"

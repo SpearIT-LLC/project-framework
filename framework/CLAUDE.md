@@ -183,6 +183,12 @@ templates/
 - Never jump straight to doing/ without approval
 - Never set status to "Doing" without user approval
 
+**Workflow Transitions:**
+- When moving work items between folders, read and follow the `onTransition` policy in `framework.yaml`
+- Check transition validity matrix before moving (e.g., backlog → doing is INVALID)
+- Complete per-transition checklist for target folder
+- See [workflow-guide.md#workflow-transitions](docs/collaboration/workflow-guide.md#workflow-transitions) for full rules
+
 **Release atomically (Step 9):**
 - Calculate version: Read PROJECT-STATUS.md + work item Version Impact → calculate next version → confirm with user
   - **Grouped releases:** Multiple items in done/? Use highest Version Impact (MAJOR > MINOR > PATCH)
