@@ -1022,19 +1022,94 @@ When a variant is active, its mindset replaces (not augments) the base tier mind
 
 ### Critical Open Question: Activation/Detection
 
-**Status:** Unresolved - this is the make-or-break question
+**Status:** Exploring - this is the make-or-break question
 
-How does the system know which role/variant to activate? Options to explore:
+How does the system know which role/variant to activate?
 
-1. **Explicit user selection** - User says "act as a Security Analyst" or selects from a list
-2. **Trigger phrase matching** - "Just get it working" → Prototype Developer
-3. **Context inference** - Working on tests → Test Developer; reviewing code → Code Reviewer
-4. **Project configuration** - Default roles defined in framework.yaml
-5. **Hybrid** - Project defaults + user override + context hints
+#### Activation Mechanisms Evaluated
 
-**Why this matters:** The role definitions are useless if they're never activated, or activated incorrectly. The UX of role selection/detection will determine whether this feature adds value or friction.
+| Mechanism | Reliability | Friction | Implementation | Notes |
+|-----------|-------------|----------|----------------|-------|
+| **Explicit selection** | High | High | Easy | User says "act as X" or uses command |
+| **Trigger phrase matching** | Medium | Low | Medium | "Just get it working" → Prototype Developer |
+| **Context inference** | Low-Medium | None | Hard | Infer from file type, task, etc. |
+| **Project configuration** | High | Medium (once) | Easy | Defined in framework.yaml |
+| **Hybrid** | High | Low | Hard | Layers multiple mechanisms |
 
-**Next step:** Explore activation mechanisms as a separate design problem.
+**Key insight:** Reliability is essential. A confident wrong answer is worse than asking.
+
+#### Proposed Approach: Layered Configuration
+
+Rather than a single default, use layered configuration with explicit selection as primary.
+
+**Layer 1: Project Config (framework.yaml)** - Which roles are *available/relevant*
+
+```yaml
+ai:
+  roles:
+    enabled:
+      - developer
+      - security_analyst
+      - architect
+      - technical_writer
+    disabled:
+      - financial_analyst    # not relevant for this project
+```
+
+This filters the list, doesn't prescribe what to use.
+
+**Layer 2: User Config (external to repo)** - Personal defaults
+
+**Layer 3: Explicit Selection** - This specific task
+
+Precedence: explicit > user config > project config > ask
+
+#### User Configuration: Scalability Consideration
+
+**Constraint:** Solution should be immediately scalable with no collision risk, even if not optimal.
+
+**Options evaluated:**
+
+| Approach | Collision Risk | Scales? | Survives Clone? |
+|----------|----------------|---------|-----------------|
+| `config-<username>.yaml` in repo | Username collision possible | No | Yes |
+| `.user/` directory in repo (gitignored) | Low | Yes | No |
+| `~/.spearit/preferences.yaml` (home dir) | None | Yes | Yes |
+| Environment variables | None | Yes | Yes (with shell config) |
+
+**Potential Solution: Home Directory with Project Reference**
+
+```
+~/.spearit/projects.yaml
+```
+
+```yaml
+# ~/.spearit/projects.yaml
+projects:
+  project-framework:          # matches project.id in framework.yaml
+    default_role: senior-production-developer
+    default_experience: senior
+
+  client-webapp:
+    default_role: senior-security-focused-developer
+```
+
+**Why this approach:**
+
+- Zero collision risk - each user has their own home directory
+- Keyed by `project.id` from framework.yaml (already exists)
+- Single file manages preferences across all projects
+- Survives fresh clones
+- Team members never touch each other's config
+- Config lives outside repo, which is arguably correct - user preferences *are* external to project
+
+**Tradeoff:** Config doesn't travel with repo. User must set up on each machine.
+
+**Open questions:**
+
+1. What happens when no role specified and no user default? Ask, or use generic assistant mode?
+2. Should trigger phrases be a supplemental layer for common patterns?
+3. How does user discover available roles? (UI/UX concern)
 
 ---
 
