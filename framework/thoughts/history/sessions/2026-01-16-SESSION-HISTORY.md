@@ -2,14 +2,14 @@
 
 **Date:** 2026-01-16
 **Participants:** Gary Elliott, Claude Code
-**Session Focus:** FEAT-059 - Context-Aware AI Roles (Deep Exploration)
-**Duration:** ~2 hours
+**Session Focus:** FEAT-059 - Context-Aware AI Roles (Deep Exploration + Schema Draft)
+**Duration:** ~3 hours
 
 ---
 
 ## Summary
 
-Deep exploration of AI role patterns for FEAT-059. Cataloged 25 base roles with 40 variants, designed a minimal 5-property schema, and established `/fw-` command prefix as the primary activation mechanism.
+Deep exploration of AI role patterns for FEAT-059. Cataloged 25 base roles with 40 variants, designed a minimal 5-property schema, established `/fw-` command prefix as the primary activation mechanism, drafted the complete YAML schema, and simplified to 22 base roles by removing redundancies.
 
 ---
 
@@ -171,9 +171,19 @@ Updated FEAT-017 and FEAT-018 with references to FEAT-059 activation strategy an
 
 ## Files Modified This Session
 
-1. `framework/thoughts/research/FEAT-059-role-exploration.md` - Created (1041 lines initial, expanded with schema and activation strategy)
-2. `framework/thoughts/work/todo/feature-017-backlog-review-command.md` - Added FEAT-059 cross-reference
-3. `framework/thoughts/work/todo/feature-018-claude-command-framework.md` - Added FEAT-059 cross-reference
+1. `framework/thoughts/work/backlog/FEAT-059-role-exploration.md` - Created and expanded (research + decisions)
+2. `framework/thoughts/work/backlog/FEAT-059-roles.yaml` - Created (complete role schema, 22 base roles + 40 variants)
+3. `framework/thoughts/work/todo/feature-017-backlog-review-command.md` - Added FEAT-059 cross-reference
+4. `framework/thoughts/work/todo/feature-018-claude-command-framework.md` - Added FEAT-059 cross-reference
+
+### Role Simplification
+
+Removed 3 redundant standalone roles:
+- `performance_engineer` → use `qa_engineer.variants.performance`
+- `business_analyst` → use `analyst.variants.business`
+- `financial_analyst` → use `analyst.variants.financial`
+
+**Final count:** 22 base roles + 40 variants (down from 25 base roles)
 
 ---
 
@@ -182,14 +192,25 @@ Updated FEAT-017 and FEAT-018 with references to FEAT-059 activation strategy an
 1. `docs(FEAT-059): Add comprehensive role exploration and schema design`
 2. `docs(FEAT-059): Explore role activation mechanisms`
 3. `docs(FEAT-059): Design /fw- command activation strategy`
+4. `docs(FEAT-059): Draft complete role schema and simplify to 22 base roles`
 
 ---
 
-## Open Questions (For Future Sessions)
+## Open Questions Resolved This Session
 
-1. **No role + no default:** Ask user, or fall back to generic assistant?
-2. **Project type → default base role:** Should project type suggest a starting role?
-3. **Trigger phrases:** Worth adding as Phase 2 supplement, or skip to AI suggestions?
+1. **No role + no default:** ~~Ask user, or fall back to generic assistant?~~ → **Use project type default**
+2. **Project type → default base role:** ~~Should project type suggest a starting role?~~ → **Yes**
+3. **Trigger phrases:** ~~Worth adding as Phase 2 supplement, or skip to AI suggestions?~~ → **Skip trigger phrases, go straight to AI suggestions**
+
+### Decision 9: Project Type Defaults
+**Question:** What role to use when none specified?
+**Decision:** Default based on project type (e.g., `application` → `senior-production-developer`)
+**Rationale:** Sensible starting point without requiring explicit selection.
+
+### Decision 10: Skip Trigger Phrases
+**Question:** Should Phase 2 use trigger phrase matching?
+**Decision:** No - skip to AI suggestions with user confirmation.
+**Rationale:** Trigger phrases are brittle (false positives, phrase explosion, context blindness). Let the smart system be smart.
 
 ---
 
@@ -203,7 +224,7 @@ Updated FEAT-017 and FEAT-018 with references to FEAT-059 activation strategy an
 
 ---
 
-**Session End:** FEAT-059 activation strategy designed, commands integrated with FEAT-017/018
+**Session End:** FEAT-059 role schema drafted, simplified to 22 roles, all design decisions resolved
 
 ---
 

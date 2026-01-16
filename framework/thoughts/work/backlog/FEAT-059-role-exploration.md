@@ -507,35 +507,36 @@ Reorganizing roles by their primary function in the lifecycle:
 
 ## Updated Summary Table
 
-| Role | Primary Domain | Code Focus | Documentation Focus | Category |
-|------|---------------|------------|---------------------|----------|
-| Developer | Technical | High | Low | Creation |
-| Architect | Technical | Medium | High | Creation |
-| Technical Writer | Documentation | Low | High | Creation |
-| UX Designer | Design | Low | High | Creation |
-| DBA/Data Engineer | Technical | High | Medium | Creation |
-| QA Engineer | Technical | High | Medium | Validation |
-| Security Analyst | Technical | High | Medium | Validation |
-| Performance Engineer | Technical | High | Low | Validation |
-| Auditor | Governance | Low | High | Validation |
-| Subject Matter Expert | Varies | Varies | Varies | Validation/Perspective |
-| User Advocate | Design | Low | Medium | Validation/Perspective |
-| Scrum Master | Process | Low | Medium | Governance |
-| Release Manager | Process | Medium | High | Governance |
-| Compliance Officer | Governance | Low | High | Governance |
-| Legal Counsel | Governance | Low | High | Governance |
-| Product Owner | Business | Low | High | Strategy |
-| Business Analyst | Business | Low | High | Strategy |
-| Financial Analyst | Business | Low | High | Strategy |
-| CEO Perspective | Strategy | Low | High | Strategy |
-| CTO Perspective | Strategy | Medium | High | Strategy |
-| DevOps Engineer | Technical | High | Medium | Operations |
-| Support Engineer | Operations | Low | High | Operations |
-| Change Manager | Process | Low | High | Operations |
-| Risk Manager | Governance | Low | High | Operations |
-| Project Manager | Process | Low | High | Strategy |
+| Role | Primary Domain | Code Focus | Documentation Focus | Category | Status |
+|------|---------------|------------|---------------------|----------|--------|
+| Developer | Technical | High | Low | Creation | ✓ |
+| Architect | Technical | Medium | High | Creation | ✓ |
+| Technical Writer | Documentation | Low | High | Creation | ✓ |
+| UX Designer | Design | Low | High | Creation | ✓ |
+| DBA/Data Engineer | Technical | High | Medium | Creation | ✓ |
+| QA Engineer | Technical | High | Medium | Validation | ✓ |
+| Security Analyst | Technical | High | Medium | Validation | ✓ |
+| ~~Performance Engineer~~ | ~~Technical~~ | ~~High~~ | ~~Low~~ | ~~Validation~~ | Removed → `qa_engineer.variants.performance` |
+| Auditor | Governance | Low | High | Validation | ✓ |
+| Subject Matter Expert | Varies | Varies | Varies | Validation/Perspective | ✓ |
+| User Advocate | Design | Low | Medium | Validation/Perspective | ✓ |
+| Scrum Master | Process | Low | Medium | Governance | ✓ |
+| Release Manager | Process | Medium | High | Governance | ✓ |
+| Compliance Officer | Governance | Low | High | Governance | ✓ |
+| Legal Counsel | Governance | Low | High | Governance | ✓ |
+| Product Owner | Business | Low | High | Strategy | ✓ |
+| ~~Business Analyst~~ | ~~Business~~ | ~~Low~~ | ~~High~~ | ~~Strategy~~ | Removed → `analyst.variants.business` |
+| ~~Financial Analyst~~ | ~~Business~~ | ~~Low~~ | ~~High~~ | ~~Strategy~~ | Removed → `analyst.variants.financial` |
+| Analyst | Business | Low | High | Strategy | ✓ (with variants) |
+| CEO Perspective | Strategy | Low | High | Strategy | ✓ |
+| CTO Perspective | Strategy | Medium | High | Strategy | ✓ |
+| DevOps Engineer | Technical | High | Medium | Operations | ✓ |
+| Support Engineer | Operations | Low | High | Operations | ✓ |
+| Change Manager | Process | Low | High | Operations | ✓ |
+| Risk Manager | Governance | Low | High | Operations | ✓ |
+| Project Manager | Process | Low | High | Strategy | ✓ |
 
-**Total: 25 roles cataloged**
+**Total: 25 explored → 22 base roles in final proposal (+ 1 Analyst with variants)**
 
 ---
 
@@ -852,9 +853,9 @@ Or flattened: `senior-production-developer`
 
 ---
 
-## Summary: What We Have
+## Summary: What We Explored
 
-**25 Base Roles** in 6 categories:
+**25 Base Roles** were initially cataloged in 6 categories:
 - Creation (5): Developer, Architect, Technical Writer, UX Designer, DBA
 - Validation (6): QA Engineer, Security Analyst, Performance Engineer, Auditor, SME, User Advocate
 - Governance (4): Scrum Master, Release Manager, Compliance Officer, Legal Counsel
@@ -876,6 +877,49 @@ Or flattened: `senior-production-developer`
 - Documentation/Policy (12 phases)
 
 **Naming Pattern:** `{Experience} {Variant} {Base Role}`
+
+---
+
+## Simplification: Removing Redundant Roles
+
+**Status:** Decided (2026-01-16)
+
+After reviewing overlap between standalone roles and variants, we removed 3 redundant standalone roles:
+
+| Removed Role | Use Instead | Rationale |
+|--------------|-------------|-----------|
+| `performance_engineer` | `qa_engineer.variants.performance` | Performance testing is a QA function |
+| `business_analyst` | `analyst.variants.business` | Business analysis is an analyst variant |
+| `financial_analyst` | `analyst.variants.financial` | Financial analysis is an analyst variant |
+
+**Roles kept despite apparent overlap:**
+- `security_analyst` - Finding vulnerabilities (proactive) differs from security code review (reactive)
+- `legal_counsel` - Advising on legal matters differs from reviewing documents for legal issues
+- `auditor` - Formal audit function has no equivalent variant
+
+---
+
+## Final Proposal: What We Will Implement
+
+**22 Base Roles** in 5 categories:
+- Creation (5): Developer, Architect, Technical Writer, UX Designer, Data Engineer
+- Validation (5): QA Engineer, Security Analyst, Auditor, SME, User Advocate
+- Governance (4): Scrum Master, Release Manager, Compliance Officer, Legal Counsel
+- Strategy (4): Product Owner, Project Manager, CEO, CTO
+- Operations (4): DevOps Engineer, Support Engineer, Change Manager, Risk Manager
+- Analysis (1 with variants): Analyst
+
+**40 Role Variants** across 6 base role families:
+- Developer (8): Prototype, Production, Refactoring, Performance, Security-Focused, Test, Maintenance, API
+- Writer (9): Draft, Technical, Policy, Editorial, User Guide, Executive, Compliance, Training, Maintenance
+- Reviewer (8): SME, Editorial, Stakeholder, Legal, User, Code, Security, Architecture
+- Architect (5): Solution, Enterprise, Security, Data, Integration
+- Analyst (5): Business, Data, Security, Financial, Risk
+- QA (5): Manual, Automation, Performance, Security, Accessibility
+
+**2 Experience Tiers:** Senior (default), Mid-Level
+
+**Schema:** See [FEAT-059-roles.yaml](FEAT-059-roles.yaml)
 
 ---
 
@@ -1193,18 +1237,54 @@ Introduces roles without being verbose. User learns the system while configuring
 | Phase | What Ships | Activation Method |
 |-------|------------|-------------------|
 | **1** | `/fw-role`, `/fw-roles`, `/fw-setup` | Explicit commands only |
-| **2** | AI suggestions | "This looks like security work - switch to Security Analyst?" |
-| **3** | Context hints | Supplemental inference, never overrides explicit |
+| **2** | AI suggestions | "This looks like security work - switch to Security Analyst?" (user confirms) |
+
+Phase 3 (context inference without confirmation) intentionally omitted - automatic switching without user consent is likely to cause more frustration than value.
 
 Start simple, gather usage data, add intelligence incrementally.
 
 ---
 
-### Remaining Open Questions
+### Resolved: Fallback and Detection Strategy
 
-1. **No role + no default:** Ask user, or fall back to generic assistant?
-2. **Project type → default base role:** Should project type suggest a starting role?
-3. **Trigger phrases:** Worth adding as Phase 2 supplement, or skip to AI suggestions?
+**Decision 1: No role + no default → Use project type default**
+
+If no role is explicitly selected and no user default is configured, fall back to a sensible default based on project type:
+
+| Project Type | Default Role |
+|--------------|--------------|
+| `application` | Senior Production Developer |
+| `library` | Senior API Developer |
+| `documentation` | Senior Technical Writer |
+| `policy` | Senior Policy Writer |
+| `framework` | Senior Production Developer |
+
+**Decision 2: Project type suggests starting role → Yes**
+
+Project type informs which roles are most relevant and what the default should be. This is already captured in the table above.
+
+**Decision 3: Skip trigger phrases, go straight to AI suggestions**
+
+Trigger phrase matching (e.g., "just get it working" → Prototype Developer) was evaluated and rejected:
+
+- **False positives** - Phrases are ambiguous ("just get it working" might mean frustration, not prototype mode)
+- **Phrase explosion** - Users express intent many ways; maintaining phrase lists is unsustainable
+- **Context blindness** - Same phrase means different things in different contexts
+- **Maintenance burden** - Phrase lists require ongoing curation
+
+Instead, Phase 2 will implement **AI suggestions with user confirmation**:
+
+```
+User: Review this for security issues
+
+AI: [notices: current role is Production Developer, user asking for security review]
+
+"I'll review this for security issues. Want me to switch to Security Analyst
+for a more thorough threat-focused review, or should I do a security-aware
+code review as a Developer?"
+```
+
+Key principle: Let the smart system be smart. No pattern matching - just contextual awareness and offering choices.
 
 ---
 
