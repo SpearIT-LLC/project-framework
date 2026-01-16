@@ -1105,11 +1105,116 @@ projects:
 
 **Tradeoff:** Config doesn't travel with repo. User must set up on each machine.
 
-**Open questions:**
+---
 
-1. What happens when no role specified and no user default? Ask, or use generic assistant mode?
-2. Should trigger phrases be a supplemental layer for common patterns?
-3. How does user discover available roles? (UI/UX concern)
+### Activation Strategy: Explicit Commands First
+
+**Decision:** Start with explicit slash commands for reliable activation. Add smarter detection later.
+
+#### Why Explicit First
+
+| Approach | Reliability | Ships When |
+|----------|-------------|------------|
+| Explicit commands | High | Now |
+| AI suggestions ("Want me to switch?") | Medium | Later |
+| Context inference | Low-Medium | Future (supplemental only) |
+
+Explicit commands are reliable, testable, and teach users the role system exists.
+
+#### Command Prefix: `/fw-`
+
+**Decision:** All framework commands use `/fw-` prefix to avoid collisions.
+
+**Rationale:**
+- Avoids collision with Claude Code builtins (`/init`, `/status`, `/help` are taken)
+- Avoids collision with other plugins/MCP servers
+- Self-teaching: typing `/fw-` shows all framework commands via autocomplete
+- Short enough (3 chars) to not be burdensome
+- Clear namespace for framework functionality
+
+#### Proposed Role Commands
+
+| Command | Purpose |
+|---------|---------|
+| `/fw-role` | Show current role; with argument, switch role (e.g., `/fw-role security-analyst`) |
+| `/fw-roles` | List all available roles for this project |
+| `/fw-setup` | Initialize framework, introduce roles, set defaults |
+
+#### Full Command Set (Integrates with FEAT-018)
+
+| Command | Purpose | Category |
+|---------|---------|----------|
+| `/fw-setup` | Initialize framework, introduce roles, set user defaults | Setup |
+| `/fw-role` | Show/switch AI role | Role |
+| `/fw-roles` | List available roles for this project | Role |
+| `/fw-status` | Project status summary | Information |
+| `/fw-backlog` | Review and prioritize backlog (FEAT-017) | Workflow |
+| `/fw-wip` | Check WIP limits and current work | Workflow |
+| `/fw-release` | Prepare release | Workflow |
+| `/fw-validate` | Check framework compliance | Utility |
+
+#### Role Switching UX
+
+```
+User: /fw-role security-analyst
+
+AI: Switched to Senior Security Analyst.
+
+   Mindset: "How would I attack this? What assumptions are we
+   making about trust? Should this feature exist given the
+   security cost?"
+
+   I'll focus on threat modeling, vulnerability identification,
+   and attack surface analysis.
+```
+
+User sees exactly what changed and why.
+
+#### Setup Flow (at `/fw-setup`)
+
+```
+Project type: application
+Available roles for this project:
+  • Developer (prototype, production, refactoring, maintenance, ...)
+  • Architect (solution, security, data, ...)
+  • Security Analyst
+  • QA Engineer
+  • Technical Writer
+
+You can switch roles anytime with "/fw-role <name>".
+
+Set a default role? [Senior Production Developer]
+```
+
+Introduces roles without being verbose. User learns the system while configuring.
+
+#### Phased Rollout
+
+| Phase | What Ships | Activation Method |
+|-------|------------|-------------------|
+| **1** | `/fw-role`, `/fw-roles`, `/fw-setup` | Explicit commands only |
+| **2** | AI suggestions | "This looks like security work - switch to Security Analyst?" |
+| **3** | Context hints | Supplemental inference, never overrides explicit |
+
+Start simple, gather usage data, add intelligence incrementally.
+
+---
+
+### Remaining Open Questions
+
+1. **No role + no default:** Ask user, or fall back to generic assistant?
+2. **Project type → default base role:** Should project type suggest a starting role?
+3. **Trigger phrases:** Worth adding as Phase 2 supplement, or skip to AI suggestions?
+
+---
+
+### Related Work Items
+
+- **[FEAT-018: Claude Command Framework](../work/todo/feature-018-claude-command-framework.md)** - Establishes the `/fw-` command infrastructure. Role commands (`/fw-role`, `/fw-roles`, `/fw-setup`) should be implemented within this framework.
+
+- **[FEAT-017: Backlog Review Command](../work/todo/feature-017-backlog-review-command.md)** - First command using the framework. Will become `/fw-backlog` under the new naming convention.
+
+**Implementation note:** FEAT-059 role activation depends on FEAT-018 command framework being in place. Consider implementing FEAT-018 first, then adding role commands as part of FEAT-059.
 
 ---
 

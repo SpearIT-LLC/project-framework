@@ -331,7 +331,8 @@ Remove command documentation from CLAUDE.md - no code to rollback in Phase 1
 - [ADR-001: AI Workflow Checkpoint Policy](../../research/adr/001-ai-workflow-checkpoint-policy.md)
 - [CLAUDE.md](../../../CLAUDE.md)
 - Related: FEAT-017 (Backlog Review Command) - First command using this framework
+- Related: [FEAT-059: Activation Strategy](../../research/FEAT-059-role-exploration.md#activation-strategy-explicit-commands-first) - Role commands (`/fw-role`, `/fw-roles`, `/fw-setup`) will use this framework. Also establishes `/fw-` prefix convention for all commands.
 
 ---
 
-**Last Updated:** 2025-12-20
+**Last Updated:** 2026-01-16

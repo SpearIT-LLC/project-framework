@@ -273,7 +273,8 @@ Remove command documentation from CLAUDE.md - no code to rollback
 - [ADR-001: AI Workflow Checkpoint Policy](../../research/adr/001-ai-workflow-checkpoint-policy.md)
 - [CLAUDE.md](../../../CLAUDE.md)
 - Related: FEAT-018 (Claude Command Framework)
+- Related: [FEAT-059: Command Prefix](../../research/FEAT-059-role-exploration.md#command-prefix-fw-) - Establishes `/fw-` prefix convention. This command will become `/fw-backlog`.
 
 ---
 
-**Last Updated:** 2025-12-20
+**Last Updated:** 2026-01-16
