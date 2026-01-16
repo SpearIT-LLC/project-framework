@@ -148,6 +148,9 @@ roles:
 5. **How are roles triggered?**
    - **Decision: Conversational triggering (see Role Triggering below)**
 
+6. **Should roles be project-type-specific or universal?**
+   - **Leaning: Universal roles (see Universal vs Project-Type Roles below)**
+
 ### Role Triggering: Conversational Approach
 
 Roles are triggered through **explicit conversation**, not automatic path matching.
@@ -297,6 +300,49 @@ The conversational approach handles this naturally:
 - "Time to release" → Release manager
 
 The role shifts as the activity shifts, and the AI asks when it's ambiguous. This is more accurate than any single role declaration could be.
+
+### Universal vs Project-Type Roles
+
+**The question:** Should each project type (framework, application, library, tool) have its own set of roles, or should roles be defined universally?
+
+**Arguments for project-type-specific roles:**
+
+- A framework project (documentation deliverable) has different concerns than an application (code deliverable)
+- A library might not need a release-manager role the same way an application does
+- Keeps roles focused and relevant to what the project actually does
+
+**Arguments for universal roles:**
+
+- Most roles apply regardless of project type (scrum master, developer, architect)
+- Simpler mental model - learn once, apply everywhere
+- Avoids maintaining multiple role sets
+- Projects can simply not use roles that don't apply to them
+
+**Analysis:**
+
+The core roles we've defined are fairly universal:
+
+| Role | Applies to... |
+|------|---------------|
+| Scrum master | Any project with kanban workflow |
+| Developer | Any project with code or content to create |
+| Architect | Any project making design decisions |
+| Release manager | Any project with versioned releases |
+
+The *mindsets* might vary slightly by project type:
+- A framework's "developer" focuses on documentation quality
+- An application's "developer" focuses on code quality
+- But the role itself (developer) and its core purpose (quality guardian) remain the same
+
+**Recommendation:** Define roles universally, but allow mindsets to be customized per project if needed.
+
+**How this would work:**
+
+1. Framework provides universal role definitions with sensible default mindsets
+2. Individual projects can override mindsets in their `framework.yaml` if their context requires different instructions
+3. Projects that don't need a role simply don't trigger it conversationally
+
+**Decision status:** Leaning universal, but not yet finalized. More thought needed on whether mindset customization is actually necessary or if universal defaults are sufficient.
 
 ---
 
