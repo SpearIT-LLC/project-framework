@@ -229,6 +229,14 @@ workflow-guide.md#workflow-transitions (rules + checklists)
 
 **Significance:** This may be the key that unlocks the entire framework - transforms AI from generic executor to role-aware collaborator.
 
+**Additional design question explored:**
+
+4. **Universal vs project-type-specific roles:**
+   - Leaning universal - core roles (scrum master, developer, architect, release manager) apply regardless of project type
+   - Mindsets might vary slightly (framework developer focuses on docs, app developer on code)
+   - Recommendation: Universal roles with customizable mindsets per project if needed
+   - Decision not finalized - more thought needed
+
 ---
 
 ## Next Steps
@@ -248,6 +256,9 @@ workflow-guide.md#workflow-transitions (rules + checklists)
 6. `chore(TECH-056): Move work item to done`
 7. `docs: Update session history for TECH-056 completion`
 8. `feat(FEAT-052): Add framework.yaml validation script`
+9. `docs: Update session history for FEAT-052 completion`
+10. `feat(FEAT-059): Design context-aware AI roles`
+11. `docs(FEAT-059): Add universal vs project-type roles analysis`
 
 ---
 
