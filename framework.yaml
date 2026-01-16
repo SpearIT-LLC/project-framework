@@ -9,3 +9,7 @@ project:
 policies:
   workflow: framework/docs/collaboration/workflow-guide.md
   onTransition: framework/docs/collaboration/workflow-guide.md#workflow-transitions
+
+roles:
+  definitions: framework/docs/ref/framework-roles.yaml
+  default: senior-production-developer

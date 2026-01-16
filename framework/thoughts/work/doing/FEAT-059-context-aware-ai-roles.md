@@ -116,13 +116,19 @@ roles:
 ### Architecture Impact
 
 **Files Modified:**
-- `framework.yaml` - Add roles section
-- `framework/tools/framework-schema.yaml` - Add roles schema validation
+- `framework.yaml` - Add roles section referencing definitions file
+- `framework/docs/ref/framework-schema.yaml` - Add roles schema validation (moved from tools/)
 - `framework/CLAUDE.md` - Add reference to roles and how to use them
 - `framework/docs/collaboration/workflow-guide.md` - Document role-based behavior
 
 **Files Added:**
-- None
+- `framework/docs/ref/framework-roles.yaml` - Role definitions (23 base roles + 40 variants)
+
+**Files Moved:**
+- `framework/tools/framework-schema.yaml` → `framework/docs/ref/framework-schema.yaml`
+
+**New Directory:**
+- `framework/docs/ref/` - Reference material (structured YAML definitions for AI consumption)
 
 ### Implementation Approach
 
@@ -344,6 +350,42 @@ The *mindsets* might vary slightly by project type:
 
 **Decision status:** Leaning universal, but not yet finalized. More thought needed on whether mindset customization is actually necessary or if universal defaults are sufficient.
 
+### Session 2026-01-16 Decisions
+
+**Decision: Separate roles.yaml file**
+- Role definitions live in a separate file, not embedded in framework.yaml
+- `framework.yaml` references the definitions file via `roles.definitions` path
+- Rationale: Roles are framework-provided reference material (~550 lines), not project-specific config
+
+**Decision: File location `framework/docs/ref/`**
+- New directory for structured reference material (YAML definitions)
+- Path: `framework/docs/ref/framework-roles.yaml`
+- Also move: `framework/tools/framework-schema.yaml` → `framework/docs/ref/framework-schema.yaml`
+- Rationale: Distinguishes reference material (lookup) from guides (read-through) and tools (execute)
+
+**Decision: Explicit `claude` base role**
+- Add `claude` role as the explicit default when no specialized role is active
+- Represents "framework-aware Claude without specialized role constraints"
+- Not raw Claude - still follows framework conventions, just no domain-specific mindset
+- Default: `senior-claude`
+
+**Decision: Fallback behavior**
+- When `roles` section missing from framework.yaml → default to `senior-claude`
+- When `roles` section present but no `default` specified → use `project_type_defaults` mapping
+- Makes baseline behavior explicit and queryable
+
+**Updated framework.yaml structure:**
+```yaml
+roles:
+  definitions: framework/docs/ref/framework-roles.yaml
+  default: senior-production-developer
+```
+
+**Updated framework-schema.yaml fields:**
+- `roles` (object, optional) - AI role configuration
+- `roles.definitions` (string) - Path to role definitions file
+- `roles.default` (string) - Default role at session start
+
 ---
 
 ## Dependencies
@@ -405,9 +447,15 @@ N/A - This is a documentation/process feature, not code execution.
 ## Implementation Checklist
 
 - [ ] Design reviewed and approved
-- [ ] Schema defined in framework-schema.yaml
-- [ ] Roles section added to framework.yaml
-- [ ] CLAUDE.md updated with role-based behavior guidance
+- [x] Create `framework/docs/ref/` directory
+- [x] Move `framework/tools/framework-schema.yaml` → `framework/docs/ref/framework-schema.yaml`
+- [x] Update any references to old schema path
+- [x] Create `framework/docs/ref/framework-roles.yaml` with all role definitions
+- [x] Add `claude` base role to roles.yaml
+- [x] Add `fallback_default: senior-claude` to roles.yaml
+- [x] Add roles schema fields to framework-schema.yaml
+- [x] Add roles section to framework.yaml
+- [x] CLAUDE.md updated with role-based behavior guidance
 - [ ] workflow-guide.md updated
 - [ ] Manual testing completed
 - [ ] CHANGELOG.md updated
@@ -420,13 +468,18 @@ N/A - This is a documentation/process feature, not code execution.
 
 ```markdown
 ### Added
-- Context-aware AI roles in framework.yaml
-  - Scrum master role for kanban workflow enforcement
-  - Developer role for code quality and security
-  - Architect role for ADR decisions
-  - Release manager role for versioning integrity
-- Conversational role triggering - AI asks "What kind of work are we doing?" at session start
-- Mid-session context switch detection with clarification prompts
+- Context-aware AI roles system
+  - 23 base roles organized into 6 families (Creation, Validation, Governance, Strategy, Operations, Perspective)
+  - 40 role variants for specialized contexts
+  - Experience tiers (mid-level, senior) with distinct mindsets
+  - `claude` base role as explicit default for framework-aware assistance
+- Role definitions file (`framework/docs/ref/framework-roles.yaml`)
+- `roles` section in framework.yaml for project-specific role configuration
+- `/fw-role` command activation strategy (future implementation)
+
+### Changed
+- Moved `framework-schema.yaml` to `framework/docs/ref/` (new reference material location)
+- Created `framework/docs/ref/` directory for structured YAML definitions
 ```
 
 ---
@@ -441,10 +494,13 @@ The role-based approach shifts from "implicit trigger recognition" to "explicit 
 
 ## References
 
-- Session discussion: 2026-01-15 (this conversation)
+- Session discussion: 2026-01-15 (initial design)
+- Session discussion: 2026-01-16 (role schema, activation strategy, file location decisions)
 - Related retrospective: framework/thoughts/retrospectives/2025-12-20-workflow-enforcement-retrospective.md
 - ADR-001: AI Workflow Checkpoint Policy
+- FEAT-059-role-exploration.md - Comprehensive role research (1100+ lines)
+- FEAT-059-roles.yaml - Draft role definitions (design artifact in backlog/)
 
 ---
 
-**Last Updated:** 2026-01-15
+**Last Updated:** 2026-01-16

@@ -55,3 +55,20 @@ fields:
     required: false
     description: "Path (with optional anchor) to workflow transition rules. AI assistants should read this before moving work items between folders."
     example: "framework/docs/collaboration/workflow-guide.md#workflow-transitions"
+
+  roles:
+    type: object
+    required: false
+    description: "AI role configuration. Defines which roles the AI should adopt based on context."
+
+  roles.definitions:
+    type: string
+    required: false
+    description: "Path to the role definitions file. If not specified, uses framework-provided defaults."
+    example: "framework/docs/ref/framework-roles.yaml"
+
+  roles.default:
+    type: string
+    required: false
+    description: "Default role at session start. If not specified, uses project_type_defaults from the definitions file."
+    example: "senior-production-developer"

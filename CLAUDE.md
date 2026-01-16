@@ -18,7 +18,7 @@ This file provides navigation and context for AI assistants working in this fram
 
 ## Project Configuration
 
-Read `framework.yaml` at the repo root for machine-readable project context. See [framework/tools/framework-schema.yaml](framework/tools/framework-schema.yaml) for valid values and field descriptions.
+Read `framework.yaml` at the repo root for machine-readable project context. See [framework/docs/ref/framework-schema.yaml](framework/docs/ref/framework-schema.yaml) for valid values and field descriptions.
 
 Use these values to understand project context rather than inferring from structure.
 

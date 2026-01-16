@@ -147,7 +147,7 @@ workflow-guide.md#workflow-transitions (rules + checklists)
 - [x] framework-schema.yaml updated for policies section
 - [x] framework/CLAUDE.md has workflow transitions instruction
 - [x] Tested: AI follows rules when moving item (this work item transition: todo → doing)
-- [ ] Changes committed
+- [x] Changes committed
 
 ---
 

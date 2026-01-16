@@ -10,7 +10,7 @@
     Path to framework.yaml. Defaults to framework.yaml in the current directory.
 
 .PARAMETER SchemaPath
-    Path to framework-schema.yaml. Defaults to framework/tools/framework-schema.yaml
+    Path to framework-schema.yaml. Defaults to framework/docs/ref/framework-schema.yaml
     relative to the config file location.
 
 .EXAMPLE
@@ -39,7 +39,7 @@ if (-not $ConfigPath) {
 
 if (-not $SchemaPath) {
     $configDir = Split-Path $ConfigPath -Parent
-    $SchemaPath = Join-Path $configDir "framework/tools/framework-schema.yaml"
+    $SchemaPath = Join-Path $configDir "framework/docs/ref/framework-schema.yaml"
 }
 
 if (-not (Test-Path $SchemaPath)) {

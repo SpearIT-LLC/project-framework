@@ -4,7 +4,7 @@
 
 **Quick Reference:** See [CLAUDE-QUICK-REFERENCE.md](CLAUDE-QUICK-REFERENCE.md) for critical rules and decision trees.
 
-**Last Updated:** 2025-12-22
+**Last Updated:** 2026-01-16
 
 ---
 
@@ -133,6 +133,53 @@ templates/
 ```
 
 **Strategy:** This file = quick reference. Collaboration docs = full details. Templates = implementation starting points.
+
+---
+
+## AI Roles
+
+The framework supports context-aware AI roles that help the AI adopt appropriate mindsets for different types of work.
+
+### How Roles Work
+
+1. **Check `framework.yaml`** for the `roles` section
+2. **Read the definitions file** specified in `roles.definitions`
+3. **Apply the default role** specified in `roles.default`, or use `project_type_defaults` if no default is set
+4. **Switch roles conversationally** when the user indicates a different type of work
+
+### Role Selection
+
+Roles are triggered through conversation, not automatic path matching:
+
+- User says "Let's work on the backlog" → Adopt **scrum-master** role
+- User says "I need to fix a bug" → Adopt **developer** role
+- User says "Time to release" → Adopt **release-manager** role
+- User says "Document this decision" → Adopt **architect** or **technical-writer** role
+
+### Mid-Session Context Switch
+
+If the user's request doesn't match the current role context, ask before switching:
+
+> "We've been working on code changes. This request involves moving work items - should I switch to workflow management mode, or is this a quick aside?"
+
+### Role Format
+
+Roles use the naming pattern: `{experience}-{variant}-{base_role}`
+
+Examples:
+- `senior-production-developer` - Senior developer focused on production-quality code
+- `senior-api-developer` - Senior developer focused on API design
+- `senior-scrum-master` - Senior scrum master for workflow governance
+
+### Fallback Behavior
+
+- No `roles` section in framework.yaml → Use `fallback_default` from definitions file (typically `senior-claude`)
+- `roles` section present but no `default` → Use `project_type_defaults` mapping based on `project.type`
+
+### Reference
+
+- Role definitions: See path in `framework.yaml` → `roles.definitions`
+- Schema: [framework/docs/ref/framework-schema.yaml](docs/ref/framework-schema.yaml)
 
 ---
 
@@ -529,5 +576,5 @@ The project includes comprehensive permission configuration in `.claude/settings
 
 ---
 
-**Last Updated:** 2025-12-22
+**Last Updated:** 2026-01-16
 **Framework Level:** Standard (see [PROJECT-STATUS.md](PROJECT-STATUS.md) for current version)
