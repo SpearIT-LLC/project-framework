@@ -72,3 +72,93 @@ fields:
     required: false
     description: "Default role at session start. If not specified, uses project_type_defaults from the definitions file."
     example: "senior-production-developer"
+
+# =============================================================================
+# ROLE DEFINITION SCHEMA
+# =============================================================================
+# Schema for entries in framework-roles.yaml
+
+role_definition:
+  type: object
+  description: "Schema for individual role definitions in framework-roles.yaml"
+
+  role.family:
+    type: enum
+    required: true
+    description: "Which family this role belongs to"
+    values:
+      creation: "Roles that build things"
+      validation: "Roles that verify quality"
+      governance: "Roles that enforce process"
+      strategy: "Roles that set direction"
+      operations: "Roles that keep things running"
+      perspective: "Roles that represent viewpoints"
+
+  role.verb:
+    type: string
+    required: true
+    description: "Action verb describing what this role does"
+    example: "builds"
+
+  role.description:
+    type: string
+    required: true
+    description: "Brief description of the role's purpose"
+    example: "Implements functional software from requirements and designs"
+
+  role.tiers:
+    type: object
+    required: true
+    description: "Experience-level mindsets for this role"
+
+  role.tiers.mid_level.mindset:
+    type: string
+    required: true
+    description: "Mindset for mid-level experience tier"
+    example: "Does this work correctly and follow our standards?"
+
+  role.tiers.senior.mindset:
+    type: string
+    required: true
+    description: "Mindset for senior experience tier"
+    example: "Is this the right approach? What are we trading off?"
+
+  role.requires_context:
+    type: object
+    required: false
+    description: "Context that must be clarified before the role can be fully activated. When present, AI should ask the clarifying question if context is not provided."
+
+  role.requires_context.question:
+    type: string
+    required: true
+    description: "Question to ask when the role is activated without explicit context"
+    example: "What domain should I focus my expertise on?"
+
+  role.requires_context.examples:
+    type: array
+    required: false
+    description: "Example answers to help the user understand what kind of context is needed"
+    example:
+      - "Legal/contracts"
+      - "Healthcare/HIPAA"
+      - "Financial services"
+
+  role.variants:
+    type: object
+    required: false
+    description: "Specialized variants of the role with distinct mindsets. Null if no variants."
+
+  role.variants.<name>.mindset:
+    type: string
+    required: true
+    description: "Mindset specific to this variant"
+    example: "Speed over polish. Prove the concept. Don't overthink."
+
+  role.variants.<name>.triggers:
+    type: array
+    required: false
+    description: "Words or phrases that suggest this variant should be activated. Used as hints for conversational matching, not automatic triggers."
+    example:
+      - "prototype"
+      - "spike"
+      - "proof of concept"

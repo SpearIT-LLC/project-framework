@@ -456,7 +456,7 @@ N/A - This is a documentation/process feature, not code execution.
 - [x] Add roles schema fields to framework-schema.yaml
 - [x] Add roles section to framework.yaml
 - [x] CLAUDE.md updated with role-based behavior guidance
-- [ ] workflow-guide.md updated
+- [x] workflow-guide.md updated (v1.1.0 - added "AI Roles and Workflow" section)
 - [ ] Manual testing completed
 - [ ] CHANGELOG.md updated
 
@@ -468,18 +468,21 @@ N/A - This is a documentation/process feature, not code execution.
 
 ```markdown
 ### Added
-- Context-aware AI roles system
-  - 23 base roles organized into 6 families (Creation, Validation, Governance, Strategy, Operations, Perspective)
-  - 40 role variants for specialized contexts
+- Context-aware AI roles system (schema v2.0)
+  - 13 base roles organized into 6 families (Creation, Validation, Governance, Strategy, Operations, Perspective)
+  - Role variants for specialized approaches (e.g., developer.prototype, developer.production)
   - Experience tiers (mid-level, senior) with distinct mindsets
   - `claude` base role as explicit default for framework-aware assistance
+  - `requires_context` field for roles needing domain clarification (subject_matter_expert, compliance, analyst)
+  - `triggers` field for variant activation hints
 - Role definitions file (`framework/docs/ref/framework-roles.yaml`)
 - `roles` section in framework.yaml for project-specific role configuration
-- `/fw-role` command activation strategy (future implementation)
+- "AI Roles and Workflow" section in workflow-guide.md
 
 ### Changed
 - Moved `framework-schema.yaml` to `framework/docs/ref/` (new reference material location)
 - Created `framework/docs/ref/` directory for structured YAML definitions
+- Updated workflow-guide.md to v1.1.0
 ```
 
 ---

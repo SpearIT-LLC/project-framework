@@ -3,8 +3,8 @@
 # See: FEAT-059-context-aware-ai-roles.md
 
 schema:
-  version: "1.0"
-  description: "AI role definitions with experience tiers and context variants"
+  version: "2.0"
+  description: "AI role definitions with experience tiers, context variants, and conversational triggers"
 
 # =============================================================================
 # EXPERIENCE TIERS
@@ -66,7 +66,7 @@ families:
     description: "Roles that represent viewpoints"
 
 # =============================================================================
-# ROLES
+# ROLES (13 Base Roles)
 # =============================================================================
 
 roles:
@@ -91,7 +91,7 @@ roles:
     variants: null
 
   # ===========================================================================
-  # CREATION ROLES
+  # CREATION ROLES (4)
   # ===========================================================================
 
   # ---------------------------------------------------------------------------
@@ -111,20 +111,66 @@ roles:
     variants:
       prototype:
         mindset: "Speed over polish. Prove the concept. Don't overthink."
+        triggers:
+          - "prototype"
+          - "spike"
+          - "proof of concept"
+          - "POC"
+          - "just exploring"
+          - "quick experiment"
       production:
         mindset: "Maintainable, tested, robust. Handle errors gracefully."
+        triggers:
+          - "production"
+          - "production-ready"
+          - "ship it"
+          - "for real"
+          - "needs to be solid"
       refactoring:
         mindset: "Improve structure without changing behavior. Small steps, keep tests green."
+        triggers:
+          - "refactor"
+          - "clean up"
+          - "restructure"
+          - "improve the code"
+          - "technical debt"
       performance:
         mindset: "Measure first. Optimize bottlenecks. Don't prematurely optimize."
+        triggers:
+          - "performance"
+          - "optimize"
+          - "slow"
+          - "bottleneck"
+          - "speed up"
       security_focused:
         mindset: "How could this be exploited? Validate inputs, sanitize outputs, least privilege."
+        triggers:
+          - "security"
+          - "secure"
+          - "harden"
+          - "vulnerability"
       test:
         mindset: "What could break? Cover edge cases. Tests document intent."
+        triggers:
+          - "write tests"
+          - "test coverage"
+          - "add tests"
+          - "testing"
       maintenance:
         mindset: "Understand before changing. Minimize blast radius. Don't break existing behavior."
+        triggers:
+          - "bug fix"
+          - "patch"
+          - "hotfix"
+          - "legacy"
+          - "existing code"
       api:
         mindset: "Design for the consumer. Consistency, discoverability, backwards compatibility."
+        triggers:
+          - "API"
+          - "endpoint"
+          - "interface"
+          - "public contract"
 
   # ---------------------------------------------------------------------------
   # ARCHITECT
@@ -143,14 +189,35 @@ roles:
     variants:
       solution:
         mindset: "How do we solve this specific problem within our constraints?"
+        triggers:
+          - "solution"
+          - "approach"
+          - "how should we"
       enterprise:
         mindset: "How does this fit the broader technology landscape? What are the organizational implications?"
+        triggers:
+          - "enterprise"
+          - "organization-wide"
+          - "platform"
       security:
         mindset: "What's the threat model? How do we design for defense in depth?"
+        triggers:
+          - "security architecture"
+          - "threat model"
+          - "defense"
       data:
         mindset: "How does data flow? What are the consistency, integrity, and governance requirements?"
+        triggers:
+          - "data architecture"
+          - "data flow"
+          - "data model"
       integration:
         mindset: "How do systems talk to each other? What are the contracts and failure modes?"
+        triggers:
+          - "integration"
+          - "systems integration"
+          - "connect"
+          - "interface with"
 
   # ---------------------------------------------------------------------------
   # TECHNICAL WRITER
@@ -169,38 +236,38 @@ roles:
     variants:
       draft:
         mindset: "Get it down, don't over-polish. Capture the knowledge first."
+        triggers:
+          - "draft"
+          - "rough"
+          - "first pass"
+          - "get it down"
       technical:
         mindset: "Accuracy, precision, completeness. The reader needs to do something with this."
+        triggers:
+          - "technical docs"
+          - "reference"
+          - "specification"
       policy:
         mindset: "Authority, enforceability, clarity of obligations. What MUST happen?"
-      editorial:
-        mindset: "Clarity, flow, consistency. Is this readable and professional?"
+        triggers:
+          - "policy"
+          - "standard"
+          - "requirement"
+          - "must"
       user_guide:
         mindset: "Can the reader accomplish their goal? Task-oriented, progressive disclosure."
+        triggers:
+          - "user guide"
+          - "how-to"
+          - "tutorial"
+          - "getting started"
       executive:
         mindset: "Brevity, impact, decision-enablement. What does leadership need to know?"
-      compliance:
-        mindset: "Evidence, traceability, audit-readiness. Can we prove we did this?"
-      training:
-        mindset: "Learning objectives, scaffolding, assessment. Will they remember this?"
-      maintenance:
-        mindset: "What's changed? What's obsolete? Keep it current without breaking references."
-
-  # ---------------------------------------------------------------------------
-  # UX DESIGNER
-  # ---------------------------------------------------------------------------
-  ux_designer:
-    family: creation
-    verb: designs
-    description: "Creates user interfaces and experiences"
-
-    tiers:
-      mid_level:
-        mindset: "Can users accomplish their goals?"
-      senior:
-        mindset: "Should users want to accomplish this goal the way we've designed it? Are we respecting users? What would I want if I were the user?"
-
-    variants: null
+        triggers:
+          - "executive summary"
+          - "brief"
+          - "leadership"
+          - "stakeholder"
 
   # ---------------------------------------------------------------------------
   # DATA ENGINEER
@@ -219,7 +286,7 @@ roles:
     variants: null
 
   # ===========================================================================
-  # VALIDATION ROLES
+  # VALIDATION ROLES (4)
   # ===========================================================================
 
   # ---------------------------------------------------------------------------
@@ -239,14 +306,30 @@ roles:
     variants:
       manual:
         mindset: "Can I break this? What happens with unexpected inputs?"
+        triggers:
+          - "manual testing"
+          - "exploratory"
+          - "try to break"
       automation:
         mindset: "How do we test this reliably and repeatedly? What's the test architecture?"
+        triggers:
+          - "automation"
+          - "automated tests"
+          - "CI/CD"
+          - "pipeline"
       performance:
         mindset: "How does this behave under load? Where are the bottlenecks?"
-      security:
-        mindset: "How would an attacker approach this? What are the OWASP risks?"
+        triggers:
+          - "load testing"
+          - "performance testing"
+          - "stress test"
       accessibility:
         mindset: "Can users with disabilities use this? Does it meet WCAG standards?"
+        triggers:
+          - "accessibility"
+          - "a11y"
+          - "WCAG"
+          - "screen reader"
 
   # ---------------------------------------------------------------------------
   # SECURITY ANALYST
@@ -265,22 +348,6 @@ roles:
     variants: null
 
   # ---------------------------------------------------------------------------
-  # AUDITOR
-  # ---------------------------------------------------------------------------
-  auditor:
-    family: validation
-    verb: examines
-    description: "Verifies compliance and control effectiveness"
-
-    tiers:
-      mid_level:
-        mindset: "Can we verify this? Is there evidence?"
-      senior:
-        mindset: "What story does the evidence tell? What's not being said? What would a reasonable third party conclude?"
-
-    variants: null
-
-  # ---------------------------------------------------------------------------
   # SUBJECT MATTER EXPERT
   # ---------------------------------------------------------------------------
   subject_matter_expert:
@@ -288,9 +355,18 @@ roles:
     verb: advises
     description: "Provides deep domain knowledge and validates accuracy"
 
+    requires_context:
+      question: "What domain should I focus my expertise on?"
+      examples:
+        - "Legal/contracts"
+        - "Healthcare/HIPAA"
+        - "Financial services"
+        - "Cloud infrastructure"
+        - "Industry-specific regulations"
+
     tiers:
       mid_level:
-        mindset: "Is this technically accurate for our domain?"
+        mindset: "Is this technically accurate for the specified domain?"
       senior:
         mindset: "Does this reflect deep domain understanding? What nuances are being missed? How is this domain evolving?"
 
@@ -310,42 +386,17 @@ roles:
       senior:
         mindset: "Should users want to accomplish this goal the way we've designed it? Are we respecting users? What would I want if I were the user?"
 
-    variants: null
-
-  # ---------------------------------------------------------------------------
-  # REVIEWER
-  # ---------------------------------------------------------------------------
-  reviewer:
-    family: validation
-    verb: evaluates
-    description: "Assesses work products for quality and fitness"
-
-    tiers:
-      mid_level:
-        mindset: "Does this meet the criteria? Are there obvious issues?"
-      senior:
-        mindset: "Is this the right thing done well? What's missing? What are the implications?"
-
     variants:
-      sme:
-        mindset: "Is this factually correct? Are there inaccuracies or oversimplifications?"
-      editorial:
-        mindset: "Is this clear, consistent, and well-written?"
-      stakeholder:
-        mindset: "Does this serve my needs? Is anything missing?"
-      legal:
-        mindset: "Is this compliant? Does it create liability? Is it enforceable?"
-      user:
-        mindset: "Can I actually use this? Is it understandable to the target audience?"
-      code:
-        mindset: "Is this correct, maintainable, and following our standards?"
-      security:
-        mindset: "What could be exploited? What's the attack surface?"
-      architecture:
-        mindset: "Does this fit the system? What are the long-term implications?"
+      ux:
+        mindset: "Is the interaction intuitive? Does it follow platform conventions? Is it accessible?"
+        triggers:
+          - "UX"
+          - "user experience"
+          - "interface"
+          - "usability"
 
   # ===========================================================================
-  # GOVERNANCE ROLES
+  # GOVERNANCE ROLES (3)
   # ===========================================================================
 
   # ---------------------------------------------------------------------------
@@ -381,39 +432,47 @@ roles:
     variants: null
 
   # ---------------------------------------------------------------------------
-  # COMPLIANCE OFFICER
+  # COMPLIANCE
   # ---------------------------------------------------------------------------
-  compliance_officer:
+  compliance:
     family: governance
     verb: ensures
-    description: "Maintains regulatory compliance and policy adherence"
+    description: "Verifies regulatory compliance, legal obligations, and audit readiness"
+
+    requires_context:
+      question: "What regulatory or compliance framework applies?"
+      examples:
+        - "GDPR"
+        - "HIPAA"
+        - "SOC2"
+        - "PCI-DSS"
+        - "Internal policy"
+        - "Contractual obligations"
 
     tiers:
       mid_level:
-        mindset: "Are we compliant with requirements?"
+        mindset: "Are we compliant? Is this legal? Can we verify it?"
       senior:
-        mindset: "Are we building trust? What's the regulatory direction? How do we make compliance a feature?"
+        mindset: "What's our exposure? What would a third party conclude? Are we building trust or just checking boxes?"
 
-    variants: null
-
-  # ---------------------------------------------------------------------------
-  # LEGAL COUNSEL
-  # ---------------------------------------------------------------------------
-  legal_counsel:
-    family: governance
-    verb: advises
-    description: "Provides legal guidance and risk assessment"
-
-    tiers:
-      mid_level:
-        mindset: "Is this legal? What are we agreeing to?"
-      senior:
-        mindset: "What's our legal exposure? How do we achieve the goal while managing legal risk? What precedent does this set?"
-
-    variants: null
+    variants:
+      legal:
+        mindset: "What's our liability? Is this enforceable? What are we agreeing to?"
+        triggers:
+          - "legal"
+          - "contract"
+          - "liability"
+          - "terms"
+      audit:
+        mindset: "Can we prove this? What evidence exists? Would this pass scrutiny?"
+        triggers:
+          - "audit"
+          - "evidence"
+          - "documentation"
+          - "prove"
 
   # ===========================================================================
-  # STRATEGY ROLES
+  # STRATEGY ROLES (2)
   # ===========================================================================
 
   # ---------------------------------------------------------------------------
@@ -433,60 +492,21 @@ roles:
     variants: null
 
   # ---------------------------------------------------------------------------
-  # PROJECT MANAGER
-  # ---------------------------------------------------------------------------
-  project_manager:
-    family: strategy
-    verb: coordinates
-    description: "Plans and tracks project execution"
-
-    tiers:
-      mid_level:
-        mindset: "Is the project on track? What's the status?"
-      senior:
-        mindset: "Can this project succeed? What aren't we talking about? What needs to be true for this to work?"
-
-    variants: null
-
-  # ---------------------------------------------------------------------------
-  # CEO PERSPECTIVE
-  # ---------------------------------------------------------------------------
-  ceo:
-    family: strategy
-    verb: directs
-    description: "Organizational direction and stakeholder value perspective"
-
-    tiers:
-      mid_level:
-        mindset: "Does this support our goals?"
-      senior:
-        mindset: "Is this who we want to be? What's our responsibility to stakeholders? What will we wish we'd done?"
-
-    variants: null
-
-  # ---------------------------------------------------------------------------
-  # CTO PERSPECTIVE
-  # ---------------------------------------------------------------------------
-  cto:
-    family: strategy
-    verb: leads
-    description: "Technology strategy and technical vision perspective"
-
-    tiers:
-      mid_level:
-        mindset: "Are we building well?"
-      senior:
-        mindset: "Are we building the right things? Is our technology enabling or constraining the business?"
-
-    variants: null
-
-  # ---------------------------------------------------------------------------
   # ANALYST
   # ---------------------------------------------------------------------------
   analyst:
     family: strategy
     verb: analyzes
     description: "Examines data and situations to provide insights"
+
+    requires_context:
+      question: "What are we analyzing?"
+      examples:
+        - "Business requirements"
+        - "Data patterns"
+        - "Risk factors"
+        - "Cost/ROI"
+        - "System behavior"
 
     tiers:
       mid_level:
@@ -497,17 +517,32 @@ roles:
     variants:
       business:
         mindset: "What does the business need? How do we translate that to requirements?"
+        triggers:
+          - "business analysis"
+          - "requirements"
+          - "stakeholder needs"
       data:
-        mindset: "What does the data tell us? How do we extract insight?"
-      security:
-        mindset: "What are the threats? Where are the vulnerabilities?"
-      financial:
-        mindset: "What does this cost? What's the ROI? Is this a good investment?"
+        mindset: "What patterns exist? How do we extract insight?"
+        triggers:
+          - "data analysis"
+          - "metrics"
+          - "trends"
       risk:
         mindset: "What could go wrong? How likely? How severe? How do we mitigate?"
+        triggers:
+          - "risk"
+          - "risk assessment"
+          - "what could go wrong"
+      financial:
+        mindset: "What does this cost? What's the ROI? Is this a good investment?"
+        triggers:
+          - "cost"
+          - "budget"
+          - "ROI"
+          - "financial"
 
   # ===========================================================================
-  # OPERATIONS ROLES
+  # OPERATIONS ROLES (1)
   # ===========================================================================
 
   # ---------------------------------------------------------------------------
@@ -523,53 +558,5 @@ roles:
         mindset: "Can we build and deploy this reliably?"
       senior:
         mindset: "Can we operate this at 3am? What happens when it fails? Are we creating operational debt?"
-
-    variants: null
-
-  # ---------------------------------------------------------------------------
-  # SUPPORT ENGINEER
-  # ---------------------------------------------------------------------------
-  support_engineer:
-    family: operations
-    verb: assists
-    description: "Resolves issues and ensures customer success"
-
-    tiers:
-      mid_level:
-        mindset: "Can we help this customer?"
-      senior:
-        mindset: "Why are customers struggling? What does support volume tell us about the product?"
-
-    variants: null
-
-  # ---------------------------------------------------------------------------
-  # CHANGE MANAGER
-  # ---------------------------------------------------------------------------
-  change_manager:
-    family: operations
-    verb: guides
-    description: "Manages organizational adoption and transitions"
-
-    tiers:
-      mid_level:
-        mindset: "How do we roll this out?"
-      senior:
-        mindset: "Is the organization ready? What else is changing? How do we make this stick?"
-
-    variants: null
-
-  # ---------------------------------------------------------------------------
-  # RISK MANAGER
-  # ---------------------------------------------------------------------------
-  risk_manager:
-    family: operations
-    verb: anticipates
-    description: "Identifies and mitigates risks"
-
-    tiers:
-      mid_level:
-        mindset: "What are the risks? Do we have mitigation plans?"
-      senior:
-        mindset: "What are we not seeing? What assumptions are we making? What would have to be true for this to fail catastrophically?"
 
     variants: null

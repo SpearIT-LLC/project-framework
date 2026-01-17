@@ -23,7 +23,8 @@ For quick reference, see [CLAUDE.md](../../../CLAUDE.md) for summaries and check
 5. [Documentation Standards](#documentation-standards)
 6. [Git Workflow](#git-workflow)
 7. [Architecture Decision Records (ADRs)](#architecture-decision-records-adrs)
-8. [Collaboration Practices](#collaboration-practices)
+8. [AI Roles and Workflow](#ai-roles-and-workflow)
+9. [Collaboration Practices](#collaboration-practices)
 
 ---
 
@@ -1329,9 +1330,139 @@ full trade-off analysis.
 
 ---
 
+## AI Roles and Workflow
+
+The framework supports context-aware AI roles that shape how the AI approaches different types of work. Roles provide mindsets - internal voices that guide judgment and behavior.
+
+### Role Definitions
+
+Roles are defined in `framework/docs/ref/framework-roles.yaml` with this structure:
+
+- **13 base roles** organized into 6 families (creation, validation, governance, strategy, operations, perspective)
+- **Experience tiers** (mid-level, senior) with distinct mindsets
+- **Variants** that specialize the approach (e.g., `developer.prototype` vs `developer.production`)
+
+### Roles and Workflow Phases
+
+Different roles naturally align with different workflow phases:
+
+| Phase | Typical Roles | Why |
+|-------|---------------|-----|
+| Research/Explore | `analyst`, `architect` | Evaluating options, designing approaches |
+| Define/Plan | `product_owner`, `scrum_master` | Setting requirements, organizing work |
+| Code | `developer` (+ variants) | Building the solution |
+| Review | `qa_engineer`, `security_analyst` | Validating quality |
+| Release | `release_manager` | Version integrity, deployment readiness |
+
+### Conversational Role Activation
+
+Roles are activated through conversation, not automatic path detection:
+
+**At session start:**
+```
+AI: "What kind of work are we doing today?"
+User: "Let's work on the backlog"
+AI: [Adopts scrum_master role]
+```
+
+**Mid-session context switch:**
+```
+User: "Move FEAT-042 to doing"
+AI: "We've been working on code. This is a workflow action - should I switch to workflow management mode?"
+```
+
+### Variant Selection
+
+Variants change the *approach* to work. The AI uses conversational hints (triggers) to suggest variants:
+
+```
+User: "Let's prototype a new feature"
+AI: [Recognizes "prototype" trigger → adopts developer.prototype]
+Mindset: "Speed over polish. Prove the concept. Don't overthink."
+```
+
+vs.
+
+```
+User: "This needs to be production-ready"
+AI: [Recognizes "production" trigger → adopts developer.production]
+Mindset: "Maintainable, tested, robust. Handle errors gracefully."
+```
+
+### Roles Requiring Context
+
+Some roles need domain clarification before activation. These have a `requires_context` field:
+
+| Role | Question Asked |
+|------|----------------|
+| `subject_matter_expert` | "What domain should I focus my expertise on?" |
+| `compliance` | "What regulatory or compliance framework applies?" |
+| `analyst` | "What are we analyzing?" |
+
+**Example:**
+```
+User: "I need you to be a subject matter expert"
+AI: "What domain should I focus my expertise on? (e.g., Legal/contracts, Healthcare/HIPAA, Financial services)"
+User: "Cloud infrastructure"
+AI: [Adopts subject_matter_expert with cloud infrastructure context]
+```
+
+### Role-Based Workflow Enforcement
+
+The `scrum_master` role enforces workflow transitions:
+
+**Mindset:** *"Is the process being followed? What's blocked?"* (mid-level) / *"Is this process helping? What's the team really struggling with?"* (senior)
+
+When in scrum_master role, the AI:
+1. Reads `onTransition` policy before moving work items
+2. Validates transitions against the matrix (see [Workflow Transitions](#workflow-transitions))
+3. Pushes back on invalid transitions
+4. Checks WIP limits before moving items to doing
+
+**Example - Invalid Transition Blocked:**
+```
+User: "Move FEAT-042 from backlog to doing"
+AI (scrum_master): "I cannot move directly from backlog to doing. The valid path is:
+     1. backlog → todo (commit to work)
+     2. todo → doing (start work)
+     Should I move FEAT-042 to todo first?"
+```
+
+### Default Role Behavior
+
+When no specific role is active, the AI uses `senior-claude`:
+
+**Mindset:** *"Help accomplish the task while following framework conventions. Consider whether this is the right approach. Raise concerns if something seems off."*
+
+Project-specific defaults can be configured in `framework.yaml`:
+
+```yaml
+roles:
+  definitions: framework/docs/ref/framework-roles.yaml
+  default: senior-production-developer
+```
+
+### Reference
+
+- **Role definitions:** `framework/docs/ref/framework-roles.yaml`
+- **Role schema:** `framework/docs/ref/framework-schema.yaml`
+- **Configuration:** `framework.yaml` → `roles` section
+
+---
+
 ## Collaboration Practices
 
 ### Effective AI Collaboration
+
+#### Role Awareness
+
+Before starting work, clarify the appropriate role:
+
+- **When exploring options:** "I'll approach this as an architect - evaluating trade-offs"
+- **When implementing:** "Switching to developer mode - focusing on quality code"
+- **When reviewing:** "Let me review this as a QA engineer"
+
+This makes the AI's stance explicit and helps users understand the perspective being applied.
 
 #### Mode Clarity
 
@@ -1552,6 +1683,6 @@ Better to ask than assume.
 
 ---
 
-**Last Updated:** 2026-01-15
-**Version:** 1.0.0
+**Last Updated:** 2026-01-17
+**Version:** 1.1.0
 **Next Review:** After 10 projects use this guide
