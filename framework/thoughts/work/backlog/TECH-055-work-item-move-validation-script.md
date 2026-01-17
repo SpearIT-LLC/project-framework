@@ -5,7 +5,7 @@
 **Priority:** Medium
 **Status:** Backlog
 **Created:** 2026-01-13
-**Related:** DOC-054 (state transition rules), FEAT-037 (project-config.yaml)
+**Related:** DOC-054 (state transition rules), FEAT-037 (project-config.yaml), FEAT-059 (testing revealed this issue)
 
 ---
 
@@ -117,7 +117,12 @@ if ($allowedTransitions[$From] -notcontains $To) {
 # 3. Check WIP limits (if target is todo/doing)
 if ($To -in @("todo", "doing")) {
     $limit = [int](Get-Content "$WorkPath/$To/.limit")
-    $count = (Get-ChildItem "$WorkPath/$To/*.md").Count
+    # Count unique work item prefixes (TYPE-NNN), not files
+    # Work items can have multiple files: .md, .yaml, .json, .ps1, etc.
+    $workItemPrefixes = Get-ChildItem "$WorkPath/$To/*" -Exclude ".gitkeep",".limit" |
+        ForEach-Object { $_.Name -replace '-.*$', '' } |
+        Select-Object -Unique
+    $count = $workItemPrefixes.Count
 
     if ($count -ge $limit) {
         Write-Error "WIP limit reached in $To/ ($count/$limit)"
@@ -275,6 +280,21 @@ if ($LASTEXITCODE -eq 0) {
 
 ## Notes
 
+**Critical: Extension-agnostic file patterns**
+
+Work items can include multiple file types (discovered during FEAT-059 testing):
+- `.md` - documentation, specs, plans
+- `.yaml` / `.yml` - structured definitions, configs
+- `.json` - data files, schemas
+- `.ps1` / `.sh` - scripts related to the work
+- `.png` / `.svg` - diagrams, mockups
+
+**All queries must use `{TYPE-ID}-*` patterns, never `{TYPE-ID}-*.md`.**
+
+WIP counting must count unique work item prefixes (e.g., `FEAT-059`), not individual files. A single work item with 3 files (`FEAT-059-main.md`, `FEAT-059-research.md`, `FEAT-059-roles.yaml`) counts as 1 toward WIP limit.
+
+---
+
 **Priority:** Medium
 - Not blocking (manual validation works)
 - Improves workflow reliability
@@ -297,4 +317,4 @@ Programmatic validation prevents workflow violations. Provides clear, consistent
 
 ---
 
-**Last Updated:** 2026-01-13
+**Last Updated:** 2026-01-17

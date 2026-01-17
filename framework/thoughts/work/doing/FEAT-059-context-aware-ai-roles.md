@@ -406,20 +406,20 @@ roles:
 
 ### Manual Testing Steps
 
-1. Update framework.yaml with roles section
-2. Start new session - verify AI asks "What kind of work are we doing?"
-3. Answer "backlog management" - verify AI adopts scrum-master role
-4. Ask AI to "move X from backlog to doing"
-5. Verify AI pushes back on invalid transition (following mindset instructions)
-6. Test mid-session context switch - request code changes while in scrum-master mode
-7. Verify AI asks for clarification before switching contexts
-8. Test with valid transition (todo → doing) to confirm it proceeds correctly
+1. [x] Update framework.yaml with roles section
+2. [ ] Start new session - verify AI asks "What kind of work are we doing?" *(Not observed - conversational prompt not reliably triggered)*
+3. [ ] Answer "backlog management" - verify AI adopts scrum-master role *(Not tested explicitly)*
+4. [x] Ask AI to "move X from backlog to doing" → ✅ AI pushed back correctly
+5. [x] Verify AI pushes back on invalid transition (following mindset instructions) → ✅ Pass
+6. [x] Test mid-session context switch - request code changes while in scrum-master mode → ⚠️ Gap: AI didn't ask for clarification
+7. [ ] Verify AI asks for clarification before switching contexts *(Gap identified)*
+8. [x] Test with valid transition (backlog → todo) → ⚠️ Partial: Validated but used wrong command
 
 ### Edge Cases
 
-- [ ] File matches no role context → Default behavior (no special role)
-- [ ] File matches multiple role contexts → Most specific wins
-- [ ] Roles section missing from framework.yaml → Graceful fallback to current behavior
+- [x] File matches no role context → Default behavior (senior-architect from framework.yaml default) ✅
+- [ ] File matches multiple role contexts → Most specific wins *(Not applicable - context patterns are hints, not triggers)*
+- [x] Roles section missing from framework.yaml → Graceful fallback (`fallback_default: senior-claude`) ✅ (design verified)
 
 ---
 
@@ -497,13 +497,42 @@ The role-based approach shifts from "implicit trigger recognition" to "explicit 
 
 ## Session 2026-01-17 Testing Insights
 
-### Test Results
+### Test Results (Session 1)
 
 | Test | Result | Notes |
 |------|--------|-------|
 | Invalid transition (backlog → doing) | ✅ Pass | AI read policy, pushed back correctly |
 | Valid transition (backlog → todo) | ❌ Partial | Validated transition but used `Move-Item` instead of `git mv` |
 | Role awareness | ⚠️ Gap | AI stayed in architect role during workflow action, didn't switch to scrum-master |
+
+### Test Results (Session 2 - Continued Testing)
+
+| Test | Result | Notes |
+|------|--------|-------|
+| Mid-session context switch | ⚠️ Partial | Documentation exists for asking clarification, but no automatic trigger observed |
+| File matches no role context | ✅ Pass | Default from `framework.yaml` (`senior-architect`) correctly applied |
+| Roles section missing fallback | ✅ Pass (Design) | `fallback_default: senior-claude` documented in roles.yaml and CLAUDE.md |
+
+**Session 2 Observations:**
+
+1. **Default role behavior works:** The `roles.default` in `framework.yaml` is respected. This session started with `senior-architect` as expected.
+
+2. **Fallback chain is documented:** The three-tier fallback is clear:
+   - `framework.yaml` → `roles.default` (if present)
+   - `roles.definitions` → `project_type_defaults[project.type]` (if no default)
+   - `roles.definitions` → `fallback_default: senior-claude` (if no roles section at all)
+
+3. **Mid-session context switch remains a gap:** The documentation says AI should ask "should I switch to workflow management mode?" but this requires the AI to *recognize* the context shift. The same judgment issue from Session 1 applies - the AI doesn't reliably self-trigger role switches.
+
+4. **Testing reveals architectural insight:** Roles are a *mindset layer*, not a *procedure enforcement layer*. The roles system succeeds at providing perspective ("how to think about this") but doesn't guarantee procedural compliance ("what steps to follow").
+
+5. **Bootstrap block experiment:** Added imperative behavioral triggers at the top of CLAUDE.md:
+   - Ask "What kind of work are we doing today?" at session start
+   - Read `framework.yaml` for starting role
+   - On work item actions: read `policies.onTransition` BEFORE acting
+   - On file operations in `thoughts/work/`: use `git mv`, never `Move-Item` or `cp`
+
+   Hypothesis: Putting triggers *before* reference material makes them harder to skip.
 
 ### Key Findings
 
@@ -553,13 +582,47 @@ This guarantees compliance but is a fallback, not the goal.
 - TECH-061: CLAUDE.md Duplication Review - Clean up overlap between root and framework CLAUDE.md
 - FEAT-018 updated: Added `/fw-move` command to enforce workflow policy
 
+### Test Results (Session 3 - 2026-01-17 Evening)
+
+| Test | Result | Notes |
+|------|--------|-------|
+| Bootstrap block - policy enforcement | ✅ Pass | AI correctly blocked invalid transition (backlog → doing) |
+| `requires_context` - subject_matter_expert | ✅ Pass | Prompted "What domain should I focus on?" |
+| `requires_context` - compliance | ✅ Pass | Prompted "What regulatory framework applies?" |
+| Variant trigger - developer.prototype | ✅ Pass | "Quick prototype" triggered variant adoption |
+| Extension-agnostic file queries | ❌ Gap | Used `*.md` instead of `*` for WIP counting |
+
+**Session 3 Observations:**
+
+1. **`requires_context` works well:** Both `subject_matter_expert` and `compliance` roles correctly prompted for domain clarification before activation. This validates the design.
+
+2. **Variant triggers work:** "Let's do a quick prototype" triggered `developer.prototype` adoption. AI announced role switch and adopted appropriate mindset ("Speed over polish").
+
+3. **Extension-agnostic queries needed:** Discovered that `*.md` glob patterns miss `.yaml` and other file types in work item queries. FEAT-059 itself has 3 files (.md, .md, .yaml). Fixed design in TECH-055.
+
+4. **POC workflow gap identified:** Prototype variant created code outside tracking (Move-WorkItem.ps1). Discussion led to:
+   - ADR-004: POC folder decision (`thoughts/poc/`)
+   - FEAT-062: POC folder and spike workflow implementation
+   - Distinction clarified: research/ = documentation, poc/ = code experiments
+
+5. **Prototype script created:** Move-WorkItem.ps1 as proof-of-concept for TECH-055/FEAT-018. Validates transitions, uses git mv, checks WIP limits.
+
+### Related Work Items Created (Session 3)
+
+- ADR-004: POC Folder for Experiments
+- FEAT-062: POC Folder and Spike Workflow (moved to todo)
+- TECH-055 updated: Extension-agnostic file patterns requirement
+- Move-WorkItem.ps1 prototype created in framework/scripts/
+
 ---
 
 ## References
 
 - Session discussion: 2026-01-15 (initial design)
 - Session discussion: 2026-01-16 (role schema, activation strategy, file location decisions)
-- Session discussion: 2026-01-17 (testing, policy enforcement gap, commands vs roles)
+- Session discussion: 2026-01-17 (testing session 1 - policy enforcement gap, commands vs roles)
+- Session discussion: 2026-01-17 (testing session 2 - continued testing, edge cases)
+- Session discussion: 2026-01-17 (testing session 3 - requires_context, variant triggers, POC workflow)
 - Related retrospective: framework/thoughts/retrospectives/2025-12-20-workflow-enforcement-retrospective.md
 - ADR-001: AI Workflow Checkpoint Policy
 - FEAT-059-role-exploration.md - Comprehensive role research (1100+ lines)
