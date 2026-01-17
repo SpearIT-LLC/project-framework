@@ -82,6 +82,12 @@ https://www.postman.com/api-evangelist/atlassian-jira/collection/uo6wdfu/jira-ca
 https://www.postman.com/api-evangelist/atlassian-jira/collection/zwuz0g6/jira-capability-update-issue
 
 ---
+## Why Constrain AI to Human Processes?
+What are the arguements for intentionally limiting AI? 
+- Limited context
+- Human validation
+
+---
 ## Roadmap
 Define a clear roadmap. 
 Perhaps document the high level map with mermaid?

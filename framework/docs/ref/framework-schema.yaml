@@ -24,8 +24,8 @@ fields:
         description: "Standalone software application"
       library:
         description: "Reusable code package"
-      tool:
-        description: "Utility script or CLI tool"
+      toolbox:
+        description: "Collection of utility scripts for administrative or operational tasks"
 
   project.deliverable:
     type: enum

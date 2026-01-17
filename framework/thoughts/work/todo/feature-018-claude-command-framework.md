@@ -181,19 +181,20 @@ None - operates on existing framework structure
 ## Proposed Commands (Initial Set)
 
 ### Workflow Commands
-- `/backlog-review` - Review and prioritize backlog (FEAT-017)
-- `/plan-sprint` - Plan next sprint by moving items to todo
-- `/wip-check` - Check WIP limits and current work
-- `/release` - Prepare release (update docs, changelog, version)
+- `/fw-move` - Move work item between folders with policy enforcement (validates transition, uses git mv, updates status)
+- `/fw-backlog-review` - Review and prioritize backlog (FEAT-017)
+- `/fw-plan-sprint` - Plan next sprint by moving items to todo
+- `/fw-wip-check` - Check WIP limits and current work
+- `/fw-release` - Prepare release (update docs, changelog, version)
 
 ### Information Commands
-- `/help` or `/commands` - List available commands
-- `/status` - Show project status summary
-- `/roadmap` - Display roadmap with current progress
+- `/fw-help` or `/fw-commands` - List available framework commands
+- `/fw-status` - Show project status summary
+- `/fw-roadmap` - Display roadmap with current progress
 
 ### Utility Commands
-- `/cleanup` - Archive old done items, organize history
-- `/validate` - Check framework structure compliance
+- `/fw-cleanup` - Archive old done items, organize history
+- `/fw-validate` - Check framework structure compliance
 
 ---
 
@@ -302,10 +303,11 @@ Remove command documentation from CLAUDE.md - no code to rollback in Phase 1
 
 ```markdown
 ### Added
-- Claude Command Framework
+- Claude Command Framework (`/fw-*` commands)
   - Standardized command structure for workflow operations
   - Command registry in CLAUDE.md
-  - Initial command set: /help, /backlog-review, /wip-check, /status
+  - `/fw-move` - Work item transitions with policy enforcement (validates, uses git mv, updates status)
+  - Initial command set: /fw-help, /fw-move, /fw-backlog-review, /fw-wip-check, /fw-status
   - Shared documentation patterns for extensibility
 ```
 

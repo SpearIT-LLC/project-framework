@@ -495,10 +495,71 @@ The role-based approach shifts from "implicit trigger recognition" to "explicit 
 
 ---
 
+## Session 2026-01-17 Testing Insights
+
+### Test Results
+
+| Test | Result | Notes |
+|------|--------|-------|
+| Invalid transition (backlog → doing) | ✅ Pass | AI read policy, pushed back correctly |
+| Valid transition (backlog → todo) | ❌ Partial | Validated transition but used `Move-Item` instead of `git mv` |
+| Role awareness | ⚠️ Gap | AI stayed in architect role during workflow action, didn't switch to scrum-master |
+
+### Key Findings
+
+**1. Documentation alone isn't enough**
+
+We have:
+- workflow-guide.md with full policy
+- CLAUDE.md pointing to the guide
+- framework.yaml explicitly pointing to policies
+- Roles to invoke the right mindset
+
+Yet the AI still used `Move-Item` instead of `git mv`. The policy was read for *validity* but not for *method*.
+
+**2. Roles help judgment, not procedure**
+
+The scrum-master mindset ("process guardian") didn't trigger for a valid transition. The AI validated the transition was allowed but didn't read the full procedure. Roles are valuable for *how to think* but don't guarantee *what to do*.
+
+**3. Policies vs Roles separation**
+
+Proposed separation:
+- **Policies** = What must happen (procedure, enforced)
+- **Roles** = How to think (perspective, judgment)
+
+Policies should trigger on action patterns regardless of role. A work item reference + action verb should trigger policy lookup.
+
+**4. Commands as forcing functions**
+
+`/fw-move` command (FEAT-018) would bake policy compliance into the command itself:
+- Validates transition
+- Uses `git mv`
+- Updates status field
+- Reports result
+
+This guarantees compliance but is a fallback, not the goal.
+
+**5. The vision vs reality gap**
+
+**Vision:** AI internalizes the framework, naturally adopts roles, reads policies proactively - a true collaborator.
+
+**Reality:** AI knows policies exist, can read them when prompted, but doesn't reliably trigger reads at the right moment.
+
+**Open question:** Is this a fundamental limitation (needs explicit invocation) or a solvable problem (better structure, different triggers)?
+
+### Related Work Items Created
+
+- FEAT-060: Framework Bootstrap Block - Minimal bootstrap in root CLAUDE.md
+- TECH-061: CLAUDE.md Duplication Review - Clean up overlap between root and framework CLAUDE.md
+- FEAT-018 updated: Added `/fw-move` command to enforce workflow policy
+
+---
+
 ## References
 
 - Session discussion: 2026-01-15 (initial design)
 - Session discussion: 2026-01-16 (role schema, activation strategy, file location decisions)
+- Session discussion: 2026-01-17 (testing, policy enforcement gap, commands vs roles)
 - Related retrospective: framework/thoughts/retrospectives/2025-12-20-workflow-enforcement-retrospective.md
 - ADR-001: AI Workflow Checkpoint Policy
 - FEAT-059-role-exploration.md - Comprehensive role research (1100+ lines)
@@ -506,4 +567,4 @@ The role-based approach shifts from "implicit trigger recognition" to "explicit 
 
 ---
 
-**Last Updated:** 2026-01-16
+**Last Updated:** 2026-01-17

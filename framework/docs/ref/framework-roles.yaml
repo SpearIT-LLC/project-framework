@@ -42,8 +42,8 @@ fallback_default: senior-claude
 project_type_defaults:
   application: senior-production-developer
   library: senior-api-developer
-  tool: senior-production-developer
-  framework: senior-production-developer
+  toolbox: senior-prototype-developer
+  framework: senior-architect
   documentation: senior-technical-writer
   policy: senior-policy-writer
 

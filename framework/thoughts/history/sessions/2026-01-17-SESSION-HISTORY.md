@@ -2,8 +2,8 @@
 
 **Date:** 2026-01-17
 **Participants:** Gary Elliott, Claude (Opus 4.5)
-**Session Focus:** FEAT-059 - Role Reduction and Schema Enhancement
-**Duration:** ~1 hour
+**Session Focus:** FEAT-059 - Role Reduction, Testing, and Policy Enforcement Analysis
+**Duration:** ~2 hours (2 sessions)
 
 ---
 
@@ -207,6 +207,98 @@ The human often plays a **complementary** role to the AI:
 - `requires_context` is a natural extension of conversational triggering design
 - `triggers` enable future "smart suggestion" features without automatic activation
 - The Senior Architect mindset proved valuable for this review - "What's the simplest thing that could work?"
+
+---
+
+## Session 2 - FEAT-059 Testing and Policy Enforcement
+
+### Summary
+
+Tested the roles system and discovered a fundamental gap: roles help with judgment but don't reliably enforce procedure. Even with documentation, policies, and roles in place, the AI didn't proactively follow all policy requirements.
+
+### Work Completed
+
+#### 1. Project Type Defaults Review
+
+Fixed misaligned defaults in `framework-roles.yaml`:
+- `framework` type: `senior-production-developer` → `senior-architect` (design focus, not code focus)
+- Renamed `tool` → `toolbox` project type with `senior-prototype-developer` default
+- Updated `framework-schema.yaml` with new `toolbox` type definition
+
+#### 2. FEAT-059 Testing
+
+| Test | Result | Notes |
+|------|--------|-------|
+| Invalid transition (backlog → doing) | ✅ Pass | AI read policy, pushed back correctly |
+| Valid transition (backlog → todo) | ❌ Partial | Validated transition but used `Move-Item` instead of `git mv` |
+| Role awareness | ⚠️ Gap | AI stayed in architect role, didn't adopt scrum-master for workflow action |
+
+#### 3. Key Insight: The Trigger Problem
+
+**What we have:**
+- workflow-guide.md with full policy
+- CLAUDE.md pointing to the guide
+- framework.yaml with explicit policy pointers
+- Roles with mindsets
+
+**What still failed:** AI used `Move-Item` instead of `git mv` - read policy for validity but not method.
+
+**Root cause:** All mechanisms rely on AI *choosing* to read at the right moment. No forcing function exists.
+
+#### 4. Solution: Slash Commands (FEAT-018)
+
+Added `/fw-move` to FEAT-018 as the reliable enforcement mechanism:
+- Validates transition
+- Uses `git mv`
+- Updates status field
+- Policy baked into command, not dependent on AI choice
+
+Updated all FEAT-018 commands to use `/fw-` prefix convention.
+
+#### 5. Policies vs Roles Separation
+
+**Policies** = What must happen (procedure, enforced via commands)
+**Roles** = How to think (perspective, judgment - still valuable)
+
+Commands handle procedure. Roles handle perspective. They're complementary.
+
+#### 6. Decision: Don't Add Policy Triggers to framework.yaml
+
+Considered adding trigger patterns to policies:
+```yaml
+policies:
+  onTransition:
+    triggers: ["move * to", "work on FEAT-"]
+```
+
+**Rejected** - still relies on AI choosing to check. Doesn't solve the fundamental problem. Focus effort on commands (FEAT-018) instead.
+
+### Work Items Created
+
+- **FEAT-060:** Framework Bootstrap Block - Minimal bootstrap in root CLAUDE.md
+- **TECH-061:** CLAUDE.md Duplication Review - Clean up overlap between root and framework CLAUDE.md
+- **FEAT-018 updated:** Added `/fw-move` command and `/fw-` prefix convention
+
+### Files Modified
+
+1. `framework/docs/ref/framework-roles.yaml` - Fixed project_type_defaults (framework → senior-architect, tool → toolbox)
+2. `framework/docs/ref/framework-schema.yaml` - Renamed tool → toolbox with updated description
+3. `framework.yaml` - Updated default role to senior-architect
+4. `framework/thoughts/work/todo/feature-018-claude-command-framework.md` - Added /fw-move, applied /fw- prefix
+5. `framework/thoughts/work/doing/FEAT-059-context-aware-ai-roles.md` - Added testing insights section
+6. `framework/thoughts/work/backlog/FEAT-060-framework-bootstrap-block.md` - Created
+7. `framework/thoughts/work/backlog/TECH-061-claude-md-duplication-review.md` - Created
+8. `framework/thoughts/work/todo/FEAT-060-framework-bootstrap-block.md` - Moved from backlog
+
+### The Vision vs Reality Gap
+
+**Vision:** AI internalizes framework, naturally adopts roles, reads policies proactively - a true collaborator.
+
+**Reality:** AI knows policies exist, can read them when prompted, but doesn't reliably trigger reads at the right moment.
+
+**Open question:** Is this a fundamental limitation (needs explicit invocation) or a solvable problem (better structure, different triggers)?
+
+**Pragmatic path forward:** Commands for reliability, roles for judgment. Accept the limitation while continuing to explore solutions.
 
 ---
 
