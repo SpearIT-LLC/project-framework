@@ -33,6 +33,8 @@ The framework provides three scaling levels (Minimal, Light, Standard) that adap
 
 **AI Integration**
 - CLAUDE.md templates help Claude Code understand your project
+- Context-aware AI roles (scrum-master, developer, architect, etc.)
+- Explicit role activation: "Adopt the scrum master role"
 - Consistent structure improves AI assistance quality
 - Framework-aware AI can navigate documentation
 
