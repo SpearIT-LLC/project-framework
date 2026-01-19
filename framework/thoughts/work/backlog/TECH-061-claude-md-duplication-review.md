@@ -119,6 +119,32 @@ None - this is a proactive cleanup task.
 
 This task should be done after FEAT-060 (bootstrap block) to ensure the pattern is established before cleanup.
 
+### Session Insights (2026-01-19)
+
+**The "less is more" problem:**
+- `/framework/CLAUDE.md` is now ~726 lines
+- This is too much to reliably process every session
+- Policies exist but aren't consistently applied in the moment
+- More documentation hasn't solved the compliance problem
+
+**Root cause hypothesis:**
+AI reads policies but doesn't reliably *apply* them when focused on a task. Adding more documentation about when to check in hasn't fixed this - the volume of guidance may actually contribute to the problem by making it harder to identify what's critical.
+
+**Proposed approach - content categorization:**
+
+When auditing, categorize each section as:
+
+1. **Bootstrap-critical** - Must read every session, must be short and memorable
+2. **Reference** - Look up when needed, doesn't need to be in working memory
+3. **Redundant** - Duplicates info elsewhere, candidate for removal
+
+**The one-rule idea:**
+Consider distilling checkpoint policies to a single memorable rule in the bootstrap block:
+
+> **Before writing code:** State what you plan to do and wait for approval.
+
+Detailed policies (transition rules, WIP limits, etc.) would remain for reference, but the *checkpoint trigger* would be simple enough to remember.
+
 ---
 
-**Last Updated:** 2026-01-17
+**Last Updated:** 2026-01-19

@@ -4,7 +4,8 @@
 **Type:** Feature
 **Version Impact:** MINOR (adds new capability)
 **Target Version:** v2.2.0
-**Status:** Backlog
+**Status:** Superseded
+**Superseded By:** FEAT-018.5
 **Created:** 2025-12-20
 **Completed:** N/A
 **Developer:** TBD
