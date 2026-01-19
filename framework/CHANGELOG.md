@@ -18,10 +18,65 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Visual diagrams for folder structure and workflow
 - ZIP distribution package
 - Interactive setup script
-- Validation script
 - Backlog review command (FEAT-017)
 - Claude command framework (FEAT-018)
 - Automated session history generation (FEAT-022)
+
+---
+
+## [3.3.0] - 2026-01-19
+
+### Added
+- **FEAT-037: Project Configuration File (framework.yaml)**
+  - Machine-readable project configuration for AI assistants and tooling
+  - Defines project metadata (name, type, deliverable)
+  - References workflow policies and documentation
+  - Enables consistent project context across sessions
+  - Schema validation via `framework-schema.yaml`
+
+- **FEAT-052: Framework YAML Validation Script**
+  - PowerShell script to validate `framework.yaml` against schema
+  - CI-friendly automation for configuration validation
+  - Located at `framework/scripts/Validate-FrameworkYaml.ps1`
+
+- **FEAT-059: Context-Aware AI Roles System**
+  - 13 base roles organized into 6 families (Creation, Validation, Governance, Strategy, Operations, Perspective)
+  - Role definitions file (`framework/docs/ref/framework-roles.yaml`)
+  - Experience tiers (mid-level, senior) with distinct mindsets
+  - `requires_context` field for roles needing domain clarification
+  - `triggers` field for variant activation hints
+  - Explicit role activation: "Adopt the scrum master role"
+  - Default role configuration in `framework.yaml`
+  - **Known limitation:** AI doesn't proactively ask about work context at session start
+
+- **DOC-058: Workflow Transitions Documentation**
+  - Comprehensive state transition rules in workflow-guide.md
+  - Valid/invalid transition matrix with rationale
+  - Per-transition checklists and procedures
+  - Machine-readable policy reference via `framework.yaml`
+
+- **New directory: `framework/docs/ref/`**
+  - Reference material location for structured YAML definitions
+  - Contains `framework-schema.yaml` and `framework-roles.yaml`
+
+### Changed
+- **TECH-056: Consolidate Workflow Documentation**
+  - Deleted redundant `kanban-workflow.md` (content in workflow-guide.md)
+  - Clarified relationship between workflow-guide.md and version-control-workflow.md
+  - Reduced documentation duplication
+
+- **TECH-043: DRY Documentation Principles**
+  - Established single-source-of-truth policy for documentation
+  - Documented information hierarchy and reference patterns
+  - Guidelines for avoiding content duplication
+
+### Documentation
+- Updated README.md with framework.yaml and docs/ref/ in structure tree
+- Added AI roles feature to AI Integration section
+- Updated Framework Structure diagram
+
+### Notes
+This release contains 6 work items grouped together, establishing the foundation for AI-aware project configuration and role-based assistance.
 
 ---
 

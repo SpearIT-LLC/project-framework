@@ -1,7 +1,7 @@
 # Standard Project Framework
 
 **Version:** See [PROJECT-STATUS.md](PROJECT-STATUS.md)
-**Last Updated:** 2026-01-11
+**Last Updated:** 2026-01-19
 **Organization:** SpearIT, LLC
 
 ---
@@ -33,10 +33,10 @@ The framework provides three scaling levels (Minimal, Light, Standard) that adap
 
 **AI Integration**
 - CLAUDE.md templates help Claude Code understand your project
+- `framework.yaml` provides machine-readable project configuration
 - Context-aware AI roles (scrum-master, developer, architect, etc.)
 - Explicit role activation: "Adopt the scrum master role"
 - Consistent structure improves AI assistance quality
-- Framework-aware AI can navigate documentation
 
 **19 Production Templates**
 - Planning, work items, decisions, research
@@ -61,11 +61,12 @@ framework/
 ├── CHANGELOG.md                 # Version history
 ├── CLAUDE.md                    # AI collaboration guide
 ├── INDEX.md                     # Documentation index
+├── framework.yaml               # Project configuration (machine-readable)
 ├── docs/                        # Framework documentation
 │   ├── collaboration/           # Universal collaboration guides
+│   ├── ref/                     # Reference material (schemas, role definitions)
 │   ├── PROJECT-STRUCTURE-*.md   # Structure specifications
-│   └── REPOSITORY-STRUCTURE.md  # Monorepo structure
-├── process/                     # Workflow documentation
+│   └── REPOSITORY-STRUCTURE.md  # Repository structure
 ├── templates/                   # 19 framework templates
 ├── patterns/                    # Implementation patterns
 └── thoughts/                    # Framework development tracking

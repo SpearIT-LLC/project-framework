@@ -1,10 +1,10 @@
 # SpearIT Project Framework - Project Status
 
-**Last Updated:** 2026-01-13
+**Last Updated:** 2026-01-19
 **Updated By:** Gary Elliott with Claude Code
-**Current Version:** v3.2.0 (2026-01-13)
+**Current Version:** v3.3.0 (2026-01-19)
 **Core Implementation:** Complete and production-ready
-**Ongoing Enhancements:** Industry-standard repository structure adopted, hello-world reference implementation validated, grouped releases supported
+**Ongoing Enhancements:** AI roles system, framework.yaml configuration, workflow transitions documentation
 
 ---
 
@@ -18,19 +18,22 @@ The SpearIT Project Framework is a comprehensive project management framework te
 
 ## Version Information
 
-### Current Release: v3.2.0 (2026-01-13)
+### Current Release: v3.3.0 (2026-01-19)
 
 **Status:** Stable - Production Ready
 
-**Latest Changes (Grouped Release: REFACTOR-052, FEAT-039, DOC-053):**
-- 🔄 **BREAKING:** Repository structure aligned with industry standards (npm/pip/bundler)
-- 📁 Renamed `project-hello-world/` → `examples/hello-world/`
-- 📁 Renamed `project-templates/` → `templates/`
-- 📝 Updated terminology: "framework source repository" replaces "monorepo"
-- ✅ Validated examples/hello-world/ - 100% compliant with Standard Framework
-- 📖 Documented Claude Code temporary file configuration (`CLAUDE_CODE_TMPDIR`)
-- 🔍 Comprehensive structure validation confirms reference implementation quality
-- 🎯 All Tier 1 (navigation) and Tier 2 (active work) documentation updated
+**Latest Changes (Grouped Release: FEAT-037, FEAT-052, FEAT-059, DOC-058, TECH-043, TECH-056):**
+- 🤖 **Context-aware AI roles system** - 13 roles with explicit activation ("Adopt the scrum master role")
+- 📄 **framework.yaml** - Machine-readable project configuration for AI and tooling
+- ✅ **Validation script** - Automated framework.yaml schema validation
+- 📋 **Workflow transitions** - Comprehensive state transition rules and checklists
+- 📁 **docs/ref/** - New reference material directory for schemas and role definitions
+- 🧹 **DRY documentation** - Consolidated workflow docs, established single-source-of-truth policy
+
+**Previous Release (v3.2.0 - Industry-Standard Structure):**
+- Repository structure aligned with industry standards (npm/pip/bundler)
+- Validated examples/hello-world/ - 100% compliant with Standard Framework
+- Documented Claude Code temporary file configuration
 
 **Previous Release (FEAT-026 - Structure Migration):**
 - 🔄 **BREAKING:** Reorganized repository into multi-project structure
@@ -292,6 +295,7 @@ See [roadmap.md](thoughts/project/planning/roadmap.md) for complete roadmap.
 
 | Version | Release Date | Type | Highlights |
 |---------|--------------|------|------------|
+| v3.3.0 | 2026-01-19 | Minor | AI roles system, framework.yaml config, workflow transitions, DRY documentation |
 | v3.2.0 | 2026-01-13 | Minor | Industry-standard repository structure, hello-world validation, temp file documentation |
 | v3.1.0 | 2026-01-11 | Minor | Grouped releases support, work item ID clarification, structure compliance fixes |
 | v3.0.1 | 2026-01-11 | Patch | Updated 10 files with v3.0.0 path references, aligned all docs with structure standard |
