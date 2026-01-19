@@ -765,6 +765,56 @@ Before submitting code for review:
 
 ---
 
+## PowerShell Standards
+
+### Output for Programmatic Consumption
+
+**Use `Write-Output` instead of `Write-Host` when output needs to be captured:**
+
+```powershell
+# Bad - Write-Host bypasses stdout, output not capturable
+Write-Host "Processing complete: $result"
+
+# Good - Write-Output writes to stdout, capturable by calling processes
+Write-Output "Processing complete: $result"
+
+# Also good - implicit output (equivalent to Write-Output)
+"Processing complete: $result"
+```
+
+**When to use each:**
+- `Write-Host` - Interactive display only (colored status messages, progress indicators)
+- `Write-Output` - Data that may be captured, piped, or consumed by other tools
+
+**Why this matters:** Scripts called by automation tools (Claude Code, CI/CD, etc.) need their output captured via stdout. `Write-Host` writes directly to the console and bypasses the output stream entirely.
+
+### Unicode and UTF-8 Encoding
+
+**Windows PowerShell 5.1 defaults to legacy OEM encoding (Code Page 437), not UTF-8.** This causes Unicode characters (arrows, emoji, non-ASCII text) to display incorrectly or be dropped.
+
+**For scripts that output Unicode characters:**
+
+```powershell
+# At the start of your script, set UTF-8 output encoding
+[Console]::OutputEncoding = [System.Text.Encoding]::UTF8
+
+# When reading files with Unicode content, specify encoding
+$content = Get-Content -Path $file -Raw -Encoding UTF8
+```
+
+**Encoding contexts:**
+- `[Console]::OutputEncoding` - Controls how PowerShell encodes output to the console/pipe
+- `-Encoding UTF8` on `Get-Content`/`Set-Content` - Controls file read/write encoding
+- `$OutputEncoding` - Controls encoding for piped output to native commands
+
+**PowerShell versions:**
+- Windows PowerShell 5.1: Defaults to OEM code page (legacy)
+- PowerShell 7+: Defaults to UTF-8
+
+**System-wide fix (Windows):** Enable "Beta: Use Unicode UTF-8 for worldwide language support" in Region settings. This affects all applications, so test thoroughly.
+
+---
+
 ## References
 
 - [CLAUDE.md](../../../CLAUDE.md) - Quick reference summaries

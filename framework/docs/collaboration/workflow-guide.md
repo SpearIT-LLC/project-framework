@@ -180,6 +180,11 @@ Ask this before elaborate planning. Keep planning proportional to project size.
   - Move [Unreleased] to [vX.Y.Z]
   - Update version in PROJECT-STATUS.md
   - Update "Last Updated" date
+- Update README.md (if applicable)
+  - Review if new features affect user-facing documentation
+  - Add new capabilities, configuration options, or usage examples
+  - Update feature lists, installation instructions, or quick start guides
+  - Skip if release is internal refactoring or bug fixes with no user-visible changes
 - Tag releases
   - `git tag -a vX.Y.Z -m "Release notes"`
   - Push tags: `git push --tags`
