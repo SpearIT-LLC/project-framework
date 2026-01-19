@@ -2,7 +2,7 @@
 
 **Last Updated:** 2026-01-19
 **Updated By:** Gary Elliott with Claude Code
-**Current Version:** v3.3.0 (2026-01-19)
+**Current Version:** v3.4.0 (2026-01-19)
 **Core Implementation:** Complete and production-ready
 **Ongoing Enhancements:** AI roles system, framework.yaml configuration, workflow transitions documentation
 
@@ -18,11 +18,17 @@ The SpearIT Project Framework is a comprehensive project management framework te
 
 ## Version Information
 
-### Current Release: v3.3.0 (2026-01-19)
+### Current Release: v3.4.0 (2026-01-19)
 
 **Status:** Stable - Production Ready
 
-**Latest Changes (Grouped Release: FEAT-037, FEAT-052, FEAT-059, DOC-058, TECH-043, TECH-056):**
+**Latest Changes (FEAT-018, DOC-063):**
+- 🤖 **Claude Command Framework** - Standardized `/fw-*` commands for workflow operations
+- 📋 **5 slash commands** - `/fw-help`, `/fw-move`, `/fw-status`, `/fw-wip`, `/fw-backlog`
+- 🔧 **PowerShell tooling** - `Get-BacklogItems.ps1`, `Get-WorkflowStatus.ps1`, `Move-WorkItem.ps1`
+- 📝 **Release process improvement** - README update step added to release workflow
+
+**Previous Release (v3.3.0 - AI Roles & Configuration):**
 - 🤖 **Context-aware AI roles system** - 13 roles with explicit activation ("Adopt the scrum master role")
 - 📄 **framework.yaml** - Machine-readable project configuration for AI and tooling
 - ✅ **Validation script** - Automated framework.yaml schema validation
@@ -67,8 +73,7 @@ The SpearIT Project Framework is a comprehensive project management framework te
 - 📋 Setup automation script - Planned
 - 📋 Visual diagrams - Planned
 - 📋 Validation tooling - Planned
-- 📋 Backlog review command - Planned (FEAT-017)
-- 📋 Claude command framework - Planned (FEAT-018)
+- ✅ Claude command framework - Complete (v3.4.0, FEAT-018)
 
 **Legend:**
 - ✅ Complete
@@ -295,6 +300,7 @@ See [roadmap.md](thoughts/project/planning/roadmap.md) for complete roadmap.
 
 | Version | Release Date | Type | Highlights |
 |---------|--------------|------|------------|
+| v3.4.0 | 2026-01-19 | Minor | Claude Command Framework (`/fw-*` commands), PowerShell tooling |
 | v3.3.0 | 2026-01-19 | Minor | AI roles system, framework.yaml config, workflow transitions, DRY documentation |
 | v3.2.0 | 2026-01-13 | Minor | Industry-standard repository structure, hello-world validation, temp file documentation |
 | v3.1.0 | 2026-01-11 | Minor | Grouped releases support, work item ID clarification, structure compliance fixes |

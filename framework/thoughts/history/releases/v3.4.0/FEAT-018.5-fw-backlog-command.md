@@ -6,7 +6,7 @@
 **Target Version:** TBD (releases with FEAT-018)
 **Status:** Done
 **Created:** 2026-01-19
-**Completed:** N/A
+**Completed:** 2026-01-19
 **Developer:** TBD
 
 ---

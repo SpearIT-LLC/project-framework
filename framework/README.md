@@ -36,7 +36,15 @@ The framework provides three scaling levels (Minimal, Light, Standard) that adap
 - `framework.yaml` provides machine-readable project configuration
 - Context-aware AI roles (scrum-master, developer, architect, etc.)
 - Explicit role activation: "Adopt the scrum master role"
+- Claude Command Framework (`/fw-*` commands) for workflow operations
 - Consistent structure improves AI assistance quality
+
+**Claude Commands (`/fw-*`)**
+- `/fw-help` - Discover available framework commands
+- `/fw-move` - Move work items with policy enforcement
+- `/fw-status` - Show project status summary
+- `/fw-wip` - Check WIP limit status
+- `/fw-backlog` - Review and prioritize backlog items
 
 **19 Production Templates**
 - Planning, work items, decisions, research

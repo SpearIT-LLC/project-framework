@@ -18,9 +18,34 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Visual diagrams for folder structure and workflow
 - ZIP distribution package
 - Interactive setup script
-- Backlog review command (FEAT-017)
-- Claude command framework (FEAT-018)
 - Automated session history generation (FEAT-022)
+
+---
+
+## [3.4.0] - 2026-01-19
+
+### Added
+- **FEAT-018: Claude Command Framework (`/fw-*` commands)**
+  - Standardized command structure for workflow operations
+  - Command registry in CLAUDE.md with `/fw-` prefix convention
+  - `/fw-help` - Discover available framework commands
+  - `/fw-move` - Move work items with policy enforcement (validates transitions, uses git mv, checks WIP limits)
+  - `/fw-status` - Show project status summary (version, workflow counts, items in progress)
+  - `/fw-wip` - Check WIP limit status and current work items
+  - `/fw-backlog` - Review and prioritize backlog items
+  - PowerShell tooling: `Get-BacklogItems.ps1`, `Get-WorkflowStatus.ps1`, `Move-WorkItem.ps1`
+  - Shared module infrastructure in `framework/tools/FrameworkLib/`
+
+- **DOC-063: README Update in Release Process**
+  - Added explicit README.md review step to release process
+  - Ensures user-facing documentation reflects released capabilities
+
+### Documentation
+- Updated workflow-guide.md with README update step in release process
+- Updated CLAUDE.md Step 9 with README check reference
+
+### Notes
+This release completes the Claude Command Framework (FEAT-018), providing standardized slash commands for framework operations. The framework now supports both AI-driven commands and PowerShell tooling for workflow automation.
 
 ---
 
