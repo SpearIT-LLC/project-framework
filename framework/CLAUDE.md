@@ -1,10 +1,12 @@
 # General Project Instructions
 
-**For AI Assistants:** This is your collaboration contract with users. Read this first, then consult [collaboration docs](thoughts/project/collaboration/) for detailed guidance.
+**For AI Assistants:** This is your collaboration contract with users. Read this first, then consult [collaboration docs](docs/collaboration/) for detailed guidance.
+
+*Note: Bootstrap block lives in root CLAUDE.md - that's what loads at session start.*
 
 **Quick Reference:** See [CLAUDE-QUICK-REFERENCE.md](CLAUDE-QUICK-REFERENCE.md) for critical rules and decision trees.
 
-**Last Updated:** 2026-01-16
+**Last Updated:** 2026-01-17
 
 ---
 
@@ -239,7 +241,7 @@ Examples:
 **Release atomically (Step 9):**
 - Calculate version: Read PROJECT-STATUS.md + work item Version Impact → calculate next version → confirm with user
   - **Grouped releases:** Multiple items in done/? Use highest Version Impact (MAJOR > MINOR > PATCH)
-- Update PROJECT-STATUS.md + CHANGELOG.md + move to done/ → commit + tag together
+- Update PROJECT-STATUS.md + CHANGELOG.md + README.md (if new features affect user-facing docs) + move to done/ → commit + tag together
   - **Grouped releases:** List all items in CHANGELOG under one version, organized by category (Added/Changed/Fixed)
 - Archive immediately: Create `thoughts/history/releases/vX.Y.Z/` → **USE git mv** to move all work items from done/
   - Command: `git mv thoughts/work/done/WORK-ITEM-* thoughts/history/releases/vX.Y.Z/`
@@ -545,9 +547,153 @@ The project includes comprehensive permission configuration in `.claude/settings
 
 ---
 
-## Command Center
+## Framework Commands (`/fw-*`)
 
-*(Reserved for future use - project-specific quick commands)*
+Framework commands provide shortcuts for common workflow operations. All commands use the `/fw-` prefix.
+
+### Command Registry
+
+| Command | Description | Status |
+|---------|-------------|--------|
+| `/fw-help` | List available commands or get help on a specific command | Active |
+| `/fw-move` | Move work item between folders with policy enforcement | Active |
+| `/fw-status` | Show project status summary | Active |
+| `/fw-wip-check` | Check WIP limits and current work | Active |
+| `/fw-backlog` | Review and prioritize backlog items | Active |
+
+### Using Commands
+
+**Syntax:** `/fw-<command> [arguments]`
+
+**Examples:**
+```
+/fw-help                    # List all commands
+/fw-help move               # Get help on /fw-move
+/fw-status                  # Show project status
+/fw-move FEAT-042 todo      # Move FEAT-042 to todo/
+/fw-wip-check               # Check WIP limit status
+/fw-backlog                 # Review backlog items
+```
+
+### Command Reference
+
+#### /fw-help
+
+List available commands or get detailed help on a specific command.
+
+```
+/fw-help [command-name]
+
+Arguments:
+  command-name   (optional) Command to get help for (without /fw- prefix)
+
+Examples:
+  /fw-help           List all available commands
+  /fw-help move      Show detailed help for /fw-move
+```
+
+---
+
+#### /fw-move
+
+Move a work item between workflow folders with transition validation.
+
+```
+/fw-move <item-id> <target-folder>
+
+Arguments:
+  item-id        Work item ID (e.g., FEAT-018, BUGFIX-001)
+  target-folder  One of: backlog, todo, doing, done
+
+Examples:
+  /fw-move FEAT-042 todo     Move from backlog to todo
+  /fw-move FEAT-042 doing    Start work (moves to doing)
+  /fw-move FEAT-042 done     Complete work (moves to done)
+
+Notes:
+  - Validates transitions (e.g., backlog → doing is invalid)
+  - Checks WIP limit before moving to doing/
+  - Uses git mv for version control
+```
+
+**Valid Transitions:**
+| From | To | Valid |
+|------|----|-------|
+| backlog | todo | ✅ |
+| backlog | doing | ❌ (use todo first) |
+| todo | doing | ✅ |
+| todo | backlog | ✅ |
+| doing | done | ✅ |
+| doing | todo | ✅ |
+| done | * | ❌ (create new item) |
+
+---
+
+#### /fw-status
+
+Show project status summary including version, current work, and workflow health.
+
+```
+/fw-status [--compact]
+
+Options:
+  --compact    Show single-line summary
+
+Output includes:
+  - Current version (from PROJECT-STATUS.md)
+  - Items in each workflow folder
+  - WIP limit status
+  - Items awaiting release
+```
+
+---
+
+#### /fw-wip-check
+
+Check Work In Progress limits and list items currently in doing/.
+
+```
+/fw-wip-check
+
+Output includes:
+  - Current count vs limit
+  - List of items in progress
+  - Status indicator (✅ under, ⚠️ at, ❌ over limit)
+```
+
+---
+
+#### /fw-backlog
+
+Review and prioritize backlog items interactively.
+
+```
+/fw-backlog [subcommand] [item-id]
+
+Subcommands:
+  (none)           List all backlog items
+  detail <id>      Show full details for an item
+  move <id>        Move item to todo/ (with confirmation)
+  prioritize       Interactive prioritization session
+
+Examples:
+  /fw-backlog                   List all backlog items
+  /fw-backlog detail FEAT-037   Show details for FEAT-037
+  /fw-backlog move FEAT-037     Move FEAT-037 to todo/
+```
+
+---
+
+### Adding New Commands
+
+New commands should follow this pattern:
+
+1. **Naming:** `/fw-<verb>` or `/fw-<noun>` (e.g., `/fw-release`, `/fw-roadmap`)
+2. **Documentation:** Add to registry table and command reference section
+3. **Work item:** Create FEAT-018.x sub-task for implementation
+4. **Consistency:** Follow existing argument and output patterns
+
+**Reference:** [FEAT-018: Claude Command Framework](thoughts/work/doing/feature-018-claude-command-framework.md)
 
 ---
 

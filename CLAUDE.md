@@ -1,8 +1,16 @@
 # Claude Context: SpearIT Project Framework
 
+> **BOOTSTRAP BLOCK - Execute on every session start**
+>
+> 1. **Ask:** "What kind of work are we doing today?" (unless user already stated intent)
+> 2. **Read:** `framework.yaml` → check `roles.default` for your starting role
+> 3. **On work item actions** (move, create, status change): Read `policies.onTransition` BEFORE acting
+> 4. **On file operations in `thoughts/work/`**: Use `git mv`, never `Move-Item` or `cp`
+> 5. **Before writing code:** State what you plan to do and wait for approval
+
 This file provides navigation and context for AI assistants working in this framework source repository.
 
-**Last Updated:** 2026-01-14 (Added Epistemic Standards section)
+**Last Updated:** 2026-01-17
 
 ---
 

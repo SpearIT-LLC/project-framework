@@ -126,7 +126,33 @@ cp framework/templates/documentation/session-history-template.md \
 
 ---
 
-## 5. Key Framework Rules
+## 5. Framework Commands (Standard)
+
+When working with AI assistants, framework commands (`/fw-*`) provide shortcuts for common workflow operations.
+
+| Command | Description |
+|---------|-------------|
+| `/fw-help` | List available commands or get help on a specific command |
+| `/fw-move` | Move work item between folders with policy enforcement |
+| `/fw-status` | Show project status summary |
+| `/fw-wip-check` | Check WIP limits and current work |
+| `/fw-backlog` | Review and prioritize backlog items |
+
+### Quick Examples
+
+```
+/fw-status                  # Show project status
+/fw-wip-check               # Check WIP limit
+/fw-move FEAT-042 todo      # Move item to todo/
+/fw-backlog                 # Review backlog items
+/fw-help move               # Get help on /fw-move
+```
+
+**Full Reference:** [framework/CLAUDE.md](framework/CLAUDE.md#framework-commands-fw-)
+
+---
+
+## 6. Key Framework Rules
 
 ### All Levels
 - **Single Source of Truth:** Version and status ONLY in PROJECT-STATUS.md
@@ -141,7 +167,7 @@ cp framework/templates/documentation/session-history-template.md \
 
 ---
 
-## 6. Quick Troubleshooting
+## 7. Quick Troubleshooting
 
 **Problem:** "Too much documentation overhead"
 → **Solution:** You might need a lower framework level. See [UPGRADE-PATH.md](templates/UPGRADE-PATH.md) (works both ways)
@@ -157,7 +183,7 @@ cp framework/templates/documentation/session-history-template.md \
 
 ---
 
-## 7. Essential Links
+## 8. Essential Links
 
 | What You Need | Document | Time to Read |
 |--------------|----------|--------------|
@@ -173,7 +199,7 @@ cp framework/templates/documentation/session-history-template.md \
 
 ---
 
-## 8. Templates Quick Reference (Standard Level)
+## 9. Templates Quick Reference (Standard Level)
 
 | Template | Use When | Location |
 |----------|----------|----------|
@@ -193,7 +219,7 @@ cp framework/templates/documentation/session-history-template.md \
 
 ---
 
-## 9. Workflow Cheat Sheet (Standard)
+## 10. Workflow Cheat Sheet (Standard)
 
 ```
 NEW PROJECT:
@@ -213,7 +239,7 @@ DAILY WORK:
 
 ---
 
-## 10. Getting Help
+## 11. Getting Help
 
 - **See working example:** [examples/hello-world/](examples/hello-world/)
 - **Framework structure questions:** [STRUCTURE.md](templates/STRUCTURE.md)
