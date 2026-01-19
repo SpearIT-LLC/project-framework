@@ -92,9 +92,56 @@ What are the arguements for intentionally limiting AI?
 Define a clear roadmap. 
 Perhaps document the high level map with mermaid?
 
-- File based workflow 
+- File based Kanban workflow 
+- Roles
+- Project templates
+- Slash commands
+- Code standards for popular languages?
 - GitHub Workflow
 - Jira Workflow
 - Multi AI model support?
-- Code standards for popular languages?
-- 
+- Performance optimizations
+
+---
+## CLAUDE.md
+- Is there anything in /CLAUDE.md that could reliably be moved to /framework/CLAUDE.md?
+- Can we identify/define the minimum block of info we need to add to /CLAUDE.md to get the framework to work reliably?
+
+## Research Claude Features
+What features are we not using that might help the framework project?
+- List all features with brief summary
+- Which are we using?
+- Which might help us?
+  - SKILLS
+  - MCP
+  - agents
+    - Split roles between agents?
+  - Something else?
+
+## Framework Project Management
+- Adopt Project Manager or Product Owner role and then evaluate the project
+
+## Project Templates
+Replace project size with a template. Perhaps that might be a better, and more flexible, way to manage different kinds and sizes of projects.
+- When doing the setup project configuration, recommend a project template rather than a project size.
+- Develop various project templates based on the kinds of work you're doing.
+- Adopt senior roles to assist with template creation
+- Templates define major phases to the project? Or top level WBS?
+- Template defines the purpose, scope and goals for each item 
+- Does the development phase iterate for each release?
+
+## Proof of Concept
+Experiment with some of these ideas:
+### Predefined checklist or questionaire
+- Create series of questions in a markdown file.
+- Have Claude work through the questionaire or checklist.
+- Claude records the user answers.
+This could be a useful pattern for other features.
+
+#### Sample
+Trivial questionaire for POC
+1. What color is the sky?
+2. What color is the grass?
+3. What color is snow?
+AI prompts each question and records the answer.
+

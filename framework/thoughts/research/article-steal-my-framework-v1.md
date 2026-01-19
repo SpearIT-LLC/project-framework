@@ -26,6 +26,13 @@ Defining a SsoT was like herding cats because Claude can be very verbose with it
 
 Enter framework.yaml, a simple project config file easily readable by both AI and human to direct them to the SsoT for every policy. The simple format saves tokens looking for information. Yes, CLAUDE.md can do that but this but the config file is easy to set with a script that both human and AI can run.
 
+## Pull My Finger
+CONCEPT: AI is not good at triggering policy or procdeural actions even though it is aware the policies exist. It still needs a little prompting, then it's fine.
+
+## Role Playing
+If I tell you to do something you'll probably do it however you think it should be done. But if I say you're a senior ____, then you're going to think differently about the task. Claude behaves the same way. 
+(develop a realistic scenario easily understood by anyone)
+
 ## Scripts for automation tasks
 This bring me to another feature, using scripts to execute standard tasks so if either human or AI executes it we get the same result. AI saves some tokens and human doesn't have to worry they'll get a different result if they run it. 
 
