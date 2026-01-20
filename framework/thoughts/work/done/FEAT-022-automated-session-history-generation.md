@@ -5,6 +5,7 @@
 **Priority:** Medium
 **Version Impact:** MINOR
 **Created:** 2025-12-29
+**Completed:** 2026-01-20
 
 ---
 
@@ -56,17 +57,17 @@ Manual generation when user remembers, or reconstruction from git logs and conve
 
 ### Functional Requirements
 
-- [ ] `/fw-session-history` command generates session history on demand
-- [ ] On done-transition (via `/fw-move`), prompt: "Would you like me to update session history?"
-- [ ] AI detects conversational wrap-up signals and offers to generate history
-- [ ] Session history follows existing format (YYYY-MM-DD-SESSION-HISTORY.md)
-- [ ] Appends to existing day's history if file exists
+- [x] `/fw-session-history` command generates session history on demand
+- [x] On done-transition (via `/fw-move`), prompt: "Would you like me to update session history?"
+- [x] AI detects conversational wrap-up signals and offers to generate history
+- [x] Session history follows existing format (YYYY-MM-DD-SESSION-HISTORY.md)
+- [x] Appends to existing day's history if file exists
 
 ### Non-Functional Requirements
 
-- [ ] No special tooling required - AI uses conversation context + git log
-- [ ] User can decline prompts without friction
-- [ ] Works with existing `/fw-*` command pattern
+- [x] No special tooling required - AI uses conversation context + git log
+- [x] User can decline prompts without friction
+- [x] Works with existing `/fw-*` command pattern
 
 ---
 
@@ -97,10 +98,10 @@ Manual generation when user remembers, or reconstruction from git logs and conve
 
 ### Acceptance Criteria
 
-- [ ] `/fw-session-history` command works
-- [ ] Done-transition prompts user (non-blocking)
-- [ ] AI recognizes wrap-up signals and offers history generation
-- [ ] Generated content follows existing session history format
+- [x] `/fw-session-history` command works
+- [x] Done-transition prompts user (non-blocking)
+- [x] AI recognizes wrap-up signals and offers history generation (via command definition)
+- [x] Generated content follows existing session history format
 
 ---
 

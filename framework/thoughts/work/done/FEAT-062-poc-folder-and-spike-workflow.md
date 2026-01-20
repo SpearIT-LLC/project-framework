@@ -45,19 +45,20 @@ Ad-hoc file placement or skipping tracking entirely.
 
 ### Functional Requirements
 
-- [ ] Create `thoughts/poc/` folder structure
-- [ ] Update `developer.prototype` variant to ask "Should I create a spike to track this experiment?"
-- [ ] Define spike-in-poc workflow (create, work, record findings, archive)
-- [ ] Support spike subfolders for multi-file artifacts (`poc/SPIKE-XXX-name/`)
-- [ ] No WIP limits on `poc/` folder
-- [ ] Spike docs archive to `history/spikes/` when complete
+- [x] Create `thoughts/poc/` folder structure
+- [x] Update `developer.prototype` variant to ask "Should I create a spike to track this experiment?"
+- [x] Define spike-in-poc workflow (create, work, record findings, archive)
+- [x] Support spike subfolders for multi-file artifacts (`poc/SPIKE-XXX-name/`)
+- [x] No WIP limits on `poc/` folder
+- [x] Entire spike folder archives to `history/spikes/SPIKE-XXX/` when complete
+- [x] Document optional artifact cleanup after production implementation
 
 ### Non-Functional Requirements
 
-- [ ] Performance: N/A
-- [ ] Security: N/A
-- [ ] Compatibility: Existing spike flow (`backlog → doing → history/spikes`) still works
-- [ ] Documentation: Update workflow-guide.md, framework-roles.yaml
+- [x] Performance: N/A
+- [x] Security: N/A
+- [x] Compatibility: Existing spike flow (`backlog → doing → history/spikes`) still works
+- [x] Documentation: Update workflow-guide.md, framework-roles.yaml
 
 ---
 
@@ -84,8 +85,17 @@ thoughts/
 │       ├── SPIKE-XXX-description.md
 │       └── [code artifacts]
 └── history/
-    └── spikes/     # Archived spike docs
+    └── spikes/
+        └── SPIKE-XXX-description/  # Archived spike folder (entire folder, not just doc)
 ```
+
+**Spike Lifecycle:**
+1. Create spike folder in `poc/SPIKE-XXX-description/`
+2. Add spike doc and code artifacts to folder
+3. Work on spike (no WIP limits)
+4. Record findings in spike doc
+5. Archive entire folder to `history/spikes/SPIKE-XXX-description/`
+6. After production implementation → optionally delete code artifacts, keep spike doc
 
 ### Implementation Approach
 
@@ -135,8 +145,9 @@ See ADR-004 for full analysis. Options considered:
 2. Trigger `developer.prototype` variant with "let's prototype X"
 3. Verify AI asks about spike creation
 4. Create a spike with artifacts in subfolder
-5. Complete spike and archive to `history/spikes/`
+5. Complete spike and archive entire folder to `history/spikes/SPIKE-XXX/`
 6. Verify no WIP limit errors for poc/
+7. After "production" implementation, optionally delete code artifacts from archived spike
 
 ### Edge Cases
 
@@ -156,24 +167,24 @@ N/A - This is a folder structure and workflow feature, not code execution.
 
 ### Files to Update
 
-- [ ] workflow-guide.md - Add poc/ folder section, update spike flow diagram
-- [ ] framework-roles.yaml - Update developer.prototype variant
+- [x] workflow-guide.md - Add poc/ folder section, update spike flow diagram
+- [x] framework-roles.yaml - Update developer.prototype variant
 - [ ] CLAUDE.md - Add brief reference to poc/ workflow (if appropriate)
 
 ### New Documentation Needed
 
-- [ ] Spike template (if not already present)
+- [x] Spike template (if not already present) - Updated existing SPIKE-TEMPLATE.md
 - [ ] Example spike with findings
 
 ---
 
 ## Implementation Checklist
 
-- [ ] ADR-004 reviewed and accepted
-- [ ] `thoughts/poc/.gitkeep` created
-- [ ] workflow-guide.md updated with poc/ section
-- [ ] framework-roles.yaml developer.prototype updated
-- [ ] Manual testing completed
+- [x] ADR-004 reviewed and accepted
+- [x] `thoughts/poc/.gitkeep` created
+- [x] workflow-guide.md updated with poc/ section
+- [x] framework-roles.yaml developer.prototype updated
+- [x] Manual testing completed
 - [ ] CHANGELOG.md updated
 
 ---

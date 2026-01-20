@@ -404,6 +404,8 @@ When moving a work item, complete the checklist for the target folder:
 - [ ] Status field updated to "Done"
 - [ ] User has approved the completed work
 
+**Note:** The `/fw-move` command automatically updates session history and commits after moving to done/.
+
 #### → history/releases/vX.Y.Z/
 - [ ] Transition is valid (check matrix above)
 - [ ] Work has been released (version tagged)
@@ -435,7 +437,9 @@ thoughts/
 ├── work/backlog/         # Ideas and future work
 ├── work/todo/            # Committed next (prioritized)
 ├── work/doing/           # Currently in progress (WIP limited)
-└── work/done/            # Completed (awaiting release)
+├── work/done/            # Completed (awaiting release)
+├── poc/                  # POC spikes with code artifacts (no WIP limit)
+└── research/             # Analysis, ADRs, landscape reviews
 ```
 
 **Workflow:**
@@ -453,26 +457,48 @@ User Idea → Backlog → [User Approval] → Todo → Doing → Done → Releas
 
 ### Spike Flow (Research/Investigation)
 
-Spikes follow a different workflow than features/bugfixes:
+Spikes follow a different workflow than features/bugfixes. There are two spike types:
+
+#### Research Spike (no code artifacts)
 
 ```
-work/backlog/SPIKE-description.md
+work/backlog/SPIKE-NNN-description.md
     ↓ (ready to investigate)
-work/doing/SPIKE-description.md
+work/doing/SPIKE-NNN-description.md
     ↓ (findings documented)
-history/spikes/SPIKE-description-YYYY-MM-DD.md
+history/spikes/SPIKE-NNN-description.md
+```
+
+#### POC Spike (with code artifacts)
+
+```
+poc/SPIKE-NNN-description/
+    ├── SPIKE-NNN-description.md
+    └── [code artifacts]
+    ↓ (findings documented, experiment complete)
+history/spikes/SPIKE-NNN-description/
+    ├── SPIKE-NNN-description.md
+    └── [code artifacts]
+    ↓ (after production implementation - optional cleanup)
+history/spikes/SPIKE-NNN-description/
+    └── SPIKE-NNN-description.md  (artifacts deleted, lessons kept)
 ```
 
 **Key differences from standard flow:**
 - Spikes do NOT go through `todo/` (they're time-boxed investigations)
 - Spikes do NOT trigger releases
 - Spikes archive to `history/spikes/`, not `history/releases/`
-- Spikes don't require IDs (use descriptive names)
+- POC spikes live in `thoughts/poc/`, not `thoughts/work/`
+- No WIP limits on `poc/` folder
 
 **When to use a spike:**
 - Need to investigate unknowns before planning solution
 - Research question with time-boxed investigation
 - Technology evaluation or proof-of-concept
+
+**When to use POC spike vs research spike:**
+- **Research spike:** Documentation-only investigation, no code artifacts
+- **POC spike:** Experiment requires code/scripts that may inform production solution
 
 ### Roadmap Integration
 

@@ -56,7 +56,7 @@
     System.String (JSON format) or formatted table output
 
 .NOTES
-    Version: 1.1.0
+    Version: 1.2.0
     Author: SpearIT Project Framework
     Requires: PowerShell 5.1+
     Dependencies: FrameworkWorkflow.psm1
@@ -131,6 +131,88 @@ function Find-ProjectStatusFile {
     }
 
     return $null
+}
+
+function Find-PocFolder {
+    <#
+    .SYNOPSIS
+        Searches for thoughts/poc folder in common locations.
+    #>
+    [CmdletBinding()]
+    param()
+
+    $candidates = @(
+        "framework/thoughts/poc",
+        "thoughts/poc",
+        "../thoughts/poc"
+    )
+
+    foreach ($candidate in $candidates) {
+        if (Test-Path -Path $candidate -PathType Container) {
+            return (Resolve-Path -Path $candidate).Path
+        }
+    }
+
+    return $null
+}
+
+function Get-PocSpikes {
+    <#
+    .SYNOPSIS
+        Gets active POC spikes from thoughts/poc folder.
+    .DESCRIPTION
+        POC spikes are folders (not files) containing spike docs and code artifacts.
+        Returns count and list of active spikes.
+    #>
+    [CmdletBinding()]
+    param(
+        [Parameter()]
+        [string]$PocPath
+    )
+
+    $result = @{
+        Count = 0
+        Spikes = @()
+    }
+
+    if (-not $PocPath -or -not (Test-Path $PocPath)) {
+        return $result
+    }
+
+    # Get spike folders (directories starting with SPIKE-)
+    $spikeFolders = @(Get-ChildItem -Path $PocPath -Directory -ErrorAction SilentlyContinue |
+        Where-Object { $_.Name -match '^SPIKE-\d+' })
+
+    if ($spikeFolders.Count -eq 0) {
+        return $result
+    }
+
+    $spikes = foreach ($folder in $spikeFolders) {
+        # Try to get spike doc inside folder
+        $spikeDoc = Get-ChildItem -Path $folder.FullName -Filter "*.md" -File -ErrorAction SilentlyContinue | Select-Object -First 1
+        $title = $null
+
+        if ($spikeDoc) {
+            try {
+                $content = Get-Content -Path $spikeDoc.FullName -Raw -Encoding UTF8 -ErrorAction Stop
+                # Extract title from first heading
+                if ($content -match '^#\s+(?:Spike:\s*)?(.+)$' ) {
+                    $title = $matches[1].Trim()
+                }
+            }
+            catch { }
+        }
+
+        @{
+            ID = $folder.Name -replace '-.*$', '' -replace 'SPIKE-', 'SPIKE-'
+            Name = $folder.Name
+            Title = $title
+        }
+    }
+
+    $result.Count = $spikes.Count
+    $result.Spikes = @($spikes)
+    return $result
 }
 
 function Get-ProjectVersion {
@@ -375,6 +457,18 @@ function Format-TableOutput {
         $output += ""
     }
 
+    # POC Spikes (separate from kanban workflow)
+    $output += "POC Spikes (no WIP limit):"
+    $spikeWord = if ($Status.PocSpikes.Count -ne 1) { "spikes" } else { "spike" }
+    $output += "  Active:   $($Status.PocSpikes.Count) $spikeWord"
+    if ($Status.PocSpikes -and $Status.PocSpikes.Count -gt 0) {
+        foreach ($spike in $Status.PocSpikes.Spikes) {
+            $title = if ($spike.Title) { $spike.Title } else { "(no title)" }
+            $output += "    - $($spike.Name): $title"
+        }
+    }
+    $output += ""
+
     # Warnings
     if ($wipInfo.LimitWarning) {
         $output += "Note: $($wipInfo.LimitWarning)"
@@ -422,6 +516,10 @@ try {
     $wipLimitInfo = Get-WipLimit -FolderPath $doingPath
     $hierarchicalWip = Get-WipCount -FolderPath $doingPath
 
+    # Get POC spikes (separate from kanban workflow)
+    $pocPath = Find-PocFolder
+    $pocSpikes = Get-PocSpikes -PocPath $pocPath
+
     # Build status object
     $status = @{
         ProjectName = $versionInfo.ProjectName
@@ -451,6 +549,10 @@ try {
         Done = @{
             Count = $doneItems.Count
         }
+        PocSpikes = @{
+            Count = $pocSpikes.Count
+            Spikes = $pocSpikes.Spikes
+        }
         # Include item details for table formatting
         DoingItems = $doingItems
         DoneItems = $doneItems
@@ -463,6 +565,7 @@ try {
             Write-Output "Todo: $($todoItems.Count)"
             Write-Output "Doing: $($hierarchicalWip.Count)"
             Write-Output "Done: $($doneItems.Count)"
+            Write-Output "POC Spikes: $($pocSpikes.Count)"
         }
         'WipCount' {
             Write-Output $hierarchicalWip.Count
@@ -500,6 +603,7 @@ try {
                     Todo = $status.Todo
                     Doing = $status.Doing
                     Done = $status.Done
+                    PocSpikes = $status.PocSpikes
                 }
                 $jsonStatus | ConvertTo-Json -Depth 5
             }

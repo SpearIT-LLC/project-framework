@@ -294,8 +294,20 @@
 - Findings inform future work (features, bugfixes)
 - Archive to `history/spikes/` when complete (not `history/releases/`)
 
-**Archive Location:**
-`thoughts/project/history/spikes/spike-[description]-YYYY-MM-DD.md`
+**Two Spike Workflows:**
 
-**Example:**
-`thoughts/project/history/spikes/spike-hpc-integration-2025-12-18.md`
+1. **Research Spike (no code artifacts):**
+   - Create spike doc in `thoughts/work/backlog/` or directly in `doing/`
+   - Archive doc to `thoughts/history/spikes/` when complete
+
+2. **POC Spike (with code artifacts):**
+   - Create spike folder in `thoughts/poc/SPIKE-XXX-description/`
+   - Put spike doc and code artifacts in the folder
+   - Archive entire folder to `thoughts/history/spikes/SPIKE-XXX-description/`
+   - After production implementation → optionally delete code artifacts, keep spike doc
+
+**Archive Location (research spike):**
+`thoughts/history/spikes/SPIKE-NNN-description.md`
+
+**Archive Location (POC spike):**
+`thoughts/history/spikes/SPIKE-NNN-description/` (entire folder)

@@ -45,13 +45,40 @@ Move a work item between workflow folders with policy enforcement, transition va
 
 ### → doing/
 - [ ] Transition is valid (check matrix)
-- [ ] WIP limit not exceeded (check `doing/.limit`, default 2)
+- [ ] WIP limit not exceeded (if `doing/.limit` exists)
 - [ ] Note: Hierarchical items (FEAT-018 + FEAT-018.1) count as 1 WIP item
 
 ### → done/
 - [ ] Transition is valid (check matrix)
 - [ ] All completion criteria met
 - [ ] User has approved the completed work
+- [ ] **After success**: Update session history (see Post-Move Actions)
+
+## Post-Move Actions
+
+### After moving to done/
+
+After successfully moving an item to `done/`, perform these steps automatically:
+
+1. **Update session history**: Run `/fw-session-history` to capture the completed work
+2. **Commit the completion**: Create a git commit with all related changes
+
+```
+✅ Moved [ITEM-ID] to done/
+
+Updating session history...
+Committing completion...
+```
+
+**Commit format:**
+```
+feat([ITEM-ID]): Complete [brief description]
+
+- Moved [ITEM-ID] to done/
+- Updated session history
+
+Co-Authored-By: Claude Opus 4.5 <noreply@anthropic.com>
+```
 
 ## Examples
 

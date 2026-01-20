@@ -121,7 +121,155 @@ Session 2: Verified FEAT-060 (bootstrap block) was already implemented in root C
 - TECH-065: Simplify PROJECT-STATUS.md to ultra-minimal format
 
 ### In doing/
-- FEAT-022: Automated session history generation (simplified scope)
+- (none)
+
+---
+
+## Session 3
+
+Session 3: Tested `/fw-session-history` command and completed FEAT-022 (automated session history generation).
+
+### Work Completed
+
+#### FEAT-022: Automated Session History Generation (Completed)
+
+- Executed `/fw-session-history` command to verify implementation
+- Command successfully detected existing session history file
+- Command gathered git log, current state, and work item information
+- Session history format follows standard template
+- Moved FEAT-022 from doing/ to done/ after verifying all acceptance criteria
+
+### Files Moved
+
+- `framework/thoughts/work/doing/FEAT-022-*.md` → `done/`
+
+### Current State Update
+
+**In done/ (awaiting release):**
+- TECH-064: Standardize work item metadata fields
+- FEAT-060: Framework bootstrap block for root CLAUDE.md
+- TECH-065: Simplify PROJECT-STATUS.md to ultra-minimal format
+- FEAT-022: Automated session history generation
+
+---
+
+## Session 4
+
+Session 4: Implemented FEAT-062 (POC folder and spike workflow), tested with SPIKE-001, and enhanced Get-WorkflowStatus.ps1 to show POC spikes.
+
+### Work Completed
+
+#### FEAT-022: Session History Automation (Enhancements)
+
+- Updated `/fw-move` to automatically update session history on done-transition (removed prompt)
+- Added automatic git commit after moving to done/
+- Added brief reference to workflow-guide.md about automated behavior
+
+#### FEAT-062: POC Folder and Spike Workflow (Implementation)
+
+- Created `thoughts/poc/` folder structure
+- Updated workflow-guide.md with POC spike workflow documentation
+- Updated framework-roles.yaml `developer.prototype` variant with `on_activate` trigger
+- Updated SPIKE-TEMPLATE.md with two spike workflow types (research vs POC)
+- Updated ADR-004 with artifact retention policy
+- Tested workflow with SPIKE-001-hello-world-test
+- Archived SPIKE-001 to `history/spikes/` successfully
+- Updated Get-WorkflowStatus.ps1 (v1.2.0) to show POC spikes section
+
+### Decisions Made
+
+1. **POC spike artifact retention:**
+   - Archive entire folder (doc + artifacts) to `history/spikes/`
+   - After production implementation, optionally delete artifacts but keep spike doc
+   - Preserves lessons learned while allowing cleanup
+
+2. **Session history automation:**
+   - Auto-update on done-transition (no prompt needed)
+   - Auto-commit after completion
+   - Reduces friction in workflow
+
+3. **Get-WorkflowStatus POC display:**
+   - Separate section for POC spikes (not mixed with kanban)
+   - Only shown when spikes exist
+   - Labeled "no WIP limit" to clarify they're exempt
+
+### Files Created
+
+- `framework/thoughts/poc/.gitkeep` - POC folder
+- `framework/thoughts/history/spikes/SPIKE-001-hello-world-test/` - Archived test spike
+- `.claude/commands/fw-session-history.md` - New command definition
+
+### Files Modified
+
+- `.claude/commands/fw-move.md` - Auto session history + commit on done
+- `framework/docs/collaboration/workflow-guide.md` - POC spike workflow, auto-commit note
+- `framework/docs/ref/framework-roles.yaml` - developer.prototype on_activate
+- `framework/templates/work-items/SPIKE-TEMPLATE.md` - Two spike workflow types
+- `framework/thoughts/research/adr/004-poc-folder-for-experiments.md` - Artifact retention policy
+- `framework/tools/Get-WorkflowStatus.ps1` - POC spikes section (v1.2.0)
+- `framework/thoughts/work/doing/FEAT-062-*.md` - Updated checklists
+
+### Files Moved
+
+- `framework/thoughts/work/doing/FEAT-022-*.md` → `done/`
+- `framework/thoughts/work/todo/FEAT-062-*.md` → `doing/`
+- `framework/thoughts/poc/SPIKE-001-*` → `history/spikes/SPIKE-001-*/`
+
+### Current State Update
+
+**In done/ (awaiting release):**
+- TECH-064: Standardize work item metadata fields
+- FEAT-060: Framework bootstrap block for root CLAUDE.md
+- TECH-065: Simplify PROJECT-STATUS.md to ultra-minimal format
+- FEAT-022: Automated session history generation
+
+**In doing/:**
+- FEAT-062: POC folder and spike workflow
+
+---
+
+## Session 5
+
+Session 5: Refined Get-WorkflowStatus.ps1 POC spikes display - always show count (even when 0) and aligned formatting with Workflow Summary section.
+
+### Work Completed
+
+#### Get-WorkflowStatus.ps1 Display Refinements
+
+- Changed POC spikes to always display (previously only shown when count > 0)
+- Aligned formatting with Workflow Summary section:
+  - Header: "POC Spikes (no WIP limit):"
+  - Indented line: "  Active:   0 spikes"
+- Maintains consistency between Summary, Table, and JSON output modes
+
+### Decisions Made
+
+1. **Always show POC spikes count:**
+   - Previously: Only shown when count > 0
+   - Now: Always shown for consistency with JSON output
+   - Rationale: Users should see the section exists even when empty
+
+### Files Modified
+
+- `framework/tools/Get-WorkflowStatus.ps1` - POC display formatting (always show, aligned indentation)
+
+### Current State Update
+
+**In done/ (awaiting release):**
+- TECH-064: Standardize work item metadata fields
+- FEAT-060: Framework bootstrap block for root CLAUDE.md
+- TECH-065: Simplify PROJECT-STATUS.md to ultra-minimal format
+- FEAT-022: Automated session history generation
+
+**In done/ (awaiting release):**
+- TECH-064: Standardize work item metadata fields
+- FEAT-060: Framework bootstrap block for root CLAUDE.md
+- TECH-065: Simplify PROJECT-STATUS.md to ultra-minimal format
+- FEAT-022: Automated session history generation
+- FEAT-062: POC folder and spike workflow
+
+**In doing/:**
+- (none)
 
 ---
 

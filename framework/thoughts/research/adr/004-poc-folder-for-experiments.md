@@ -72,9 +72,10 @@ thoughts/
 1. User says "let's prototype X"
 2. AI adopts `developer.prototype` variant
 3. AI asks: "Should I create a spike to track this experiment?"
-4. If yes → create spike in `thoughts/poc/`
-5. Artifacts go in spike subfolder
-6. When done → record findings, archive spike doc to `history/spikes/`
+4. If yes → create spike folder in `thoughts/poc/SPIKE-XXX-description/`
+5. Spike doc and code artifacts live in that folder
+6. When spike complete → archive entire folder to `history/spikes/SPIKE-XXX-description/`
+7. After production solution implemented → optionally delete code artifacts, keep spike doc (lessons learned)
 
 ---
 
@@ -85,12 +86,28 @@ thoughts/
 - History preserved (what worked, what didn't)
 - Clear separation from production code
 - Supports rapid iteration (no WIP limits)
+- Artifacts available during production implementation
+- Lessons learned preserved even after artifact cleanup
 
 **Bad:**
 - Another folder to know about
 - Need to update documentation and templates
 
 **Revisit if:** POC folder becomes dumping ground for abandoned experiments (may need cleanup policy)
+
+---
+
+## Artifact Retention Policy
+
+**During spike:** All artifacts live in `thoughts/poc/SPIKE-XXX/`
+
+**On spike completion:** Entire folder archives to `history/spikes/SPIKE-XXX/`
+- Artifacts preserved for reference during production implementation
+
+**After production implementation:** Optionally clean up archived artifacts
+- Keep: Spike doc (captures lessons learned, approach, findings)
+- Delete: Code artifacts (now superseded by production code)
+- Decision is manual - not all spikes lead to production work
 
 ---
 
