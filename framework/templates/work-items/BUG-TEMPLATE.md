@@ -1,16 +1,16 @@
-# Bug Fix: [Brief Description]
+# Bug: [Brief Description]
 
-**ID:** NNN (e.g., 004, 101, 102)
-**Type:** Bugfix
-**Version Impact:** PATCH (backward-compatible fix)
-**Status:** [Backlog | Todo | Doing | Done | Released]
+**ID:** BUG-NNN
+**Type:** Bug
+**Priority:** [High | Medium | Low]
+**Version Impact:** PATCH
+**Created:** YYYY-MM-DD
+
+<!-- Optional fields - uncomment if needed:
 **Severity:** [Critical | High | Medium | Low]
-**Priority:** [P0 | P1 | P2 | P3]
-**Version Found:** [e.g., v1.0.0]
-**Version Fixed:** [e.g., v1.0.1]
-**Created:** [YYYY-MM-DD]
-**Fixed:** [YYYY-MM-DD or N/A]
-**Developer:** [Name]
+**Assigned:** [Name]
+**Depends On:** [ITEM-NNN, ITEM-NNN]
+-->
 
 ---
 

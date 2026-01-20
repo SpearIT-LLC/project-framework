@@ -1,11 +1,15 @@
 # Spike: [Investigation Topic]
 
-**Type:** Spike (Research/Investigation)
-**Status:** [Backlog | Doing | Complete]
-**Created:** [YYYY-MM-DD]
-**Completed:** [YYYY-MM-DD or N/A]
-**Investigator:** [Name]
-**Time Box:** [Hours allocated, e.g., 2-4 hours]
+**ID:** SPIKE-NNN
+**Type:** Spike
+**Priority:** [High | Medium | Low]
+**Version Impact:** None
+**Created:** YYYY-MM-DD
+
+<!-- Optional fields - uncomment if needed:
+**Assigned:** [Name]
+**Depends On:** [ITEM-NNN, ITEM-NNN]
+-->
 
 ---
 

@@ -1,12 +1,15 @@
 # Feature: [Feature Name]
 
-**ID:** NNN (e.g., 001, 002, 042)
+**ID:** FEAT-NNN
 **Type:** Feature
-**Version Impact:** MINOR (adds new capability)
-**Status:** [Backlog | Todo | Doing | Done | Released]
-**Created:** [YYYY-MM-DD]
-**Completed:** [YYYY-MM-DD or N/A]
-**Developer:** [Name]
+**Priority:** [High | Medium | Low]
+**Version Impact:** [MAJOR | MINOR | PATCH]
+**Created:** YYYY-MM-DD
+
+<!-- Optional fields - uncomment if needed:
+**Assigned:** [Name]
+**Depends On:** [ITEM-NNN, ITEM-NNN]
+-->
 
 ---
 

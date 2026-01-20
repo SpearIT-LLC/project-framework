@@ -155,6 +155,67 @@ FEAT-015       Medium     MINOR    2025-12-19   Generate executive...
 
 ---
 
+## TECH-064: Standardize Work Item Metadata
+
+### Problem
+Work item templates had inconsistent metadata fields:
+- `**Created:**` vs `**Date:**`
+- `**Status:**` redundant with folder location
+- Missing Priority field in some templates
+- Blocker type conflated dependency with work item type
+- No templates for Tech Debt or Decision types
+
+### Decisions Made
+
+**Work Item Types (5 total):**
+| Type | ID Prefix | Purpose |
+|------|-----------|---------|
+| Feature | FEAT- | New capability |
+| Bug | BUG- | Defect fix (renamed from Bugfix) |
+| Tech Debt | TECH- | Internal improvement |
+| Decision | DECISION- | ADR / design choice |
+| Spike | SPIKE- | Time-boxed research |
+
+**Removed:** Blocker type (use `Depends On` field instead)
+
+**Standard Metadata (all types):**
+```markdown
+**ID:** TYPE-NNN
+**Type:** Feature | Bug | Tech Debt | Decision | Spike
+**Priority:** High | Medium | Low
+**Version Impact:** MAJOR | MINOR | PATCH | None
+**Created:** YYYY-MM-DD
+```
+
+**Optional Fields:**
+- `**Assigned:**` - for team environments
+- `**Severity:**` - for Bug type only
+- `**Depends On:**` - replaces Blocker type
+
+**Fields Removed:**
+- Status (folder location is status)
+- Completed (git history captures this)
+- Time Box (ad-hoc if needed)
+- Developer (renamed to Assigned)
+
+### Template Changes (Phase 1)
+
+| Template | Action |
+|----------|--------|
+| FEATURE-TEMPLATE.md | Updated - added Priority, removed Status/Completed |
+| BUG-TEMPLATE.md | Renamed from BUGFIX, standardized fields |
+| SPIKE-TEMPLATE.md | Updated - added Priority/Version Impact |
+| TECHDEBT-TEMPLATE.md | Created |
+| DECISION-TEMPLATE.md | Created |
+| BLOCKER-TEMPLATE.md | Deleted |
+
+### Remaining Work (deferred)
+- [ ] Update FrameworkWorkflow.psm1 for BUG/BUGFIX compatibility
+- [ ] Document standard in workflow-guide.md
+- [ ] Test PowerShell tools with new formats
+
+---
+
 ## Follow-up Items
 
 - [ ] Update PROJECT-STATUS.md "Pending Work" section (stale references)
@@ -163,5 +224,5 @@ FEAT-015       Medium     MINOR    2025-12-19   Generate executive...
 
 ---
 
-**Session Duration:** ~1 hour
+**Session Duration:** ~2 hours
 **Last Updated:** 2026-01-20
