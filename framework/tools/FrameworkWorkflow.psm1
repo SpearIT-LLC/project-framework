@@ -104,28 +104,34 @@ Export-ModuleMember -Function ConvertTo-NormalizedWorkItemId
 function Get-WipLimit {
     <#
     .SYNOPSIS
-        Reads WIP limit from doing/.limit file.
+        Reads WIP limit from a folder's .limit file.
 
-    .PARAMETER DoingPath
-        Path to the doing/ folder.
+    .PARAMETER FolderPath
+        Path to the workflow folder (e.g., doing/, todo/).
+
+    .PARAMETER DefaultLimit
+        Default limit if .limit file is missing or invalid. Default is 0 (no limit).
 
     .OUTPUTS
-        Hashtable with Limit, Source, and Warning properties.
+        Hashtable with Limit, Source, HasLimit, and Warning properties.
     #>
     [CmdletBinding()]
     param(
         [Parameter(Mandatory)]
-        [string]$DoingPath
+        [string]$FolderPath,
+
+        [Parameter()]
+        [int]$DefaultLimit = 0
     )
 
-    $limitFile = Join-Path $DoingPath ".limit"
-    $defaultLimit = 2
+    $limitFile = Join-Path $FolderPath ".limit"
 
     if (-not (Test-Path $limitFile)) {
         return @{
-            Limit = $defaultLimit
-            Source = "default"
-            Warning = ".limit file not found, using default"
+            Limit = $DefaultLimit
+            Source = "none"
+            HasLimit = $false
+            Warning = $null
         }
     }
 
@@ -135,23 +141,26 @@ function Get-WipLimit {
 
         if ($limit -lt 1) {
             return @{
-                Limit = $defaultLimit
-                Source = "default"
-                Warning = "Invalid limit value ($content), using default"
+                Limit = $DefaultLimit
+                Source = "invalid"
+                HasLimit = $false
+                Warning = "Invalid limit value ($content) in .limit file"
             }
         }
 
         return @{
             Limit = $limit
             Source = "file"
+            HasLimit = $true
             Warning = $null
         }
     }
     catch {
         return @{
-            Limit = $defaultLimit
-            Source = "default"
-            Warning = "Failed to parse .limit file, using default"
+            Limit = $DefaultLimit
+            Source = "error"
+            HasLimit = $false
+            Warning = "Failed to parse .limit file: $_"
         }
     }
 }
@@ -161,7 +170,7 @@ Export-ModuleMember -Function Get-WipLimit
 function Get-WipCount {
     <#
     .SYNOPSIS
-        Counts work items in doing/ with hierarchical grouping.
+        Counts work items in a workflow folder with hierarchical grouping.
 
     .DESCRIPTION
         Per workflow-guide.md#hierarchical-numbering:
@@ -169,8 +178,8 @@ function Get-WipCount {
 
         Normalizes IDs so FEAT-018, FEAT-018.1, and feature-018 all group together.
 
-    .PARAMETER DoingPath
-        Path to the doing/ folder.
+    .PARAMETER FolderPath
+        Path to the workflow folder (e.g., doing/, todo/).
 
     .OUTPUTS
         Hashtable with Count (number of WIP groups) and Groups (details).
@@ -178,17 +187,17 @@ function Get-WipCount {
     [CmdletBinding()]
     param(
         [Parameter(Mandatory)]
-        [string]$DoingPath
+        [string]$FolderPath
     )
 
-    if (-not (Test-Path $DoingPath)) {
+    if (-not (Test-Path $FolderPath)) {
         return @{
             Count = 0
             Groups = @()
         }
     }
 
-    $items = Get-ChildItem -Path $DoingPath -Filter "*.md" -File -ErrorAction SilentlyContinue
+    $items = Get-ChildItem -Path $FolderPath -Filter "*.md" -File -ErrorAction SilentlyContinue
 
     # Group by normalized base ID
     $groups = @{}
@@ -228,24 +237,42 @@ Export-ModuleMember -Function Get-WipCount
 function Test-WipLimitExceeded {
     <#
     .SYNOPSIS
-        Checks if adding another item would exceed WIP limit.
+        Checks if adding another item would exceed WIP limit for a folder.
 
-    .PARAMETER DoingPath
-        Path to the doing/ folder.
+    .DESCRIPTION
+        Returns detailed status about WIP limit for any workflow folder.
+        If the folder has no .limit file, HasLimit will be false and
+        Exceeded will always be false (no limit to exceed).
+
+    .PARAMETER FolderPath
+        Path to the workflow folder (e.g., doing/, todo/).
 
     .OUTPUTS
-        Hashtable with Exceeded (bool), Current, Limit, and Message.
+        Hashtable with Exceeded, Current, Limit, HasLimit, and Message.
     #>
     [CmdletBinding()]
     param(
         [Parameter(Mandatory)]
-        [string]$DoingPath
+        [string]$FolderPath
     )
 
-    $wipCount = (Get-WipCount -DoingPath $DoingPath).Count
-    $wipLimitInfo = Get-WipLimit -DoingPath $DoingPath
-    $limit = $wipLimitInfo.Limit
+    $wipCount = (Get-WipCount -FolderPath $FolderPath).Count
+    $wipLimitInfo = Get-WipLimit -FolderPath $FolderPath
 
+    # If no limit is configured, can't exceed it
+    if (-not $wipLimitInfo.HasLimit) {
+        return @{
+            Exceeded = $false
+            Current = $wipCount
+            Limit = 0
+            HasLimit = $false
+            LimitSource = $wipLimitInfo.Source
+            LimitWarning = $wipLimitInfo.Warning
+            Message = "No WIP limit configured"
+        }
+    }
+
+    $limit = $wipLimitInfo.Limit
     $exceeded = $wipCount -ge $limit
 
     $message = if ($wipCount -lt $limit) {
@@ -262,6 +289,7 @@ function Test-WipLimitExceeded {
         Exceeded = $exceeded
         Current = $wipCount
         Limit = $limit
+        HasLimit = $true
         LimitSource = $wipLimitInfo.Source
         LimitWarning = $wipLimitInfo.Warning
         Message = $message

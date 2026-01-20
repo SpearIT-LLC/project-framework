@@ -236,24 +236,36 @@ function Get-FolderItems {
     <#
     .SYNOPSIS
         Gets work items from a workflow folder.
+    .OUTPUTS
+        Array of work item hashtables. Returns empty array (not $null) if no items found.
     #>
     [CmdletBinding()]
+    [OutputType([array])]
     param(
         [Parameter(Mandatory)]
         [string]$FolderPath
     )
 
     if (-not (Test-Path $FolderPath)) {
-        return @()
+        # Use comma operator to ensure array is preserved through pipeline
+        return , @()
     }
 
     $files = Get-ChildItem -Path $FolderPath -Filter "*.md" -File -ErrorAction SilentlyContinue
+
+    if (-not $files -or $files.Count -eq 0) {
+        return , @()
+    }
 
     $items = foreach ($file in $files) {
         Get-WorkItemInfo -FilePath $file.FullName
     }
 
-    return @($items | Where-Object { $_.ID })
+    $filtered = @($items | Where-Object { $_.ID })
+    if (-not $filtered -or $filtered.Count -eq 0) {
+        return , @()
+    }
+    return , $filtered
 }
 
 function Format-TableOutput {
@@ -389,8 +401,8 @@ try {
     $doneItems = Get-FolderItems -FolderPath $donePath
 
     # Get WIP limit and hierarchical count (from module)
-    $wipLimitInfo = Get-WipLimit -DoingPath $doingPath
-    $hierarchicalWip = Get-WipCount -DoingPath $doingPath
+    $wipLimitInfo = Get-WipLimit -FolderPath $doingPath
+    $hierarchicalWip = Get-WipCount -FolderPath $doingPath
 
     # Build status object
     $status = @{

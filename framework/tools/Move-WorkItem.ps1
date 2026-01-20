@@ -3,10 +3,10 @@
     Moves a work item between workflow folders with validation.
 
 .DESCRIPTION
-    POC script for /fw-move command. Handles:
+    Production script for /fw-move command. Handles:
     - Finding item by ID across workflow folders
     - Validating transitions against workflow matrix
-    - Checking WIP limits for moves to doing/
+    - Checking WIP limits for any folder with a .limit file (doing/, todo/, etc.)
     - Using git mv or mv based on tracking status
 
 .PARAMETER ItemId
@@ -183,18 +183,21 @@ if (-not (Test-TransitionValid -From $fromFolder -To $toFolder)) {
     exit 1
 }
 
-# WIP limit check for moves to doing/
-if ($toFolder -eq "doing") {
-    $doingPath = Join-Path $workPath "doing"
-    $wipStatus = Test-WipLimitExceeded -DoingPath $doingPath
+# WIP limit check for any target folder with a .limit file
+$targetPath = Join-Path $workPath $toFolder
+$wipStatus = Test-WipLimitExceeded -FolderPath $targetPath
 
-    if ($wipStatus.Exceeded) {
-        Write-Output ""
-        Write-Output "X Cannot move to doing/ - WIP limit reached"
-        Write-Output "  Current: $($wipStatus.Current) of $($wipStatus.Limit)"
+if ($wipStatus.HasLimit -and $wipStatus.Exceeded) {
+    Write-Output ""
+    Write-Output "X Cannot move to $toFolder/ - WIP limit reached"
+    Write-Output "  Current: $($wipStatus.Current) of $($wipStatus.Limit)"
+    if ($toFolder -eq "doing") {
         Write-Output "  Complete or pause current work first."
-        exit 1
     }
+    else {
+        Write-Output "  Review and prioritize existing items in $toFolder/ first."
+    }
+    exit 1
 }
 
 # Build destination path
