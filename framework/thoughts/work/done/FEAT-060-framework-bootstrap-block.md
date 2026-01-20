@@ -3,9 +3,9 @@
 **ID:** 060
 **Type:** Feature
 **Version Impact:** PATCH (documentation enhancement)
-**Status:** Backlog
+**Status:** Done
 **Created:** 2026-01-17
-**Completed:** N/A
+**Completed:** 2026-01-20
 **Developer:** Claude
 
 ---
@@ -43,17 +43,17 @@ User must explicitly ask AI to read `/framework/CLAUDE.md`, or AI must proactive
 
 ### Functional Requirements
 
-- [ ] Add ~15 line bootstrap section to root `/CLAUDE.md`
-- [ ] Bootstrap must reference `framework.yaml` as the config hub
-- [ ] Bootstrap must indicate roles and policies exist
-- [ ] Bootstrap must specify when to read full guidance
-- [ ] Bootstrap must not duplicate content from `/framework/CLAUDE.md`
+- [x] Add ~15 line bootstrap section to root `/CLAUDE.md`
+- [x] Bootstrap must reference `framework.yaml` as the config hub
+- [x] Bootstrap must indicate roles and policies exist
+- [x] Bootstrap must specify when to read full guidance
+- [x] Bootstrap must not duplicate content from `/framework/CLAUDE.md`
 
 ### Non-Functional Requirements
 
-- [ ] Performance: No additional file reads required at session start (just awareness)
-- [ ] Compatibility: Existing workflow unchanged, just better triggered
-- [ ] Documentation: Self-contained change to `/CLAUDE.md`
+- [x] Performance: No additional file reads required at session start (just awareness)
+- [x] Compatibility: Existing workflow unchanged, just better triggered
+- [x] Documentation: Self-contained change to `/CLAUDE.md`
 
 ---
 
@@ -120,8 +120,8 @@ This project uses the SpearIT Project Framework. Before acting, check:
 
 ### Edge Cases
 
-- [ ] AI enters via different sub-project (examples/hello-world) - bootstrap still applies
-- [ ] User immediately gives command without context - AI should ask or adopt default role
+- [x] AI enters via different sub-project (examples/hello-world) - bootstrap still applies
+- [x] User immediately gives command without context - AI should ask or adopt default role
 
 ---
 
@@ -135,7 +135,7 @@ N/A - Documentation only.
 
 ### Files to Update
 
-- [ ] `/CLAUDE.md` - Add bootstrap section
+- [x] `/CLAUDE.md` - Add bootstrap section
 
 ### New Documentation Needed
 
@@ -145,11 +145,11 @@ N/A - Documentation only.
 
 ## Implementation Checklist
 
-- [ ] Design reviewed and approved
-- [ ] Bootstrap block added to `/CLAUDE.md`
-- [ ] Verified no duplication with `/framework/CLAUDE.md`
-- [ ] Manual testing completed
-- [ ] CHANGELOG.md updated
+- [x] Design reviewed and approved
+- [x] Bootstrap block added to `/CLAUDE.md`
+- [x] Verified no duplication with `/framework/CLAUDE.md`
+- [x] Manual testing completed
+- [ ] CHANGELOG.md updated (pending release)
 
 ---
 

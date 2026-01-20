@@ -2,14 +2,16 @@
 
 **Date:** 2026-01-20
 **Participants:** Gary Elliott, Claude Code
-**Session Focus:** TECH-064 completion, PROJECT-STATUS.md simplification planning
+**Session Focus:** TECH-064 completion, TECH-065 completion, FEAT-060 verification
 **Role:** senior-architect (default from framework.yaml)
 
 ---
 
 ## Summary
 
-Completed TECH-064 (standardize work item metadata fields) including tool updates, documentation, and testing. Discussed PROJECT-STATUS.md staleness issues and created TECH-065 to simplify it to ultra-minimal format. Archived superseded FEAT-017.
+Session 1: Completed TECH-064 (standardize work item metadata fields) including tool updates, documentation, and testing. Discussed PROJECT-STATUS.md staleness issues and created TECH-065 to simplify it to ultra-minimal format. Archived superseded FEAT-017.
+
+Session 2: Verified FEAT-060 (bootstrap block) was already implemented in root CLAUDE.md - marked complete. Completed TECH-065 (simplify PROJECT-STATUS.md) - reduced from 390 lines to 20 lines.
 
 ---
 
@@ -34,14 +36,25 @@ Completed TECH-064 (standardize work item metadata fields) including tool update
 
 3. **Moved to done/** - All acceptance criteria met
 
-### TECH-065: Simplify PROJECT-STATUS.md (Created)
+### FEAT-060: Framework Bootstrap Block (Verified Complete)
 
-- Created backlog item for ultra-minimal PROJECT-STATUS.md format
-- Current file (~400 lines) has duplicated info prone to staleness
-- New format: ~20-30 lines with just version, status, and pointers to:
-  - README.md for features
-  - CHANGELOG.md for history
-  - `/fw-status` for workflow state
+- Checked root `/CLAUDE.md` - bootstrap block already implemented (lines 3-9)
+- Implementation more actionable than original design (numbered list format)
+- Marked complete, moved to done/
+
+### TECH-065: Simplify PROJECT-STATUS.md (Completed)
+
+- Reduced PROJECT-STATUS.md from 390 lines to 20 lines (95% reduction)
+- Removed all duplicated content:
+  - Feature lists (now authoritative in README.md)
+  - Phase implementation tables
+  - Known issues, pending work sections
+  - Testing status, dependencies
+  - Release history (authoritative in CHANGELOG.md)
+  - Milestone planning
+- New format contains only: version, status, quick links, maintainer
+- Verified README.md has complete feature list
+- Verified workflow-guide.md references still accurate (describe purpose, not content)
 
 ### FEAT-017: Archived
 
@@ -69,7 +82,9 @@ Completed TECH-064 (standardize work item metadata fields) including tool update
 - `framework/tools/FrameworkWorkflow.psm1` - Added BUGFIX→BUG normalization
 - `framework/tools/Get-WorkflowStatus.ps1` - Fixed single-item array bug
 - `framework/docs/collaboration/workflow-guide.md` - Updated template docs, version 1.2.0
-- `framework/PROJECT-STATUS.md` - Updated pending work section
+- `framework/PROJECT-STATUS.md` - Complete rewrite to ultra-minimal format (390→20 lines)
+- `framework/thoughts/work/doing/FEAT-060-*.md` - Marked complete
+- `framework/thoughts/work/doing/TECH-065-*.md` - Marked complete
 
 ## Files Created
 
@@ -79,6 +94,8 @@ Completed TECH-064 (standardize work item metadata fields) including tool update
 
 - `framework/thoughts/work/doing/TECH-064-*.md` → `done/`
 - `framework/thoughts/work/todo/feature-017-*.md` → `history/releases/v3.4.0/`
+- `framework/thoughts/work/todo/FEAT-060-*.md` → `doing/` → `done/`
+- `framework/thoughts/work/backlog/TECH-065-*.md` → `todo/` → `doing/` → `done/`
 
 ---
 
@@ -86,12 +103,11 @@ Completed TECH-064 (standardize work item metadata fields) including tool update
 
 ### In done/ (awaiting release)
 - TECH-064: Standardize work item metadata fields
+- FEAT-060: Framework bootstrap block for root CLAUDE.md
+- TECH-065: Simplify PROJECT-STATUS.md to ultra-minimal format
 
 ### In doing/
 - None
-
-### In backlog/ (new)
-- TECH-065: Simplify PROJECT-STATUS.md to ultra-minimal format
 
 ---
 
