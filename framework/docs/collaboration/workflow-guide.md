@@ -538,40 +538,19 @@ Work item numbers are **sequential and globally unique** across all work item ty
 
 #### Finding the Next Number
 
-**CRITICAL:** When creating a new work item, you MUST scan **ALL** locations where work items exist, not just the backlog folder.
+**See [Finding Next Available ID](#finding-next-available-id) for the complete algorithm.**
 
-**Locations to scan:**
-```bash
-thoughts/work/backlog/          # Not yet approved
-thoughts/work/todo/             # Approved, not started
-thoughts/work/doing/            # In progress
-thoughts/work/done/             # Completed, awaiting release
-thoughts/history/releases/*/    # Archived after release
-```
-
-**Command to find next FEAT number:**
-```bash
-find thoughts/work/backlog/ \
-     thoughts/work/todo/ \
-     thoughts/work/doing/ \
-     thoughts/work/done/ \
-     thoughts/history/releases/ \
-     -name "FEAT-*.md" 2>/dev/null | \
-     grep -oE "FEAT-[0-9]+" | \
-     grep -oE "[0-9]+" | \
-     sort -n | \
-     tail -1
-```
-
-Then increment by 1 for the new number.
+Key points:
+- All work item types share a **common ID namespace** (FEAT, BUG, TECH, DECISION, SPIKE, POLICY)
+- Scan **all four directories**: `work/`, `releases/`, `poc/`, `history/spikes/`
+- Extract max ID from filenames, then increment by 1
 
 **Why scan all locations?**
 - Work items move through lifecycle (backlog → todo → doing → done → archive)
-- If you only scan backlog/, you'll miss items that moved or were archived
+- Spikes live in `poc/` and archive to `history/spikes/`
+- If you only scan one folder, you'll miss items elsewhere
 - Creates collision risk: Two different items with same number
 - See BUGFIX-001 for detailed analysis of this issue
-
-**For other types:** Replace `FEAT` with `BUG`, `TECH`, `DECISION`, `SPIKE`, etc.
 
 #### Hierarchical Numbering (Sub-Items)
 
@@ -606,6 +585,80 @@ After `FEAT-999`, continue naturally to `FEAT-1000`, `FEAT-1001`, etc.
 **No special handling required.** Simply increment and drop zero-padding.
 
 If your project reaches 1000+ features, consider whether it should be split into multiple projects, but the numbering system supports any count.
+
+### Finding Next Available ID
+
+When creating a new work item or spike, find the next available ID by scanning all existing items.
+
+**Common ID Namespace:**
+
+All work item types share a **single ID counter**:
+- Features (FEAT-NNN)
+- Bugs (BUG-NNN)
+- Tech Debt (TECH-NNN)
+- Decisions (DECISION-NNN)
+- Spikes (SPIKE-NNN)
+- Policy (POLICY-NNN)
+
+This means if the last created item was FEAT-067, the next spike would be SPIKE-068 (not SPIKE-001).
+
+**Benefits:**
+- One algorithm for all item types
+- No ID collisions (e.g., SPIKE-042 and FEAT-042 cannot both exist)
+- Simple to answer "what's ID 42?" without specifying type
+- Single function in tooling
+
+**Scan Scope:**
+
+Scan **all four directories** containing work items:
+
+| Directory | Contains |
+|-----------|----------|
+| `thoughts/work/` | Active items (backlog, todo, doing, done) |
+| `thoughts/releases/` | Released items archived by version |
+| `thoughts/poc/` | POC spikes with code artifacts |
+| `thoughts/history/spikes/` | Archived spike folders |
+
+**Algorithm:**
+
+1. Glob all work item files:
+   ```
+   {work,releases,poc,history/spikes}/**/{DECISION,FEAT,TECH,SPIKE,POLICY,BUG}-*.md
+   ```
+
+2. Extract numeric IDs from filenames (e.g., `FEAT-042-description.md` → `042`)
+
+3. Find the maximum ID across all matches
+
+4. Next available ID = max + 1
+
+**Example (bash):**
+
+```bash
+# Find all work items and spikes
+ls thoughts/{work,releases,poc,history/spikes}/**/*-[0-9][0-9][0-9]-*.md 2>/dev/null
+
+# Parse IDs and find maximum
+# If max is 067, next ID is 068
+```
+
+**Example (PowerShell):**
+
+```powershell
+# Use Get-NextWorkItemId from FrameworkWorkflow.psm1
+Import-Module ./tools/FrameworkWorkflow.psm1
+Get-NextWorkItemId -ThoughtsPath "thoughts"
+# Returns: 068
+```
+
+**Rationale:**
+- Ensures no ID collisions across all item types
+- Self-healing (always accurate, no state drift)
+- Efficient (filename parsing only, no file content reads)
+- No state files to maintain or keep in sync
+- Git-friendly (no merge conflicts on metadata files)
+
+**Related:** See DECISION-042 for work item ID definition, TECH-046 for policy details.
 
 ### Work Item Templates
 

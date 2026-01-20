@@ -320,6 +320,7 @@ Filename: 042-description.md
 - kanban-workflow.md - primary specification document
 - All work item templates - need consistent format
 - TECH-028 (DRY Principles) - single source of truth for ID definition
+- TECH-046 (ID Discovery Policy) - algorithm for finding next available ID
 
 ---
 

@@ -7,9 +7,10 @@
     - WIP limit checking with hierarchical counting
     - Work folder discovery
     - Work item ID normalization
+    - Next available ID discovery (common namespace across all types)
 
 .NOTES
-    Version: 1.0.0
+    Version: 1.1.0
     Used by: Get-WorkflowStatus.ps1, Move-WorkItem.ps1, Get-BacklogItems.ps1
 #>
 
@@ -97,6 +98,148 @@ function ConvertTo-NormalizedWorkItemId {
 }
 
 Export-ModuleMember -Function ConvertTo-NormalizedWorkItemId
+
+#endregion
+
+#region ID Discovery
+
+function Find-ThoughtsFolder {
+    <#
+    .SYNOPSIS
+        Searches for thoughts folder in common locations.
+    #>
+    [CmdletBinding()]
+    param()
+
+    $candidates = @(
+        "framework/thoughts",
+        "thoughts",
+        "../thoughts"
+    )
+
+    foreach ($candidate in $candidates) {
+        if (Test-Path -Path $candidate -PathType Container) {
+            return (Resolve-Path -Path $candidate).Path
+        }
+    }
+
+    return $null
+}
+
+Export-ModuleMember -Function Find-ThoughtsFolder
+
+function Get-NextWorkItemId {
+    <#
+    .SYNOPSIS
+        Finds the next available work item ID by scanning all work item locations.
+
+    .DESCRIPTION
+        Scans all directories containing work items (work/, releases/, poc/, history/spikes/)
+        to find the maximum ID currently in use, then returns max + 1.
+
+        All work item types share a common ID namespace:
+        FEAT, BUG, TECH, DECISION, SPIKE, POLICY
+
+        Per TECH-046 and workflow-guide.md#finding-next-available-id
+
+    .PARAMETER ThoughtsPath
+        Path to the thoughts folder. If not provided, searches common locations.
+
+    .PARAMETER ReturnAsInt
+        If true, returns the ID as an integer. Default returns zero-padded string (e.g., "068").
+
+    .OUTPUTS
+        String (default): Zero-padded ID like "068" or "1001"
+        Int (with -ReturnAsInt): Integer like 68 or 1001
+
+    .EXAMPLE
+        Get-NextWorkItemId
+        # Returns: "068"
+
+    .EXAMPLE
+        Get-NextWorkItemId -ReturnAsInt
+        # Returns: 68
+
+    .EXAMPLE
+        Get-NextWorkItemId -ThoughtsPath "framework/thoughts"
+        # Returns: "068"
+    #>
+    [CmdletBinding()]
+    param(
+        [Parameter()]
+        [string]$ThoughtsPath,
+
+        [Parameter()]
+        [switch]$ReturnAsInt
+    )
+
+    # Find thoughts folder if not provided
+    if (-not $ThoughtsPath) {
+        $ThoughtsPath = Find-ThoughtsFolder
+        if (-not $ThoughtsPath) {
+            Write-Error "Could not find thoughts folder. Provide -ThoughtsPath parameter."
+            return $null
+        }
+    }
+
+    if (-not (Test-Path $ThoughtsPath)) {
+        Write-Error "Thoughts folder not found: $ThoughtsPath"
+        return $null
+    }
+
+    # Define all scan locations (relative to thoughts folder)
+    $scanFolders = @(
+        "work",
+        "releases",
+        "poc",
+        "history/spikes"
+    )
+
+    # Valid work item type prefixes
+    $validPrefixes = @("DECISION", "FEAT", "TECH", "SPIKE", "POLICY", "BUG", "BUGFIX")
+    $prefixPattern = ($validPrefixes -join "|")
+
+    $maxId = 0
+
+    foreach ($folder in $scanFolders) {
+        $folderPath = Join-Path $ThoughtsPath $folder
+
+        if (-not (Test-Path $folderPath)) {
+            Write-Verbose "Skipping non-existent folder: $folderPath"
+            continue
+        }
+
+        # Get all .md files recursively
+        $files = Get-ChildItem -Path $folderPath -Filter "*.md" -Recurse -File -ErrorAction SilentlyContinue
+
+        foreach ($file in $files) {
+            # Match pattern: TYPE-NNN where NNN is one or more digits
+            if ($file.BaseName -match "^($prefixPattern)-(\d+)") {
+                $idNum = [int]$matches[2]
+                if ($idNum -gt $maxId) {
+                    $maxId = $idNum
+                    Write-Verbose "Found ID $idNum in $($file.Name)"
+                }
+            }
+        }
+    }
+
+    $nextId = $maxId + 1
+
+    if ($ReturnAsInt) {
+        return $nextId
+    }
+
+    # Return zero-padded string (3 digits minimum, or more if needed)
+    if ($nextId -lt 1000) {
+        return $nextId.ToString("D3")
+    }
+    else {
+        return $nextId.ToString()
+    }
+}
+
+Export-ModuleMember -Function Get-NextWorkItemId
 
 #endregion
 

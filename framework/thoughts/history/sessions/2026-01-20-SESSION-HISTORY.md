@@ -273,4 +273,121 @@ Session 5: Refined Get-WorkflowStatus.ps1 POC spikes display - always show count
 
 ---
 
+## Session 6
+
+Session 6: Implemented TECH-046 (work item ID discovery policy) - documented common ID namespace algorithm, added PowerShell function and standalone script, created /fw-next-id slash command.
+
+### Work Completed
+
+#### TECH-046: Work Item ID Discovery Policy (Implementation)
+
+1. **Documentation Updates:**
+   - Added "Finding Next Available ID" section to workflow-guide.md
+   - Documented common ID namespace (all types share single counter)
+   - Updated scan scope to include `poc/` and `history/spikes/`
+   - Added cross-reference in DECISION-042
+
+2. **PowerShell Implementation:**
+   - Added `Get-NextWorkItemId` function to FrameworkWorkflow.psm1 (v1.1.0)
+   - Added `Find-ThoughtsFolder` helper function
+   - Scans all four directories: work/, releases/, poc/, history/spikes/
+   - Returns zero-padded string (e.g., "067") or integer with `-ReturnAsInt`
+   - Handles 999→1000 transition correctly
+
+3. **Standalone Script and Slash Command:**
+   - Created `Get-NextWorkItemId.ps1` standalone wrapper script
+   - Created `/fw-next-id` slash command for AI assistants
+   - Both use same algorithm via shared module
+
+### Decisions Made
+
+1. **Common ID namespace:**
+   - All work item types (FEAT, BUG, TECH, DECISION, SPIKE, POLICY) share single counter
+   - Benefits: One algorithm, no collisions, simpler tooling
+   - SPIKE-068 comes after FEAT-067 (not SPIKE-001)
+
+2. **Return format:**
+   - Default: Zero-padded string ("067") - ready for filenames
+   - Optional: Integer (67) with `-ReturnAsInt` switch
+   - Transition: 999 → 1000 (no padding after 999)
+
+3. **AI integration:**
+   - `/fw-next-id` command for explicit requests
+   - AI should run script when creating any work item type
+   - Same algorithm whether slash command or natural language
+
+### Files Created
+
+- `framework/tools/Get-NextWorkItemId.ps1` - Standalone script
+- `.claude/commands/fw-next-id.md` - Slash command definition
+
+### Files Modified
+
+- `framework/tools/FrameworkWorkflow.psm1` - Added Get-NextWorkItemId, Find-ThoughtsFolder (v1.1.0)
+- `framework/docs/collaboration/workflow-guide.md` - ID discovery section, updated version to 1.2.0
+- `framework/thoughts/history/releases/v3.1.0/DECISION-042-work-item-id-definition.md` - Added TECH-046 cross-reference
+- `framework/thoughts/work/doing/TECH-046-work-item-id-discovery-policy.md` - Updated scan scope, status
+
+### Files Moved
+
+- `framework/thoughts/work/todo/TECH-046-*.md` → `doing/`
+
+### Current State Update
+
+**In done/ (awaiting release):**
+- TECH-064: Standardize work item metadata fields
+- FEAT-060: Framework bootstrap block for root CLAUDE.md
+- TECH-065: Simplify PROJECT-STATUS.md to ultra-minimal format
+- FEAT-022: Automated session history generation
+- FEAT-062: POC folder and spike workflow
+
+**In doing/:**
+- TECH-046: Work item ID discovery policy
+
+---
+
+## Session 7
+
+Session 7: Completed TECH-046 (work item ID discovery policy) and fixed `/fw-next-id` command to work with Windows PowerShell 5.1.
+
+### Work Completed
+
+#### TECH-046: Work Item ID Discovery Policy (Completed)
+
+- Moved from doing/ to done/
+- All acceptance criteria verified:
+  - Common ID namespace documented
+  - PowerShell function implemented
+  - Standalone script created
+  - `/fw-next-id` slash command working
+
+#### PowerShell 5.1 Compatibility Fix
+
+- Updated `/fw-next-id` command to use `powershell` instead of `pwsh`
+- Added `-ExecutionPolicy Bypass -File` flags for cross-environment compatibility
+- Works with both Windows PowerShell 5.1 (built-in) and PowerShell Core
+
+### Files Modified
+
+- `.claude/commands/fw-next-id.md` - Changed `pwsh` to `powershell -ExecutionPolicy Bypass -File`
+
+### Files Moved
+
+- `framework/thoughts/work/doing/TECH-046-*.md` → `done/`
+
+### Current State Update
+
+**In done/ (awaiting release):**
+- TECH-064: Standardize work item metadata fields
+- FEAT-060: Framework bootstrap block for root CLAUDE.md
+- TECH-065: Simplify PROJECT-STATUS.md to ultra-minimal format
+- FEAT-022: Automated session history generation
+- FEAT-062: POC folder and spike workflow
+- TECH-046: Work item ID discovery policy
+
+**In doing/:**
+- (none)
+
+---
+
 **Last Updated:** 2026-01-20

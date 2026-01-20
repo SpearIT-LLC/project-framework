@@ -3,7 +3,7 @@
 **ID:** 046
 **Type:** Technical Debt / Documentation
 **Priority:** Medium
-**Status:** Backlog
+**Status:** In Progress
 **Created:** 2026-01-11
 **Related:** DECISION-042, TECH-044, workflow-guide.md
 
@@ -59,13 +59,15 @@ Document the official policy for discovering the next available work item ID.
 
 **Scan Scope:**
 
-Scan both top-level directories containing work items:
+Scan all directories containing work items with shared ID numbering:
 - `work/` (includes all subdirectories: backlog, doing, done, todo, archive)
 - `releases/` (includes all version subdirectories)
+- `poc/` (spike experiments with code artifacts)
+- `history/spikes/` (archived spike folders)
 
 **Algorithm:**
 
-1. **Glob pattern:** `{work,releases}/**/{DECISION,FEAT,TECH,SPIKE,POLICY,BUGFIX}-*.md`
+1. **Glob pattern:** `{work,releases,poc,history/spikes}/**/{DECISION,FEAT,TECH,SPIKE,POLICY,BUGFIX}-*.md`
 2. **Parse IDs:** Extract numeric ID from each filename (e.g., `FEAT-042-description.md` → `042`)
 3. **Find maximum:** Determine the highest ID across all matches
 4. **Calculate next:** Next available ID = max + 1
@@ -73,8 +75,8 @@ Scan both top-level directories containing work items:
 **Examples:**
 
 ```bash
-# Find all work item files in both locations
-ls {work,releases}/**/{DECISION,FEAT,TECH,SPIKE,POLICY,BUGFIX}-*.md
+# Find all work item files in all locations
+ls {work,releases,poc,history/spikes}/**/{DECISION,FEAT,TECH,SPIKE,POLICY,BUGFIX}-*.md
 
 # If current max ID found is 045
 # Then next available ID is 046
@@ -89,12 +91,14 @@ ls {work,releases}/**/{DECISION,FEAT,TECH,SPIKE,POLICY,BUGFIX}-*.md
 - ✅ **Comprehensive:** Covers all work items regardless of status or location
 - ✅ **Future-proof:** Works with any subdirectory structure
 
-**Why scan both work/ and releases/?**
+**Why scan all four locations?**
 
 - `work/` contains active work items (backlog, doing, done, todo, archive)
 - `releases/` contains work items associated with specific releases
-- Both directories can contain the most recent ID
-- Scanning both ensures no ID collisions
+- `poc/` contains spike experiments (SPIKE-XXX folders with code artifacts)
+- `history/spikes/` contains archived spike folders
+- All locations share the common ID namespace
+- Scanning all ensures no ID collisions
 
 **Why include archive/?**
 
@@ -124,29 +128,33 @@ Content:
 ```markdown
 ### Finding Next Available ID
 
-When creating a new work item, find the next available ID by scanning existing work items:
+When creating a new work item or spike, find the next available ID by scanning existing items:
+
+**Common ID Namespace:**
+All work item types (FEAT, TECH, DECISION, SPIKE, POLICY, BUGFIX) share a single ID counter.
 
 **Algorithm:**
-1. Scan both `work/` and `releases/` directories for all work item files
-2. Use glob pattern: `{work,releases}/**/{DECISION,FEAT,TECH,SPIKE,POLICY,BUGFIX}-*.md`
+1. Scan all directories: `work/`, `releases/`, `poc/`, `history/spikes/`
+2. Use glob pattern: `{work,releases,poc,history/spikes}/**/{DECISION,FEAT,TECH,SPIKE,POLICY,BUGFIX}-*.md`
 3. Extract numeric IDs from filenames
 4. Find the maximum ID
 5. Next available ID = max + 1
 
 **Example:**
 ```bash
-# Find all work items
-ls {work,releases}/**/*-[0-9][0-9][0-9]-*.md
+# Find all work items and spikes
+ls {work,releases,poc,history/spikes}/**/*-[0-9][0-9][0-9]-*.md
 
 # Parse IDs and find maximum
-# If max is 045, next ID is 046
+# If max is 067, next ID is 068
 ```
 
 **Rationale:**
-- Ensures no ID collisions
+- Ensures no ID collisions across all item types
 - Self-healing (always accurate)
 - Efficient (filename parsing only)
 - No state files to maintain
+- Single algorithm for all work item types
 ```
 
 **2. Reference in TECH-044 (Work Item Creation Policy)**
@@ -293,5 +301,5 @@ Provide example implementations in different contexts:
 
 ---
 
-**Last Updated:** 2026-01-11
-**Status:** Backlog (awaiting approval)
+**Last Updated:** 2026-01-20
+**Status:** In Progress
