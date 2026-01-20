@@ -95,6 +95,7 @@ param(
     [switch]$Full
 )
 
+#Requires -Version 5.1
 Set-StrictMode -Version Latest
 $ErrorActionPreference = "Stop"
 
@@ -108,7 +109,8 @@ if (Test-Path $modulePath) {
 }
 
 # Ensure UTF-8 output for Unicode characters (arrows, etc.)
-[Console]::OutputEncoding = [System.Text.Encoding]::UTF8
+# Wrapped in try/catch for non-interactive contexts (CI, scheduled tasks)
+try { [Console]::OutputEncoding = [System.Text.Encoding]::UTF8 } catch { }
 
 #region Helper Functions
 

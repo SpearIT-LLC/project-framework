@@ -43,12 +43,18 @@ param(
     [switch]$Force
 )
 
+#Requires -Version 5.1
 Set-StrictMode -Version Latest
 $ErrorActionPreference = "Stop"
 
 # Import shared module
-$scriptDir = Split-Path -Parent $MyInvocation.MyCommand.Path
-Import-Module (Join-Path $scriptDir "FrameworkWorkflow.psm1") -Force
+$modulePath = Join-Path $PSScriptRoot "FrameworkWorkflow.psm1"
+if (Test-Path $modulePath) {
+    Import-Module $modulePath -Force
+} else {
+    Write-Error "Required module not found: $modulePath"
+    exit 1
+}
 
 #region Configuration
 
@@ -73,13 +79,13 @@ function Find-WorkItem {
     foreach ($folder in $folders) {
         $folderPath = Join-Path $WorkPath $folder
         if (Test-Path $folderPath) {
-            $matches = Get-ChildItem -Path $folderPath -Filter "*.md" -File |
+            $files = Get-ChildItem -Path $folderPath -Filter "*.md" -File |
                 Where-Object { $_.Name -like $pattern -or $_.Name -match "(?i)$Id" }
 
-            foreach ($match in $matches) {
+            foreach ($file in $files) {
                 return @{
-                    Path = $match.FullName
-                    Name = $match.Name
+                    Path = $file.FullName
+                    Name = $file.Name
                     Folder = $folder
                 }
             }
@@ -102,13 +108,10 @@ function Test-TransitionValid {
 function Test-GitTracked {
     param([string]$FilePath)
 
-    try {
-        $result = git ls-files --error-unmatch $FilePath 2>&1
-        return $LASTEXITCODE -eq 0
-    }
-    catch {
-        return $false
-    }
+    # Run git ls-files and capture exit code directly
+    # Note: Don't pipe to Out-Null as it can interfere with $LASTEXITCODE
+    $null = git ls-files --error-unmatch $FilePath 2>&1
+    return $LASTEXITCODE -eq 0
 }
 
 function Move-File {
@@ -130,12 +133,12 @@ function Move-File {
 
     if ($isTracked) {
         git mv $Source $Destination
+        return $LASTEXITCODE -eq 0
     }
     else {
         Move-Item -Path $Source -Destination $Destination
+        return $?
     }
-
-    return $LASTEXITCODE -eq 0 -or $?
 }
 
 #endregion

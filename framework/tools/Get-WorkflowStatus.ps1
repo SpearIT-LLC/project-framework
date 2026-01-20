@@ -91,6 +91,7 @@ param(
     [switch]$Current
 )
 
+#Requires -Version 5.1
 Set-StrictMode -Version Latest
 $ErrorActionPreference = "Stop"
 
@@ -104,7 +105,8 @@ if (Test-Path $modulePath) {
 }
 
 # Ensure UTF-8 output for Unicode characters
-[Console]::OutputEncoding = [System.Text.Encoding]::UTF8
+# Wrapped in try/catch for non-interactive contexts (CI, scheduled tasks)
+try { [Console]::OutputEncoding = [System.Text.Encoding]::UTF8 } catch { }
 
 #region Helper Functions
 
@@ -198,15 +200,12 @@ function Get-WorkItemInfo {
         }
     }
 
-    # Extract ID
+    # Extract ID (case-insensitive, normalize to uppercase)
     $id = ""
-    if ($content -match '\*\*ID:\*\*\s*([A-Z]+-\d+(?:\.\d+)?)') {
-        $id = $matches[1]
+    if ($content -match '\*\*ID:\*\*\s*([A-Za-z]+-\d+(?:\.\d+)?)') {
+        $id = $matches[1].ToUpper()
     }
-    elseif ($filename -match '^([A-Z]+-\d+(?:\.\d+)?)') {
-        $id = $matches[1]
-    }
-    elseif ($filename -match '^([a-z]+-\d+)') {
+    elseif ($filename -match '^([A-Za-z]+-\d+(?:\.\d+)?)') {
         $id = $matches[1].ToUpper()
     }
 
