@@ -68,23 +68,23 @@ This causes automation tools to need multiple fallback patterns and produces inc
 
 ## Implementation Plan
 
-### Phase 1: Template Updates
-- [ ] Update FEATURE-TEMPLATE.md (add Priority, remove Status/Completed)
-- [ ] Rename BUGFIX-TEMPLATE.md → BUG-TEMPLATE.md and standardize
-- [ ] Update SPIKE-TEMPLATE.md (add Priority/Version Impact, remove Status)
-- [ ] Create TECHDEBT-TEMPLATE.md
-- [ ] Create DECISION-TEMPLATE.md
-- [ ] Delete BLOCKER-TEMPLATE.md
+### Phase 1: Template Updates ✓
+- [x] Update FEATURE-TEMPLATE.md (add Priority, remove Status/Completed)
+- [x] Rename BUGFIX-TEMPLATE.md → BUG-TEMPLATE.md and standardize
+- [x] Update SPIKE-TEMPLATE.md (add Priority/Version Impact, remove Status)
+- [x] Create TECHDEBT-TEMPLATE.md
+- [x] Create DECISION-TEMPLATE.md
+- [x] Delete BLOCKER-TEMPLATE.md
 
-### Phase 2: Tool Updates
-- [ ] Update FrameworkWorkflow.psm1 to recognize BUG- and BUGFIX- prefixes
-- [ ] Test Get-BacklogItems.ps1 with new templates
-- [ ] Test Get-WorkflowStatus.ps1 with new templates
-- [ ] Test Move-WorkItem.ps1 with new templates
+### Phase 2: Tool Updates ✓
+- [x] Update FrameworkWorkflow.psm1 to recognize BUG- and BUGFIX- prefixes
+- [x] Test Get-BacklogItems.ps1 with new templates
+- [x] Test Get-WorkflowStatus.ps1 with new templates (fixed single-item array bug)
+- [x] Test Move-WorkItem.ps1 with new templates
 
-### Phase 3: Documentation
-- [ ] Document standard in workflow-guide.md
-- [ ] Update any references to old field names
+### Phase 3: Documentation ✓
+- [x] Document standard in workflow-guide.md
+- [x] Update any references to old field names
 
 ### Phase 4: Migration (deferred)
 - Existing items grandfathered - no bulk migration
@@ -95,10 +95,10 @@ This causes automation tools to need multiple fallback patterns and produces inc
 
 ## Acceptance Criteria
 
-- [ ] All 5 work item templates use consistent field names
-- [ ] Field naming convention documented in workflow-guide.md
-- [ ] PowerShell tools work with both old and new formats
-- [ ] BLOCKER-TEMPLATE.md removed
+- [x] All 5 work item templates use consistent field names
+- [x] Field naming convention documented in workflow-guide.md
+- [x] PowerShell tools work with both old and new formats
+- [x] BLOCKER-TEMPLATE.md removed
 
 ---
 

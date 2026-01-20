@@ -1,6 +1,6 @@
 # SpearIT Project Framework - Project Status
 
-**Last Updated:** 2026-01-19
+**Last Updated:** 2026-01-20
 **Updated By:** Gary Elliott with Claude Code
 **Current Version:** v3.4.0 (2026-01-19)
 **Core Implementation:** Complete and production-ready
@@ -108,7 +108,7 @@ The SpearIT Project Framework is a comprehensive project management framework te
 
 | Template Category | Count | Status | Notes |
 |------------------|-------|--------|-------|
-| Work Items | 4 | ✅ Complete | FEATURE, BUGFIX, BLOCKER, SPIKE |
+| Work Items | 5 | ✅ Complete | FEATURE, BUG, TECHDEBT, DECISION, SPIKE |
 | Decisions | 2 | ✅ Complete | ADR-MAJOR, ADR-MINOR |
 | Research Phase | 5 | ✅ Complete | Problem → Justification → Definition |
 | Core Docs | 5 | ✅ Complete | README, STATUS, CHANGELOG, INDEX, CLAUDE |
@@ -210,26 +210,19 @@ The SpearIT Project Framework is a comprehensive project management framework te
 
 ## Pending Work
 
+### Awaiting Release (work/done/)
+- ✅ TECH-064: Standardize work item metadata fields
+
 ### In Progress (work/doing/)
-- 🚧 FEAT-001: Apply Standard framework to project-framework project itself
+- None
 
 ### Committed Next (work/todo/)
-- 📋 FEAT-002: Create version strategy documentation
-- 📋 FEAT-003: Remove legacy root templates
-- 📋 FEAT-004: Create visual diagrams for documentation
-- 📋 FEAT-005: Plan ZIP distribution package
-- 📋 FEAT-006: Design setup script with planning questions
-- 📋 FEAT-007: Create validation script
+- 9 items queued
 
-### Backlog (planning/backlog/)
-- 📋 FEAT-008: Create upgrade automation script
-- 📋 FEAT-009: Create stale documentation checker
-- 📋 FEAT-010: Create trivial sample project
-- 📋 FEAT-011: Create CONTRIBUTING.md
-- 📋 FEAT-012: Create migration guide
-- 📋 FEAT-013: Create FAQ document
+### Backlog (work/backlog/)
+- 37 items in backlog
 
-See [roadmap.md](thoughts/project/planning/roadmap.md) for complete roadmap.
+Use `/fw-status` or `/fw-backlog` for current details.
 
 ---
 

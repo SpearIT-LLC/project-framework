@@ -251,9 +251,9 @@ function Get-FolderItems {
         return , @()
     }
 
-    $files = Get-ChildItem -Path $FolderPath -Filter "*.md" -File -ErrorAction SilentlyContinue
+    $files = @(Get-ChildItem -Path $FolderPath -Filter "*.md" -File -ErrorAction SilentlyContinue)
 
-    if (-not $files -or $files.Count -eq 0) {
+    if ($files.Count -eq 0) {
         return , @()
     }
 

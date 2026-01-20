@@ -113,8 +113,9 @@ All projects follow this core workflow, with depth varying by framework level:
   - What are the milestones?
 - Break down into features/work items
   - Use FEATURE-TEMPLATE.md for features
-  - Use BUGFIX-TEMPLATE.md for bugs
-  - Use BLOCKER-TEMPLATE.md for blockers
+  - Use BUG-TEMPLATE.md for bugs
+  - Use TECHDEBT-TEMPLATE.md for tech debt
+  - Use DECISION-TEMPLATE.md for decisions
   - Use SPIKE-TEMPLATE.md for investigations
 - Identify dependencies and risks
   - What depends on what?
@@ -504,10 +505,10 @@ history/spikes/SPIKE-description-YYYY-MM-DD.md
 Work item numbers are **sequential and globally unique** across all work item types within a project.
 
 **Format:** `[TYPE]-[NNN]` where:
-- `TYPE` = FEAT, BUGFIX, BLOCKER, SPIKE, RESEARCH, etc.
+- `TYPE` = FEAT, BUG, TECH, DECISION, SPIKE
 - `NNN` = Zero-padded 3-digit number (001-999), then continues naturally (1000+)
 
-**Examples:** `FEAT-021`, `BUGFIX-005`, `BLOCKER-001`, `FEAT-1000`
+**Examples:** `FEAT-021`, `BUG-005`, `TECH-033`, `DECISION-042`, `FEAT-1000`
 
 #### Finding the Next Number
 
@@ -544,7 +545,7 @@ Then increment by 1 for the new number.
 - Creates collision risk: Two different items with same number
 - See BUGFIX-001 for detailed analysis of this issue
 
-**For other types:** Replace `FEAT` with `BUGFIX`, `BLOCKER`, `SPIKE`, etc.
+**For other types:** Replace `FEAT` with `BUG`, `TECH`, `DECISION`, `SPIKE`, etc.
 
 #### Hierarchical Numbering (Sub-Items)
 
@@ -582,7 +583,38 @@ If your project reaches 1000+ features, consider whether it should be split into
 
 ### Work Item Templates
 
-Located in `thoughts/framework/templates/`:
+Located in `framework/templates/work-items/`:
+
+#### Standard Metadata Fields (All Types)
+
+All work item templates use consistent metadata fields:
+
+```markdown
+**ID:** TYPE-NNN
+**Type:** Feature | Bug | Tech Debt | Decision | Spike
+**Priority:** High | Medium | Low
+**Version Impact:** MAJOR | MINOR | PATCH | None
+**Created:** YYYY-MM-DD
+```
+
+**Optional fields:**
+```markdown
+**Assigned:** [Name]
+**Severity:** Critical | High | Medium | Low  (Bug only)
+**Depends On:** ITEM-NNN, ITEM-NNN
+```
+
+**Note:** Status is determined by folder location (backlog/todo/doing/done), not a metadata field.
+
+#### Work Item Types (5 total)
+
+| Type | Template | ID Prefix | Purpose |
+|------|----------|-----------|---------|
+| Feature | FEATURE-TEMPLATE.md | FEAT- | New capability or enhancement |
+| Bug | BUG-TEMPLATE.md | BUG- | Defect fix |
+| Tech Debt | TECHDEBT-TEMPLATE.md | TECH- | Internal improvement |
+| Decision | DECISION-TEMPLATE.md | DECISION- | ADR / design choice |
+| Spike | SPIKE-TEMPLATE.md | SPIKE- | Time-boxed research |
 
 #### FEATURE-TEMPLATE.md
 Use for new capabilities or enhancements.
@@ -601,7 +633,7 @@ Use for new capabilities or enhancements.
 
 **When to use:** Adding new functionality or significant enhancement.
 
-#### BUGFIX-TEMPLATE.md
+#### BUG-TEMPLATE.md
 Use for correcting defects.
 
 **Sections:**
@@ -616,20 +648,32 @@ Use for correcting defects.
 
 **When to use:** Fixing incorrect behavior.
 
-#### BLOCKER-TEMPLATE.md
-Use for critical issues preventing progress.
+#### TECHDEBT-TEMPLATE.md
+Use for internal improvements and refactoring.
 
 **Sections:**
 - Summary
-- Problem Statement
-- Severity/Impact
-- Root Cause
-- Resolution Plan
-- Timeline
-- Alternatives/Workarounds
-- Status Updates
+- Problem Statement (current state, why problematic, desired state)
+- Proposed Solution
+- Files Affected
+- Acceptance Criteria
+- Notes
+- Related items
 
-**When to use:** Critical issue blocking current work or users.
+**When to use:** Code cleanup, performance improvements, documentation updates, internal tooling.
+
+#### DECISION-TEMPLATE.md
+Use for architecture decisions that need documentation.
+
+**Sections:**
+- Summary
+- Context (why decision is needed)
+- Options Considered
+- Decision
+- Consequences
+- Related items
+
+**When to use:** Technical choices between alternatives, establishing patterns or standards.
 
 #### SPIKE-TEMPLATE.md
 Use for research/investigation.
@@ -644,6 +688,10 @@ Use for research/investigation.
 - Decision/Next Steps
 
 **When to use:** Need to investigate unknowns before planning solution.
+
+#### Deprecated: BLOCKER-TEMPLATE.md
+
+The Blocker type has been removed. Use the `Depends On` field instead to track dependencies between work items.
 
 ### Always Ask First
 
@@ -1688,6 +1736,6 @@ Better to ask than assume.
 
 ---
 
-**Last Updated:** 2026-01-17
-**Version:** 1.1.0
+**Last Updated:** 2026-01-20
+**Version:** 1.2.0
 **Next Review:** After 10 projects use this guide

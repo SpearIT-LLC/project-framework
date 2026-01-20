@@ -82,6 +82,7 @@ function ConvertTo-NormalizedWorkItemId {
             $type = switch ($type) {
                 "FEATURE" { "FEAT" }
                 "TECHDEBT" { "TECH" }
+                "BUGFIX" { "BUG" }
                 default { $type }
             }
 
