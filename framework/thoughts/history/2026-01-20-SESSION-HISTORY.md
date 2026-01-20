@@ -107,6 +107,54 @@ Refactored WIP functions to be folder-agnostic so any folder with a `.limit` fil
 
 ---
 
+## PowerShell Tools Consistency Improvements
+
+### Get-WorkflowStatus.ps1 - Todo WIP Limit Display
+
+**Problem:** Table output showed WIP limit for `doing/` but not for `todo/`, despite both folders supporting limits.
+
+**Solution:**
+- Added `HasLimit`, `HierarchicalCount`, and `Limit` fields to Todo status object
+- Refactored `Format-TableOutput` to use a helper function `Get-FolderStatusLine` for consistent formatting
+- Both Todo and Doing now show limit and status indicator when configured
+
+**Before:**
+```
+Todo:     9 items
+Doing:    1 item  (limit: 1) ✅
+```
+
+**After:**
+```
+Todo:     7 items  (limit: 10) ✅
+Doing:    0 items  (limit: 1) ✅
+```
+
+### Get-BacklogItems.ps1 - Replace Type with Priority
+
+**Problem:** The Type column was redundant because the ID prefix (FEAT, TECH, DECISION) already conveys item type.
+
+**Solution:**
+- Replaced Type column with Priority column
+- Added priority normalization (High/Medium/Low from various formats like P1, "High - blocking", etc.)
+- Updated `-SortBy` parameter: `Type` → `Priority`
+- Priority sort order: High → Medium → Low → unset
+
+**Before:**
+```
+ID             Type         Impact Created      Summary
+FEAT-010       Feature      MINOR  2025-12-19   Document Enterprise...
+```
+
+**After:**
+```
+ID             Priority   Impact   Created      Summary
+DECISION-029   High       -        2026-01-08   Decide which open...
+FEAT-015       Medium     MINOR    2025-12-19   Generate executive...
+```
+
+---
+
 ## Follow-up Items
 
 - [ ] Update PROJECT-STATUS.md "Pending Work" section (stale references)
@@ -115,5 +163,5 @@ Refactored WIP functions to be folder-agnostic so any folder with a `.limit` fil
 
 ---
 
-**Session Duration:** ~45 minutes
+**Session Duration:** ~1 hour
 **Last Updated:** 2026-01-20

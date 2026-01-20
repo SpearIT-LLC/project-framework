@@ -303,20 +303,36 @@ function Format-TableOutput {
     # Workflow summary
     $output += "Workflow Summary:"
 
+    $todoInfo = $Status.Todo
     $wipInfo = $Status.Doing
-    $wipCount = $wipInfo.HierarchicalCount
-    $limit = $wipInfo.Limit
 
-    # WIP indicator
-    $wipIndicator = ""
-    if ($wipCount -lt $limit) {
-        $wipIndicator = " $([char]0x2705)"
-    }
-    elseif ($wipCount -eq $limit) {
-        $wipIndicator = " $([char]0x26A0)"
-    }
-    else {
-        $wipIndicator = " $([char]0x274C)"
+    # Helper function to build folder status line
+    function Get-FolderStatusLine {
+        param(
+            [string]$Label,
+            [int]$Count,
+            [int]$Limit,
+            [bool]$HasLimit
+        )
+
+        $itemWord = if ($Count -ne 1) { "items" } else { "item" }
+        $line = "  ${Label}:".PadRight(12) + "$Count $itemWord"
+
+        if ($HasLimit) {
+            $line += "  (limit: $Limit)"
+            # Add indicator
+            if ($Count -lt $Limit) {
+                $line += " $([char]0x2705)"
+            }
+            elseif ($Count -eq $Limit) {
+                $line += " $([char]0x26A0)"
+            }
+            else {
+                $line += " $([char]0x274C)"
+            }
+        }
+
+        return $line
     }
 
     # Done indicator
@@ -326,8 +342,8 @@ function Format-TableOutput {
     }
 
     $output += "  Backlog:  $($Status.Backlog.Count) items"
-    $output += "  Todo:     $($Status.Todo.Count) items"
-    $output += "  Doing:    $wipCount item$(if ($wipCount -ne 1) { 's' })  (limit: $limit)$wipIndicator"
+    $output += Get-FolderStatusLine -Label "Todo" -Count $todoInfo.HierarchicalCount -Limit $todoInfo.Limit -HasLimit $todoInfo.HasLimit
+    $output += Get-FolderStatusLine -Label "Doing" -Count $wipInfo.HierarchicalCount -Limit $wipInfo.Limit -HasLimit $wipInfo.HasLimit
     $output += "  Done:     $($Status.Done.Count) item$(if ($Status.Done.Count -ne 1) { 's' })$doneIndicator"
     $output += ""
 
@@ -401,6 +417,8 @@ try {
     $doneItems = Get-FolderItems -FolderPath $donePath
 
     # Get WIP limit and hierarchical count (from module)
+    $todoLimitInfo = Get-WipLimit -FolderPath $todoPath
+    $hierarchicalTodo = Get-WipCount -FolderPath $todoPath
     $wipLimitInfo = Get-WipLimit -FolderPath $doingPath
     $hierarchicalWip = Get-WipCount -FolderPath $doingPath
 
@@ -414,11 +432,18 @@ try {
         }
         Todo = @{
             Count = $todoItems.Count
+            HierarchicalCount = $hierarchicalTodo.Count
+            Limit = $todoLimitInfo.Limit
+            HasLimit = $todoLimitInfo.HasLimit
+            LimitSource = $todoLimitInfo.Source
+            LimitWarning = $todoLimitInfo.Warning
+            Groups = $hierarchicalTodo.Groups
         }
         Doing = @{
             RawCount = $doingItems.Count
             HierarchicalCount = $hierarchicalWip.Count
             Limit = $wipLimitInfo.Limit
+            HasLimit = $wipLimitInfo.HasLimit
             LimitSource = $wipLimitInfo.Source
             LimitWarning = $wipLimitInfo.Warning
             Groups = $hierarchicalWip.Groups

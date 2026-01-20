@@ -18,16 +18,16 @@
     Default output (without -Format) is table format.
 
 .PARAMETER SortBy
-    Sort field: 'Created' (default), 'ID', or 'Type'
+    Sort field: 'Created' (default), 'ID', or 'Priority'
     - Created: Oldest to newest by default
     - ID: Lowest number to highest (numeric sort, ignores type prefix)
-    - Type: Groups by type A-Z, then by Created within each group
+    - Priority: Groups by priority (High, Medium, Low), then by Created within each group
 
 .PARAMETER Ascending
     Reverses the default sort direction:
     - Created: Shows newest first instead of oldest
     - ID: Shows highest numbers first instead of lowest
-    - Type: Groups Z-A instead of A-Z
+    - Priority: Groups Low to High instead of High to Low
 
 .PARAMETER Full
     Show full summaries with word-wrapping instead of truncated single-line.
@@ -54,8 +54,8 @@
     Lists items sorted by ID number (4, 5, 6... regardless of FEAT/TECH/DECISION prefix).
 
 .EXAMPLE
-    .\Get-BacklogItems.ps1 -SortBy Type
-    Groups items by type (Decision, Feature, Tech Debt), sorted by Created within each group.
+    .\Get-BacklogItems.ps1 -SortBy Priority
+    Groups items by priority (High, Medium, Low), sorted by Created within each group.
 
 .OUTPUTS
     System.String (table format) or System.Object[] (JSON format)
@@ -84,7 +84,7 @@ param(
 
     [Parameter(ParameterSetName = 'Table')]
     [Parameter(ParameterSetName = 'Full')]
-    [ValidateSet("Created", "ID", "Type")]
+    [ValidateSet("Created", "ID", "Priority")]
     [string]$SortBy = "Created",
 
     [Parameter(ParameterSetName = 'Table')]
@@ -166,29 +166,16 @@ function Get-WorkItemMetadata {
         $id = ConvertTo-NormalizedWorkItemId -RawId $matches[1] -IncludeSubItem
     }
 
-    # Extract Type from metadata
-    $type = ""
-    if ($content -match '\*\*Type:\*\*\s*([^\r\n]+)') {
-        $type = $matches[1].Trim()
-        # Normalize type values
-        $type = $type -replace '\s*\([^)]+\)', ''  # Remove parenthetical notes
-        switch -Regex ($type) {
-            'Tech'                  { $type = "Tech Debt"; break }
-            'Bug'                   { $type = "Bugfix"; break }
-            'Feature|Enhancement'   { $type = "Feature"; break }
-            'Decision'              { $type = "Decision"; break }
-        }
-    }
-
-    # Infer type from ID prefix if not found in metadata
-    if (-not $type -and $id) {
-        switch -Regex ($id) {
-            '^DECISION'  { $type = "Decision"; break }
-            '^FEAT'      { $type = "Feature"; break }
-            '^TECH'      { $type = "Tech Debt"; break }
-            '^BUGFIX'    { $type = "Bugfix"; break }
-            '^SPIKE'     { $type = "Spike"; break }
-            '^DOC'       { $type = "Documentation"; break }
+    # Extract Priority from metadata and normalize to High/Medium/Low
+    $priority = ""
+    if ($content -match '\*\*Priority:\*\*\s*([^\r\n]+)') {
+        $rawPriority = $matches[1].Trim()
+        # Normalize priority values
+        switch -Regex ($rawPriority) {
+            '^(High|P1)'   { $priority = "High"; break }
+            '^(Medium|P2)' { $priority = "Medium"; break }
+            '^(Low|P3)'    { $priority = "Low"; break }
+            default        { $priority = "Medium" }  # Default ambiguous values to Medium
         }
     }
 
@@ -222,12 +209,12 @@ function Get-WorkItemMetadata {
     }
 
     return [PSCustomObject]@{
-        ID      = $id
-        Type    = $type
-        Impact  = $impact
-        Created = $created
-        Summary = $summary
-        File    = $filename
+        ID       = $id
+        Priority = $priority
+        Impact   = $impact
+        Created  = $created
+        Summary  = $summary
+        File     = $filename
     }
 }
 
@@ -248,33 +235,33 @@ function Format-TableOutput {
 
     # Column widths
     $colId = 14
-    $colType = 12
-    $colImpact = 6
+    $colPriority = 10
+    $colImpact = 8
     $colCreated = 12
     $colSummary = 44  # Remaining width for summary
-    $totalWidth = $colId + $colType + $colImpact + $colCreated + $colSummary
+    $totalWidth = $colId + $colPriority + $colImpact + $colCreated + $colSummary
 
     $output = @()
     $output += ""
     $output += "Backlog: $($Items.Count) items"
     $output += "=" * $totalWidth
-    $output += "{0,-$colId} {1,-$colType} {2,-$colImpact} {3,-$colCreated} {4}" -f "ID", "Type", "Impact", "Created", "Summary"
+    $output += "{0,-$colId} {1,-$colPriority} {2,-$colImpact} {3,-$colCreated} {4}" -f "ID", "Priority", "Impact", "Created", "Summary"
     $output += "-" * $totalWidth
 
     foreach ($item in $Items) {
-        $id      = if ($item.ID)      { $item.ID }      else { "-" }
-        $type    = if ($item.Type)    { $item.Type }    else { "-" }
-        $impact  = if ($item.Impact)  { $item.Impact }  else { "-" }
-        $created = if ($item.Created) { $item.Created } else { "-" }
-        $summary = if ($item.Summary) { $item.Summary } else { "-" }
+        $id       = if ($item.ID)       { $item.ID }       else { "-" }
+        $priority = if ($item.Priority) { $item.Priority } else { "-" }
+        $impact   = if ($item.Impact)   { $item.Impact }   else { "-" }
+        $created  = if ($item.Created)  { $item.Created }  else { "-" }
+        $summary  = if ($item.Summary)  { $item.Summary }  else { "-" }
 
         if ($Full) {
             # Word-wrap summary for full view
             $summaryLines = Split-TextIntoLines -Text $summary -MaxWidth $colSummary
-            $prefixWidth = $colId + $colType + $colImpact + $colCreated + 3  # +3 for spaces
+            $prefixWidth = $colId + $colPriority + $colImpact + $colCreated + 3  # +3 for spaces
 
             # First line includes all columns
-            $output += "{0,-$colId} {1,-$colType} {2,-$colImpact} {3,-$colCreated} {4}" -f $id, $type, $impact, $created, $summaryLines[0]
+            $output += "{0,-$colId} {1,-$colPriority} {2,-$colImpact} {3,-$colCreated} {4}" -f $id, $priority, $impact, $created, $summaryLines[0]
 
             # Subsequent lines are indented
             for ($i = 1; $i -lt $summaryLines.Count; $i++) {
@@ -286,7 +273,7 @@ function Format-TableOutput {
             if ($summary.Length -gt $colSummary) {
                 $summary = $summary.Substring(0, $colSummary - 3) + "..."
             }
-            $output += "{0,-$colId} {1,-$colType} {2,-$colImpact} {3,-$colCreated} {4}" -f $id, $type, $impact, $created, $summary
+            $output += "{0,-$colId} {1,-$colPriority} {2,-$colImpact} {3,-$colCreated} {4}" -f $id, $priority, $impact, $created, $summary
         }
     }
 
@@ -397,10 +384,17 @@ try {
                         if ($_.ID -match '-(\d+)') { [int]$matches[1] } else { [int]::MaxValue }
                     } -Descending:$Ascending  # Inverted: -Ascending flag means highest first
                 }
-                "Type" {
-                    # Group by type A-Z, then by Created within each group
+                "Priority" {
+                    # Group by priority (High=1, Medium=2, Low=3, empty=4), then by Created within each group
                     $items = $items | Sort-Object -Property @(
-                        @{ Expression = { if ([string]::IsNullOrEmpty($_.Type)) { "ZZZ" } else { $_.Type } }; Descending = $Ascending }
+                        @{ Expression = {
+                            switch ($_.Priority) {
+                                "High"   { 1 }
+                                "Medium" { 2 }
+                                "Low"    { 3 }
+                                default  { 4 }
+                            }
+                        }; Descending = $Ascending }
                         @{ Expression = { if ([string]::IsNullOrEmpty($_.Created)) { "0000-00-00" } else { $_.Created } }; Descending = $false }
                     )
                 }
