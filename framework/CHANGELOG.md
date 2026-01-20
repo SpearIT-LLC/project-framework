@@ -18,7 +18,60 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Visual diagrams for folder structure and workflow
 - ZIP distribution package
 - Interactive setup script
-- Automated session history generation (FEAT-022)
+
+---
+
+## [3.5.0] - 2026-01-20
+
+### Added
+- **FEAT-022: Automated Session History Generation**
+  - `/fw-session-history` slash command for capturing session work
+  - Auto-update session history when moving items to done/
+  - Auto-commit after done-transition
+  - Standard session history format in `thoughts/history/sessions/`
+
+- **FEAT-060: Framework Bootstrap Block**
+  - Bootstrap block in root CLAUDE.md for session initialization
+  - Numbered checklist format for AI assistants
+  - Ensures consistent session startup behavior
+
+- **FEAT-062: POC Folder and Spike Workflow**
+  - `thoughts/poc/` folder for proof-of-concept experiments
+  - Two spike workflow types: research (document-only) and POC (with artifacts)
+  - Archive path: `history/spikes/` for completed spikes
+  - Updated Get-WorkflowStatus.ps1 to show POC spikes section
+  - Artifact retention policy in ADR-004
+
+- **TECH-046: Work Item ID Discovery Policy**
+  - Common ID namespace documented (all types share single counter)
+  - `Get-NextWorkItemId` PowerShell function in FrameworkWorkflow.psm1
+  - `Get-NextWorkItemId.ps1` standalone script
+  - `/fw-next-id` slash command for AI assistants
+  - Windows PowerShell 5.1 compatibility (not just pwsh)
+
+### Changed
+- **TECH-064: Standardize Work Item Metadata Fields**
+  - 5 work item types: Feature, Bug, Tech Debt, Decision, Spike
+  - Status determined by folder location, not metadata field
+  - BUGFIX → BUG normalization in PowerShell tools
+  - Updated workflow-guide.md with standard metadata fields section
+  - Fixed single-item array bug in Get-WorkflowStatus.ps1
+
+- **TECH-065: Simplify PROJECT-STATUS.md**
+  - Reduced from 390 lines to 20 lines (95% reduction)
+  - Ultra-minimal format: version, status, quick links, maintainer
+  - README.md is authoritative for feature list (DRY principle)
+  - CHANGELOG.md is authoritative for release history
+
+### Documentation
+- workflow-guide.md updated to v1.2.0 with:
+  - POC spike workflow documentation
+  - ID discovery section ("Finding Next Available ID")
+  - Standard metadata fields section
+  - Session history automation notes
+
+### Notes
+This release focuses on workflow automation and tooling improvements. The `/fw-*` command set is now more complete with session history and ID discovery capabilities.
 
 ---
 
