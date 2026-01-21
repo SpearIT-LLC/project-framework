@@ -1,11 +1,11 @@
-# /fw-index - Framework Topic Index
+# /fw-topic-index - Framework Topic Index
 
 Display the source-of-truth index for framework topics. Answers "where is X documented?"
 
 ## Usage
 
 ```
-/fw-index [filter]
+/fw-topic-index [filter]
 ```
 
 ## Arguments
@@ -57,10 +57,10 @@ When presenting in the session window, Claude may organize topics into logical c
 ## Examples
 
 ```
-/fw-index                    # Full topic index
-/fw-index workflow*          # All workflow-related topics
-/fw-index security           # Just the security topic
-/fw-index pattern*           # All pattern topics
+/fw-topic-index                    # Full topic index
+/fw-topic-index workflow*          # All workflow-related topics
+/fw-topic-index security           # Just the security topic
+/fw-topic-index pattern*           # All pattern topics
 ```
 
 ## Implementation
@@ -81,9 +81,9 @@ When presenting in the session window, Claude may organize topics into logical c
 
 ## Use Cases
 
-1. **"Where is workflow documented?"** - Run `/fw-index workflow*`
-2. **"What's the source of truth for security?"** - Run `/fw-index security`
-3. **"List all topics"** - Run `/fw-index` for full index
+1. **"Where is workflow documented?"** - Run `/fw-topic-index workflow*`
+2. **"What's the source of truth for security?"** - Run `/fw-topic-index security`
+3. **"List all topics"** - Run `/fw-topic-index` for full index
 4. **Machine parsing** - Use `-Format json` for tooling integration
 
 ## Edge Cases

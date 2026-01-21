@@ -15,7 +15,7 @@ roles:
   default: senior-architect
 
 # Source-of-truth index for framework topics
-# Use /fw-index or Get-FrameworkIndex.ps1 for human-friendly output
+# Use /fw-topic-index or Get-FrameworkIndex.ps1 for human-friendly output
 sources:
   # Workflow & Process
   workflow-process: framework/docs/collaboration/workflow-guide.md#development-workflow-phases
