@@ -8,6 +8,12 @@
 
 ---
 
+## Summary
+
+Brainstorming document for FEAT-025 manual setup validation strategy.
+
+---
+
 ## Abstract
 This doc is for brainstorming a strategy for feat-025.
 

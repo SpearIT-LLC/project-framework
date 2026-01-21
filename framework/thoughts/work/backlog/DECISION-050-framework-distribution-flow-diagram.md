@@ -8,6 +8,12 @@
 
 ---
 
+## Summary
+
+Visual diagrams clarifying the framework-as-dependency distribution model.
+
+---
+
 ## Diagram 1: Framework Lifecycle - Development vs. Dependency
 
 ```mermaid

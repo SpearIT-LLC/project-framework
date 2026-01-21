@@ -8,6 +8,12 @@
 
 ---
 
+## Summary
+
+Example showing how users tag customizations for future framework merge operations.
+
+---
+
 ## Scenario
 
 Alice needs to add regulatory tracking to work items. She customizes `framework/templates/work-items/FEATURE-TEMPLATE.md` in her project.
