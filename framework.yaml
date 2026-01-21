@@ -13,3 +13,49 @@ policies:
 roles:
   definitions: framework/docs/ref/framework-roles.yaml
   default: senior-architect
+
+# Source-of-truth index for framework topics
+# Use /fw-index or Get-FrameworkIndex.ps1 for human-friendly output
+sources:
+  # Workflow & Process
+  workflow-process: framework/docs/collaboration/workflow-guide.md#development-workflow-phases
+  workflow-transitions: framework/docs/collaboration/workflow-guide.md#workflow-transitions
+  work-item-numbering: framework/docs/collaboration/workflow-guide.md#work-item-numbering
+  work-item-templates: framework/docs/collaboration/workflow-guide.md#work-item-templates
+  git-workflow: framework/docs/collaboration/workflow-guide.md#git-workflow
+  versioning: framework/docs/collaboration/workflow-guide.md#versioning--releases
+  planning: framework/docs/collaboration/workflow-guide.md#planning-guidelines
+  session-history: framework/docs/collaboration/workflow-guide.md#session-history
+  adr-process: framework/docs/collaboration/workflow-guide.md#architecture-decision-records-adrs
+  research-phase: framework/docs/collaboration/workflow-guide.md#research-phase
+  collaboration: framework/docs/collaboration/workflow-guide.md#collaboration-practices
+  documentation-standards: framework/docs/collaboration/workflow-guide.md#documentation-standards
+
+  # Standards & Policies
+  code-quality: framework/docs/collaboration/code-quality-standards.md
+  testing: framework/docs/collaboration/testing-strategy.md
+  security: framework/docs/collaboration/security-policy.md
+  architecture: framework/docs/collaboration/architecture-guide.md
+  troubleshooting: framework/docs/collaboration/troubleshooting-guide.md
+  dry-principles: framework/docs/collaboration/documentation-dry-principles.md
+
+  # AI Collaboration
+  ai-reading-protocol: framework/CLAUDE.md#ai-reading-protocol
+  ai-roles: framework/docs/ref/framework-roles.yaml
+  ai-checkpoint-policy: framework/CLAUDE.md#ai-workflow-checkpoint-policy-critical---adr-001
+
+  # Project Structure
+  structure-standard: framework/docs/PROJECT-STRUCTURE-STANDARD.md
+  structure-light: framework/docs/PROJECT-STRUCTURE-LIGHT.md
+  structure-minimal: framework/docs/PROJECT-STRUCTURE-MINIMAL.md
+  structure-repository: framework/docs/REPOSITORY-STRUCTURE.md
+
+  # Templates & Setup
+  template-selection: templates/README-TEMPLATE-SELECTION.md
+  new-project-setup: templates/NEW-PROJECT-CHECKLIST.md
+  upgrade-path: templates/UPGRADE-PATH.md
+
+  # Patterns
+  pattern-cmd-wrappers: framework/docs/patterns/cmd-wrappers.md
+  pattern-powershell-modules: framework/docs/patterns/powershell-modules.md
+  pattern-config-management: framework/docs/patterns/config-management.md
