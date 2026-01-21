@@ -390,4 +390,53 @@ Session 7: Completed TECH-046 (work item ID discovery policy) and fixed `/fw-nex
 
 ---
 
-**Last Updated:** 2026-01-20
+## Session 8
+
+Session 8: Released v3.5.0 and completed TECH-066 (migrate existing work items to standard metadata format).
+
+### Work Completed
+
+#### v3.5.0 Release
+
+- Released 6 work items: FEAT-022, FEAT-060, FEAT-062, TECH-046, TECH-064, TECH-065
+- Updated CHANGELOG.md and PROJECT-STATUS.md
+- Created git tag v3.5.0
+- Archived work items to `history/releases/v3.5.0/`
+
+#### TECH-066: Migrate Existing Work Items to Standard Metadata (Completed)
+
+- Updated 41 work items across backlog/, todo/, doing/
+- Removed deprecated fields: `**Status:**`, `**Target Version:**`, `**Completed:**`, `**Developer:**`
+- Added missing fields: `**Priority:**`, `**Version Impact:**`
+- Standardized `**ID:**` to include TYPE prefix
+- Added Summary sections to 4 sub-items/supporting documents
+
+### Decisions Made
+
+1. **Sub-items and supporting documents:**
+   - Should include brief Summary section (one sentence)
+   - Provides quick context without requiring full Problem Statement
+
+### Files Modified
+
+- 41 work items in `thoughts/work/` (metadata standardization)
+- 4 sub-items (added Summary sections)
+- `framework/CHANGELOG.md` (v3.5.0 release notes)
+- `framework/PROJECT-STATUS.md` (version bump to v3.5.0)
+
+### Files Moved
+
+- 6 work items from `done/` → `history/releases/v3.5.0/`
+- `TECH-066` from `doing/` → `done/`
+
+### Current State Update
+
+**In done/ (awaiting release):**
+- TECH-066: Migrate existing work items to standard metadata
+
+**In doing/:**
+- (none)
+
+---
+
+**Last Updated:** 2026-01-21
