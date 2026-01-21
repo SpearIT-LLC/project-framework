@@ -1,13 +1,10 @@
 # Feature: Renumber Workflow Steps to Sequential Integers
 
 **ID:** FEAT-024
-**Type:** Enhancement
-**Version Impact:** PATCH (documentation cleanup, no functional changes)
-**Target Version:** v2.4.0+
-**Status:** Backlog
-**Priority:** P3 (Low - cosmetic cleanup)
+**Type:** Feature
+**Priority:** Low
+**Version Impact:** PATCH
 **Created:** 2026-01-01
-**Developer:** Claude & User
 
 ---
 

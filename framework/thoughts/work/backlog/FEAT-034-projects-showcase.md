@@ -1,11 +1,10 @@
 # FEAT-034: Projects Showcase Documentation
 
 **ID:** FEAT-034
-**Type:** Feature (Documentation)
+**Type:** Feature
 **Priority:** Low
-**Status:** Backlog
+**Version Impact:** MINOR
 **Created:** 2026-01-08
-**Related:** FEAT-026, DECISION-029
 
 ---
 

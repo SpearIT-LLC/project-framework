@@ -1,12 +1,10 @@
 # TECH-048: Remove Small Team References from Documentation
 
-**ID:** 048
-**Type:** Technical (Documentation Cleanup)
+**ID:** TECH-048
+**Type:** Tech Debt
 **Priority:** Medium
-**Status:** Backlog
+**Version Impact:** PATCH
 **Created:** 2026-01-11
-**Related:** FEAT-047, TECH-046
-**Blocks:** None (but should complete before public release)
 
 ---
 

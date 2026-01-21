@@ -1,12 +1,10 @@
 # Feature: Trivial Sample Project
 
 **ID:** FEAT-011
-**Type:** Feature (Documentation/Example)
+**Type:** Feature
+**Priority:** Low
 **Version Impact:** MINOR
-**Target Version:** v2.2.0
-**Status:** Backlog (FUTURE)
 **Created:** 2025-12-19
-**Developer:** TBD
 
 ---
 

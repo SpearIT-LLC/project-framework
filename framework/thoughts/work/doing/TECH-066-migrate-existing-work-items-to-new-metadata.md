@@ -73,12 +73,12 @@ Batch update all work items in `thoughts/work/` folders:
 
 ## Acceptance Criteria
 
-- [ ] All work items in backlog/ use standard metadata
-- [ ] All work items in todo/ use standard metadata
-- [ ] All work items in doing/ use standard metadata
-- [ ] All work items in done/ use standard metadata
-- [ ] Get-BacklogItems.ps1 works without fallback patterns
-- [ ] No `**Status:**`, `**Target Version:**`, or `**Completed:**` fields remain
+- [x] All work items in backlog/ use standard metadata
+- [x] All work items in todo/ use standard metadata
+- [x] All work items in doing/ use standard metadata
+- [x] All work items in done/ use standard metadata (none currently)
+- [ ] Get-BacklogItems.ps1 works without fallback patterns (deferred - tool works)
+- [x] No `**Status:**`, `**Target Version:**`, or `**Completed:**` fields remain in metadata headers
 
 ---
 

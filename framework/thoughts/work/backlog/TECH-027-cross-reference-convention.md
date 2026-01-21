@@ -1,11 +1,10 @@
 # TECH-027: Establish Cross-Reference Convention for Work Items
 
 **ID:** TECH-027
-**Type:** Technical Debt / Process Improvement
+**Type:** Tech Debt
 **Priority:** Medium
-**Status:** Backlog
+**Version Impact:** PATCH
 **Created:** 2026-01-07
-**Related:** FEAT-026-P2-TECH-doc-dedup (cancelled, archived)
 
 ---
 

@@ -1,11 +1,10 @@
 # Technical Debt: Document Supporting Files Naming Policy
 
 **ID:** TECH-041
-**Type:** Technical Debt / Documentation
+**Type:** Tech Debt
 **Priority:** Medium
-**Status:** Backlog
+**Version Impact:** PATCH
 **Created:** 2026-01-11
-**Related:** TECH-044, workflow-guide.md
 
 ---
 

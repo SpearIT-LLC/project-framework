@@ -1,12 +1,10 @@
 # Feature: CONTRIBUTING.md Guide
 
 **ID:** FEAT-012
-**Type:** Feature (Documentation)
+**Type:** Feature
+**Priority:** Low
 **Version Impact:** PATCH
-**Target Version:** v2.2.0
-**Status:** Backlog (FUTURE)
 **Created:** 2025-12-19
-**Developer:** TBD
 
 ---
 

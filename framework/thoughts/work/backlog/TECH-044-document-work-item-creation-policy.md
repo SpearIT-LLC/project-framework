@@ -1,12 +1,10 @@
 # Technical: Document Work Item Creation Policy
 
-**ID:** 044
-**Type:** Technical (Documentation/Policy)
-**Version Impact:** PATCH (clarifies existing process)
-**Status:** Backlog
+**ID:** TECH-044
+**Type:** Tech Debt
+**Priority:** Medium
+**Version Impact:** PATCH
 **Created:** 2026-01-10
-**Completed:** N/A
-**Developer:** TBD
 
 ---
 

@@ -1,11 +1,10 @@
 # TECH-033: Review Status Field Redundancy in Work Items
 
 **ID:** TECH-033
-**Type:** Technical Debt / Process Review
+**Type:** Tech Debt
 **Priority:** Low
-**Status:** Backlog
+**Version Impact:** PATCH
 **Created:** 2026-01-08
-**Related:** FEAT-026
 
 ---
 

@@ -1,12 +1,10 @@
 # Feature: Manual Setup Process Validation
 
 **ID:** FEAT-025
-**Type:** Feature (Validation/Testing)
-**Version Impact:** PATCH (fixes validation gap, no new user-facing features)
-**Status:** Todo
+**Type:** Feature
+**Priority:** High
+**Version Impact:** PATCH
 **Created:** 2026-01-01
-**Completed:** N/A
-**Developer:** TBD
 
 ---
 

@@ -1,8 +1,10 @@
 # DECISION-050: Framework Distribution Flow Diagrams
 
-**Supporting Document for:** DECISION-050-framework-distribution-model.md
+**ID:** DECISION-050.2
+**Type:** Decision
+**Priority:** Low
+**Version Impact:** None
 **Created:** 2026-01-12
-**Purpose:** Visual clarification of framework-as-dependency concept
 
 ---
 

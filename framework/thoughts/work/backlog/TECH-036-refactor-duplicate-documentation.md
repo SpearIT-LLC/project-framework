@@ -1,11 +1,10 @@
 # TECH-036: Audit and Refactor Duplicate Documentation
 
 **ID:** TECH-036
-**Type:** Technical Debt / Refactoring
+**Type:** Tech Debt
 **Priority:** Medium
-**Status:** Backlog
+**Version Impact:** PATCH
 **Created:** 2026-01-08
-**Requires:** TECH-043, FEAT-031
 
 ---
 

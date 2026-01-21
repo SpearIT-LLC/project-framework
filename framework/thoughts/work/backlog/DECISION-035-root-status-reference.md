@@ -1,11 +1,10 @@
 # DECISION-035: Root Status Reference Strategy
 
 **ID:** DECISION-035
-**Type:** Decision / Investigation
+**Type:** Decision
 **Priority:** Low
-**Status:** Backlog
+**Version Impact:** None
 **Created:** 2026-01-08
-**Related:** FEAT-026
 
 ---
 

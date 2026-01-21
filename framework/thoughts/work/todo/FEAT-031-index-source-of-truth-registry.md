@@ -1,12 +1,10 @@
 # FEAT-031: INDEX.md as Source-of-Truth Registry
 
 **ID:** FEAT-031
-**Type:** Feature (Enhancement)
+**Type:** Feature
 **Priority:** Medium
-**Status:** Backlog
+**Version Impact:** MINOR
 **Created:** 2026-01-08
-**Requires:** TECH-043
-**Blocks:** TECH-036
 
 ---
 

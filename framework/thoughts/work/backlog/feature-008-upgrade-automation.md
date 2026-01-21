@@ -1,12 +1,10 @@
 # Feature: Upgrade Automation Script
 
 **ID:** FEAT-008
-**Type:** Feature (Tooling)
+**Type:** Feature
+**Priority:** Low
 **Version Impact:** MINOR
-**Target Version:** v2.2.0
-**Status:** Backlog (FUTURE)
 **Created:** 2025-12-19
-**Developer:** TBD
 
 ---
 

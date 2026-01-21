@@ -1,13 +1,10 @@
 # Feature: Interactive Setup Script
 
 **ID:** FEAT-006
-**Type:** Feature (Tooling)
-**Version Impact:** MINOR (new tool)
-**Target Version:** v2.1.0
-**Status:** Backlog
+**Type:** Feature
+**Priority:** Medium
+**Version Impact:** MINOR
 **Created:** 2025-12-19
-**Completed:** N/A
-**Developer:** Gary Elliott
 
 ---
 

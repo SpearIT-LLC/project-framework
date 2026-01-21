@@ -1,13 +1,10 @@
 # Feature: Release Checklist Template
 
 **ID:** FEAT-019
-**Type:** Feature (Template)
-**Version Impact:** MINOR (adds new template)
-**Target Version:** v2.2.0
-**Status:** Backlog
+**Type:** Feature
+**Priority:** Low
+**Version Impact:** MINOR
 **Created:** 2025-12-20
-**Completed:** N/A
-**Developer:** TBD
 
 ---
 

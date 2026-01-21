@@ -1,12 +1,10 @@
 # Feature: Release Automation Script
 
-**ID:** 028
-**Type:** Feature (Tooling)
-**Version Impact:** MINOR
-**Status:** Backlog
-**Created:** 2026-01-08
+**ID:** FEAT-028
+**Type:** Feature
 **Priority:** Medium
-**Related:** FEAT-019 (release checklist template), ADR-003 (archival process)
+**Version Impact:** MINOR
+**Created:** 2026-01-08
 
 ---
 

@@ -1,12 +1,10 @@
 # Feature: Enterprise Framework Documentation
 
 **ID:** FEAT-010
-**Type:** Feature (Documentation)
+**Type:** Feature
+**Priority:** Low
 **Version Impact:** MINOR
-**Target Version:** v2.2.0
-**Status:** Backlog (FUTURE)
 **Created:** 2025-12-19
-**Developer:** TBD
 
 ---
 

@@ -1,12 +1,10 @@
 # Feature: Framework Update Test Harness
 
 **ID:** FEAT-051
-**Type:** Feature (Testing Infrastructure)
-**Version Impact:** MINOR (adds testing capability)
-**Status:** Backlog
+**Type:** Feature
+**Priority:** Low
+**Version Impact:** MINOR
 **Created:** 2026-01-12
-**Completed:** N/A
-**Developer:** Gary Elliott
 
 ---
 

@@ -1,11 +1,10 @@
 # DECISION-029: License Choice for Framework
 
 **ID:** DECISION-029
-**Type:** Decision / ADR
-**Priority:** High (blocking public release)
-**Status:** Backlog
+**Type:** Decision
+**Priority:** High
+**Version Impact:** None
 **Created:** 2026-01-08
-**Related:** FEAT-026
 
 ---
 

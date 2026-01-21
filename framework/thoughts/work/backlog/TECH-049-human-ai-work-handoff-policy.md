@@ -1,11 +1,10 @@
 # TECH-049: Human-AI Work Handoff Policy
 
-**ID:** 049
-**Type:** Technical (Process/Policy)
+**ID:** TECH-049
+**Type:** Tech Debt
 **Priority:** Medium
-**Status:** Backlog
+**Version Impact:** PATCH
 **Created:** 2026-01-11
-**Related:** None (process discovery)
 
 ---
 

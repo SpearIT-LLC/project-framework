@@ -1,12 +1,10 @@
 # DECISION-050: Framework Distribution Model (Framework-as-Dependency)
 
-**Status:** Decided
-**Date:** 2026-01-12
-**Decided By:** Gary Elliott
-**Impact:** Major
-**Scope:** Entire framework architecture, project structure, distribution mechanism
-**Supersedes:** None
-**Blocks:** DECISION-036 (template access strategy)
+**ID:** DECISION-050
+**Type:** Decision
+**Priority:** High
+**Version Impact:** None
+**Created:** 2026-01-12
 
 ---
 

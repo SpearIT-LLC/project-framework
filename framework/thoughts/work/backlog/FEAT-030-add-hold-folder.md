@@ -1,11 +1,10 @@
 # FEAT-030: Add work/hold/ Folder to Workflow
 
 **ID:** FEAT-030
-**Type:** Feature (Enhancement)
+**Type:** Feature
 **Priority:** Medium
-**Status:** Backlog
+**Version Impact:** MINOR
 **Created:** 2026-01-08
-**Related:** FEAT-026
 
 ---
 

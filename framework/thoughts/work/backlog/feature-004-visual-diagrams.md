@@ -1,13 +1,10 @@
 # Feature: Visual Diagrams for Framework Documentation
 
-**ID:** 004
-**Type:** Feature (Documentation)
-**Version Impact:** PATCH (documentation improvement)
-**Target Version:** v2.0.0
-**Status:** Backlog
+**ID:** FEAT-004
+**Type:** Feature
+**Priority:** Low
+**Version Impact:** PATCH
 **Created:** 2025-12-19
-**Completed:** N/A
-**Developer:** Gary Elliott
 
 ---
 
@@ -233,4 +230,3 @@ ASCII-art folder trees in documentation, which work but aren't as clear as prope
 ---
 
 **Last Updated:** 2025-12-19
-**Status:** Backlog (ready for implementation)

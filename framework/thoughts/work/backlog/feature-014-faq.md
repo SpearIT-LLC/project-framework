@@ -1,12 +1,10 @@
 # Feature: FAQ Document
 
 **ID:** FEAT-014
-**Type:** Feature (Documentation)
+**Type:** Feature
+**Priority:** Low
 **Version Impact:** PATCH
-**Target Version:** v2.3.0
-**Status:** Backlog (FUTURE)
 **Created:** 2025-12-19
-**Developer:** TBD
 
 ---
 

@@ -1,16 +1,11 @@
 # Bug Fix: Complete Bash/Write/Edit Permission Configuration
 
-**ID:** 045
-**Type:** Bugfix
-**Version Impact:** PATCH (when fixed)
-**Target Version:** TBD (After VSCode Extension Fix)
-**Status:** Backlog - Blocked on External Fix
-**Severity:** Medium
-**Priority:** P2
-**Parent Work Item:** BUGFIX-003
-**Blocking Issue:** https://github.com/anthropics/claude-code/issues/15921
+**ID:** BUG-045
+**Type:** Bug
+**Priority:** Medium
+**Version Impact:** PATCH
 **Created:** 2025-12-31
-**Developer:** TBD
+**Severity:** Medium
 
 ---
 

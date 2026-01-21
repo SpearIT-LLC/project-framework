@@ -1,13 +1,10 @@
 # Feature: ZIP Distribution Package
 
 **ID:** FEAT-005
-**Type:** Feature (Distribution)
-**Version Impact:** MINOR (new distribution method)
-**Target Version:** v2.1.0
-**Status:** Backlog
+**Type:** Feature
+**Priority:** Medium
+**Version Impact:** MINOR
 **Created:** 2025-12-19
-**Completed:** N/A
-**Developer:** Gary Elliott
 
 ---
 
@@ -155,4 +152,3 @@ Questions? gary.elliott@spearit.solutions
 ---
 
 **Last Updated:** 2025-12-19
-**Status:** Backlog (priority for v2.1.0)

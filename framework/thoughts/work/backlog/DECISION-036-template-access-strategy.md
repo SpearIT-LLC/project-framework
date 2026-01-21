@@ -1,13 +1,10 @@
 # DECISION-036: Template Access Strategy for User Projects
 
-**Status:** Decided (Resolved by DECISION-050)
-**Date:** 2026-01-10
-**Updated:** 2026-01-12
-**Decided By:** Gary Elliott
-**Impact:** Minor
-**Scope:** User project setup, template access workflow
-**Supersedes:** None
-**Resolved By:** DECISION-050 (Framework Distribution Model)
+**ID:** DECISION-036
+**Type:** Decision
+**Priority:** Low
+**Version Impact:** None
+**Created:** 2026-01-10
 
 ---
 

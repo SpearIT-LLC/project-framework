@@ -1,11 +1,10 @@
 # TECH-058: Documentation DRY Cleanup
 
 **ID:** TECH-058
-**Type:** Technical Debt
+**Type:** Tech Debt
 **Priority:** Medium
-**Status:** Backlog
+**Version Impact:** PATCH
 **Created:** 2026-01-14
-**Related:** TECH-043, TECH-036
 
 ---
 

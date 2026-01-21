@@ -1,12 +1,10 @@
 # Feature: Migration Guide from Other Frameworks
 
 **ID:** FEAT-013
-**Type:** Feature (Documentation)
+**Type:** Feature
+**Priority:** Low
 **Version Impact:** MINOR
-**Target Version:** v2.3.0
-**Status:** Backlog (FUTURE)
 **Created:** 2025-12-19
-**Developer:** TBD
 
 ---
 

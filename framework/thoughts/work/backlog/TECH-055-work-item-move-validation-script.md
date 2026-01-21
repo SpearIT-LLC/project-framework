@@ -1,11 +1,10 @@
 # TECH-055: Create Work Item Move Validation Script
 
-**ID:** 055
-**Type:** Technical Enhancement
+**ID:** TECH-055
+**Type:** Tech Debt
 **Priority:** Medium
-**Status:** Backlog
+**Version Impact:** MINOR
 **Created:** 2026-01-13
-**Related:** DOC-054 (state transition rules), FEAT-037 (project-config.yaml), FEAT-059 (testing revealed this issue)
 
 ---
 

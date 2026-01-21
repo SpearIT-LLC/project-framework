@@ -1,13 +1,10 @@
 # Feature: Executive Summary Reporting
 
 **ID:** FEAT-015
-**Type:** Feature (Tooling/Reporting)
+**Type:** Feature
+**Priority:** Low
 **Version Impact:** MINOR
-**Target Version:** v2.2.0
-**Status:** Backlog (FUTURE)
 **Created:** 2025-12-19
-**Completed:** N/A
-**Developer:** TBD
 
 ---
 

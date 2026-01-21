@@ -1,11 +1,10 @@
 # FEAT-047: Small Team ID Collision Support
 
-**ID:** 047
+**ID:** FEAT-047
 **Type:** Feature
-**Priority:** Medium (Backlog)
-**Status:** Backlog
+**Priority:** Medium
+**Version Impact:** MINOR
 **Created:** 2026-01-11
-**Related:** TECH-046, DECISION-042
 
 ---
 

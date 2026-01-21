@@ -1,8 +1,10 @@
 # DECISION-050: Customization Tagging Example
 
-**Supporting Document for:** DECISION-050-framework-distribution-model.md
+**ID:** DECISION-050.1
+**Type:** Decision
+**Priority:** Low
+**Version Impact:** None
 **Created:** 2026-01-12
-**Purpose:** Show how users tag customizations for future merging
 
 ---
 

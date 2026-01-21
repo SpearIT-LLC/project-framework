@@ -2,11 +2,9 @@
 
 **ID:** FEAT-021
 **Type:** Feature
-**Version Impact:** PATCH (documentation/process improvement, no breaking changes)
-**Target Version:** TBD
-**Status:** Backlog
+**Priority:** Low
+**Version Impact:** PATCH
 **Created:** 2025-12-22
-**Developer:** TBD
 
 ---
 
