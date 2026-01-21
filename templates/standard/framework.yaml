@@ -6,3 +6,48 @@ project:
   name: "{{PROJECT_NAME}}"
   type: application  # framework | application | library | tool
   deliverable: code  # code | documentation | hybrid
+
+policies:
+  workflow: framework/docs/collaboration/workflow-guide.md
+  onTransition: framework/docs/collaboration/workflow-guide.md#workflow-transitions
+
+roles:
+  definitions: framework/docs/ref/framework-roles.yaml
+  default: senior-developer
+
+# Source-of-truth index for project topics
+# Use /fw-topic-index for human-friendly output
+sources:
+  # Workflow & Process
+  workflow-process: framework/docs/collaboration/workflow-guide.md#development-workflow-phases
+  workflow-transitions: framework/docs/collaboration/workflow-guide.md#workflow-transitions
+  work-item-numbering: framework/docs/collaboration/workflow-guide.md#work-item-numbering
+  work-item-templates: framework/docs/collaboration/workflow-guide.md#work-item-templates
+  git-workflow: framework/docs/collaboration/workflow-guide.md#git-workflow
+  versioning: framework/docs/collaboration/workflow-guide.md#versioning--releases
+  planning: framework/docs/collaboration/workflow-guide.md#planning-guidelines
+  session-history: framework/docs/collaboration/workflow-guide.md#session-history
+  adr-process: framework/docs/collaboration/workflow-guide.md#architecture-decision-records-adrs
+  research-phase: framework/docs/collaboration/workflow-guide.md#research-phase
+  collaboration: framework/docs/collaboration/workflow-guide.md#collaboration-practices
+  documentation-standards: framework/docs/collaboration/workflow-guide.md#documentation-standards
+
+  # Standards & Policies
+  code-quality: framework/docs/collaboration/code-quality-standards.md
+  testing: framework/docs/collaboration/testing-strategy.md
+  security: framework/docs/collaboration/security-policy.md
+  architecture: framework/docs/collaboration/architecture-guide.md
+  troubleshooting: framework/docs/collaboration/troubleshooting-guide.md
+  dry-principles: framework/docs/collaboration/documentation-dry-principles.md
+
+  # AI Collaboration
+  ai-roles: framework/docs/collaboration/workflow-guide.md#ai-roles-and-workflow
+  ai-role-definitions: framework/docs/ref/framework-roles.yaml
+
+  # Project Structure
+  structure-standard: framework/docs/PROJECT-STRUCTURE-STANDARD.md
+
+  # Patterns
+  pattern-cmd-wrappers: framework/docs/patterns/cmd-wrappers.md
+  pattern-powershell-modules: framework/docs/patterns/powershell-modules.md
+  pattern-config-management: framework/docs/patterns/config-management.md

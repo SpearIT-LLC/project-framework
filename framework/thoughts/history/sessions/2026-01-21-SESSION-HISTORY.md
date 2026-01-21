@@ -104,7 +104,175 @@ Implemented FEAT-031 - a machine-readable source-of-truth registry for framework
 - TECH-066: Migrate existing work items to standard metadata
 
 ### In doing/
-- (none)
+- FEAT-025: Manual Setup Process Validation
+
+---
+
+## Session 3: FEAT-025 Planning and Analysis
+
+### Summary
+
+Resumed FEAT-025 (Manual Setup Process Validation). Renamed `/fw-index` to `/fw-topic-index` for clarity. Conducted deep analysis of FEAT-025 alignment with v3.0.0 structure, updated work item paths, and discovered critical gaps in `templates/standard/` and `NEW-PROJECT-CHECKLIST.md`. Established that template packages should include complete framework copy (vendored dependency model).
+
+### Work Completed
+
+#### FEAT-025: Manual Setup Process Validation
+- Moved FEAT-025 files from `todo/` to `doing/`
+- Updated FEAT-025-manual-setup-validation.md to align with v3.0.0 paths
+- Analyzed alignment with PROJECT-STRUCTURE-STANDARD.md
+- Identified critical issues:
+  - `templates/standard/` uses old v2.x structure (`thoughts/project/planning/`, `thoughts/framework/`)
+  - `NEW-PROJECT-CHECKLIST.md` has 10+ outdated path references
+  - Template package model clarified: users get complete `framework/` copy (minus thoughts/)
+
+#### Command Rename
+- Renamed `/fw-index` → `/fw-topic-index` (matches output title, more discoverable)
+
+### Decisions Made
+
+1. **Command naming: fw-topic-index over fw-index**
+   - Matches output title "Framework Topic Index"
+   - Self-documenting, promotes discoverability
+   - Length acceptable for slash commands
+
+2. **Validation approach: External project simulation (Option C)**
+   - Created `C:\Users\gelliott\OneDrive\Documents\SpearIT\Projects\project-hello-world`
+   - Tests realistic user journey (project outside framework repo)
+   - Findings fed back into framework repo
+
+3. **Template package model confirmed**
+   - Users get complete `framework/` folder (vendored)
+   - Excludes `framework/thoughts/` (framework's own work items)
+   - Framework version-controlled with project
+
+4. **Scope simplification**
+   - Dropped Minimal/Light levels - everything is "Standard"
+   - Single setup path reduces complexity
+
+### Files Modified
+
+- `.claude/commands/fw-index.md` → `.claude/commands/fw-topic-index.md` (renamed + updated references)
+- `framework.yaml` - Updated comment to reference `/fw-topic-index`
+- `framework/thoughts/work/doing/FEAT-025-manual-setup-validation.md` - Aligned paths with v3.0.0
+
+### Files Moved
+
+- `framework/thoughts/work/todo/FEAT-025-*.md` → `doing/`
+
+### Key Findings
+
+**templates/standard/ is severely outdated:**
+- Uses `thoughts/project/planning/` (should be `thoughts/work/`)
+- Has `thoughts/framework/` (user projects shouldn't have this)
+- Missing: complete `framework/` folder with docs, templates, collaboration guides
+
+**NEW-PROJECT-CHECKLIST.md issues:**
+- References `project-framework-template/` (should be `templates/`)
+- References `thoughts/framework/templates/` (wrong model)
+- Version mismatch (header: 2.0.0, footer: 1.0.0)
+
+---
+
+## Current State
+
+### In done/ (awaiting release)
+- FEAT-031: Source-of-Truth Topic Registry
+- TECH-066: Migrate existing work items to standard metadata
+
+### In doing/
+- FEAT-025: Manual Setup Process Validation (planning/analysis phase)
+
+### Next Steps
+1. Rebuild `templates/standard/` from scratch
+2. Update `NEW-PROJECT-CHECKLIST.md`
+3. Validate by copying to external test project
+
+---
+
+## Session 4: Template Package Rebuild
+
+### Summary
+
+Completed comprehensive rebuild of `templates/standard/` package. Rewrote all root documents (README.md, CLAUDE.md, INDEX.md, PROJECT-STATUS.md) with v3.0.0 paths. Added QUICK-START.md and NEW-PROJECT-CHECKLIST.md to template. Deleted redundant `framework/CLAUDE.md` and `framework/CLAUDE-QUICK-REFERENCE.md` from template. Populated `framework.yaml` with 24 sources matching root pattern. Created TECH-067 for consolidating AI sections into workflow-guide.md.
+
+### Work Completed
+
+#### FEAT-025: Manual Setup Process Validation (continued)
+
+- Rewrote `templates/standard/README.md` - v3.0.0 paths, placeholder variables
+- Rewrote `templates/standard/CLAUDE.md` - Bootstrap block, SsoT references, ~90 lines (was ~220)
+- Rewrote `templates/standard/INDEX.md` - v3.0.0 folder structure
+- Updated `templates/standard/PROJECT-STATUS.md` - Fixed path reference
+- Rewrote `templates/NEW-PROJECT-CHECKLIST.md` - v3.0.0, Standard-only, PowerShell commands
+- Added `templates/standard/QUICK-START.md` - User's ongoing reference
+- Added `templates/standard/NEW-PROJECT-CHECKLIST.md` - User's setup guide
+- Deleted `templates/standard/framework/CLAUDE.md` - Redundant with root CLAUDE.md
+- Deleted `templates/standard/framework/CLAUDE-QUICK-REFERENCE.md` - Redundant
+- Populated `templates/standard/framework.yaml` with 24 sources
+
+#### Work Item Created
+
+- TECH-067: Consolidate AI sections from CLAUDE.md into workflow-guide.md (backlog)
+
+### Decisions Made
+
+1. **No automatic setup tasks in new projects**
+   - Users start with clean `thoughts/work/` folder
+   - Onboarding guidance via QUICK-START.md
+   - Respects user autonomy, clean git history
+
+2. **QUICK-START.md and NEW-PROJECT-CHECKLIST.md go into template**
+   - Framework is vendored - user project *is* the distribution
+   - Both docs become part of user's project after copy
+
+3. **Delete framework/CLAUDE.md from template**
+   - Redundant with root CLAUDE.md (which has bootstrap block)
+   - Content should be in workflow-guide.md (TECH-067)
+   - framework.yaml sources point to collaboration docs
+
+4. **Template framework.yaml matches root pattern**
+   - 24 sources (root has 31 - difference is distribution-specific docs)
+   - Same `policies`, `roles`, `sources` structure
+   - When user copies template, it becomes their root framework.yaml
+
+### Files Created
+
+- `templates/standard/QUICK-START.md` - User's workflow quick reference
+- `templates/standard/NEW-PROJECT-CHECKLIST.md` - Copied from templates/
+- `framework/thoughts/work/backlog/TECH-067-consolidate-ai-sections-into-workflow-guide.md`
+
+### Files Modified
+
+- `templates/standard/README.md` - Complete rewrite
+- `templates/standard/CLAUDE.md` - Complete rewrite with bootstrap block
+- `templates/standard/INDEX.md` - Complete rewrite
+- `templates/standard/PROJECT-STATUS.md` - Path fix
+- `templates/standard/framework.yaml` - Added policies, roles, 24 sources
+- `templates/NEW-PROJECT-CHECKLIST.md` - Complete rewrite (v3.0.0)
+
+### Files Deleted
+
+- `templates/standard/framework/CLAUDE.md`
+- `templates/standard/framework/CLAUDE-QUICK-REFERENCE.md`
+
+---
+
+## Current State
+
+### In done/ (awaiting release)
+- FEAT-031: Source-of-Truth Topic Registry
+- TECH-066: Migrate existing work items to standard metadata
+
+### In doing/
+- FEAT-025: Manual Setup Process Validation (template rebuild complete, ready for validation)
+
+### In backlog/
+- TECH-067: Consolidate AI sections into workflow-guide.md
+
+### Next Steps
+1. Copy `templates/standard/` to external test project
+2. Follow NEW-PROJECT-CHECKLIST.md to validate setup process
+3. Document findings, fix issues discovered
 
 ---
 

@@ -131,7 +131,7 @@
 - 📋 [FEAT-NNN]: [Description]
 - 📋 [BUG-NNN]: [Description]
 
-See [thoughts/work/backlog/](thoughts/work/backlog/) for planned work.
+See [roadmap.md](thoughts/roadmap.md) for complete roadmap.
 
 ---
 

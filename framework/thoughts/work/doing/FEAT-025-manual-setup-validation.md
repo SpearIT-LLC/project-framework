@@ -18,7 +18,7 @@ Manually execute the framework setup process for **Standard level only** by crea
 
 **What problem does this solve?**
 
-We've built templates and documentation but never validated the end-to-end user journey: "download framework → setup project → working structure." Documentation references paths like `thoughts/framework/templates/` that may not exist after setup. NEW-PROJECT-CHECKLIST.md has never been tested. We don't know if the setup process actually works.
+We've built templates and documentation but never validated the end-to-end user journey: "download framework → setup project → working structure." NEW-PROJECT-CHECKLIST.md has never been tested. We don't know if the setup process actually works or if users can access framework templates correctly.
 
 **Risk Level:** HIGH - This is the foundational user experience. If setup is broken, nothing else matters.
 
@@ -44,9 +44,9 @@ None - we've been developing the framework templates but not validating the setu
 - [ ] Create 2-3 sample work items showing framework workflow
 - [ ] Create 1 sample ADR showing decision documentation
 - [ ] Create sample session history
-- [ ] Validate final directory structure matches expected paths
-- [ ] Confirm `thoughts/framework/templates/` exists and is accessible
-- [ ] Test copying templates from `thoughts/framework/templates/` to work items
+- [ ] Validate final directory structure matches PROJECT-STRUCTURE-STANDARD.md
+- [ ] Confirm framework templates in `framework/templates/` are accessible
+- [ ] Test copying templates from `framework/templates/` to `thoughts/work/` folders
 - [ ] Confirm documentation path references are accurate
 
 ### Non-Functional Requirements
@@ -63,9 +63,9 @@ None - we've been developing the framework templates but not validating the setu
 ### Architecture Impact
 
 **Files Modified:**
-- `project-framework-template/standard/NEW-PROJECT-CHECKLIST.md` - Fix discovered setup issues
-- `thoughts/project/collaboration/*.md` - Fix path references if needed
-- `CLAUDE.md` - Fix template path references if needed
+- `templates/NEW-PROJECT-CHECKLIST.md` - Fix discovered setup issues
+- `framework/docs/collaboration/*.md` - Fix path references if needed
+- `framework/CLAUDE.md` - Fix template path references if needed
 
 **Files Added:**
 - `examples/greeter-standard/` - Complete Standard framework example
@@ -76,10 +76,10 @@ None - we've been developing the framework templates but not validating the setu
 
 **Phase 1: Setup Standard Framework Example**
 1. Create `examples/greeter-standard/` directory
-2. Copy `project-framework-template/standard/` contents to `examples/greeter-standard/`
+2. Copy `templates/standard/` contents to `examples/greeter-standard/`
 3. Follow NEW-PROJECT-CHECKLIST.md Standard section exactly
 4. Document every issue, confusing step, or missing instruction in FEAT-025 work item
-5. Verify final directory structure
+5. Verify final directory structure matches PROJECT-STRUCTURE-STANDARD.md
 
 **Phase 2: Implement Greeter Application**
 1. Create basic `src/Greet.ps1` (Hello World functionality)
@@ -89,12 +89,12 @@ None - we've been developing the framework templates but not validating the setu
 5. Initialize CHANGELOG.md
 
 **Phase 3: Test Framework Workflow**
-1. Create FEAT-001: "Add custom greetings" in backlog
+1. Create FEAT-001: "Add custom greetings" in `thoughts/work/backlog/`
 2. Move through backlog → todo → doing → done (following kanban workflow)
 3. Implement Add-Greeting.ps1 functionality
-4. Create ADR-001: "JSON config format choice" in research/adr/
-5. Create sample session history documenting development
-6. **CRITICAL TEST:** Copy template from `thoughts/framework/templates/FEATURE-TEMPLATE.md` to work item
+4. Create ADR-001: "JSON config format choice" in `thoughts/research/adr/`
+5. Create sample session history in `thoughts/history/sessions/`
+6. **CRITICAL TEST:** Copy template from `framework/templates/work-items/FEATURE-TEMPLATE.md` to work item
 7. Verify all paths work as documented
 
 **Phase 4: Validate & Fix Documentation**
@@ -134,8 +134,9 @@ None - we've been developing the framework templates but not validating the setu
 ## Dependencies
 
 **Requires:**
-- Current template structure in `project-framework-template/{minimal,light,standard}/`
-- NEW-PROJECT-CHECKLIST.md
+- Current template structure in `templates/{minimal,light,standard}/`
+- `templates/NEW-PROJECT-CHECKLIST.md`
+- PROJECT-STRUCTURE-STANDARD.md as validation specification
 
 **Blocks:**
 - FEAT-005 (ZIP distribution package) - Should wait until Standard setup is validated
@@ -153,10 +154,10 @@ None - we've been developing the framework templates but not validating the setu
 
 **Standard Framework Setup:**
 - [ ] Create examples/greeter-standard/ directory
-- [ ] Copy project-framework-template/standard/ contents
+- [ ] Copy templates/standard/ contents
 - [ ] Follow NEW-PROJECT-CHECKLIST.md Standard section step-by-step
 - [ ] Document every issue, missing step, or unclear instruction
-- [ ] Verify complete directory structure created
+- [ ] Verify directory structure matches PROJECT-STRUCTURE-STANDARD.md
 
 **Greeter Application Implementation:**
 - [ ] Implement basic Greet.ps1 (Hello World)
@@ -165,19 +166,20 @@ None - we've been developing the framework templates but not validating the setu
 - [ ] Verify application works: `.\src\Greet.ps1 -Name "Alice"`
 
 **Framework Workflow Testing:**
-- [ ] **CRITICAL:** Verify `thoughts/framework/templates/` directory exists
-- [ ] **CRITICAL:** Test template copy: `cp thoughts/framework/templates/FEATURE-TEMPLATE.md thoughts/project/planning/backlog/FEAT-001-custom-greetings.md`
-- [ ] Create FEAT-001 work item in backlog/
+- [ ] **CRITICAL:** Verify `framework/templates/` directory is accessible
+- [ ] **CRITICAL:** Test template copy: `cp framework/templates/work-items/FEATURE-TEMPLATE.md thoughts/work/backlog/FEAT-001-custom-greetings.md`
+- [ ] Create FEAT-001 work item in `thoughts/work/backlog/`
 - [ ] Move FEAT-001: backlog/ → todo/ → doing/ → done/
 - [ ] Implement Add-Greeting.ps1 feature
-- [ ] Create ADR-001 in research/adr/
-- [ ] Create session history in history/
+- [ ] Create ADR-001 in `thoughts/research/adr/`
+- [ ] Create session history in `thoughts/history/sessions/`
 - [ ] Verify kanban workflow functions correctly
 
 **Path Validation:**
-- [ ] Compare documented paths in CLAUDE.md with actual paths in greeter-standard/
-- [ ] Compare documented paths in collaboration/*.md with actual paths
+- [ ] Compare documented paths in framework/CLAUDE.md with actual paths in greeter-standard/
+- [ ] Compare documented paths in framework/docs/collaboration/*.md with actual paths
 - [ ] Test all path references in documentation
+- [ ] Validate against PROJECT-STRUCTURE-STANDARD.md specification
 - [ ] Create list of path corrections needed
 
 **Documentation Updates:**
@@ -240,77 +242,20 @@ None - we've been developing the framework templates but not validating the setu
 
 ## Open Questions
 
-**CRITICAL: These must be answered at Step 7.5 (Pre-Implementation Review) before proceeding.**
+**Note:** Many questions were resolved by FEAT-026 restructuring. Remaining questions below.
 
-### Q1: File Structure - Where do examples live?
+### Q1: File Structure - Where do examples live? ✅ RESOLVED
 
-**Options:**
+**Decision (FEAT-026):** Examples live at repository root in `examples/` folder.
+- `examples/hello-world/` already exists as Standard reference implementation
+- This work item creates `examples/greeter-standard/` for validation
 
-**Option A: Top-level `examples/` directory**
-```
-project-framework/
-├── examples/
-│   ├── task-timer-minimal/
-│   ├── task-timer-light/
-│   └── task-timer-standard/
-├── project-framework-template/
-├── thoughts/
-└── ...
-```
-- Pros: Clean separation, easy to find, matches common practice
-- Cons: Another top-level directory
+### Q2: Archive Strategy - What gets saved after validation? ✅ RESOLVED
 
-**Option B: Inside `project-framework-template/examples/`**
-```
-project-framework/
-├── project-framework-template/
-│   ├── examples/
-│   │   ├── task-timer-minimal/
-│   │   ├── task-timer-light/
-│   │   └── task-timer-standard/
-│   ├── minimal/
-│   ├── light/
-│   └── standard/
-└── ...
-```
-- Pros: Keeps template-related content together
-- Cons: Examples aren't templates, they're working projects
-
-**Option C: `thoughts/project/reference/examples/`**
-```
-project-framework/
-├── thoughts/
-│   └── project/
-│       └── reference/
-│           └── examples/
-│               ├── task-timer-minimal/
-│               ├── task-timer-light/
-│               └── task-timer-standard/
-└── ...
-```
-- Pros: Part of project documentation/reference
-- Cons: Deeply nested, harder to discover
-
-**Question:** Which structure best serves users looking for examples?
-
-### Q2: Archive Strategy - What gets saved after validation?
-
-**The examples themselves:**
-- Keep permanently as reference examples? OR
-- Delete after validation complete (documentation is what matters)? OR
-- Move to `thoughts/project/reference/examples/` for archival?
-
-**The validation notes:**
-- Create `FEAT-025-VALIDATION-NOTES.md` alongside work item?
-- Include directly in FEAT-025 work item?
-- Separate file in `thoughts/project/reference/`?
-
-**Test results:**
-- Create `FEAT-025-TEST-RESULTS.md` (like FEAT-020)?
-- Include in work item?
-- Create checklist in work item that gets checked off?
-
-**Question:** What artifacts persist after this work item is done?
+**Decision (FEAT-026):**
+- Examples are permanent reference implementations (kept in `examples/`)
+- Validation notes co-locate with work item in `thoughts/work/`
+- Work items archive to `thoughts/history/releases/vX.Y.Z/` at release
 
 ### Q3: Testing This Work Item - What's the validation process?
 
@@ -437,30 +382,31 @@ greeter-light/
 │   └── Get-Greeting.ps1  # Helper function
 ├── config.json           # Greeting messages
 └── thoughts/
-    └── project/
-        └── history/      # Decision log
+    └── history/          # Decision log (flat structure for Light)
 ```
 
 **Standard example (`greeter-standard`):**
 ```
 greeter-standard/
-├── [Full framework structure]
+├── [Full framework structure per PROJECT-STRUCTURE-STANDARD.md]
 ├── src/
 │   ├── Greet.ps1
 │   ├── Add-Greeting.ps1     # Add custom greetings
 │   └── Get-GreetingList.ps1 # List available greetings
 ├── config.json
 └── thoughts/
-    └── project/
-        ├── work/
-        │   ├── todo/
-        │   ├── doing/
-        │   └── done/
-        │       ├── FEAT-001-add-custom-greetings.md
-        │       └── FEAT-002-list-greetings.md
-        └── research/
-            └── adr/
-                └── 001-json-config-format.md
+    ├── work/
+    │   ├── backlog/
+    │   ├── todo/
+    │   ├── doing/
+    │   └── done/
+    │       ├── FEAT-001-add-custom-greetings.md
+    │       └── FEAT-002-list-greetings.md
+    ├── history/
+    │   └── sessions/
+    └── research/
+        └── adr/
+            └── 001-json-config-format.md
 ```
 
 **Application features by level:**
@@ -515,11 +461,11 @@ This is the highest-risk item in the backlog because:
 
 **Discovery during planning:**
 
-User identified that documentation references `thoughts/framework/templates/` but that path may not exist after setup. This work item validates whether:
-- Path exists after setup
-- Documentation is accurate
-- Templates are accessible as documented
-- Setup process actually works
+User identified that documentation may have outdated path references. This work item validates:
+- Setup process creates correct structure per PROJECT-STRUCTURE-STANDARD.md
+- Documentation paths are accurate
+- Framework templates (`framework/templates/`) are accessible to users
+- Setup process actually works end-to-end
 
 **Approach:**
 
@@ -532,8 +478,10 @@ Manual validation first, automation second. Prove the concept works before build
 - FEAT-005: ZIP Distribution Package (blocked by this)
 - FEAT-006: Interactive Setup Script (blocked by this)
 - FEAT-011: Comprehensive Sample Project (this is minimal version)
-- NEW-PROJECT-CHECKLIST.md (being validated)
+- `templates/NEW-PROJECT-CHECKLIST.md` (being validated)
+- `framework/docs/PROJECT-STRUCTURE-STANDARD.md` (validation specification)
+- `examples/hello-world/` (existing Standard reference - compare against)
 
 ---
 
-**Last Updated:** 2026-01-01
+**Last Updated:** 2026-01-21
