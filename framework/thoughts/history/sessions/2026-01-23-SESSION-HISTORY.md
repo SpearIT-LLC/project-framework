@@ -298,4 +298,96 @@ Completed TECH-069 (Work Item Cancellation Process). Added comprehensive cancell
 
 ---
 
+## Session 4: Issue Response Process Documentation
+
+### Summary
+
+Started TECH-070 (originally "Rollback Policy") and expanded scope significantly during implementation. Through discussion, evolved from narrow rollback documentation to comprehensive "Issue Response Process" covering all issue discovery scenarios. Added full process to version-control-workflow.md. Created sub-task TECH-070.1 for validation testing. Paused TECH-070 pending validation.
+
+### Work Completed
+
+#### TECH-070: Issue Response Process - PAUSED (Documentation Complete)
+
+- Expanded scope from "Rollback Policy" to "Issue Response Process"
+- Added comprehensive section to version-control-workflow.md:
+  - Four-phase process: Triage → Assess → Decide → Resolve
+  - Severity classification (Critical/High/Medium/Low)
+  - Impact assessment with function-level conflict analysis
+  - Assessment report template
+  - Decision matrix for resolution path selection
+  - Four resolution paths: Fix in place, Fix forward, Rollback, Hotfix
+  - Rollback branch strategy and limitations
+  - Version numbering and CHANGELOG formats for each path
+  - Complete test scenario with exercises
+- Synced to templates/standard/
+- Created TECH-070.1 sub-task for validation testing
+- Moved back to todo/ pending validation
+
+### Decisions Made
+
+1. **Expanded scope from rollback to issue response**
+   - Original: Document rollback/revert policy only
+   - Realized: When issue is reported, we don't know if it's a rollback situation yet
+   - Solution: Universal triage → assess → decide → resolve process
+   - Covers issues discovered at any point (development, testing, post-release)
+
+2. **Function-level impact assessment**
+   - File-level change detection insufficient
+   - Need to identify which functions/line ranges are affected
+   - Enables accurate conflict detection for rollback viability
+
+3. **Rollback branch strategy**
+   - Never revert directly on main
+   - Use dedicated `rollback/vX.Y.Z-reason` branch
+   - Test before merging, abandon if tests fail
+   - Safer, consistent with feature/bugfix branch patterns
+
+4. **Rollback limitations documented**
+   - Practical window: Most recent release only
+   - Older releases likely have conflicts with subsequent releases
+   - Data/schema changes cannot be reverted by code rollback
+   - These scenarios require fix-forward
+
+5. **Validation testing as separate sub-task**
+   - Documentation complete, but test scenario not executed
+   - Created TECH-070.1 for validation testing
+   - Allows pausing TECH-070 without blocking progress
+
+### Files Created
+
+- `framework/thoughts/work/todo/TECH-070.1-validate-issue-response-process.md`
+
+### Files Modified
+
+- `framework/docs/process/version-control-workflow.md` - Added Issue Response Process section (~600 lines)
+- `templates/standard/framework/docs/process/version-control-workflow.md` - Synced
+- `framework/thoughts/work/todo/TECH-070-issue-response-process.md` - Updated with delivered solution, marked paused
+
+### Files Moved/Renamed
+
+- `TECH-070`: doing/ → todo/ (paused for validation)
+- `TECH-070-rollback-policy.md` → `TECH-070-issue-response-process.md`
+
+---
+
+## Current State (End of Session 4)
+
+### In done/ (awaiting release)
+- FEAT-025: Manual Setup Process Validation
+- FEAT-031: Source-of-Truth Topic Registry
+- TECH-066: Migrate existing work items to standard metadata
+- TECH-068: WIP Limit Flexibility
+- TECH-069: Work Item Cancellation Process
+- TECH-074: Include fw- Commands and Tools in Template
+
+### In todo/
+- TECH-070: Issue Response Process (High) - paused, documentation complete
+- TECH-070.1: Validate Issue Response Process (sub-task)
+- TECH-076: Add Enforcement Prompts to Workflow (High)
+
+### In doing/
+- (empty)
+
+---
+
 **Last Updated:** 2026-01-23
