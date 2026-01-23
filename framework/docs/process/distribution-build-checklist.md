@@ -236,7 +236,6 @@ These items are documented as missing and have work items to address:
 |-----|-----------|
 | Session history template | TECH-072 |
 | External reference template | TECH-073 |
-| fw- commands and tools not in template | TECH-074 |
 
 ---
 

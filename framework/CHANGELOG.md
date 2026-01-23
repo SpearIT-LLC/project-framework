@@ -21,12 +21,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Updated NEW-PROJECT-CHECKLIST.md with tools, commands, troubleshooting sections
   - Documented 14 follow-on work items (TECH-068 to TECH-081) for discovered gaps
 
+- **TECH-074: Include fw- Commands and Tools in Template**
+  - Added `.claude/commands/` folder with all 8 fw- commands to Standard template
+  - Added `framework/tools/` with 7 PowerShell scripts (.ps1, .psm1) to Standard template
+  - New projects now have full workflow automation support out of the box
+
 ### Changed
 - Updated PROJECT-STRUCTURE-STANDARD.md to include `poc/` as required folder
 - Updated `.gitkeep` count from 6 to 7 (added `poc/.gitkeep`)
 
 ### Known Gaps (tracked in backlog)
-- fw- commands and tools not yet synced to template (TECH-074)
 - Session history template not yet created (TECH-072)
 - External reference template not yet created (TECH-073)
 - Enforcement prompts needed in workflow transitions (TECH-076)

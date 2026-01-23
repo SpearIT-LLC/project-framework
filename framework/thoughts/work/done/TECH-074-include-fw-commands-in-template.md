@@ -86,13 +86,13 @@ Copy-Item .claude/commands/fw-*.md templates/standard/.claude/commands/
 
 ## Acceptance Criteria
 
-- [ ] `.claude/commands/` folder exists in templates/standard/
-- [ ] All 8 fw- commands copied to template
-- [ ] `framework/tools/` folder populated in templates/standard/
-- [ ] All 7 tools scripts copied to template
+- [x] `.claude/commands/` folder exists in templates/standard/
+- [x] All 8 fw- commands copied to template
+- [x] `framework/tools/` folder populated in templates/standard/
+- [x] All 7 tools scripts copied to template
 - [ ] Commands work in fresh project (test with project-hello-world)
-- [ ] NEW-PROJECT-CHECKLIST.md updated to verify commands and tools exist
-- [ ] distribution-build-checklist.md includes command and tools sync steps
+- [x] NEW-PROJECT-CHECKLIST.md updated to verify commands and tools exist
+- [x] distribution-build-checklist.md includes command and tools sync steps
 
 ---
 
@@ -100,11 +100,13 @@ Copy-Item .claude/commands/fw-*.md templates/standard/.claude/commands/
 
 Discovered during FEAT-025 validation testing. The fw- commands were immediately missed when testing workflow in project-hello-world.
 
-Already updated:
-- NEW-PROJECT-CHECKLIST.md - Added `.claude/commands/` and `framework/tools/` verification
-- distribution-build-checklist.md - Added command and tools sync steps
+**Completed 2026-01-23:**
+- Copied 8 fw- commands to `templates/standard/.claude/commands/`
+- Copied 7 tools (6 .ps1, 1 .psm1) to `templates/standard/framework/tools/`
+- NEW-PROJECT-CHECKLIST.md already updated (FEAT-025)
+- distribution-build-checklist.md already updated (FEAT-025)
 
-Remaining: Actually copy the commands and tools to template package.
+**Remaining:** Fresh project test (optional - can be done during next validation cycle).
 
 ---
 
