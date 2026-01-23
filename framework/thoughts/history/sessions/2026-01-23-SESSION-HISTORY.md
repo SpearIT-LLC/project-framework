@@ -161,4 +161,84 @@ From project-hello-world validation (18 work items, 6 releases):
 
 ---
 
+## Session 2: Template Sync and WIP Flexibility
+
+### Summary
+
+Continued work from Session 1. Completed TECH-074 (fw-commands and tools sync to template) and TECH-068 (renamed from "Hotfix Workflow" to "WIP Limit Flexibility" after discussion). Both items moved to done/.
+
+### Work Completed
+
+#### TECH-074: Include fw- Commands and Tools in Template - COMPLETED
+
+- Copied 8 fw- commands to `templates/standard/.claude/commands/`
+- Copied 7 tools (6 .ps1, 1 .psm1) to `templates/standard/framework/tools/`
+- New projects now have full workflow automation out of the box
+- Updated CHANGELOG and distribution-build-checklist (removed from Known Gaps)
+
+#### TECH-068: WIP Limit Flexibility - COMPLETED
+
+- Renamed scope from "Hotfix/Emergency Workflow" to "WIP Limit Flexibility"
+- Discussion revealed hotfix path better addressed through WIP flexibility
+- Added "WIP Limit Flexibility" section to workflow-guide.md:
+  - Pattern 1: Pause & Resume (recommended default)
+  - Pattern 2: Temporary WIP Bump (with guardrails)
+  - Setting Your Project's WIP Limit guidance
+- Clarified WIP limits are user-configurable, not framework-mandated
+- Synced to templates/standard/
+
+### Decisions Made
+
+1. **Hotfix workflow → WIP flexibility**
+   - Original TECH-068 proposed separate "hotfix path" bypassing workflow
+   - After discussion: overhead of pause/resume is ~2 minutes, not a real blocker
+   - Better solution: document when/how to temporarily bump WIP
+   - Keeps workflow intact, adjusts a parameter instead of bypassing rules
+
+2. **WIP limits are user-defined**
+   - Framework provides recommended defaults (1 for solo, 2 for team)
+   - Projects set their own limits via `.limit` file
+   - Documentation updated to reflect this flexibility
+
+### Files Created
+
+- `templates/standard/.claude/commands/fw-*.md` (8 files)
+- `templates/standard/framework/tools/*.ps1` (6 files)
+- `templates/standard/framework/tools/FrameworkWorkflow.psm1`
+
+### Files Modified
+
+- `framework/docs/collaboration/workflow-guide.md` - Added WIP Limit Flexibility section (v1.2.0 → v1.3.0)
+- `templates/standard/framework/docs/collaboration/workflow-guide.md` - Synced
+- `framework/CHANGELOG.md` - Added TECH-074 accomplishments, removed from Known Gaps
+- `framework/docs/process/distribution-build-checklist.md` - Removed TECH-074 from Known Gaps
+- `framework/thoughts/work/doing/TECH-068-hotfix-emergency-workflow.md` - Renamed scope, updated acceptance criteria
+- `framework/thoughts/work/doing/TECH-074-include-fw-commands-in-template.md` - Marked complete
+
+### Files Moved
+
+- `TECH-074-include-fw-commands-in-template.md`: todo/ → doing/ → done/
+- `TECH-068-hotfix-emergency-workflow.md`: todo/ → doing/ → done/
+
+---
+
+## Current State (End of Session 2)
+
+### In done/ (awaiting release)
+- FEAT-025: Manual Setup Process Validation
+- FEAT-031: Source-of-Truth Topic Registry
+- TECH-066: Migrate existing work items to standard metadata
+- TECH-068: WIP Limit Flexibility (was: Hotfix Workflow)
+- TECH-074: Include fw- Commands and Tools in Template
+
+### In todo/
+- TECH-069: Work Item Cancellation Process (High)
+- TECH-070: Rollback/Revert Policy (High)
+- TECH-076: Add Enforcement Prompts to Workflow (High)
+
+### In doing/
+- (empty)
+
+---
+
 **Last Updated:** 2026-01-23
