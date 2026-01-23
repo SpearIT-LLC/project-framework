@@ -360,6 +360,10 @@ Not all transitions are valid. Use this matrix to determine if a transition is a
 | doing | backlog | ❌ | Use todo as intermediate state |
 | done | history | ✅ | Post-release archival |
 | done | * | ❌ | No reopening (create new work item) |
+| backlog | archive | ✅ | Cancellation (most common) |
+| todo | archive | ✅ | Cancellation (commitment withdrawn) |
+| doing | archive | ✅ | Cancellation (work abandoned) |
+| done | archive | ✅ | Cancellation (rare, retroactive) |
 
 **Invalid Transition Handling:**
 
@@ -411,6 +415,89 @@ When moving a work item, complete the checklist for the target folder:
 - [ ] Work has been released (version tagged)
 - [ ] Use `git mv` (not `cp`) to move files
 - [ ] Verify done/ is empty after archival
+
+#### → history/archive/ (Cancellation)
+- [ ] Transition is valid (check matrix above)
+- [ ] Cancellation reason documented in work item
+- [ ] Status and date fields added (see Cancellation Process below)
+- [ ] Use `git mv` (not `cp`) to move files
+- [ ] Session history updated noting the cancellation
+
+### Cancellation Process
+
+When work items are cancelled, outdated, or superseded, they move to `history/archive/` rather than being deleted. This preserves context and lessons learned.
+
+#### When to Cancel vs Deprioritize
+
+| Situation | Action | Destination |
+|-----------|--------|-------------|
+| Work no longer needed | Cancel | archive/ |
+| Requirements changed fundamentally | Cancel | archive/ |
+| Superseded by different approach | Cancel | archive/ |
+| Lower priority, may do later | Deprioritize | backlog/ |
+| Blocked temporarily | Pause | todo/ or backlog/ |
+
+**Rule of thumb:** If the work item as written will *never* be done, cancel it. If it *might* be done later, deprioritize it.
+
+#### Required Cancellation Metadata
+
+Add these fields to the work item before archiving:
+
+```markdown
+**Status:** Cancelled
+**Cancelled Date:** YYYY-MM-DD
+**Cancellation Reason:** [Brief explanation]
+```
+
+**Optional fields:**
+```markdown
+**Superseded By:** ITEM-NNN
+**Lessons Learned:** [What we learned from this]
+```
+
+#### Cancellation Steps
+
+1. **Update the work item** with cancellation metadata (Status, Date, Reason)
+2. **Add lessons learned** if applicable (optional but valuable)
+3. **Move to archive:** `git mv thoughts/work/[folder]/ITEM-NNN-*.md thoughts/history/archive/`
+4. **Update session history** noting the cancellation
+5. **Commit:** `git commit -m "chore: Cancel ITEM-NNN - [brief reason]"`
+
+#### Example Cancellation
+
+**Before (in backlog/):**
+```markdown
+# Feature: Add PDF Export
+
+**ID:** FEAT-042
+**Type:** Feature
+**Priority:** Medium
+**Created:** 2026-01-10
+
+## Summary
+Add ability to export reports as PDF files.
+```
+
+**After (in archive/):**
+```markdown
+# Feature: Add PDF Export
+
+**ID:** FEAT-042
+**Type:** Feature
+**Priority:** Medium
+**Created:** 2026-01-10
+**Status:** Cancelled
+**Cancelled Date:** 2026-01-23
+**Cancellation Reason:** Users prefer CSV export; PDF adds complexity without demand.
+
+## Summary
+Add ability to export reports as PDF files.
+
+## Lessons Learned
+- Validated with 5 users before cancelling - none needed PDF
+- CSV export covers 95% of use cases
+- Consider user research before committing to export formats
+```
 
 ### Policy Reference
 

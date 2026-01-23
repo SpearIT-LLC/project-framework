@@ -71,11 +71,11 @@ Add cancellation process section to `workflow-guide.md`:
 
 ## Acceptance Criteria
 
-- [ ] Cancellation process documented in workflow-guide.md
-- [ ] Valid transition paths to archive defined
-- [ ] Required metadata fields documented
-- [ ] Example cancellation shown
-- [ ] Template synced to templates/standard/
+- [x] Cancellation process documented in workflow-guide.md
+- [x] Valid transition paths to archive defined
+- [x] Required metadata fields documented
+- [x] Example cancellation shown
+- [x] Template synced to templates/standard/
 
 ---
 

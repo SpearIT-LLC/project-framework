@@ -241,4 +241,61 @@ Continued work from Session 1. Completed TECH-074 (fw-commands and tools sync to
 
 ---
 
+## Session 3: Cancellation Process Documentation
+
+### Summary
+
+Completed TECH-069 (Work Item Cancellation Process). Added comprehensive cancellation documentation to workflow-guide.md including transition matrix updates, archive checklist, and full cancellation process with examples. Synced to templates/standard/.
+
+### Work Completed
+
+#### TECH-069: Work Item Cancellation Process - COMPLETED
+
+- Added 4 archive transitions to Transition Validity Matrix (backlog/todo/doing/done → archive)
+- Added `→ history/archive/ (Cancellation)` checklist with 5 items
+- Added "Cancellation Process" section with:
+  - When to Cancel vs Deprioritize decision table
+  - Required Cancellation Metadata (Status, Date, Reason + optional fields)
+  - 5-step Cancellation Steps process
+  - Full before/after example (FEAT-042 PDF Export)
+- Synced all changes to templates/standard/
+
+### Decisions Made
+
+1. **Keep archive/ as general-purpose catch-all**
+   - Discussed whether to create separate `cancelled/` folder for "location is the status" consistency
+   - Decided: archive/ serves multiple purposes (cancelled, outdated, superseded)
+   - Metadata in file (Status: Cancelled) provides the specific reason
+   - Avoids folder proliferation for rare transitions
+
+### Files Modified
+
+- `framework/docs/collaboration/workflow-guide.md` - Added cancellation section
+- `templates/standard/framework/docs/collaboration/workflow-guide.md` - Synced
+
+### Files Moved
+
+- `TECH-069-cancellation-process.md`: todo/ → doing/ → done/
+
+---
+
+## Current State (End of Session 3)
+
+### In done/ (awaiting release)
+- FEAT-025: Manual Setup Process Validation
+- FEAT-031: Source-of-Truth Topic Registry
+- TECH-066: Migrate existing work items to standard metadata
+- TECH-068: WIP Limit Flexibility
+- TECH-069: Work Item Cancellation Process
+- TECH-074: Include fw- Commands and Tools in Template
+
+### In todo/
+- TECH-070: Rollback/Revert Policy (High)
+- TECH-076: Add Enforcement Prompts to Workflow (High)
+
+### In doing/
+- (empty)
+
+---
+
 **Last Updated:** 2026-01-23
