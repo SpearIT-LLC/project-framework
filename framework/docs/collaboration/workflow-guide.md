@@ -448,18 +448,33 @@ User Idea → Backlog → [User Approval] → Todo → Doing → Done → Releas
 ```
 
 **WIP Limits:**
-- Check `thoughts/work/doing/.limit` file
-- Default: 1-2 items maximum in doing/
-- Never exceed WIP limit
-- Complete current work before starting new
+- Check `thoughts/work/doing/.limit` file for your project's configured limit
+- Framework default: 1 item (solo developer) or 2 items (small team)
+- Projects can set their own limits based on team size and workflow
+- Complete current work before starting new (up to your limit)
 
 #### WIP Limit Flexibility
 
-WIP limits are tools for maintaining focus, not rigid laws. This section provides guidance on when and how to handle situations that require flexibility.
+WIP limits are user-defined tools for maintaining focus, not rigid laws. The `.limit` file value is yours to set based on your project's needs.
+
+**Setting Your Project's WIP Limit:**
+
+```bash
+# Solo developer (recommended default)
+echo "1" > thoughts/work/doing/.limit
+
+# Small team or parallel workstreams
+echo "2" > thoughts/work/doing/.limit
+
+# Larger team (consider if this is really needed)
+echo "3" > thoughts/work/doing/.limit
+```
+
+Choose a limit that enforces focus without being unrealistic for your context.
 
 **Pattern 1: Pause & Resume (Recommended)**
 
-When new work arrives while you're mid-feature:
+When new work arrives while you're at your WIP limit:
 
 1. Move current work item from `doing/` back to `todo/`
 2. Create and move new item to `doing/`
@@ -475,7 +490,7 @@ When new work arrives while you're mid-feature:
 
 **Pattern 2: Temporary WIP Bump**
 
-Temporarily increase WIP limit (e.g., from 1 to 2) when parallel work is genuinely needed.
+Temporarily increase your WIP limit when parallel work is genuinely needed.
 
 **When appropriate:**
 - Production issue while mid-flight on a feature (costly to context-switch)
@@ -484,16 +499,19 @@ Temporarily increase WIP limit (e.g., from 1 to 2) when parallel work is genuine
 
 **Guardrails:**
 - Document *why* you're bumping WIP (in work item or session history)
-- Set a time limit ("WIP=2 until EOD" or "until BUG-123 ships")
-- Return to normal WIP as soon as one item completes
-- Don't make WIP bump the default - it defeats the purpose
+- Set a time limit ("WIP+1 until EOD" or "until BUG-123 ships")
+- Return to your normal WIP as soon as one item completes
+- Temporary bumps should be exceptions, not the norm
 
 **How to temporarily bump:**
 ```bash
-# Increase limit
+# Check current limit
+cat thoughts/work/doing/.limit  # Shows: 1
+
+# Increase temporarily
 echo "2" > thoughts/work/doing/.limit
 
-# After completing one item, restore
+# After completing one item, restore your normal limit
 echo "1" > thoughts/work/doing/.limit
 ```
 
@@ -504,7 +522,7 @@ echo "1" > thoughts/work/doing/.limit
 3. **WIP limits exist for a reason** - They prevent context-switching chaos and ensure completion
 4. **When in doubt, pause and resume** - It's the simpler, safer pattern
 
-**Anti-pattern:** Permanently increasing WIP limit because "we always have urgent interrupts." If this happens frequently, the problem is prioritization or team structure, not the WIP limit.
+**Anti-pattern:** Permanently increasing WIP limit because "we always have urgent interrupts." If this happens frequently, the problem is prioritization or team structure, not the WIP limit. Consider whether your baseline limit is set appropriately for your context.
 
 **For AI assistants:** See CLAUDE.md "AI Workflow Checkpoint Policy" for mandatory approval checkpoints.
 
