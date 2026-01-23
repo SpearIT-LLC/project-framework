@@ -255,6 +255,21 @@ Completed comprehensive rebuild of `templates/standard/` package. Rewrote all ro
 - `templates/standard/framework/CLAUDE.md`
 - `templates/standard/framework/CLAUDE-QUICK-REFERENCE.md`
 
+### Session 4 Completion
+
+- Committed template rebuild: `feat(FEAT-025): Rebuild templates/standard/ for v3.0.0 structure`
+- Copied `templates/standard/` to external test project: `C:\Users\gelliott\OneDrive\Documents\SpearIT\Projects\project-hello-world`
+- Created `SETUP-VALIDATION-NOTES.md` in test project for capturing validation feedback
+
+### Validation Handoff
+
+User will switch to `project-hello-world` to:
+1. Follow NEW-PROJECT-CHECKLIST.md step by step
+2. Replace placeholder values (`{{PROJECT_NAME}}`, `{{DATE}}`, etc.)
+3. Initialize git repository
+4. Document issues in `SETUP-VALIDATION-NOTES.md`
+5. Return findings to FEAT-025 in this repo
+
 ---
 
 ## Current State
@@ -264,15 +279,10 @@ Completed comprehensive rebuild of `templates/standard/` package. Rewrote all ro
 - TECH-066: Migrate existing work items to standard metadata
 
 ### In doing/
-- FEAT-025: Manual Setup Process Validation (template rebuild complete, ready for validation)
+- FEAT-025: Manual Setup Process Validation (validation phase - test project ready)
 
 ### In backlog/
 - TECH-067: Consolidate AI sections into workflow-guide.md
-
-### Next Steps
-1. Copy `templates/standard/` to external test project
-2. Follow NEW-PROJECT-CHECKLIST.md to validate setup process
-3. Document findings, fix issues discovered
 
 ---
 

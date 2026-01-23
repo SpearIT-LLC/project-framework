@@ -484,4 +484,91 @@ Manual validation first, automation second. Prove the concept works before build
 
 ---
 
-**Last Updated:** 2026-01-21
+## Validation Results (2026-01-23)
+
+### Test Summary
+
+**Test Project:** project-hello-world (separate repository)
+**Test Period:** 2026-01-21 to 2026-01-23
+**Releases Tested:** v0.1.0 through v1.0.1 (6 releases)
+**Work Items Tested:** 18 items covering all workflow scenarios
+
+**Overall Assessment:** Framework provides solid structure but relies heavily on AI/operator discipline. Most constraints are advisory with no enforcement mechanisms.
+
+### Critical Findings
+
+| Category | Finding | Impact |
+|----------|---------|--------|
+| **Workflow Bypass** | AI skipped transition states 3 times (backlog→doing, backlog→done) | Process discipline undermined |
+| **WIP Limits** | Only enforced when AI actively thinking about limits | Context-sensitive, unreliable |
+| **Dependencies** | `Depends On` field never checked before moving items | Dependencies ignored |
+| **Pre-approval** | AI presents summary but proceeds without waiting | No user checkpoint |
+
+### Missing from Template Package
+
+| Component | Status | Priority |
+|-----------|--------|----------|
+| `.claude/commands/fw-*.md` (8 commands) | Not included | High |
+| `tools/` folder | Not included | Medium |
+| `poc/` folder | Not included | Low |
+| Session history template | Not in templates/documentation/ | Medium |
+| External reference template | Not in templates/ | Medium |
+
+### Missing Process Documentation
+
+| Process | Status | Priority |
+|---------|--------|----------|
+| Hotfix/emergency workflow | Not documented | High |
+| Work item cancellation | Not documented | High |
+| Rollback/revert policy | Not documented | High |
+| Session handoff checklist | Not documented | Medium |
+| Empty release guard | Not documented | Low |
+
+### Documentation Issues
+
+| Issue | Location | Fix |
+|-------|----------|-----|
+| Spike workflow contradiction | workflow-guide.md lines 348-378 vs 458-498 | Reconcile matrix with spike flow |
+| Release → session history | workflow-guide.md lines 171-210 | Add session history update step |
+| `/fw-move` referenced but missing | workflow-guide.md line 407 | Include in distribution |
+
+### What Worked Well
+
+1. AI-guided setup process worked smoothly
+2. Git workflow (init, commits, tags) correct
+3. Work item templates provided good structure
+4. Session history excellent for cross-session continuity
+5. Grouped releases worked well
+6. Batch work item creation clean
+
+### Proposed Fixes
+
+**Priority 1: Add enforcement prompts to transition documentation**
+- "Check `.limit` file before moving to doing/"
+- "Verify all `Depends On` items are in done/"
+- "STOP and wait for user approval after presenting summary"
+
+**Priority 2: Document missing processes**
+- Hotfix/emergency workflow
+- Cancellation process (5-step proposed)
+- Rollback policy (6-step proposed)
+- Session handoff checklists
+
+**Priority 3: Add missing templates**
+- Session history template
+- External reference template with metadata header
+
+**Priority 4: Include missing components in distribution**
+- Copy `.claude/commands/` to template package
+- Add `tools/` placeholder
+- Add `poc/` placeholder (optional)
+
+### Test Artifacts
+
+Full test documentation in separate project:
+- `C:\Users\gelliott\OneDrive\Documents\SpearIT\Projects\project-hello-world\SETUP-VALIDATION-NOTES.md`
+- `C:\Users\gelliott\OneDrive\Documents\SpearIT\Projects\project-hello-world\FRAMEWORK-TEST-RESULTS.md`
+
+---
+
+**Last Updated:** 2026-01-23

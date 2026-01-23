@@ -64,6 +64,10 @@ Standard user projects typically create a single-project repository and follow t
 │       ├── architecture/            # OPTIONAL - Architecture docs
 │       └── deployment/              # OPTIONAL - Deployment docs
 │
+├── poc/                              # REQUIRED - Proof-of-concept and experiments
+│   ├── .gitkeep                     # REQUIRED (if empty)
+│   └── README.md                    # REQUIRED - POC folder purpose
+│
 ├── templates/                        # OPTIONAL - Only if project produces templates
 ├── tools/                            # OPTIONAL - Only if project has utilities
 │
@@ -354,13 +358,14 @@ See also: [research/README.md](../research/README.md) for distinction.
 
 **Purpose:** Ensure empty folders exist after git clone
 
-**Locations (6 files per project):**
+**Locations (7 files per project):**
 1. `src/.gitkeep`
 2. `tests/.gitkeep`
-3. `thoughts/work/backlog/.gitkeep`
-4. `thoughts/work/todo/.gitkeep`
-5. `thoughts/work/doing/.gitkeep`
-6. `thoughts/work/done/.gitkeep`
+3. `poc/.gitkeep`
+4. `thoughts/work/backlog/.gitkeep`
+5. `thoughts/work/todo/.gitkeep`
+6. `thoughts/work/doing/.gitkeep`
+7. `thoughts/work/done/.gitkeep`
 
 **Policy:** Selective strategy (only where needed for user experience)
 

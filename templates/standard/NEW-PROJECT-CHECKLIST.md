@@ -69,14 +69,17 @@ git tag -a v0.1.0 -m "Initial setup"
 - [ ] Copy `templates/standard/.gitignore` to your project root
 - [ ] Verify folder structure exists:
   - [ ] `framework/` - Framework documentation and templates
+  - [ ] `framework/tools/` - Framework workflow scripts
   - [ ] `src/` - Source code (empty)
   - [ ] `tests/` - Test files (empty)
   - [ ] `docs/` - Project documentation
+  - [ ] `poc/` - Proof-of-concept and experimental work
   - [ ] `thoughts/work/` - Kanban workflow folders
   - [ ] `thoughts/history/` - Session logs and archives
   - [ ] `thoughts/research/` - Research and ADRs
   - [ ] `thoughts/retrospectives/` - Project retrospectives
   - [ ] `thoughts/external-references/` - Cached references
+  - [ ] `.claude/commands/` - Claude Code slash commands (fw-* commands)
 
 ### Phase 2: Configure Project
 
@@ -153,10 +156,26 @@ git tag -a v0.1.0 -m "Initial setup"
   Get-ChildItem framework/templates/decisions/
   ```
 
+- [ ] **Verify framework tools accessible**
+  ```powershell
+  Get-ChildItem framework/tools/*.ps1
+  # Should list: Get-NextWorkItemId, Move-WorkItem, Get-BacklogItems,
+  #              Get-WorkflowStatus, Get-FrameworkIndex, validate-framework
+  ```
+
 - [ ] **Test Claude integration** (if using Claude Code)
   - [ ] Open Claude Code in project directory
   - [ ] Verify CLAUDE.md is loaded
   - [ ] Ask Claude about project structure
+  - [ ] Test `/fw-help` command works
+  - [ ] Test `/fw-status` command works
+
+- [ ] **Verify Claude Code commands**
+  ```powershell
+  Get-ChildItem .claude/commands/fw-*.md
+  # Should list: fw-backlog, fw-help, fw-move, fw-next-id,
+  #              fw-session-history, fw-status, fw-topic-index, fw-wip
+  ```
 
 ---
 
@@ -169,15 +188,17 @@ After setup, create your first work item:
 Copy-Item framework/templates/work-items/FEAT-NNN-template.md thoughts/work/backlog/FEAT-001-first-feature.md
 
 # Edit the work item
-# Move to todo when ready to plan
-Move-Item thoughts/work/backlog/FEAT-001-*.md thoughts/work/todo/
+# Move to todo when ready to plan (use git mv to preserve history)
+git mv thoughts/work/backlog/FEAT-001-*.md thoughts/work/todo/
 
 # Move to doing when ready to implement (max 1)
-Move-Item thoughts/work/todo/FEAT-001-*.md thoughts/work/doing/
+git mv thoughts/work/todo/FEAT-001-*.md thoughts/work/doing/
 
 # Move to done when complete
-Move-Item thoughts/work/doing/FEAT-001-*.md thoughts/work/done/
+git mv thoughts/work/doing/FEAT-001-*.md thoughts/work/done/
 ```
+
+**Important:** Always use `git mv` instead of `Move-Item` to preserve file history across transitions.
 
 ---
 
@@ -203,8 +224,11 @@ Move-Item thoughts/work/doing/FEAT-001-*.md thoughts/work/done/
 | `framework/docs/patterns/` | Implementation patterns |
 | `framework/templates/work-items/` | Feature, bug, spike templates |
 | `framework/templates/decisions/` | ADR templates |
-| `framework/templates/documentation/` | Session history templates |
+| `framework/templates/documentation/` | README, CHANGELOG, session history, external reference templates |
 | `framework/templates/research/` | Research phase templates |
+| `framework/tools/` | PowerShell scripts for workflow automation |
+| `poc/` | Proof-of-concept and experimental work |
+| `.claude/commands/` | Claude Code slash commands (fw-* workflow commands) |
 
 ---
 
@@ -216,6 +240,17 @@ Move-Item thoughts/work/doing/FEAT-001-*.md thoughts/work/done/
 | `thoughts/work/todo/` | Committed next work | 10 |
 | `thoughts/work/doing/` | Active work | 1 |
 | `thoughts/work/done/` | Completed, awaiting release | None |
+
+---
+
+## Optional Components
+
+These folders are optional and can be created as needed:
+
+| Folder | Purpose | When to Add |
+|--------|---------|-------------|
+| `tools/` | Project-specific utility scripts | When you have helper scripts beyond framework tools |
+| `templates/` | Project-specific templates | When project produces templates for others |
 
 ---
 
@@ -234,8 +269,11 @@ You've successfully set up the project when:
 - [ ] All placeholder values replaced in templates
 - [ ] Git repository initialized with initial commit
 - [ ] Framework templates accessible from `framework/templates/`
+- [ ] Framework tools accessible from `framework/tools/`
 - [ ] WIP limit files in place (`.limit` files)
+- [ ] Claude Code commands available in `.claude/commands/`
 - [ ] Claude can answer questions about project structure (if using Claude Code)
+- [ ] `/fw-help` and `/fw-status` commands work (if using Claude Code)
 
 ---
 
@@ -250,6 +288,12 @@ Check `.gitignore` - it should only ignore temp files and build artifacts, not f
 ### Claude doesn't see CLAUDE.md
 Ensure CLAUDE.md is at the project root and you opened Claude Code in that directory.
 
+### fw- commands don't work
+Ensure `.claude/commands/` folder exists with all `fw-*.md` files. The commands also require `framework/tools/*.ps1` scripts to be present.
+
+### Missing framework tools
+Ensure `framework/tools/` folder contains the PowerShell scripts (`.ps1` and `.psm1` files). These are required for the fw- commands to function.
+
 ---
 
-**Last Updated:** 2026-01-21
+**Last Updated:** 2026-01-23

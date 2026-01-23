@@ -13,6 +13,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- **FEAT-025: Manual Setup Process Validation**
+  - Comprehensive testing of Standard template (18 work items, 6 releases in test project)
+  - Created `distribution-build-checklist.md` for template package builds
+  - Added `poc/` folder with README to Standard template (now required, not optional)
+  - Updated NEW-PROJECT-CHECKLIST.md with tools, commands, troubleshooting sections
+  - Documented 14 follow-on work items (TECH-068 to TECH-081) for discovered gaps
+
+### Changed
+- Updated PROJECT-STRUCTURE-STANDARD.md to include `poc/` as required folder
+- Updated `.gitkeep` count from 6 to 7 (added `poc/.gitkeep`)
+
+### Known Gaps (tracked in backlog)
+- fw- commands and tools not yet synced to template (TECH-074)
+- Session history template not yet created (TECH-072)
+- External reference template not yet created (TECH-073)
+- Enforcement prompts needed in workflow transitions (TECH-076)
+- Missing process documentation: hotfix, cancellation, rollback, session handoff
+
 ### Planned
 - Minimal and Light Framework template packages (deferred from v3.0.0)
 - Visual diagrams for folder structure and workflow
