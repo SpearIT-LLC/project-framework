@@ -453,6 +453,59 @@ User Idea → Backlog → [User Approval] → Todo → Doing → Done → Releas
 - Never exceed WIP limit
 - Complete current work before starting new
 
+#### WIP Limit Flexibility
+
+WIP limits are tools for maintaining focus, not rigid laws. This section provides guidance on when and how to handle situations that require flexibility.
+
+**Pattern 1: Pause & Resume (Recommended)**
+
+When new work arrives while you're mid-feature:
+
+1. Move current work item from `doing/` back to `todo/`
+2. Create and move new item to `doing/`
+3. Complete new item
+4. Resume previous work
+
+**When to use:**
+- Current work can wait (not time-critical)
+- New work is urgent but not "drop everything"
+- You want enforced single-item focus
+
+**Overhead:** ~2 minutes of git mv commands. This is the default approach.
+
+**Pattern 2: Temporary WIP Bump**
+
+Temporarily increase WIP limit (e.g., from 1 to 2) when parallel work is genuinely needed.
+
+**When appropriate:**
+- Production issue while mid-flight on a feature (costly to context-switch)
+- Blocking another team member who needs unblocking without abandoning your work
+- Time-boxed parallel work ("I'll spend 2 hours on this bug, then back to feature")
+
+**Guardrails:**
+- Document *why* you're bumping WIP (in work item or session history)
+- Set a time limit ("WIP=2 until EOD" or "until BUG-123 ships")
+- Return to normal WIP as soon as one item completes
+- Don't make WIP bump the default - it defeats the purpose
+
+**How to temporarily bump:**
+```bash
+# Increase limit
+echo "2" > thoughts/work/doing/.limit
+
+# After completing one item, restore
+echo "1" > thoughts/work/doing/.limit
+```
+
+**Guidance Principles:**
+
+1. **Pause & Resume is usually sufficient** - The overhead is low, and it maintains clean single-item focus
+2. **Most "emergencies" don't require WIP bump** - Production issues can often use pause/resume
+3. **WIP limits exist for a reason** - They prevent context-switching chaos and ensure completion
+4. **When in doubt, pause and resume** - It's the simpler, safer pattern
+
+**Anti-pattern:** Permanently increasing WIP limit because "we always have urgent interrupts." If this happens frequently, the problem is prioritization or team structure, not the WIP limit.
+
 **For AI assistants:** See CLAUDE.md "AI Workflow Checkpoint Policy" for mandatory approval checkpoints.
 
 ### Spike Flow (Research/Investigation)
@@ -1815,6 +1868,6 @@ Better to ask than assume.
 
 ---
 
-**Last Updated:** 2026-01-20
-**Version:** 1.2.0
+**Last Updated:** 2026-01-23
+**Version:** 1.3.0
 **Next Review:** After 10 projects use this guide
