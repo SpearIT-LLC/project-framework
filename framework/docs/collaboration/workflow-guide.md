@@ -383,44 +383,62 @@ AI: "I cannot move directly from backlog to doing. The valid path is:
 
 ### Per-Transition Checklists
 
-When moving a work item, complete the checklist for the target folder:
+When moving a work item, complete the checklist for the target folder. Use `git mv` for all moves to preserve history.
 
 #### → backlog/
 - [ ] Work item created from template
 - [ ] ID assigned (scan ALL work/ locations and history/releases/ first)
+- [ ] Commit new work item(s) (immediately or after batch creation)
 
 #### → todo/
 - [ ] Transition is valid (check matrix above)
 - [ ] User has approved the work
 - [ ] Priority set
+- [ ] If `todo/.limit` exists, check WIP limit not exceeded
+- [ ] Use `git mv` to move file
 
 #### → doing/
 - [ ] Transition is valid (check matrix above)
-- [ ] WIP limit not exceeded (check `doing/.limit`)
+- [ ] If `doing/.limit` exists, check WIP limit not exceeded
+- [ ] Check `Depends On` field - all dependencies must be in done/
+- [ ] Use `git mv` to move file
+
+**Pre-Implementation Review** (on move OR when user requests):
 - [ ] Read ENTIRE work item document
 - [ ] Identify open questions (search for: TODO, TBD, DECIDE, Question, Option A/B/C)
 - [ ] Present pre-implementation summary to user
-- [ ] Wait for user confirmation before implementing
+- [ ] **STOP - Wait for user confirmation before implementing**
 
 #### → done/
 - [ ] Transition is valid (check matrix above)
 - [ ] All completion criteria in work item are checked
 - [ ] Status field updated to "Done"
 - [ ] User has approved the completed work
+- [ ] Use `git mv` to move file
 
-**Note:** The `/fw-move` command automatically updates session history and commits after moving to done/.
+**Post-Move Actions:**
+- [ ] Update session history (`/fw-session-history`)
+- [ ] Commit the changes
 
 #### → history/releases/vX.Y.Z/
 - [ ] Transition is valid (check matrix above)
-- [ ] Work has been released (version tagged)
-- [ ] Use `git mv` (not `cp`) to move files
+- [ ] Use `git mv` to move files
 - [ ] Verify done/ is empty after archival
+
+**Full Release Process:**
+- [ ] Calculate version (PROJECT-STATUS.md + Version Impact)
+- [ ] Update CHANGELOG.md
+- [ ] Update PROJECT-STATUS.md
+- [ ] Update README.md (if user-facing changes)
+- [ ] Update session history
+- [ ] Create git tag
+- [ ] Commit and push
 
 #### → history/archive/ (Cancellation)
 - [ ] Transition is valid (check matrix above)
 - [ ] Cancellation reason documented in work item
 - [ ] Status and date fields added (see Cancellation Process below)
-- [ ] Use `git mv` (not `cp`) to move files
+- [ ] Use `git mv` to move file
 - [ ] Session history updated noting the cancellation
 
 ### Cancellation Process
@@ -1973,6 +1991,6 @@ Better to ask than assume.
 
 ---
 
-**Last Updated:** 2026-01-23
+**Last Updated:** 2026-01-25
 **Version:** 1.3.0
 **Next Review:** After 10 projects use this guide

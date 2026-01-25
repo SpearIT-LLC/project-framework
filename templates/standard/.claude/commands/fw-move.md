@@ -38,47 +38,17 @@ Move a work item between workflow folders with policy enforcement, transition va
 
 ## Per-Transition Checklists
 
-### → todo/
-- [ ] Transition is valid (check matrix)
-- [ ] User has approved the work
-- [ ] Priority understood
+Before executing any move, read and follow the appropriate checklist at:
+`framework/docs/collaboration/workflow-guide.md#per-transition-checklists`
 
-### → doing/
-- [ ] Transition is valid (check matrix)
-- [ ] WIP limit not exceeded (if `doing/.limit` exists)
-- [ ] Note: Hierarchical items (FEAT-018 + FEAT-018.1) count as 1 WIP item
+This ensures you follow the complete, authoritative checklist rather than an abbreviated version.
 
-### → done/
-- [ ] Transition is valid (check matrix)
-- [ ] All completion criteria met
-- [ ] User has approved the completed work
-- [ ] **After success**: Update session history (see Post-Move Actions)
-
-## Post-Move Actions
-
-### After moving to done/
-
-After successfully moving an item to `done/`, perform these steps automatically:
-
-1. **Update session history**: Run `/fw-session-history` to capture the completed work
-2. **Commit the completion**: Create a git commit with all related changes
-
-```
-✅ Moved [ITEM-ID] to done/
-
-Updating session history...
-Committing completion...
-```
-
-**Commit format:**
-```
-feat([ITEM-ID]): Complete [brief description]
-
-- Moved [ITEM-ID] to done/
-- Updated session history
-
-Co-Authored-By: Claude Opus 4.5 <noreply@anthropic.com>
-```
+**Key points:**
+- Use `git mv` for all moves
+- Check `.limit` files when they exist (any folder can have one)
+- → doing triggers pre-implementation review
+- → done triggers session history update and commit
+- → releases triggers full release process
 
 ## Examples
 
