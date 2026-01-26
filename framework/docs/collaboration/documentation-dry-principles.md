@@ -1,7 +1,7 @@
 # Documentation DRY Principles
 
 **Purpose:** Guidelines for avoiding duplication and maintaining single sources of truth in documentation
-**Last Updated:** 2026-01-14
+**Last Updated:** 2026-01-26
 
 ---
 
@@ -65,6 +65,8 @@ A **source of truth** is the single authoritative location for a piece of inform
 | Information Type | Source of Truth Location |
 |-----------------|-------------------------|
 | Workflow process | `docs/collaboration/workflow-guide.md` |
+| Release process | `docs/process/version-control-workflow.md` |
+| Issue response process | `docs/process/version-control-workflow.md` |
 | Code standards | `docs/collaboration/code-quality-standards.md` |
 | Security policy | `docs/collaboration/security-policy.md` |
 | Testing approach | `docs/collaboration/testing-strategy.md` |

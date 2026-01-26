@@ -425,14 +425,7 @@ When moving a work item, complete the checklist for the target folder. Use `git 
 - [ ] Use `git mv` to move files
 - [ ] Verify done/ is empty after archival
 
-**Full Release Process:**
-- [ ] Calculate version (PROJECT-STATUS.md + Version Impact)
-- [ ] Update CHANGELOG.md
-- [ ] Update PROJECT-STATUS.md
-- [ ] Update README.md (if user-facing changes)
-- [ ] Update session history
-- [ ] Create git tag
-- [ ] Commit and push
+**Full Release Process:** See [version-control-workflow.md#release-checklist](../process/version-control-workflow.md#release-checklist) for the complete release checklist.
 
 #### → history/archive/ (Cancellation)
 - [ ] Transition is valid (check matrix above)

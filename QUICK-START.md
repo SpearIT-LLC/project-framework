@@ -71,7 +71,7 @@ cp -r /path/to/framework/templates/standard/.gitignore .
 4. Move features to `work/todo/` → `work/doing/` → `work/done/`
 5. Update CHANGELOG.md and PROJECT-STATUS.md for releases
 
-**Detailed Workflow:** See framework documentation in [framework/process/](framework/process/)
+**Detailed Workflow:** See [workflow-guide.md](framework/docs/collaboration/workflow-guide.md)
 
 ---
 
@@ -243,7 +243,7 @@ DAILY WORK:
 
 - **See working example:** [examples/hello-world/](examples/hello-world/)
 - **Framework structure questions:** [STRUCTURE.md](templates/STRUCTURE.md)
-- **Workflow questions:** [framework/process/](framework/process/)
+- **Workflow questions:** [workflow-guide.md](framework/docs/collaboration/workflow-guide.md)
 - **Complete doc index:** [framework/INDEX.md](framework/INDEX.md)
 - **Maintainer:** gary.elliott@spearit.solutions
 

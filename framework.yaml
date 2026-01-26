@@ -24,6 +24,8 @@ sources:
   work-item-templates: framework/docs/collaboration/workflow-guide.md#work-item-templates
   git-workflow: framework/docs/collaboration/workflow-guide.md#git-workflow
   versioning: framework/docs/collaboration/workflow-guide.md#versioning--releases
+  release-process: framework/docs/process/version-control-workflow.md#release-checklist
+  issue-response: framework/docs/process/version-control-workflow.md#issue-response-process
   planning: framework/docs/collaboration/workflow-guide.md#planning-guidelines
   session-history: framework/docs/collaboration/workflow-guide.md#session-history
   adr-process: framework/docs/collaboration/workflow-guide.md#architecture-decision-records-adrs

@@ -107,19 +107,19 @@ Release immediately when:
 2. ✅ Bugfix complete and tested
 3. ✅ Blocker resolved and tested
 
-**Rule:** One release per completed issue. Don't batch multiple changes.
+**Rule:** Release when ready. Batching multiple completed issues into a single release is acceptable.
 
 ### Release Checklist
 
 ```markdown
 Pre-Release:
 [ ] All tests pass
-[ ] Feature/bugfix branch merged to main
-[ ] Work item moved to work/done/ (triggers this process)
-[ ] Work item has CHANGELOG notes section
+[ ] Feature/bugfix branches merged to main
+[ ] Work item(s) moved to work/done/
+[ ] Work item(s) have CHANGELOG notes sections
 
 Determine Version:
-[ ] Read work item metadata:
+[ ] Read work item metadata (use highest impact if batching multiple):
     - Type: Feature | Bugfix | Breaking Change
     - Version Impact: MAJOR | MINOR | PATCH
 [ ] Calculate new version number from current version
@@ -131,19 +131,19 @@ Release (do together - atomic operation):
     [ ] Add completion notes if applicable
 [ ] Update CHANGELOG.md:
     [ ] Move [Unreleased] to new version section [vX.Y.Z] - YYYY-MM-DD
-    [ ] Add changes from work item CHANGELOG notes
+    [ ] Add changes from all work items' CHANGELOG notes
     [ ] Update Version History table
     [ ] Reset [Unreleased] sections to "None"
 [ ] Commit both: git commit -m "Release vX.Y.Z: Description"
 [ ] Create git tag: git tag -a vX.Y.Z -m "Description"
 [ ] Push with tags: git push origin main --tags
-[ ] Delete feature/bugfix branch: git branch -d feature/NNN-name
+[ ] Delete feature/bugfix branches if applicable
 
 Post-Release:
 [ ] Verify tag pushed to origin: git tag -l vX.Y.Z
-[ ] Archive: work/done/[item].md → history/releases/vX.Y.Z/[item].md
+[ ] Archive: work/done/*.md → history/releases/vX.Y.Z/
 [ ] Update CLAUDE.md if architecture/standards changed
-[ ] Update roadmap.md status for this work item
+[ ] Update roadmap.md status for completed work items
 
 Note: README.md and other docs reference PROJECT-STATUS.md, so no updates needed there.
 ```
@@ -1131,5 +1131,5 @@ Remove-Item -Recurse -Force rollback-test
 
 ---
 
-**Last Updated:** 2026-01-23
+**Last Updated:** 2026-01-26
 **Next Review:** When process issues arise or after 5 releases
