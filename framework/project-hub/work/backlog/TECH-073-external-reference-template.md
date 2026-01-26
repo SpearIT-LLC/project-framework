@@ -92,7 +92,6 @@ Create `EXTERNAL-REFERENCE-TEMPLATE.md` in `framework/templates/documentation/`:
 
 **Files Created:**
 - `framework/templates/documentation/EXTERNAL-REFERENCE-TEMPLATE.md`
-- `templates/standard/framework/templates/documentation/EXTERNAL-REFERENCE-TEMPLATE.md`
 
 **Files Updated:**
 - `project-hub/external-references/README.md` - Add link to template and naming convention
@@ -104,7 +103,6 @@ Create `EXTERNAL-REFERENCE-TEMPLATE.md` in `framework/templates/documentation/`:
 - [ ] Template created in framework/templates/documentation/
 - [ ] Metadata header includes Source, Retrieved, URL, Version
 - [ ] Naming convention documented
-- [ ] Template synced to templates/standard/
 - [ ] external-references/README.md updated with template reference
 
 ---

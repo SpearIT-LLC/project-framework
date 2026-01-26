@@ -60,7 +60,6 @@ Add session handoff checklists to workflow documentation:
 
 **Files Affected:**
 - `framework/docs/collaboration/workflow-guide.md` - Add Session Handoff section
-- `templates/standard/framework/docs/collaboration/workflow-guide.md` - Sync changes
 
 ---
 
@@ -70,7 +69,6 @@ Add session handoff checklists to workflow documentation:
 - [ ] Start of session checklist documented
 - [ ] Guidance on minimum context to preserve
 - [ ] Integration with session history documented
-- [ ] Template synced to templates/standard/
 
 ---
 

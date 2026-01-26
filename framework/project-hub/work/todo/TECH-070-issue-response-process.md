@@ -71,7 +71,6 @@ Added comprehensive "Issue Response Process" section to `version-control-workflo
 
 **Files Affected:**
 - `framework/docs/process/version-control-workflow.md` - Added Issue Response Process section
-- `templates/standard/framework/docs/process/version-control-workflow.md` - Synced changes
 
 ---
 
@@ -82,7 +81,6 @@ Added comprehensive "Issue Response Process" section to `version-control-workflo
 - [x] Version numbering rules for rollbacks defined
 - [x] CHANGELOG format for reverted changes shown
 - [x] Example rollback scenario documented
-- [x] Template synced to templates/standard/
 
 **Additional delivered (scope expansion):**
 - [x] Unified issue response process covering all discovery points

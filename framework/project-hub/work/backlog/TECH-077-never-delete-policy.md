@@ -65,7 +65,6 @@ Add "Work Item Retention Policy" section to workflow-guide.md:
 
 **Files Affected:**
 - `framework/docs/collaboration/workflow-guide.md` - Add retention policy section
-- `templates/standard/framework/docs/collaboration/workflow-guide.md` - Sync changes
 
 ---
 
@@ -74,7 +73,6 @@ Add "Work Item Retention Policy" section to workflow-guide.md:
 - [ ] "Never delete" policy documented in workflow-guide.md
 - [ ] Process for archiving cancelled items documented
 - [ ] Process for archiving test artifacts documented
-- [ ] Template synced to templates/standard/
 
 ---
 

@@ -71,12 +71,7 @@ The hello-world project is a reference implementation showing how to use the fra
 
 **Location:** [templates/](templates/)
 
-This folder contains template packages for creating new projects at different framework levels:
-- Minimal (single scripts)
-- Light (small tools)
-- Standard (full applications)
-
-These are starter templates that users copy to begin new projects.
+This folder contains the `starter/` template for creating new projects. The template provides complete project scaffolding with framework included (framework-as-dependency model per DECISION-050).
 
 ---
 
@@ -138,7 +133,7 @@ Each project has its own project-hub/ structure:
 - **Framework status:** [framework/PROJECT-STATUS.md](framework/PROJECT-STATUS.md)
 - **Framework changelog:** [framework/CHANGELOG.md](framework/CHANGELOG.md)
 - **Quick start guide:** [QUICK-START.md](QUICK-START.md)
-- **Template selection:** [templates/README-TEMPLATE-SELECTION.md](templates/README-TEMPLATE-SELECTION.md)
+- **New project setup:** [templates/NEW-PROJECT-CHECKLIST.md](templates/NEW-PROJECT-CHECKLIST.md)
 
 ---
 
@@ -146,4 +141,4 @@ Each project has its own project-hub/ structure:
 
 ---
 
-**Last Updated:** 2026-01-14
+**Last Updated:** 2026-01-26

@@ -1,164 +1,94 @@
-# SpearIT Project Framework Template Package
+# SpearIT Project Framework - Template Package
 
-**Version:** 2.0.0
-**Last Updated:** 2025-12-19
-**Purpose:** Reusable project framework templates for new projects
+**Version:** 3.0.0
+**Last Updated:** 2026-01-26
 
 ---
 
 ## What Is This?
 
-This is the complete **SpearIT Project Framework template package** - a collection of ready-to-use project templates that scale from single scripts to full applications.
+This folder contains the **starter template** for creating new projects using the SpearIT Project Framework.
 
-**Choose your framework level:**
-- [README-TEMPLATE-SELECTION.md](README-TEMPLATE-SELECTION.md) - **Start here** to determine which framework level you need
-
-**Setup instructions:**
-- [NEW-PROJECT-CHECKLIST.md](NEW-PROJECT-CHECKLIST.md) - Complete setup guide for all levels
+**Quick Start:**
+1. Use the distribution archive (recommended) - see [NEW-PROJECT-CHECKLIST.md](NEW-PROJECT-CHECKLIST.md)
+2. Or manually copy from [starter/](starter/)
 
 ---
 
-## Framework Levels
+## Contents
 
-### Minimal Framework ([minimal/](minimal/))
-**For:** Single scripts, throwaway projects, personal automation
-- **Files:** 2 (README.md, .gitignore)
-- **Use when:** Single file script, one-time use, personal tool
+### Template
+- [starter/](starter/) - Complete project scaffolding with framework included
 
-### Light Framework ([light/](light/))
-**For:** Small tools, medium lifespan, handoff expected
-- **Files:** 7 (README, PROJECT-STATUS, CHANGELOG, CLAUDE.md, project-hub/)
-- **Use when:** 2-10 files, maintained for months, possible collaboration
+### Setup Guides
+- [NEW-PROJECT-CHECKLIST.md](NEW-PROJECT-CHECKLIST.md) - Setup instructions (start here)
 
-### Standard Framework ([standard/](standard/))
-**For:** Applications, teams, ongoing projects, critical systems
-- **Files:** 50+ (complete documentation, kanban workflow, 19 templates)
-- **Use when:** 10+ files, team collaboration, formal releases, architecture decisions
+### Reference (may be outdated)
+- [STRUCTURE.md](STRUCTURE.md) - Template structure reference
 
 ---
 
-## Quick Start
+## How It Works
 
-### Step 1: Choose Framework Level
-Read [README-TEMPLATE-SELECTION.md](README-TEMPLATE-SELECTION.md) and answer 3 questions:
-1. **Scope & Complexity** - Script, Tool, Application, or System?
-2. **Lifespan & Evolution** - Throwaway, Short-term, Maintained, or Critical?
-3. **Team & Collaboration** - Solo, Solo+Handoff, Small Team, or Large Team?
+The framework uses a **framework-as-dependency** model (see DECISION-050):
 
-### Step 2: Copy Template
-```bash
-# For single scripts
-cp -r minimal/ /path/to/your-project
+1. **Each project gets its own `framework/` copy** - Self-contained, portable
+2. **Use the starter template** - Provides complete project scaffolding
+3. **Customize as needed** - You own your copy, modify freely
 
-# For small tools
-cp -r light/ /path/to/your-project
-
-# For applications
-cp -r standard/ /path/to/your-project
+```
+your-project/
+├── framework/              # Your copy of the framework
+│   ├── docs/
+│   ├── templates/
+│   └── tools/
+├── project-hub/            # Your work items and history
+├── src/                    # Your code
+├── CLAUDE.md
+├── README.md
+└── ...
 ```
 
-### Step 3: Follow Checklist
-Open [NEW-PROJECT-CHECKLIST.md](NEW-PROJECT-CHECKLIST.md) and follow the instructions for your framework level.
+---
+
+## Distribution Methods
+
+### Method 1: Framework Archive (Recommended)
+
+```powershell
+# Build the archive
+.\tools\Build-FrameworkArchive.ps1
+
+# Setup new project from archive
+.\templates\starter\Setup-Project.ps1 -ArchivePath ".\distrib\spearit-framework-v3.7.0.zip"
+```
+
+### Method 2: Manual Copy
+
+```powershell
+# Copy starter template
+Copy-Item -Recurse templates/starter/* path/to/your-project/
+
+# Copy framework docs and templates
+Copy-Item -Recurse framework/docs path/to/your-project/framework/
+Copy-Item -Recurse framework/templates path/to/your-project/framework/
+Copy-Item -Recurse framework/tools path/to/your-project/framework/
+```
 
 ---
 
-## What's Included
+## Future: Task-Based Project Templates
 
-### Guide Documents (This Folder)
-- **[README-TEMPLATE-SELECTION.md](README-TEMPLATE-SELECTION.md)** - Choose your framework level ⭐
-- **[NEW-PROJECT-CHECKLIST.md](NEW-PROJECT-CHECKLIST.md)** - Setup instructions ⭐
-- [UPGRADE-PATH.md](UPGRADE-PATH.md) - Upgrade between framework levels
-- [STRUCTURE.md](STRUCTURE.md) - Template structure reference
-- This README - Package overview
-
-### Template Folders
-- [minimal/](minimal/) - Minimal framework templates (2 files)
-- [light/](light/) - Light framework templates (7 files)
-- [standard/](standard/) - Standard framework templates (50+ files)
+The framework will evolve to include **task-based project templates** that guide appropriate rigor based on what you're building (not project size). See [misc-thoughts-and-planning.md](../framework/project-hub/research/misc-thoughts-and-planning.md#Project-Templates) for the concept.
 
 ---
 
-## Framework Features
+## Related Documents
 
-### Multi-Level Scaling
-Start with the right amount of structure. Upgrade as your project grows.
-
-### Research-Driven Development (Standard)
-5 research phase templates help you answer: "Are we recreating the wheel?"
-
-### File-Based Kanban Workflow (Standard)
-Simple folder-based work tracking: `planning/backlog → work/todo → work/doing → work/done`
-
-### AI Integration
-CLAUDE.md templates for working with Claude Code and other AI assistants.
-
-### Architecture Decision Records (Standard)
-Two-tier ADR system (Major/Minor) for documenting important decisions.
-
-### PowerShell CMD Wrappers (Standard)
-4 production-ready CMD wrapper templates for double-click PowerShell execution.
-
-### Upgrade Paths
-Clear migration guides in [UPGRADE-PATH.md](UPGRADE-PATH.md).
+- [NEW-PROJECT-CHECKLIST.md](NEW-PROJECT-CHECKLIST.md) - Setup instructions
+- [../framework/CLAUDE.md](../framework/CLAUDE.md) - Framework context
+- [../QUICK-START.md](../QUICK-START.md) - Framework quick reference
 
 ---
-
-## Documentation
-
-| Document | Purpose |
-|----------|---------|
-| [README-TEMPLATE-SELECTION.md](README-TEMPLATE-SELECTION.md) | **Choose framework level** (start here) |
-| [NEW-PROJECT-CHECKLIST.md](NEW-PROJECT-CHECKLIST.md) | **Setup instructions** for each level |
-| [UPGRADE-PATH.md](UPGRADE-PATH.md) | Migrate between framework levels |
-| [STRUCTURE.md](STRUCTURE.md) | Template structure reference |
-| This README | Package overview |
-
----
-
-## Migration Note (v1.0.0 → v2.0.0)
-
-**If you copied templates from v1.0.0:**
-
-In v1.0.0, template files existed at the root of this folder (README.md, CLAUDE.md, etc.).
-
-**In v2.0.0:**
-- ✅ Templates moved to framework-level folders (minimal/, light/, standard/)
-- ❌ Root-level templates removed (they were redundant with standard/)
-- ✅ Guide documents remain at root (README-TEMPLATE-SELECTION.md, NEW-PROJECT-CHECKLIST.md, etc.)
-
-**Action Required:**
-- Existing projects using v1.0.0 templates: No action needed - continue using them
-- New projects: Copy from appropriate framework level folder (minimal/, light/, or standard/)
-
-**Rationale:**
-- Eliminates confusion about which files to copy
-- Each framework level is self-contained in its own folder
-- Guide documents are clearly separated from templates
-
----
-
-## Version History
-
-| Version | Date | Changes |
-|---------|------|---------|
-| 2.0.0 | 2025-12-19 | Multi-level framework system, removed legacy root templates |
-| 1.0.0 | 2025-12-18 | Initial framework template package |
-
-See parent [CHANGELOG.md](../CHANGELOG.md) for detailed framework version history.
-
----
-
-## Support
-
-**Questions?**
-- Review [README-TEMPLATE-SELECTION.md](README-TEMPLATE-SELECTION.md) for framework selection
-- Check [NEW-PROJECT-CHECKLIST.md](NEW-PROJECT-CHECKLIST.md) for setup guidance
-- Read [STRUCTURE.md](STRUCTURE.md) for template structure details
-- See [UPGRADE-PATH.md](UPGRADE-PATH.md) for upgrade guidance
 
 **Maintainer:** Gary Elliott (gary.elliott@spearit.solutions)
-**Organization:** SpearIT, LLC
-
----
-
-**Get Started:** [README-TEMPLATE-SELECTION.md](README-TEMPLATE-SELECTION.md) → [NEW-PROJECT-CHECKLIST.md](NEW-PROJECT-CHECKLIST.md)

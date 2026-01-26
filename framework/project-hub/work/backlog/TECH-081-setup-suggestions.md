@@ -104,7 +104,7 @@ Add to "Phase 2: Configure Project":
 ```
 
 **Files Affected:**
-- `templates/standard/NEW-PROJECT-CHECKLIST.md` - All three improvements
+- `templates/NEW-PROJECT-CHECKLIST.md` - All three improvements
 
 ---
 

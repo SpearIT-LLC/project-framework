@@ -92,7 +92,6 @@ Create `SESSION-HISTORY-TEMPLATE.md` in `framework/templates/documentation/`:
 
 **Files Created:**
 - `framework/templates/documentation/SESSION-HISTORY-TEMPLATE.md`
-- `templates/standard/framework/templates/documentation/SESSION-HISTORY-TEMPLATE.md`
 
 ---
 
@@ -100,7 +99,6 @@ Create `SESSION-HISTORY-TEMPLATE.md` in `framework/templates/documentation/`:
 
 - [ ] Template created in framework/templates/documentation/
 - [ ] Template includes all recommended sections
-- [ ] Template synced to templates/standard/
 - [ ] NEW-PROJECT-CHECKLIST.md references template location
 
 ---

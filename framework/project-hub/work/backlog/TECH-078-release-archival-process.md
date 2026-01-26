@@ -66,7 +66,6 @@ Add archival step to release process in version-control-workflow.md:
 
 **Files Affected:**
 - `framework/docs/process/version-control-workflow.md` - Add post-release archival step
-- `templates/standard/framework/docs/process/version-control-workflow.md` - Sync changes
 
 ---
 
@@ -76,7 +75,6 @@ Add archival step to release process in version-control-workflow.md:
 - [ ] Archival folder naming convention documented (releases/vX.Y.Z/)
 - [ ] `git mv` usage specified (not regular mv)
 - [ ] Empty done/ verification included
-- [ ] Template synced to templates/standard/
 
 ---
 

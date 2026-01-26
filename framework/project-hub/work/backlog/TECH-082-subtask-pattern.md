@@ -64,7 +64,6 @@ Define a pattern for parent/child work item relationships, similar to Jira sub-t
 
 - [ ] `Parent` field added to work item templates (optional, commented out by default)
 - [ ] Sub-task pattern documented in workflow-guide.md
-- [ ] Template synced to templates/standard/
 
 ---
 

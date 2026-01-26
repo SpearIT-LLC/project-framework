@@ -66,7 +66,6 @@ Before starting a release:
 
 **Files Affected:**
 - `framework/docs/process/version-control-workflow.md` - Add pre-release validation
-- `templates/standard/framework/docs/process/version-control-workflow.md` - Sync changes
 
 ---
 
@@ -75,7 +74,6 @@ Before starting a release:
 - [ ] Pre-release check for empty done/ documented
 - [ ] Warning/confirmation guidance for empty releases
 - [ ] Valid reasons for empty release documented
-- [ ] Template synced to templates/standard/
 
 ---
 

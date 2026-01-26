@@ -62,7 +62,6 @@ Add session history step to release process in version-control-workflow.md:
 
 **Files Affected:**
 - `framework/docs/process/version-control-workflow.md` - Add session history step
-- `templates/standard/framework/docs/process/version-control-workflow.md` - Sync changes
 
 ---
 
@@ -70,7 +69,6 @@ Add session history step to release process in version-control-workflow.md:
 
 - [ ] Session history update added to post-release checklist
 - [ ] Format for release entry in session history documented
-- [ ] Template synced to templates/standard/
 
 ---
 
