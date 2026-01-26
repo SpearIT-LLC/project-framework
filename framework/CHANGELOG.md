@@ -13,6 +13,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Planned
+- Minimal and Light Framework template packages (deferred from v3.0.0)
+- Visual diagrams for folder structure and workflow
+- ZIP distribution package
+- Interactive setup script
+
+---
+
+## [3.6.0] - 2026-01-26
+
 ### Added
 - **FEAT-025: Manual Setup Process Validation**
   - Comprehensive testing of Standard template (18 work items, 6 releases in test project)
@@ -21,26 +31,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Updated NEW-PROJECT-CHECKLIST.md with tools, commands, troubleshooting sections
   - Documented 14 follow-on work items (TECH-068 to TECH-081) for discovered gaps
 
+- **FEAT-031: Source-of-Truth Topic Registry**
+  - Central registry tracking authoritative sources for framework topics
+  - Prevents documentation drift and duplicate content
+
 - **TECH-074: Include fw- Commands and Tools in Template**
   - Added `.claude/commands/` folder with all 8 fw- commands to Standard template
   - Added `framework/tools/` with 7 PowerShell scripts (.ps1, .psm1) to Standard template
   - New projects now have full workflow automation support out of the box
 
+- **TECH-068: Document WIP Limit Flexibility**
+  - Pause & Resume pattern (recommended default)
+  - Temporary WIP Bump pattern with guardrails
+  - Added WIP Limit Flexibility section to workflow-guide.md
+
+- **TECH-069: Document Work Item Cancellation Process**
+  - Cancellation vs deprioritization guidance
+  - Required cancellation metadata (Status, Date, Reason)
+  - Archive path: `history/archive/`
+
 ### Changed
+- **TECH-036: Documentation DRY Audit and Remediation**
+  - Audited framework documentation for duplicate content
+  - Consolidated overlapping guidance
+
+- **TECH-066: Migrate Existing Work Items to New Metadata Standard**
+  - Updated existing work items to use standard 5 metadata fields
+  - Consistent formatting across all work item types
+
+- **TECH-075: Reconcile Spike Workflow vs Transition Matrix**
+  - Consolidated spike workflow to use `poc/` folder consistently
+  - Removed contradictory `backlog/` references for spikes
+
+- **TECH-076: Consolidate Workflow Transition Checklists**
+  - Unified enforcement prompts in workflow transitions
+  - Clearer checklist formatting
+
 - Updated PROJECT-STRUCTURE-STANDARD.md to include `poc/` as required folder
 - Updated `.gitkeep` count from 6 to 7 (added `poc/.gitkeep`)
 
 ### Known Gaps (tracked in backlog)
 - Session history template not yet created (TECH-072)
 - External reference template not yet created (TECH-073)
-- Enforcement prompts needed in workflow transitions (TECH-076)
-- Missing process documentation: hotfix, cancellation, rollback, session handoff
-
-### Planned
-- Minimal and Light Framework template packages (deferred from v3.0.0)
-- Visual diagrams for folder structure and workflow
-- ZIP distribution package
-- Interactive setup script
 
 ---
 
