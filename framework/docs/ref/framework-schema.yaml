@@ -73,6 +73,20 @@ fields:
     description: "Default role at session start. If not specified, uses project_type_defaults from the definitions file."
     example: "senior-production-developer"
 
+  sources:
+    type: object
+    required: false
+    description: "Source-of-truth index mapping topic names to their authoritative documentation locations. Keys are topic identifiers, values are file paths with optional anchors."
+    example:
+      workflow-process: "framework/docs/collaboration/workflow-guide.md#development-workflow-phases"
+      code-quality: "framework/docs/collaboration/code-quality-standards.md"
+
+  sources.<topic>:
+    type: string
+    required: false
+    description: "Path to authoritative source for a topic, optionally with anchor (e.g., 'path/to/file.md#section'). Topic names should use kebab-case."
+    example: "framework/docs/collaboration/workflow-guide.md#workflow-transitions"
+
 # =============================================================================
 # ROLE DEFINITION SCHEMA
 # =============================================================================

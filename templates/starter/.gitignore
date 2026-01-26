@@ -1,0 +1,45 @@
+# Dependencies
+node_modules/
+vendor/
+packages/
+
+# Build output
+bin/
+obj/
+dist/
+build/
+out/
+
+# IDE and editor
+.vs/
+.vscode/
+*.suo
+*.user
+*.sln.docstates
+.idea/
+
+# OS files
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Logs
+*.log
+logs/
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# Temporary files
+*.tmp
+*.temp
+*.swp
+*~
+
+# Sensitive files
+*.key
+*.pem
+credentials.json
+secrets.yaml

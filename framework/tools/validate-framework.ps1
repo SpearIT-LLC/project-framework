@@ -102,8 +102,21 @@ function Parse-Schema {
     $content = Get-Content $Path -Raw
     $fields = @{}
 
-    # Extract field definitions using regex
-    $fieldMatches = [regex]::Matches($content, '(?m)^  ([\w.]+):\s*\n((?:    .+\n)*)')
+    # Find where 'fields:' section starts and ends
+    $fieldsStart = $content.IndexOf("`nfields:")
+    if ($fieldsStart -lt 0) { return $fields }
+
+    # Find next root-level section (line starting with letter, no indent)
+    $afterFields = $content.Substring($fieldsStart + 8)  # Skip past "fields:\n"
+    $nextSection = [regex]::Match($afterFields, '(?m)^[a-z]')
+    if ($nextSection.Success) {
+        $fieldsSection = $afterFields.Substring(0, $nextSection.Index)
+    } else {
+        $fieldsSection = $afterFields
+    }
+
+    # Extract field definitions from the fields section only
+    $fieldMatches = [regex]::Matches($fieldsSection, '(?m)^  ([\w.]+):\s*\n((?:    .+\n)*)')
 
     foreach ($match in $fieldMatches) {
         $fieldName = $match.Groups[1].Value

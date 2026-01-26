@@ -35,3 +35,7 @@ desktop.ini
 *.temp
 *.log
 tmpclaude-*
+
+# Build artifacts
+distrib/*.zip
+distrib/temp/

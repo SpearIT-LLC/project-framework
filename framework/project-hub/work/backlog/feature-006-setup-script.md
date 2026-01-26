@@ -143,5 +143,40 @@ Manual following of NEW-PROJECT-CHECKLIST.md (2-4 hours for Standard).
 
 ---
 
-**Last Updated:** 2025-12-19
-**Status:** Backlog (priority for v2.1.0)
+## Partial Implementation (v3.7.0)
+
+A basic `Setup-Project.ps1` was created in v3.7.0 as part of the distribution archive work. It covers:
+- [x] Project name prompt
+- [x] Project description prompt
+- [x] Placeholder replacement (`{{PROJECT_NAME}}`, `{{PROJECT_DESCRIPTION}}`, `{{DATE}}`)
+- [x] Git initialization (optional)
+- [x] Initial commit
+- [x] Works in-place from extracted archive
+
+**Still needed for full feature:**
+- [ ] Author name/email prompts
+- [ ] Framework level selection questions (Scope, Lifespan, Team)
+- [ ] Framework level recommendation logic
+- [ ] Dry-run mode (-WhatIf)
+- [ ] Cross-platform bash script
+- [ ] License selection
+- [ ] Validation of destination path
+
+---
+
+## Decisions to Make
+
+1. **Framework level support** - Current archive is "Standard" only. Do we need Minimal/Light variants, or is Standard the only distribution target?
+
+2. **Author info** - Should we prompt for author name/email, or rely on git config?
+
+3. **License selection** - Offer license picker (MIT, Apache, etc.) or leave as placeholder?
+
+4. **Bash script** - Is cross-platform support needed, or is PowerShell-only acceptable?
+
+5. **Dry-run mode** - Is -WhatIf valuable for a setup script, or unnecessary complexity?
+
+---
+
+**Last Updated:** 2026-01-26
+**Status:** Backlog - Partially implemented in v3.7.0

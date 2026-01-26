@@ -1,7 +1,7 @@
 # New Project Setup Checklist
 
-**Version:** 3.0.0
-**Last Updated:** 2026-01-21
+**Version:** 4.0.0
+**Last Updated:** 2026-01-26
 
 ---
 
@@ -17,16 +17,45 @@ This checklist guides setup of a new project using the SpearIT Project Framework
 
 ---
 
-## Quick Start (10 minutes)
+## Quick Start - Automated (2 minutes)
+
+### Option 1: Using Setup Script (Recommended)
+
+```powershell
+# Run the setup script with the framework archive
+.\tools\Setup-Project.ps1 -ArchivePath ".\distrib\spearit_framework_v3.0.0.zip" -Destination "C:\Projects\my-app"
+```
+
+The script will:
+- Prompt for project name and description
+- Extract the archive to your destination
+- Replace all `{{PLACEHOLDER}}` tokens automatically
+- Initialize git repository with initial commit
+
+**Setup Complete!** Begin development.
+
+### Option 2: Manual Setup
+
+If you don't have the archive or prefer manual setup, see [Detailed Manual Setup](#detailed-manual-setup) below.
+
+---
+
+## Quick Start - Manual (10 minutes)
 
 ### Step 1: Copy Template
 
 ```powershell
 # Copy the template package to your project location
-Copy-Item -Recurse path/to/framework/templates/standard/* path/to/your-project/
+Copy-Item -Recurse path/to/framework/templates/starter/* path/to/your-project/
 
 # Copy hidden files too
-Copy-Item path/to/framework/templates/standard/.gitignore path/to/your-project/
+Copy-Item path/to/framework/templates/starter/.gitignore path/to/your-project/
+Copy-Item -Recurse path/to/framework/templates/starter/.claude path/to/your-project/
+
+# Copy framework documentation and templates
+Copy-Item -Recurse path/to/framework/docs path/to/your-project/framework/
+Copy-Item -Recurse path/to/framework/templates path/to/your-project/framework/
+Copy-Item -Recurse path/to/framework/tools path/to/your-project/framework/
 ```
 
 ### Step 2: Configure framework.yaml
@@ -61,12 +90,16 @@ git tag -a v0.1.0 -m "Initial setup"
 
 ---
 
-## Detailed Setup Checklist
+## Detailed Manual Setup
 
 ### Phase 1: Copy Template Package
 
-- [ ] Copy `templates/standard/*` to your project root
-- [ ] Copy `templates/standard/.gitignore` to your project root
+- [ ] Copy `templates/starter/*` to your project root
+- [ ] Copy `templates/starter/.gitignore` to your project root
+- [ ] Copy `templates/starter/.claude` to your project root
+- [ ] Copy `framework/docs` to `your-project/framework/docs`
+- [ ] Copy `framework/templates` to `your-project/framework/templates`
+- [ ] Copy `framework/tools` to `your-project/framework/tools`
 - [ ] Verify folder structure exists:
   - [ ] `framework/` - Framework documentation and templates
   - [ ] `src/` - Source code (empty)
@@ -242,7 +275,16 @@ You've successfully set up the project when:
 ## Troubleshooting
 
 ### Missing framework/ folder
-Ensure you copied the entire `templates/standard/` directory, including the `framework/` subfolder.
+The framework/ folder is created from live source during automated setup. For manual setup:
+- Copy `framework/docs` to `your-project/framework/docs`
+- Copy `framework/templates` to `your-project/framework/templates`
+- Copy `framework/tools` to `your-project/framework/tools`
+
+### Placeholders not replaced
+If using manual setup, replace these tokens in all `.md` and `.yaml` files:
+- `{{PROJECT_NAME}}` - Your project name
+- `{{PROJECT_DESCRIPTION}}` - Project description
+- `{{DATE}}` - Current date (YYYY-MM-DD)
 
 ### Git ignoring important files
 Check `.gitignore` - it should only ignore temp files and build artifacts, not framework files.
@@ -250,6 +292,9 @@ Check `.gitignore` - it should only ignore temp files and build artifacts, not f
 ### Claude doesn't see CLAUDE.md
 Ensure CLAUDE.md is at the project root and you opened Claude Code in that directory.
 
+### Missing Claude commands (.claude/commands/)
+Copy the `.claude/` folder from `templates/starter/.claude/` to your project root.
+
 ---
 
-**Last Updated:** 2026-01-21
+**Last Updated:** 2026-01-26
