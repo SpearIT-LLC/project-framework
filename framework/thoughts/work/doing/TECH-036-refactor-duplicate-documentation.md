@@ -135,11 +135,11 @@ Brief summary (1-2 sentences).
 **To be identified during audit, but potential areas include:**
 
 1. **Workflow documentation**
-   - Appears in: CLAUDE.md, QUICK-START.md, workflow-guide.md
+   - Appears in: QUICK-START.md, workflow-guide.md
    - Candidate source: workflow-guide.md
 
 2. **Work item structure**
-   - Appears in: Templates, workflow-guide.md, possibly CLAUDE.md
+   - Appears in: Templates, workflow-guide.md
    - Candidate source: FEATURE-TEMPLATE.md (with workflow-guide.md for lifecycle)
 
 3. **Framework purpose/overview**
@@ -147,10 +147,10 @@ Brief summary (1-2 sentences).
    - Candidate source: Root README.md (with framework/README.md for details)
 
 4. **Collaboration guidelines**
-   - Appears in: CLAUDE.md, collaboration/ files
-   - Candidate source: collaboration/ files (CLAUDE.md references)
+   - Appears in: collaboration/ files
+   - Candidate source: collaboration/ files
 
-**Note:** These are preliminary. Actual audit may reveal different patterns.
+**Note:** These are preliminary. Actual audit may reveal different patterns. CLAUDE.md files are out of scope (see TECH-061).
 
 ---
 
@@ -173,6 +173,7 @@ Brief summary (1-2 sentences).
 - Large-scale restructuring (keep file organization as-is)
 - Style/formatting changes (unless needed for clarity)
 - Content updates beyond resolving duplication
+- CLAUDE.md files (handled separately by TECH-061)
 
 ---
 
@@ -202,6 +203,7 @@ Brief summary (1-2 sentences).
 
 - Requires: TECH-043 (DRY documentation principles)
 - Requires: FEAT-031 (INDEX.md source-of-truth registry)
+- Related: TECH-061 (CLAUDE.md cleanup - handled separately)
 - Related: framework/thoughts/research/backlog-ideas-from-feat-026.md (Item #2, #3)
 
 ---
