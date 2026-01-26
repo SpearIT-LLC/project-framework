@@ -394,12 +394,12 @@ When moving a work item, complete the checklist for the target folder. Use `git 
 - [ ] Transition is valid (check matrix above)
 - [ ] User has approved the work
 - [ ] Priority set
-- [ ] If `todo/.limit` exists, check WIP limit not exceeded
+- [ ] If `todo/.limit` exists, check WIP limit not exceeded (parent + children = 1 item)
 - [ ] Use `git mv` to move file
 
 #### → doing/
 - [ ] Transition is valid (check matrix above)
-- [ ] If `doing/.limit` exists, check WIP limit not exceeded
+- [ ] If `doing/.limit` exists, check WIP limit not exceeded (parent + children = 1 item)
 - [ ] Check `Depends On` field - all dependencies must be in done/
 - [ ] Use `git mv` to move file
 
