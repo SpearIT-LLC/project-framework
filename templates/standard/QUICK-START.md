@@ -12,25 +12,25 @@
 
 ```powershell
 # Copy template
-Copy-Item framework/templates/work-items/FEAT-NNN-template.md thoughts/work/backlog/FEAT-001-name.md
+Copy-Item framework/templates/work-items/FEAT-NNN-template.md project-hub/work/backlog/FEAT-001-name.md
 
 # Edit the file, then move through workflow
-git mv thoughts/work/backlog/FEAT-001-*.md thoughts/work/todo/
-git mv thoughts/work/todo/FEAT-001-*.md thoughts/work/doing/
-git mv thoughts/work/doing/FEAT-001-*.md thoughts/work/done/
+git mv project-hub/work/backlog/FEAT-001-*.md project-hub/work/todo/
+git mv project-hub/work/todo/FEAT-001-*.md project-hub/work/doing/
+git mv project-hub/work/doing/FEAT-001-*.md project-hub/work/done/
 ```
 
 ### Fix a Bug
 
 ```powershell
-Copy-Item framework/templates/work-items/BUG-NNN-template.md thoughts/work/backlog/BUG-001-name.md
+Copy-Item framework/templates/work-items/BUG-NNN-template.md project-hub/work/backlog/BUG-001-name.md
 # Move through workflow: backlog → todo → doing → done
 ```
 
 ### Make Architectural Decision
 
 ```powershell
-Copy-Item framework/templates/decisions/ADR-NNNN-template.md thoughts/research/adr/ADR-0001-name.md
+Copy-Item framework/templates/decisions/ADR-NNNN-template.md project-hub/research/adr/ADR-0001-name.md
 ```
 
 ### Create Release
@@ -45,13 +45,13 @@ git tag vX.Y.Z
 git push origin main --tags
 
 # 4. Archive completed work
-git mv thoughts/work/done/*.md thoughts/history/releases/vX.Y.Z/
+git mv project-hub/work/done/*.md project-hub/history/releases/vX.Y.Z/
 ```
 
 ### End of Day
 
 ```powershell
-Copy-Item framework/templates/documentation/session-history-template.md thoughts/history/sessions/2026-01-21-SESSION-HISTORY.md
+Copy-Item framework/templates/documentation/session-history-template.md project-hub/history/sessions/2026-01-21-SESSION-HISTORY.md
 # Document what you did, decisions made, blockers
 ```
 
@@ -60,7 +60,7 @@ Copy-Item framework/templates/documentation/session-history-template.md thoughts
 ## Workflow
 
 ```
-thoughts/work/backlog/ → todo/ → doing/ → done/ → history/releases/vX.Y.Z/
+project-hub/work/backlog/ → todo/ → doing/ → done/ → history/releases/vX.Y.Z/
 ```
 
 | Folder | Purpose | Limit |

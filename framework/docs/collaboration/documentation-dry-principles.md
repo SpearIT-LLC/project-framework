@@ -70,8 +70,8 @@ A **source of truth** is the single authoritative location for a piece of inform
 | Code standards | `docs/collaboration/code-quality-standards.md` |
 | Security policy | `docs/collaboration/security-policy.md` |
 | Testing approach | `docs/collaboration/testing-strategy.md` |
-| Architecture decisions | `thoughts/adr/` (specific ADR file) |
-| Work item details | `thoughts/work/` (specific work item file) |
+| Architecture decisions | `project-hub/adr/` (specific ADR file) |
+| Work item details | `project-hub/work/` (specific work item file) |
 | Project configuration | `framework.yaml` |
 | AI collaboration rules | `CLAUDE.md` |
 | Session history format | `docs/collaboration/workflow-guide.md` (Session History section) |

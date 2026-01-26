@@ -3,15 +3,15 @@
     Lists backlog items with metadata from a project framework backlog folder.
 
 .DESCRIPTION
-    Scans a thoughts/work/backlog/ folder for .md files, parses work item metadata,
+    Scans a project-hub/work/backlog/ folder for .md files, parses work item metadata,
     and outputs a formatted table or JSON. Handles inconsistent metadata formats
     from older items by inferring values from filenames and content patterns.
 
 .PARAMETER Path
     Path to the backlog folder. If not specified, searches common locations:
-    - framework/thoughts/work/backlog
-    - thoughts/work/backlog
-    - ../thoughts/work/backlog
+    - framework/project-hub/work/backlog
+    - project-hub/work/backlog
+    - ../project-hub/work/backlog
 
 .PARAMETER Format
     Output format: 'json'. Mutually exclusive with -Full, -SortBy, and -Ascending.
@@ -46,7 +46,7 @@
     Outputs backlog items as JSON for programmatic consumption.
 
 .EXAMPLE
-    .\Get-BacklogItems.ps1 -Path "C:\Projects\myproject\thoughts\work\backlog"
+    .\Get-BacklogItems.ps1 -Path "C:\Projects\myproject\project-hub\work\backlog"
     Lists backlog items from a specific folder.
 
 .EXAMPLE

@@ -83,7 +83,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - `/fw-session-history` slash command for capturing session work
   - Auto-update session history when moving items to done/
   - Auto-commit after done-transition
-  - Standard session history format in `thoughts/history/sessions/`
+  - Standard session history format in `project-hub/history/sessions/`
 
 - **FEAT-060: Framework Bootstrap Block**
   - Bootstrap block in root CLAUDE.md for session initialization
@@ -91,7 +91,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Ensures consistent session startup behavior
 
 - **FEAT-062: POC Folder and Spike Workflow**
-  - `thoughts/poc/` folder for proof-of-concept experiments
+  - `project-hub/poc/` folder for proof-of-concept experiments
   - Two spike workflow types: research (document-only) and POC (with artifacts)
   - Archive path: `history/spikes/` for completed spikes
   - Updated Get-WorkflowStatus.ps1 to show POC spikes section
@@ -222,7 +222,7 @@ This release contains 6 work items grouped together, establishing the foundation
   - Updated terminology: "framework source repository" replaces "monorepo"
   - Updated all Tier 1 (critical navigation) and Tier 2 (active work items) documentation
   - Tier 3 work items (backlog/todo/done) will be updated incrementally as touched
-  - See research: [thoughts/research/package-ecosystem-terminology-patterns.md](thoughts/research/package-ecosystem-terminology-patterns.md)
+  - See research: [project-hub/research/package-ecosystem-terminology-patterns.md](project-hub/research/package-ecosystem-terminology-patterns.md)
   - **Migration Note:** If referencing old paths in external docs, update to new structure
 
 ### Added
@@ -286,7 +286,7 @@ This release contains 3 work items grouped together.
   - Process documentation: kanban-workflow.md, workflow-guide.md, troubleshooting-guide.md, architecture-guide.md
   - Templates: CLAUDE-TEMPLATE.md, INDEX-TEMPLATE.md, PROJECT-STATUS-TEMPLATE.md, README-TEMPLATE.md, PROJECT-DEFINITION-TEMPLATE.md
   - NEW-PROJECT-CHECKLIST.md updated to v3.0.0
-  - All references changed: thoughts/project/planning/ → thoughts/work/
+  - All references changed: project-hub/project/planning/ → project-hub/work/
   - Fixed template package path: project-framework-template/ → templates/
   - Removed 4-level structure references (now 3-level)
   - Aligned all documentation with PROJECT-STRUCTURE-STANDARD.md
@@ -311,7 +311,7 @@ This release contains 3 work items grouped together.
 - **Universal Structure Definitions**
   - `framework/docs/PROJECT-STRUCTURE-STANDARD.md` - Definitive project structure specification
   - `framework/docs/REPOSITORY-STRUCTURE.md` - Repository root structure specification
-  - `framework/thoughts/research/README.md` - Research folder purpose documentation
+  - `framework/project-hub/research/README.md` - Research folder purpose documentation
 - **Idea Collection Pattern**
   - Established pattern for idea collections in research/ folder
   - Documented lifecycle and workflow in FEAT-026-sub-item-strategy.md
@@ -323,7 +323,7 @@ This release contains 3 work items grouped together.
   - All framework documentation in framework/
   - Framework uses its own templates, process, and workflow
 - **Flattened Folder Structure**
-  - Removed `thoughts/project/planning/` level
+  - Removed `project-hub/project/planning/` level
   - Moved `planning/backlog/` to `work/backlog/`
   - Reduced nesting from 4 levels to 3 levels maximum
 - **Template Reorganization**
@@ -331,7 +331,7 @@ This release contains 3 work items grouped together.
   - Created: work-items/, decisions/, research/, documentation/, project/, wrappers/
   - Easier navigation and clearer organization
 - **Collaboration Guides Location**
-  - Moved from `thoughts/project/collaboration/` to `framework/collaboration/`
+  - Moved from `project-hub/project/collaboration/` to `framework/collaboration/`
   - Now recognized as universal guides, not project-specific
 
 ### Fixed
@@ -539,7 +539,7 @@ This release contains 3 work items grouped together.
   - "What NOT to Do" checklist
   - Enforces framework workflow compliance
 - **Retrospective system** for dogfooding learnings
-  - thoughts/project/retrospectives/ directory
+  - project-hub/project/retrospectives/ directory
   - 2025-12-20-workflow-enforcement-retrospective.md documenting FEAT-016 incident
 - **Planned features** (documented in backlog, not implemented)
   - FEAT-017: Backlog Review Command (/backlog-review)
@@ -563,13 +563,13 @@ This release contains 3 work items grouped together.
 - PROJECT-STATUS.md for framework project (single source of truth for version)
 - CHANGELOG.md for framework project version history
 - INDEX.md for framework project documentation navigation
-- thoughts/project/ structure for framework development (kanban workflow)
-- thoughts/project/reference/version-strategy.md - Version strategy documentation
+- project-hub/project/ structure for framework development (kanban workflow)
+- project-hub/project/reference/version-strategy.md - Version strategy documentation
 - project-framework-template/README.md - Package overview with migration notes
 
 ### Changed
 - **BREAKING:** Removed legacy root templates from project-framework-template/
-  - Removed duplicate README.md, CLAUDE.md, PROJECT-STATUS.md, CHANGELOG.md, INDEX.md, thoughts/
+  - Removed duplicate README.md, CLAUDE.md, PROJECT-STATUS.md, CHANGELOG.md, INDEX.md, project-hub/
   - Templates now exclusively in framework-level folders (minimal/, light/, standard/)
   - Guide documents remain at package root
 - Updated README.md with comprehensive project overview
@@ -644,7 +644,7 @@ This release contains 3 work items grouped together.
   - powershell-modules.md
   - config-management.md
   - cmd-wrappers.md
-- Complete thoughts/ folder structure
+- Complete project-hub/ folder structure
 - File-based kanban workflow (todo/doing/done)
 - WIP limits (doing=1, todo=10)
 - Generic CLAUDE.md for framework guidelines

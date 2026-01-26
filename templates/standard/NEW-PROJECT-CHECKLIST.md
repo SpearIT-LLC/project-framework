@@ -74,11 +74,11 @@ git tag -a v0.1.0 -m "Initial setup"
   - [ ] `tests/` - Test files (empty)
   - [ ] `docs/` - Project documentation
   - [ ] `poc/` - Proof-of-concept and experimental work
-  - [ ] `thoughts/work/` - Kanban workflow folders
-  - [ ] `thoughts/history/` - Session logs and archives
-  - [ ] `thoughts/research/` - Research and ADRs
-  - [ ] `thoughts/retrospectives/` - Project retrospectives
-  - [ ] `thoughts/external-references/` - Cached references
+  - [ ] `project-hub/work/` - Kanban workflow folders
+  - [ ] `project-hub/history/` - Session logs and archives
+  - [ ] `project-hub/research/` - Research and ADRs
+  - [ ] `project-hub/retrospectives/` - Project retrospectives
+  - [ ] `project-hub/external-references/` - Cached references
   - [ ] `.claude/commands/` - Claude Code slash commands (fw-* commands)
 
 ### Phase 2: Configure Project
@@ -146,8 +146,8 @@ git tag -a v0.1.0 -m "Initial setup"
 
 - [ ] **Verify WIP limit files**
   ```powershell
-  Get-Content thoughts/work/doing/.limit   # Should contain "1"
-  Get-Content thoughts/work/todo/.limit    # Should contain "10"
+  Get-Content project-hub/work/doing/.limit   # Should contain "1"
+  Get-Content project-hub/work/todo/.limit    # Should contain "10"
   ```
 
 - [ ] **Verify framework templates accessible**
@@ -185,17 +185,17 @@ After setup, create your first work item:
 
 ```powershell
 # Copy a feature template
-Copy-Item framework/templates/work-items/FEAT-NNN-template.md thoughts/work/backlog/FEAT-001-first-feature.md
+Copy-Item framework/templates/work-items/FEAT-NNN-template.md project-hub/work/backlog/FEAT-001-first-feature.md
 
 # Edit the work item
 # Move to todo when ready to plan (use git mv to preserve history)
-git mv thoughts/work/backlog/FEAT-001-*.md thoughts/work/todo/
+git mv project-hub/work/backlog/FEAT-001-*.md project-hub/work/todo/
 
 # Move to doing when ready to implement (max 1)
-git mv thoughts/work/todo/FEAT-001-*.md thoughts/work/doing/
+git mv project-hub/work/todo/FEAT-001-*.md project-hub/work/doing/
 
 # Move to done when complete
-git mv thoughts/work/doing/FEAT-001-*.md thoughts/work/done/
+git mv project-hub/work/doing/FEAT-001-*.md project-hub/work/done/
 ```
 
 **Important:** Always use `git mv` instead of `Move-Item` to preserve file history across transitions.
@@ -236,10 +236,10 @@ git mv thoughts/work/doing/FEAT-001-*.md thoughts/work/done/
 
 | Folder | Purpose | Limit |
 |--------|---------|-------|
-| `thoughts/work/backlog/` | Future work, not committed | None |
-| `thoughts/work/todo/` | Committed next work | 10 |
-| `thoughts/work/doing/` | Active work | 1 |
-| `thoughts/work/done/` | Completed, awaiting release | None |
+| `project-hub/work/backlog/` | Future work, not committed | None |
+| `project-hub/work/todo/` | Committed next work | 10 |
+| `project-hub/work/doing/` | Active work | 1 |
+| `project-hub/work/done/` | Completed, awaiting release | None |
 
 ---
 

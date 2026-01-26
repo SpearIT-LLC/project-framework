@@ -205,7 +205,7 @@ These files live **inside each project**, not at repository root:
 ❌ **PROJECT-STATUS.md** - Each project has its own version tracking
 ❌ **CHANGELOG.md** - Each project has its own change history
 ❌ **INDEX.md** - Each project has its own documentation index
-❌ **Project-specific folders** (src/, tests/, docs/, thoughts/) - All inside projects
+❌ **Project-specific folders** (src/, tests/, docs/, project-hub/) - All inside projects
 
 **Why?**
 - Each project is self-contained
@@ -246,7 +246,7 @@ my-awesome-project/         # Repository root = Project root
 ├── src/
 ├── tests/
 ├── docs/
-└── thoughts/
+└── project-hub/
 ```
 
 **They follow PROJECT-STRUCTURE-STANDARD.md directly at root.**

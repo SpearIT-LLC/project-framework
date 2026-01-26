@@ -39,7 +39,7 @@
 ├── tests/                      # Test files
 ├── docs/                       # Project-specific documentation
 │
-└── thoughts/                   # Project thinking and workflow
+└── project-hub/                   # Project thinking and workflow
     ├── work/                   # Kanban workflow
     │   ├── backlog/            # Future work (not yet committed)
     │   ├── todo/               # Committed next work
@@ -79,19 +79,19 @@ See [QUICK-START.md](QUICK-START.md) for common operations and workflow referenc
 
 ```powershell
 # Copy a feature template
-Copy-Item framework/templates/work-items/FEAT-NNN-template.md thoughts/work/backlog/FEAT-001-feature-name.md
+Copy-Item framework/templates/work-items/FEAT-NNN-template.md project-hub/work/backlog/FEAT-001-feature-name.md
 
 # Move through workflow (use git mv to preserve history)
-git mv thoughts/work/backlog/FEAT-001-*.md thoughts/work/todo/
-git mv thoughts/work/todo/FEAT-001-*.md thoughts/work/doing/
-git mv thoughts/work/doing/FEAT-001-*.md thoughts/work/done/
+git mv project-hub/work/backlog/FEAT-001-*.md project-hub/work/todo/
+git mv project-hub/work/todo/FEAT-001-*.md project-hub/work/doing/
+git mv project-hub/work/doing/FEAT-001-*.md project-hub/work/done/
 ```
 
 ### Making Decisions
 
 ```powershell
 # Copy ADR template for architectural decisions
-Copy-Item framework/templates/decisions/ADR-NNNN-template.md thoughts/research/adr/ADR-0001-decision-name.md
+Copy-Item framework/templates/decisions/ADR-NNNN-template.md project-hub/research/adr/ADR-0001-decision-name.md
 ```
 
 ---

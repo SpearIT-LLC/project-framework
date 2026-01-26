@@ -56,7 +56,7 @@ ProjectName/
 ├── PROJECT-STATUS.md           # Single source of truth for status
 ├── CHANGELOG.md                # Version history
 │
-└── thoughts/                   # Project documentation and framework
+└── project-hub/                   # Project documentation and framework
     ├── project/                # Project-specific content
     │   ├── planning/           # Roadmap and backlog
     │   ├── work/               # Kanban workflow
@@ -275,7 +275,7 @@ ProjectName/
 > - Session history format (daily YYYY-MM-DD-SESSION-HISTORY.md files)
 > - Work item documentation templates (FEATURE, BUGFIX, BLOCKER, SPIKE)
 > - Code documentation requirements
-> - Work item location (`thoughts/work/` backlog/todo/doing/done folders)
+> - Work item location (`project-hub/work/` backlog/todo/doing/done folders)
 
 ### [Project]-Specific Documentation
 
@@ -286,7 +286,7 @@ ProjectName/
 - [Component-specific doc requirements]
 
 **Release Process:**
-When features/bugfixes are complete, follow [version-control-workflow.md](thoughts/framework/process/version-control-workflow.md):
+When features/bugfixes are complete, follow [version-control-workflow.md](project-hub/framework/process/version-control-workflow.md):
 1. Keep CHANGELOG notes in work item doc during development
 2. At release: Update PROJECT-STATUS.md and CHANGELOG.md together
 3. Commit, tag, and push as single atomic operation
@@ -333,7 +333,7 @@ cd /path/to/project
 - [Enhancement description]
 - [Enhancement description]
 
-See [roadmap.md](thoughts/roadmap.md) for complete roadmap.
+See [roadmap.md](project-hub/roadmap.md) for complete roadmap.
 
 ---
 
@@ -403,19 +403,19 @@ See [roadmap.md](thoughts/roadmap.md) for complete roadmap.
 - [README.md](README.md) - Project overview and getting started guide
 
 **Must Read:**
-- [system-architecture.md](thoughts/external-references/system-architecture.md) - Canonical architecture reference (if exists)
-- [coding-standards.md](thoughts/external-references/coding-standards.md) - Code quality standards (if exists)
-- [version-control-workflow.md](thoughts/framework/process/version-control-workflow.md) - Git branching, releases, and CHANGELOG discipline
+- [system-architecture.md](project-hub/external-references/system-architecture.md) - Canonical architecture reference (if exists)
+- [coding-standards.md](project-hub/external-references/coding-standards.md) - Code quality standards (if exists)
+- [version-control-workflow.md](project-hub/framework/process/version-control-workflow.md) - Git branching, releases, and CHANGELOG discipline
 
 **Framework (Reusable):**
-- [FRAMEWORK-CHANGELOG.md](thoughts/framework/FRAMEWORK-CHANGELOG.md) - Process evolution tracking
-- [workflow-guide.md](thoughts/framework/collaboration/workflow-guide.md) - Work item lifecycle
+- [FRAMEWORK-CHANGELOG.md](project-hub/framework/FRAMEWORK-CHANGELOG.md) - Process evolution tracking
+- [workflow-guide.md](project-hub/framework/collaboration/workflow-guide.md) - Work item lifecycle
 
 ---
 
 ## Version Control & Release Process
 
-**All development follows a disciplined version control workflow documented in [version-control-workflow.md](thoughts/framework/process/version-control-workflow.md).**
+**All development follows a disciplined version control workflow documented in [version-control-workflow.md](project-hub/framework/process/version-control-workflow.md).**
 
 ### Key Principles
 
@@ -431,7 +431,7 @@ See [roadmap.md](thoughts/roadmap.md) for complete roadmap.
 - **MINOR (1.3.0)** - New features (backward-compatible)
 - **PATCH (1.2.1)** - Bug fixes (backward-compatible)
 
-See [version-control-workflow.md](thoughts/framework/process/version-control-workflow.md) for complete details.
+See [version-control-workflow.md](project-hub/framework/process/version-control-workflow.md) for complete details.
 
 ---
 

@@ -281,7 +281,7 @@ cd project-framework/templates
 
 **Template Versions:** Inherit framework version unless independently versioned
 
-See [Version Strategy Documentation](framework/thoughts/external-references/version-strategy.md) for details.
+See [Version Strategy Documentation](framework/project-hub/external-references/version-strategy.md) for details.
 
 ---
 
@@ -310,7 +310,7 @@ See [LICENSE](LICENSE) file for details.
 2. **Example** - Real-world example of framework usage
 3. **Improvement** - Surfaces pain points and areas for enhancement
 
-Check [framework/thoughts/](framework/thoughts/) to see the framework in action on itself, or [examples/hello-world/](examples/hello-world/) for a simpler reference implementation.
+Check [framework/project-hub/](framework/project-hub/) to see the framework in action on itself, or [examples/hello-world/](examples/hello-world/) for a simpler reference implementation.
 
 ---
 

@@ -19,15 +19,15 @@
 function Find-WorkFolder {
     <#
     .SYNOPSIS
-        Searches for thoughts/work folder in common locations.
+        Searches for project-hub/work folder in common locations.
     #>
     [CmdletBinding()]
     param()
 
     $candidates = @(
-        "framework/thoughts/work",
-        "thoughts/work",
-        "../thoughts/work"
+        "framework/project-hub/work",
+        "project-hub/work",
+        "../project-hub/work"
     )
 
     foreach ($candidate in $candidates) {
@@ -106,15 +106,15 @@ Export-ModuleMember -Function ConvertTo-NormalizedWorkItemId
 function Find-ThoughtsFolder {
     <#
     .SYNOPSIS
-        Searches for thoughts folder in common locations.
+        Searches for project-hub folder in common locations.
     #>
     [CmdletBinding()]
     param()
 
     $candidates = @(
-        "framework/thoughts",
-        "thoughts",
-        "../thoughts"
+        "framework/project-hub",
+        "project-hub",
+        "../project-hub"
     )
 
     foreach ($candidate in $candidates) {
@@ -142,8 +142,8 @@ function Get-NextWorkItemId {
 
         Per TECH-046 and workflow-guide.md#finding-next-available-id
 
-    .PARAMETER ThoughtsPath
-        Path to the thoughts folder. If not provided, searches common locations.
+    .PARAMETER ProjectHubPath
+        Path to the project-hub folder. If not provided, searches common locations.
 
     .PARAMETER ReturnAsInt
         If true, returns the ID as an integer. Default returns zero-padded string (e.g., "068").
@@ -161,33 +161,33 @@ function Get-NextWorkItemId {
         # Returns: 68
 
     .EXAMPLE
-        Get-NextWorkItemId -ThoughtsPath "framework/thoughts"
+        Get-NextWorkItemId -ProjectHubPath "framework/project-hub"
         # Returns: "068"
     #>
     [CmdletBinding()]
     param(
         [Parameter()]
-        [string]$ThoughtsPath,
+        [string]$ProjectHubPath,
 
         [Parameter()]
         [switch]$ReturnAsInt
     )
 
-    # Find thoughts folder if not provided
-    if (-not $ThoughtsPath) {
-        $ThoughtsPath = Find-ThoughtsFolder
-        if (-not $ThoughtsPath) {
-            Write-Error "Could not find thoughts folder. Provide -ThoughtsPath parameter."
+    # Find project-hub folder if not provided
+    if (-not $ProjectHubPath) {
+        $ProjectHubPath = Find-ThoughtsFolder
+        if (-not $ProjectHubPath) {
+            Write-Error "Could not find project-hub folder. Provide -ProjectHubPath parameter."
             return $null
         }
     }
 
-    if (-not (Test-Path $ThoughtsPath)) {
-        Write-Error "Thoughts folder not found: $ThoughtsPath"
+    if (-not (Test-Path $ProjectHubPath)) {
+        Write-Error "Thoughts folder not found: $ProjectHubPath"
         return $null
     }
 
-    # Define all scan locations (relative to thoughts folder)
+    # Define all scan locations (relative to project-hub folder)
     $scanFolders = @(
         "work",
         "releases",
@@ -202,7 +202,7 @@ function Get-NextWorkItemId {
     $maxId = 0
 
     foreach ($folder in $scanFolders) {
-        $folderPath = Join-Path $ThoughtsPath $folder
+        $folderPath = Join-Path $ProjectHubPath $folder
 
         if (-not (Test-Path $folderPath)) {
             Write-Verbose "Skipping non-existent folder: $folderPath"

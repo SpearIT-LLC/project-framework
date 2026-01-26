@@ -297,17 +297,17 @@
 **Two Spike Workflows:**
 
 1. **Research Spike (no code artifacts):**
-   - Create spike doc in `thoughts/work/backlog/` or directly in `doing/`
-   - Archive doc to `thoughts/history/spikes/` when complete
+   - Create spike doc in `project-hub/work/backlog/` or directly in `doing/`
+   - Archive doc to `project-hub/history/spikes/` when complete
 
 2. **POC Spike (with code artifacts):**
-   - Create spike folder in `thoughts/poc/SPIKE-XXX-description/`
+   - Create spike folder in `project-hub/poc/SPIKE-XXX-description/`
    - Put spike doc and code artifacts in the folder
-   - Archive entire folder to `thoughts/history/spikes/SPIKE-XXX-description/`
+   - Archive entire folder to `project-hub/history/spikes/SPIKE-XXX-description/`
    - After production implementation → optionally delete code artifacts, keep spike doc
 
 **Archive Location (research spike):**
-`thoughts/history/spikes/SPIKE-NNN-description.md`
+`project-hub/history/spikes/SPIKE-NNN-description.md`
 
 **Archive Location (POC spike):**
-`thoughts/history/spikes/SPIKE-NNN-description/` (entire folder)
+`project-hub/history/spikes/SPIKE-NNN-description/` (entire folder)

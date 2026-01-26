@@ -77,7 +77,7 @@ framework/
 │   └── REPOSITORY-STRUCTURE.md  # Repository structure
 ├── templates/                   # 19 framework templates
 ├── patterns/                    # Implementation patterns
-└── thoughts/                    # Framework development tracking
+└── project-hub/                    # Framework development tracking
     ├── work/                    # Framework work items (kanban)
     ├── research/                # Framework ADRs
     ├── retrospectives/          # Framework retrospectives
@@ -157,7 +157,7 @@ This serves as:
 2. **Example** - Real-world example of framework usage
 3. **Improvement** - Surfaces pain points and areas for enhancement
 
-Check [thoughts/](thoughts/) to see the framework in action on itself.
+Check [project-hub/](project-hub/) to see the framework in action on itself.
 
 ---
 

@@ -71,7 +71,7 @@ Standard user projects typically create a single-project repository and follow t
 ├── templates/                        # OPTIONAL - Only if project produces templates
 ├── tools/                            # OPTIONAL - Only if project has utilities
 │
-└── thoughts/                         # REQUIRED - Project management
+└── project-hub/                         # REQUIRED - Project management
     ├── work/                         # REQUIRED - Kanban workflow
     │   ├── README.md                # REQUIRED - Minimal workflow reference
     │   │
@@ -189,7 +189,7 @@ Standard user projects typically create a single-project repository and follow t
 **Minimum content:**
 - Links to core documents (README, PROJECT-STATUS, CHANGELOG, CLAUDE)
 - Links to documentation (docs/)
-- Links to project management (thoughts/)
+- Links to project management (project-hub/)
 
 **Template:** Use `INDEX-TEMPLATE.md` from framework templates
 
@@ -233,9 +233,9 @@ Standard user projects typically create a single-project repository and follow t
 
 ---
 
-### `thoughts/` Folder Files
+### `project-hub/` Folder Files
 
-#### `thoughts/work/README.md` (REQUIRED)
+#### `project-hub/work/README.md` (REQUIRED)
 **Purpose:** Minimal workflow reference
 
 **Content:**
@@ -257,7 +257,7 @@ See [workflow-guide.md](../../docs/collaboration/workflow-guide.md) for complete
 
 ---
 
-#### `thoughts/work/todo/.limit` (REQUIRED)
+#### `project-hub/work/todo/.limit` (REQUIRED)
 **Purpose:** WIP (Work In Progress) limit for todo/ folder
 
 **Content:** Plain text number
@@ -271,7 +271,7 @@ See [workflow-guide.md](../../docs/collaboration/workflow-guide.md) for complete
 
 ---
 
-#### `thoughts/work/doing/.limit` (REQUIRED)
+#### `project-hub/work/doing/.limit` (REQUIRED)
 **Purpose:** WIP (Work In Progress) limit for doing/ folder
 
 **Content:** Plain text number
@@ -285,7 +285,7 @@ See [workflow-guide.md](../../docs/collaboration/workflow-guide.md) for complete
 
 ---
 
-#### `thoughts/research/README.md` (REQUIRED)
+#### `project-hub/research/README.md` (REQUIRED)
 **Purpose:** Explain research folder purpose and distinction from external-references/
 
 **Content:**
@@ -321,7 +321,7 @@ See also: [external-references/README.md](../external-references/README.md) for 
 
 ---
 
-#### `thoughts/external-references/README.md` (REQUIRED)
+#### `project-hub/external-references/README.md` (REQUIRED)
 **Purpose:** Explain external-references folder purpose and distinction from research/
 
 **Content:**
@@ -362,10 +362,10 @@ See also: [research/README.md](../research/README.md) for distinction.
 1. `src/.gitkeep`
 2. `tests/.gitkeep`
 3. `poc/.gitkeep`
-4. `thoughts/work/backlog/.gitkeep`
-5. `thoughts/work/todo/.gitkeep`
-6. `thoughts/work/doing/.gitkeep`
-7. `thoughts/work/done/.gitkeep`
+4. `project-hub/work/backlog/.gitkeep`
+5. `project-hub/work/todo/.gitkeep`
+6. `project-hub/work/doing/.gitkeep`
+7. `project-hub/work/done/.gitkeep`
 
 **Policy:** Selective strategy (only where needed for user experience)
 
@@ -579,12 +579,12 @@ When creating a new Standard Framework project:
 **Phase 3: Create docs/ files**
 - [ ] `docs/README.md` (minimal documentation index)
 
-**Phase 4: Create thoughts/ files**
-- [ ] `thoughts/work/README.md` (minimal workflow reference)
-- [ ] `thoughts/work/todo/.limit` (contains: `10`)
-- [ ] `thoughts/work/doing/.limit` (contains: `1`)
-- [ ] `thoughts/research/README.md` (research purpose explanation)
-- [ ] `thoughts/external-references/README.md` (distinction explanation)
+**Phase 4: Create project-hub/ files**
+- [ ] `project-hub/work/README.md` (minimal workflow reference)
+- [ ] `project-hub/work/todo/.limit` (contains: `10`)
+- [ ] `project-hub/work/doing/.limit` (contains: `1`)
+- [ ] `project-hub/research/README.md` (research purpose explanation)
+- [ ] `project-hub/external-references/README.md` (distinction explanation)
 
 **Phase 5: Initialize git**
 - [ ] `git init`
@@ -606,7 +606,7 @@ To verify a project matches Standard Framework structure:
 
 **Folder structure validation:**
 - [ ] All REQUIRED folders exist
-- [ ] Folder hierarchy matches specification (3 levels max in thoughts/)
+- [ ] Folder hierarchy matches specification (3 levels max in project-hub/)
 - [ ] No extra unexpected folders (unless project-specific)
 
 **File validation:**
@@ -621,9 +621,9 @@ To verify a project matches Standard Framework structure:
 - [ ] `PROJECT-STATUS.md` has current version
 - [ ] `CHANGELOG.md` follows Keep a Changelog format
 - [ ] `.limit` files contain integers only
-- [ ] `thoughts/work/README.md` references workflow doc
-- [ ] `thoughts/research/README.md` explains purpose
-- [ ] `thoughts/external-references/README.md` explains distinction
+- [ ] `project-hub/work/README.md` references workflow doc
+- [ ] `project-hub/research/README.md` explains purpose
+- [ ] `project-hub/external-references/README.md` explains distinction
 
 **Git validation:**
 - [ ] Repository initialized

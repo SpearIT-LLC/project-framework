@@ -212,7 +212,7 @@ Project flow: Input → Process → Output
 ### History Documents
 **Format:** `{YYYY-MM-DD}-{DOCUMENT-DESCRIPTION}.md`
 
-**Location:** `thoughts/history/`
+**Location:** `project-hub/history/`
 
 **Examples:**
 - `2025-11-17-SECURITY-REVIEW.md`

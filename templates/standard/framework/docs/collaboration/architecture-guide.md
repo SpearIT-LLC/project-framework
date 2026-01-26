@@ -88,7 +88,7 @@ project/
 ├── README.md
 ├── PROJECT-STATUS.md      # Version & status
 ├── CHANGELOG.md           # Version history
-├── thoughts/
+├── project-hub/
 │   └── project/
 │       └── history/       # Decision history
 └── src/                   # Your code
@@ -113,7 +113,7 @@ project/
 ```
 project/
 ├── Core Documentation (README, STATUS, CHANGELOG, CLAUDE.md)
-├── thoughts/
+├── project-hub/
 │   ├── project/
 │   │   ├── work/          # Kanban workflow (todo/doing/done)
 │   │   ├── planning/      # Backlog, roadmap
@@ -156,16 +156,16 @@ project/
 
 ## Folder Structure Architecture
 
-### The `thoughts/` Folder Concept
+### The `project-hub/` Folder Concept
 
-**Why "thoughts"?**
-- Project management is capturing and organizing thoughts
-- Not code, not deliverables, but thinking artifacts
+**Why "project-hub"?**
+- Central location for project management artifacts
+- Not code, not deliverables, but coordination content
 - Separates "how we work" from "what we deliver"
 
 **Architecture:**
 ```
-thoughts/
+project-hub/
 ├── project/        # Project-specific content (unique per project)
 │   ├── work/       # Current work (kanban)
 │   ├── planning/   # Future work
@@ -193,14 +193,14 @@ thoughts/
 - Enables framework reuse across projects
 
 **Example:**
-- `thoughts/work/doing/feature-020.md` - Specific to THIS project
-- `thoughts/framework/templates/FEATURE-TEMPLATE.md` - Reusable for ANY project
+- `project-hub/work/doing/feature-020.md` - Specific to THIS project
+- `project-hub/framework/templates/FEATURE-TEMPLATE.md` - Reusable for ANY project
 
 ### Collaboration Folder Architecture
 
 **Purpose:** Universal collaboration documentation for humans and AI
 
-**Location:** `thoughts/collaboration/`
+**Location:** `project-hub/collaboration/`
 
 **Contents:**
 - `workflow-guide.md` - Complete workflow documentation
@@ -272,7 +272,7 @@ history/releases/vX.Y.Z/
 
 ### WIP Limit Enforcement
 
-**File:** `thoughts/work/doing/.limit`
+**File:** `project-hub/work/doing/.limit`
 
 **Content:** Single number (default: 2)
 
@@ -360,7 +360,7 @@ history/releases/vX.Y.Z/
 - **Audience:** Humans discovering project
 - **Purpose:** What, why, how to get started
 - **Kept:** High-level overview
-- **Detailed info:** Links to thoughts/
+- **Detailed info:** Links to project-hub/
 
 **PROJECT-STATUS.md**
 - **Audience:** Humans and AI
@@ -395,9 +395,9 @@ history/releases/vX.Y.Z/
 ```
 CLAUDE.md (Quick Reference)
     ↓ links to
-thoughts/collaboration/ (Detailed Guides)
+project-hub/collaboration/ (Detailed Guides)
     ↓ links to
-thoughts/framework/templates/ (Copy-paste Examples)
+project-hub/framework/templates/ (Copy-paste Examples)
 ```
 
 **Example: ADR Documentation**
@@ -624,7 +624,7 @@ AI moves to todo → doing → implementation
 
 **Context:** How to organize reusable vs project-specific content
 
-**Decision:** Separate `thoughts/framework/` (reusable) from `thoughts/` (project-specific)
+**Decision:** Separate `project-hub/framework/` (reusable) from `project-hub/` (project-specific)
 
 **Rationale:**
 - Framework can be updated independently

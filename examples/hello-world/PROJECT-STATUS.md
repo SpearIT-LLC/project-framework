@@ -39,7 +39,7 @@ None - project is stable and complete.
 
 ## Decisions & Architecture
 
-See `thoughts/research/adr/` for architectural decision records (currently none - project is too simple to require ADRs).
+See `project-hub/research/adr/` for architectural decision records (currently none - project is too simple to require ADRs).
 
 ## Dependencies
 

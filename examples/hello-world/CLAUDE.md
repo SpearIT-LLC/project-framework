@@ -41,7 +41,7 @@ examples/hello-world/
 ├── tests/            # Test files
 │   └── hello-world.test.js
 ├── docs/             # Project-specific documentation
-└── thoughts/         # Project tracking (work items, decisions, history)
+└── project-hub/         # Project tracking (work items, decisions, history)
     ├── work/         # Current and planned work
     ├── history/      # Releases, sessions, spikes
     ├── research/     # ADRs and technical research
@@ -55,10 +55,10 @@ examples/hello-world/
 
 Use the framework's work item workflow:
 
-1. **New items:** `thoughts/work/backlog/` (use framework templates)
-2. **Planned:** `thoughts/work/todo/` (ready to start)
-3. **In progress:** `thoughts/work/doing/` (limit: 1 per person)
-4. **Completed:** `thoughts/work/done/`
+1. **New items:** `project-hub/work/backlog/` (use framework templates)
+2. **Planned:** `project-hub/work/todo/` (ready to start)
+3. **In progress:** `project-hub/work/doing/` (limit: 1 per person)
+4. **Completed:** `project-hub/work/done/`
 
 ### Creating Work Items
 
@@ -73,13 +73,13 @@ Use framework templates from [../framework/templates/work-items/](../framework/t
 
 Document architectural decisions using:
 - Framework template: [../framework/templates/decisions/ADR-NNNN-title.md](../framework/templates/decisions/ADR-NNNN-title.md)
-- Save to: `thoughts/research/adr/`
+- Save to: `project-hub/research/adr/`
 
 ### Session History
 
 Track work sessions using:
 - Framework template: [../framework/templates/documentation/session-history-template.md](../framework/templates/documentation/session-history-template.md)
-- Save to: `thoughts/history/sessions/YYYY-MM-DD-session-N.md`
+- Save to: `project-hub/history/sessions/YYYY-MM-DD-session-N.md`
 
 ## Communication Guidelines
 

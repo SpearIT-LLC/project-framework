@@ -55,12 +55,12 @@ All projects follow this core workflow, with depth varying by framework level:
   - Should we defer or cancel?
 
 **Documentation:**
-- **Standard/Full frameworks:** `thoughts/research/`
+- **Standard/Full frameworks:** `project-hub/research/`
   - `problem-statement.md` - Clear problem definition
   - `landscape-analysis.md` - Existing solutions review
   - `feasibility.md` - Can/should we build this?
   - `project-justification.md` - Go/no-go decision
-- **Light framework:** `thoughts/research/justification.md` (simplified)
+- **Light framework:** `project-hub/research/justification.md` (simplified)
 - **Minimal framework:** Embedded in README.md "Why This Exists" section
 
 **Exit Criteria:**
@@ -92,7 +92,7 @@ All projects follow this core workflow, with depth varying by framework level:
   - What might we do later?
 
 **Documentation:**
-- **Standard/Full:** `thoughts/external-references/project-definition.md`
+- **Standard/Full:** `project-hub/external-references/project-definition.md`
 - **Light:** Brief section in README.md
 - **Minimal:** Embedded in README.md
 
@@ -127,7 +127,7 @@ All projects follow this core workflow, with depth varying by framework level:
   - Resource requirements
 
 **Documentation:**
-- **Standard/Full:** `thoughts/`
+- **Standard/Full:** `project-hub/`
   - `roadmap.md` - Version plan
   - `work/backlog/` - Features not yet started
   - `work/todo/` - Committed next work
@@ -146,7 +146,7 @@ Ask this before elaborate planning. Keep planning proportional to project size.
 
 **Activities:**
 - One work item at a time (respect WIP limits)
-  - Check `thoughts/work/doing/.limit`
+  - Check `project-hub/work/doing/.limit`
   - Default WIP limit: 1-2 items
   - Complete before starting new work
 - Follow coding standards
@@ -194,15 +194,15 @@ Ask this before elaborate planning. Keep planning proportional to project size.
   - **Light/Minimal:** Mark as complete
 - **Archive work items (Standard/Full):**
   - Immediately after release tag is created
-  - Create `thoughts/history/releases/vX.Y.Z/` folder
+  - Create `project-hub/history/releases/vX.Y.Z/` folder
   - Move ALL related work item files from done/ to release folder
     - Primary work items (FEAT-XXX.md, BUGFIX-XXX.md)
     - Supporting documents (FEAT-XXX-*.md, feature-XXX-*.md)
     - Test plans, results, migration matrices, planning docs
-  - **Command:** `git mv thoughts/work/done/WORK-ITEM-*.md thoughts/history/releases/vX.Y.Z/`
+  - **Command:** `git mv project-hub/work/done/WORK-ITEM-*.md project-hub/history/releases/vX.Y.Z/`
   - **CRITICAL:** Use `git mv` (move), NOT `cp` (copy) - prevents duplicates
   - Commit: `git commit -m "chore: Archive vX.Y.Z work items"`
-  - **Verify:** Check done/ is empty: `ls thoughts/work/done/*.md` (should return empty)
+  - **Verify:** Check done/ is empty: `ls project-hub/work/done/*.md` (should return empty)
   - Result: done/ folder should be empty after archival
   - **See ADR-003 for complete archival process and common mistakes**
 
@@ -256,7 +256,7 @@ Takes 30 seconds, no dependencies, works for our team.
 
 #### Light Framework
 
-Simple justification document at `thoughts/research/justification.md`:
+Simple justification document at `project-hub/research/justification.md`:
 
 **Structure:**
 - Problem statement (1 paragraph)
@@ -291,7 +291,7 @@ Takes ~2 hours to build, solves our specific workflow, no infrastructure.
 
 #### Standard/Full Framework
 
-Complete research documentation in `thoughts/research/`:
+Complete research documentation in `project-hub/research/`:
 
 **Required Documents:**
 
@@ -470,7 +470,7 @@ Add these fields to the work item before archiving:
 
 1. **Update the work item** with cancellation metadata (Status, Date, Reason)
 2. **Add lessons learned** if applicable (optional but valuable)
-3. **Move to archive:** `git mv thoughts/work/[folder]/ITEM-NNN-*.md thoughts/history/archive/`
+3. **Move to archive:** `git mv project-hub/work/[folder]/ITEM-NNN-*.md project-hub/history/archive/`
 4. **Update session history** noting the cancellation
 5. **Commit:** `git commit -m "chore: Cancel ITEM-NNN - [brief reason]"`
 
@@ -531,7 +531,7 @@ policies:
 Work items flow through folders:
 
 ```
-thoughts/
+project-hub/
 ├── work/backlog/         # Ideas and future work
 ├── work/todo/            # Committed next (prioritized)
 ├── work/doing/           # Currently in progress (WIP limited)
@@ -546,7 +546,7 @@ User Idea → Backlog → [User Approval] → Todo → Doing → Done → Releas
 ```
 
 **WIP Limits:**
-- Check `thoughts/work/doing/.limit` file for your project's configured limit
+- Check `project-hub/work/doing/.limit` file for your project's configured limit
 - Framework default: 1 item (solo developer) or 2 items (small team)
 - Projects can set their own limits based on team size and workflow
 - Complete current work before starting new (up to your limit)
@@ -559,13 +559,13 @@ WIP limits are user-defined tools for maintaining focus, not rigid laws. The `.l
 
 ```bash
 # Solo developer (recommended default)
-echo "1" > thoughts/work/doing/.limit
+echo "1" > project-hub/work/doing/.limit
 
 # Small team or parallel workstreams
-echo "2" > thoughts/work/doing/.limit
+echo "2" > project-hub/work/doing/.limit
 
 # Larger team (consider if this is really needed)
-echo "3" > thoughts/work/doing/.limit
+echo "3" > project-hub/work/doing/.limit
 ```
 
 Choose a limit that enforces focus without being unrealistic for your context.
@@ -604,13 +604,13 @@ Temporarily increase your WIP limit when parallel work is genuinely needed.
 **How to temporarily bump:**
 ```bash
 # Check current limit
-cat thoughts/work/doing/.limit  # Shows: 1
+cat project-hub/work/doing/.limit  # Shows: 1
 
 # Increase temporarily
-echo "2" > thoughts/work/doing/.limit
+echo "2" > project-hub/work/doing/.limit
 
 # After completing one item, restore your normal limit
-echo "1" > thoughts/work/doing/.limit
+echo "1" > project-hub/work/doing/.limit
 ```
 
 **Guidance Principles:**
@@ -658,7 +658,7 @@ If the spike informed a production implementation, you may delete code artifacts
 
 ### Roadmap Integration
 
-**Location:** `thoughts/roadmap.md`
+**Location:** `project-hub/roadmap.md`
 
 **Purpose:** Track high-level version goals and reference work items by ID.
 
@@ -770,10 +770,10 @@ Scan **all four directories** containing work items:
 
 | Directory | Contains |
 |-----------|----------|
-| `thoughts/work/` | Active items (backlog, todo, doing, done) |
-| `thoughts/releases/` | Released items archived by version |
-| `thoughts/poc/` | POC spikes with code artifacts |
-| `thoughts/history/spikes/` | Archived spike folders |
+| `project-hub/work/` | Active items (backlog, todo, doing, done) |
+| `project-hub/releases/` | Released items archived by version |
+| `project-hub/poc/` | POC spikes with code artifacts |
+| `project-hub/history/spikes/` | Archived spike folders |
 
 **Algorithm:**
 
@@ -792,7 +792,7 @@ Scan **all four directories** containing work items:
 
 ```bash
 # Find all work items and spikes
-ls thoughts/{work,releases,poc,history/spikes}/**/*-[0-9][0-9][0-9]-*.md 2>/dev/null
+ls project-hub/{work,releases,poc,history/spikes}/**/*-[0-9][0-9][0-9]-*.md 2>/dev/null
 
 # Parse IDs and find maximum
 # If max is 067, next ID is 068
@@ -803,7 +803,7 @@ ls thoughts/{work,releases,poc,history/spikes}/**/*-[0-9][0-9][0-9]-*.md 2>/dev/
 ```powershell
 # Use Get-NextWorkItemId from FrameworkWorkflow.psm1
 Import-Module ./tools/FrameworkWorkflow.psm1
-Get-NextWorkItemId -ThoughtsPath "thoughts"
+Get-NextWorkItemId -ProjectHubPath "project-hub"
 # Returns: 068
 ```
 
@@ -999,7 +999,7 @@ Every project should have these files in the root:
 
 **Naming:** `YYYY-MM-DD-SESSION-HISTORY.md`
 
-**Location:** `thoughts/history/`
+**Location:** `project-hub/history/`
 
 **Purpose:** Capture daily activity, decisions, and context for future reference
 
@@ -1078,7 +1078,7 @@ function calculateTotal(subtotal, taxRate, discountPercent) {
 - Major features complete
 - After significant issues/failures
 
-**Location:** `thoughts/retrospectives/YYYY-MM-DD-retrospective.md`
+**Location:** `project-hub/retrospectives/YYYY-MM-DD-retrospective.md`
 
 **Standard Structure:**
 
@@ -1363,14 +1363,14 @@ Given current version and Version Impact from work item:
 
 3. **Create grouped release folder:**
    ```bash
-   mkdir -p thoughts/history/releases/v2.3.0
+   mkdir -p project-hub/history/releases/v2.3.0
    ```
 
 4. **Move all items to release folder:**
    ```bash
-   git mv thoughts/work/done/FEAT-032-*.md thoughts/history/releases/v2.3.0/
-   git mv thoughts/work/done/DECISION-042-*.md thoughts/history/releases/v2.3.0/
-   git mv thoughts/work/done/FEAT-040-*.md thoughts/history/releases/v2.3.0/
+   git mv project-hub/work/done/FEAT-032-*.md project-hub/history/releases/v2.3.0/
+   git mv project-hub/work/done/DECISION-042-*.md project-hub/history/releases/v2.3.0/
+   git mv project-hub/work/done/FEAT-040-*.md project-hub/history/releases/v2.3.0/
    ```
 
 5. **Update CHANGELOG.md** - Add all items under one version:
@@ -1403,7 +1403,7 @@ Given current version and Version Impact from work item:
 
 8. **Verify done/ is empty:**
    ```bash
-   ls thoughts/work/done/*.md  # Should return empty
+   ls project-hub/work/done/*.md  # Should return empty
    ```
 
 #### CHANGELOG Format for Grouped Releases
@@ -1447,7 +1447,7 @@ Given current version and Version Impact from work item:
 
 **Folder structure:**
 ```
-thoughts/history/releases/
+project-hub/history/releases/
 ├── v2.2.5/
 │   └── BUGFIX-100-auth-fix.md
 ├── v2.3.0/                        # Grouped release
@@ -1531,19 +1531,19 @@ Start with MINOR, upgrade to MAJOR if you discover complexity.
 
 ### Template Locations
 
-- **MAJOR:** `thoughts/framework/templates/ADR-MAJOR-TEMPLATE.md`
-- **MINOR:** `thoughts/framework/templates/ADR-MINOR-TEMPLATE.md`
+- **MAJOR:** `project-hub/framework/templates/ADR-MAJOR-TEMPLATE.md`
+- **MINOR:** `project-hub/framework/templates/ADR-MINOR-TEMPLATE.md`
 
 ### Naming Convention
 
 - Numbered sequentially: `001-decision-title.md`, `002-next-decision.md`
 - Use lowercase with hyphens
 - Both MAJOR and MINOR share same numbering sequence (chronological order)
-- Store in `thoughts/research/adr/`
+- Store in `project-hub/research/adr/`
 
 **Examples:**
 ```
-thoughts/research/adr/
+project-hub/research/adr/
 ├── 001-ai-workflow-checkpoint-policy.md (MAJOR)
 ├── 002-json-library-selection.md (MINOR)
 ├── 003-authentication-architecture.md (MAJOR)
@@ -1873,11 +1873,11 @@ Do you agree with this approach, or would you like to provide additional guidanc
    - Derived: README.md (may reference or summarize status)
 
 3. **ADRs → implementation docs**
-   - Master: thoughts/project/research/adr/*.md (decision records)
+   - Master: project-hub/project/research/adr/*.md (decision records)
    - Derived: Code comments, implementation notes referencing decisions
 
 4. **Templates → instances**
-   - Master: thoughts/framework/templates/*.md (never edit directly)
+   - Master: project-hub/framework/templates/*.md (never edit directly)
    - Derived: Work items, documents created from templates
 
 **Update Sequence:**

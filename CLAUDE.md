@@ -5,7 +5,7 @@
 > 1. **Ask:** "What kind of work are we doing today?" (unless user already stated intent)
 > 2. **Read:** `framework.yaml` → check `roles.default` for your starting role
 > 3. **On work item actions** (move, create, status change): Read `policies.onTransition` BEFORE acting
-> 4. **On file operations in `thoughts/work/`**: Use `git mv`, never `Move-Item` or `cp`
+> 4. **On file operations in `project-hub/work/`**: Use `git mv`, never `Move-Item` or `cp`
 > 5. **Before writing code:** State what you plan to do and wait for approval
 
 This file provides navigation and context for AI assistants working in this framework source repository.
@@ -59,7 +59,7 @@ The framework project contains:
 - Collaboration guides ([framework/collaboration/](framework/collaboration/))
 - Templates ([framework/templates/](framework/templates/))
 - Patterns ([framework/patterns/](framework/patterns/))
-- Framework work items and history ([framework/thoughts/](framework/thoughts/))
+- Framework work items and history ([framework/project-hub/](framework/project-hub/))
 
 ### Working on the Hello World Example?
 
@@ -96,31 +96,31 @@ These are starter templates that users copy to begin new projects.
 
 ### Work Item Tracking
 
-Each project has its own thoughts/ structure:
+Each project has its own project-hub/ structure:
 
-- Framework work items: [framework/thoughts/work/](framework/thoughts/work/)
-- Hello-world work items: [examples/hello-world/thoughts/work/](examples/hello-world/thoughts/work/)
+- Framework work items: [framework/project-hub/work/](framework/project-hub/work/)
+- Hello-world work items: [examples/hello-world/project-hub/work/](examples/hello-world/project-hub/work/)
 
-**Current active work:** Always check `framework/thoughts/work/doing/` for in-progress framework improvements.
+**Current active work:** Always check `framework/project-hub/work/doing/` for in-progress framework improvements.
 
 ### Context Switching (Important!)
 
 **Work items must be created in the correct project:**
-- Issues about the framework itself → `framework/thoughts/work/`
-- Issues about the hello-world example → `examples/hello-world/thoughts/work/`
-- Issues about template packages → `templates/thoughts/work/`
+- Issues about the framework itself → `framework/project-hub/work/`
+- Issues about the hello-world example → `examples/hello-world/project-hub/work/`
+- Issues about template packages → `templates/project-hub/work/`
 
 **To switch project context:**
 1. User explicitly states which project (e.g., "switch to examples/hello-world")
 2. AI reads that project's CLAUDE.md and understands context
-3. All subsequent work items go in that project's thoughts/work/ folder
+3. All subsequent work items go in that project's project-hub/work/ folder
 
 **When referencing work items:**
 - Work item location implies project context
 - "Work on FEAT-039" → Check where FEAT-039 exists → Use that project's context
 - Cross-project references should be explicit: "Create a work item in hello-world for X"
 
-**Note:** A more robust solution using project-config.yaml files is being designed in [framework/thoughts/work/backlog/FEAT-037-project-config-file.md](framework/thoughts/work/backlog/FEAT-037-project-config-file.md). This interim guidance will be superseded when that feature is implemented.
+**Note:** A more robust solution using project-config.yaml files is being designed in [framework/project-hub/work/backlog/FEAT-037-project-config-file.md](framework/project-hub/work/backlog/FEAT-037-project-config-file.md). This interim guidance will be superseded when that feature is implemented.
 
 ---
 
@@ -128,7 +128,7 @@ Each project has its own thoughts/ structure:
 
 1. **Read** [README.md](README.md) - Understand what the framework is
 2. **Read** [framework/CLAUDE.md](framework/CLAUDE.md) - Framework-specific context
-3. **Check** [framework/thoughts/work/doing/](framework/thoughts/work/doing/) - See what's in progress
+3. **Check** [framework/project-hub/work/doing/](framework/project-hub/work/doing/) - See what's in progress
 4. **Consult** [framework/collaboration/](framework/collaboration/) - Detailed collaboration guides
 
 ---

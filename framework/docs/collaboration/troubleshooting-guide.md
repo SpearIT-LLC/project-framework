@@ -27,16 +27,16 @@ Run these commands to verify framework setup:
 
 ```bash
 # Verify folder structure exists
-ls thoughts/work/todo
-ls thoughts/work/doing
-ls thoughts/work/done
-ls thoughts/framework/templates
+ls project-hub/work/todo
+ls project-hub/work/doing
+ls project-hub/work/done
+ls project-hub/framework/templates
 
 # Check WIP limit configuration
-cat thoughts/work/doing/.limit
+cat project-hub/work/doing/.limit
 
 # Count items in doing/ folder
-ls thoughts/work/doing/*.md | wc -l
+ls project-hub/work/doing/*.md | wc -l
 
 # Verify git repository
 git status
@@ -53,7 +53,7 @@ cat PROJECT-STATUS.md | grep "Current Version"
 
 ### Quick Diagnostic Questions
 
-1. **Is your folder structure correct?** Check thoughts/ exists with project/ and framework/ subdirectories
+1. **Is your folder structure correct?** Check project-hub/ exists with project/ and framework/ subdirectories
 2. **Are you violating WIP limits?** Count files in work/doing/, should be ≤ .limit value
 3. **Is git clean?** Run `git status`, should see "nothing to commit, working tree clean" after releases
 4. **Is version consistent?** PROJECT-STATUS.md, CHANGELOG.md, and latest git tag should match
@@ -72,8 +72,8 @@ cat PROJECT-STATUS.md | grep "Current Version"
 
 **Diagnosis:**
 ```bash
-# Check if thoughts/ folder exists
-ls thoughts/
+# Check if project-hub/ folder exists
+ls project-hub/
 
 # Expected output:
 # project/  framework/
@@ -87,8 +87,8 @@ ls thoughts/
 cp -r project-framework-template/standard /path/to/your-project
 
 # Or create manually
-mkdir -p thoughts/{work/{backlog,todo,doing,done},research,reference,retrospectives,history,archive,collaboration}
-mkdir -p thoughts/framework/{templates,process,patterns,tools}
+mkdir -p project-hub/{work/{backlog,todo,doing,done},research,reference,retrospectives,history,archive,collaboration}
+mkdir -p project-hub/framework/{templates,process,patterns,tools}
 ```
 
 **For Existing Projects:**
@@ -112,10 +112,10 @@ mkdir -p thoughts/framework/{templates,process,patterns,tools}
 **Diagnosis:**
 ```bash
 # Check WIP limit
-cat thoughts/work/doing/.limit
+cat project-hub/work/doing/.limit
 
 # Count items in doing/
-ls thoughts/work/doing/*.md | wc -l
+ls project-hub/work/doing/*.md | wc -l
 
 # If count > limit, you're violating WIP
 ```
@@ -125,10 +125,10 @@ ls thoughts/work/doing/*.md | wc -l
 **Immediate Fix:**
 ```bash
 # Complete and move items to done/
-mv thoughts/work/doing/feature-ABC.md thoughts/work/done/
+mv project-hub/work/doing/feature-ABC.md project-hub/work/done/
 
 # Or move back to todo/ if not really started
-mv thoughts/work/doing/feature-XYZ.md thoughts/work/todo/
+mv project-hub/work/doing/feature-XYZ.md project-hub/work/todo/
 ```
 
 **Long-term Fix:**
@@ -153,7 +153,7 @@ mv thoughts/work/doing/feature-XYZ.md thoughts/work/todo/
 **Diagnosis:**
 ```bash
 # List all work items with status
-grep -r "Status:" thoughts/work/ thoughts/work/
+grep -r "Status:" project-hub/work/ project-hub/work/
 
 # Compare folder location vs status field
 ```
@@ -163,7 +163,7 @@ grep -r "Status:" thoughts/work/ thoughts/work/
 **Fix Mismatched Status:**
 ```bash
 # Move to correct folder based on actual status
-mv thoughts/work/backlog/feature-123.md thoughts/work/doing/
+mv project-hub/work/backlog/feature-123.md project-hub/work/doing/
 
 # Update status field in document
 # Edit file and change "Status: Backlog" to "Status: Doing"
@@ -241,7 +241,7 @@ $env:CLAUDE_CODE_TMPDIR = $env:TEMP
 3. If implementation is wrong direction, revert and restart with approval
 
 **Process Fix:**
-- Review ADR-001 (thoughts/research/adr/001-ai-workflow-checkpoint-policy.md)
+- Review ADR-001 (project-hub/research/adr/001-ai-workflow-checkpoint-policy.md)
 - Ensure AI reads and follows checkpoint policy
 - Update CLAUDE.md if guidance unclear
 
@@ -304,10 +304,10 @@ git push
 **Diagnosis:**
 ```bash
 # Check if done/ folder has old items
-ls thoughts/work/done/
+ls project-hub/work/done/
 
 # Check if history/releases/vX.Y.Z/ exists
-ls thoughts/history/releases/
+ls project-hub/history/releases/
 ```
 
 **Solutions:**
@@ -315,13 +315,13 @@ ls thoughts/history/releases/
 **Retroactive Fix:**
 ```bash
 # Create release folder
-mkdir -p thoughts/history/releases/v2.1.0
+mkdir -p project-hub/history/releases/v2.1.0
 
 # Move completed items to release
-mv thoughts/work/done/*.md thoughts/history/releases/v2.1.0/
+mv project-hub/work/done/*.md project-hub/history/releases/v2.1.0/
 
 # Commit
-git add thoughts/history/releases/v2.1.0/
+git add project-hub/history/releases/v2.1.0/
 git commit -m "Archive: Move v2.1.0 completed items to history"
 ```
 
@@ -469,7 +469,7 @@ git reset --hard def5678
 **Diagnosis:**
 ```bash
 # Check if template has been modified
-git log thoughts/framework/templates/FEATURE-TEMPLATE.md
+git log project-hub/framework/templates/FEATURE-TEMPLATE.md
 
 # Should only have framework updates, not project-specific content
 ```
@@ -479,7 +479,7 @@ git log thoughts/framework/templates/FEATURE-TEMPLATE.md
 **Fix Modified Template:**
 ```bash
 # Restore original template
-git checkout HEAD~1 thoughts/framework/templates/FEATURE-TEMPLATE.md
+git checkout HEAD~1 project-hub/framework/templates/FEATURE-TEMPLATE.md
 
 # If you want to keep the content:
 # 1. Copy current (wrong) content somewhere
@@ -491,13 +491,13 @@ git checkout HEAD~1 thoughts/framework/templates/FEATURE-TEMPLATE.md
 **Correct Workflow:**
 ```bash
 # CORRECT: Copy template to create instance
-cp thoughts/framework/templates/FEATURE-TEMPLATE.md thoughts/work/backlog/feature-123-new-feature.md
+cp project-hub/framework/templates/FEATURE-TEMPLATE.md project-hub/work/backlog/feature-123-new-feature.md
 
 # Edit the instance (feature-123-new-feature.md), NOT the template
 ```
 
 **Prevention:**
-- Never edit files in thoughts/framework/templates/ directly
+- Never edit files in project-hub/framework/templates/ directly
 - Always copy template to project location first
 - Templates are read-only reference
 
@@ -516,7 +516,7 @@ cp thoughts/framework/templates/FEATURE-TEMPLATE.md thoughts/work/backlog/featur
 **Compare Against Template:**
 ```bash
 # Diff your feature against template
-diff thoughts/framework/templates/FEATURE-TEMPLATE.md thoughts/work/doing/feature-123.md
+diff project-hub/framework/templates/FEATURE-TEMPLATE.md project-hub/work/doing/feature-123.md
 
 # Add missing sections
 ```

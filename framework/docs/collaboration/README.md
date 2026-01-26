@@ -194,7 +194,7 @@ Browse the guides below based on what you need. Each guide is comprehensive and 
   - Standard Framework (50+ files, applications)
   - Selection matrix
 - Folder Structure Architecture
-  - thoughts/ folder concept
+  - project-hub/ folder concept
   - Separation: project/ vs framework/
   - Collaboration folder architecture
 - File-Based Kanban Design
@@ -302,7 +302,7 @@ CLAUDE.md (Quick Reference)
     ↓ links to
 collaboration/ (Detailed Guides) ← YOU ARE HERE
     ↓ links to
-thoughts/framework/templates/ (Copy-paste Examples)
+project-hub/framework/templates/ (Copy-paste Examples)
 ```
 
 **Strategy:**
@@ -425,7 +425,7 @@ Reviewing code?
 
 **Related Documentation:**
 - [CLAUDE.md](../../../CLAUDE.md) - AI collaboration contract and quick reference
-- [thoughts/framework/templates/](../../framework/templates/) - Copy-paste templates
+- [project-hub/framework/templates/](../../framework/templates/) - Copy-paste templates
 - [PROJECT-STATUS.md](../../../PROJECT-STATUS.md) - Current version and status
 
 ---

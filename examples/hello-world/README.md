@@ -23,7 +23,7 @@ examples/hello-world/
 ├── src/              # Application source code
 ├── tests/            # Test files
 ├── docs/             # Project documentation
-└── thoughts/         # Project tracking and decision history
+└── project-hub/         # Project tracking and decision history
 ```
 
 ## Documentation

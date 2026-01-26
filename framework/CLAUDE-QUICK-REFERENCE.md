@@ -18,7 +18,7 @@ User Request → Backlog → [CHECKPOINT] → Todo → Doing → Done → Releas
 
 1. **Listen** - Understand user requirement
 2. **Research** - Quick check - does this exist already?
-3. **Create Backlog** - Use template, place in `thoughts/work/backlog/`, status "Backlog"
+3. **Create Backlog** - Use template, place in `project-hub/work/backlog/`, status "Backlog"
 4. **Present Plan** ⚠️ CHECKPOINT - Summarize approach, list files, ask "Should I proceed?"
 5. **Wait for Approval** - User says yes → continue, no → stop
 6. **Check WIP Limits** - Read `.limit` file, count doing/ items, must be under limit
@@ -28,7 +28,7 @@ User Request → Backlog → [CHECKPOINT] → Todo → Doing → Done → Releas
 8.5. **Review & Approval** ⚠️ CHECKPOINT - Present completed work for user review
 9. **Complete & Release** - Atomic: update PROJECT-STATUS.md + CHANGELOG.md + move to done/ + commit + tag
 
-**Reference:** [CLAUDE.md](CLAUDE.md) | [ADR-001](thoughts/research/adr/001-ai-workflow-checkpoint-policy.md)
+**Reference:** [CLAUDE.md](CLAUDE.md) | [ADR-001](project-hub/research/adr/001-ai-workflow-checkpoint-policy.md)
 
 ---
 
@@ -78,7 +78,7 @@ Which template?
 When in doubt: Start MINOR, upgrade to MAJOR if needed
 ```
 
-**Location:** `thoughts/research/adr/NNN-decision-name.md`
+**Location:** `project-hub/research/adr/NNN-decision-name.md`
 **Templates:** [templates/](templates/)
 **Full Guide:** [collaboration/workflow-guide.md](docs/collaboration/workflow-guide.md#architecture-decision-records-adrs)
 
@@ -106,7 +106,7 @@ After release:
 └─ Archive done/ items to history/releases/vX.Y.Z/
 ```
 
-**Reference:** [CLAUDE.md step 9](CLAUDE.md) | [version-control-workflow.md](project-framework-template/standard/thoughts/framework/process/version-control-workflow.md)
+**Reference:** [CLAUDE.md step 9](CLAUDE.md) | [version-control-workflow.md](project-framework-template/standard/project-hub/framework/process/version-control-workflow.md)
 
 ---
 
@@ -133,13 +133,13 @@ Not sure? → collaboration/README.md (navigation index)
 **1. WIP Limit Violation**
 ```bash
 # Check limit
-cat thoughts/work/doing/.limit
+cat project-hub/work/doing/.limit
 
 # Count items
-ls thoughts/work/doing/*.md | wc -l
+ls project-hub/work/doing/*.md | wc -l
 
 # Fix: Move items back to todo/ or complete to done/
-mv thoughts/work/doing/extra-item.md thoughts/work/todo/
+mv project-hub/work/doing/extra-item.md project-hub/work/todo/
 ```
 
 **2. Version Mismatch**
@@ -171,19 +171,19 @@ git log templates/FEATURE-TEMPLATE.md
 git checkout HEAD~1 templates/FEATURE-TEMPLATE.md
 
 # Correct workflow: COPY template to project location
-cp templates/FEATURE-TEMPLATE.md thoughts/work/backlog/feature-123.md
+cp templates/FEATURE-TEMPLATE.md project-hub/work/backlog/feature-123.md
 ```
 
 **5. Forgot to Archive After Release**
 ```bash
 # Create release archive
-mkdir -p thoughts/history/releases/v2.1.0
+mkdir -p project-hub/history/releases/v2.1.0
 
 # Move completed items
-mv thoughts/work/done/*.md thoughts/history/releases/v2.1.0/
+mv project-hub/work/done/*.md project-hub/history/releases/v2.1.0/
 
 # Commit
-git add thoughts/history/releases/v2.1.0/
+git add project-hub/history/releases/v2.1.0/
 git commit -m "Archive: Move v2.1.0 items to history"
 ```
 
@@ -200,11 +200,11 @@ git commit -m "Archive: Move v2.1.0 items to history"
 - `templates/` - Copy-paste templates
 
 ### Work Tracking
-- `thoughts/work/backlog/` - Future work (not approved)
-- `thoughts/work/todo/` - Ready to start (approved, not started)
-- `thoughts/work/doing/` - In progress (WIP limit enforced)
-- `thoughts/work/done/` - Complete (awaiting release)
-- `thoughts/history/releases/vX.Y.Z/` - Archived (released)
+- `project-hub/work/backlog/` - Future work (not approved)
+- `project-hub/work/todo/` - Ready to start (approved, not started)
+- `project-hub/work/doing/` - In progress (WIP limit enforced)
+- `project-hub/work/done/` - Complete (awaiting release)
+- `project-hub/history/releases/vX.Y.Z/` - Archived (released)
 
 ### Version Info (Single Source of Truth)
 - `PROJECT-STATUS.md` - Current version and status
@@ -230,7 +230,7 @@ git commit -m "Archive: Move v2.1.0 items to history"
 ### Check Status
 ```bash
 # WIP limit compliance
-cat thoughts/work/doing/.limit && ls thoughts/work/doing/*.md | wc -l
+cat project-hub/work/doing/.limit && ls project-hub/work/doing/*.md | wc -l
 
 # Version consistency
 grep "Current Version" PROJECT-STATUS.md && git describe --tags --abbrev=0
@@ -242,19 +242,19 @@ git status
 ### Move Work Items
 ```bash
 # Backlog → Todo (after user approval)
-mv thoughts/work/backlog/feature-XXX.md thoughts/work/todo/
+mv project-hub/work/backlog/feature-XXX.md project-hub/work/todo/
 
 # Todo → Doing (check WIP limit first!)
-mv thoughts/work/todo/feature-XXX.md thoughts/work/doing/
+mv project-hub/work/todo/feature-XXX.md project-hub/work/doing/
 
 # Doing → Done (after completion)
-mv thoughts/work/doing/feature-XXX.md thoughts/work/done/
+mv project-hub/work/doing/feature-XXX.md project-hub/work/done/
 ```
 
 ### Create Work Items
 ```bash
 # Copy template
-cp templates/FEATURE-TEMPLATE.md thoughts/work/backlog/feature-XXX-description.md
+cp templates/FEATURE-TEMPLATE.md project-hub/work/backlog/feature-XXX-description.md
 
 # Edit the copy (NOT the template!)
 ```

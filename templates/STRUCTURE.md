@@ -56,7 +56,7 @@ light/
 ├── CLAUDE.md                           # Optional 1-page project guide
 ├── .gitignore                          # Standard gitignore
 │
-└── thoughts/
+└── project-hub/
     └── project/
         ├── history/
         │   └── .gitkeep                # Session notes go here
@@ -82,7 +82,7 @@ standard/
 ├── INDEX.md                            # Documentation navigation
 ├── .gitignore                          # Comprehensive gitignore
 │
-└── thoughts/
+└── project-hub/
     ├── framework/                      # Reusable framework (shared across projects)
     │   ├── FRAMEWORK-CHANGELOG.md      # Framework evolution tracking
     │   │
@@ -268,10 +268,10 @@ find light/ -type f | wc -l
 find standard/ -type f | wc -l
 # Should see: 50+ files
 
-ls standard/thoughts/framework/templates/
+ls standard/project-hub/framework/templates/
 # Should include all templates including PROBLEM-STATEMENT-TEMPLATE.md, etc.
 
-ls standard/thoughts/framework/templates/wrappers/cmd/
+ls standard/project-hub/framework/templates/wrappers/cmd/
 # Should see: WRAPPER*.cmd files (not TEMPLATE-WRAPPER*.cmd)
 ```
 

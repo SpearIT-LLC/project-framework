@@ -26,21 +26,21 @@ This project follows the Standard Project Framework. See:
 ## Project Tracking
 
 ### Work Items
-- [work/backlog/](thoughts/work/backlog/) - Planned work
-- [work/todo/](thoughts/work/todo/) - Ready to start
-- [work/doing/](thoughts/work/doing/) - In progress (limit: 1)
-- [work/done/](thoughts/work/done/) - Completed
+- [work/backlog/](project-hub/work/backlog/) - Planned work
+- [work/todo/](project-hub/work/todo/) - Ready to start
+- [work/doing/](project-hub/work/doing/) - In progress (limit: 1)
+- [work/done/](project-hub/work/done/) - Completed
 
 ### History & Decisions
-- [history/sessions/](thoughts/history/sessions/) - Session history
-- [history/releases/](thoughts/history/releases/) - Release notes
-- [research/adr/](thoughts/research/adr/) - Architectural decisions
-- [retrospectives/](thoughts/retrospectives/) - Retrospective notes
+- [history/sessions/](project-hub/history/sessions/) - Session history
+- [history/releases/](project-hub/history/releases/) - Release notes
+- [research/adr/](project-hub/research/adr/) - Architectural decisions
+- [retrospectives/](project-hub/retrospectives/) - Retrospective notes
 
 ### Reference
-- [reference/](thoughts/reference/) - Project reference materials
-- [external-references/](thoughts/external-references/) - External resources
-- [archive/](thoughts/archive/) - Archived content
+- [reference/](project-hub/reference/) - Project reference materials
+- [external-references/](project-hub/external-references/) - External resources
+- [archive/](project-hub/archive/) - Archived content
 
 ## Quick Links
 

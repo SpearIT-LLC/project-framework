@@ -43,7 +43,7 @@ See [CHANGELOG.md](CHANGELOG.md) for detailed version history.
 
 ## Planned Work
 
-See `thoughts/project/history/` for session notes and future plans.
+See `project-hub/project/history/` for session notes and future plans.
 
 - [ ] [Planned item 1]
 - [ ] [Planned item 2]

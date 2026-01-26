@@ -131,7 +131,7 @@
 - 📋 [FEAT-NNN]: [Description]
 - 📋 [BUG-NNN]: [Description]
 
-See [thoughts/work/backlog/](thoughts/work/backlog/) for planned work.
+See [project-hub/work/backlog/](project-hub/work/backlog/) for planned work.
 
 ---
 

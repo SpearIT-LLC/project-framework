@@ -46,7 +46,7 @@ This is a complete project framework template package that provides:
    ```bash
    # From project root
    cp -r /path/to/project-framework-template/CLAUDE.md ../
-   cp -r /path/to/project-framework-template/thoughts/framework thoughts/
+   cp -r /path/to/project-framework-template/project-hub/framework project-hub/
    ```
 
 2. **Follow the checklist:**
@@ -73,7 +73,7 @@ This is a complete project framework template package that provides:
 - **INDEX-TEMPLATE.md** - Documentation navigation template
 - **CLAUDE-TEMPLATE.md** - Project-specific AI instructions template
 
-### Framework (thoughts/framework/)
+### Framework (project-hub/framework/)
 
 **Process Documentation:**
 - `collaboration/workflow-guide.md` - Work item lifecycle and workflow
@@ -93,11 +93,11 @@ This is a complete project framework template package that provides:
 - `patterns/config-management.md`
 - `patterns/cmd-wrappers.md`
 
-### Project Structure (thoughts/)
+### Project Structure (project-hub/)
 
 **Empty folder structure ready for your work:**
 ```
-thoughts/
+project-hub/
 ├── roadmap.md (template included)
 ├── work/
 │   ├── backlog/
@@ -127,7 +127,7 @@ cp -r project-framework-template /path/to/new-project-name
 
 # For existing project (copy pieces)
 cp CLAUDE.md /path/to/existing-project/../
-cp -r thoughts/framework /path/to/existing-project/thoughts/
+cp -r project-hub/framework /path/to/existing-project/project-hub/
 ```
 
 ### Step 2: Rename Templates
@@ -162,9 +162,9 @@ git tag -a v0.1.0 -m "Initial setup"
 
 ### Step 5: Start Working
 
-1. Create first feature in `thoughts/work/backlog/`
-2. Move to `thoughts/work/todo/`
-3. Move to `thoughts/work/doing/`
+1. Create first feature in `project-hub/work/backlog/`
+2. Move to `project-hub/work/todo/`
+3. Move to `project-hub/work/doing/`
 4. Begin implementation
 
 ---
@@ -240,10 +240,10 @@ ParentFolder/
 ├── CLAUDE.md (generic framework - shared)
 ├── Project1/
 │   ├── CLAUDE.md (project-specific - inherits from ../CLAUDE.md)
-│   └── thoughts/framework/ (copy of framework)
+│   └── project-hub/framework/ (copy of framework)
 ├── Project2/
 │   ├── CLAUDE.md (project-specific - inherits from ../CLAUDE.md)
-│   └── thoughts/framework/ (copy of framework)
+│   └── project-hub/framework/ (copy of framework)
 ```
 
 Each project-specific CLAUDE.md should reference the parent:
@@ -277,9 +277,9 @@ These are HPC-specific and should be created fresh for your project.
 ## Questions?
 
 - Review `NEW-PROJECT-CHECKLIST.md` for step-by-step guidance
-- Read `thoughts/framework/collaboration/workflow-guide.md` for workflow details
-- Read `thoughts/framework/process/version-control-workflow.md` for release process
-- Check templates in `thoughts/framework/templates/` for work item structure
+- Read `project-hub/framework/collaboration/workflow-guide.md` for workflow details
+- Read `project-hub/framework/process/version-control-workflow.md` for release process
+- Check templates in `project-hub/framework/templates/` for work item structure
 
 ---
 

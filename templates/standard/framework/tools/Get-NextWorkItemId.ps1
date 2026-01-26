@@ -26,7 +26,7 @@ param()
 $modulePath = Join-Path $PSScriptRoot "FrameworkWorkflow.psm1"
 Import-Module $modulePath -Force
 
-# Get next ID (auto-discovers thoughts folder)
+# Get next ID (auto-discovers project-hub folder)
 $nextId = Get-NextWorkItemId
 
 if ($nextId) {

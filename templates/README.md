@@ -27,7 +27,7 @@ This is the complete **SpearIT Project Framework template package** - a collecti
 
 ### Light Framework ([light/](light/))
 **For:** Small tools, medium lifespan, handoff expected
-- **Files:** 7 (README, PROJECT-STATUS, CHANGELOG, CLAUDE.md, thoughts/)
+- **Files:** 7 (README, PROJECT-STATUS, CHANGELOG, CLAUDE.md, project-hub/)
 - **Use when:** 2-10 files, maintained for months, possible collaboration
 
 ### Standard Framework ([standard/](standard/))

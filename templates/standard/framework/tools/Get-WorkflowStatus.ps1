@@ -3,15 +3,15 @@
     Gets workflow status including folder counts, WIP limits, and version information.
 
 .DESCRIPTION
-    Scans thoughts/work/ folders to provide a complete picture of project workflow status.
+    Scans project-hub/work/ folders to provide a complete picture of project workflow status.
     Applies hierarchical WIP counting where parent + children count as 1 item.
     Used by both /fw-status and /fw-wip-check commands (DRY - single source of truth).
 
 .PARAMETER Path
-    Path to the thoughts/work/ folder. If not specified, searches common locations:
-    - framework/thoughts/work
-    - thoughts/work
-    - ../thoughts/work
+    Path to the project-hub/work/ folder. If not specified, searches common locations:
+    - framework/project-hub/work
+    - project-hub/work
+    - ../project-hub/work
 
 .PARAMETER Format
     Output format: 'json' (default) or 'table'. Mutually exclusive with -Summary, -WipCount, and -Current.
@@ -136,15 +136,15 @@ function Find-ProjectStatusFile {
 function Find-PocFolder {
     <#
     .SYNOPSIS
-        Searches for thoughts/poc folder in common locations.
+        Searches for project-hub/poc folder in common locations.
     #>
     [CmdletBinding()]
     param()
 
     $candidates = @(
-        "framework/thoughts/poc",
-        "thoughts/poc",
-        "../thoughts/poc"
+        "framework/project-hub/poc",
+        "project-hub/poc",
+        "../project-hub/poc"
     )
 
     foreach ($candidate in $candidates) {
@@ -159,7 +159,7 @@ function Find-PocFolder {
 function Get-PocSpikes {
     <#
     .SYNOPSIS
-        Gets active POC spikes from thoughts/poc folder.
+        Gets active POC spikes from project-hub/poc folder.
     .DESCRIPTION
         POC spikes are folders (not files) containing spike docs and code artifacts.
         Returns count and list of active spikes.
@@ -487,7 +487,7 @@ try {
     if (-not $Path) {
         $Path = Find-WorkFolder
         if (-not $Path) {
-            Write-Error "thoughts/work folder not found. Use -Path to specify location."
+            Write-Error "project-hub/work folder not found. Use -Path to specify location."
             exit 1
         }
     }

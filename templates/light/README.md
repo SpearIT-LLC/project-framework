@@ -121,7 +121,7 @@ cd [project-directory]
 ├── [main files]
 ├── PROJECT-STATUS.md
 ├── CHANGELOG.md
-└── thoughts/
+└── project-hub/
     └── project/
         ├── history/         # Session notes
         └── research/        # Research and justification
@@ -161,4 +161,4 @@ cd [project-directory]
 **For detailed project status and version history, see:**
 - [PROJECT-STATUS.md](PROJECT-STATUS.md) - Current status and version
 - [CHANGELOG.md](CHANGELOG.md) - Version history
-- [thoughts/project/research/justification.md](thoughts/project/research/justification.md) - Why this tool exists
+- [project-hub/project/research/justification.md](project-hub/project/research/justification.md) - Why this tool exists

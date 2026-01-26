@@ -61,13 +61,13 @@ cp -r /path/to/framework/templates/standard/.gitignore .
 ### Light
 1. Update README.md with project details
 2. Set initial version in PROJECT-STATUS.md
-3. Document your first decision in `thoughts/history/`
+3. Document your first decision in `project-hub/history/`
 4. Code and update CHANGELOG.md as you go
 
 ### Standard
 1. Review the example: [examples/hello-world/](examples/hello-world/)
 2. Complete research phase (use templates from `framework/templates/research/`)
-3. Plan features in `thoughts/work/backlog/`
+3. Plan features in `project-hub/work/backlog/`
 4. Move features to `work/todo/` → `work/doing/` → `work/done/`
 5. Update CHANGELOG.md and PROJECT-STATUS.md for releases
 
@@ -81,7 +81,7 @@ cp -r /path/to/framework/templates/standard/.gitignore .
 ```bash
 # Copy template from framework
 cp framework/templates/work-items/FEAT-NNN-template.md \
-   thoughts/work/backlog/FEAT-NNN-name.md
+   project-hub/work/backlog/FEAT-NNN-name.md
 # Edit feature file
 # Move to work/todo/ when ready to plan
 # Move to work/doing/ when ready to implement (max 1 in doing/)
@@ -91,7 +91,7 @@ cp framework/templates/work-items/FEAT-NNN-template.md \
 ```bash
 # Copy template from framework
 cp framework/templates/work-items/BUG-NNN-template.md \
-   thoughts/work/backlog/BUG-NNN-name.md
+   project-hub/work/backlog/BUG-NNN-name.md
 # Document bug, implement fix, test
 # Move through workflow: backlog → todo → doing → done
 ```
@@ -100,7 +100,7 @@ cp framework/templates/work-items/BUG-NNN-template.md \
 ```bash
 # Use ADR template from framework
 cp framework/templates/decisions/ADR-NNNN-template.md \
-   thoughts/research/adr/ADR-NNNN-decision-name.md
+   project-hub/research/adr/ADR-NNNN-decision-name.md
 ```
 
 ### Create Release (Light/Standard)
@@ -120,7 +120,7 @@ git push origin main --tags
 ```bash
 # Create session history from framework template
 cp framework/templates/documentation/session-history-template.md \
-   thoughts/history/sessions/YYYY-MM-DD-session-N.md
+   project-hub/history/sessions/YYYY-MM-DD-session-N.md
 # Document what you did, decisions made, blockers
 ```
 

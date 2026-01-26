@@ -13,7 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Test suite with comprehensive coverage
 - Complete project documentation (README, CLAUDE, PROJECT-STATUS, INDEX)
 - Standard Project Framework structure
-- Project tracking structure (thoughts/ hierarchy)
+- Project tracking structure (project-hub/ hierarchy)
 
 ### Notes
 - Created as part of FEAT-026 structure migration

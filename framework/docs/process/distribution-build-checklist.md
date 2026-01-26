@@ -43,19 +43,19 @@ This checklist ensures the `templates/standard/` package contains everything nee
 - [ ] `tests/` with `.gitkeep`
 - [ ] `docs/` with `README.md`
 - [ ] `poc/` with `.gitkeep` and `README.md`
-- [ ] `thoughts/work/backlog/` with `.gitkeep`
-- [ ] `thoughts/work/todo/` with `.gitkeep` and `.limit` (contains: 10)
-- [ ] `thoughts/work/doing/` with `.gitkeep` and `.limit` (contains: 1)
-- [ ] `thoughts/work/done/` with `.gitkeep`
-- [ ] `thoughts/work/README.md`
-- [ ] `thoughts/history/releases/` with `.gitkeep`
-- [ ] `thoughts/history/sessions/` with `.gitkeep`
-- [ ] `thoughts/history/spikes/` with `.gitkeep`
-- [ ] `thoughts/history/archive/` with `.gitkeep`
-- [ ] `thoughts/research/` with `README.md`
-- [ ] `thoughts/research/adr/` with `.gitkeep`
-- [ ] `thoughts/retrospectives/` with `.gitkeep`
-- [ ] `thoughts/external-references/` with `README.md`
+- [ ] `project-hub/work/backlog/` with `.gitkeep`
+- [ ] `project-hub/work/todo/` with `.gitkeep` and `.limit` (contains: 10)
+- [ ] `project-hub/work/doing/` with `.gitkeep` and `.limit` (contains: 1)
+- [ ] `project-hub/work/done/` with `.gitkeep`
+- [ ] `project-hub/work/README.md`
+- [ ] `project-hub/history/releases/` with `.gitkeep`
+- [ ] `project-hub/history/sessions/` with `.gitkeep`
+- [ ] `project-hub/history/spikes/` with `.gitkeep`
+- [ ] `project-hub/history/archive/` with `.gitkeep`
+- [ ] `project-hub/research/` with `README.md`
+- [ ] `project-hub/research/adr/` with `.gitkeep`
+- [ ] `project-hub/retrospectives/` with `.gitkeep`
+- [ ] `project-hub/external-references/` with `README.md`
 
 ### 4. Framework Documentation
 
@@ -181,8 +181,8 @@ Copy-Item .claude/commands/fw-*.md templates/standard/.claude/commands/
 
 ```powershell
 # Verify .limit files have correct values
-Get-Content templates/standard/thoughts/work/todo/.limit    # Should be: 10
-Get-Content templates/standard/thoughts/work/doing/.limit   # Should be: 1
+Get-Content templates/standard/project-hub/work/todo/.limit    # Should be: 10
+Get-Content templates/standard/project-hub/work/doing/.limit   # Should be: 1
 ```
 
 ### Step 6: Validate Placeholders

@@ -15,7 +15,7 @@ Show a summary of the current project status including version, work items in pr
 ## Behavior
 
 1. Read `PROJECT-STATUS.md` for current version
-2. Scan `thoughts/work/` subfolders and count items
+2. Scan `project-hub/work/` subfolders and count items
 3. Read `doing/.limit` for WIP limit (default: 2). Apply hierarchical counting per `workflow-guide.md#hierarchical-numbering`
 4. Present formatted status report
 
@@ -58,8 +58,8 @@ FEAT-018: Claude Command Framework
 ## Data Sources
 
 - **Version**: `framework/PROJECT-STATUS.md` or `PROJECT-STATUS.md`
-- **Work items**: `thoughts/work/{backlog,todo,doing,done}/`
-- **WIP limit**: `thoughts/work/doing/.limit` (default: 2)
+- **Work items**: `project-hub/work/{backlog,todo,doing,done}/`
+- **WIP limit**: `project-hub/work/doing/.limit` (default: 2)
 
 ## Examples
 

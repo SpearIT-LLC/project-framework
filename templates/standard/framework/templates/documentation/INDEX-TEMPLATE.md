@@ -41,83 +41,83 @@
 
 ## Framework Documentation
 
-Location: `thoughts/framework/`
+Location: `project-hub/framework/`
 
 ### Process Documentation
 
-Location: `thoughts/framework/process/`
+Location: `project-hub/framework/process/`
 
-- **[workflow-guide.md](thoughts/framework/collaboration/workflow-guide.md)** - Work item lifecycle and workflow
-- **[version-control-workflow.md](thoughts/framework/process/version-control-workflow.md)** - Git workflow and release process
-- **[documentation-standards.md](thoughts/framework/process/documentation-standards.md)** - Documentation formatting standards
+- **[workflow-guide.md](project-hub/framework/collaboration/workflow-guide.md)** - Work item lifecycle and workflow
+- **[version-control-workflow.md](project-hub/framework/process/version-control-workflow.md)** - Git workflow and release process
+- **[documentation-standards.md](project-hub/framework/process/documentation-standards.md)** - Documentation formatting standards
 
 ### Templates
 
-Location: `thoughts/framework/templates/`
+Location: `project-hub/framework/templates/`
 
 **Work Item Templates:**
-- **[FEATURE-TEMPLATE.md](thoughts/framework/templates/FEATURE-TEMPLATE.md)** - Feature planning template
-- **[BUGFIX-TEMPLATE.md](thoughts/framework/templates/BUGFIX-TEMPLATE.md)** - Bug fix documentation template
-- **[BLOCKER-TEMPLATE.md](thoughts/framework/templates/BLOCKER-TEMPLATE.md)** - Blocker documentation template
-- **[SPIKE-TEMPLATE.md](thoughts/framework/templates/SPIKE-TEMPLATE.md)** - Research/investigation template
+- **[FEATURE-TEMPLATE.md](project-hub/framework/templates/FEATURE-TEMPLATE.md)** - Feature planning template
+- **[BUGFIX-TEMPLATE.md](project-hub/framework/templates/BUGFIX-TEMPLATE.md)** - Bug fix documentation template
+- **[BLOCKER-TEMPLATE.md](project-hub/framework/templates/BLOCKER-TEMPLATE.md)** - Blocker documentation template
+- **[SPIKE-TEMPLATE.md](project-hub/framework/templates/SPIKE-TEMPLATE.md)** - Research/investigation template
 
 **Architecture Decision Records:**
-- **[ADR-MAJOR-TEMPLATE.md](thoughts/framework/templates/ADR-MAJOR-TEMPLATE.md)** - Major decision template
-- **[ADR-MINOR-TEMPLATE.md](thoughts/framework/templates/ADR-MINOR-TEMPLATE.md)** - Minor decision template
+- **[ADR-MAJOR-TEMPLATE.md](project-hub/framework/templates/ADR-MAJOR-TEMPLATE.md)** - Major decision template
+- **[ADR-MINOR-TEMPLATE.md](project-hub/framework/templates/ADR-MINOR-TEMPLATE.md)** - Minor decision template
 
 ### Patterns
 
-Location: `thoughts/framework/patterns/`
+Location: `project-hub/framework/patterns/`
 
-- **[powershell-modules.md](thoughts/framework/patterns/powershell-modules.md)** - PowerShell module patterns (if applicable)
-- **[config-management.md](thoughts/framework/patterns/config-management.md)** - Configuration patterns (if applicable)
-- **[cmd-wrappers.md](thoughts/framework/patterns/cmd-wrappers.md)** - CMD wrapper patterns (if applicable)
+- **[powershell-modules.md](project-hub/framework/patterns/powershell-modules.md)** - PowerShell module patterns (if applicable)
+- **[config-management.md](project-hub/framework/patterns/config-management.md)** - Configuration patterns (if applicable)
+- **[cmd-wrappers.md](project-hub/framework/patterns/cmd-wrappers.md)** - CMD wrapper patterns (if applicable)
 
 ### Framework Evolution
 
-- **[FRAMEWORK-CHANGELOG.md](thoughts/framework/FRAMEWORK-CHANGELOG.md)** - Process/framework evolution tracking
+- **[FRAMEWORK-CHANGELOG.md](project-hub/framework/FRAMEWORK-CHANGELOG.md)** - Process/framework evolution tracking
 
 ---
 
 ## Project Documentation
 
-Location: `thoughts/`
+Location: `project-hub/`
 
 ### Planning
 
-- **[roadmap.md](thoughts/roadmap.md)** - High-level vision and version goals
+- **[roadmap.md](project-hub/roadmap.md)** - High-level vision and version goals
 
 ### Active Work (Kanban)
 
-Location: `thoughts/work/`
+Location: `project-hub/work/`
 
-- **[backlog/](thoughts/work/backlog/)** - Future work items (not yet committed)
+- **[backlog/](project-hub/work/backlog/)** - Future work items (not yet committed)
   - `feature-NNN-*.md` - Feature plans
   - `bugfix-NNN-*.md` - Bug fix plans
   - `spike-*.md` - Investigation plans
-- **[todo/](thoughts/work/todo/)** - Committed next work (max 10 items)
-- **[doing/](thoughts/work/doing/)** - Active work (WIP limit: 1)
-- **[done/](thoughts/work/done/)** - Completed work ready for release
+- **[todo/](project-hub/work/todo/)** - Committed next work (max 10 items)
+- **[doing/](project-hub/work/doing/)** - Active work (WIP limit: 1)
+- **[done/](project-hub/work/done/)** - Completed work ready for release
 
 ### Reference Documentation
 
-Location: `thoughts/external-references/`
+Location: `project-hub/external-references/`
 
 **Core References:**
-- **[system-architecture.md](thoughts/external-references/system-architecture.md)** - Canonical architecture reference
-- **[coding-standards.md](thoughts/external-references/coding-standards.md)** - Code quality and style standards
-- **[security-policy.md](thoughts/external-references/security-policy.md)** - Security approach and guidelines
-- **[terminology-standards.md](thoughts/external-references/terminology-standards.md)** - Standard terminology
+- **[system-architecture.md](project-hub/external-references/system-architecture.md)** - Canonical architecture reference
+- **[coding-standards.md](project-hub/external-references/coding-standards.md)** - Code quality and style standards
+- **[security-policy.md](project-hub/external-references/security-policy.md)** - Security approach and guidelines
+- **[terminology-standards.md](project-hub/external-references/terminology-standards.md)** - Standard terminology
 
 **Additional References:**
 - [Add project-specific reference docs as created]
 
 ### Research
 
-Location: `thoughts/research/`
+Location: `project-hub/research/`
 
 **Architecture Decision Records:**
-- **[adr/](thoughts/research/adr/)** - Architecture decision records
+- **[adr/](project-hub/research/adr/)** - Architecture decision records
   - `001-decision-title.md`
   - `002-another-decision.md`
 
@@ -126,25 +126,25 @@ Location: `thoughts/research/`
 
 ### History
 
-Location: `thoughts/history/`
+Location: `project-hub/history/`
 
 **Session Histories:**
-- **[YYYY-MM-DD-SESSION-HISTORY.md](thoughts/history/)** - Daily session activity logs
+- **[YYYY-MM-DD-SESSION-HISTORY.md](project-hub/history/)** - Daily session activity logs
 
 **Releases:**
-- **[releases/](thoughts/history/releases/)** - Archived work items by version
+- **[releases/](project-hub/history/releases/)** - Archived work items by version
   - `v1.0.0/` - Version 1.0.0 work items
   - `v1.1.0/` - Version 1.1.0 work items
 
 **Spikes:**
-- **[spikes/](thoughts/history/spikes/)** - Completed research/investigations
+- **[spikes/](project-hub/history/spikes/)** - Completed research/investigations
   - `spike-description-YYYY-MM-DD.md`
 
 ### Retrospectives
 
-Location: `thoughts/retrospectives/`
+Location: `project-hub/retrospectives/`
 
-- **[YYYY-MM-DD-retrospective.md](thoughts/retrospectives/)** - Project retrospectives
+- **[YYYY-MM-DD-retrospective.md](project-hub/retrospectives/)** - Project retrospectives
   - What went well
   - What didn't go well
   - Process improvements
@@ -152,9 +152,9 @@ Location: `thoughts/retrospectives/`
 
 ### Archive
 
-Location: `thoughts/history/archive/`
+Location: `project-hub/history/archive/`
 
-- **[Cancelled/outdated/superseded items](thoughts/history/archive/)** - Historical reference
+- **[Cancelled/outdated/superseded items](project-hub/history/archive/)** - Historical reference
 
 ---
 
@@ -213,21 +213,21 @@ Location: `tests/`
 
 ### For Developers
 1. [CLAUDE.md](CLAUDE.md) - Project conventions
-2. [thoughts/external-references/system-architecture.md](thoughts/external-references/system-architecture.md) - Architecture
-3. [thoughts/external-references/coding-standards.md](thoughts/external-references/coding-standards.md) - Code standards
-4. [thoughts/framework/collaboration/workflow-guide.md](thoughts/framework/collaboration/workflow-guide.md) - Workflow
+2. [project-hub/external-references/system-architecture.md](project-hub/external-references/system-architecture.md) - Architecture
+3. [project-hub/external-references/coding-standards.md](project-hub/external-references/coding-standards.md) - Code standards
+4. [project-hub/framework/collaboration/workflow-guide.md](project-hub/framework/collaboration/workflow-guide.md) - Workflow
 5. [PROJECT-STATUS.md](PROJECT-STATUS.md) - Current status
 
 ### For Contributors
 1. [CONTRIBUTING.md](CONTRIBUTING.md) - How to contribute
-2. [thoughts/framework/process/version-control-workflow.md](thoughts/framework/process/version-control-workflow.md) - Git workflow
+2. [project-hub/framework/process/version-control-workflow.md](project-hub/framework/process/version-control-workflow.md) - Git workflow
 3. [CHANGELOG.md](CHANGELOG.md) - Version history
 
 ### For AI Assistants (Claude)
 1. [CLAUDE.md](CLAUDE.md) - Primary instructions
 2. [../CLAUDE.md](../CLAUDE.md) - Generic framework (if exists)
-3. [thoughts/framework/](thoughts/framework/) - All framework docs
-4. [thoughts/external-references/](thoughts/external-references/) - Project references
+3. [project-hub/framework/](project-hub/framework/) - All framework docs
+4. [project-hub/external-references/](project-hub/external-references/) - Project references
 
 ---
 
@@ -241,7 +241,7 @@ Location: `tests/`
 
 ### Process & Standards
 - CLAUDE.md - Project conventions
-- thoughts/framework/process/* - Workflows
+- project-hub/framework/process/* - Workflows
 - reference/coding-standards.md - Code quality
 
 ### History & Learning
@@ -262,17 +262,17 @@ Location: `tests/`
 
 **Find by work item ID:**
 ```bash
-grep -r "FEAT-002" thoughts/
+grep -r "FEAT-002" project-hub/
 ```
 
 **Find all ADRs:**
 ```bash
-ls thoughts/research/adr/
+ls project-hub/research/adr/
 ```
 
 **Find recent session histories:**
 ```bash
-ls -t thoughts/history/sessions/*SESSION-HISTORY.md | head -5
+ls -t project-hub/history/sessions/*SESSION-HISTORY.md | head -5
 ```
 
 **Find all TODOs in code:**

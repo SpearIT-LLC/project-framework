@@ -47,7 +47,7 @@ ProjectRoot/
 ├── process/                    # Workflow documentation
 ├── templates/                  # Planning templates (COPY these, don't edit)
 ├── patterns/                   # Implementation patterns
-└── thoughts/                   # Work management and history
+└── project-hub/                   # Work management and history
     ├── work/                   # Kanban workflow for active work
     │   ├── backlog/            # Future work (not approved yet)
     │   ├── todo/               # Planned work items (approved, not started)
@@ -65,7 +65,7 @@ ProjectRoot/
 **Critical Folders:**
 - `docs/collaboration/` - **Universal collaboration guides** (read these for detailed guidance)
 - `templates/` - **Copy-paste starting points** (never edit templates directly)
-- `thoughts/work/` - **Kanban workflow** (backlog → todo → doing → done)
+- `project-hub/work/` - **Kanban workflow** (backlog → todo → doing → done)
 
 ---
 
@@ -224,7 +224,7 @@ Examples:
 - Step 8.5 ensures user reviews work before release
 
 **Respect WIP limits:**
-- Check `thoughts/work/doing/.limit` before moving items to doing/
+- Check `project-hub/work/doing/.limit` before moving items to doing/
 - If at limit, complete current work first
 
 **Follow kanban flow:**
@@ -243,12 +243,12 @@ Examples:
   - **Grouped releases:** Multiple items in done/? Use highest Version Impact (MAJOR > MINOR > PATCH)
 - Update PROJECT-STATUS.md + CHANGELOG.md + README.md (if new features affect user-facing docs) + move to done/ → commit + tag together
   - **Grouped releases:** List all items in CHANGELOG under one version, organized by category (Added/Changed/Fixed)
-- Archive immediately: Create `thoughts/history/releases/vX.Y.Z/` → **USE git mv** to move all work items from done/
-  - Command: `git mv thoughts/work/done/WORK-ITEM-* thoughts/history/releases/vX.Y.Z/`
+- Archive immediately: Create `project-hub/history/releases/vX.Y.Z/` → **USE git mv** to move all work items from done/
+  - Command: `git mv project-hub/work/done/WORK-ITEM-* project-hub/history/releases/vX.Y.Z/`
   - ⚠️ CRITICAL: Use `git mv` (move), NOT `cp` (copy) - prevents duplicates
   - Commit: `git commit -m "chore: Archive vX.Y.Z work items"`
   - **Grouped releases:** All items go into same release folder (e.g., `releases/v2.3.0/` contains multiple work items)
-- Verify: Check done/ is empty: `ls thoughts/work/done/*.md` (should return empty)
+- Verify: Check done/ is empty: `ls project-hub/work/done/*.md` (should return empty)
 - Why atomic? Version must match implementation. Why archive? Maintains WIP limits, preserves complete history.
 - **Full grouped release process:** See [workflow-guide.md](docs/collaboration/workflow-guide.md#releasing-multiple-work-items-together)
 
@@ -262,7 +262,7 @@ This policy ensures:
 - Open questions addressed before implementation
 - No surprises - user sees and approves changes
 
-**Reference:** [ADR-001: AI Workflow Checkpoint Policy](thoughts/research/adr/001-ai-workflow-checkpoint-policy.md)
+**Reference:** [ADR-001: AI Workflow Checkpoint Policy](project-hub/research/adr/001-ai-workflow-checkpoint-policy.md)
 
 **Full Workflow Details:** See [Workflow Guide](docs/collaboration/workflow-guide.md) for complete 11-step process, work item numbering, templates, and examples.
 
@@ -301,12 +301,12 @@ Before starting any project, determine the appropriate framework level based on 
 
 **Light Framework:**
 - README.md, PROJECT-STATUS.md, CHANGELOG.md
-- Simplified thoughts/project/history/ for decisions
+- Simplified project-hub/project/history/ for decisions
 - No kanban workflow, lightweight git
 - For: Small tools, medium lifespan, solo with handoff
 
 **Standard Framework:**
-- Complete thoughts/ structure with kanban workflow
+- Complete project-hub/ structure with kanban workflow
 - Formal planning and releases
 - For: Applications, ongoing maintenance, small teams
 - Formal ADRs, comprehensive retrospectives
@@ -401,12 +401,12 @@ await db.query(query, [email]);
 
 **Session History:**
 - Format: `YYYY-MM-DD-SESSION-HISTORY.md`
-- Location: `thoughts/history/sessions/`
+- Location: `project-hub/history/sessions/`
 - Content: What was done, decisions made, blockers, next steps
 
 **Work Items:**
 - Use templates from `templates/`
-- Location: `thoughts/work/` (backlog/todo/doing/done)
+- Location: `project-hub/work/` (backlog/todo/doing/done)
 
 **Full Details:** [collaboration/workflow-guide.md](docs/collaboration/workflow-guide.md)
 
@@ -455,7 +455,7 @@ Which template?
 - MAJOR: `templates/ADR-MAJOR-TEMPLATE.md`
 - MINOR: `templates/ADR-MINOR-TEMPLATE.md`
 
-**Storage:** `thoughts/research/adr/NNN-decision-name.md`
+**Storage:** `project-hub/research/adr/NNN-decision-name.md`
 
 **Examples:**
 - MAJOR: Database choice, authentication architecture, state management
@@ -497,8 +497,8 @@ Which template?
 
 **1. WIP Limit Violation**
 ```bash
-cat thoughts/work/doing/.limit
-ls thoughts/work/doing/*.md | wc -l
+cat project-hub/work/doing/.limit
+ls project-hub/work/doing/*.md | wc -l
 # If count > limit: move items to todo/ or complete to done/
 ```
 
@@ -516,14 +516,14 @@ git describe --tags --abbrev=0
 **4. Modified Template Instead of Instance**
 ```bash
 # CORRECT: Copy template first
-cp templates/FEATURE-TEMPLATE.md thoughts/work/backlog/feature-123.md
+cp templates/FEATURE-TEMPLATE.md project-hub/work/backlog/feature-123.md
 # Edit the copy, NOT the template
 ```
 
 **5. Forgot to Archive After Release**
 ```bash
-mkdir -p thoughts/history/releases/vX.Y.Z
-mv thoughts/work/done/*.md thoughts/history/releases/vX.Y.Z/
+mkdir -p project-hub/history/releases/vX.Y.Z
+mv project-hub/work/done/*.md project-hub/history/releases/vX.Y.Z/
 ```
 
 **Full Troubleshooting:** [collaboration/troubleshooting-guide.md](docs/collaboration/troubleshooting-guide.md)
@@ -693,7 +693,7 @@ New commands should follow this pattern:
 3. **Work item:** Create FEAT-018.x sub-task for implementation
 4. **Consistency:** Follow existing argument and output patterns
 
-**Reference:** [FEAT-018: Claude Command Framework](thoughts/work/doing/feature-018-claude-command-framework.md)
+**Reference:** [FEAT-018: Claude Command Framework](project-hub/work/doing/feature-018-claude-command-framework.md)
 
 ---
 

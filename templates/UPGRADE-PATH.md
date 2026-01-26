@@ -57,8 +57,8 @@ Projects evolve. What starts as a simple script can grow into a maintained tool 
 **What you're adding:**
 - PROJECT-STATUS.md - Version tracking
 - CHANGELOG.md - Change history
-- thoughts/project/history/ - Decision documentation
-- thoughts/project/research/justification.md - Why this tool exists
+- project-hub/project/history/ - Decision documentation
+- project-hub/project/research/justification.md - Why this tool exists
 - Optional CLAUDE.md - Project-specific guidance
 
 **Step-by-step:**
@@ -75,7 +75,7 @@ Projects evolve. What starts as a simple script can grow into a maintained tool 
    cp README.md README-light-template.md
    cp PROJECT-STATUS.md .
    cp CHANGELOG.md .
-   cp -r thoughts/ .
+   cp -r project-hub/ .
    ```
 
 3. **Merge README content**
@@ -96,7 +96,7 @@ Projects evolve. What starts as a simple script can grow into a maintained tool 
    - Create [Unreleased] section for future work
 
 6. **Create justification document**
-   - Create `thoughts/project/research/justification.md`
+   - Create `project-hub/project/research/justification.md`
    - Document why tool exists (move from README if present)
    - List alternatives considered
    - Explain decision to build custom
@@ -108,7 +108,7 @@ Projects evolve. What starts as a simple script can grow into a maintained tool 
 
    - Added PROJECT-STATUS.md for version tracking
    - Added CHANGELOG.md with history
-   - Added thoughts/project/ structure for decisions
+   - Added project-hub/project/ structure for decisions
    - Created research justification document"
 
    git tag -a v1.1.0 -m "Framework upgrade to Light"
@@ -124,7 +124,7 @@ Projects evolve. What starts as a simple script can grow into a maintained tool 
 ### Light → Standard Upgrade
 
 **What you're adding:**
-- Full thoughts/ framework structure
+- Full project-hub/ framework structure
 - Kanban workflow (todo/doing/done)
 - Planning and roadmap capability
 - Full research templates
@@ -147,10 +147,10 @@ Projects evolve. What starts as a simple script can grow into a maintained tool 
    # Be careful not to overwrite existing files
    cp -n INDEX.md .
    cp -n CLAUDE.md CLAUDE-template.md
-   cp -r thoughts/framework/ thoughts/
-   cp -r thoughts/project/planning/ thoughts/project/
-   cp -r thoughts/project/work/ thoughts/project/
-   cp -r thoughts/project/reference/ thoughts/project/
+   cp -r project-hub/framework/ project-hub/
+   cp -r project-hub/project/planning/ project-hub/project/
+   cp -r project-hub/project/work/ project-hub/project/
+   cp -r project-hub/project/reference/ project-hub/project/
    ```
 
 3. **Migrate existing content**
@@ -173,19 +173,19 @@ Projects evolve. What starts as a simple script can grow into a maintained tool 
    - Add links to key documents
 
 6. **Initialize planning structure**
-   - Create `thoughts/project/planning/roadmap.md`
+   - Create `project-hub/project/planning/roadmap.md`
    - Document high-level goals and version targets
    - Create initial backlog items if known
 
 7. **Initialize kanban workflow**
    - Review current work items
-   - Create feature docs in `thoughts/project/work/todo/`
+   - Create feature docs in `project-hub/project/work/todo/`
    - Use FEATURE-TEMPLATE.md for structure
    - Set WIP limits in .limit files (default: doing=1, todo=10)
 
 8. **Migrate decisions to ADRs (optional)**
    - Review history/ for significant decisions
-   - Create ADRs in `thoughts/project/research/adr/` for major ones
+   - Create ADRs in `project-hub/project/research/adr/` for major ones
    - Use ADR-MAJOR-TEMPLATE.md or ADR-MINOR-TEMPLATE.md
 
 9. **Update documentation**
@@ -198,7 +198,7 @@ Projects evolve. What starts as a simple script can grow into a maintained tool 
     git add .
     git commit -m "Framework: Upgrade from Light to Standard
 
-    - Added full thoughts/framework/ structure
+    - Added full project-hub/framework/ structure
     - Added kanban workflow (todo/doing/done)
     - Added planning/roadmap capability
     - Created project-specific CLAUDE.md
@@ -226,7 +226,7 @@ Projects evolve. What starts as a simple script can grow into a maintained tool 
 - Team size decreased
 
 **Process:**
-1. Archive unnecessary documentation to `thoughts/project/archive/`
+1. Archive unnecessary documentation to `project-hub/project/archive/`
 2. Keep git history intact (don't delete, just stop using)
 3. Simplify active documentation to lower framework level
 4. Document downgrade decision in session history
@@ -241,7 +241,7 @@ Projects evolve. What starts as a simple script can grow into a maintained tool 
 - [ ] Backup current files
 - [ ] Add PROJECT-STATUS.md
 - [ ] Add CHANGELOG.md
-- [ ] Add thoughts/project/history/
+- [ ] Add project-hub/project/history/
 - [ ] Create research/justification.md
 - [ ] Commit and tag upgrade
 
@@ -263,7 +263,7 @@ Projects evolve. What starts as a simple script can grow into a maintained tool 
 
 - [NEW-PROJECT-CHECKLIST.md](NEW-PROJECT-CHECKLIST.md) - Initial setup for each framework level
 - [CLAUDE.md](../CLAUDE.md) - Generic framework guidelines
-- [version-control-workflow.md](../HPCJobQueuePrototype/thoughts/framework/process/version-control-workflow.md) - Release process
+- [version-control-workflow.md](../HPCJobQueuePrototype/project-hub/framework/process/version-control-workflow.md) - Release process
 
 ---
 

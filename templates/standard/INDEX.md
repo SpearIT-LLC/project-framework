@@ -71,41 +71,41 @@ Location: `framework/templates/`
 
 ## Project Documentation
 
-Location: `thoughts/`
+Location: `project-hub/`
 
 ### Active Work (Kanban)
 
-Location: `thoughts/work/`
+Location: `project-hub/work/`
 
-- **[backlog/](thoughts/work/backlog/)** - Future work (not yet committed)
-- **[todo/](thoughts/work/todo/)** - Committed next work (limit: 10)
-- **[doing/](thoughts/work/doing/)** - Active work (limit: 1)
-- **[done/](thoughts/work/done/)** - Completed, awaiting release
+- **[backlog/](project-hub/work/backlog/)** - Future work (not yet committed)
+- **[todo/](project-hub/work/todo/)** - Committed next work (limit: 10)
+- **[doing/](project-hub/work/doing/)** - Active work (limit: 1)
+- **[done/](project-hub/work/done/)** - Completed, awaiting release
 
 ### History
 
-Location: `thoughts/history/`
+Location: `project-hub/history/`
 
-- **[sessions/](thoughts/history/sessions/)** - Daily session history files
-- **[releases/](thoughts/history/releases/)** - Archived work items by version
-- **[spikes/](thoughts/history/spikes/)** - Completed research investigations
-- **[archive/](thoughts/history/archive/)** - Superseded documents
+- **[sessions/](project-hub/history/sessions/)** - Daily session history files
+- **[releases/](project-hub/history/releases/)** - Archived work items by version
+- **[spikes/](project-hub/history/spikes/)** - Completed research investigations
+- **[archive/](project-hub/history/archive/)** - Superseded documents
 
 ### Research
 
-Location: `thoughts/research/`
+Location: `project-hub/research/`
 
-- **[adr/](thoughts/research/adr/)** - Architecture Decision Records
+- **[adr/](project-hub/research/adr/)** - Architecture Decision Records
 
 ### Retrospectives
 
-Location: `thoughts/retrospectives/`
+Location: `project-hub/retrospectives/`
 
 - Project retrospectives after major milestones
 
 ### External References
 
-Location: `thoughts/external-references/`
+Location: `project-hub/external-references/`
 
 - Cached authoritative references (RFCs, specs, standards)
 
@@ -139,17 +139,17 @@ Location: `docs/`
 
 **Find by work item ID:**
 ```powershell
-Get-ChildItem -Recurse thoughts/work -Filter "*FEAT-001*"
+Get-ChildItem -Recurse project-hub/work -Filter "*FEAT-001*"
 ```
 
 **Find all ADRs:**
 ```powershell
-Get-ChildItem thoughts/research/adr/
+Get-ChildItem project-hub/research/adr/
 ```
 
 **Find recent session histories:**
 ```powershell
-Get-ChildItem thoughts/history/sessions/ | Sort-Object LastWriteTime -Descending | Select-Object -First 5
+Get-ChildItem project-hub/history/sessions/ | Sort-Object LastWriteTime -Descending | Select-Object -First 5
 ```
 
 ---

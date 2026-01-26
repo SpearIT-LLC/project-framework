@@ -15,7 +15,7 @@ Move a work item between workflow folders with policy enforcement, transition va
 
 ## Behavior
 
-1. **Find the item**: Search `thoughts/work/` subfolders for a file matching the item-id
+1. **Find the item**: Search `project-hub/work/` subfolders for a file matching the item-id
 2. **Validate transition**: Check against the transition matrix (see below)
 3. **Check WIP limit**: If moving to `doing/`, verify WIP limit not exceeded
 4. **Execute move**: Use `git mv` to move the file

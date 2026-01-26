@@ -21,7 +21,7 @@ Review and prioritize backlog items, with options to view details and move items
 
 ### List View (default)
 
-1. Scan `thoughts/work/backlog/` for `.md` files
+1. Scan `project-hub/work/backlog/` for `.md` files
 2. Parse metadata from each file (ID, Type, Version Impact, Created)
 3. Present formatted table sorted by created date
 

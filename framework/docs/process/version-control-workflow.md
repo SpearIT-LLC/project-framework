@@ -324,9 +324,9 @@ Before starting ANY new feature, bugfix, or blocker:
 
 ### 1. Create Planning Document
 
-**Features:** `thoughts/plans/features/feature-<name>.md`
-**Bugfixes:** `thoughts/plans/bugfixes/bugfix-<name>-YYYY-MM-DD.md`
-**Blockers:** `thoughts/plans/blockers/blocker-<name>.md`
+**Features:** `project-hub/plans/features/feature-<name>.md`
+**Bugfixes:** `project-hub/plans/bugfixes/bugfix-<name>-YYYY-MM-DD.md`
+**Blockers:** `project-hub/plans/blockers/blocker-<name>.md`
 
 ### 2. Required Content
 
@@ -355,7 +355,7 @@ Before starting ANY new feature, bugfix, or blocker:
 
 ```powershell
 # 1. Create planning document
-New-Item "thoughts/plans/features/feature-catia-template.md"
+New-Item "project-hub/plans/features/feature-catia-template.md"
 
 # 2. Document approach (use template)
 # ... write feature plan ...
@@ -416,8 +416,8 @@ git push origin main --tags
 git branch -d feature/catia-template
 
 # 8. Archive feature doc
-Move-Item "thoughts/plans/features/feature-catia-template.md" `
-          "thoughts/history/feature-catia-template-complete.md"
+Move-Item "project-hub/plans/features/feature-catia-template.md" `
+          "project-hub/history/feature-catia-template-complete.md"
 ```
 
 ---
@@ -438,7 +438,7 @@ git checkout main
 git checkout -b hotfix/scheduler-crash-on-exit
 
 # 3. Quick bugfix doc (abbreviated for hotfixes)
-# thoughts/plans/bugfixes/bugfix-scheduler-crash-2025-11-26.md
+# project-hub/plans/bugfixes/bugfix-scheduler-crash-2025-11-26.md
 ```
 
 ### Fix and Ship
@@ -682,7 +682,7 @@ Simply fix the code and continue. No special process needed.
 
 ```powershell
 # 1. Create work item (BUG type)
-# thoughts/work/doing/BUG-NNN-description.md
+# project-hub/work/doing/BUG-NNN-description.md
 
 # 2. Create bugfix branch
 git checkout main
@@ -720,7 +720,7 @@ git branch -d bugfix/NNN-brief-description
 
 ```powershell
 # 1. Create work item (BUG type)
-# thoughts/work/doing/BUG-NNN-rollback-description.md
+# project-hub/work/doing/BUG-NNN-rollback-description.md
 
 # 2. Create rollback branch
 git checkout main

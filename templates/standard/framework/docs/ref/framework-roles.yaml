@@ -120,7 +120,7 @@ roles:
           - "quick experiment"
         on_activate: |
           When adopting this variant, ask:
-          "Should I create a spike in thoughts/poc/ to track this experiment?"
+          "Should I create a spike in project-hub/poc/ to track this experiment?"
           If yes: Create SPIKE-NNN-description/ folder with spike doc and artifacts.
           See workflow-guide.md "POC Spike" section for details.
       production:

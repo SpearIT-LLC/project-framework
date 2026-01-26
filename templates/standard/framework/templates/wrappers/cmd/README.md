@@ -37,7 +37,7 @@ These wrapper templates solve a common Windows usability problem: PowerShell scr
 
 **Usage:**
 ```cmd
-copy thoughts\framework\templates\wrappers\cmd\WRAPPER.cmd scripts\New-JobsFromManifest.cmd
+copy framework\templates\wrappers\cmd\WRAPPER.cmd scripts\New-JobsFromManifest.cmd
 ```
 
 ---
@@ -55,7 +55,7 @@ copy thoughts\framework\templates\wrappers\cmd\WRAPPER.cmd scripts\New-JobsFromM
 
 **Usage:**
 ```cmd
-copy thoughts\framework\templates\wrappers\cmd\WRAPPER-ENHANCED.cmd scripts\Start-JobScheduler.cmd
+copy framework\templates\wrappers\cmd\WRAPPER-ENHANCED.cmd scripts\Start-JobScheduler.cmd
 ```
 
 **Recommended for:**
@@ -78,7 +78,7 @@ copy thoughts\framework\templates\wrappers\cmd\WRAPPER-ENHANCED.cmd scripts\Star
 
 **Usage:**
 ```cmd
-copy thoughts\framework\templates\wrappers\cmd\WRAPPER-PS7.cmd scripts\Export-HpcJobXml.cmd
+copy framework\templates\wrappers\cmd\WRAPPER-PS7.cmd scripts\Export-HpcJobXml.cmd
 ```
 
 **When to use:**
@@ -101,7 +101,7 @@ copy thoughts\framework\templates\wrappers\cmd\WRAPPER-PS7.cmd scripts\Export-Hp
 
 **Usage:**
 ```cmd
-copy thoughts\framework\templates\wrappers\cmd\WRAPPER-ADMIN.cmd installers\microsoft\Install-HpcPack.cmd
+copy framework\templates\wrappers\cmd\WRAPPER-ADMIN.cmd installers\microsoft\Install-HpcPack.cmd
 ```
 
 **When to use:**
@@ -135,7 +135,7 @@ copy wrappers\cmd\TEMPLATE-WRAPPER-ENHANCED.cmd scripts\Start-JobScheduler.cmd
 
 ```
 HPCJobQueuePrototype/
-├── thoughts/
+├── project-hub/
 │   └── framework/
 │       └── templates/
 │           └── wrappers/
@@ -223,13 +223,13 @@ The wrapper preserves the PowerShell script's exit code, allowing batch scripts 
 ### Version Control
 
 **Git tracking:**
-- ✅ Track template files in `thoughts/framework/templates/wrappers/cmd/`
+- ✅ Track template files in `project-hub/framework/templates/wrappers/cmd/`
 - ✅ Track copies in `scripts/` and `installers/` (they're small, useful for users)
 - ❌ Don't track temporary or generated wrappers
 
 ### Updating Wrappers
 
-If you update a template in `thoughts/framework/templates/wrappers/cmd/`:
+If you update a template in `project-hub/framework/templates/wrappers/cmd/`:
 
 1. Review all locations where the template is used
 2. Decide if updates should be propagated
@@ -295,7 +295,7 @@ Set-ExecutionPolicy RemoteSigned -Scope CurrentUser
 
 ```cmd
 cd HPCJobQueuePrototype
-copy thoughts\framework\templates\wrappers\cmd\WRAPPER-ENHANCED.cmd scripts\Start-JobScheduler.cmd
+copy framework\templates\wrappers\cmd\WRAPPER-ENHANCED.cmd scripts\Start-JobScheduler.cmd
 ```
 
 **Result:** QA team can double-click `Start-JobScheduler.cmd` to launch the job scheduler.
@@ -308,7 +308,7 @@ copy thoughts\framework\templates\wrappers\cmd\WRAPPER-ENHANCED.cmd scripts\Star
 
 ```cmd
 cd HPCJobQueuePrototype
-copy thoughts\framework\templates\wrappers\cmd\WRAPPER-ADMIN.cmd installers\microsoft\Install-HpcPack.cmd
+copy framework\templates\wrappers\cmd\WRAPPER-ADMIN.cmd installers\microsoft\Install-HpcPack.cmd
 ```
 
 **Result:**
@@ -324,7 +324,7 @@ copy thoughts\framework\templates\wrappers\cmd\WRAPPER-ADMIN.cmd installers\micr
 
 ```cmd
 cd HPCJobQueuePrototype
-copy thoughts\framework\templates\wrappers\cmd\WRAPPER-PS7.cmd scripts\Export-HpcJobXml.cmd
+copy framework\templates\wrappers\cmd\WRAPPER-PS7.cmd scripts\Export-HpcJobXml.cmd
 ```
 
 **Result:**
@@ -335,7 +335,7 @@ copy thoughts\framework\templates\wrappers\cmd\WRAPPER-PS7.cmd scripts\Export-Hp
 
 ## Related Documentation
 
-- **[coding-standards.md](../../thoughts/project/reference/coding-standards.md)** - PowerShell coding standards
+- **[coding-standards.md](../../project-hub/project/reference/coding-standards.md)** - PowerShell coding standards
 - **[CLAUDE.md](../../CLAUDE.md)** - Project overview and architecture
 - **[README.md](../../README.md)** - Getting started guide
 

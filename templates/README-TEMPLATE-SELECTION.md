@@ -68,7 +68,7 @@ Combine your answers using this matrix:
 
 **What you DON'T get:**
 - No PROJECT-STATUS.md
-- No thoughts/ folder structure
+- No project-hub/ folder structure
 - No formal planning or kanban
 - No templates
 
@@ -97,7 +97,7 @@ Combine your answers using this matrix:
 - PROJECT-STATUS.md (version tracking)
 - CHANGELOG.md (history)
 - Optional CLAUDE.md (1-page guide)
-- Basic thoughts/project/history/ structure
+- Basic project-hub/project/history/ structure
 - Simple research justification
 
 **What you DON'T get:**
@@ -131,7 +131,7 @@ Combine your answers using this matrix:
 
 **What you get:**
 - Complete documentation suite (README, STATUS, CHANGELOG, INDEX, CLAUDE.md)
-- Full thoughts/ framework structure
+- Full project-hub/ framework structure
 - Kanban workflow (todo/doing/done)
 - Planning and roadmap capability
 - Complete research templates (5 templates)
@@ -312,7 +312,7 @@ Projects evolve. What starts as a script can become a critical tool. See [UPGRAD
 - [NEW-PROJECT-CHECKLIST.md](NEW-PROJECT-CHECKLIST.md) - Setup instructions for each level
 - [UPGRADE-PATH.md](UPGRADE-PATH.md) - How to upgrade between levels
 - [CLAUDE.md](../CLAUDE.md) - Generic framework guidelines
-- [Framework Changelog](../HPCJobQueuePrototype/thoughts/framework/FRAMEWORK-CHANGELOG.md) - Framework evolution
+- [Framework Changelog](../HPCJobQueuePrototype/project-hub/framework/FRAMEWORK-CHANGELOG.md) - Framework evolution
 
 ---
 

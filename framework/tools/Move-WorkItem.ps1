@@ -148,7 +148,7 @@ function Move-File {
 # Find work folder
 $workPath = Find-WorkFolder
 if (-not $workPath) {
-    Write-Error "Could not find thoughts/work folder"
+    Write-Error "Could not find project-hub/work folder"
     exit 1
 }
 
