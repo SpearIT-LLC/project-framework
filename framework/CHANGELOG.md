@@ -14,10 +14,51 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Planned
-- Minimal and Light Framework template packages (deferred from v3.0.0)
 - Visual diagrams for folder structure and workflow
-- ZIP distribution package
-- Interactive setup script
+- Task-based project templates (FEAT-052) - replacing size-based templates
+
+---
+
+## [4.0.0] - 2026-01-26
+
+### Breaking Changes
+- **TECH-084: Rename thoughts/ to project-hub/**
+  - All `thoughts/` folders renamed to `project-hub/` across framework
+  - Clearer naming: "project-hub" indicates central place for project management
+  - Affects: documentation, templates, PowerShell scripts, YAML files
+  - PowerShell parameter renamed: `ThoughtsPath` → `ProjectHubPath`
+  - **Migration:** Rename your `thoughts/` folder to `project-hub/`
+
+- **Removed size-based templates** (minimal/, light/, standard/)
+  - Superseded by single `starter/` template with framework-as-dependency model
+  - Framework included directly in each project (self-contained, portable)
+
+### Added
+- **DECISION-050: Framework Distribution Model (Framework-as-Dependency)**
+  - Each project gets its own `framework/` copy - self-contained and portable
+  - `tools/Build-FrameworkArchive.ps1` - Creates distributable zip archive
+  - `templates/starter/Setup-Project.ps1` - In-place project setup from archive
+  - `templates/starter/` - Complete project scaffolding with framework included
+  - `.framework-version` file tracks framework version in each project
+  - Customization tagging standard (`<!-- CUSTOM: vX.Y.Z, DATE -->`)
+  - Pre-build check warns about unreleased items in done/
+
+- **FEAT-052: Task-Based Project Templates** (backlog)
+  - Concept for future: workflow rigor based on project type, not size
+  - Examples: Quick Script, Feature Enhancement, New Application, Research/Spike
+
+### Changed
+- Simplified `templates/` folder - now contains only `starter/` and setup guides
+- Updated root CLAUDE.md with new template references
+- Removed obsolete `templates/standard/` sync references from 11 backlog items
+
+### Removed
+- `templates/minimal/` - Use starter/ template instead
+- `templates/light/` - Use starter/ template instead
+- `templates/standard/` - Use starter/ template instead
+- `templates/README-TEMPLATE-SELECTION.md` - No longer needed
+- `templates/UPGRADE-PATH.md` - No longer needed
+- `templates/STRUCTURE.md` - No longer needed
 
 ---
 
