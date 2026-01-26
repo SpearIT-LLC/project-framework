@@ -572,17 +572,27 @@ When evaluating options, prioritize:
 - [Flow Diagrams](DECISION-050-framework-distribution-flow-diagram.md) - Visual explanation of model
 - [Customization Example](DECISION-050-customization-example.md) - Tagging examples and options
 
-**Future Implementation Work Items:**
+**Implementation Status (v3.7.0):**
 
-The following features will implement this decision:
-- **FEAT-XXX: Implement framework-as-dependency for examples/hello-world** - Dogfood the model
-- **FEAT-XXX: Update template packages** - Include framework/ copy in all templates
-- **FEAT-XXX: Create .framework-version tracking** - Version identification mechanism
-- **FEAT-XXX: Document customization tagging standard** - Update collaboration guides
-- **FEAT-XXX: Framework Update Script** - Version-agnostic update tooling with grep-based customization detection
-- **FEAT-XXX: Framework Update Test Harness** - Read-only baseline versions for regression testing
+Core implementation completed:
+- ✅ `tools/Build-FrameworkArchive.ps1` - Creates distributable zip with framework/
+- ✅ `templates/starter/Setup-Project.ps1` - In-place setup from extracted archive
+- ✅ `templates/starter/` - Full project scaffolding with framework/ included
+- ✅ `.framework-version` tracking - Created by build script
+- ✅ Framework exclusions - `framework/project-hub/` excluded from distribution
+- ✅ Version auto-detection from PROJECT-STATUS.md
+- ✅ Pre-build check for unreleased items in done/
+
+**Follow-on work items:**
+- **TECH-085: Remove examples/ folder** - No longer needed with new distribution model
+- **FEAT-006: Interactive Setup Script** - Partial implementation, remaining items in backlog
+- **FEAT-007: Framework Validation Script** - Includes `-Framework` mode for pre-release validation
+
+**Deferred (build if validated by usage):**
+- Update-Framework.ps1 script - MVP is manual update
+- Framework Update Test Harness - Future tooling
 
 ---
 
-**Last Updated:** 2026-01-12
-**Status:** Decided
+**Last Updated:** 2026-01-26
+**Status:** Done - Implementation complete

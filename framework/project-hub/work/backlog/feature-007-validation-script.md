@@ -42,19 +42,33 @@ Manual review of folder structure and files.
 
 ### Functional Requirements
 
+**Default Mode (Consumer Projects):**
+
 - [ ] Detect framework level (Minimal/Light/Standard)
 - [ ] Validate folder structure for detected level
 - [ ] Check for required files (README.md, PROJECT-STATUS.md, etc.)
 - [ ] Validate WIP limit files exist and contain valid numbers
 - [ ] Check for stale documentation (Last Updated > 6 months)
 - [ ] Verify git repository exists (if expected)
-- [ ] **Version consistency validation (v2.1.0 dogfooding learning):**
+- [ ] **YAML schema validation:**
+  - [ ] Validate framework.yaml against framework-schema.yaml
+  - [ ] Report missing required fields, invalid types
+- [ ] **Version consistency validation:**
   - [ ] Version in PROJECT-STATUS.md matches latest git tag
   - [ ] CHANGELOG.md has section for current version
   - [ ] No significant [Unreleased] content when version is released
   - [ ] All work/done/ items have been archived to history/releases/vX.Y.Z/
 - [ ] Generate validation report with issues and warnings
 - [ ] Return exit code 0 (valid) or 1 (issues found)
+
+**Framework Mode (`-Framework` parameter):**
+
+All default checks PLUS:
+
+- [ ] Template sync validation (`templates/starter/` matches `framework/` source)
+- [ ] Framework tooling exists (`tools/Build-FrameworkArchive.ps1`, etc.)
+- [ ] Schema file up-to-date with framework.yaml fields
+- [ ] Build script calls this validation as pre-build gate
 
 ### Non-Functional Requirements
 
@@ -71,22 +85,19 @@ Manual review of folder structure and files.
 ### Validation Checks
 
 **Level Detection:**
-- Check for presence of project-hub/framework/ → Standard
-- Check for PROJECT-STATUS.md + project-hub/project/ → Light
+- Check for presence of framework/project-hub/ → Standard
+- Check for PROJECT-STATUS.md + basic structure → Light
 - Check for README.md only → Minimal
 
 **Folder Structure (Standard):**
 ```
-✓ project-hub/project/planning/ exists
-✓ project-hub/project/work/todo/ exists
-✓ project-hub/project/work/doing/ exists
-✓ project-hub/project/work/done/ exists
-✓ project-hub/project/reference/ exists
-✓ project-hub/project/research/ exists
-✓ project-hub/project/history/ exists
-✓ project-hub/framework/process/ exists
-✓ project-hub/framework/templates/ exists
-✓ project-hub/framework/patterns/ exists
+✓ framework/project-hub/work/backlog/ exists
+✓ framework/project-hub/work/todo/ exists
+✓ framework/project-hub/work/doing/ exists
+✓ framework/project-hub/work/done/ exists
+✓ framework/project-hub/history/ exists
+✓ framework/docs/ exists
+✓ framework/templates/ exists
 ```
 
 **Required Files:**
@@ -100,10 +111,8 @@ Manual review of folder structure and files.
 
 **WIP Limits (Standard):**
 ```
-✓ project-hub/project/work/doing/.limit exists
-✓ Content is valid number (typically 1)
-✓ project-hub/project/work/todo/.limit exists
-✓ Content is valid number (typically 10)
+✓ framework/project-hub/work/doing/.limit exists
+✓ Content is valid number (typically 2)
 ```
 
 **Stale Documentation:**
@@ -137,6 +146,29 @@ Manual review of folder structure and files.
   → Move to history/releases/v2.1.0/
 ```
 
+**YAML Schema Validation:**
+```
+✓ framework.yaml validates against schema
+✓ All required fields present (project, policies, roles)
+✓ Field types correct
+```
+
+**YAML Schema Errors:**
+```
+✗ framework.yaml missing required field: project.name
+✗ Field 'roles.default' expected string, got array
+
+⚠ Unknown field 'customField' - not in schema (warning only)
+```
+
+**Framework Mode Additional Checks (`-Framework`):**
+```
+✓ templates/starter/ exists
+✓ Template CLAUDE.md paths match framework structure
+✓ tools/Build-FrameworkArchive.ps1 exists
+✓ framework-schema.yaml covers all framework.yaml fields
+```
+
 ### Output Format
 
 **Console Output:**
@@ -145,22 +177,24 @@ Framework Validation Report
 ===========================
 Framework Level: Standard
 Project: SpearIT Project Framework
-Validated: 2025-12-19 23:59:59
+Validated: 2026-01-26 12:00:00
 
 Structure:
-✓ All required folders present (10/10)
+✓ All required folders present (7/7)
 
 Files:
 ✓ All required files present (5/5)
 
 WIP Limits:
-✓ doing/.limit = 1 (valid)
-✓ todo/.limit = 10 (valid)
+✓ doing/.limit = 2 (valid)
+
+YAML Schema:
+✓ framework.yaml validates against schema
 
 Documentation:
-✓ README.md updated 2025-12-19 (current)
-✓ PROJECT-STATUS.md updated 2025-12-19 (current)
-⚠ CLAUDE.md updated 2025-11-15 (1 month old - consider review)
+✓ README.md updated 2026-01-26 (current)
+✓ PROJECT-STATUS.md updated 2026-01-26 (current)
+⚠ CLAUDE.md updated 2025-11-15 (2 months old - consider review)
 
 Issues Found: 0 errors, 1 warning
 
@@ -172,20 +206,22 @@ Status: VALID ✓
 {
   "status": "valid",
   "framework_level": "standard",
+  "mode": "default",
   "errors": [],
   "warnings": [
     {
       "type": "stale_doc",
       "file": "CLAUDE.md",
       "last_updated": "2025-11-15",
-      "age_days": 34,
+      "age_days": 72,
       "message": "Consider reviewing"
     }
   ],
   "checks": {
-    "structure": {"passed": 10, "failed": 0},
+    "structure": {"passed": 7, "failed": 0},
     "files": {"passed": 5, "failed": 0},
-    "wip_limits": {"passed": 2, "failed": 0},
+    "wip_limits": {"passed": 1, "failed": 0},
+    "yaml_schema": {"passed": 1, "failed": 0},
     "documentation": {"passed": 2, "warnings": 1}
   }
 }
@@ -195,27 +231,45 @@ Status: VALID ✓
 
 ## Implementation Steps
 
+**Core validation (default mode):**
+
 - [ ] Create validate-framework.ps1 (PowerShell Core 7+)
 - [ ] Implement framework level detection
 - [ ] Implement folder structure validation
 - [ ] Implement required file checks
 - [ ] Implement WIP limit validation
 - [ ] Implement stale documentation detection
+- [ ] Implement YAML schema validation (framework.yaml against schema)
 - [ ] Add JSON output mode
 - [ ] Add verbose mode
+
+**Framework mode (`-Framework`):**
+
+- [ ] Add `-Framework` switch parameter
+- [ ] Implement template sync validation
+- [ ] Implement framework tooling checks
+- [ ] Implement schema completeness check
+- [ ] Integrate with Build-FrameworkArchive.ps1 as pre-build gate
+
+**Testing & documentation:**
+
 - [ ] Test on all framework levels
+- [ ] Test both default and -Framework modes
 - [ ] Document script usage in README.md
-- [ ] Add to project-framework-template/standard/project-hub/framework/tools/
+- [ ] Add to framework/tools/
 
 ---
 
 ## Success Criteria
 
 - [ ] Script correctly detects all 3 framework levels
-- [ ] All validation checks work correctly
+- [ ] All validation checks work correctly (default mode)
+- [ ] YAML schema validation catches field mismatches
+- [ ] `-Framework` mode validates template sync and tooling
 - [ ] Error messages are clear and actionable
 - [ ] JSON output valid for CI/CD integration
 - [ ] Performance acceptable (< 5 seconds)
+- [ ] Build script integration works as pre-build gate
 - [ ] Documentation complete
 
 ---
@@ -225,10 +279,12 @@ Status: VALID ✓
 **Added:**
 - validate-framework.ps1 - Framework structure validation script
 - Automated checking of folder structure, files, and WIP limits
+- YAML schema validation (framework.yaml against schema)
 - Stale documentation detection
 - JSON output mode for CI/CD integration
+- `-Framework` mode for framework repo pre-release validation
 
 ---
 
-**Last Updated:** 2025-12-19
-**Status:** Backlog (priority for v2.1.0)
+**Last Updated:** 2026-01-26
+**Status:** Backlog

@@ -168,4 +168,218 @@ Fixed the spike workflow contradiction (TECH-075) by consolidating research and 
 
 ---
 
+## Session 3: DECISION-050 Implementation
+
+### DECISION-050: Framework Distribution Model - Implementation
+
+Implemented the framework-as-dependency distribution model with automated build and setup tooling.
+
+**Key deliverables:**
+
+1. **Starter Template** (`templates/starter/`)
+   - 36 files with `{{PLACEHOLDER}}` tokens
+   - Root docs: README.md, CLAUDE.md, PROJECT-STATUS.md, CHANGELOG.md, INDEX.md, QUICK-START.md, framework.yaml
+   - Project scaffolding: project-hub/, src/, tests/, docs/, poc/
+   - Claude commands: .claude/commands/fw-*.md
+   - NO framework/ folder (added during build from live source)
+
+2. **Build Script** (`tools/Build-FrameworkArchive.ps1`)
+   - Assembles distributable zip from:
+     - `templates/starter/*` (scaffolding)
+     - `framework/docs/` (live documentation)
+     - `framework/templates/` (live templates)
+     - `framework/tools/` (PowerShell tools)
+   - Creates `.framework-version` file for tracking
+   - Output: `distrib/spearit_framework_v{VERSION}.zip`
+
+3. **Setup Script** (`tools/Setup-Project.ps1`)
+   - Extracts archive to destination
+   - Prompts for project name/description
+   - Replaces all `{{PLACEHOLDER}}` tokens automatically
+   - Initializes git repository with initial commit
+
+4. **Updated NEW-PROJECT-CHECKLIST.md** (v4.0.0)
+   - Added automated setup workflow
+   - Updated manual setup to reference starter template
+   - Added troubleshooting for new workflow
+
+**End-to-end test verified:**
+- Build archive: 196 KB with framework/docs, templates, tools
+- Setup project: All 15 placeholders replaced, git initialized
+
+---
+
+## Files Created (Session 3)
+
+- `tools/Build-FrameworkArchive.ps1` - Archive build script
+- `tools/Setup-Project.ps1` - Project setup script
+- `distrib/.gitkeep` - Keeps distrib folder in git
+- `templates/starter/` - 36 files (full starter template structure)
+
+## Files Modified (Session 3)
+
+- `.gitignore` - Added `distrib/*.zip` and `distrib/temp/` exclusions
+- `templates/NEW-PROJECT-CHECKLIST.md` - Updated to v4.0.0 with new workflow
+
+---
+
+## Current State (Updated)
+
+### In done/ (awaiting release)
+- TECH-075, TECH-036, FEAT-031, TECH-066, TECH-068, TECH-069, TECH-074, TECH-076
+
+### In doing/
+- DECISION-050: Framework Distribution Model (implementation complete, decision can move to done)
+
+---
+
+## Session 4: Distribution Archive Fixes and Build Improvements
+
+### Distribution Structure Fix
+
+Fixed mismatch between source and archive structure. The archive had `project-hub/` at root level while source has it inside `framework/`.
+
+**Resolution:** Moved `templates/starter/project-hub/` to `templates/starter/framework/project-hub/` and updated all path references.
+
+### Setup-Project.ps1 Redesign
+
+The setup script wasn't included in the archive. Created a new in-place version that:
+- Works from within extracted archive (no external ArchivePath parameter)
+- Copies template contents to destination (excluding itself)
+- Replaces `{{PLACEHOLDER}}` tokens
+- Initializes git repository with initial commit
+
+Archived the old external `tools/Setup-Project.ps1` to `framework/project-hub/history/archive/`.
+
+### Build Script Improvements
+
+Updated `tools/Build-FrameworkArchive.ps1`:
+- **Removed `-Version` parameter** - Now auto-detects from `framework/PROJECT-STATUS.md`
+- **Added pre-build check** - Warns if items exist in `done/` folder (unreleased work) with prompt to continue/cancel
+
+### Schema and Validator Fix
+
+Discovered `framework-schema.yaml` and `validate-framework.ps1` were outdated - missing the `sources` section added to `framework.yaml`.
+
+**Fixes:**
+- Added `sources` field to `framework-schema.yaml` as object type
+- Fixed `validate-framework.ps1` to only parse `fields:` section (was incorrectly including `role_definition:` section)
+
+### Process Gaps Identified
+
+1. **Schema sync process**: Schema and validator should be checked/updated when `framework.yaml` changes
+2. **Retroactive tracking**: Ad-hoc fixes (like schema fix) should have change tickets
+
+---
+
+## Files Modified (Session 4)
+
+- `templates/starter/CLAUDE.md` - Updated paths from `project-hub/` to `framework/project-hub/`
+- `templates/starter/PROJECT-STATUS.md` - Updated paths
+- `templates/starter/INDEX.md` - Updated paths
+- `templates/starter/README.md` - Updated paths
+- `templates/starter/QUICK-START.md` - Updated paths
+- `templates/starter/.claude/commands/*.md` - Updated all fw-command paths
+- `templates/starter/Setup-Project.ps1` - Complete rewrite for in-place operation
+- `tools/Build-FrameworkArchive.ps1` - Removed -Version param, added done/ check, auto-detect version
+- `framework/docs/ref/framework-schema.yaml` - Added sources field definition
+- `framework/tools/validate-framework.ps1` - Fixed to parse only fields: section
+
+## Files Created (Session 4)
+
+- `templates/starter/framework/project-hub/` - Moved from root level
+- `templates/starter/framework/project-hub/work/backlog/.gitkeep`
+- `templates/starter/framework/project-hub/work/doing/.gitkeep`
+- `templates/starter/framework/project-hub/work/doing/.limit`
+- `templates/starter/framework/project-hub/work/done/.gitkeep`
+- `templates/starter/framework/project-hub/work/todo/.gitkeep`
+- `templates/starter/framework/project-hub/history/sessions/.gitkeep`
+
+## Files Moved (Session 4)
+
+- `tools/Setup-Project.ps1` → `framework/project-hub/history/archive/Setup-Project-v1.ps1` (archived)
+- `templates/starter/project-hub/*` → `templates/starter/framework/project-hub/`
+
+## Files Deleted (Session 4)
+
+- `templates/starter/project-hub/` (contents moved to framework/project-hub/)
+
+---
+
+## Current State (Updated)
+
+### In done/ (awaiting release)
+- TECH-084: Rename thoughts/ to project-hub/
+
+### In doing/
+- DECISION-050: Framework Distribution Model (+ 2 supporting docs)
+
+---
+
+## Commits (Session 4)
+
+- `b74ccf0` - chore: Complete TECH-084, resume DECISION-050
+- `9cad6f1` - feat(TECH-084): Rename thoughts/ to project-hub/
+
+---
+
+## Session 5: DECISION-050 Completion and Cleanup
+
+### DECISION-050 Moved to Done
+
+Core implementation of framework-as-dependency distribution model completed:
+- Build script (`Build-FrameworkArchive.ps1`)
+- Setup script (`Setup-Project.ps1`) - in-place from extracted archive
+- Starter template with framework/ included
+- `.framework-version` tracking
+- Version auto-detection and done/ check
+
+Updated DECISION-050 with implementation status and moved to done/ with supporting docs.
+
+### FEAT-007 Updated
+
+Added `-Framework` parameter design for validation script:
+- Default mode: consumer project validation (folder structure, files, WIP limits, YAML schema)
+- Framework mode: adds template sync, tooling checks, schema completeness
+- Eliminates need for separate Test-ReleaseReadiness script
+
+### TECH-085 Created
+
+New work item to remove `examples/` folder - redundant with new distribution model.
+
+### Process Discussion
+
+- Reviewed workflow policy for done/ transitions
+- Identified post-move actions (session history, commit) were missed
+
+---
+
+## Files Modified (Session 5)
+
+- `framework/project-hub/work/backlog/feature-007-validation-script.md` - Added `-Framework` mode design, updated paths
+- `framework/project-hub/work/done/DECISION-050-framework-distribution-model.md` - Added implementation status
+
+## Files Created (Session 5)
+
+- `framework/project-hub/work/backlog/TECH-085-remove-examples-folder.md`
+
+## Files Moved (Session 5)
+
+- `DECISION-050-framework-distribution-model.md` → `done/`
+- `DECISION-050-customization-example.md` → `done/`
+- `DECISION-050-framework-distribution-flow-diagram.md` → `done/`
+
+---
+
+## Current State (Updated)
+
+### In done/ (awaiting release)
+- TECH-084: Rename thoughts/ to project-hub/
+- DECISION-050: Framework Distribution Model (+ 2 supporting docs)
+
+### In doing/
+- (empty)
+
+---
+
 **Last Updated:** 2026-01-26
