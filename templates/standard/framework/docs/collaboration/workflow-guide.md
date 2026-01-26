@@ -615,48 +615,35 @@ echo "1" > thoughts/work/doing/.limit
 
 ### Spike Flow (Research/Investigation)
 
-Spikes follow a different workflow than features/bugfixes. There are two spike types:
-
-#### Research Spike (no code artifacts)
-
-```
-work/backlog/SPIKE-NNN-description.md
-    ↓ (ready to investigate)
-work/doing/SPIKE-NNN-description.md
-    ↓ (findings documented)
-history/spikes/SPIKE-NNN-description.md
-```
-
-#### POC Spike (with code artifacts)
+Spikes follow a different workflow than features/bugfixes. They use the `poc/` folder for active investigation.
 
 ```
 poc/SPIKE-NNN-description/
     ├── SPIKE-NNN-description.md
-    └── [code artifacts]
-    ↓ (findings documented, experiment complete)
+    └── [code artifacts, if any]
+    ↓ (findings documented, investigation complete)
 history/spikes/SPIKE-NNN-description/
     ├── SPIKE-NNN-description.md
-    └── [code artifacts]
-    ↓ (after production implementation - optional cleanup)
-history/spikes/SPIKE-NNN-description/
-    └── SPIKE-NNN-description.md  (artifacts deleted, lessons kept)
+    └── [code artifacts, if any]
 ```
 
+**Optional: Queue spikes in backlog first**
+If you have a spike idea but aren't ready to start, you may create a spike doc in `work/backlog/` and move it to `poc/` when ready. Most spikes start directly in `poc/`.
+
+**Optional cleanup after production implementation:**
+If the spike informed a production implementation, you may delete code artifacts from `history/spikes/` while keeping the spike document (preserves lessons learned).
+
 **Key differences from standard flow:**
-- Spikes do NOT go through `todo/` (they're time-boxed investigations)
+- Spikes start directly in `poc/` folder (or optionally queue in `backlog/` first)
+- Spikes do NOT go through `todo/` or `doing/`
 - Spikes do NOT trigger releases
 - Spikes archive to `history/spikes/`, not `history/releases/`
-- POC spikes live in `thoughts/poc/`, not `thoughts/work/`
 - No WIP limits on `poc/` folder
 
 **When to use a spike:**
 - Need to investigate unknowns before planning solution
 - Research question with time-boxed investigation
 - Technology evaluation or proof-of-concept
-
-**When to use POC spike vs research spike:**
-- **Research spike:** Documentation-only investigation, no code artifacts
-- **POC spike:** Experiment requires code/scripts that may inform production solution
 
 ### Roadmap Integration
 
