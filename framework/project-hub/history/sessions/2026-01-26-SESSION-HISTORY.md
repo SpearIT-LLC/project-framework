@@ -451,17 +451,60 @@ Discovered that `templates/light/`, `templates/minimal/`, and `templates/standar
 
 ---
 
+## Session 8: TECH-081 Setup Process Improvements
+
+### TECH-081: Implement Setup Process Suggestions
+
+Improved new project setup experience based on FEAT-025 testing feedback.
+
+**Changes Implemented:**
+
+1. **NEW-PROJECT-CHECKLIST.md - "After Setup" section**
+   - Added clear section heading for post-setup tasks
+   - Improved "First Work Item" guidance with purpose explanation
+   - Added "Option A: Ask the AI" with example prompt for Claude Code users
+   - Added "Option B: Manual Creation" with clear steps
+   - Explained WHY work items matter (prevents scope creep, clear completion criteria)
+
+2. **NEW-PROJECT-CHECKLIST.md - Phase 2: LICENSE guidance**
+   - Added optional LICENSE file step
+   - Listed common options (MIT, Apache 2.0, GPL)
+   - Included link to https://choosealicense.com/
+
+3. **NEW-PROJECT-CHECKLIST.md - Phase 3.5: Remote Setup**
+   - Added new optional section for GitHub/remote setup
+   - Included commands for adding remote and pushing
+   - Positioned after git initialization (logical flow)
+
+4. **Setup-Project.ps1 - Output update**
+   - Changed "Next steps" to reference NEW-PROJECT-CHECKLIST.md as SsoT
+   - Listed key topics covered (work item, GitHub, LICENSE)
+   - Followed DRY principle - documentation is single source of truth
+
+**Files Modified:**
+- `templates/NEW-PROJECT-CHECKLIST.md` - Added 3 improvements
+- `templates/starter/Setup-Project.ps1` - Updated output text
+
+**Related Work Items:**
+- TECH-087: Add project type selection to setup (created, in backlog)
+
+---
+
 ## Current State (Updated)
 
 ### In done/ (awaiting release)
 - TECH-084: Rename thoughts/ to project-hub/
 - TECH-085: Remove examples/ folder
 - TECH-086: Align POC folder location with ADR-004
+- TECH-081: Setup process improvements
 - DECISION-050: Framework Distribution Model (+ 2 supporting docs)
 
 ### In doing/
 - (empty)
 
+### In backlog/
+- TECH-087: Add project type selection to setup
+
 ---
 
-**Last Updated:** 2026-01-26
+**Last Updated:** 2026-01-27

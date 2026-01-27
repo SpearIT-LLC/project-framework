@@ -103,8 +103,22 @@ Add to "Phase 2: Configure Project":
   - Use https://choosealicense.com/ if unsure
 ```
 
+### 4. Update Setup-Project.ps1 Output
+
+Update script "Next steps" output to reference documentation (DRY principle):
+
+```powershell
+Write-Host "`nFor next steps, see:" -ForegroundColor Yellow
+Write-Host "  NEW-PROJECT-CHECKLIST.md (After Setup section)" -ForegroundColor White
+Write-Host "`nKey topics covered:" -ForegroundColor Cyan
+Write-Host "  - Creating your first work item (AI or manual)" -ForegroundColor Gray
+Write-Host "  - GitHub/remote setup (optional)" -ForegroundColor Gray
+Write-Host "  - Adding a LICENSE file (optional)" -ForegroundColor Gray
+```
+
 **Files Affected:**
-- `templates/NEW-PROJECT-CHECKLIST.md` - All three improvements
+- `templates/NEW-PROJECT-CHECKLIST.md` - Add/improve three sections
+- `templates/starter/Setup-Project.ps1` - Update "Next steps" output
 
 ---
 
@@ -113,8 +127,8 @@ Add to "Phase 2: Configure Project":
 - [ ] "First Work Item" section explains purpose of work items
 - [ ] "Ask the AI" option provided for creating first work item
 - [ ] Optional GitHub/remote setup step added
-- [ ] Optional LICENSE guidance added
-- [ ] Template includes common license options
+- [ ] Optional LICENSE guidance added with choosealicense.com link
+- [ ] Setup-Project.ps1 points to NEW-PROJECT-CHECKLIST.md as single source of truth
 
 ---
 
