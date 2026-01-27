@@ -145,6 +145,11 @@ git tag -a v0.1.0 -m "Initial setup"
   - [ ] Replace `{{PROJECT_NAME}}` with actual project name
   - [ ] Replace `{{DATE}}` with current date
 
+- [ ] **Add LICENSE file (optional)**
+  - For open source: MIT, Apache 2.0, GPL
+  - For proprietary: Add copyright notice or skip
+  - Use https://choosealicense.com/ if unsure
+
 ### Phase 3: Git Setup
 
 - [ ] Initialize git repository
@@ -165,6 +170,21 @@ git tag -a v0.1.0 -m "Initial setup"
 - [ ] Tag initial version
   ```powershell
   git tag -a v0.1.0 -m "Initial setup"
+  ```
+
+### Phase 3.5: Remote Setup (Optional)
+
+If you want to push to GitHub or another remote:
+
+- [ ] Create repository on GitHub/GitLab (do not initialize with README)
+- [ ] Add remote
+  ```powershell
+  git remote add origin https://github.com/username/repo-name.git
+  ```
+- [ ] Push with tags
+  ```powershell
+  git push -u origin main
+  git push --tags
   ```
 
 ### Phase 4: Verify Setup
@@ -193,24 +213,41 @@ git tag -a v0.1.0 -m "Initial setup"
 
 ---
 
-## First Work Item
+## After Setup
 
-After setup, create your first work item:
+### First Work Item
+
+After setup completes, define what you're building. Work items define scope BEFORE writing code, preventing scope creep and providing clear completion criteria.
+
+**Option A: Ask the AI (Recommended if using Claude Code)**
+
+Open Claude Code in your project directory and ask:
+```
+Create a work item for my first feature: [describe what you want to build]
+```
+
+The AI will create a properly formatted work item in `project-hub/work/backlog/` using the framework templates.
+
+**Option B: Manual Creation**
 
 ```powershell
 # Copy a feature template
-Copy-Item framework/templates/work-items/FEAT-NNN-template.md project-hub/work/backlog/FEAT-001-first-feature.md
+Copy-Item framework/templates/work-items/FEAT-NNN-template.md project-hub/work/backlog/FEAT-001-your-feature.md
 
-# Edit the work item
-# Move to todo when ready to plan
-Move-Item project-hub/work/backlog/FEAT-001-*.md project-hub/work/todo/
+# Edit the work item to describe:
+# - What you're building
+# - Why it's needed
+# - Acceptance criteria
 
-# Move to doing when ready to implement (max 1)
-Move-Item project-hub/work/todo/FEAT-001-*.md project-hub/work/doing/
-
-# Move to done when complete
-Move-Item project-hub/work/doing/FEAT-001-*.md project-hub/work/done/
+# Move through workflow as you work:
+# backlog → todo → doing → done
 ```
+
+**Why work items?** They document intent before implementation, making it easy to:
+- Stay focused on the current goal
+- Know when you're done
+- Communicate progress
+- Avoid scope creep
 
 ---
 

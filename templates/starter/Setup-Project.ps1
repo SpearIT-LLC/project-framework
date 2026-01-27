@@ -208,10 +208,12 @@ Write-Host "    src/, tests/, docs/   - Code and documentation" -ForegroundColor
 
 Write-Host "`nNext steps:" -ForegroundColor Yellow
 Write-Host "  1. cd `"$Destination`"" -ForegroundColor White
-Write-Host "  2. Review and customize CLAUDE.md for your project" -ForegroundColor White
-Write-Host "  3. Update PROJECT-STATUS.md with initial status" -ForegroundColor White
-Write-Host "  4. Start creating work items in framework/project-hub/work/backlog/" -ForegroundColor White
-Write-Host "  5. See QUICK-START.md for workflow reference" -ForegroundColor White
+Write-Host "  2. Review: NEW-PROJECT-CHECKLIST.md (After Setup section)" -ForegroundColor White
+Write-Host "`nKey topics in the checklist:" -ForegroundColor Cyan
+Write-Host "  - Creating your first work item (AI or manual)" -ForegroundColor Gray
+Write-Host "  - GitHub/remote setup (optional)" -ForegroundColor Gray
+Write-Host "  - Adding a LICENSE file (optional)" -ForegroundColor Gray
+Write-Host "`nFor quick workflow reference: QUICK-START.md" -ForegroundColor Cyan
 
 Write-Host "`nKey commands:" -ForegroundColor Cyan
 Write-Host "  /fw-help    - Show available framework commands" -ForegroundColor Gray
