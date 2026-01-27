@@ -4,7 +4,7 @@
 
 project:
   name: "{{PROJECT_NAME}}"
-  type: application  # framework | application | library | tool
+  type: {{PROJECT_TYPE}}
   deliverable: code  # code | documentation | hybrid
 
 policies:

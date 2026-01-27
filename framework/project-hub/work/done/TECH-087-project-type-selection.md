@@ -4,7 +4,9 @@
 **Type:** Tech Debt
 **Priority:** Medium
 **Version Impact:** MINOR
+**Status:** Done
 **Created:** 2026-01-27
+**Completed:** 2026-01-27
 
 ---
 
@@ -111,13 +113,13 @@ $placeholders = @{
 
 ## Acceptance Criteria
 
-- [ ] `{{PROJECT_TYPE}}` placeholder added to templates/starter/framework.yaml
-- [ ] Setup-Project.ps1 reads framework-schema.yaml
-- [ ] Script displays numbered list of valid project types with descriptions
-- [ ] Script validates user selection
-- [ ] Selected project type replaces placeholder in framework.yaml
-- [ ] Project type shown in confirmation summary
-- [ ] Error handling for invalid schema file
+- [x] `{{PROJECT_TYPE}}` placeholder added to templates/starter/framework.yaml
+- [x] Setup-Project.ps1 reads framework-schema.yaml
+- [x] Script displays numbered list of valid project types with descriptions
+- [x] Script validates user selection
+- [x] Selected project type replaces placeholder in framework.yaml
+- [x] Project type shown in confirmation summary
+- [x] Error handling for invalid schema file
 
 ---
 

@@ -60,6 +60,58 @@ $TemplateDir = Split-Path -Parent $MyInvocation.MyCommand.Path
 $TemplateDir = [System.IO.Path]::GetFullPath($TemplateDir)
 $Destination = [System.IO.Path]::GetFullPath($Destination)
 
+function Get-ProjectTypes {
+    <#
+    .SYNOPSIS
+        Parses project types from framework-schema.yaml
+    .DESCRIPTION
+        Reads the project.type enum values and their descriptions from the schema file.
+        Uses regex parsing to avoid YAML library dependency.
+    .PARAMETER SchemaPath
+        Path to the framework-schema.yaml file
+    .OUTPUTS
+        Ordered hashtable of @{ typeName = description }
+    #>
+    param(
+        [Parameter(Mandatory = $true)]
+        [string]$SchemaPath
+    )
+
+    if (-not (Test-Path $SchemaPath)) {
+        Write-Error "Schema file not found: $SchemaPath"
+        return $null
+    }
+
+    $content = Get-Content -Path $SchemaPath -Raw
+
+    # Find the project.type section and extract values block
+    # Match from 'project.type:' to the next top-level field
+    if ($content -notmatch '(?s)project\.type:.*?values:(.*?)(?=\n  project\.)') {
+        Write-Error "Could not find project.type values in schema"
+        return $null
+    }
+
+    $valuesBlock = $Matches[1]
+    $types = [ordered]@{}
+
+    # Extract each type and its description
+    # Pattern: type name, colon, newline, spaces, description: "value"
+    $typeMatches = [regex]::Matches($valuesBlock, '(\w+):\s*\r?\n\s+description:\s*"([^"]+)"')
+
+    foreach ($match in $typeMatches) {
+        $typeName = $match.Groups[1].Value
+        $description = $match.Groups[2].Value
+        $types[$typeName] = $description
+    }
+
+    if ($types.Count -eq 0) {
+        Write-Error "No project types found in schema"
+        return $null
+    }
+
+    return $types
+}
+
 # Prevent copying to self
 if ($TemplateDir -eq $Destination) {
     Write-Error "Destination cannot be the same as the template directory."
@@ -95,12 +147,56 @@ if ([string]::IsNullOrWhiteSpace($ProjectDescription)) {
     }
 }
 
+# Get project types from schema and prompt for selection
+$schemaPath = Join-Path $TemplateDir "framework\docs\ref\framework-schema.yaml"
+$projectTypes = Get-ProjectTypes -SchemaPath $schemaPath
+
+if ($null -eq $projectTypes) {
+    Write-Host "Warning: Could not read project types from schema. Using default 'application'." -ForegroundColor Yellow
+    $ProjectType = "application"
+} else {
+    Write-Host "`nSelect project type:" -ForegroundColor Yellow
+    $typeKeys = @($projectTypes.Keys)
+    for ($i = 0; $i -lt $typeKeys.Count; $i++) {
+        $key = $typeKeys[$i]
+        Write-Host "  $($i + 1). $key - $($projectTypes[$key])" -ForegroundColor White
+    }
+
+    $validSelection = $false
+    while (-not $validSelection) {
+        $selection = Read-Host "`nProject type [1-$($typeKeys.Count)]"
+
+        # Handle empty input - default to application
+        if ([string]::IsNullOrWhiteSpace($selection)) {
+            $defaultIndex = [Array]::IndexOf($typeKeys, "application")
+            if ($defaultIndex -ge 0) {
+                $selection = $defaultIndex + 1
+            } else {
+                $selection = 1
+            }
+        }
+
+        if ($selection -match '^\d+$') {
+            $selectionInt = [int]$selection
+            if ($selectionInt -ge 1 -and $selectionInt -le $typeKeys.Count) {
+                $ProjectType = $typeKeys[$selectionInt - 1]
+                $validSelection = $true
+            }
+        }
+
+        if (-not $validSelection) {
+            Write-Host "Invalid selection. Please enter a number between 1 and $($typeKeys.Count)." -ForegroundColor Red
+        }
+    }
+}
+
 # Get current date
 $CurrentDate = Get-Date -Format "yyyy-MM-dd"
 
 Write-Host "`nConfiguration:" -ForegroundColor Yellow
 Write-Host "  Project Name: $ProjectName" -ForegroundColor White
 Write-Host "  Description:  $ProjectDescription" -ForegroundColor White
+Write-Host "  Project Type: $ProjectType" -ForegroundColor White
 Write-Host "  Destination:  $Destination" -ForegroundColor White
 Write-Host "  Date:         $CurrentDate" -ForegroundColor White
 
@@ -134,6 +230,7 @@ Write-Host "  Replacing placeholders..." -ForegroundColor Gray
 $placeholders = @{
     "{{PROJECT_NAME}}" = $ProjectName
     "{{PROJECT_DESCRIPTION}}" = $ProjectDescription
+    "{{PROJECT_TYPE}}" = $ProjectType
     "{{DATE}}" = $CurrentDate
 }
 

@@ -2,14 +2,14 @@
 
 **Date:** 2026-01-27
 **Participants:** Gary Elliott, Claude Code
-**Session Focus:** TECH-081 setup improvements, research insights analysis, FEAT-091 roadmap implementation
+**Session Focus:** TECH-081 setup improvements, research insights analysis, FEAT-091 roadmap, TECH-087 implementation, TECH-093 workflow enforcement design
 **Role:** developer.iterate
 
 ---
 
 ## Summary
 
-Completed TECH-081 setup process improvements, analyzed research insights from misc-thoughts-and-planning.md, created four new feature work items (FEAT-088 through FEAT-091), and implemented FEAT-091 (Project Roadmap Structure). The session progressed from documentation improvements to strategic planning infrastructure, establishing a roadmap system for the framework project and all future user projects.
+Completed TECH-081 setup process improvements, analyzed research insights from misc-thoughts-and-planning.md, created four new feature work items (FEAT-088 through FEAT-091), implemented FEAT-091 (Project Roadmap Structure), and TECH-087 (Project Type Selection). Also identified a workflow compliance gap and created TECH-093 to address it with three-layer enforcement (enhanced fw-move skill, work item transition tracking, pre-commit hooks). The session progressed from documentation improvements to strategic planning infrastructure to process reliability improvements.
 
 ---
 
@@ -271,13 +271,14 @@ User suggested sprint-based roadmap instead of quarterly themes:
 - TECH-086: Align POC folder location with ADR-004
 - TECH-081: Setup process improvements
 - FEAT-091: Project Roadmap Structure
+- TECH-087: Project type selection in setup
 - DECISION-050: Framework Distribution Model (+ 2 supporting docs)
 
 ### In doing/
 - (empty)
 
 ### In backlog/
-- TECH-087: Add project type selection to setup
+- TECH-093: fw-move enforcement (High priority)
 - FEAT-088: Framework Glossary
 - FEAT-089: Project Type Patterns
 - FEAT-090: Coding Strategy Patterns
@@ -300,9 +301,81 @@ User suggested sprint-based roadmap instead of quarterly themes:
 
 ---
 
+## Session 4: TECH-087 Implementation and Workflow Enforcement Research
+
+### TECH-087: Project Type Selection - Implemented
+
+**Workflow:** todo → doing → done
+
+Implemented project type selection during setup:
+
+1. **framework.yaml placeholder**
+   - Changed `type: application` to `type: {{PROJECT_TYPE}}`
+
+2. **Get-ProjectTypes function**
+   - Parses framework-schema.yaml using regex
+   - Extracts enum values and descriptions
+   - Returns ordered hashtable for display
+
+3. **Interactive prompt**
+   - Displays numbered list after project description
+   - Shows type name and description for each option
+   - Validates selection (1-N range)
+   - Defaults to "application" if Enter pressed
+
+4. **Integration**
+   - Added to placeholder replacement hashtable
+   - Added to configuration summary display
+   - Error handling for missing/malformed schema
+
+### TECH-093: fw-move Enforcement - Created
+
+Discovered workflow compliance issue: FEAT-091 was moved to done/ and committed BEFORE Status field was updated and acceptance criteria were checked.
+
+**Root cause analysis:**
+- fw-move skill documents policies but doesn't enforce them
+- Claude knows the policies but executes them inconsistently
+- Current design is advisory, not mechanical enforcement
+
+**Proposed three-layer enforcement:**
+
+| Layer | Purpose | Timing |
+|-------|---------|--------|
+| Enhanced fw-move skill | Proactive guidance | Before action |
+| Work item transition section | Durable record | During action |
+| Pre-commit hook (PowerShell) | Safety net | After action |
+
+**Claude Hooks Research:**
+- Documented hook capabilities and limitations
+- Created PowerShell 5.1 validation script design
+- Hooks are reactive (catch errors) not proactive (guide process)
+- Best approach: skill + hooks together
+
+### Files Modified
+
+- `templates/starter/framework.yaml` - Added {{PROJECT_TYPE}} placeholder
+- `templates/starter/Setup-Project.ps1` - Added Get-ProjectTypes, prompt, placeholder replacement
+
+### Files Created
+
+- `framework/project-hub/work/backlog/TECH-093-fw-move-enforcement.md`
+- `framework/project-hub/research/claude-hooks-research.md`
+
+### Files Moved
+
+- `TECH-087` → todo → doing → done
+
+### Commits
+
+- `e42306a` - chore: Move TECH-087 to todo, fix FEAT-091 completion metadata
+- `8707c21` - feat: Create TECH-093 for fw-move enforcement with hooks research
+
+---
+
 ## Next Steps
 
-- 6 work items ready for release in done/
+- 7 work items ready for release in done/
+- TECH-093 (fw-move enforcement) in backlog - high priority for process reliability
 - 5 new features in backlog ready for prioritization
 - FEAT-092 (Sprint Support) needs further design discussion
 - Roadmap provides strategic framework for future work
