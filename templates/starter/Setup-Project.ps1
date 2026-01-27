@@ -273,7 +273,7 @@ if (-not $NoGit) {
         $ErrorActionPreference = "Continue"
 
         # Check if git is available
-        $gitVersion = & git --version 2>&1
+        & git --version 2>&1 | Out-Null
         if ($LASTEXITCODE -eq 0) {
             # Initialize repository - suppress warnings
             & git init --quiet 2>&1 | Out-Null
