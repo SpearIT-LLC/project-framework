@@ -117,6 +117,18 @@ None - this is a proactive cleanup task.
 
 This task should be done after FEAT-060 (bootstrap block) to ensure the pattern is established before cleanup.
 
+### Scope Note
+
+Originally considered as separate work item (FEAT-092: CLAUDE.md Minimum Viable Block Audit), but merged into this cleanup task since the categorization work achieves both goals.
+
+### Related Research
+
+Original concepts documented in [framework/project-hub/research/misc-thoughts-and-planning.md](../research/misc-thoughts-and-planning.md).
+
+Questions addressed:
+- "Is there anything in /CLAUDE.md that could reliably be moved to /framework/CLAUDE.md?"
+- "Can we identify/define the minimum block of info we need to add to /CLAUDE.md to get the framework to work reliably?"
+
 ### Session Insights (2026-01-19)
 
 **The "less is more" problem:**
@@ -136,6 +148,25 @@ When auditing, categorize each section as:
 2. **Reference** - Look up when needed, doesn't need to be in working memory
 3. **Redundant** - Duplicates info elsewhere, candidate for removal
 
+**Category examples:**
+
+**Bootstrap-critical** (must be short, memorable, processed every session):
+- Role selection/activation
+- Pre-implementation review trigger ("Before writing code: state plan and wait")
+- Work item transition requirements
+- Git workflow safety rules
+
+**Reference** (look up when needed):
+- Detailed transition matrix
+- Complete template catalog
+- Coding standards
+- Release checklist steps
+
+**Redundant** (candidates for removal):
+- Information duplicated from framework.yaml
+- Content better suited for dedicated docs (move to workflow-guide.md, etc.)
+- Historical context that doesn't inform current actions
+
 **The one-rule idea:**
 Consider distilling checkpoint policies to a single memorable rule in the bootstrap block:
 
@@ -143,6 +174,23 @@ Consider distilling checkpoint policies to a single memorable rule in the bootst
 
 Detailed policies (transition rules, WIP limits, etc.) would remain for reference, but the *checkpoint trigger* would be simple enough to remember.
 
+### Success Criteria
+
+**Quantitative:**
+- [ ] /CLAUDE.md under 100 lines
+- [ ] Bootstrap block under 20 lines
+- [ ] No duplicated content between root and framework CLAUDE.md files
+
+**Qualitative:**
+- [ ] AI can navigate from root to appropriate project context
+- [ ] Critical policies are memorable enough to apply during task execution
+- [ ] Reference material is discoverable when needed but doesn't clutter working memory
+
+### Synergy with Other Features
+
+- FEAT-088 (Glossary): CLAUDE.md should reference glossary for term definitions, not define inline
+- TECH-061 cleanup enables glossary to be the term authority
+
 ---
 
-**Last Updated:** 2026-01-19
+**Last Updated:** 2026-01-27
