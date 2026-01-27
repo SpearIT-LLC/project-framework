@@ -42,7 +42,6 @@ This checklist ensures the `templates/standard/` package contains everything nee
 - [ ] `src/` with `.gitkeep`
 - [ ] `tests/` with `.gitkeep`
 - [ ] `docs/` with `README.md`
-- [ ] `poc/` with `.gitkeep` and `README.md`
 - [ ] `project-hub/work/backlog/` with `.gitkeep`
 - [ ] `project-hub/work/todo/` with `.gitkeep` and `.limit` (contains: 10)
 - [ ] `project-hub/work/doing/` with `.gitkeep` and `.limit` (contains: 1)
@@ -54,6 +53,7 @@ This checklist ensures the `templates/standard/` package contains everything nee
 - [ ] `project-hub/history/archive/` with `.gitkeep`
 - [ ] `project-hub/research/` with `README.md`
 - [ ] `project-hub/research/adr/` with `.gitkeep`
+- [ ] `project-hub/poc/` with `.gitkeep` and `README.md`
 - [ ] `project-hub/retrospectives/` with `.gitkeep`
 - [ ] `project-hub/external-references/` with `README.md`
 

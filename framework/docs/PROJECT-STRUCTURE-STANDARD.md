@@ -64,10 +64,6 @@ Standard user projects typically create a single-project repository and follow t
 │       ├── architecture/            # OPTIONAL - Architecture docs
 │       └── deployment/              # OPTIONAL - Deployment docs
 │
-├── poc/                              # REQUIRED - Proof-of-concept and experiments
-│   ├── .gitkeep                     # REQUIRED (if empty)
-│   └── README.md                    # REQUIRED - POC folder purpose
-│
 ├── templates/                        # OPTIONAL - Only if project produces templates
 ├── tools/                            # OPTIONAL - Only if project has utilities
 │
@@ -98,6 +94,10 @@ Standard user projects typically create a single-project repository and follow t
     ├── research/                     # REQUIRED
     │   ├── README.md                # REQUIRED - Research folder purpose
     │   └── adr/                     # REQUIRED - Architecture Decision Records
+    │
+    ├── poc/                          # REQUIRED - Proof-of-concept and experiments
+    │   ├── .gitkeep                 # REQUIRED (if empty)
+    │   └── README.md                # REQUIRED - POC folder purpose
     │
     ├── retrospectives/               # REQUIRED - Project retrospectives
     │
@@ -361,7 +361,7 @@ See also: [research/README.md](../research/README.md) for distinction.
 **Locations (7 files per project):**
 1. `src/.gitkeep`
 2. `tests/.gitkeep`
-3. `poc/.gitkeep`
+3. `project-hub/poc/.gitkeep`
 4. `project-hub/work/backlog/.gitkeep`
 5. `project-hub/work/todo/.gitkeep`
 6. `project-hub/work/doing/.gitkeep`

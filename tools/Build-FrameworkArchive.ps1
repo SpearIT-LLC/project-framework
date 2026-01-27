@@ -176,7 +176,7 @@ Write-Host "    docs/          - Process and collaboration documentation" -Foreg
 Write-Host "    templates/     - Work item and documentation templates" -ForegroundColor Gray
 Write-Host "    tools/         - PowerShell workflow tools" -ForegroundColor Gray
 Write-Host "    project-hub/   - Project workflow structure" -ForegroundColor Gray
-Write-Host "  src/, tests/, docs/, poc/ - Empty scaffolding" -ForegroundColor White
+Write-Host "  src/, tests/, docs/ - Empty scaffolding" -ForegroundColor White
 Write-Host "  *.md, framework.yaml - Project root files (with placeholders)" -ForegroundColor White
 Write-Host "  Setup-Project.ps1 - Project creation script" -ForegroundColor White
 

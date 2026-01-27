@@ -13,6 +13,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+- **TECH-086: Align POC folder location with ADR-004**
+  - Moved `poc/` from project root to `project-hub/poc/` per ADR-004 decision
+  - Updated PROJECT-STRUCTURE-STANDARD.md, distribution-build-checklist.md
+  - Updated Build-FrameworkArchive.ps1 output text
+  - Moved starter template poc folder to correct location
+
 ### Planned
 - Visual diagrams for folder structure and workflow
 - Task-based project templates (FEAT-052) - replacing size-based templates

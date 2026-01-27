@@ -382,4 +382,40 @@ New work item to remove `examples/` folder - redundant with new distribution mod
 
 ---
 
+## Session 6: TECH-086 POC Folder Location Fix
+
+### TECH-086: Align POC Folder Location with ADR-004
+
+Discovered documentation inconsistency: PROJECT-STRUCTURE-STANDARD.md showed `poc/` at project root, but ADR-004 decided it should be at `project-hub/poc/`.
+
+**Analysis:**
+- ADR-004 explicitly chose `project-hub/poc/` (sibling to `research/`)
+- Framework itself correctly uses `framework/project-hub/poc/`
+- Documentation and starter template incorrectly showed `poc/` at root
+
+**Resolution:** Aligned documentation and template with ADR-004 decision.
+
+**Files Modified:**
+- `framework/docs/PROJECT-STRUCTURE-STANDARD.md` - Moved poc from root to under project-hub
+- `framework/docs/process/distribution-build-checklist.md` - Updated checklist
+- `tools/Build-FrameworkArchive.ps1` - Updated output text
+- `framework/CHANGELOG.md` - Added to Unreleased
+
+**Files Moved:**
+- `templates/starter/poc/` → `templates/starter/framework/project-hub/poc/`
+
+---
+
+## Current State (Updated)
+
+### In done/ (awaiting release)
+- TECH-084: Rename thoughts/ to project-hub/
+- TECH-086: Align POC folder location with ADR-004
+- DECISION-050: Framework Distribution Model (+ 2 supporting docs)
+
+### In doing/
+- (empty)
+
+---
+
 **Last Updated:** 2026-01-26
