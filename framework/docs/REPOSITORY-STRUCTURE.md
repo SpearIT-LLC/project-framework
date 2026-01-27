@@ -2,7 +2,7 @@
 
 **Version:** 3.0.0
 **Status:** Published
-**Last Updated:** 2026-01-07
+**Last Updated:** 2026-01-27
 **Purpose:** Definitive reference for project-framework repository root structure
 
 ---
@@ -12,16 +12,14 @@
 This document defines the **repository root structure** for the project-framework repository.
 
 **Important distinction:**
-- This document defines **REPOSITORY** structure (meta-level container)
-- For **PROJECT** structure, see:
-  - [PROJECT-STRUCTURE-STANDARD.md](PROJECT-STRUCTURE-STANDARD.md) - Standard Framework level
-  - PROJECT-STRUCTURE-LIGHT.md (future) - Light Framework level
-  - PROJECT-STRUCTURE-MINIMAL.md (future) - Minimal Framework level
+- This document defines **REPOSITORY** structure (source code repository for developing the framework)
+- For **USER PROJECT** structure, see [PROJECT-STRUCTURE-STANDARD.md](PROJECT-STRUCTURE-STANDARD.md)
 
-**Repository ≠ Project:**
-- Repository root contains multiple projects
-- Each project follows its own structure standard
-- Repository root is minimal (just navigation and meta files)
+**This repository:**
+- Source code for developing the framework itself
+- `framework/` folder contains the packaged framework content (documentation, templates, tools)
+- Repository root has project management files for developing the framework
+- Users receive the `framework/` contents via the distribution archive
 
 ---
 
@@ -216,42 +214,72 @@ These files live **inside each project**, not at repository root:
 
 ---
 
-## Multi-Project Repository vs Single Project
+## Framework Source Repository vs User Projects
 
-### This Repository
+### This Repository (Framework Source)
 
-```
-project-framework/           # Repository root (minimal)
-├── README.md               # Repo overview
-├── QUICK-START.md          # Navigation
-├── CLAUDE.md               # AI navigation
-├── LICENSE
-├── .gitignore
-├── framework/              # The framework (complete project)
-├── templates/              # Template packages
-└── tools/                  # Build scripts
-```
-
-### User Projects (Single Project)
-
-When users create their own projects, they typically create a **single project repository**:
+The framework source repository structure for developing the framework itself:
 
 ```
-my-awesome-project/         # Repository root = Project root
+project-framework/           # Repository root
+├── README.md               # Repository overview
+├── QUICK-START.md          # Navigation guide
+├── CLAUDE.md               # AI navigation hub
+├── LICENSE                 # Repository-wide license
+├── .gitignore              # Repository-wide ignores
+│
+├── docs/                   # Framework development project management
+│   └── project/            # Roadmap for framework development
+│       └── ROADMAP.md      # Strategic direction for this project
+│
+├── framework/              # Packaged framework content (what users get)
+│   ├── docs/               # Framework documentation (user-facing)
+│   ├── templates/          # Work item and planning templates
+│   ├── tools/              # PowerShell utilities
+│   └── project-hub/        # Framework's own work tracking
+│
+├── templates/              # Project scaffolding templates
+│   └── starter/            # Complete starter template with framework included
+│
+└── tools/                  # Build and distribution scripts
+    └── Build-FrameworkArchive.ps1
+```
+
+**Key insight:** `framework/` is analogous to `src/` in a code project - it's the packaged content that gets distributed.
+
+### User Projects
+
+When users create projects from the starter template, they get:
+
+```
+my-awesome-project/         # User's repository root
 ├── README.md              # Project overview
-├── PROJECT-STATUS.md      # Project version
-├── CHANGELOG.md           # Project changes
-├── CLAUDE.md              # Project AI guide
-├── INDEX.md               # Project docs
+├── PROJECT-STATUS.md      # Project version/status
+├── CHANGELOG.md           # Version history
+├── CLAUDE.md              # AI collaboration guide
+├── INDEX.md               # Documentation navigation
 ├── LICENSE
 ├── .gitignore
-├── src/
-├── tests/
-├── docs/
-└── project-hub/
+│
+├── docs/                   # Project documentation
+│   └── project/            # Project planning (roadmap)
+│       └── ROADMAP.md      # Strategic direction for this project
+│
+├── src/                    # Source code
+├── tests/                  # Test files
+│
+├── framework/              # Framework package (documentation, templates, tools)
+│   ├── docs/               # Framework documentation (read-only)
+│   ├── templates/          # Work item templates
+│   └── tools/              # PowerShell utilities
+│
+└── project-hub/            # Project management (user's work items)
+    ├── work/               # Kanban workflow
+    ├── history/            # Session history, releases
+    └── research/           # Research artifacts
 ```
 
-**They follow PROJECT-STRUCTURE-STANDARD.md directly at root.**
+**They follow PROJECT-STRUCTURE-STANDARD.md directly at repository root.**
 
 ---
 

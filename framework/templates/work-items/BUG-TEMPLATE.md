@@ -8,6 +8,7 @@
 
 <!-- Optional fields - uncomment if needed:
 **Severity:** [Critical | High | Medium | Low]
+**Theme:** [Theme name from docs/project/ROADMAP.md]
 **Assigned:** [Name]
 **Depends On:** [ITEM-NNN, ITEM-NNN]
 -->

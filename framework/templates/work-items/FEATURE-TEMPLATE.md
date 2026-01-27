@@ -7,6 +7,7 @@
 **Created:** YYYY-MM-DD
 
 <!-- Optional fields - uncomment if needed:
+**Theme:** [Theme name from docs/project/ROADMAP.md]
 **Assigned:** [Name]
 **Depends On:** [ITEM-NNN, ITEM-NNN]
 -->

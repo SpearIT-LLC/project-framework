@@ -943,6 +943,88 @@ Don't over-plan simple tasks. Don't under-plan complex systems.
 
 ---
 
+## Project Roadmap
+
+A project roadmap provides strategic direction beyond the immediate backlog. It organizes work into themes with 6-12 month horizons, helping teams prioritize and measure progress toward long-term goals.
+
+### Location
+
+`docs/project/ROADMAP.md` (consistent path for all projects)
+
+### Purpose
+
+**Roadmap vs Backlog:**
+- **Roadmap** = Strategic direction (themes, milestones, why)
+- **Backlog** = Tactical execution (specific work items, how)
+
+**The roadmap answers:**
+- Where is this project going?
+- What are our strategic priorities?
+- Why are we building these features?
+- How do individual work items fit into the bigger picture?
+
+### Structure
+
+**Theme-based organization** (recommended):
+- Group related initiatives into strategic themes
+- Themes span multiple work items
+- Progress measured by completing work items within themes
+
+**Example themes:**
+- AI Integration & Clarity
+- Developer Guidance & Patterns
+- Quality & Release Automation
+- Distribution & Setup Excellence
+
+### Roadmap-to-Backlog Workflow
+
+1. **Define themes** in `docs/project/ROADMAP.md`
+2. **Create work items** in backlog to support themes
+3. **Reference themes** in work item metadata: `**Theme:** [Theme Name]`
+4. **Measure progress** by tracking completed work items per theme
+5. **Review quarterly** to adjust themes based on learnings
+
+### When to Use Themes
+
+**Use theme metadata in work items when:**
+- Work supports a larger strategic initiative
+- You want to track progress toward roadmap goals
+- Multiple work items contribute to the same theme
+
+**Skip theme metadata for:**
+- Ad-hoc bug fixes
+- Small maintenance tasks
+- Work that doesn't align with any current theme
+
+### Template and Examples
+
+- **Template:** `framework/templates/planning/ROADMAP-TEMPLATE.md`
+- **Real example:** `docs/project/ROADMAP.md` (this framework's roadmap)
+- **Starter template:** `templates/starter/docs/project/ROADMAP.md`
+
+### Best Practices
+
+**Do:**
+- Review and update roadmap quarterly
+- Link roadmap themes to work items
+- Use roadmap to explain prioritization decisions
+- Treat roadmap as a guide, not a commitment
+
+**Don't:**
+- Let roadmap become stale (quarterly reviews prevent this)
+- Create too many themes (2-4 active themes is ideal)
+- Use roadmap as a rigid schedule (themes, not deadlines)
+- Duplicate backlog content in roadmap (different levels of detail)
+
+### Roadmap Anti-Patterns
+
+- **The Wishlist**: Every idea goes in roadmap → Loses strategic focus
+- **The Commitment**: Roadmap treated as promises → Can't adapt to learnings
+- **The Duplicate Backlog**: Listing all work items → Loses strategic view
+- **The Stale Document**: Never updated → Becomes irrelevant
+
+---
+
 ## Documentation Standards
 
 ### Core Documentation Files

@@ -56,6 +56,7 @@ Standard user projects typically create a single-project repository and follow t
 │   ├── README.md                    # REQUIRED - Documentation index
 │   │
 │   └── [OPTIONAL SUBFOLDERS - Create as needed]
+│       ├── project/                 # OPTIONAL - Project planning (roadmap)
 │       ├── patterns/                # OPTIONAL - Project-specific patterns
 │       ├── process/                 # OPTIONAL - Project-specific processes
 │       ├── collaboration/           # OPTIONAL - Project-specific AI guides
