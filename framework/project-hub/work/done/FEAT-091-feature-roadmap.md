@@ -4,7 +4,9 @@
 **Type:** Feature
 **Priority:** Medium
 **Version Impact:** MINOR
+**Status:** Done
 **Created:** 2026-01-27
+**Completed:** 2026-01-27
 
 ---
 
@@ -190,12 +192,12 @@ Projects currently lack:
 
 ## Acceptance Criteria
 
-- [ ] Roadmap structure and format defined
-- [ ] ROADMAP.md template created in framework/templates/
-- [ ] Roadmap documentation added to workflow-guide.md
-- [ ] Framework project adopts roadmap structure (dogfooding)
-- [ ] Roadmap synced to templates/starter/
-- [ ] Clear guidance on roadmap vs backlog distinction
+- [x] Roadmap structure and format defined
+- [x] ROADMAP.md template created in framework/templates/
+- [x] Roadmap documentation added to workflow-guide.md
+- [x] Framework project adopts roadmap structure (dogfooding)
+- [x] Roadmap synced to templates/starter/
+- [x] Clear guidance on roadmap vs backlog distinction
 
 ---
 
