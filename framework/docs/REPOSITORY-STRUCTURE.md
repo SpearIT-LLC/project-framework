@@ -39,8 +39,11 @@ project-framework/                    # REPOSITORY (not a project)
 ├── framework/                        # PROJECT (follows Standard Framework structure)
 │   └── [See PROJECT-STRUCTURE-STANDARD.md]
 │
-└── examples/hello-world/              # PROJECT (follows Standard Framework structure)
-    └── [See PROJECT-STRUCTURE-STANDARD.md]
+├── templates/                        # Template packages for new projects
+│   └── starter/                     # Complete project scaffolding with framework
+│
+└── tools/                            # Build and setup scripts
+    └── Build-FrameworkArchive.ps1   # Creates distribution archive
 ```
 
 ---
@@ -108,21 +111,19 @@ project-framework/                    # REPOSITORY (not a project)
 **Working on the framework itself?**
 → Read [framework/CLAUDE.md](framework/CLAUDE.md)
 
-**Working on hello-world sample?**
-→ Read [examples/hello-world/CLAUDE.md](examples/hello-world/CLAUDE.md)
-
-**Not sure which project?**
-→ Ask the user which project you're working on
+**Working on templates?**
+→ Work in [templates/](templates/)
 
 ---
 
 ## Repository Structure
 
-This repository contains multiple projects:
+This repository contains:
 - `framework/` - The framework itself (reusable, universal)
-- `examples/hello-world/` - Sample project (validation/reference)
+- `templates/` - Template packages for new projects
+- `tools/` - Build scripts for distribution
 
-Each project is self-contained and follows the Standard Framework structure.
+The framework project follows the Standard Framework structure.
 
 ---
 
@@ -217,7 +218,7 @@ These files live **inside each project**, not at repository root:
 
 ## Multi-Project Repository vs Single Project
 
-### This Repository (Multi-Project)
+### This Repository
 
 ```
 project-framework/           # Repository root (minimal)
@@ -226,8 +227,9 @@ project-framework/           # Repository root (minimal)
 ├── CLAUDE.md               # AI navigation
 ├── LICENSE
 ├── .gitignore
-├── framework/              # Project 1 (complete)
-└── examples/hello-world/    # Project 2 (complete)
+├── framework/              # The framework (complete project)
+├── templates/              # Template packages
+└── tools/                  # Build scripts
 ```
 
 ### User Projects (Single Project)
@@ -271,8 +273,8 @@ To verify repository root matches this specification:
 - [ ] `.gitignore` contains security patterns
 
 **Structure validation:**
-- [ ] Project folders exist (framework/, examples/hello-world/)
-- [ ] Each project folder follows appropriate PROJECT-STRUCTURE-*.md
+- [ ] Project folders exist (framework/, templates/, tools/)
+- [ ] framework/ follows PROJECT-STRUCTURE-STANDARD.md
 - [ ] No project-specific files at root (PROJECT-STATUS.md, CHANGELOG.md, INDEX.md)
 
 ---
@@ -282,8 +284,8 @@ To verify repository root matches this specification:
 **When creating repository:**
 1. Initialize git repository
 2. Create all REQUIRED root files (5 files)
-3. Create project folders (framework/, examples/hello-world/)
-4. Populate each project following PROJECT-STRUCTURE-STANDARD.md
+3. Create project folders (framework/, templates/, tools/)
+4. Populate framework/ following PROJECT-STRUCTURE-STANDARD.md
 5. Commit: `git commit -m "Initial repository setup"`
 
 **Migration (FEAT-026):**

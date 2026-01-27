@@ -31,10 +31,10 @@ Remove the `examples/` folder from the repository. With the new framework-as-dep
 
 ## Implementation
 
-- [ ] Remove `examples/` folder entirely
-- [ ] Update any references to examples/ in documentation
-- [ ] Update CLAUDE.md if it mentions examples/
-- [ ] Update framework.yaml if it references examples/
+- [x] Remove `examples/` folder entirely
+- [x] Update any references to examples/ in documentation
+- [x] Update CLAUDE.md if it mentions examples/
+- [x] Update framework.yaml if it references examples/ (no references found)
 
 ---
 
@@ -59,5 +59,20 @@ Remove the `examples/` folder from the repository. With the new framework-as-dep
 
 ---
 
+## Files Modified
+
+- `CLAUDE.md` - Updated repository structure, removed examples references
+- `README.md` - Updated references
+- `QUICK-START.md` - Updated references
+- `framework/README.md` - Updated references
+- `framework/docs/REPOSITORY-STRUCTURE.md` - Updated structure and references
+- `framework/CHANGELOG.md` - Added to Unreleased
+
+## Files Removed
+
+- `examples/hello-world/` - Entire directory (21 files)
+
+---
+
 **Last Updated:** 2026-01-26
-**Status:** Backlog
+**Status:** Done

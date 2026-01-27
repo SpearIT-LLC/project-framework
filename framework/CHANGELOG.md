@@ -13,6 +13,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Removed
+- **TECH-085: Remove examples/ folder**
+  - `examples/hello-world/` folder removed - redundant with framework-as-dependency model
+  - Starter template (`templates/starter/`) now serves as the reference
+  - Updated documentation references (CLAUDE.md, README.md, QUICK-START.md, etc.)
+
 ### Fixed
 - **TECH-086: Align POC folder location with ADR-004**
   - Moved `poc/` from project root to `project-hub/poc/` per ADR-004 decision

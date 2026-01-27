@@ -406,10 +406,33 @@ Discovered documentation inconsistency: PROJECT-STRUCTURE-STANDARD.md showed `po
 
 ---
 
+### TECH-085: Remove examples/ Folder
+
+Removed `examples/hello-world/` folder - redundant with framework-as-dependency model.
+
+**Rationale:**
+- `templates/starter/` IS the reference - it's exactly what users get
+- Every project created from the archive IS an example
+- Less maintenance overhead
+
+**Files Removed:**
+- `examples/hello-world/` - 21 files
+
+**Files Modified:**
+- `CLAUDE.md` - Updated repository structure
+- `README.md` - Removed examples references
+- `QUICK-START.md` - Updated to reference starter template
+- `framework/README.md` - Updated references
+- `framework/docs/REPOSITORY-STRUCTURE.md` - Updated structure
+- `framework/CHANGELOG.md` - Added to Unreleased
+
+---
+
 ## Current State (Updated)
 
 ### In done/ (awaiting release)
 - TECH-084: Rename thoughts/ to project-hub/
+- TECH-085: Remove examples/ folder
 - TECH-086: Align POC folder location with ADR-004
 - DECISION-050: Framework Distribution Model (+ 2 supporting docs)
 

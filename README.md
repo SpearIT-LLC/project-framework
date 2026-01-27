@@ -13,8 +13,8 @@ The **SpearIT Project Framework** is a comprehensive, multi-level project manage
 
 This repository contains:
 - **framework/** - The Standard Project Framework implementation and documentation
-- **examples/hello-world/** - Reference implementation demonstrating framework usage
-- **templates/** - Template packages for new projects (Minimal, Light, Standard levels)
+- **templates/** - Template packages for new projects
+- **tools/** - Build and setup scripts for distribution
 
 **Key Innovation:** This framework scales from single scripts to full applications using a 3-level system (Minimal, Light, Standard) that adapts to your project's scope, lifespan, and team size.
 
@@ -24,7 +24,7 @@ This repository contains:
 
 **Want the fastest path?** See [QUICK-START.md](QUICK-START.md) for a bare-bones, get-functional guide. ⚡
 
-**See the framework in action:** Check out [examples/hello-world/](examples/hello-world/) for a complete reference implementation.
+**Create a new project:** Use `tools/Build-FrameworkArchive.ps1` to create a distribution, then run `Setup-Project.ps1` to scaffold a new project.
 
 ### For New Projects
 
@@ -126,9 +126,6 @@ Clear migration guides for moving between framework levels as your project evolv
 - **[framework/INDEX.md](framework/INDEX.md)** - Complete documentation index
 - [UPGRADE-PATH.md](templates/UPGRADE-PATH.md) - Migration between levels
 - [STRUCTURE.md](templates/STRUCTURE.md) - Template structure reference
-
-### Reference Implementation
-- **[examples/hello-world/](examples/hello-world/)** - Complete working example of Standard framework
 
 ### Template Package
 - [templates/](templates/) - Complete template package
@@ -310,7 +307,7 @@ See [LICENSE](LICENSE) file for details.
 2. **Example** - Real-world example of framework usage
 3. **Improvement** - Surfaces pain points and areas for enhancement
 
-Check [framework/project-hub/](framework/project-hub/) to see the framework in action on itself, or [examples/hello-world/](examples/hello-world/) for a simpler reference implementation.
+Check [framework/project-hub/](framework/project-hub/) to see the framework in action on itself, or use the starter template ([templates/starter/](templates/starter/)) to create a new project.
 
 ---
 

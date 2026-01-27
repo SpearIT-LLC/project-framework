@@ -1,7 +1,0 @@
-# framework.yaml
-# Project configuration for AI assistants and tooling
-
-project:
-  name: "Hello World"
-  type: application
-  deliverable: code

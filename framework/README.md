@@ -96,8 +96,8 @@ See [../README.md](../README.md) for repository structure and getting started.
 2. Choose your framework level (Minimal, Light, or Standard)
 3. Follow [../templates/NEW-PROJECT-CHECKLIST.md](../templates/NEW-PROJECT-CHECKLIST.md)
 
-**For Reference Implementation:**
-See [../examples/hello-world/](../examples/hello-world/) for a complete Standard framework example.
+**To Create a New Project:**
+Use `../tools/Build-FrameworkArchive.ps1` to create a distribution, then run `Setup-Project.ps1` to scaffold a new project.
 
 ---
 

@@ -5,7 +5,7 @@
 
 **Version:** 3.0.0 | **Last Updated:** 2026-01-07
 
-**See It In Action:** Check out [examples/hello-world/](examples/hello-world/) for a complete working example.
+**See It In Action:** Use `tools/Build-FrameworkArchive.ps1` to create a distribution, then `Setup-Project.ps1` to scaffold a new project.
 
 ---
 
@@ -65,7 +65,7 @@ cp -r /path/to/framework/templates/standard/.gitignore .
 4. Code and update CHANGELOG.md as you go
 
 ### Standard
-1. Review the example: [examples/hello-world/](examples/hello-world/)
+1. Review the starter template: [templates/starter/](templates/starter/)
 2. Complete research phase (use templates from `framework/templates/research/`)
 3. Plan features in `project-hub/work/backlog/`
 4. Move features to `work/todo/` → `work/doing/` → `work/done/`
@@ -188,7 +188,7 @@ When working with AI assistants, framework commands (`/fw-*`) provide shortcuts 
 | What You Need | Document | Time to Read |
 |--------------|----------|--------------|
 | Full overview | [README.md](README.md) | 10 min |
-| Working example | [examples/hello-world/](examples/hello-world/) | 5 min |
+| Starter template | [templates/starter/](templates/starter/) | 5 min |
 | Choose framework level | [README-TEMPLATE-SELECTION.md](templates/README-TEMPLATE-SELECTION.md) | 5 min |
 | Setup instructions | [NEW-PROJECT-CHECKLIST.md](templates/NEW-PROJECT-CHECKLIST.md) | 15 min |
 | Current version/status | [framework/PROJECT-STATUS.md](framework/PROJECT-STATUS.md) | 2 min |
@@ -241,7 +241,7 @@ DAILY WORK:
 
 ## 11. Getting Help
 
-- **See working example:** [examples/hello-world/](examples/hello-world/)
+- **See starter template:** [templates/starter/](templates/starter/)
 - **Framework structure questions:** [STRUCTURE.md](templates/STRUCTURE.md)
 - **Workflow questions:** [workflow-guide.md](framework/docs/collaboration/workflow-guide.md)
 - **Complete doc index:** [framework/INDEX.md](framework/INDEX.md)

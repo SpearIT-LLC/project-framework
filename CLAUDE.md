@@ -34,13 +34,11 @@ Use these values to understand project context rather than inferring from struct
 
 ## Repository Structure
 
-This repository contains multiple related projects:
-
 ```
 project-framework/
 ├── framework/                   # The Standard Project Framework itself
-├── examples/hello-world/        # Reference implementation (example project)
-├── templates/           # Template packages for new projects
+├── templates/                   # Template packages for new projects
+├── tools/                       # Build and setup scripts
 ├── README.md                    # Repository overview and getting started
 ├── QUICK-START.md              # Quick reference guide
 └── CLAUDE.md                   # This file - Repository navigation
@@ -55,17 +53,11 @@ project-framework/
 **Read:** [framework/CLAUDE.md](framework/CLAUDE.md)
 
 The framework project contains:
-- Process documentation ([framework/process/](framework/process/))
-- Collaboration guides ([framework/collaboration/](framework/collaboration/))
+- Process documentation ([framework/docs/process/](framework/docs/process/))
+- Collaboration guides ([framework/docs/collaboration/](framework/docs/collaboration/))
 - Templates ([framework/templates/](framework/templates/))
-- Patterns ([framework/patterns/](framework/patterns/))
+- Patterns ([framework/docs/patterns/](framework/docs/patterns/))
 - Framework work items and history ([framework/project-hub/](framework/project-hub/))
-
-### Working on the Hello World Example?
-
-**Read:** [examples/hello-world/CLAUDE.md](examples/hello-world/CLAUDE.md)
-
-The hello-world project is a reference implementation showing how to use the framework.
 
 ### Working on Template Packages?
 
@@ -80,42 +72,20 @@ This folder contains the `starter/` template for creating new projects. The temp
 ### Understanding the Separation
 
 - **framework/** = The framework documentation, process, templates, and tracking
-- **examples/hello-world/** = An example project that uses the framework
 - **templates/** = Packages for bootstrapping new projects
+- **tools/** = Build scripts for creating distribution archives
 
 ### Where Do Changes Go?
 
 - **Framework improvements** → Work in [framework/](framework/)
-- **Example updates** → Work in [examples/hello-world/](examples/hello-world/)
 - **Template updates** → Work in [templates/](templates/)
+- **Build tooling** → Work in [tools/](tools/)
 
 ### Work Item Tracking
 
-Each project has its own project-hub/ structure:
-
-- Framework work items: [framework/project-hub/work/](framework/project-hub/work/)
-- Hello-world work items: [examples/hello-world/project-hub/work/](examples/hello-world/project-hub/work/)
+Framework work items: [framework/project-hub/work/](framework/project-hub/work/)
 
 **Current active work:** Always check `framework/project-hub/work/doing/` for in-progress framework improvements.
-
-### Context Switching (Important!)
-
-**Work items must be created in the correct project:**
-- Issues about the framework itself → `framework/project-hub/work/`
-- Issues about the hello-world example → `examples/hello-world/project-hub/work/`
-- Issues about template packages → `templates/project-hub/work/`
-
-**To switch project context:**
-1. User explicitly states which project (e.g., "switch to examples/hello-world")
-2. AI reads that project's CLAUDE.md and understands context
-3. All subsequent work items go in that project's project-hub/work/ folder
-
-**When referencing work items:**
-- Work item location implies project context
-- "Work on FEAT-039" → Check where FEAT-039 exists → Use that project's context
-- Cross-project references should be explicit: "Create a work item in hello-world for X"
-
-**Note:** A more robust solution using project-config.yaml files is being designed in [framework/project-hub/work/backlog/FEAT-037-project-config-file.md](framework/project-hub/work/backlog/FEAT-037-project-config-file.md). This interim guidance will be superseded when that feature is implemented.
 
 ---
 
@@ -137,7 +107,7 @@ Each project has its own project-hub/ structure:
 
 ---
 
-**Remember:** This repository contains multiple projects. Always identify which project you're working on before making changes.
+**Remember:** This repository is the framework source. Use `templates/starter/` to create new projects via the distribution archive.
 
 ---
 
