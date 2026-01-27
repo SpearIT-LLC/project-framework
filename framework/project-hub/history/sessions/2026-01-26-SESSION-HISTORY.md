@@ -428,6 +428,29 @@ Removed `examples/hello-world/` folder - redundant with framework-as-dependency 
 
 ---
 
+## Session 7: Size-Based Template Cleanup
+
+### Removed Obsolete Template Folders
+
+Discovered that `templates/light/`, `templates/minimal/`, and `templates/standard/` still existed despite CHANGELOG v4.0.0 claiming they were removed. These folders were untracked by git (not committed).
+
+**Resolution:** Removed the obsolete folders and updated README.md to reference only the starter template.
+
+**Rationale:**
+- Framework-as-dependency model (DECISION-050) makes size-based templates obsolete
+- `templates/starter/` IS the standard template - it includes framework documentation
+- Users choose framework level by what they keep/remove, not by which template they copy
+
+**Files Removed:**
+- `templates/light/` - Entire folder (untracked)
+- `templates/minimal/` - Entire folder (untracked)
+- `templates/standard/` - Entire folder (untracked)
+
+**Files Modified:**
+- `README.md` - Updated Template Package section to reference only starter template
+
+---
+
 ## Current State (Updated)
 
 ### In done/ (awaiting release)

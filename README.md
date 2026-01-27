@@ -128,10 +128,7 @@ Clear migration guides for moving between framework levels as your project evolv
 - [STRUCTURE.md](templates/STRUCTURE.md) - Template structure reference
 
 ### Template Package
-- [templates/](templates/) - Complete template package
-- [minimal/](templates/minimal/) - Minimal framework templates
-- [light/](templates/light/) - Light framework templates
-- [standard/](templates/standard/) - Standard framework templates
+- [templates/starter/](templates/starter/) - Complete project scaffolding with framework included
 
 ---
 
