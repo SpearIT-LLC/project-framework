@@ -100,7 +100,7 @@ Complete setup automation achieved. Users can now bootstrap a new project with z
 **Why This Matters:** Workflow policies should be mechanically enforced, not just documented. Prevents inconsistent work item state. Planning periods should have structured completion and archival processes.
 
 **Key Initiatives:**
-- TECH-093: fw-move enforcement (validate transitions with hooks)
+- TECH-094: fw-move enforcement (validate transitions with hooks)
 - FEAT-093: Planning period archival (retrospectives and historical organization)
 - FEAT-030: Hold folder (for blocked work items)
 - FEAT-021: Hierarchical work item numbering

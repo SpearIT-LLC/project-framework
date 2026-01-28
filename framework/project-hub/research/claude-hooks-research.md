@@ -2,7 +2,7 @@
 
 **Date:** 2026-01-27
 **Purpose:** Evaluate Claude hooks for enforcing workflow policies in fw-move
-**Related:** TECH-093 (fw-move enforcement)
+**Related:** TECH-094 (fw-move enforcement)
 
 ---
 

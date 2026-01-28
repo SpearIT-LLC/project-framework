@@ -269,6 +269,7 @@ This policy ensures:
 ---
 
 ## Project Classification & Framework Selection
+<NOTE: This section needs rework. We no longer have 3 framework levels.>
 
 Before starting any project, determine the appropriate framework level based on these three dimensions:
 

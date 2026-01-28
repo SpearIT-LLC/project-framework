@@ -9,7 +9,7 @@
 
 ## Summary
 
-Five-session day covering setup improvements (TECH-081, TECH-087), strategic planning infrastructure (FEAT-091 roadmap), workflow enforcement research (TECH-093), and detailed sprint/planning design. Completed Q1 2026 theme (Distribution & Setup Excellence), designed flexible sprint system with strategic initiatives and lifecycle states (FEAT-092), created planning period archival infrastructure (FEAT-093), and deferred project-hub relocation decision to avoid scope creep. Fixed linter warning and organized Q2 roadmap with 4 themes.
+Five-session day covering setup improvements (TECH-081, TECH-087), strategic planning infrastructure (FEAT-091 roadmap), workflow enforcement research (TECH-094), and detailed sprint/planning design. Completed Q1 2026 theme (Distribution & Setup Excellence), designed flexible sprint system with strategic initiatives and lifecycle states (FEAT-092), created planning period archival infrastructure (FEAT-093), and deferred project-hub relocation decision to avoid scope creep. Fixed linter warning and organized Q2 roadmap with 4 themes.
 
 ---
 
@@ -278,7 +278,7 @@ User suggested sprint-based roadmap instead of quarterly themes:
 - (empty)
 
 ### In backlog/
-- TECH-093: fw-move enforcement (High priority)
+- TECH-094: fw-move enforcement (High priority)
 - FEAT-088: Framework Glossary
 - FEAT-089: Project Type Patterns
 - FEAT-090: Coding Strategy Patterns
@@ -328,7 +328,7 @@ Implemented project type selection during setup:
    - Added to configuration summary display
    - Error handling for missing/malformed schema
 
-### TECH-093: fw-move Enforcement - Created
+### TECH-094: fw-move Enforcement - Created
 
 Discovered workflow compliance issue: FEAT-091 was moved to done/ and committed BEFORE Status field was updated and acceptance criteria were checked.
 
@@ -358,7 +358,7 @@ Discovered workflow compliance issue: FEAT-091 was moved to done/ and committed 
 
 ### Files Created
 
-- `framework/project-hub/work/backlog/TECH-093-fw-move-enforcement.md`
+- `framework/project-hub/work/backlog/TECH-094-fw-move-enforcement.md`
 - `framework/project-hub/research/claude-hooks-research.md`
 
 ### Files Moved
@@ -368,7 +368,7 @@ Discovered workflow compliance issue: FEAT-091 was moved to done/ and committed 
 ### Commits
 
 - `e42306a` - chore: Move TECH-087 to todo, fix FEAT-091 completion metadata
-- `8707c21` - feat: Create TECH-093 for fw-move enforcement with hooks research
+- `8707c21` - feat: Create TECH-094 for fw-move enforcement with hooks research
 
 ---
 
@@ -566,7 +566,7 @@ The actual need was **internal reorganization** (active planning vs archive, sep
 ## Next Steps
 
 - 7 work items ready for release in done/
-- TECH-093 (fw-move enforcement) in backlog - high priority for process reliability
+- TECH-094 (fw-move enforcement) in backlog - high priority for process reliability
 - FEAT-093 (planning period archival) in backlog - enables structured retrospectives
 - FEAT-092 (sprint support) in backlog - design captured, ready for implementation
 - FEAT-088 and TECH-061 in todo/ - Q2 AI Integration & Clarity theme
