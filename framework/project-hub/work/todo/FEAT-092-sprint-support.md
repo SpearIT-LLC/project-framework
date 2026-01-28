@@ -265,7 +265,7 @@ All three could be optional fields that teams can use if valuable:
 
 **Option A: Metadata in Work Items**
 ```markdown
-**Sprint:** Sprint 3 (2026-02-10 to 2026-02-23)
+**Planning Period:** Sprint 3 (2026-02-10 to 2026-02-23)
 ```
 - Pros: Work items stay in kanban folders, no structure change
 - Cons: Duration duplicated across work items (not DRY)
@@ -294,12 +294,14 @@ project-hub/
 
 **4. Sprint Metadata Single Source of Truth**
 
-Problem: If work items say `**Sprint:** Sprint 3 (2026-02-10 to 2026-02-23)`, dates are duplicated.
+Problem: If work items say `**Planning Period:** Sprint 3 (2026-02-10 to 2026-02-23)`, dates are duplicated.
 
 **Proposed Solution:**
-- Work items: `**Sprint:** Sprint 3` (name only)
+- Work items: `**Planning Period:** Sprint 3` (name only)
 - Roadmap: Sprint 3 definition with dates
-- Tool resolves sprint name to dates from roadmap
+- Tool resolves planning period name to dates from roadmap
+
+*Note: Uses standardized `planning_period` field (FEAT-095) rather than sprint-specific field.*
 
 **5. Framework Skills**
 
@@ -348,11 +350,14 @@ Problem: If work items say `**Sprint:** Sprint 3 (2026-02-10 to 2026-02-23)`, da
 
 ### Work Item Sprint Metadata
 
+**Terminology Note (2026-01-28):**
+Use standardized `planning_period` field instead of `Sprint:` for consistency across all planning styles (sprints, quarters, milestones, phases). See FEAT-095 for terminology standardization details.
+
 ```markdown
 **ID:** FEAT-088
 **Type:** Feature
 **Priority:** High
-**Sprint:** Sprint 1
+**Planning Period:** Sprint 1
 **Theme:** Developer Guidance & Patterns
 ```
 
@@ -438,7 +443,7 @@ Problem: If work items say `**Sprint:** Sprint 3 (2026-02-10 to 2026-02-23)`, da
 - [ ] Retrospective workflow documented
 - [ ] `/fw-sprint-planning` skill created
 - [ ] `/fw-retrospective` skill created
-- [ ] Work item templates updated with optional Sprint field
+- [ ] Work item templates updated with optional Planning Period field
 - [ ] Roadmap template updated with sprint example
 - [ ] Documentation covers when to use sprints (and when not to)
 
@@ -472,6 +477,12 @@ Problem: If work items say `**Sprint:** Sprint 3 (2026-02-10 to 2026-02-23)`, da
 - Sprint dates and assignments live in roadmap
 - Work items reference sprint by name only
 - Eliminates duplication while maintaining clarity
+
+**Terminology Alignment (2026-01-28):**
+- Uses standardized `planning_period` metadata field (not sprint-specific field)
+- Aligns with broader framework support for quarters, milestones, phases (FEAT-095)
+- Sprint is one type of planning period; field name supports all types
+- See FEAT-095 for complete planning period terminology documentation
 
 **When to Use Sprints:**
 - Team wants predictable delivery cadence
