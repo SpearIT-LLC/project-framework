@@ -43,16 +43,19 @@ None - this is a proactive cleanup task.
 
 ### Functional Requirements
 
-- [ ] Audit both files for overlapping content
-- [ ] Identify any conflicting guidance
-- [ ] Define clear responsibility for each file
-- [ ] Remove duplication (keep content in one authoritative location)
-- [ ] Add cross-references where appropriate
+- [x] Audit both files for overlapping content
+- [x] Identify any conflicting guidance
+- [x] Define clear responsibility for each file
+- [x] Remove duplication (keep content in one authoritative location)
+- [x] Add cross-references where appropriate
 
 ### Non-Functional Requirements
 
-- [ ] Compatibility: No behavior change, just cleaner organization
-- [ ] Documentation: Both files should be self-explanatory about their purpose
+- [x] Compatibility: No behavior change, just cleaner organization
+- [x] Documentation: Both files should be self-explanatory about their purpose
+
+**Status:** Done
+**Completed:** 2026-01-28
 
 ---
 
