@@ -154,6 +154,7 @@ This index provides quick navigation to all documentation for the SpearIT Projec
   - [troubleshooting-guide.md](project-hub/project/collaboration/troubleshooting-guide.md) - Troubleshooting (697 lines)
 
 #### Reference Documentation
+- [docs/ref/GLOSSARY.md](docs/ref/GLOSSARY.md) - Framework terminology definitions
 - [project-hub/project/reference/](project-hub/project/reference/) - Framework reference docs *(to be populated)*
 
 #### Research & Decisions

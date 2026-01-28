@@ -13,6 +13,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- **FEAT-088: Framework Glossary**
+  - Created GLOSSARY.md in framework/docs/ref/ defining framework terminology
+  - 30 terms defined with cross-references to detailed documentation
+  - Linked from QUICK-START.md Section 11 (Getting Help)
+  - Added to framework/INDEX.md reference documentation section
+  - Synced to templates/starter/ for distribution
+  - Single source of truth for term definitions
+
 ### Removed
 - **TECH-085: Remove examples/ folder**
   - `examples/hello-world/` folder removed - redundant with framework-as-dependency model

@@ -241,6 +241,7 @@ DAILY WORK:
 
 ## 11. Getting Help
 
+- **Framework terminology:** [GLOSSARY.md](framework/docs/ref/GLOSSARY.md)
 - **See starter template:** [templates/starter/](templates/starter/)
 - **Framework structure questions:** [STRUCTURE.md](templates/STRUCTURE.md)
 - **Workflow questions:** [workflow-guide.md](framework/docs/collaboration/workflow-guide.md)
