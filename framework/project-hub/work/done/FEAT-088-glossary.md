@@ -139,12 +139,15 @@ See: [Workflow Guide](../collaboration/workflow-guide.md)
 
 ## Acceptance Criteria
 
-- [ ] GLOSSARY.md created in framework/docs/ref/
-- [ ] Minimum 20 terms defined with cross-references
-- [ ] Linked from QUICK-START.md Section 11
-- [ ] Added to framework/INDEX.md
-- [ ] Synced to templates/starter/ for distribution
-- [ ] Documentation updated in CHANGELOG.md
+- [x] GLOSSARY.md created in framework/docs/ref/
+- [x] Minimum 20 terms defined with cross-references (30 terms delivered)
+- [x] Linked from QUICK-START.md Section 11
+- [x] Added to framework/INDEX.md
+- [x] Synced to templates/starter/ for distribution
+- [x] Documentation updated in CHANGELOG.md
+
+**Status:** Done
+**Completed:** 2026-01-28
 
 ---
 
