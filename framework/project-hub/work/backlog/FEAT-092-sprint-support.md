@@ -144,6 +144,123 @@ Sprints are defined in ROADMAP.md, not separate files. Archive uses FEAT-093 inf
 
 ---
 
+### Optional Sprint Fields (Open Question)
+
+**Question:** Should sprints support optional success criteria and demo plans?
+
+**Context:** Sprints define strategic initiatives (goals), but don't yet specify how to measure or demonstrate success.
+
+**Option 1: Success Criteria**
+
+Sprint-level success criteria (more tactical than roadmap metrics):
+
+```markdown
+**Success Criteria:**
+- Framework glossary published with 20+ key terms
+- CLAUDE.md reduced to under 100 lines
+- All committed work items have passing acceptance criteria
+```
+
+**Pros:**
+- Clear definition of success
+- Measurable outcomes
+- Retrospective can measure against criteria
+
+**Cons:**
+- Could feel rigid for informal sprints
+- May duplicate work item acceptance criteria
+- Not all goals are easily measurable
+
+**Option 2: Demo Plan**
+
+How to show the work (common in Scrum sprint reviews):
+
+```markdown
+**Demo Plan:**
+- Show before/after of CLAUDE.md (length reduction)
+- Walk through glossary and how it resolves term confusion
+- Demonstrate AI using glossary to answer framework questions
+```
+
+**Pros:**
+- Focuses on demonstrable value
+- Good preparation for sprint reviews
+- Shows impact, not just completion
+
+**Cons:**
+- Not all work is "demo-able" (refactoring, tech debt)
+- May feel like overhead for solo developers
+- Requires effort to prepare demos
+
+**Option 3: Definition of Done**
+
+Sprint-level completion checklist:
+
+```markdown
+**Sprint Complete When:**
+- [ ] All committed work items in done/
+- [ ] All acceptance criteria passing
+- [ ] Documentation updated
+- [ ] No broken tests
+- [ ] Session history updated
+```
+
+**Pros:**
+- Clear checklist for completion
+- Works for any sprint type
+- Easy to verify
+
+**Cons:**
+- Generic (doesn't capture sprint-specific goals)
+- May duplicate work item-level DoD
+- Could be overly prescriptive
+
+**Recommended Approach: Make All Optional**
+
+All three could be optional fields that teams can use if valuable:
+
+**Sprint MVP (Required):**
+- Strategic initiatives
+- Committed work items (when Active)
+
+**Optional (Recommended):**
+- Success criteria (how we measure success)
+- Demo plan (how we show value - for sprint reviews)
+- Definition of Done (completion checklist)
+- Notes (risks, dependencies, noteworthy items)
+
+**Example with optional fields:**
+
+```markdown
+## Sprint 3 - ACTIVE
+
+**Strategic Initiatives:**
+- Reduce AI cognitive load when reading framework docs
+- Establish shared terminology for framework concepts
+
+**Success Criteria:**
+- CLAUDE.md under 100 lines
+- Glossary with 20+ terms published
+- AI correctly applies glossary terms in responses
+
+**Committed Work Items:**
+- FEAT-088: Framework glossary (doing)
+- TECH-061: CLAUDE.md optimization (todo)
+
+**Demo Plan:**
+- Before/after: CLAUDE.md complexity reduction
+- Walkthrough: How glossary resolves term confusion
+- Live demo: AI using glossary to explain framework
+
+**Notes:**
+- TECH-061 depends on FEAT-088 completion
+- May need to break CLAUDE.md work into phases
+```
+
+**Decision Deferred:** Finalize during implementation based on user feedback and usage patterns.
+
+---
+
 ### Organization: Metadata vs Folders
 
 **Option A: Metadata in Work Items**
