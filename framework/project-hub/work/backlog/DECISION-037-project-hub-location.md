@@ -5,12 +5,15 @@
 **Priority:** Low
 **Version Impact:** MAJOR (if moved to root)
 **Created:** 2026-01-27
+**Status:** Deferred
 
 ---
 
 ## Summary
 
-Decide whether project-hub/ should remain at `framework/project-hub/` or move to repository root as `project-hub/`.
+Decide whether project-hub/ should move to repository root as `project-hub/` or remain at `framework/project-hub/`.
+
+**Current Status:** Decision deferred. Would expand scope of current work (FEAT-093). Revisit after internal reorganization is complete.
 
 ---
 
@@ -106,32 +109,39 @@ During roadmap planning session, considered two organizational models:
 
 ---
 
-## Recommendation
+## Decision Status
 
-**Recommended:** Keep project-hub at `framework/project-hub/` (Option A - current)
+**Status:** DEFERRED
 
-**Reasoning:**
+**Reason for Deferral:**
 
-1. **Dogfooding principle:** Framework should use its own structure. Moving project-hub out would break this.
+During roadmap planning session (2026-01-27), discussed moving project-hub/ to root as part of reorganization work. However, this would significantly expand the scope of FEAT-093 (planning period archival), which is already a substantial change.
 
-2. **YAGNI:** No concrete problem is solved by moving to root. The actual issues (roadmap growth, archival) are solved by FEAT-093's internal reorganization.
+**Why defer:**
+1. **Scope creep:** FEAT-093 is reorganizing project-hub internally (project/, history/archive/). Adding a move to root would combine two major changes.
+2. **Focus:** Internal reorganization solves the immediate pain point (roadmap growth, archival). Location relative to repo root is a separate concern.
+3. **Testing:** Better to complete internal reorganization first, validate it works, then consider relocation.
+4. **Breaking change:** Moving to root is a breaking change for users. Should be its own deliberate decision, not bundled with other work.
 
-3. **Cost vs benefit:** Breaking change with widespread impact, unclear benefit.
-
-4. **Single project:** This repository has one main project (framework). templates/ and tools/ are supporting artifacts, not independent projects.
-
-5. **FEAT-093 is sufficient:** Internal reorganization provides the structure needed without the breaking change.
+**When to revisit:**
+- After FEAT-093 is implemented and stable
+- When internal reorganization is proven to work
+- If new evidence emerges that root location solves specific problems
 
 ---
 
-## If Decision Changes Later
+## When Revisiting This Decision
 
-**Triggers to reconsider:**
+**Prerequisites for decision:**
+- FEAT-093 implemented and in use for 1-2 quarters
+- Clear understanding of whether root location solves problems
+
+**Triggers to favor moving to root:**
 - Repository becomes true multi-project monorepo
 - Multiple independent projects need shared project management
-- Clear evidence that current location causes problems
+- Evidence that current location causes problems
 
-**Migration path if needed:**
+**Migration path if decision is to move:**
 ```bash
 git mv framework/project-hub project-hub
 # Update all references in:
@@ -167,25 +177,53 @@ project-framework/
 
 ---
 
-## Decision Criteria
+## Evaluation Criteria (When Revisiting)
 
-Choose based on:
+When FEAT-093 is complete and we revisit this decision, evaluate:
 
-1. **Is framework dogfooding valuable?** (yes → keep in framework/)
-2. **Do multiple projects need coordination?** (no → keep in framework/)
-3. **Does current location cause problems?** (no → keep in framework/)
-4. **Does FEAT-093 solve the actual pain point?** (yes → keep in framework/)
+1. **Does internal reorganization solve all problems?**
+   - If yes → likely keep in framework/
+   - If no → identify what problems remain
 
-All criteria point to: **Keep project-hub in framework/**
+2. **Is framework dogfooding still valuable?**
+   - Does having project-hub in framework/ demonstrate framework usage?
+   - Or does it just create confusion?
+
+3. **Has repository become multi-project?**
+   - Are templates/, tools/, or other projects independent enough to need shared project management?
+   - If yes → consider root location
+
+4. **Does current location cause concrete problems?**
+   - Documentation confusion?
+   - Path references awkward?
+   - User complaints?
+
+5. **What's the cost/benefit of moving?**
+   - Breaking change impact
+   - Migration effort
+   - Actual benefit gained
+
+**Decision guideline:**
+- If internal reorganization solves all issues → keep in framework/
+- If root location solves concrete remaining problems → move to root
+- If unsure → defer again until evidence emerges
 
 ---
 
 ## Completion Criteria
 
-- [ ] Decision made and documented
+**For Deferral (current):**
+- [x] Deferral reason documented
+- [x] Context captured for future decision
+- [x] Related work item (FEAT-093) aware of deferral
+- [ ] Trigger conditions defined for revisiting
+
+**For Final Decision (when revisited):**
+- [ ] FEAT-093 complete and stable
+- [ ] Evaluation completed: does root location solve remaining problems?
+- [ ] Decision made: move or keep
 - [ ] If moving: Migration plan executed, all references updated
-- [ ] If keeping: Document rationale (this file)
-- [ ] Related work items (FEAT-093) aware of decision
+- [ ] If keeping: Final rationale documented
 
 ---
 
@@ -201,17 +239,28 @@ All criteria point to: **Keep project-hub in framework/**
 
 **Session context (2026-01-27):**
 
-During roadmap planning, discussed:
+During roadmap planning, discussed moving project-hub/ to root:
 > "We talked about moving project-hub/ to repo root but decided to defer. However, perhaps project-hub/project/ would be a better long term location for the roadmap. Then closed quarters/sprints/phases can move to project-hub/history/archive. This keeps project info together and frees repo-root/docs/ to be solution documentation."
 
-Key insight: The actual need was **internal reorganization of project-hub**, not moving it to root. FEAT-093 addresses this by:
+**Key insight:** The immediate need is **internal reorganization of project-hub**, not necessarily moving it to root. FEAT-093 addresses the immediate needs:
 - Creating project-hub/project/ for active planning (roadmap, etc.)
 - Creating project-hub/history/archive/ for completed periods
-- Keeping docs/ for technical/solution documentation
+- Separating project management from technical docs
 
-This achieves the goal (separation of active planning from history, and from technical docs) without the breaking change of moving project-hub to root.
+**Why deferral makes sense:**
+1. FEAT-093's internal reorganization is substantial work on its own
+2. Adding relocation to root would expand scope significantly
+3. Better to prove internal reorganization works first
+4. Moving to root can be evaluated independently later
+5. Not clear yet if root location provides benefits beyond internal reorganization
 
-**Deferral reason:** FEAT-093's internal reorganization solves the stated problem. Moving to root is a solution looking for a problem.
+**What needs to happen before deciding:**
+- Complete FEAT-093 implementation
+- Use the new structure for 1-2 quarters
+- Evaluate if root location would solve any remaining problems
+- Consider user impact of breaking change
+
+**Deferral reason:** Too much scope expansion during active feature work. Need to complete internal reorganization first, then evaluate if root location is still needed.
 
 ---
 
