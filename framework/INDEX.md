@@ -155,6 +155,7 @@ This index provides quick navigation to all documentation for the SpearIT Projec
 
 #### Reference Documentation
 - [docs/ref/GLOSSARY.md](docs/ref/GLOSSARY.md) - Framework terminology definitions
+- [docs/ref/framework-commands.md](docs/ref/framework-commands.md) - Framework command reference (/fw-* commands)
 - [project-hub/project/reference/](project-hub/project/reference/) - Framework reference docs *(to be populated)*
 
 #### Research & Decisions
