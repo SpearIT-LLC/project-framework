@@ -1,15 +1,15 @@
 # Session History: 2026-01-27
 
 **Date:** 2026-01-27
-**Participants:** Gary Elliott, Claude Code
-**Session Focus:** TECH-081 setup improvements, research insights analysis, FEAT-091 roadmap, TECH-087 implementation, TECH-093 workflow enforcement design
-**Role:** developer.iterate
+**Participants:** Gary Elliott, Claude Sonnet 4.5
+**Session Focus:** Setup improvements, research insights analysis, roadmap implementation, sprint design, Q1 completion, planning period archival
+**Role:** Production Developer
 
 ---
 
 ## Summary
 
-Completed TECH-081 setup process improvements, analyzed research insights from misc-thoughts-and-planning.md, created four new feature work items (FEAT-088 through FEAT-091), implemented FEAT-091 (Project Roadmap Structure), and TECH-087 (Project Type Selection). Also identified a workflow compliance gap and created TECH-093 to address it with three-layer enforcement (enhanced fw-move skill, work item transition tracking, pre-commit hooks). The session progressed from documentation improvements to strategic planning infrastructure to process reliability improvements.
+Five-session day covering setup improvements (TECH-081, TECH-087), strategic planning infrastructure (FEAT-091 roadmap), workflow enforcement research (TECH-093), and detailed sprint/planning design. Completed Q1 2026 theme (Distribution & Setup Excellence), designed flexible sprint system with strategic initiatives and lifecycle states (FEAT-092), created planning period archival infrastructure (FEAT-093), and deferred project-hub relocation decision to avoid scope creep. Fixed linter warning and organized Q2 roadmap with 4 themes.
 
 ---
 
@@ -372,12 +372,205 @@ Discovered workflow compliance issue: FEAT-091 was moved to done/ and committed 
 
 ---
 
+## Session 5: Roadmap Planning, Sprint Design, and Q1 Completion
+
+### Q1 2026 Theme Complete
+
+**Distribution & Setup Excellence - Achieved:**
+- All milestones completed (DECISION-050, TECH-081, TECH-085, TECH-086, TECH-087)
+- Success metrics met:
+  - Setup time under 5 minutes ✅
+  - Zero manual file editing required ✅
+  - Users understand project type implications ✅
+- Outcome: Users can now bootstrap projects with zero manual configuration
+
+### Roadmap Updates
+
+**Q2 2026 Planning:**
+- Removed FEAT-059 from roadmap (already released in v3.3.0)
+- Added FEAT-092 (Sprint support) to Developer Guidance & Patterns theme
+- Added FEAT-093 (Planning period archival) to new Workflow Enhancements theme
+- Elevated Workflow Enhancements from Q3+ to Q2 as dedicated theme
+
+**Roadmap Integrity Issue:**
+- Discovered FEAT-059 referenced on roadmap but already released
+- Established principle: roadmap should only reference existing work items or create placeholders
+- Prevents "ghost references" to completed/non-existent items
+
+### FEAT-092: Sprint Support - Design Decisions
+
+**Decision 1: Flexible Dates Model**
+
+Sprints use flexible dates to avoid rigidity while tracking reality:
+
+**During Planning (Draft):**
+- Planned duration (e.g., "2 weeks") - guidance, not enforced
+- Optional target start ("Early March" or "After FEAT-088 completes")
+- No hard dates required
+
+**When Activated:**
+- Actual start date (auto-recorded)
+- Expected end date (calculated, guidance only)
+
+**When Completed:**
+- Actual end date (auto-recorded)
+- Actual duration (calculated for retrospective metrics)
+
+**Rationale:** Structure without prescriptive deadlines. Dates become valuable retrospective data rather than enforcement mechanisms.
+
+**Decision 2: Strategic Initiatives**
+
+Sprints use plain-language strategic initiatives instead of requiring all work items upfront:
+- 1-3 bullet points describing goals
+- Work items can be existing or placeholders created during planning
+- Allows strategic planning without bureaucracy
+
+Example:
+```markdown
+**Strategic Initiatives:**
+- Reduce AI cognitive load when reading framework docs
+- Establish shared terminology for framework concepts
+- Improve consistency of policy application
+```
+
+**Decision 3: Sprint Lifecycle and Activation**
+
+Three states:
+1. **Draft:** Created with strategic initiatives, no work items required yet
+2. **Active:** At least 1 work item committed, sprint is current
+3. **Complete:** Ready for retrospective and archival
+
+**Activation rule:** Sprint moves Draft → Active when:
+- Planning ceremony is complete
+- At least 1 work item is committed
+- Team/user confirms "start sprint"
+
+**Rationale:** Prevents ghost sprints with no actual work while allowing flexible planning.
+
+**Decision 4: Roadmap Integration**
+
+- Sprints defined in ROADMAP.md, not separate files
+- Archive uses FEAT-093 infrastructure
+- Single source of truth
+
+**Optional Sprint Fields Discussion:**
+
+Added design discussion for three optional field types:
+1. **Success Criteria:** Measurable sprint-level outcomes
+2. **Demo Plan:** How to demonstrate value (for sprint reviews)
+3. **Definition of Done:** Sprint completion checklist
+
+**Recommendation:** Make all optional to support varying team needs (from informal solo to formal team sprints)
+
+**Decision Deferred:** Finalize during implementation based on user feedback
+
+### FEAT-093: Planning Period Archival System - Created
+
+**Problem Solved:**
+- ROADMAP.md grows indefinitely without archival strategy
+- No structured retrospective process
+- Active planning mixed with historical information
+
+**Solution Design:**
+
+**1. Reorganize project-hub structure:**
+```
+project-hub/
+├── project/              # NEW - Active planning
+│   └── ROADMAP.md        # Moved from docs/project/
+├── work/                 # Existing kanban
+├── history/
+│   ├── archive/          # NEW - Completed periods
+│   │   ├── sprint-01.md
+│   │   └── q1-2026.md
+│   ├── sessions/         # Existing
+│   └── decisions/        # Existing
+└── research/             # Existing
+```
+
+**Rationale:**
+- `project/` = Active planning and strategy
+- `history/archive/` = Completed planning periods with retrospectives
+- `docs/` = Technical/solution documentation (separated from project management)
+
+**2. Archival Workflow:**
+- `/fw-retrospective` skill generates completion report
+- User adds retrospective notes (what went well, improvements, lessons learned)
+- `/fw-archive` skill creates archive file combining plan + retrospective + metrics
+- Active roadmap stays lean and focused
+
+**3. Archive File Format:**
+- Completed period section from ROADMAP.md
+- Retrospective notes
+- Metrics (velocity, completion rate, actual vs planned)
+- Self-contained historical artifact
+
+**Flexibility:**
+- Works with any planning style (sprints, quarters, milestones)
+- FEAT-092 uses this archival infrastructure
+- Archive trigger: after retrospective (manual, not automatic)
+
+### DECISION-037: Project-Hub Location - Deferred
+
+**Question:** Should project-hub/ move to repository root or stay at framework/project-hub/?
+
+**Decision:** DEFERRED
+
+**Rationale:**
+1. Would expand scope of FEAT-093 (internal reorganization already substantial)
+2. Internal reorganization solves immediate pain point (archival, separation of concerns)
+3. Better to complete internal reorg first, then evaluate if root location is needed
+4. Moving to root is breaking change - should be its own deliberate decision
+
+**When to Revisit:**
+- After FEAT-093 implemented and stable (1-2 quarters)
+- If repository becomes multi-project monorepo
+- If evidence emerges that root location solves concrete problems
+
+**Key Insight:**
+The actual need was **internal reorganization** (active planning vs archive, separate from technical docs), not relocation to root. FEAT-093 addresses this without the breaking change.
+
+### Code Quality
+
+**Setup-Project.ps1 Linter Fix:**
+- Removed unused `$gitVersion` variable on line 276
+- Script only needs `$LASTEXITCODE` to check if git is available
+- VSCode PowerShell linter warning resolved
+
+### Files Modified (Session 5)
+
+- `docs/project/ROADMAP.md` - Marked Q1 complete, removed FEAT-059, added FEAT-092/093, elevated Workflow Enhancements theme
+- `framework/project-hub/work/backlog/FEAT-092-sprint-support.md` - Added design decisions and optional fields discussion
+- `templates/starter/Setup-Project.ps1` - Removed unused variable $gitVersion
+
+### Files Created (Session 5)
+
+- `framework/project-hub/work/backlog/FEAT-093-planning-period-archival.md` - Planning period archival system
+- `framework/project-hub/work/backlog/DECISION-037-project-hub-location.md` - Deferred decision on project-hub relocation
+
+### Files Moved (Session 5)
+
+- `FEAT-088-glossary.md` → backlog → todo (Prioritized for Q2)
+- `TECH-061-claude-md-duplication-review.md` → backlog → todo (Prioritized for Q2)
+
+### Commits (Session 5)
+
+- `e3b01e0` - chore: Fix unused variable warning in Setup-Project.ps1
+- `c6a700f` - feat: Update roadmap and planning features
+- `2755088` - feat(FEAT-092): Add optional sprint fields discussion
+- `186be95` - feat: Create DECISION-037 for project-hub location
+- `0964873` - fix(DECISION-037): Clarify decision is deferred, not made
+
+---
+
 ## Next Steps
 
 - 7 work items ready for release in done/
 - TECH-093 (fw-move enforcement) in backlog - high priority for process reliability
-- 5 new features in backlog ready for prioritization
-- FEAT-092 (Sprint Support) needs further design discussion
+- FEAT-093 (planning period archival) in backlog - enables structured retrospectives
+- FEAT-092 (sprint support) in backlog - design captured, ready for implementation
+- FEAT-088 and TECH-061 in todo/ - Q2 AI Integration & Clarity theme
+- DECISION-037 deferred - revisit after FEAT-093 stable
 - Roadmap provides strategic framework for future work
 
 ---
