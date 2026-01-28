@@ -20,23 +20,22 @@ This roadmap defines the strategic direction for the SpearIT Project Framework. 
 ### Theme: Distribution & Setup Excellence
 **Goal:** Make framework adoption effortless
 
-**Status:** 🚧 In Progress
+**Status:** ✅ Complete
 
 **Key Milestones:**
 - ✅ Framework-as-dependency model (DECISION-050)
 - ✅ Build and setup automation (Build-FrameworkArchive.ps1, Setup-Project.ps1)
 - ✅ Folder structure alignment (TECH-085, TECH-086)
 - ✅ Setup process improvements (TECH-081)
-- 🚧 Project type selection during setup (TECH-087)
+- ✅ Project type selection during setup (TECH-087)
 
 **Success Metrics:**
-- Setup time under 5 minutes from download
-- Zero manual file editing required during setup
-- Users understand project type implications
+- ✅ Setup time under 5 minutes from download
+- ✅ Zero manual file editing required during setup
+- ✅ Users understand project type implications
 
-**What's Next:**
-- Complete TECH-087 (project type selection)
-- Test end-to-end setup flow with real users
+**Outcome:**
+Complete setup automation achieved. Users can now bootstrap a new project with zero manual configuration, selecting project type interactively with clear descriptions.
 
 ---
 
@@ -50,7 +49,6 @@ This roadmap defines the strategic direction for the SpearIT Project Framework. 
 **Key Initiatives:**
 - TECH-061: CLAUDE.md optimization (reduce to <100 lines, clearer bootstrap)
 - FEAT-088: Framework glossary (consistent terminology)
-- FEAT-059: Context-aware AI roles (if prioritized)
 
 **Success Metrics:**
 - AI applies policies without repeated reminders
@@ -69,11 +67,13 @@ This roadmap defines the strategic direction for the SpearIT Project Framework. 
 - FEAT-089: Project type patterns (architecture guidance)
 - FEAT-090: Coding strategy patterns (MVP → Performance progression)
 - FEAT-052: Task-based project templates (workflow guidance per project type)
+- FEAT-092: Optional sprint support (time-boxed iteration planning)
 
 **Success Metrics:**
 - Developers know which patterns apply to their project type
 - Consistent quality across different projects
 - Reduced "analysis paralysis" during setup
+- Teams can choose cadence that fits their workflow (sprints vs continuous flow)
 
 ---
 
@@ -94,16 +94,32 @@ This roadmap defines the strategic direction for the SpearIT Project Framework. 
 
 ---
 
+### Theme: Workflow Enhancements
+**Goal:** Make workflow transitions reliable and consistent
+
+**Why This Matters:** Workflow policies should be mechanically enforced, not just documented. Prevents inconsistent work item state. Planning periods should have structured completion and archival processes.
+
+**Key Initiatives:**
+- TECH-093: fw-move enforcement (validate transitions with hooks)
+- FEAT-093: Planning period archival (retrospectives and historical organization)
+- FEAT-030: Hold folder (for blocked work items)
+- FEAT-021: Hierarchical work item numbering
+- FEAT-024: Renumber workflow steps sequentially
+
+**Success Metrics:**
+- Zero work items in wrong folder/state
+- Transition policies enforced automatically
+- Durable audit trail of work item transitions
+- Retrospectives completed for all planning periods
+- Active roadmap stays lean and focused
+
+---
+
 ## Future Considerations (Q3+ 2026)
 
 ### Visual Communication
 - FEAT-034: Projects showcase (examples of framework in use)
 - FEAT-004: Visual diagrams (architecture, workflow)
-
-### Workflow Enhancements
-- FEAT-030: Hold folder (for blocked work items)
-- FEAT-021: Hierarchical work item numbering
-- FEAT-024: Renumber workflow steps sequentially
 
 ### Extensibility
 - FEAT-047: Small team ID collision support
@@ -164,7 +180,7 @@ Making framework adoption as smooth as possible. Focuses on initial user experie
 Using diagrams, examples, and visual aids to communicate framework concepts more effectively than text alone.
 
 ### Workflow Enhancements
-Improvements to the kanban workflow, work item management, and process tooling.
+Improvements to the kanban workflow, work item management, and process tooling. Focuses on mechanical enforcement of workflow policies to ensure consistent work item state and reliable transitions.
 
 ---
 

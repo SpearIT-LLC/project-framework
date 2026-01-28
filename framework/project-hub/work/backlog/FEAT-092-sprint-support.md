@@ -61,28 +61,90 @@ Teams working in sprints need:
 
 ## Design
 
-### Open Questions (Discussion Points)
+### Key Design Decisions
 
-**1. Sprint Template**
-- Do we need a sprint document template?
-- What would it contain? (Goals, work items, retrospective notes?)
-- Location: `project-hub/sprints/sprint-NN.md` or integrated into roadmap?
+**Decision 1: Flexible Dates Model (2026-01-27)**
 
-**2. Configuration (framework.yaml)**
-```yaml
-sprints:
-  enabled: true           # yes/no or true/false?
-  duration: "2wk"         # 1wk, 2wk, 3wk, 1mo, flexible
-  ceremony: "informal"    # formal, informal
-  start_day: "Monday"     # Sprint start day of week
+Sprints use flexible dates to avoid rigidity while still tracking reality:
+
+**During Planning (Draft):**
+- **Planned Duration:** "2 weeks" or "until milestone X" (guidance, not enforced)
+- **Target Start:** Optional - "Early March" or "After FEAT-088 completes"
+- No hard dates required
+
+**When Activated:**
+- **Actual Start Date:** Auto-recorded when sprint moves to Active status
+- **Expected End Date:** Calculated from start + duration (guidance only)
+
+**When Completed:**
+- **Actual End Date:** Auto-recorded when sprint completes
+- **Actual Duration:** Calculated for retrospective metrics
+
+**Rationale:** Provides structure without prescriptive deadlines. Actual dates become valuable retrospective data rather than enforcement mechanisms.
+
+**Decision 2: Strategic Initiatives (2026-01-27)**
+
+Sprints use plain-language strategic initiatives instead of requiring all work items upfront:
+
+**Sprint Definition includes:**
+- **Strategic Initiatives:** 1-3 bullet points describing goals
+- **Committed Work Items:** Can be existing items or placeholders created during planning
+- **Associated Theme(s):** Links to roadmap themes
+
+**Example:**
+```markdown
+**Strategic Initiatives:**
+- Reduce AI cognitive load when reading framework docs
+- Establish shared terminology for framework concepts
+- Improve consistency of policy application
 ```
 
-**Questions:**
-- Should `duration` be enforced or just guidance?
-- What's the difference between formal vs informal ceremony?
-- Do we need more config options?
+**Rationale:** Allows strategic planning without bureaucracy. Work items can be placeholders that get fleshed out during planning ceremony.
 
-**3. Organization: Metadata vs Folders**
+**Decision 3: Sprint Lifecycle and Activation (2026-01-27)**
+
+Sprints have three states:
+
+1. **Draft:** Created with strategic initiatives, no work items required yet
+2. **Active:** At least 1 work item committed, sprint is current
+3. **Complete:** Ready for retrospective and archival
+
+**Activation Rule:** Sprint moves Draft → Active when:
+- Planning ceremony is complete
+- At least 1 work item is committed
+- Team/user confirms "start sprint"
+
+**Rationale:** Prevents ghost sprints with no actual work while allowing flexible planning.
+
+**Decision 4: Roadmap Integration (2026-01-27)**
+
+Sprints are defined in ROADMAP.md, not separate files. Archive uses FEAT-093 infrastructure.
+
+**Rationale:** No duplication, roadmap is the single source of truth, archival handled by existing system.
+
+---
+
+### Minimal Required Fields
+
+**Draft Sprint:**
+- Name/Title
+- Strategic initiatives (1-3 bullets)
+- Planned duration
+- Associated theme(s)
+
+**Active Sprint:**
+- All fields from Draft
+- Actual start date (auto-recorded)
+- At least 1 committed work item
+
+**Complete Sprint:**
+- All fields from Active
+- Actual end date (auto-recorded)
+- Actual duration (calculated)
+
+---
+
+### Organization: Metadata vs Folders
 
 **Option A: Metadata in Work Items**
 ```markdown
@@ -246,6 +308,7 @@ Problem: If work items say `**Sprint:** Sprint 3 (2026-02-10 to 2026-02-23)`, da
 - None
 
 **Related:**
+- FEAT-093: Planning period archival (provides retrospective and archival infrastructure)
 - FEAT-015: Executive Summary (could report sprint progress)
 - Session history (feeds into retrospectives)
 
