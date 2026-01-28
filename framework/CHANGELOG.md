@@ -22,6 +22,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Synced to templates/starter/ for distribution
   - Single source of truth for term definitions
 
+- **TECH-061: Framework Commands Reference**
+  - Created framework-commands.md in framework/docs/ref/
+  - Comprehensive documentation for all /fw-* commands
+  - Added to framework/INDEX.md reference documentation section
+
+### Changed
+- **TECH-061: CLAUDE.md Cleanup and Streamlining**
+  - Reduced framework/CLAUDE.md from 728 to 500 lines (31% reduction)
+  - Added glossary reference at top - establishes GLOSSARY.md as term authority
+  - Distilled Checkpoint Policy from 79 to 30 lines - core rule now prominent
+  - Externalized Framework Commands to framework-commands.md (130 line savings)
+  - Removed outdated "Project Classification & Framework Selection" section (50 line savings)
+  - Improved focus on bootstrap-critical vs. reference content
+  - All detailed content preserved in appropriate reference locations
+
 ### Removed
 - **TECH-085: Remove examples/ folder**
   - `examples/hello-world/` folder removed - redundant with framework-as-dependency model
