@@ -3,8 +3,10 @@
 **ID:** 094
 **Type:** Tech Debt
 **Priority:** High
+**Status:** Done
 **Version Impact:** MINOR
 **Created:** 2026-01-27
+**Completed:** 2026-01-29
 
 ---
 
