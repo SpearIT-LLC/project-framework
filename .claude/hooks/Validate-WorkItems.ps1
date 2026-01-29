@@ -33,20 +33,43 @@ if (-not $projectDir) {
     exit 0
 }
 
-$donePath = Join-Path $projectDir "framework/project-hub/work/done"
+$donePath = "framework/project-hub/work/done"
 
-# Skip if done/ doesn't exist
-if (-not (Test-Path $donePath)) {
+# Get staged files from git
+Push-Location $projectDir
+try {
+    $stagedFiles = git diff --cached --name-only 2>$null
+    if ($LASTEXITCODE -ne 0) {
+        # Git command failed, allow commit
+        exit 0
+    }
+} finally {
+    Pop-Location
+}
+
+# Filter for .md files in done/ folder
+$stagedInDone = $stagedFiles | Where-Object {
+    $_ -like "$donePath/*.md" -and $_ -notlike "*/.*.md"
+}
+
+# If no staged files in done/, allow commit
+if (-not $stagedInDone -or $stagedInDone.Count -eq 0) {
     exit 0
 }
 
 $errors = @()
 
-Get-ChildItem -Path $donePath -Filter "*.md" -ErrorAction SilentlyContinue |
-    Where-Object { $_.Name -notlike ".*" } |
-    ForEach-Object {
-        $content = Get-Content $_.FullName -Raw
-        $name = $_.Name
+# Validate each staged file in done/
+foreach ($relativePath in $stagedInDone) {
+    $fullPath = Join-Path $projectDir $relativePath
+
+    # Skip if file doesn't exist (deleted file)
+    if (-not (Test-Path $fullPath)) {
+        continue
+    }
+
+    $content = Get-Content $fullPath -Raw
+    $name = Split-Path -Leaf $relativePath
 
         # Check Status field
         if ($content -notmatch '\*\*Status:\*\*\s*Done') {
@@ -70,7 +93,7 @@ Get-ChildItem -Path $donePath -Filter "*.md" -ErrorAction SilentlyContinue |
                 }
             }
         }
-    }
+}
 
 if ($errors.Count -gt 0) {
     [Console]::Error.WriteLine("")
