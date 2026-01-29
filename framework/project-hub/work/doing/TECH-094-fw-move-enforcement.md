@@ -248,7 +248,7 @@ fw-move could check the active role to determine enforcement level:
 - [x] Hook refinement: Improve acceptance criteria detection (scope after ## heading only)
 - [x] fw-move updated with step-by-step enforcement rules
 - [x] Documentation updated (workflow-guide.md, CLAUDE.md)
-- [ ] CHANGELOG.md updated
+- [x] CHANGELOG.md updated
 
 ---
 
@@ -283,11 +283,16 @@ Claude hooks are reactive (catch after attempt), not proactive (guide before). T
 
 **Issues Found & Resolved:**
 1. **Syntax Error (FIXED):** Variable interpolation `$name:` failed; required `${name}:` syntax
-2. **Overly Broad Validation (FIXED):** Hook was checking for ANY unchecked box if "## Acceptance Criteria" section exists
+2. **Overly Broad Validation - Acceptance Criteria (FIXED):** Hook was checking for ANY unchecked box if "## Acceptance Criteria" section exists
    - Was catching unchecked boxes in "Requirements" sections that appear before Acceptance Criteria
    - FEAT-088, FEAT-091 had completed Acceptance Criteria but unchecked Requirements (false positives)
    - **Resolution:** Updated hook to split content at "## Acceptance Criteria" heading and only check that section
    - **Verification:** FEAT-088 and FEAT-091 now pass validation; TEST-004 still correctly fails
+3. **Overly Broad Validation - All Files (FIXED):** Hook was checking ALL files in done/, not just staged files
+   - Blocked all commits if ANY file in done/ was invalid (TECH-081, TEST files, artifacts)
+   - Required --no-verify for every commit, defeating purpose of hook
+   - **Resolution:** Updated hook to use `git diff --cached --name-only` to get staged files only
+   - **Verification:** Can commit without --no-verify when no done/ files staged; hook still blocks invalid staged files
 
 **Remaining Issues:**
 3. **Artifact Files in done/:** TECH-061-audit-report.md is a deliverable, not a work item
@@ -347,4 +352,4 @@ Research on Claude hooks capabilities saved to: `framework/project-hub/research/
 
 ---
 
-**Last Updated:** 2026-01-27
+**Last Updated:** 2026-01-29

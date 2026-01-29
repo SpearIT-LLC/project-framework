@@ -27,6 +27,32 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Comprehensive documentation for all /fw-* commands
   - Added to framework/INDEX.md reference documentation section
 
+- **TECH-094: Workflow Enforcement System**
+  - **Three-Layer Enforcement Architecture**
+    - Layer 1: Enhanced /fw-move with embedded checklists and mechanical precondition validation
+    - Layer 2: Implementation Checklist with step-by-step execution protocol in templates
+    - Layer 3: Pre-commit hook validating work items before commits (Claude Code hook)
+  - **Pre-Commit Hook** (`.claude/hooks/Validate-WorkItems.ps1`)
+    - Validates work items in done/ have Status=Done, Completed date, all criteria checked
+    - Only validates staged files (not entire done/ folder)
+    - Respects --no-verify for emergency bypasses
+    - Catches issues after "## Acceptance Criteria" heading only (ignores Requirements section)
+  - **Enhanced /fw-move Skill**
+    - Embedded transition checklists directly in command (no references)
+    - Verifies preconditions before executing git mv (Status, dependencies, WIP limits)
+    - Blocks transitions when requirements not met, offers to fix issues
+    - Added "During Implementation" checklist enforcement protocol
+  - **Template Enhancements**
+    - Added Implementation Checklist with enforcement comment to all work item templates
+    - 5 mandatory rules: strict order, immediate marking, stop at each step, re-read file, use TodoWrite
+    - User override phrases ("continue to completion", "skip to step N")
+  - **Documentation**
+    - Added "Workflow Enforcement" section to workflow-guide.md with architecture, behavior, limitations
+    - Updated CLAUDE.md Framework Commands section noting enforcement
+    - All enforcement layers documented with examples and philosophy
+  - **Known Limitation:** Enforcement only applies when Claude performs operations (see TECH-096)
+  - **Origin:** FEAT-091 was committed with incomplete metadata - root cause was advisory-only checklists
+
 ### Changed
 - **TECH-061: CLAUDE.md Cleanup and Streamlining**
   - Reduced framework/CLAUDE.md from 728 to 500 lines (31% reduction)
