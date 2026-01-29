@@ -451,14 +451,19 @@ The project includes comprehensive permission configuration in `.claude/settings
 
 ## Framework Commands (`/fw-*`)
 
-Framework commands provide workflow shortcuts using the `/fw-` prefix.
+Framework commands provide workflow shortcuts with mechanical enforcement.
 
 **Available Commands:**
 - `/fw-help` - List commands or get help on a specific command
-- `/fw-move` - Move work items with transition validation
+- `/fw-move` - Move work items with transition validation and enforcement
 - `/fw-status` - Show project status summary
 - `/fw-wip` - Check WIP limits
 - `/fw-backlog` - Review and prioritize backlog
+
+**Enforcement System:**
+- `/fw-move` validates preconditions before executing transitions (checks Status, dependencies, WIP limits)
+- Pre-commit hook validates work items in done/ before commits
+- See [workflow-guide.md](docs/collaboration/workflow-guide.md#workflow-enforcement) for transition checklists and enforcement details
 
 **Quick Examples:**
 ```

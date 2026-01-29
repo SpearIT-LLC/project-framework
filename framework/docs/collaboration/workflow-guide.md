@@ -526,6 +526,150 @@ policies:
 
 ---
 
+## Workflow Enforcement
+
+The framework provides a three-layer enforcement system to ensure workflow policies are followed mechanically, not just documented.
+
+### Three-Layer Architecture
+
+```
+┌─────────────────────────────────────────────────────────┐
+│  Layer 1: /fw-move skill (proactive guidance)           │
+│  - Embedded checklists in command                       │
+│  - Validates preconditions before executing git mv      │
+│  - Blocks transitions when requirements not met         │
+│  - Offers to fix missing fields automatically           │
+├─────────────────────────────────────────────────────────┤
+│  Layer 2: Work item templates (structured execution)    │
+│  - Implementation Checklist with enforcement comment    │
+│  - Step-by-step execution protocol                      │
+│  - AI must stop at each step for approval               │
+├─────────────────────────────────────────────────────────┤
+│  Layer 3: Pre-commit hook (safety net)                  │
+│  - Validates work items in done/ before commits         │
+│  - Blocks commits if state inconsistent                 │
+│  - Can be bypassed with --no-verify if needed           │
+└─────────────────────────────────────────────────────────┘
+```
+
+### Layer 1: /fw-move Enforcement
+
+The `/fw-move` command mechanically enforces transition policies:
+
+**Precondition Validation:**
+- Checks transition validity against the matrix
+- Reads work item file completely
+- Verifies required fields (Status, Completed date, Priority)
+- Checks dependencies (all must be in done/)
+- Validates WIP limits not exceeded
+- Scans for unchecked acceptance criteria
+
+**Behavior on Failure:**
+- STOPS immediately if any check fails
+- Reports exactly what's missing
+- Offers to fix issues automatically
+- Does NOT proceed until requirements met
+
+**Example:**
+```
+User: /fw-move FEAT-042 done
+
+AI: ❌ Cannot move FEAT-042 to done - preconditions not met:
+   - Status field not set to "Done"
+   - Completed date missing
+   - 2 acceptance criteria still unchecked
+
+   Would you like me to fix these issues?
+```
+
+### Layer 2: Implementation Checklist Enforcement
+
+Work item templates include an Implementation Checklist with enforcement comment:
+
+```markdown
+## Implementation Checklist
+
+<!-- ⚠️ AI: Complete items in order. STOP at each [ ] and wait for approval. -->
+<!-- User can say "continue to completion" to approve remaining steps at once. -->
+
+- [ ] Step 1
+- [ ] Step 2
+- [ ] Step 3
+```
+
+**Enforcement Protocol (5 mandatory rules):**
+
+1. **Complete items in strict order** - Do not skip ahead unless user explicitly requests
+2. **Mark items complete immediately** - Update `[ ]` to `[x]` as soon as step finishes
+3. **STOP at each unchecked item** - Wait for explicit user approval before proceeding
+   - Exception: User says "continue to completion" to approve all remaining
+4. **Read work item file before every edit** - File may be updated during work
+5. **Use TodoWrite tool** - Track progress and provide visibility to user
+
+**User Override Phrases:**
+- "continue to completion" → Approve all remaining checklist items at once
+- "skip to step N" → Jump ahead (only when explicitly requested)
+
+**When This Applies:**
+- Automatically enforced when enforcement comment is present
+- Activated after `/fw-move ITEM doing` completes
+- Gives user control over implementation pace
+
+### Layer 3: Pre-Commit Hook
+
+**Hook Location:** `.claude/hooks/Validate-WorkItems.ps1`
+
+**Validation Rules:**
+The hook validates ALL files in `done/` before allowing commits:
+1. **Status field** must be "Done"
+2. **Completed date** must exist
+3. **Acceptance Criteria** must all be checked (no `- [ ]` after the "## Acceptance Criteria" heading)
+
+**Behavior:**
+- Runs automatically before git commit commands (Claude Code PreToolUse hook)
+- Lists all validation failures, not just the first one
+- Blocks commit (exit code 2) if any validation fails
+- Provides clear error messages with file names and specific issues
+
+**Bypass When Needed:**
+```bash
+git commit --no-verify -m "message"
+```
+
+Use `--no-verify` for:
+- Emergency commits when hook has bugs
+- Committing test files (TEST-NNN-*.md)
+- Committing artifact/deliverable files
+- When you need to commit the hook fixes themselves
+
+**Example Output:**
+```
+Work item validation failed:
+  FEAT-042-api-endpoint.md: Missing 'Status: Done'
+  FEAT-042-api-endpoint.md: Has unchecked acceptance criteria
+  TECH-081-setup.md: Missing 'Completed' date
+
+To override this check, use: git commit --no-verify
+```
+
+### Design Philosophy
+
+**Why Three Layers?**
+
+- **Layer 1 (/fw-move):** Proactive - guides before action, prevents mistakes
+- **Layer 2 (Checklist):** Structured - controls implementation pace
+- **Layer 3 (Hook):** Reactive - catches anything that slips through
+
+**Trade-offs:**
+- Layer 1 is proactive but only enforced when using /fw-move
+- Layer 3 is reactive (catches after attempt) but always active
+- Together they provide defense in depth
+
+**Historical Context:**
+This system was implemented via TECH-094 after FEAT-091 was committed with incomplete metadata. The root cause: fw-move *instructed* Claude to follow checklists but didn't *enforce* compliance mechanically. The three-layer system ensures policies are followed reliably, not just documented.
+
+---
+
 ## Planning Guidelines
 
 ### Kanban Workflow (Standard/Full Frameworks)

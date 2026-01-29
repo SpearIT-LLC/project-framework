@@ -227,7 +227,7 @@ fw-move could check the active role to determine enforcement level:
 - [x] Hook tested: respects --no-verify flag
 - [x] Hook syntax errors fixed (variable interpolation)
 - [x] Hook refinement: Only check boxes after "## Acceptance Criteria" heading
-- [ ] Documentation updated in workflow-guide.md and CLAUDE.md
+- [x] Documentation updated in workflow-guide.md and CLAUDE.md
 
 ---
 
@@ -247,7 +247,7 @@ fw-move could check the active role to determine enforcement level:
 - [x] Testing: Hook blocks invalid commits, respects --no-verify
 - [x] Hook refinement: Improve acceptance criteria detection (scope after ## heading only)
 - [x] fw-move updated with step-by-step enforcement rules
-- [ ] Documentation updated (workflow-guide.md, CLAUDE.md)
+- [x] Documentation updated (workflow-guide.md, CLAUDE.md)
 - [ ] CHANGELOG.md updated
 
 ---
