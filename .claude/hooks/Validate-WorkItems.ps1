@@ -59,8 +59,16 @@ Get-ChildItem -Path $donePath -Filter "*.md" -ErrorAction SilentlyContinue |
         }
 
         # Check for unchecked acceptance criteria
-        if ($content -match '## Acceptance Criteria' -and $content -match '- \[ \]') {
-            $errors += "${name}: Has unchecked acceptance criteria"
+        # Only check boxes AFTER the "## Acceptance Criteria" heading
+        if ($content -match '## Acceptance Criteria') {
+            $sections = $content -split '## Acceptance Criteria', 2
+            if ($sections.Count -gt 1) {
+                $criteriaSection = $sections[1]
+                # Check if there are unchecked boxes in the criteria section
+                if ($criteriaSection -match '- \[ \]') {
+                    $errors += "${name}: Has unchecked acceptance criteria"
+                }
+            }
         }
     }
 

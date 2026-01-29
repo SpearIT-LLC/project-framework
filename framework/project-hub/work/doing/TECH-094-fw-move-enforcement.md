@@ -226,7 +226,7 @@ fw-move could check the active role to determine enforcement level:
 - [x] Hook tested: blocks commit when work item state inconsistent
 - [x] Hook tested: respects --no-verify flag
 - [x] Hook syntax errors fixed (variable interpolation)
-- [ ] Hook refinement: Only check boxes after "## Acceptance Criteria" heading
+- [x] Hook refinement: Only check boxes after "## Acceptance Criteria" heading
 - [ ] Documentation updated in workflow-guide.md and CLAUDE.md
 
 ---
@@ -245,7 +245,7 @@ fw-move could check the active role to determine enforcement level:
 - [x] Layer 3: Pre-commit validation hooks (created and tested)
 - [x] Hook syntax errors fixed (variable interpolation, --no-verify support)
 - [x] Testing: Hook blocks invalid commits, respects --no-verify
-- [ ] Hook refinement: Improve acceptance criteria detection (scope after ## heading only)
+- [x] Hook refinement: Improve acceptance criteria detection (scope after ## heading only)
 - [ ] fw-move updated with step-by-step enforcement rules
 - [ ] Documentation updated (workflow-guide.md, CLAUDE.md)
 - [ ] CHANGELOG.md updated
@@ -281,12 +281,15 @@ Claude hooks are reactive (catch after attempt), not proactive (guide before). T
 - ✅ Error messages are clear and actionable
 - ✅ Lists all validation failures, not just the first one
 
-**Issues Found:**
+**Issues Found & Resolved:**
 1. **Syntax Error (FIXED):** Variable interpolation `$name:` failed; required `${name}:` syntax
-2. **Overly Broad Validation:** Hook checks for ANY unchecked box if "## Acceptance Criteria" section exists
-   - Catches unchecked boxes in "Requirements" sections that appear before Acceptance Criteria
-   - FEAT-088, FEAT-091 have completed Acceptance Criteria but unchecked Requirements
-   - Recommendation: Refine regex to only check boxes AFTER "## Acceptance Criteria" heading
+2. **Overly Broad Validation (FIXED):** Hook was checking for ANY unchecked box if "## Acceptance Criteria" section exists
+   - Was catching unchecked boxes in "Requirements" sections that appear before Acceptance Criteria
+   - FEAT-088, FEAT-091 had completed Acceptance Criteria but unchecked Requirements (false positives)
+   - **Resolution:** Updated hook to split content at "## Acceptance Criteria" heading and only check that section
+   - **Verification:** FEAT-088 and FEAT-091 now pass validation; TEST-004 still correctly fails
+
+**Remaining Issues:**
 3. **Artifact Files in done/:** TECH-061-audit-report.md is a deliverable, not a work item
    - Doesn't follow work item template structure
    - Recommendation: Either move artifacts to separate folder or update hook to identify work items by template structure
