@@ -22,6 +22,11 @@ if ($command -notmatch 'git commit') {
     exit 0
 }
 
+# Allow bypass with --no-verify flag
+if ($command -match '--no-verify') {
+    exit 0
+}
+
 $projectDir = $env:CLAUDE_PROJECT_DIR
 if (-not $projectDir) {
     # No project directory set, skip validation
@@ -45,17 +50,17 @@ Get-ChildItem -Path $donePath -Filter "*.md" -ErrorAction SilentlyContinue |
 
         # Check Status field
         if ($content -notmatch '\*\*Status:\*\*\s*Done') {
-            $errors += "$name: Missing 'Status: Done'"
+            $errors += "${name}: Missing 'Status: Done'"
         }
 
         # Check Completed date
         if ($content -notmatch '\*\*Completed:\*\*') {
-            $errors += "$name: Missing 'Completed' date"
+            $errors += "${name}: Missing 'Completed' date"
         }
 
         # Check for unchecked acceptance criteria
         if ($content -match '## Acceptance Criteria' -and $content -match '- \[ \]') {
-            $errors += "$name: Has unchecked acceptance criteria"
+            $errors += "${name}: Has unchecked acceptance criteria"
         }
     }
 
