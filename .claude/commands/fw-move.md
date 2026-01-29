@@ -120,6 +120,40 @@ git mv project-hub/work/[source]/ITEM-NNN-*.md project-hub/work/doing/
 
 **Do NOT start implementation until user approves the plan.**
 
+**During Implementation - Checklist Enforcement:**
+
+If the work item has an "Implementation Checklist" section with the enforcement comment:
+```markdown
+<!-- ⚠️ AI: Complete items in order. STOP at each [ ] and wait for approval. -->
+```
+
+**You MUST follow this step-by-step execution protocol:**
+
+1. ✅ **Complete items in strict order** - Do not skip ahead
+2. ✅ **Mark items complete immediately** - Update `[ ]` to `[x]` as soon as finished
+3. ✅ **STOP at each unchecked item** - Wait for explicit user approval before proceeding
+   - Exception: User says "continue to completion" to approve all remaining steps at once
+4. ✅ **Read the file before every edit** - Work item may be updated during implementation
+5. ✅ **Use TodoWrite tool** - Track progress and provide visibility to user
+
+**Step-by-step execution example:**
+```
+Current item: "[ ] Design API endpoint structure"
+AI: "I'll design the API endpoint structure now..."
+[AI completes the work]
+AI: [Marks item complete in work item file]
+AI: "API endpoint structure designed. Next step is implementing the handler. Continue?"
+[Waits for user approval]
+User: "yes"
+AI: [Proceeds to next checklist item]
+```
+
+**User override phrases:**
+- "continue to completion" → Approve all remaining checklist items at once
+- "skip to step N" → Jump ahead (only if user explicitly requests)
+
+**CRITICAL:** The enforcement comment indicates user wants control over implementation pace. Respect this by stopping at each step unless explicitly told to continue.
+
 ---
 
 ### → done/

@@ -220,7 +220,7 @@ fw-move could check the active role to determine enforcement level:
 - [x] fw-move blocks and reports when preconditions not met
 - [x] fw-move offers to fix missing fields (Status, Completed date)
 - [x] Work item templates updated with enhanced Implementation Checklist
-- [ ] fw-move updated with enforcement rules for step-by-step execution
+- [x] fw-move updated with enforcement rules for step-by-step execution
 - [x] Pre-commit hook script created (PowerShell 5.1)
 - [x] Hook configuration added to settings.json
 - [x] Hook tested: blocks commit when work item state inconsistent
@@ -246,7 +246,7 @@ fw-move could check the active role to determine enforcement level:
 - [x] Hook syntax errors fixed (variable interpolation, --no-verify support)
 - [x] Testing: Hook blocks invalid commits, respects --no-verify
 - [x] Hook refinement: Improve acceptance criteria detection (scope after ## heading only)
-- [ ] fw-move updated with step-by-step enforcement rules
+- [x] fw-move updated with step-by-step enforcement rules
 - [ ] Documentation updated (workflow-guide.md, CLAUDE.md)
 - [ ] CHANGELOG.md updated
 
@@ -304,6 +304,29 @@ Claude hooks are reactive (catch after attempt), not proactive (guide before). T
 - TEST-004: Unchecked acceptance criteria
 - TEST-005: Multiple issues
 - TEST-006: In doing/ folder (correctly ignored by hook)
+
+### fw-move Enforcement Rules (2026-01-29)
+
+**Added to "→ doing/" section:**
+- "During Implementation - Checklist Enforcement" subsection
+- Step-by-step execution protocol with 5 mandatory rules
+- Example workflow showing stop-at-each-step pattern
+- User override phrases ("continue to completion", "skip to step N")
+
+**Enforcement Rules:**
+1. Complete checklist items in strict order (no skipping ahead)
+2. Mark items complete immediately after finishing
+3. STOP at each unchecked item and wait for user approval
+4. Read work item file before every edit (may be updated during work)
+5. Use TodoWrite tool for progress tracking and user visibility
+
+**Integration with Templates:**
+Works with enhanced Implementation Checklist added to work item templates:
+```markdown
+<!-- ⚠️ AI: Complete items in order. STOP at each [ ] and wait for approval. -->
+```
+
+When this comment is present, fw-move enforcement rules automatically apply during the doing phase.
 
 ---
 
