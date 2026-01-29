@@ -385,6 +385,8 @@ AI: "I cannot move directly from backlog to doing. The valid path is:
 
 When moving a work item, complete the checklist for the target folder. Use `git mv` for all moves to preserve history.
 
+**⚠️ Sync Warning:** These checklists are duplicated in `.claude/commands/fw-move.md` for enforcement. Any changes here must be synced to fw-move.md to maintain consistency.
+
 #### → backlog/
 - [ ] Work item created from template
 - [ ] ID assigned (scan ALL work/ locations and history/releases/ first)
