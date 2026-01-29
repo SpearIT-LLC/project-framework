@@ -215,15 +215,18 @@ fw-move could check the active role to determine enforcement level:
 
 ## Acceptance Criteria
 
-- [ ] fw-move.md rewritten with embedded checklists per transition type
-- [ ] fw-move verifies preconditions before executing `git mv`
-- [ ] fw-move blocks and reports when preconditions not met
-- [ ] fw-move offers to fix missing fields (Status, Completed date)
-- [ ] Work item templates updated with enhanced Implementation Checklist
+- [x] fw-move.md rewritten with embedded checklists per transition type
+- [x] fw-move verifies preconditions before executing `git mv`
+- [x] fw-move blocks and reports when preconditions not met
+- [x] fw-move offers to fix missing fields (Status, Completed date)
+- [x] Work item templates updated with enhanced Implementation Checklist
 - [ ] fw-move updated with enforcement rules for step-by-step execution
-- [ ] Pre-commit hook script created (PowerShell 7)
-- [ ] Hook configuration added to settings.json
-- [ ] Hook tested: blocks commit when work item state inconsistent
+- [x] Pre-commit hook script created (PowerShell 5.1)
+- [x] Hook configuration added to settings.json
+- [x] Hook tested: blocks commit when work item state inconsistent
+- [x] Hook tested: respects --no-verify flag
+- [x] Hook syntax errors fixed (variable interpolation)
+- [ ] Hook refinement: Only check boxes after "## Acceptance Criteria" heading
 - [ ] Documentation updated in workflow-guide.md and CLAUDE.md
 
 ---
@@ -239,10 +242,12 @@ fw-move could check the active role to determine enforcement level:
 
 - [x] Layer 1: Enhanced fw-move with embedded checklists
 - [x] Work item templates updated with enhanced Implementation Checklist
-- [ ] Layer 3: Pre-commit validation hooks
+- [x] Layer 3: Pre-commit validation hooks (created and tested)
+- [x] Hook syntax errors fixed (variable interpolation, --no-verify support)
+- [x] Testing: Hook blocks invalid commits, respects --no-verify
+- [ ] Hook refinement: Improve acceptance criteria detection (scope after ## heading only)
 - [ ] fw-move updated with step-by-step enforcement rules
 - [ ] Documentation updated (workflow-guide.md, CLAUDE.md)
-- [ ] Testing: Validate all three layers work together
 - [ ] CHANGELOG.md updated
 
 ---
@@ -267,6 +272,35 @@ Claude hooks are reactive (catch after attempt), not proactive (guide before). T
 - No `ConvertFrom-Json -AsHashtable` (use default PSCustomObject)
 - Use `[Console]::Error.WriteLine()` for stderr
 - Test on Windows PowerShell, not PowerShell Core
+
+### Testing Results (2026-01-29)
+
+**Hook Functionality:**
+- ✅ Hook successfully blocks commits with invalid work items
+- ✅ Hook respects `--no-verify` flag for emergency bypasses
+- ✅ Error messages are clear and actionable
+- ✅ Lists all validation failures, not just the first one
+
+**Issues Found:**
+1. **Syntax Error (FIXED):** Variable interpolation `$name:` failed; required `${name}:` syntax
+2. **Overly Broad Validation:** Hook checks for ANY unchecked box if "## Acceptance Criteria" section exists
+   - Catches unchecked boxes in "Requirements" sections that appear before Acceptance Criteria
+   - FEAT-088, FEAT-091 have completed Acceptance Criteria but unchecked Requirements
+   - Recommendation: Refine regex to only check boxes AFTER "## Acceptance Criteria" heading
+3. **Artifact Files in done/:** TECH-061-audit-report.md is a deliverable, not a work item
+   - Doesn't follow work item template structure
+   - Recommendation: Either move artifacts to separate folder or update hook to identify work items by template structure
+4. **Legitimately Incomplete Items:** TECH-081 in done/ has unchecked criteria and is actually incomplete
+   - Demonstrates the hook is working correctly - this item should not be in done/
+   - Root cause: Manual move without fw-move enforcement (exactly what TECH-094 addresses)
+
+**Test Files Created:**
+- TEST-001: Valid work item (all requirements met)
+- TEST-002: Missing Status field
+- TEST-003: Missing Completed date
+- TEST-004: Unchecked acceptance criteria
+- TEST-005: Multiple issues
+- TEST-006: In doing/ folder (correctly ignored by hook)
 
 ---
 

@@ -11,6 +11,8 @@
 
 Test work item with all required fields for done/ folder validation.
 
+**Test Note:** This file verifies the hook allows valid commits.
+
 ---
 
 ## Acceptance Criteria

@@ -4,7 +4,9 @@
 **Type:** Tech Debt
 **Priority:** Low
 **Version Impact:** MINOR
+**Status:** Done
 **Created:** 2026-01-26
+**Completed:** 2026-01-26
 
 ---
 
