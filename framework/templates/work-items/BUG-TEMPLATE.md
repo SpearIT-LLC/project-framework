@@ -188,6 +188,13 @@
 
 ## Implementation Checklist
 
+<!-- ⚠️ AI: Complete items in order. STOP at each [ ] and wait for approval. -->
+<!-- User can say "continue to completion" to approve remaining steps at once. -->
+
+- [ ] **PRE-IMPLEMENTATION REVIEW COMPLETED**
+  - AI presents: Root cause, fix approach, testing plan, scope
+  - User explicitly approves before proceeding
+
 - [ ] Root cause identified and documented
 - [ ] Fix implemented following coding-standards.md
 - [ ] ASCII-only characters in code (no Unicode)

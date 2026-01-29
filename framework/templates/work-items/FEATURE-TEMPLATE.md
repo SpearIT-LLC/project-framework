@@ -168,6 +168,13 @@
 
 ## Implementation Checklist
 
+<!-- ⚠️ AI: Complete items in order. STOP at each [ ] and wait for approval. -->
+<!-- User can say "continue to completion" to approve remaining steps at once. -->
+
+- [ ] **PRE-IMPLEMENTATION REVIEW COMPLETED**
+  - AI presents: What we're building, key decisions, open questions, scope
+  - User explicitly approves before proceeding
+
 - [ ] Design reviewed and approved
 - [ ] Code implemented following coding-standards.md
 - [ ] ASCII-only characters in code (no Unicode)

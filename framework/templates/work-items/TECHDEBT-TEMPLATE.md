@@ -54,6 +54,24 @@
 
 ---
 
+## Implementation Checklist
+
+<!-- ⚠️ AI: Complete items in order. STOP at each [ ] and wait for approval. -->
+<!-- User can say "continue to completion" to approve remaining steps at once. -->
+
+- [ ] **PRE-IMPLEMENTATION REVIEW COMPLETED**
+  - AI presents: Current vs desired state, proposed solution, scope
+  - User explicitly approves before proceeding
+
+- [ ] Code/documentation changes implemented
+- [ ] Changes follow coding-standards.md (if applicable)
+- [ ] Tests updated (if applicable)
+- [ ] Documentation updated
+- [ ] CHANGELOG.md updated
+- [ ] Acceptance criteria verified
+
+---
+
 ## Notes
 
 [Any additional context, constraints, or considerations]

@@ -219,12 +219,31 @@ fw-move could check the active role to determine enforcement level:
 - [ ] fw-move verifies preconditions before executing `git mv`
 - [ ] fw-move blocks and reports when preconditions not met
 - [ ] fw-move offers to fix missing fields (Status, Completed date)
-- [ ] Work item templates updated with Transition History section
-- [ ] fw-move appends to Transition History after successful move
-- [ ] Pre-commit hook script created (PowerShell 5.1)
+- [ ] Work item templates updated with enhanced Implementation Checklist
+- [ ] fw-move updated with enforcement rules for step-by-step execution
+- [ ] Pre-commit hook script created (PowerShell 7)
 - [ ] Hook configuration added to settings.json
 - [ ] Hook tested: blocks commit when work item state inconsistent
-- [ ] Documentation updated in workflow-guide.md
+- [ ] Documentation updated in workflow-guide.md and CLAUDE.md
+
+---
+
+## Implementation Checklist
+
+<!-- ⚠️ AI: Complete items in order. STOP at each [ ] and wait for approval. -->
+<!-- User can say "continue to completion" to approve remaining steps at once. -->
+
+- [x] **PRE-IMPLEMENTATION REVIEW COMPLETED**
+  - AI presented: Three-layer architecture, design decisions, scope
+  - User approved: Skip Layer 2, implement Layers 1 and 3
+
+- [x] Layer 1: Enhanced fw-move with embedded checklists
+- [x] Work item templates updated with enhanced Implementation Checklist
+- [ ] Layer 3: Pre-commit validation hooks
+- [ ] fw-move updated with step-by-step enforcement rules
+- [ ] Documentation updated (workflow-guide.md, CLAUDE.md)
+- [ ] Testing: Validate all three layers work together
+- [ ] CHANGELOG.md updated
 
 ---
 
