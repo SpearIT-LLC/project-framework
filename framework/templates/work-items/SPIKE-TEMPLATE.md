@@ -274,6 +274,26 @@
 
 ---
 
+## Implementation Checklist
+
+<!-- ⚠️ AI: Complete items in order. STOP at each [ ] and wait for approval. -->
+<!-- User can say "continue to completion" to approve remaining steps at once. -->
+
+- [ ] **PRE-INVESTIGATION REVIEW COMPLETED**
+  - AI presents: Investigation goal, research questions, time box, approach
+  - User explicitly approves before proceeding
+
+- [ ] Time box set and respected
+- [ ] Resources reviewed (documentation, code, tools)
+- [ ] Experiments/prototypes completed
+- [ ] Findings documented with evidence
+- [ ] Research questions answered
+- [ ] Recommendations formulated
+- [ ] Follow-up work items identified
+- [ ] Spike archived to history/spikes/
+
+---
+
 ## Notes
 
 [Any additional context, observations, or insights]

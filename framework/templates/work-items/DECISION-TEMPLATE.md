@@ -84,6 +84,24 @@
 
 ---
 
+## Implementation Checklist
+
+<!-- ⚠️ AI: Complete items in order. STOP at each [ ] and wait for approval. -->
+<!-- User can say "continue to completion" to approve remaining steps at once. -->
+
+- [ ] **PRE-IMPLEMENTATION REVIEW COMPLETED**
+  - AI presents: Decision context, options considered, proposed recommendation
+  - User explicitly approves before proceeding
+
+- [ ] All options evaluated with pros/cons
+- [ ] Decision made and rationale documented
+- [ ] Consequences identified
+- [ ] Follow-up work items created (if needed)
+- [ ] Decision record reviewed and approved
+- [ ] CHANGELOG.md updated (if decision impacts framework)
+
+---
+
 ## Related
 
 - [Links to related work items, documentation, or discussions]
