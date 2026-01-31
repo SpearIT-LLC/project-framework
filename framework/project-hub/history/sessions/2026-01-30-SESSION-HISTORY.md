@@ -319,4 +319,164 @@ workflow:
 
 ---
 
+## Session 3: Release Automation and Epistemic Standards
+
+**Session Focus:** FEAT-099 creation and accuracy-over-speculation discussion
+
+### Work Items Created
+
+**FEAT-099: /fw-release Command**
+
+**Trigger:** User question: "Do we have a command planned for releasing? e.g. fw-release or similar?"
+
+**Current State:**
+- Manual 20-step checklist in version-control-workflow.md
+- No automated tooling
+- Risk of forgotten steps, inconsistent releases
+- TECH-079 mentions fw-release as "future enhancement"
+
+**Proposed Solution:**
+
+Automate release process with `/fw-release` command:
+
+**What it automates:**
+1. Pre-release validation (empty done/ guard from TECH-079)
+2. Size warnings (integration with DECISION-097)
+3. Version calculation from work item metadata
+4. File updates (PROJECT-STATUS.md, CHANGELOG.md)
+5. Git tag creation
+6. Work item archival to history/releases/vX.Y.Z/
+7. Artifact folder movement (folder-follows-parent pattern)
+8. Release summary display
+
+**Design Approach:**
+- **Phase 1:** Claude command (skill) using existing tools - Quick to implement, easy to test
+- **Phase 2:** Optional PowerShell script - For manual releases, CI/CD integration
+- **Philosophy:** Guided automation with prompts (not fully automatic), fail-safe validation
+
+**Primary Objectives:**
+- **Accuracy:** Consistent results every time, no missed steps
+- **Repeatability:** Same process for every release, deterministic behavior
+
+**Success Metrics:**
+- Zero missed release steps (validation catches everything)
+- Consistent release quality (same process every time)
+- Reduced manual checklist items (20 → 1 command)
+- Adoption rate (used for 100% of releases)
+
+**Dependencies:**
+- DECISION-097: Release sizing policy (for warnings)
+- TECH-079: Empty release guard (for validation)
+- TECH-097: Artifacts pattern (for folder movement)
+
+### Epistemic Standards Discussion
+
+**Issue Identified:**
+
+Initial FEAT-099 draft included unverified performance claims:
+- "Release time reduced from 15 minutes to < 5 minutes"
+- "Complete in < 5 seconds for typical release"
+
+**User Challenge:**
+> "Where did you get the data that fw-release reduces release time from 15 to 5 minutes? I don't think it takes 5 minutes now."
+
+**Problem:** Speculation presented as fact, violating epistemic standards from CLAUDE.md:
+> "Facts must be verified before stating. Read the file, run the command, check the source. If you cannot verify, say so explicitly."
+
+**User Guidance:**
+> "The primary objective is accuracy. We want a repeatable process every time. Improving performance is always great but we need to deal with facts. Remove the performance claim unless you can back it up with real data."
+
+**Correction Made:**
+
+Removed unverified performance claims, refocused on verifiable objectives:
+
+**Before:**
+- Non-Functional: "Performance: Complete in < 5 seconds"
+- Success Metric: "Release time reduced from 15 minutes to < 5 minutes"
+
+**After:**
+- Non-Functional: "Accuracy: Consistent results every time, no missed steps"
+- Non-Functional: "Repeatability: Same process for every release"
+- Success Metric: "Zero missed release steps (validation)"
+- Success Metric: "Consistent release quality (repeatability)"
+
+### Decisions Made (Session 3)
+
+**9. Release Automation Priority:**
+- **Decision:** Create FEAT-099 for fw-release command
+- **Rationale:** Natural evolution of workflow automation (fw-move → enforcement hooks → release automation)
+- **Scope:** Start with Claude command (Phase 1), evaluate PowerShell script (Phase 2) based on demand
+
+**10. Accuracy Over Performance:**
+- **Decision:** Primary objective is accuracy and repeatability, not speed
+- **User principle:** "We need to deal with facts"
+- **Rationale:** Only state what can be verified; remove speculation
+- **Learning:** Epistemic rigor matters - verify before claiming
+
+**11. Two-Phase Implementation:**
+- **Decision:** Phase 1 (Claude command) first, Phase 2 (PowerShell script) optional
+- **Rationale:** Quick to implement and test; can extract to script if manual/CI use emerges
+- **Philosophy:** Prove pattern first, expand based on need
+
+### Files Created (Session 3)
+
+- `framework/project-hub/work/backlog/FEAT-099-fw-release-command.md` - Release automation feature
+
+### Files Modified (Session 3)
+
+- `framework/project-hub/work/backlog/FEAT-099-fw-release-command.md` - Removed unverified performance claims, added accuracy/repeatability focus
+
+### Key Insights (Session 3)
+
+**1. Epistemic Standards Matter:**
+- Don't present speculation as fact
+- Made-up metrics undermine credibility
+- "15 minutes to 5 minutes" had no basis - violation of CLAUDE.md standards
+- If unsure, say "estimated" or "to be measured"
+
+**2. Primary Objective Clarity:**
+- User corrected focus: "The primary objective is accuracy"
+- Performance improvements are nice-to-have, not primary goal
+- Repeatability and consistency matter more than speed
+
+**3. Verify Before Claiming:**
+- Three options for statements:
+  1. Measure it: "Current process takes X minutes (timed)"
+  2. Estimate honestly: "Estimated ~15 minutes (to be validated)"
+  3. Leave vague: "Reduces manual effort"
+- Only option 1 is acceptable for facts
+
+**4. Workflow Automation Evolution:**
+- Pattern emerging: fw-move → enforcement hooks → release automation
+- Each builds on previous work
+- FEAT-099 integrates DECISION-097 (sizing), TECH-079 (empty guard), TECH-097 (artifacts)
+- Cohesive automation ecosystem
+
+**5. User Feedback as Quality Gate:**
+- User caught unsubstantiated claim immediately
+- Quick correction maintained credibility
+- Good example of collaborative quality control
+
+### Commits (Session 3)
+
+- `8c0427b` - feat: Create FEAT-099 - /fw-release command
+- `529171d` - fix(FEAT-099): Remove unverified performance claims, focus on accuracy
+
+### Current State (End of Day)
+
+**In backlog (4 new items today):**
+- TECH-097: Document Artifacts Pattern (High)
+- DECISION-097: Release Sizing Policy (Medium)
+- TECH-098: Auto-Branching Strategy (Low)
+- FEAT-099: /fw-release Command (Medium)
+
+**In done/ (9 items - approaching release recommendation):**
+- TECH-094, TECH-084, TECH-085, TECH-086, TECH-081, FEAT-091, TECH-087, DECISION-050, + artifacts
+
+**Today's total commits:** 6
+**Today's total work items created:** 4
+**Today's total sessions:** 3
+
+---
+
 **Last Updated:** 2026-01-30
