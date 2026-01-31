@@ -193,4 +193,130 @@ None yet - planning session only.
 
 ---
 
+## Session 2: Workflow Policy Development
+
+**Session Focus:** Release sizing and branching strategy discussions
+
+### Work Items Created
+
+**DECISION-097: Release Sizing Policy**
+
+**Trigger:** 9 items in done/ - more than typical. Question: What's the right amount for a release?
+
+**Options Considered:**
+1. No guidance (status quo) - Maximum flexibility, but inconsistent
+2. Strict limits by version type - Clear but too rigid
+3. Gentle guidance with progressive nudging - **CHOSEN**
+4. Project-type-specific policies - Defer to FEAT-089
+
+**Decision:**
+- Sweet spot: 3-8 items per MINOR release
+- AI nudges at 10 items: "Consider releasing"
+- AI recommends at 15+ items: "Recommend releasing or splitting"
+- Quality gates matter more than count
+- User always has final say
+
+**Rationale:**
+- Helpful without being authoritarian
+- Balances CHANGELOG clarity with release overhead
+- Proven simple pattern first, refine based on experience
+- Leaves door open for project-type variations
+
+**Follow-up Work:**
+- Add "Release Sizing" section to version-control-workflow.md
+- Update fw-status to show item count with indicators
+- Add AI logic for release suggestions
+- Revisit with FEAT-089 for project-type variations
+
+**TECH-098: Auto-Branching Strategy**
+
+**Trigger:** Question about whether to create branches for work items. Industry best practices?
+
+**Problem:**
+- Current workflow is trunk-based (work on main directly)
+- No guidance on when to branch vs. trunk
+- No tooling support for consistent branching
+- Manual branch creation prone to inconsistent naming
+
+**Proposed Solution:**
+1. Document branching strategies (trunk-based vs. feature branches)
+2. Add project configuration option in framework.yaml
+3. Integrate auto-branching with fw-move (optional)
+4. Recommend strategy based on project type (after FEAT-089)
+
+**Configuration Concept:**
+```yaml
+workflow:
+  branching:
+    strategy: auto      # or: manual, never
+    pattern: "{type}-{id}-{slug}"
+    auto_branch_for:
+      - FEAT
+      - SPIKE
+      - DECISION
+```
+
+**When to Branch:**
+- FEAT items (larger scope, multi-session)
+- SPIKE items (experimental, might abandon)
+- DECISION items (might want review)
+
+**When to Use Trunk:**
+- TECH items (small improvements)
+- BUG items (quick fixes)
+- Single-session work
+
+**Philosophy:**
+- Default to simplicity (trunk-based unless configured)
+- User always in control
+- Consistent naming prevents ad-hoc variations
+- After FEAT-089, can recommend based on project type
+
+### Decisions Made (Session 2)
+
+**6. Release Sizing Approach:**
+- **Decision:** Gentle guidance over strict enforcement
+- **User insight:** "AI prompts would be polite and professional but not mandatory"
+- **Rationale:** Helpful suggestions without being authoritarian
+
+**7. Project-Type Variations Timing:**
+- **Decision:** Single reasonable policy now, multi-project types later
+- **User guidance:** "Later we can consider multi-project types, perhaps after feat-089? Keep it simple, prove the pattern, then expand?"
+- **Rationale:** Don't over-engineer before we have evidence we need complexity
+
+**8. Branching Strategy Approach:**
+- **Decision:** Document and explore, don't implement immediately
+- **Priority:** Low (TECH-098 in backlog)
+- **Rationale:** Current trunk-based works well, but worth having capability for users' projects
+
+### Files Created (Session 2)
+
+- `framework/project-hub/work/backlog/DECISION-097-release-sizing-policy.md` - Release sizing guidelines
+- `framework/project-hub/work/backlog/TECH-098-auto-branching-strategy.md` - Auto-branching exploration
+
+### Key Insights (Session 2)
+
+**1. Guidance vs. Enforcement:**
+- User preference for "polite and professional" AI suggestions
+- Never mandatory, never blocking
+- Provide context and recommendations, user decides
+
+**2. Prove Pattern First, Expand Later:**
+- Same philosophy as artifacts pattern
+- Simple defaults that work for 80% of cases
+- Expand based on real experience, not theoretical complexity
+- FEAT-089 as future expansion point
+
+**3. Work Item Numbering Discovery:**
+- DECISIONs use common namespace (not separate sequence)
+- DECISION-050 exists → next is DECISION-097
+- All types (FEAT, BUG, TECH, DECISION, SPIKE) share same ID pool
+
+**4. Industry Practices Inform, Don't Dictate:**
+- Reviewed continuous delivery, agile, trunk-based, feature branch approaches
+- Framework context different from deployed services
+- Adapt practices to framework needs (docs/templates, gradual adoption)
+
+---
+
 **Last Updated:** 2026-01-30
