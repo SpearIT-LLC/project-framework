@@ -57,7 +57,8 @@ Manually follow 20-step checklist in version-control-workflow.md. Prone to error
 
 ### Non-Functional Requirements
 
-- [ ] Performance: Complete in < 5 seconds for typical release (8 items)
+- [ ] Accuracy: Consistent results every time, no missed steps
+- [ ] Repeatability: Same process for every release, deterministic behavior
 - [ ] Security: No credential exposure, safe path handling
 - [ ] Compatibility: Works with existing manual process, backward compatible
 - [ ] Documentation: Clear usage guide, examples, troubleshooting
@@ -316,9 +317,9 @@ If issues found, continue using manual release process from version-control-work
 
 **How do we know this feature is successful?**
 
-- Metric 1: Release time reduced from 15 minutes to < 5 minutes
-- Metric 2: Zero missed release steps (validation catches everything)
-- Metric 3: User satisfaction ("This is so much easier!")
+- Metric 1: Zero missed release steps (validation catches all required updates)
+- Metric 2: Consistent release quality (same process every time)
+- Metric 3: Reduced manual checklist items (20 manual steps → 1 command)
 - Metric 4: Adoption rate (used for 100% of releases after introduction)
 
 ---
