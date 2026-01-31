@@ -47,9 +47,11 @@ try {
     Pop-Location
 }
 
-# Filter for .md files in done/ folder
+# Filter for .md files directly in done/ folder (not in artifact subfolders)
 $stagedInDone = $stagedFiles | Where-Object {
-    $_ -like "$donePath/*.md" -and $_ -notlike "*/.*.md"
+    $_ -like "$donePath/*.md" -and              # In done/ folder
+    $_ -notlike "*/.*.md" -and                  # Not hidden files
+    $_ -notlike "$donePath/*/*.md"              # Not in artifact subfolders
 }
 
 # If no staged files in done/, allow commit
