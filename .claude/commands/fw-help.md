@@ -20,6 +20,7 @@ When invoked with no arguments, list all available `/fw-*` commands in a table:
 |---------|-------------|--------|
 | `/fw-help` | Show this help message | Active |
 | `/fw-move` | Move work item between folders with policy enforcement | Active |
+| `/fw-roadmap` | AI-guided roadmap creation through strategic questioning | Active |
 | `/fw-status` | Show project status summary | Active |
 | `/fw-wip` | Check WIP limits and current work | Active |
 | `/fw-backlog` | Review and prioritize backlog items | Active |

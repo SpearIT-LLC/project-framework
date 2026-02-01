@@ -465,37 +465,50 @@ Planning Period Archival (FEAT-093)
 
 ## Acceptance Criteria
 
+### MVP (v1.0) - In Scope
+
 **Implementation:**
-- [ ] `/fw-roadmap` skill created in `framework/.claude/commands/`
-- [ ] Skill synced to `templates/starter/.claude/commands/`
-- [ ] Detects creation vs review mode correctly
-- [ ] Reads project context before questioning
-- [ ] Uses Senior Product Owner role + Opus model
+- [x] `/fw-roadmap` skill created in `.claude/commands/` (repo root)
+- [x] Skill synced to `templates/starter/.claude/commands/`
+- [x] Uses Senior Product Owner role + Opus model
+- [x] Added to `/fw-help` command output (both locations)
+- [ ] Reads project context before questioning (framework.yaml, PROJECT-STATUS.md)
+- [ ] Creation mode only (no review mode detection needed for MVP)
 
-**Behavior:**
-- [ ] Asks strategic questions appropriate to mode
+**Behavior (3-Section Conversation):**
+- [ ] Section 1: Asks strategic vision/purpose questions
+- [ ] Section 2: Synthesizes themes (2-4) from user input
+- [ ] Section 3: Defines success metrics for each theme
 - [ ] Pushes back on vague answers (demonstrated in testing)
-- [ ] Challenges misaligned priorities (demonstrated in testing)
-- [ ] Identifies gaps in themes/metrics (demonstrated in testing)
-- [ ] Drafts sections iteratively with approval
-- [ ] Generates/updates ROADMAP.md with proper structure
+- [ ] Challenges scattered priorities (>4 themes)
+- [ ] Drafts sections iteratively with approval checkpoints
+- [ ] Generates ROADMAP.md with proper structure
 
-**Documentation:**
-- [ ] Skill usage documented in workflow-guide.md
-- [ ] Added to `/fw-help` command output
-- [ ] Example session included in documentation
-- [ ] Guidance on when to use vs manual editing
-- [ ] Planning period concept explained in Quick-Start guide (3-4 sentences + examples)
-- [ ] Planning period guidance added to ROADMAP-TEMPLATE.md (inline contextual help)
-- [ ] Planning period definition added to Framework Glossary (FEAT-088)
-- [ ] Work item template updated with planning period field and inline comment
-- [ ] /fw-roadmap skill includes conversational planning period explanation
+**Documentation (MVP):**
+- [ ] Skill file contains clear usage instructions
+- [ ] Brief mention in session history when complete
+- [ ] ROADMAP.md generated matches template structure
 
 **Quality:**
-- [ ] Tested on new project (creation mode)
-- [ ] Tested on existing project (review mode)
-- [ ] User feedback incorporated
-- [ ] Token usage measured and acceptable
+- [ ] Tested on framework project (creation mode)
+- [ ] Generates valid ROADMAP.md
+- [ ] User feedback: Conversation feels strategic (not just form-filling)
+
+### Post-MVP (v1.1+) - Deferred
+
+**Features:**
+- [ ] Review mode (periodic roadmap updates)
+- [ ] Backlog integration (suggest work items at end)
+- [ ] Retrospective integration (FEAT-093)
+- [ ] PROJECT-STATUS.md synchronization
+- [ ] Planning period documentation in Quick-Start, ROADMAP-TEMPLATE, Glossary
+- [ ] Work item template planning period field
+
+**Documentation:**
+- [ ] Full workflow-guide.md section
+- [ ] Example session included in docs
+- [ ] Guidance on when to use vs manual editing
+- [ ] Token usage measurement and optimization if needed
 
 ---
 
@@ -507,7 +520,7 @@ Planning Period Archival (FEAT-093)
 
 **Context:** Pure conversational is better UX but uses more tokens. Script collects data first, then AI refines.
 
-**Decision:** Start with pure conversational. Add script optimization in future release if token costs problematic.
+**Decision:** ✅ **DECIDED - Use pure conversational approach.** Defer token optimization to future release if needed. MVP focuses on creation mode with 3-section conversation (Vision → Themes → Metrics).
 
 ### 2. Backlog Integration
 
@@ -523,13 +536,9 @@ Planning Period Archival (FEAT-093)
 - User might want to create work items separately
 - Adds complexity to skill
 
-**Recommendation:** Offer to create placeholder work items, but don't force it.
+**Decision:** ✅ **DECIDED - Offer at the END with proposed list.** After completing the roadmap conversation, provide a proposed list of work items that could support the themes, then offer to create placeholder or detailed work items. Consider storing the proposed work item list in the roadmap itself.
 
-```
-AI: "I notice the 'API Documentation' theme has no work items yet.
-     Should I create a placeholder FEAT-XXX to track this initiative,
-     or would you prefer to create it yourself later?"
-```
+**Deferred to:** Post-MVP (v1.1+)
 
 ### 3. Retrospective Integration
 
@@ -537,7 +546,9 @@ AI: "I notice the 'API Documentation' theme has no work items yet.
 
 **Context:** Periodic reviews often happen at planning period boundaries (end of sprint, quarter, milestone, etc.). Could create retrospective as part of review process.
 
-**Recommendation:** Defer to FEAT-093 implementation. Keep `/fw-roadmap` focused on roadmap content.
+**Decision:** ✅ **DECIDED - Defer to post-MVP.** Get basics working first, then enhance. Keep `/fw-roadmap` focused on roadmap content initially.
+
+**Deferred to:** Post-MVP (v1.1+) when FEAT-093 is implemented
 
 ---
 
