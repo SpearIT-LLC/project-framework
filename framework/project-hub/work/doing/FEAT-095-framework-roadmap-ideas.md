@@ -38,4 +38,53 @@ These categories could enhance or replace existing categories for the framework 
 - What are some generic categories that apply to all, or most projects?
 - What are typical roadmap categories or steps across the industry?
 - Are there some patterns typical for each "type" of project?
+- Should a roadmap be organized by Themes or Features?
+
+## Framework Features
+A broad overview of the major features of the framework. 
+Is this accurate? Can we summarize the framework down to just 3 main features? Am I missing anything?
+
+I've included SOME of the work items related to the bullet points for reference. We should probably associate all open tickets under this feature outline.
+
+### User Features
+- Workflow
+  - Kanban
+  - Release
+  - Distribution
+  - Workflow patterns
+- Project Guidance
+  - Setup tech-081, feat-006
+  - Project definition feat-087, 
+  - Project organization feat-089
+    - Project patterns
+    - Define pattern based on project type
+  - Reporting feat-015
+  - Roadmaps feat-095, feat-091
+  - Planning Periods feat-092, feat-093
+  - Research (project level)
+  - Retrospectives
+- Developer Guidance
+  - Coding standards
+  - Development methods
+    - Developer patterns e.g Research, POC, MVP, Code, Test, Refactor, Test, Secure, Test
+    - Robust verses "quick"
+    - Define pattern based on impact?
+  - Testing
+  - Security
+  - POC
+  - Research (code level)
+
+### Technical Features
+Not sure this is worth separating.
+
+- AI Collaboration
+  - Although this IS a major feature, it's integrated into everything else so does it really deserve it's own category? It's definitely worth mentioning in overview or marketing material but it's not really something that stands on it's own apart from the other features. AI Collaboration hovers over the entire framework.
+  - Slash commands supporting above workflows
+  - Hooks
+  - Roles
+  - AI Model selection
+- Project structure
+- Documentation
+- Scripts
+- Session history
 - 

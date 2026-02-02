@@ -692,12 +692,62 @@ Theme 2: Framework Adoption & Onboarding (SECONDARY)
 
 ### Recommended v1.1+ Improvements
 
-1. **Vision Scanning:** Check README/PROJECT-STATUS for existing vision before asking foundational questions
-2. **Backlog Analysis:** Scan work items to suggest data-driven feature areas/themes
-3. **Feature-Based Format:** Default to timeline-oriented roadmap (Q1: F1, F2; Q2: F3)
-4. **Time Expectations:** State upfront: "15-25 minutes" or offer quick mode
-5. **File Path Fix:** Generate at `docs/project/ROADMAP.md` per workflow guide
+1. ~~**Vision Scanning:** Check README/PROJECT-STATUS for existing vision before asking foundational questions~~ ✅ **DONE 2026-02-02**
+2. ~~**Backlog Analysis:** Scan work items to suggest data-driven feature areas/themes~~ ✅ **DONE 2026-02-02**
+3. ~~**Feature-Based Format:** Default to timeline-oriented roadmap (Q1: F1, F2; Q2: F3)~~ ✅ **DONE 2026-02-02**
+4. ~~**Time Expectations:** State upfront: "15-25 minutes" or offer quick mode~~ ✅ **DONE 2026-02-02**
+5. ~~**File Path Fix:** Generate at `docs/project/ROADMAP.md` per workflow guide~~ ✅ **DONE 2026-02-02**
 
 ---
 
-**Last Updated:** 2026-02-01
+## MVP v1.1 Updates (2026-02-02)
+
+### Issues Resolved
+
+All three MVP issues from initial testing have been addressed:
+
+**1. File Location Bug ✅**
+- **Issue:** Generated at project root instead of `docs/project/ROADMAP.md`
+- **Fix:** Updated skill instructions (line 119) to write to correct path
+- **Files:** `.claude/commands/fw-roadmap.md`, `templates/starter/.claude/commands/fw-roadmap.md`
+
+**2. Time Expectations ✅**
+- **Issue:** No upfront time warning (25-35 min conversation unexpected)
+- **Fix:** Added time expectation notice at top of Behavior section
+- **Message:** "This is a strategic conversation that typically takes 15-25 minutes. Let the user know upfront."
+
+**3. Roadmap Format Support ✅**
+- **Issue:** Only supported theme-based (OKR style), users wanted feature-based timeline
+- **Fix:** Added dual format support in Section 2
+  - **Feature-based** (recommended): Timeline showing "Q1: Features 1, 2; Q2: Features 3, 4"
+  - **Theme-based**: Strategic themes with metrics (OKR style)
+- **Default:** Recommends feature-based unless user specifically wants strategic themes
+
+### Additional Enhancements
+
+**Vision Integration:**
+- Now checks README.md "What Is This?" section for existing project definition
+- Avoids re-asking foundational questions if vision already documented
+- Aligns with FEAT-087 (Project Definition) workflow
+
+**Backlog Integration:**
+- Scans `project-hub/work/backlog/` and groups by feature area
+- Uses existing work items to inform roadmap structure
+- Data-driven feature identification
+
+**Better Guidance:**
+- Prompts users to document vision in README.md if missing
+- Reminds users to sync new vision content to README.md after roadmap creation
+- Clarifies relationship between project definition and roadmap planning
+
+### Status
+
+**MVP v1.1:** Ready for testing
+- [x] All v1.0 issues resolved
+- [x] All "Recommended v1.1+ Improvements" implemented
+- [x] Template synced
+- [ ] Tested on framework project (next step)
+
+---
+
+**Last Updated:** 2026-02-02
