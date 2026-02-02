@@ -1,13 +1,22 @@
 # SpearIT Project Framework - Roadmap
 
-**Last Updated:** 2026-01-27
-**Next Review:** 2026-04-27 (Quarterly)
+**Last Updated:** 2026-02-01
+**Next Review:** 2026-05-01 (Quarterly recommended)
 
 ---
 
 ## Purpose
 
-This roadmap defines the strategic direction for the SpearIT Project Framework. It organizes work into themes that guide prioritization and measure progress toward long-term goals.
+The SpearIT Project Framework is a "batteries-included" collaborative development framework that brings professional project management practices to solo and small team development.
+
+**The Problem:**
+Solo and small team projects often drift into "vibe mode"—loose direction, unclear scope, and inconsistent practices. AI collaboration degrades as context is lost and focus drifts across sprawling tasks. Developers get buried in tactical implementation details while losing sight of strategic goals. Every new project brings the same setup tax: reinventing structure, debating process choices, and configuring the same scaffolding over and over.
+
+**The Solution:**
+The framework provides a ready-to-use kanban workflow with professional practices built-in—no external tooling or licensing required. Through role-based AI collaboration, the framework elevates strategic thinking and maintains project clarity. Consistent, battle-tested patterns let teams start building immediately instead of reinventing process.
+
+**The Transformation:**
+From "vibe mode" to professional discipline. From reinventing process to "insert and go." From AI context drift to focused, structured collaboration. From setup tax to immediate productivity.
 
 **Roadmap vs Backlog:**
 - **Roadmap** = Strategic direction (6-12 month horizon, themes and milestones)
@@ -15,190 +24,115 @@ This roadmap defines the strategic direction for the SpearIT Project Framework. 
 
 ---
 
-## Current Focus (Q1 2026)
+## Current Focus (Q1-Q2 2026)
 
-### Theme: Distribution & Setup Excellence
-**Goal:** Make framework adoption effortless
+### Theme 1: Project Guidance & Planning (PRIMARY FOCUS)
 
-**Status:** ✅ Complete
+**Goal:** Build AI-guided project planning capabilities that help developers create and execute professional project plans—regardless of their PM experience. Create planning patterns for application projects that guide users through strategic thinking like a senior project manager would.
+
+**Status:** 🚧 In Progress
 
 **Key Milestones:**
-- ✅ Framework-as-dependency model (DECISION-050)
-- ✅ Build and setup automation (Build-FrameworkArchive.ps1, Setup-Project.ps1)
-- ✅ Folder structure alignment (TECH-085, TECH-086)
-- ✅ Setup process improvements (TECH-081)
-- ✅ Project type selection during setup (TECH-087)
+- 🚧 Define pattern MVP for application projects (FEAT-089)
+- 🚧 Implement AI-guided roadmap creation (FEAT-095)
+- 📋 Validate pattern with hello world application project
+- 📋 Complete end-to-end planning workflow (idea → roadmap → work items)
 
 **Success Metrics:**
-- ✅ Setup time under 5 minutes from download
-- ✅ Zero manual file editing required during setup
-- ✅ Users understand project type implications
+- **Application project pattern MVP complete:** MVP defined with clear milestones, AI guidance implemented (fw-roadmap + implementation planning), validated with hello world application project
+- **User can successfully plan an application project:** Observable outcome where user starts with idea → AI guides through planning → User has actionable roadmap with themes, milestones, and initial work items. Validated with at least one test project planned end-to-end.
 
-**Outcome:**
-Complete setup automation achieved. Users can now bootstrap a new project with zero manual configuration, selecting project type interactively with clear descriptions.
+**What's Next:**
+- Complete FEAT-089 first task: Define pattern MVP scope and milestones
+- Finish FEAT-095: fw-roadmap skill implementation
+- Validate MVP pattern with hello world application
+- Expand to other project types (framework, library, toolbox) after application pattern proven
 
 ---
 
-## Next Phase (Q2 2026)
+### Theme 2: Framework Adoption & Onboarding (SECONDARY FOCUS)
 
-### Theme: AI Integration & Clarity
-**Goal:** Improve framework-AI collaboration effectiveness
+**Goal:** Reduce friction and create a smooth first-time experience for new framework users. Make it easy for developers to adopt the framework and start their first project with minimal confusion or support needed.
 
-**Why This Matters:** AI assistants are primary framework users. Better collaboration means better outcomes.
+**Status:** 📋 Planned
 
-**Key Initiatives:**
-- TECH-061: CLAUDE.md optimization (reduce to <100 lines, clearer bootstrap)
-- FEAT-088: Framework glossary (consistent terminology)
+**Key Milestones:**
+- 📋 Create streamlined onboarding documentation
+- 📋 Implement setup automation/scripts
+- 📋 Validate <10 minute experience (download → first work item)
 
 **Success Metrics:**
-- AI applies policies without repeated reminders
-- Critical patterns applied consistently
-- Term confusion eliminated
+- **Onboarding path complete, documented, and validated:** Complete flow from download → setup → first project → first work item. Documented in quick-start guide. Validated that new users can go from download to productive use in <10 minutes.
+
+**What's Next:**
+- Document ideal onboarding flow (framework purpose → download → setup → first work item)
+- Create/improve setup automation
+- Test with new user to validate experience
 
 ---
 
-### Theme: Developer Guidance & Patterns
-**Goal:** Help developers make good decisions quickly
+## Next Phase (Q3 2026)
 
-**Why This Matters:** Users shouldn't have to reinvent patterns we've already solved.
-
-**Key Initiatives:**
-- ✅ FEAT-091: Project roadmap structure (this document)
-- FEAT-089: Project type patterns (architecture guidance)
-- FEAT-090: Coding strategy patterns (MVP → Performance progression)
-- FEAT-052: Task-based project templates (workflow guidance per project type)
-- FEAT-092: Optional sprint support (time-boxed iteration planning)
-
-**Success Metrics:**
-- Developers know which patterns apply to their project type
-- Consistent quality across different projects
-- Reduced "analysis paralysis" during setup
-- Teams can choose cadence that fits their workflow (sprints vs continuous flow)
+_To be determined based on Q1-Q2 learnings and Theme 1/2 completion_
 
 ---
 
-### Theme: Quality & Release Automation
-**Goal:** Catch issues before they reach users
+## Future Considerations
 
-**Why This Matters:** Manual validation is error-prone. Automation ensures consistency.
+### Development Process Patterns
+**Status:** Deferred until Project Guidance & Planning is functional
 
-**Key Initiatives:**
-- FEAT-007: Validation script with -Framework mode
-- FEAT-028: Release automation script
-- FEAT-051: Framework update test harness
+- Guide developers through proven development workflows (research → POC → MVP → test → security)
+- Process patterns, not language-specific syntax
+- Related work item: FEAT-090
 
-**Success Metrics:**
-- Zero broken distributions released
-- Release process takes <15 minutes
-- Structure violations caught automatically
+### Workflow Maturity
+**Status:** Maintenance mode - address critical issues only
 
----
-
-### Theme: Workflow Enhancements
-**Goal:** Make workflow transitions reliable and consistent
-
-**Why This Matters:** Workflow policies should be mechanically enforced, not just documented. Prevents inconsistent work item state. Planning periods should have structured completion and archival processes.
-
-**Key Initiatives:**
-- TECH-094: fw-move enforcement (validate transitions with hooks)
-- FEAT-093: Planning period archival (retrospectives and historical organization)
-- FEAT-030: Hold folder (for blocked work items)
-- FEAT-021: Hierarchical work item numbering
-- FEAT-024: Renumber workflow steps sequentially
-
-**Success Metrics:**
-- Zero work items in wrong folder/state
-- Transition policies enforced automatically
-- Durable audit trail of work item transitions
-- Retrospectives completed for all planning periods
-- Active roadmap stays lean and focused
-
----
-
-## Future Considerations (Q3+ 2026)
-
-### Visual Communication
-- FEAT-034: Projects showcase (examples of framework in use)
-- FEAT-004: Visual diagrams (architecture, workflow)
-
-### Extensibility
-- FEAT-047: Small team ID collision support
-- GitHub/Jira integration (research phase needed)
-- Multi-language documentation support
+- Polish kanban workflow based on user feedback
+- Eliminate friction points for new users
+- No major new features planned; focus is on stability
 
 ---
 
 ## Deferred / On Hold
 
-### Low Priority
-- DECISION-029: License choice (framework, not urgent)
-- DECISION-035: Root status reference (needs more context)
-- BUGFIX-045: Complete bash write/edit permissions
-
-### Research Needed
-- GitHub Issues integration (complexity vs benefit unclear)
-- Jira integration (most teams use one or the other, not framework)
-- Visual roadmap generation (mermaid charts)
+### Development Process Patterns (FEAT-090)
+**Why deferred:** Waiting for Project Guidance & Planning theme to reach functional state. Pattern-based development guidance is valuable but secondary to core planning capabilities.
 
 ---
 
 ## Completed Milestones
 
-### Q4 2025 / Q1 2026
-- ✅ **Framework Distribution Model** (DECISION-050)
-  - Achieved framework-as-dependency architecture
-  - Build and setup automation scripts
-  - Single starter template replaces size-based templates
-
-- ✅ **Structure Cleanup**
-  - Renamed thoughts/ to project-hub/ (TECH-084)
-  - Removed obsolete examples/ folder (TECH-085)
-  - Aligned POC folder with ADR-004 (TECH-086)
-
-- ✅ **Setup Experience Improvements** (TECH-081)
-  - Clear "After Setup" guidance
-  - AI integration documented
-  - GitHub setup instructions
+_No completed milestones yet - this is the initial roadmap._
 
 ---
 
 ## Theme Definitions
 
-### AI Integration & Clarity
-Improving how AI assistants understand and apply framework policies. Focuses on reducing cognitive load, clarifying critical behaviors, and consistent terminology.
+### Project Guidance & Planning
+AI-guided planning tools and patterns that help developers create professional project plans, break down work strategically, and track progress—without requiring formal PM training. Focuses on making strategic thinking accessible through role-based AI collaboration.
 
-### Developer Guidance & Patterns
-Providing clear architectural and process patterns for different project types. Helps developers apply best practices without guessing.
-
-### Quality & Release Automation
-Automated validation and release processes. Ensures consistent quality and reduces manual error.
-
-### Distribution & Setup Excellence
-Making framework adoption as smooth as possible. Focuses on initial user experience from download to first work item.
-
-### Visual Communication
-Using diagrams, examples, and visual aids to communicate framework concepts more effectively than text alone.
-
-### Workflow Enhancements
-Improvements to the kanban workflow, work item management, and process tooling. Focuses on mechanical enforcement of workflow policies to ensure consistent work item state and reliable transitions.
+### Framework Adoption & Onboarding
+Reducing friction in the first-time framework experience. Covers quick-start documentation, setup automation, and streamlined workflows that get new users from "What is this?" to productive work in under 10 minutes.
 
 ---
 
 ## How to Use This Roadmap
 
-**For Maintainers:**
+**For Team Members:**
 1. When prioritizing backlog items, consider which theme they support
-2. Review roadmap quarterly, adjust themes based on what we've learned
+2. Review roadmap quarterly, adjust themes based on learnings
 3. Themes inform decisions ("Does this align with our current focus?")
 
-**For Contributors:**
-1. Understand strategic direction before proposing features
-2. Reference relevant themes in work item proposals
-3. Roadmap explains "why" behind priorities
+**For Stakeholders:**
+1. Understand project direction without diving into backlog details
+2. See progress toward strategic goals
+3. Provide feedback on theme priorities
 
 **For AI Assistants:**
-1. Use themes for context when the user asks "what should we work on?"
-2. Reference roadmap when prioritizing between competing work items
+1. Use themes for context when prioritizing work items
+2. Reference roadmap when answering "what should we work on?"
 3. Roadmap provides strategic framing for technical decisions
 
 ---
@@ -207,5 +141,5 @@ Improvements to the kanban workflow, work item management, and process tooling. 
 
 ---
 
-**Created:** 2026-01-27
-**Owner:** Gary Elliott (gary.elliott@spearit.solutions)
+**Created:** 2026-02-01
+**Owner:** Gary Elliott / SpearIT Solutions
