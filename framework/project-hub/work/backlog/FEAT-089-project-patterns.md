@@ -10,7 +10,7 @@
 
 ## Summary
 
-Document architectural and design patterns specific to each project type (framework, application, library, toolbox) to guide developers toward proven practices.
+Document architectural and design patterns specific to each project type (framework, application, library, toolbox) to guide developers toward proven practices. Includes defining typical **feature structure** for each project type to support roadmap planning and work organization.
 
 ---
 
@@ -68,11 +68,45 @@ Based on `framework-schema.yaml` project.type enum:
 ### Pattern Categories (per project type)
 
 **For each project type, document:**
+- **Feature structure** (major feature areas that define the project)
 - Architecture patterns (how to structure the codebase)
 - Configuration patterns (how to handle settings)
 - Documentation patterns (what docs are essential)
 - Testing patterns (what testing approach makes sense)
 - Deployment patterns (how to package/distribute)
+
+### Feature Structure Definition
+
+**Purpose:** Each project type has typical feature areas that:
+1. Define the scope of what the project delivers
+2. Provide structure for roadmap planning (FEAT-095)
+3. Help organize backlog work items by feature area
+4. Guide project definition and vision (FEAT-087)
+
+**Example Feature Structures:**
+
+**Framework Projects:**
+- Workflow (kanban process, transitions, releases)
+- Project Guidance (planning, roadmaps, reporting, organization)
+- Developer Guidance (coding standards, methods, testing, security)
+
+**Application Projects:**
+- User Management (auth, profiles, permissions)
+- Core Features (domain-specific functionality)
+- Data Management (storage, sync, export/import)
+- Integration (APIs, third-party services)
+
+**Library Projects:**
+- Core API (primary functionality)
+- Extensions (optional add-ons)
+- Documentation (API docs, examples, guides)
+- Developer Tools (testing utilities, debugging)
+
+**Toolbox Projects:**
+- Script Collection (individual utilities)
+- Shared Infrastructure (common functions, logging)
+- Documentation (command reference, examples)
+- Distribution (packaging, installation)
 
 ### Example Patterns
 
@@ -125,6 +159,8 @@ Based on `framework-schema.yaml` project.type enum:
 - FEAT-052: Task-Based Project Templates - Workflow phases for project types (complementary)
 - FEAT-090: Coding Patterns - Coding strategy progression (complementary)
 - TECH-087: Project Type Selection - Uses project types defined in schema
+- FEAT-095: AI-Guided Roadmap - Uses feature structure from patterns to organize roadmaps
+- FEAT-087: Project Definition - Establishes feature structure during project setup
 
 ---
 
@@ -167,6 +203,21 @@ Concept originated from [misc-thoughts-and-planning.md](../research/misc-thought
 
 **Best Practices Focus:** These patterns represent what the best developers use, guided by the framework, not arbitrary rules.
 
+**Integration with Roadmap Planning (2026-02-01):**
+
+Feature structure definition creates natural flow from project setup to roadmap planning:
+
+1. **Project Definition (FEAT-087):** Vision + identify feature areas for project type
+2. **Project Organization (FEAT-089):** Pattern guidance + scan backlog by feature area
+3. **Roadmap Planning (FEAT-095):** Timeline-based roadmap showing feature progression (Q1: F1, F2; Q2: F3)
+
+**Benefit:** Roadmap planning becomes faster and more data-driven because feature structure already exists. Vision questions happen once during project definition, not every roadmap cycle.
+
+**Example:**
+- Framework project establishes: Workflow, Project Guidance, Developer Guidance
+- FEAT-095 roadmap then shows: "Q1: Project Guidance features (fw-roadmap, planning patterns)"
+- Not: "What are your strategic themes?" (abstract synthesis every time)
+
 ---
 
-**Last Updated:** 2026-01-27
+**Last Updated:** 2026-02-01

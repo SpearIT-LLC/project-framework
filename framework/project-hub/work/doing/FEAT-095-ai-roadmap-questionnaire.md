@@ -625,4 +625,79 @@ Roadmap quality depends on strategic thinking, not just filling in blanks. The q
 
 ---
 
-**Last Updated:** 2026-01-28
+## Testing Insights (2026-02-01)
+
+### MVP Test Results
+
+**What Worked:**
+- ✅ End-to-end flow functional (Vision → Themes → Metrics → Generate)
+- ✅ Strategic questioning and pushback effective
+- ✅ Produced valid, well-structured ROADMAP.md
+- ✅ Senior Product Owner role provided good strategic framing
+
+**Issues Discovered:**
+
+1. **File Location Bug:**
+   - Generated at project root instead of `docs/project/ROADMAP.md`
+   - Need to update skill instructions
+
+2. **Duration Exceeded Expectations:**
+   - Took 25-35 minutes vs expected 5 minutes (5-7x longer)
+   - Need upfront time expectation setting
+   - Consider "quick mode" for users with existing vision/structure
+
+3. **Roadmap Format Mismatch:**
+   - Created theme-based strategic roadmap (OKR style)
+   - User expected feature-based roadmap (Q1: F1, F2; Q2: F3, F4)
+   - Theme-based feels like sprint planning, not product roadmap
+
+### Key Insight: Feature-Based vs Theme-Based Roadmaps
+
+**User Mental Model:**
+Roadmaps show **feature progression over time**:
+```
+Q1 2026: Framework Command Suite (fw-roadmap, fw-status, fw-backlog)
+Q2 2026: Application Planning Pattern (project setup, work breakdown)
+Q3 2026: Onboarding Automation (quick-start, setup scripts)
+```
+
+**What MVP Created:**
+Abstract strategic themes with metrics (more like OKRs):
+```
+Theme 1: Project Guidance & Planning (PRIMARY)
+Theme 2: Framework Adoption & Onboarding (SECONDARY)
+```
+
+**Resolution:** Support feature-based roadmaps showing timeline of what's being built.
+
+### Integration with Project Definition (Critical Discovery)
+
+**Natural Information Flow:**
+
+1. **Project Definition (FEAT-087)** - Happens once at project start
+   - Define vision and problem
+   - Identify major **feature areas** for project type
+   - Document in README.md / PROJECT-STATUS.md
+
+2. **Project Organization (FEAT-089)** - Maps work to features
+   - Scan backlog and cluster by feature area
+   - Establish planning patterns per project type
+
+3. **Roadmap Planning (FEAT-095)** - Timeline-based planning
+   - **Prerequisite:** Feature structure exists
+   - Questions shift from "what are we building?" to "when and in what order?"
+   - Output: Feature-based roadmap showing Q1, Q2, Q3 progression
+
+**Benefit:** Vision questions happen once (FEAT-087), not every roadmap review.
+
+### Recommended v1.1+ Improvements
+
+1. **Vision Scanning:** Check README/PROJECT-STATUS for existing vision before asking foundational questions
+2. **Backlog Analysis:** Scan work items to suggest data-driven feature areas/themes
+3. **Feature-Based Format:** Default to timeline-oriented roadmap (Q1: F1, F2; Q2: F3)
+4. **Time Expectations:** State upfront: "15-25 minutes" or offer quick mode
+5. **File Path Fix:** Generate at `docs/project/ROADMAP.md` per workflow guide
+
+---
+
+**Last Updated:** 2026-02-01

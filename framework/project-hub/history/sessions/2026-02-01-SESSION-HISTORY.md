@@ -191,4 +191,49 @@ None
 
 ---
 
-**Last Updated:** 2026-02-01 (Evening)
+---
+
+## Session 3: Feature Structure Integration
+
+**Time:** Late evening session
+**Focus:** Capture feature-based roadmap insight in work items
+
+### Key Insight Documented
+
+**Discovery:** Roadmaps should show feature progression over time, not abstract themes. This requires project definition to establish feature structure first.
+
+**Natural Information Flow:**
+1. **FEAT-087 (Project Definition):** Define vision + identify feature areas for project type
+2. **FEAT-089 (Project Organization):** Map backlog to feature areas + provide pattern guidance
+3. **FEAT-095 (Roadmap Planning):** Create timeline-based roadmap (Q1: F1, F2; Q2: F3)
+
+**Benefits:**
+- Vision questions happen once (during project setup), not every roadmap review
+- Roadmap planning faster and more data-driven
+- Feature structure reusable across roadmap cycles
+- Natural for mature projects (structure exists, just update timeline)
+
+### Work Items Updated
+
+**FEAT-095 (doing/):**
+- Added testing insights section with MVP results
+- Documented file location bug
+- Captured duration/format mismatch issues
+- Added integration note about dependency on FEAT-089 for feature structure
+- Listed v1.1+ improvements based on user feedback
+
+**FEAT-089 (backlog/):**
+- Expanded summary to include feature structure definition
+- Added "Feature Structure Definition" section with examples for all 4 project types
+- Added integration note explaining flow to FEAT-095
+- Updated related work items to include FEAT-087 and FEAT-095
+
+### Files Modified
+
+- `framework/project-hub/work/doing/FEAT-095-ai-roadmap-questionnaire.md` - Testing insights and integration notes
+- `framework/project-hub/work/backlog/FEAT-089-project-patterns.md` - Feature structure definition and roadmap integration
+- `framework/project-hub/history/sessions/2026-02-01-SESSION-HISTORY.md` - Session 3 notes
+
+---
+
+**Last Updated:** 2026-02-01 (Late Evening)
