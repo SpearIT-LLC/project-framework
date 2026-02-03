@@ -54,6 +54,7 @@ I've included SOME of the work items related to the bullet points for reference.
   - Workflow patterns
 - Project Guidance
   - Setup tech-081, feat-006
+    - There's some important user experience issues here. First useage must be positive.
   - Project definition feat-087, 
   - Project organization feat-089
     - Project patterns
@@ -73,6 +74,7 @@ I've included SOME of the work items related to the bullet points for reference.
   - Security
   - POC
   - Research (code level)
+  - Bringing order to a preexisting messy code base (the scenario: user has an existing code base, then discovers the framework. How does the framework identify and help to bring order? /fw-code-review?) This might be more of an advance feature.
 
 ### Technical Features
 Not sure this is worth separating.
