@@ -108,4 +108,40 @@ This command should also be offered:
 - User reviews content before file is written
 - Existing content is preserved when updating
 
+## Important: Append-Only Principle
+
+**Session history is a historical record - show the journey, not just the destination.**
+
+When updating an existing session history file:
+
+✅ **DO:**
+- Append new sections for continued work
+- Show evolution of thinking throughout the day
+- Preserve original decisions/conclusions even if later superseded
+- Add "(Later)" or "(Afternoon Session)" markers when continuing discussions
+- Document how you arrived at final decisions
+
+❌ **DON'T:**
+- Replace earlier content with final decisions
+- Rewrite history to show only the end state
+- Delete original "pending" or "TBD" status when decisions are made later
+
+**Example:**
+
+**Morning (original):**
+```
+### 2. Epic Structure (Pending)
+**Status:** Three options under consideration, final decision next session
+```
+
+**Afternoon (append, don't replace):**
+```
+### 2. Epic Structure - Final Decision (Afternoon Session)
+**Continuation:** Resumed epic discussion from morning
+**Final decision:** Themes + Planning Periods model
+**Rationale:** [Why we chose this over the three options]
+```
+
+This preserves the historical record of HOW decisions evolved, not just WHAT was decided.
+
 ARGUMENTS: $ARGUMENTS
