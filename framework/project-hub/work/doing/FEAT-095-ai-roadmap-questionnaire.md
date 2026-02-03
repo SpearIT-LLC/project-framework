@@ -750,4 +750,177 @@ All three MVP issues from initial testing have been addressed:
 
 ---
 
-**Last Updated:** 2026-02-02
+## Design Refinement: Themes vs Epics (2026-02-03)
+
+### Problem Identified
+
+Initial epic discussion (from session 2026-02-03) explored adding epic tracking to roadmaps. Three options were considered:
+- Option A: Epics persist in ROADMAP.md indefinitely (contradicts archival)
+- Option B: Epics archive with planning periods (requires transition logic for open work items)
+- Option C: EPIC-REGISTRY.md (adds new file, duplication/sync issues)
+
+**Key realization:** Introducing rigid "Epic" concept contradicts framework philosophy and FEAT-092's flexible Planning Period design.
+
+### Solution: Themes + Flexible Planning Periods
+
+**Model:**
+```
+Themes (Stable)
+  └─ Planning Periods (Flexible, user-defined)
+      └─ Work Items (Tactical)
+```
+
+**Themes** - Stable project categories (what the project IS)
+- Examples: "Distribution & Onboarding", "Workflow", "Project Guidance"
+- Never change unless project fundamentally pivots
+- Work items reference their theme
+- Provides consistent categorization across planning periods
+
+**Planning Periods** - Flexible time-based organization (from FEAT-092)
+- User names them however makes sense:
+  - "Sprint 1" (if working in sprints)
+  - "Q1 2026" (if quarterly planning)
+  - "Foundation Phase" (if phase-based)
+  - "Initial Setup Epic" (if thinking in epics)
+  - Any custom naming
+- Live in ROADMAP.md with strategic framing (goal, success criteria, which themes)
+- Archive when complete (FEAT-093)
+- No rigid structure - adapts to user's mental model
+
+**Work Items** - Tactical implementation
+- `Theme:` [stable category - e.g., "Distribution & Onboarding"]
+- `Planning Period:` [optional - e.g., "Sprint 1" or "Q1 2026"]
+
+### Philosophy Alignment
+
+**Preserves FEAT-092 flexibility:**
+- Planning Periods remain abstract/flexible
+- User decides naming convention and cadence
+- No prescribed structure (sprints vs quarters vs epics vs phases)
+
+**Adds strategic layer:**
+- Themes provide stable categorization
+- Roadmaps focus on goals/success criteria (strategic)
+- Not feature lists or sprint plans (tactical)
+
+**Maintains framework voice:**
+- "Guidance not enforcement" - themes and planning periods are documentation
+- "Loose coupling" - no referential integrity, no sync logic
+- "Clarity without overhead" - simple text fields, no complex tracking
+
+### Why Not Rigid "Epic" Concept?
+
+**Problems with prescriptive epics:**
+- Adds new terminology on top of Planning Periods (confusing)
+- Requires archival transition logic (complexity)
+- Feels like building a database (sync, validation, relationships)
+- Contradicts flexible Planning Period design
+
+**Better approach:**
+- Users CAN call planning periods "epics" if they want
+- Framework just calls them "Planning Periods" (generic)
+- Themes provide the stable categorization layer
+- Simple, flexible, aligned with existing design
+
+### Terminology Decision
+
+**"Theme" chosen over alternatives:**
+
+Considered:
+- Feature Area (too prescriptive, tied to "features")
+- Feature Domain (same issue)
+- Domain (too technical, implies DDD)
+- Pillar (slightly grandiose)
+- Value Stream (too formal/enterprise)
+- Track (implies parallel/independent)
+
+**Why "Theme":**
+- ✅ Standard agile terminology (widely understood)
+- ✅ Flexible - accommodates functional, strategic, or technical organization
+- ✅ One word (clean)
+- ✅ Already used in MVP v1.0 (continuity)
+- ✅ Open to user interpretation (aligns with framework flexibility)
+
+### ROADMAP.md Structure (Revised)
+
+**Section 1: Project Themes** (Stable)
+```markdown
+## Project Themes
+
+1. **Distribution & Onboarding** - Setup, installation, first-use experience
+2. **Workflow** - Kanban structure, work item management
+3. **Project Guidance** - Planning, roadmaps, status, reporting
+4. **Developer Guidance** - Patterns, best practices, templates
+```
+
+**Section 2: Planning Periods** (Strategic framing, user-named)
+```markdown
+## Planning Period: Sprint 1-3 (Foundation)
+**Themes:** Distribution & Onboarding, Workflow
+**Goal:** Establish core framework capabilities
+**Success:** User can set up project and track work without external tools
+**Duration:** 5 sprints (estimated)
+**Work:** See backlog items tagged with Planning Period "Sprint 1-3"
+```
+
+Or if user prefers epic-style naming:
+```markdown
+## Planning Period: Initial Setup Experience Epic
+**Themes:** Distribution & Onboarding
+**Goal:** Seamless one-command setup
+**Success:** New user productive in <5 minutes
+```
+
+**Key difference from v1.1:**
+- Themes declared upfront (stable reference)
+- Planning periods use strategic framing (goal/success, not feature lists)
+- Work items referenced, not enumerated (no sync issues)
+
+### Impact on FEAT-095 Implementation
+
+**What changes:**
+1. `/fw-roadmap` asks about themes FIRST (stable structure)
+2. Then asks about current planning period (goal, timeframe, success criteria)
+3. Generates ROADMAP.md with themes section + planning period sections
+4. Strategic questions (capabilities/goals), not tactical (feature lists)
+
+**What stays the same:**
+- Conversational approach
+- Senior Product Owner role
+- Constructive pushback on vague answers
+- Flexible timeframe support (FEAT-092 alignment)
+- Section-by-section approval
+
+**Work item template update needed:**
+```yaml
+**Theme:** [Optional - e.g., "Distribution & Onboarding", "Workflow"]
+**Planning Period:** [Optional - e.g., "Sprint 3", "Q2 2026", "Beta Phase"]
+```
+
+### Next Steps
+
+**For FEAT-095 v1.2:**
+- [ ] Update `/fw-roadmap` skill with themes-first approach
+- [ ] Add strategic question set (goals/success vs features/tasks)
+- [ ] Update ROADMAP.md generation to include themes section
+- [ ] Test on framework project with refined approach
+
+**For Framework:**
+- [ ] Update work item template (add Theme field)
+- [ ] Update glossary with Theme and Planning Period definitions
+- [ ] Update README with "workflow system" positioning statement
+- [ ] Ensure ROADMAP-TEMPLATE.md reflects themes + planning periods structure
+
+**For Documentation:**
+- [ ] Add Theme vs Planning Period distinction to glossary (FEAT-088)
+- [ ] Update workflow guide with strategic roadmap examples
+- [ ] Clarify relationship: Theme (stable) vs Planning Period (temporal)
+
+### Key Quote
+
+**Framework positioning statement (for README):**
+> "A strategic thinking partner and workflow system for developers who want clarity without overhead."
+
+---
+
+**Last Updated:** 2026-02-03
