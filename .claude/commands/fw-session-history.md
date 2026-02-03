@@ -112,6 +112,8 @@ This command should also be offered:
 
 **Session history is a historical record - show the journey, not just the destination.**
 
+*See also: [Workflow Guide - Session History](../docs/collaboration/workflow-guide.md#session-history) for detailed process guidance.*
+
 When updating an existing session history file:
 
 ✅ **DO:**

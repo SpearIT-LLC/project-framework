@@ -1263,6 +1263,48 @@ Every project should have these files in the root:
 [What's next]
 ```
 
+**Important: Append-Only Principle**
+
+Session history is a historical record - preserve the journey, not just the destination.
+
+When updating an existing session history file:
+
+✅ **DO:**
+- Append new sections for continued work
+- Show evolution of thinking throughout the day
+- Preserve original decisions/conclusions even if later superseded
+- Add "(Later)" or "(Afternoon Session)" markers when continuing discussions
+- Document how you arrived at final decisions
+
+❌ **DON'T:**
+- Replace earlier content with final decisions
+- Rewrite history to show only the end state
+- Delete original "pending" or "TBD" status when decisions are made later
+
+**Example of proper evolution:**
+
+Morning (original):
+```markdown
+### 2. Database Schema Design (Pending)
+**Status:** Three options under consideration, final decision next session
+```
+
+Afternoon (append, don't replace):
+```markdown
+### 2. Database Schema Design - Final Decision (Afternoon Session)
+**Continuation:** Resumed schema discussion from morning
+**Final decision:** Option B (normalized schema with caching layer)
+**Rationale:** Better data integrity, performance concerns addressed with Redis cache
+```
+
+This preserves the historical record of HOW decisions evolved, not just WHAT was decided.
+
+**Automation:**
+- Use `/fw-session-history` skill to generate/update session history
+- See: [fw-session-history command](../../.claude/commands/fw-session-history.md)
+
+---
+
 ### Code Documentation Requirements
 
 **Must have:**
