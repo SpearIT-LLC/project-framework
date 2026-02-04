@@ -1,6 +1,9 @@
 # Framework Roadmap Ideas
 
-## Abstact
+**Status:** Done (Supporting document for FEAT-095)
+**Completed:** 2026-02-04
+
+## Abstract
 This document is a sketch pad of ideas I have about the framework roadmap. It is meant to provide another perspective for FEAT-095.
 
 ## Broad Categories

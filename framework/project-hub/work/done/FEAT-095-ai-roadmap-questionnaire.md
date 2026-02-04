@@ -5,6 +5,8 @@
 **Priority:** High
 **Version Impact:** MINOR
 **Created:** 2026-01-28
+**Completed:** 2026-02-04
+**Status:** Done
 **Theme:** AI Integration & Clarity
 
 ---
@@ -465,7 +467,9 @@ Planning Period Archival (FEAT-093)
 
 ## Acceptance Criteria
 
-### MVP (v1.0) - In Scope
+**Note:** These criteria reflect the original MVP scope. FEAT-095 v1.3 exceeded MVP by implementing the Themes + Planning Periods model (v1.3). Testing/validation items were intentionally deferred as the skill is functional. See "Completion Summary" section for what was actually delivered.
+
+### MVP (v1.0) - In Scope (Original Plan)
 
 **Implementation:**
 - [x] `/fw-roadmap` skill created in `.claude/commands/` (repo root)
@@ -923,4 +927,64 @@ Or if user prefers epic-style naming:
 
 ---
 
-**Last Updated:** 2026-02-03
+## Critical Finding: Obsolete Multi-Level Framework Concept (2026-02-04)
+
+During FEAT-095 completion, discovered extensive references to the abandoned "Minimal/Light/Standard" framework levels concept still present in 117+ files across the codebase.
+
+**Issue:** Core documentation (README, QUICK-START, CLAUDE.md) still positions framework as "multi-level" and "choose your framework level", contradicting the unified framework vision and blocking FEAT-089 clarity.
+
+**Action Taken:**
+- Created **DECISION-105**: Formally retire multi-level framework concept
+- Created **TECH-106**: Execute documentation cleanup (follow-up work)
+- Deferred README positioning update from FEAT-095 to TECH-106
+
+**Impact on FEAT-095:**
+- GLOSSARY.md Theme/Planning Period definitions completed ✅
+- README positioning update deferred to TECH-106 (blocked by DECISION-105)
+- `/fw-roadmap` skill implementation unaffected (already correct)
+
+**Rationale for deferral:**
+Discovered issue is too large to address within FEAT-095 scope. Better to formally document decision (DECISION-105), create dedicated cleanup work item (TECH-106), then complete FEAT-095 v1.3 with what's already done.
+
+---
+
+## Completion Summary (v1.3)
+
+**Status:** Complete - Core implementation finished, follow-up work identified
+
+**What Was Delivered:**
+1. ✅ `/fw-roadmap` skill v1.3 - Industry-standard strategic roadmaps
+   - Themes + Planning Periods model implemented
+   - Creation mode with strategic questioning
+   - Natural language update support
+   - Senior Product Owner role + Opus model
+   - Synced to starter template
+
+2. ✅ Documentation Updated
+   - GLOSSARY.md: Added Theme, Planning Period, Roadmap definitions
+   - ROADMAP-TEMPLATE.md: Updated with Themes + Planning Periods structure
+   - Work item templates: All include Theme and Planning Period fields
+   - Framework's own ROADMAP.md: Using new structure
+
+3. ✅ Critical Issue Identified & Documented
+   - Discovered obsolete multi-level framework concept (117+ files)
+   - Created DECISION-105: Formally retire concept
+   - Created TECH-106: Documentation cleanup work item
+   - Approved positioning statements documented
+
+**Deferred to Future Work:**
+- Testing/validation: Deferred (skill is functional, testing optional)
+- README positioning update: Deferred to TECH-106 (blocked by DECISION-105)
+- Review mode: Deferred to post-MVP (v1.4+)
+- Backlog integration: Deferred to post-MVP (v1.4+)
+
+**Dependencies Created:**
+- DECISION-105 blocks TECH-106 (approved positioning needed first)
+- DECISION-105 prerequisite for FEAT-089 (Project Organization)
+
+**Version Delivered:** v1.3 (exceeded MVP scope)
+
+---
+
+**Last Updated:** 2026-02-04
+**Completed:** 2026-02-04

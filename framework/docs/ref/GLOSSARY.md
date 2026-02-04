@@ -113,6 +113,19 @@ A lightweight implementation created to validate technical feasibility or explor
 
 See: [Workflow Guide - Development Workflow Phases](../collaboration/workflow-guide.md#development-workflow-phases)
 
+### Planning Period
+A flexible, user-defined timeframe for organizing roadmap work temporally. Planning periods have goals, success criteria, and focus on specific themes. They answer "What are we trying to achieve in this timeframe?"
+
+**Common types:**
+- **Time-boxed**: Sprints (1-4 weeks), Quarters (3 months)
+- **Milestone-based**: "MVP Complete", "Beta Launch", "v2.0 Release"
+- **Phase-based**: "Discovery", "Alpha", "Production"
+- **Ad-hoc**: "Post-Refactor", "After User Testing", "Holiday Season"
+
+Planning periods are organizational labels for grouping work, not enforced deadlines. Users choose their own naming convention. Work items can optionally reference planning periods in metadata. Planning periods are defined in ROADMAP.md and archived when complete.
+
+See: [ROADMAP-TEMPLATE.md](../../templates/planning/ROADMAP-TEMPLATE.md), [Roadmap](#roadmap), [Theme](#theme)
+
 ### Pre-Implementation Review
 A checkpoint where AI assistants read the entire work item, identify open questions, present an implementation summary, and wait for user confirmation before proceeding.
 
@@ -132,6 +145,26 @@ See: [Workflow Guide - Documentation Standards](../collaboration/workflow-guide.
 What type of project you're building: `application` (end-user software), `library` (reusable code), `framework` (process/structure), or `toolbox` (utilities collection). Defined in framework.yaml.
 
 See: [Framework Schema](framework-schema.yaml)
+
+---
+
+## R
+
+### Roadmap
+A strategic document defining project direction through stable themes and temporal planning periods. Roadmaps answer "What are the major categories of work?" (themes) and "What are we focusing on now?" (planning periods).
+
+**Structure:**
+- **Themes**: 3-5 stable categories organizing all project work
+- **Planning Periods**: Time-bound sections with goals, success criteria, and theme focus
+- **Future Considerations**: Ideas not yet assigned to planning periods
+
+**Roadmap vs Backlog:**
+- **Roadmap** = Strategic direction (themes, goals, outcomes)
+- **Backlog** = Tactical work items (specific features/bugs)
+
+Roadmaps focus on strategic framing (why, what outcomes) rather than tactical details (specific work items). Created and updated using the `/fw-roadmap` skill.
+
+See: [ROADMAP-TEMPLATE.md](../../templates/planning/ROADMAP-TEMPLATE.md), [Theme](#theme), [Planning Period](#planning-period)
 
 ---
 
@@ -161,6 +194,25 @@ A work item type representing technical improvements, refactoring, or cleanup ne
 
 See: [Workflow Guide - Work Item Templates](../collaboration/workflow-guide.md#work-item-templates)
 
+### Theme
+A stable category of project work that organizes all work items and persists throughout the project lifecycle. Themes answer "What are the major categories of this project?" and rarely change unless the project fundamentally pivots.
+
+**Examples:**
+- "Distribution & Onboarding" - Setup, installation, first-use experience
+- "Workflow" - Work item management, release automation
+- "Project Guidance" - Planning, roadmaps, status, strategic tools
+- "Developer Guidance" - Code standards, patterns, best practices
+
+**Key characteristics:**
+- 3-5 themes per project (too many = unfocused)
+- Stable over time (not temporal like planning periods)
+- Every work item should map to a theme
+- Themes provide consistent categorization across planning periods
+
+Themes are defined in ROADMAP.md and referenced in work item metadata. All planning periods focus on one or more themes, but not all themes are active simultaneously.
+
+See: [ROADMAP-TEMPLATE.md](../../templates/planning/ROADMAP-TEMPLATE.md), [Roadmap](#roadmap), [Planning Period](#planning-period)
+
 ### Todo
 Work items committed for immediate attention. Located in `project-hub/work/todo/`. Represents prioritized work ready to start.
 
@@ -187,4 +239,4 @@ See: [Workflow Guide - Work Item Templates](../collaboration/workflow-guide.md#w
 
 ---
 
-**Total Terms Defined:** 30
+**Total Terms Defined:** 33
