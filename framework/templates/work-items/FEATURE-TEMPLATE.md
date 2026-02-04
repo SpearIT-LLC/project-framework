@@ -5,9 +5,10 @@
 **Priority:** [High | Medium | Low]
 **Version Impact:** [MAJOR | MINOR | PATCH]
 **Created:** YYYY-MM-DD
+**Theme:** [Optional - e.g., "Distribution & Onboarding", "Workflow", "Project Guidance", "Developer Guidance"]
+**Planning Period:** [Optional - e.g., "Sprint 3", "Q2 2026", "Beta Phase", "Foundation Epic"]
 
 <!-- Optional fields - uncomment if needed:
-**Theme:** [Theme name from docs/project/ROADMAP.md]
 **Assigned:** [Name]
 **Depends On:** [ITEM-NNN, ITEM-NNN]
 -->

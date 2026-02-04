@@ -75,6 +75,11 @@ I've included SOME of the work items related to the bullet points for reference.
   - POC
   - Research (code level)
   - Bringing order to a preexisting messy code base (the scenario: user has an existing code base, then discovers the framework. How does the framework identify and help to bring order? /fw-code-review?) This might be more of an advance feature.
+- Distribution & Onboarding
+  - Security concerns
+    - We're only delivering a zip file but how do we assure it's secure?
+  - Does the initial setup activity belong here instead of project guidance? There's some overlap but it starts here.
+  - 
 
 ### Technical Features
 Not sure this is worth separating.

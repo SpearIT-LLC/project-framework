@@ -5,10 +5,11 @@
 **Priority:** [High | Medium | Low]
 **Version Impact:** PATCH
 **Created:** YYYY-MM-DD
+**Theme:** [Optional - e.g., "Distribution & Onboarding", "Workflow"]
+**Planning Period:** [Optional - e.g., "Sprint 3", "Q2 2026"]
 
 <!-- Optional fields - uncomment if needed:
 **Severity:** [Critical | High | Medium | Low]
-**Theme:** [Theme name from docs/project/ROADMAP.md]
 **Assigned:** [Name]
 **Depends On:** [ITEM-NNN, ITEM-NNN]
 -->

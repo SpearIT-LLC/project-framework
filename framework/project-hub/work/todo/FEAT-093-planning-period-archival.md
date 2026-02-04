@@ -275,12 +275,18 @@ planning:
 
 ## Migration Plan
 
+### Prerequisites
+- **DECISION-037 must be resolved first** - Determine if project-hub moves to repo root or stays in framework/
+- **Current state (as of FEAT-095):** ROADMAP.md is at `framework/docs/project/ROADMAP.md` (temporary location until FEAT-093 completes)
+
 ### Phase 1: Structure Reorganization
-1. Create `framework/project-hub/project/` folder
-2. Create `framework/project-hub/history/archive/` folder
-3. Move `docs/project/ROADMAP.md` → `project-hub/project/ROADMAP.md`
-4. Update all references to ROADMAP.md location
-5. Update framework documentation
+1. **Wait for DECISION-037 completion** - Know final project-hub location
+2. Create `project-hub/project/` folder (at final location from DECISION-037)
+3. Create `project-hub/history/archive/` folder
+4. Move ROADMAP.md from current location (`framework/docs/project/`) → `project-hub/project/ROADMAP.md`
+5. Update all references to ROADMAP.md location (skills, docs, framework.yaml)
+6. Update framework documentation
+7. Update /fw-roadmap skill to write to new location
 
 ### Phase 2: Archive Q1 2026 (Completed)
 1. Extract Q1 2026 section from ROADMAP.md
@@ -315,7 +321,9 @@ planning:
 ## Dependencies
 
 **Requires:**
-- FEAT-091: Project roadmap (provides structure to archive)
+- DECISION-037: Project-hub location (must know final location before reorganizing)
+- FEAT-091: Project roadmap (provides structure to archive) ✅ Complete
+- FEAT-095: /fw-roadmap skill (creates ROADMAP.md, currently at temporary location) ✅ Complete
 
 **Blocks:**
 - None

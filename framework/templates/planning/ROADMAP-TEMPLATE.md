@@ -7,139 +7,157 @@
 
 ## Purpose
 
-This roadmap defines the strategic direction for [Project Name]. It organizes work into themes that guide prioritization and measure progress toward long-term goals.
+This roadmap defines the strategic direction for [Project Name]. It organizes work into stable **themes** (project categories) and temporal **planning periods** (time-bound goals).
+
+**Key Concepts:**
+- **Themes** = Stable categories of work (what the project IS)
+- **Planning Periods** = Time-bound focus areas (what you're working on NOW)
 
 **Roadmap vs Backlog:**
-- **Roadmap** = Strategic direction (6-12 month horizon, themes and milestones)
+- **Roadmap** = Strategic direction (themes, planning periods, goals)
 - **Backlog** = Tactical work items (specific features/bugs supporting themes)
 
 ---
 
-## Current Focus ([Time Period, e.g., Q1 2026])
+## Project Themes
 
-### Theme: [Theme Name]
-**Goal:** [What you're trying to achieve]
+These are the major categories that organize ALL project work. Themes are stable - they don't change unless the project fundamentally pivots.
+
+### 1. [Theme Name]
+[1-2 sentence description of what this theme encompasses and why it matters]
+
+### 2. [Theme Name]
+[1-2 sentence description of what this theme encompasses and why it matters]
+
+### 3. [Theme Name]
+[1-2 sentence description of what this theme encompasses and why it matters]
+
+### 4. [Theme Name] (Optional)
+[1-2 sentence description of what this theme encompasses and why it matters]
+
+---
+
+## Current Planning Period: [Period Name]
+
+**Duration:** [Estimate, e.g., "~6 weeks (3 sprints)" or "Q1 2026"]
+**Primary Themes:** [Theme 1], [Theme 2]
+**Goal:** [What you're trying to achieve this period]
+
+**Success Criteria:**
+- [Measurable outcome 1]
+- [Measurable outcome 2]
+- [Measurable outcome 3]
+
+**Key Work:**
+- [Work item or initiative] (WORK-ITEM-ID)
+- [Work item or initiative] (WORK-ITEM-ID)
+- [Work item or initiative] (WORK-ITEM-ID)
 
 **Status:** [🚧 In Progress | 📋 Planned | ✅ Complete]
 
-**Key Milestones:**
-- ✅ [Completed milestone] (WORK-ITEM-ID)
-- 🚧 [In progress milestone] (WORK-ITEM-ID)
-- 📋 [Planned milestone] (WORK-ITEM-ID)
+---
 
-**Success Metrics:**
-- [Measurable criterion 1]
-- [Measurable criterion 2]
-- [Measurable criterion 3]
+## Future Planning Periods
 
-**What's Next:**
-- [Immediate next steps]
-- [What needs to happen to complete this theme]
+### Planning Period: [Next Period Name]
+
+**Duration:** [Estimate]
+**Primary Themes:** [Theme X], [Theme Y]
+**Goal:** [High-level goal for this period]
+
+**Planned Work:**
+- [Initiative or work item]
+- [Initiative or work item]
 
 ---
 
-## Next Phase ([Time Period, e.g., Q2 2026])
+### Planning Period: [Later Period Name]
 
-### Theme: [Theme Name]
-**Goal:** [What you're trying to achieve]
+**Duration:** [Estimate]
+**Primary Themes:** [Theme X]
+**Goal:** [High-level goal for this period]
 
-**Why This Matters:** [Brief explanation of strategic importance]
-
-**Key Initiatives:**
-- [Work item or initiative description] (WORK-ITEM-ID if created)
-- [Work item or initiative description]
-- [Work item or initiative description]
-
-**Success Metrics:**
-- [How you'll know this theme succeeded]
-- [Measurable outcomes]
+**Ideas:**
+- [Potential initiative]
+- [Potential initiative]
 
 ---
 
-### Theme: [Another Theme Name]
-**Goal:** [What you're trying to achieve]
+## Future Considerations
 
-**Why This Matters:** [Brief explanation]
+Ideas and initiatives not yet assigned to planning periods.
 
-**Key Initiatives:**
-- [List of work items or initiatives]
+**By Theme:**
 
-**Success Metrics:**
-- [Measurable outcomes]
+### [Theme Name]
+- [Idea or initiative]
+- [Idea or initiative]
 
----
+### [Theme Name]
+- [Idea or initiative]
+- [Idea or initiative]
 
-## Future Considerations ([Time Period, e.g., Q3+ 2026])
-
-### [Category Name, e.g., Performance Optimization]
-- [Initiative or idea]
-- [Initiative or idea]
-- [Initiative or idea]
-
-### [Category Name, e.g., User Experience]
-- [Initiative or idea]
-- [Initiative or idea]
+**Unorganized:**
+- [Idea not yet mapped to a theme]
 
 ---
 
 ## Deferred / On Hold
 
 ### Low Priority
-- [Item name]: [Why it's low priority]
-- [Item name]: [Why it's low priority]
+- [Item name]: [Why it's low priority or deferred]
+- [Item name]: [Why it's low priority or deferred]
 
 ### Research Needed
-- [Item name]: [What needs to be researched first]
+- [Item name]: [What needs to be researched before proceeding]
 - [Item name]: [What's unclear or blocking decision]
 
 ---
 
-## Completed Milestones
+## Completed Planning Periods
 
-### [Time Period]
-- ✅ **[Theme or Milestone Name]** ([Work Item IDs])
-  - [Key achievement]
-  - [Key achievement]
-  - [Key achievement]
+### Planning Period: [Period Name] (Completed YYYY-MM-DD)
 
-- ✅ **[Theme or Milestone Name]** ([Work Item IDs])
-  - [Brief description of what was accomplished]
+**Themes:** [Theme 1], [Theme 2]
+**Goal:** [What was achieved]
 
----
+**Completed Work:**
+- ✅ [Work item] (WORK-ITEM-ID)
+- ✅ [Work item] (WORK-ITEM-ID)
 
-## Theme Definitions
-
-### [Theme Name]
-[1-2 sentence description of what this theme encompasses and why it matters]
-
-### [Theme Name]
-[1-2 sentence description]
-
-### [Theme Name]
-[1-2 sentence description]
+**Key Outcomes:**
+- [Achievement or learning]
+- [Achievement or learning]
 
 ---
 
 ## How to Use This Roadmap
 
-**For Team Members:**
-1. When prioritizing backlog items, consider which theme they support
-2. Review roadmap quarterly, adjust themes based on learnings
-3. Themes inform decisions ("Does this align with our current focus?")
+**For Project Members:**
+1. **Themes** help categorize work - every work item should map to a theme
+2. **Planning Periods** show current focus - not all themes are active simultaneously
+3. Review roadmap at planning period boundaries, adjust based on learnings
+4. Themes are stable; planning periods evolve
 
 **For Stakeholders:**
 1. Understand project direction without diving into backlog details
-2. See progress toward strategic goals
-3. Provide feedback on theme priorities
+2. See progress through completed planning periods
+3. Provide feedback on theme priorities and planning period goals
 
 **For AI Assistants:**
-1. Use themes for context when prioritizing work items
-2. Reference roadmap when answering "what should we work on?"
-3. Roadmap provides strategic framing for technical decisions
+1. Use themes for context when prioritizing or creating work items
+2. Reference current planning period when answering "what should we work on?"
+3. Planning periods provide strategic framing for technical decisions
+4. Suggest work items connect to themes via metadata
+
+**Relationship: Themes ↔ Planning Periods ↔ Work Items:**
+- **Themes** = Stable project categories (e.g., "Workflow", "Distribution")
+- **Planning Periods** = Temporal goals focusing on 1-2 themes
+- **Work Items** = Tactical tasks supporting themes, optionally tagged with planning period
 
 ---
 
-**Note:** This roadmap is a guide, not a commitment. Themes and priorities may shift based on user feedback, technical discoveries, or changing requirements. The roadmap informs decisions; it doesn't constrain them.
+**Note:** This roadmap is a guide, not a commitment. Planning periods may shift based on feedback, discoveries, or changing requirements. The roadmap informs decisions; it doesn't constrain them.
 
 ---
 
