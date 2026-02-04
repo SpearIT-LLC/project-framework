@@ -116,7 +116,7 @@ Two versions approved for different contexts:
 > The **SpearIT Project Framework** is a file-based workflow and AI collaboration partner for solo developers and small teams building software or documentation projects.
 
 **Version 2 (Verbose)** - For detailed intro, About sections, comprehensive description:
-> The **SpearIT Project Framework** is a file-based workflow and AI collaboration partner for solo developers and small teams. Using markdown files and scripting tools, it provides Kanban work tracking, strategic roadmaps, AI-guided planning, and documentation standards—without requiring external services or databases.
+> The **SpearIT Project Framework** is a file-based workflow and AI collaboration partner for solo developers and small teams. Using markdown files and scripting tools, it provides Kanban work tracking, strategic roadmaps, AI-guided planning, and documentation standards—no project management tools or databases required.
 
 **Usage guidance:**
 - README.md "What Is This?" section: Use Version 1 as opening line
