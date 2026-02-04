@@ -30,7 +30,7 @@ For quick reference, see [CLAUDE.md](../../../CLAUDE.md) for summaries and check
 
 ## Development Workflow Phases
 
-All projects follow this core workflow, with depth varying by framework level:
+All projects follow this core workflow, with depth varying by project needs:
 
 ### 1. Research/Explore
 
@@ -55,13 +55,14 @@ All projects follow this core workflow, with depth varying by framework level:
   - Should we defer or cancel?
 
 **Documentation:**
-- **Standard/Full frameworks:** `project-hub/research/`
-  - `problem-statement.md` - Clear problem definition
-  - `landscape-analysis.md` - Existing solutions review
-  - `feasibility.md` - Can/should we build this?
-  - `project-justification.md` - Go/no-go decision
-- **Light framework:** `project-hub/research/justification.md` (simplified)
-- **Minimal framework:** Embedded in README.md "Why This Exists" section
+
+The framework supports `project-hub/research/` for detailed research documentation:
+- `problem-statement.md` - Clear problem definition
+- `landscape-analysis.md` - Existing solutions review
+- `feasibility.md` - Can/should we build this?
+- `project-justification.md` - Go/no-go decision
+
+For simpler projects, you may use a single `justification.md` or embed research in README.md "Why This Exists" section.
 
 **Exit Criteria:**
 - Problem clearly defined
@@ -92,9 +93,8 @@ All projects follow this core workflow, with depth varying by framework level:
   - What might we do later?
 
 **Documentation:**
-- **Standard/Full:** `project-hub/external-references/project-definition.md`
-- **Light:** Brief section in README.md
-- **Minimal:** Embedded in README.md
+
+For comprehensive projects, create `project-hub/external-references/project-definition.md`. For simpler projects, a section in README.md is sufficient.
 
 **Exit Criteria:**
 - Clear definition of what we're building
@@ -127,14 +127,15 @@ All projects follow this core workflow, with depth varying by framework level:
   - Resource requirements
 
 **Documentation:**
-- **Standard/Full:** `project-hub/`
-  - `roadmap.md` - Version plan
-  - `work/backlog/` - Features not yet started
-  - `work/todo/` - Committed next work
-  - `work/doing/` - Currently in progress (WIP limited)
-  - `work/done/` - Completed work
-- **Light:** Simple task list in README or STATUS
-- **Minimal:** Informal notes or none
+
+The framework provides `project-hub/` structure for work tracking:
+- `roadmap.md` - Version plan
+- `work/backlog/` - Features not yet started
+- `work/todo/` - Committed next work
+- `work/doing/` - Currently in progress (WIP limited)
+- `work/done/` - Completed work
+
+For simpler projects, a task list in README or STATUS may be sufficient.
 
 **Planning Principle:** "What's the one thing this must accomplish?"
 
@@ -190,9 +191,8 @@ Ask this before elaborate planning. Keep planning proportional to project size.
   - `git tag -a vX.Y.Z -m "Release notes"`
   - Push tags: `git push --tags`
 - Move to work/done/
-  - **Standard/Full:** File moves from doing/ → done/
-  - **Light/Minimal:** Mark as complete
-- **Archive work items (Standard/Full):**
+  - File moves from doing/ → done/
+- **Archive work items:**
   - Immediately after release tag is created
   - Create `project-hub/history/releases/vX.Y.Z/` folder
   - Move ALL related work item files from done/ to release folder
@@ -223,11 +223,13 @@ Always research before implementing:
 
 Don't skip research. It prevents wasted effort.
 
-### Research Depth by Framework Level
+### Research Depth Based on Project Needs
 
-#### Minimal Framework
+Apply research depth proportional to project complexity, risk, and uncertainty. The framework supports comprehensive research documentation while allowing simpler approaches for straightforward projects.
 
-Embedded in README.md:
+#### Lightweight Research (Simple Projects)
+
+For scripts, small utilities, or well-understood problems, embed research directly in README.md:
 
 ```markdown
 ## Why This Script Exists
@@ -254,9 +256,9 @@ Embedded in README.md:
 Takes 30 seconds, no dependencies, works for our team.
 ```
 
-#### Light Framework
+#### Mid-Depth Research (Moderate Complexity)
 
-Simple justification document at `project-hub/research/justification.md`:
+For projects with some uncertainty or moderate investment, create a simple justification document at `project-hub/research/justification.md`:
 
 **Structure:**
 - Problem statement (1 paragraph)
@@ -289,11 +291,11 @@ Takes ~2 hours to build, solves our specific workflow, no infrastructure.
 **GO** - Build custom script. Low effort, high value for our workflow.
 ```
 
-#### Standard/Full Framework
+#### Comprehensive Research (Complex/High-Risk Projects)
 
-Complete research documentation in `project-hub/research/`:
+For significant projects with high uncertainty, investment, or risk, use complete research documentation in `project-hub/research/`:
 
-**Required Documents:**
+**Research Documents:**
 
 1. **problem-statement.md** - Clear problem definition
    - What is the problem?
@@ -319,11 +321,18 @@ Complete research documentation in `project-hub/research/`:
    - Timeline implications
    - Final recommendation
 
-5. **project-definition.md** (in reference/) - What we're building
+5. **project-definition.md** (in external-references/) - What we're building
    - Created after go decision
    - Detailed scope
    - Success criteria
    - Architecture approach
+
+**When to use comprehensive research:**
+- Significant time/resource investment (months of work)
+- High technical or business risk
+- Multiple stakeholders or teams involved
+- Unfamiliar technology or domain
+- Compliance or regulatory requirements
 
 ### Research Exit Criteria
 
@@ -672,7 +681,7 @@ This system was implemented via TECH-094 after FEAT-091 was committed with incom
 
 ## Planning Guidelines
 
-### Kanban Workflow (Standard/Full Frameworks)
+### Kanban Workflow
 
 Work items flow through folders:
 
@@ -1080,7 +1089,7 @@ Before elaborate planning:
 **"What's the one thing this must accomplish?"**
 
 Keep planning proportional to:
-- Project size (Minimal needs less than Full)
+- Project size (scripts need less than multi-year systems)
 - Uncertainty (more unknowns = more planning)
 - Risk (higher risk = more planning)
 - Team size (larger team = more coordination)

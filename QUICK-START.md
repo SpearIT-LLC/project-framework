@@ -9,75 +9,41 @@
 
 ---
 
-## 1. Choose Your Framework Level (30 seconds)
+## 1. Setup Your Project
 
-```
-Do you have 3+ files AND ongoing maintenance?
-├─ NO  → Minimal (2 files, 10 min setup)
-└─ YES → Is this for a team OR requires formal planning?
-         ├─ NO  → Light (7 files, 45 min setup)
-         └─ YES → Standard (50+ files, 3 hr setup)
-```
-
-**Still unsure?** See [README-TEMPLATE-SELECTION.md](templates/README-TEMPLATE-SELECTION.md)
-
----
-
-## 2. Setup Commands (15 seconds)
-
-### Minimal Framework (Single Scripts)
+### Quick Setup
 ```bash
-cd /path/to/your-project
-cp /path/to/framework/templates/minimal/README.md .
-# Edit README.md, add your code
-```
+# Create distribution
+tools/Build-FrameworkArchive.ps1
 
-### Light Framework (Small Tools)
-```bash
-cd /path/to/your-project
-cp -r /path/to/framework/templates/light/* .
-# Edit README.md, PROJECT-STATUS.md, CHANGELOG.md
-```
+# Run setup script
+Setup-Project.ps1
 
-### Standard Framework (Applications)
-```bash
-cd /path/to/your-project
-cp -r /path/to/framework/templates/standard/* .
-cp -r /path/to/framework/templates/standard/.gitignore .
-# Follow NEW-PROJECT-CHECKLIST.md
+# Follow the checklist
+# See templates/NEW-PROJECT-CHECKLIST.md
 ```
 
 **Detailed Setup:** [NEW-PROJECT-CHECKLIST.md](templates/NEW-PROJECT-CHECKLIST.md)
 
 ---
 
-## 3. First Steps After Setup
+## 2. First Steps After Setup
 
-### Minimal
-1. Fill out "Why This Exists" section in README.md
-2. Write your code
-3. Done!
-
-### Light
-1. Update README.md with project details
-2. Set initial version in PROJECT-STATUS.md
-3. Document your first decision in `project-hub/history/`
-4. Code and update CHANGELOG.md as you go
-
-### Standard
 1. Review the starter template: [templates/starter/](templates/starter/)
-2. Complete research phase (use templates from `framework/templates/research/`)
-3. Plan features in `project-hub/work/backlog/`
-4. Move features to `work/todo/` → `work/doing/` → `work/done/`
-5. Update CHANGELOG.md and PROJECT-STATUS.md for releases
+2. Update README.md with project details
+3. Set initial version in PROJECT-STATUS.md
+4. Complete research phase (use templates from `framework/templates/research/`)
+5. Plan features in `project-hub/work/backlog/`
+6. Move features through workflow: `work/todo/` → `work/doing/` → `work/done/`
+7. Update CHANGELOG.md and PROJECT-STATUS.md for releases
 
 **Detailed Workflow:** See [workflow-guide.md](framework/docs/collaboration/workflow-guide.md)
 
 ---
 
-## 4. Common Operations
+## 3. Common Operations
 
-### Start New Feature (Standard)
+### Start New Feature
 ```bash
 # Copy template from framework
 cp framework/templates/work-items/FEAT-NNN-template.md \
@@ -87,7 +53,7 @@ cp framework/templates/work-items/FEAT-NNN-template.md \
 # Move to work/doing/ when ready to implement (max 1 in doing/)
 ```
 
-### Fix a Bug (Standard)
+### Fix a Bug
 ```bash
 # Copy template from framework
 cp framework/templates/work-items/BUG-NNN-template.md \
@@ -96,14 +62,14 @@ cp framework/templates/work-items/BUG-NNN-template.md \
 # Move through workflow: backlog → todo → doing → done
 ```
 
-### Make Architectural Decision (Standard)
+### Make Architectural Decision
 ```bash
 # Use ADR template from framework
 cp framework/templates/decisions/ADR-NNNN-template.md \
    project-hub/research/adr/ADR-NNNN-decision-name.md
 ```
 
-### Create Release (Light/Standard)
+### Create Release
 ```bash
 # 1. Update CHANGELOG.md with changes
 # 2. Update PROJECT-STATUS.md with new version
@@ -113,10 +79,10 @@ git commit -m "Release: vX.Y.Z"
 git tag vX.Y.Z
 git push origin main --tags
 
-# 4. (Standard only) Move completed work to history/releases/
+# 4. Move completed work to history/releases/
 ```
 
-### End of Day (Standard)
+### End of Day
 ```bash
 # Create session history from framework template
 cp framework/templates/documentation/session-history-template.md \
@@ -126,7 +92,7 @@ cp framework/templates/documentation/session-history-template.md \
 
 ---
 
-## 5. Framework Commands (Standard)
+## 4. Framework Commands
 
 When working with AI assistants, framework commands (`/fw-*`) provide shortcuts for common workflow operations.
 
@@ -152,28 +118,22 @@ When working with AI assistants, framework commands (`/fw-*`) provide shortcuts 
 
 ---
 
-## 6. Key Framework Rules
+## 5. Key Framework Rules
 
-### All Levels
 - **Single Source of Truth:** Version and status ONLY in PROJECT-STATUS.md
 - **Update "Last Updated":** When content materially changes (not typos)
 - **Semantic Versioning:** MAJOR.MINOR.PATCH (breaking.feature.bugfix)
-
-### Standard Level
 - **WIP Limits:** Max 1-2 items in `work/doing/` at once (check `.limit` file)
-- **Research First:** Always complete research phase before coding new projects
+- **Research First:** Complete research phase before coding new projects
 - **Document Decisions:** Use ADRs for technical choices with alternatives
 - **Work Item Flow:** backlog → todo → doing → done → history/releases/
 
 ---
 
-## 7. Quick Troubleshooting
+## 6. Quick Troubleshooting
 
 **Problem:** "Too much documentation overhead"
-→ **Solution:** You might need a lower framework level. See [UPGRADE-PATH.md](templates/UPGRADE-PATH.md) (works both ways)
-
-**Problem:** "Don't know which framework level"
-→ **Solution:** Start with Light. Upgrade to Standard when you need planning, downgrade to Minimal if it's overkill.
+→ **Solution:** Start simple with just README and PROJECT-STATUS. Add structure progressively as your project grows.
 
 **Problem:** "Lost in the kanban workflow"
 → **Solution:** Think: backlog (someday) → todo (planned) → doing (now, max 2) → done (shipped)
@@ -183,23 +143,21 @@ When working with AI assistants, framework commands (`/fw-*`) provide shortcuts 
 
 ---
 
-## 8. Essential Links
+## 7. Essential Links
 
 | What You Need | Document | Time to Read |
 |--------------|----------|--------------|
 | Full overview | [README.md](README.md) | 10 min |
 | Starter template | [templates/starter/](templates/starter/) | 5 min |
-| Choose framework level | [README-TEMPLATE-SELECTION.md](templates/README-TEMPLATE-SELECTION.md) | 5 min |
 | Setup instructions | [NEW-PROJECT-CHECKLIST.md](templates/NEW-PROJECT-CHECKLIST.md) | 15 min |
 | Current version/status | [framework/PROJECT-STATUS.md](framework/PROJECT-STATUS.md) | 2 min |
 | Change history | [framework/CHANGELOG.md](framework/CHANGELOG.md) | 5 min |
 | All documentation | [framework/INDEX.md](framework/INDEX.md) | 3 min |
-| Upgrade/downgrade | [UPGRADE-PATH.md](templates/UPGRADE-PATH.md) | 10 min |
 | File structure | [STRUCTURE.md](templates/STRUCTURE.md) | 5 min |
 
 ---
 
-## 9. Templates Quick Reference (Standard Level)
+## 8. Templates Quick Reference
 
 | Template | Use When | Location |
 |----------|----------|----------|
@@ -219,7 +177,7 @@ When working with AI assistants, framework commands (`/fw-*`) provide shortcuts 
 
 ---
 
-## 10. Workflow Cheat Sheet (Standard)
+## 9. Workflow Cheat Sheet
 
 ```
 NEW PROJECT:
@@ -239,7 +197,7 @@ DAILY WORK:
 
 ---
 
-## 11. Getting Help
+## 10. Getting Help
 
 - **Framework terminology:** [GLOSSARY.md](framework/docs/ref/GLOSSARY.md)
 - **See starter template:** [templates/starter/](templates/starter/)
@@ -250,12 +208,11 @@ DAILY WORK:
 
 ---
 
-**Remember:** The framework serves you, not the other way around. If something feels like overhead, you might be using the wrong framework level or over-engineering. Start simple, upgrade as needed.
+**Remember:** The framework serves you, not the other way around. If something feels like overhead, you're over-engineering. Start simple, add structure progressively as your project grows.
 
 ---
 
 **Next Steps:**
-1. Choose your framework level (section 1)
-2. Run setup commands (section 2)
-3. Follow first steps (section 3)
-4. Start building!
+1. Run setup commands (section 1)
+2. Follow first steps (section 2)
+3. Start building!

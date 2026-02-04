@@ -9,7 +9,7 @@
 ## Table of Contents
 
 1. [Framework Overview](#framework-overview)
-2. [Multi-Level Design Philosophy](#multi-level-design-philosophy)
+2. [Framework Flexibility](#framework-flexibility)
 3. [Folder Structure Architecture](#folder-structure-architecture)
 4. [File-Based Kanban Design](#file-based-kanban-design)
 5. [Template System Architecture](#template-system-architecture)
@@ -23,134 +23,62 @@
 
 ### What Is the Project Framework?
 
-The **SpearIT Project Framework** is a comprehensive, multi-level project management framework designed to bring structure, consistency, and AI integration to software projects of any size.
+The **SpearIT Project Framework** is a file-based workflow and AI collaboration partner for solo developers and small teams building software or documentation projects. Using markdown files and scripting tools, it provides Kanban work tracking, strategic roadmaps, AI-guided planning, and documentation standards—without requiring external services or databases.
 
-**Key Innovation:** Scales from single scripts to full applications using a 3-dimension classification system that selects the appropriate framework level based on:
-1. **Scope & Complexity** (Script → Tool → Application → System)
-2. **Lifespan & Evolution** (Throwaway → Short-term → Maintained → Critical)
-3. **Team & Collaboration** (Solo/Personal → Solo/Professional → Small Team → Large Team)
+**Key Innovation:** Universal Kanban workflow with flexible rigor. All projects—from scripts to enterprise systems—use the same workflow structure (backlog → todo → doing → done → archive). Teams apply appropriate detail and rigor based on project needs.
 
 ### Core Problem Solved
 
-**Problem:** Most project frameworks are one-size-fits-all:
-- Too heavyweight for simple scripts (discourage good practices)
+**Problem:** Most project frameworks force a rigid approach:
+- Too heavyweight for simple projects (discourage good practices)
 - Too lightweight for complex projects (lead to chaos)
-- No clear upgrade path as projects grow
+- No guidance on how much structure is appropriate
 
-**Solution:** Tiered framework with explicit upgrade paths:
-```
-Minimal (2 files) → Light (7 files) → Standard (50+ files)
-```
+**Solution:** Universal workflow with flexible application:
+- The **Kanban workflow** stays consistent (file-based tracking through folders)
+- The **level of detail and rigor** varies by project needs (complexity, risk, team size)
+- The **templates and documentation** support lightweight to comprehensive approaches
 
 ### Core Principles
 
-1. **Right-Sized Structure** - Never pay for more structure than you need
-2. **Upgrade Path** - Start small, grow with your project
+1. **Universal Workflow** - Same Kanban structure for all projects (backlog → todo → doing → done)
+2. **Flexible Rigor** - Apply detail proportional to project needs
 3. **Single Source of Truth** - No duplicated information
 4. **File-Based Simplicity** - Folders and files, no databases or tools required
 5. **AI-Native** - Designed for human-AI collaboration
-6. **Dogfooding** - Framework uses itself (Standard level)
+6. **Dogfooding** - Framework uses itself
 
 ---
 
-## Multi-Level Design Philosophy
+## Framework Flexibility
 
-### The Four Framework Levels
+### Universal Kanban Workflow
 
-#### Minimal Framework (2 files)
+The framework provides a **universal Kanban workflow** that all projects use:
 
-**For:** Single scripts, throwaway projects, personal automation
-
-**Structure:**
 ```
-project/
-├── README.md          # With embedded "Why This Exists" section
-└── script.py          # Your code
-```
-
-**Philosophy:**
-- Capture the "why" before it's forgotten
-- Just enough to hand off to future-you
-- No overhead, no ceremony
-
-**When to Use:**
-- One-time scripts
-- Personal automation
-- Proof-of-concepts you'll delete
-
-#### Light Framework (7 files)
-
-**For:** Small tools with medium lifespan, solo professional work
-
-**Structure:**
-```
-project/
-├── README.md
-├── PROJECT-STATUS.md      # Version & status
-├── CHANGELOG.md           # Version history
-├── project-hub/
-│   └── project/
-│       └── history/       # Decision history
-└── src/                   # Your code
+project-hub/work/
+├── backlog/         # Ideas and future work
+├── todo/            # Committed next work
+├── doing/           # Currently in progress (WIP limited)
+└── done/            # Completed, awaiting release
+    ↓
+project-hub/history/releases/vX.Y.Z/  # Archived after release
 ```
 
-**Philosophy:**
-- Version tracking matters
-- Future maintainers need context
-- Decisions should be documented
-- Still lightweight, no kanban overhead
+**Core components:**
+- Folder-based Kanban workflow (backlog → todo → doing → done → archive)
+- Work item templates (FEAT, BUG, TECH, DECISION, SPIKE)
+- File-based tracking with markdown
+- WIP limits in doing/
+- Git-based version control
+- Documentation templates and standards
 
-**When to Use:**
-- Tools you'll maintain for months/years
-- Solo work that might be handed off
-- Projects needing version control discipline
+**How teams use the framework:**
 
-#### Standard Framework (50+ files)
+Teams use the components they need from the framework. The Kanban workflow stays the same regardless of project size—what varies is which templates, documentation, and processes teams choose to apply based on their project's needs.
 
-**For:** Applications, small teams, ongoing maintenance
-
-**Structure:**
-```
-project/
-├── Core Documentation (README, STATUS, CHANGELOG, CLAUDE.md)
-├── project-hub/
-│   ├── project/
-│   │   ├── work/          # Kanban workflow (todo/doing/done)
-│   │   ├── planning/      # Backlog, roadmap
-│   │   ├── research/      # Problem validation, ADRs
-│   │   ├── reference/     # Current project docs
-│   │   ├── retrospectives/
-│   │   ├── history/       # Session history
-│   │   └── archive/
-│   └── framework/
-│       ├── templates/     # 19 reusable templates
-│       ├── process/       # Workflow documentation
-│       └── patterns/      # Implementation patterns
-└── src/                   # Your code
-```
-
-**Philosophy:**
-- Workflow discipline prevents chaos
-- WIP limits enforce focus
-- Templates capture best practices
-- Research phase prevents wheel reinvention
-- AI integration is first-class
-- Retrospectives drive improvement
-
-**When to Use:**
-- Multi-feature applications
-- Small team collaboration (2-5 developers)
-- Projects requiring formal planning
-- AI-assisted development
-
-### Selection Matrix
-
-| Scope | Lifespan | Team Size | Framework Level |
-|-------|----------|-----------|-----------------|
-| Script | Throwaway/Short-term | Solo/Personal | **Minimal** |
-| Script/Tool | Maintained | Solo/Professional | **Light** |
-| Tool/Application | Maintained | Solo/Professional or Small Team | **Standard** |
-| Application/System | Maintained/Critical | Small team | **Standard** |
+Project types and their characteristics are defined in `framework.yaml` under the `project.types` configuration.
 
 ---
 
@@ -549,22 +477,23 @@ AI moves to todo → doing → implementation
 - Manual file moves (accepted)
 - No fancy UI (accepted)
 
-### Decision: Multi-Level Framework Over One-Size-Fits-All
+### Decision: Universal Workflow with Flexible Rigor
 
-**Context:** Need framework that works for scripts through full applications
+**Context:** Need framework that works for scripts through full applications without forcing rigid structure
 
 **Options:**
 1. Minimal framework for all (too light for complex projects)
 2. Full framework for all (too heavy for simple projects)
-3. Multi-level framework (chosen)
+3. Universal workflow with flexible rigor (chosen)
 
-**Decision:** Multi-level with explicit upgrade paths
+**Decision:** Single Kanban workflow that all projects use, with guidance on applying appropriate detail
 
 **Rationale:**
-- Right-sized structure prevents under/over-engineering
-- Clear criteria removes guesswork
-- Upgrade path accommodates growth
-- Proven by dogfooding (framework uses Standard on itself)
+- **Consistency:** All projects use same folder structure and workflow (backlog → todo → doing → done)
+- **Flexibility:** Teams apply detail proportional to project needs (complexity, risk, team size)
+- **Simplicity:** No "level selection" decision—just use what you need
+- **Scalability:** Projects can add rigor as they grow without restructuring
+- **AI-friendly:** Universal structure means AI learns one workflow, not multiple variants
 
 ### Decision: Universal Collaboration Docs Over AI-Specific
 
@@ -641,5 +570,5 @@ AI moves to todo → doing → implementation
 
 ---
 
-**Last Updated:** 2026-01-11
+**Last Updated:** 2026-02-04
 **Maintained By:** Framework Team

@@ -86,7 +86,7 @@ A work item type representing new functionality or capabilities. Uses the FEATUR
 See: [Workflow Guide - Work Item Templates](../collaboration/workflow-guide.md#work-item-templates)
 
 ### Framework
-The SpearIT Project Framework - a structured approach to project organization, documentation, and AI collaboration. Available in Standard, Light, and Minimal levels.
+The SpearIT Project Framework is a file-based workflow and AI collaboration partner for solo developers and small teams building software or documentation projects.
 
 See: [README.md](../../../README.md)
 
@@ -134,7 +134,7 @@ See: [Workflow Guide - Workflow Transitions](../collaboration/workflow-guide.md#
 ### Project Hub
 The `project-hub/` directory containing all project management artifacts: work items, decisions, research, planning documents, and history.
 
-See: [Project Structure Standard](../PROJECT-STRUCTURE-STANDARD.md)
+See: [Project Structure Standard](../PROJECT-STRUCTURE.md)
 
 ### PROJECT-STATUS.md
 A living document summarizing current project state, recent changes, active work, and upcoming priorities. Updated with each release.

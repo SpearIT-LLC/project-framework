@@ -5,7 +5,7 @@ This folder contains framework documentation organized by topic.
 ## Structure References
 
 **Official structure specifications:**
-- [PROJECT-STRUCTURE-STANDARD.md](PROJECT-STRUCTURE-STANDARD.md) - Complete Standard Framework project structure specification
+- [PROJECT-STRUCTURE.md](PROJECT-STRUCTURE.md) - Complete Standard Framework project structure specification
 - [REPOSITORY-STRUCTURE.md](REPOSITORY-STRUCTURE.md) - Repository root structure for multi-project organization
 
 ## Collaboration Guides

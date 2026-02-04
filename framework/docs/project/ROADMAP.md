@@ -7,9 +7,9 @@
 
 ## Purpose
 
-The SpearIT Project Framework is a comprehensive, multi-level project management framework designed to bring structure, consistency, and AI integration to software projects of any size.
+The SpearIT Project Framework is a file-based workflow and AI collaboration partner for solo developers and small teams building software or documentation projects.
 
-**Key Innovation:** The framework scales from single scripts to full applications using a 3-level system (Minimal, Light, Standard) that adapts to your project's scope, lifespan, and team size.
+**Key Innovation:** The framework provides a complete, batteries-included solution with Kanban work tracking, strategic roadmaps, AI-guided planning, and documentation standards—all using markdown files and scripting tools, without requiring external services or databases.
 
 **Key Concepts:**
 - **Themes** = Stable categories of work (what the project IS)
@@ -39,7 +39,33 @@ How AI guides the user through industry tested patterns for how to solve and tes
 
 ---
 
-## Current Planning Period: Sprint D&O 1
+## Current Planning Period: Sprint D&O 0 (Prerequisites)
+
+**Duration:** ~3-5 days
+**Primary Theme:** Distribution & Onboarding
+**Goal:** Complete foundational decisions and cleanup required before Sprint D&O 1
+
+**Success Criteria:**
+- Multi-level framework concept officially retired (DECISION-105)
+- Positioning statements approved and documented
+- Documentation updated to reflect unified framework model (TECH-106)
+- Project-hub location decision resolved (DECISION-037)
+
+**Key Outcomes:**
+- Clear, honest positioning for system requirements documentation
+- Clean documentation foundation for distribution work
+- Structural decisions finalized
+
+**Committed Work:**
+- DECISION-105: Retire Multi-Level Framework Concept
+- TECH-106: Remove Multi-Level Framework References
+- DECISION-037: Project-Hub Location
+
+**Status:** 🏃 In Progress
+
+---
+
+## Next Planning Period: Sprint D&O 1
 
 **Duration:** ~1 week
 **Primary Theme:** Distribution & Onboarding
@@ -57,6 +83,9 @@ How AI guides the user through industry tested patterns for how to solve and tes
 - Interactive setup guides project configuration without manual editing
 - Clear validation ensures correct installation
 - First-time users achieve productive setup in under 10 minutes
+
+**Committed Work:**
+- FEAT-107: System Requirements Documentation
 
 **Status:** 📋 Planned
 

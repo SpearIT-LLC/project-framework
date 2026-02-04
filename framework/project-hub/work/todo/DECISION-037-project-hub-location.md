@@ -5,7 +5,9 @@
 **Priority:** Low
 **Version Impact:** MAJOR (if moved to root)
 **Created:** 2026-01-27
-**Status:** Deferred
+**Theme:** Distribution & Onboarding
+**Planning Period:** Sprint D&O 0
+**Status:** Active
 
 ---
 

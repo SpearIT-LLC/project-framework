@@ -150,7 +150,7 @@ Based on `framework-schema.yaml` project.type enum:
 ## Dependencies
 
 **Requires:**
-- None
+- DECISION-105: Retire Multi-Level Framework Concept - Clear positioning needed for pattern documentation
 
 **Blocks:**
 - None

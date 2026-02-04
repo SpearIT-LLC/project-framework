@@ -9,14 +9,12 @@
 
 ## What Is This?
 
-The **SpearIT Project Framework** is a comprehensive, multi-level project management framework designed to bring structure, consistency, and AI integration to software projects of any size.
+The **SpearIT Project Framework** is a file-based workflow and AI collaboration partner for solo developers and small teams building software or documentation projects.
 
 This repository contains:
 - **framework/** - The Standard Project Framework implementation and documentation
 - **templates/** - Template packages for new projects
 - **tools/** - Build and setup scripts for distribution
-
-**Key Innovation:** This framework scales from single scripts to full applications using a 3-level system (Minimal, Light, Standard) that adapts to your project's scope, lifespan, and team size.
 
 ---
 
@@ -28,33 +26,25 @@ This repository contains:
 
 ### For New Projects
 
-1. **Choose your framework level:**
-   - Read [README-TEMPLATE-SELECTION.md](templates/README-TEMPLATE-SELECTION.md)
-   - Answer 3 simple questions about your project
-   - Get recommended framework level
-
-2. **Copy the appropriate template:**
+1. **Create a distribution package:**
    ```bash
-   # For single scripts
-   cp -r templates/minimal /path/to/your-project
+   tools/Build-FrameworkArchive.ps1
+   ```
 
-   # For small tools
-   cp -r templates/light /path/to/your-project
-
-   # For applications
-   cp -r templates/standard /path/to/your-project
+2. **Run the setup script:**
+   ```bash
+   Setup-Project.ps1
    ```
 
 3. **Follow the setup checklist:**
    - Open [NEW-PROJECT-CHECKLIST.md](templates/NEW-PROJECT-CHECKLIST.md)
-   - Follow the instructions for your framework level
+   - Follow the setup instructions
    - Customize templates with your project details
 
 ### For Existing Projects
 
 1. **Assess your project:**
    - Determine current scope, lifespan, and team size
-   - Choose appropriate framework level
 
 2. **Integrate the framework:**
    - Follow "Existing Project Integration" section in [NEW-PROJECT-CHECKLIST.md](templates/NEW-PROJECT-CHECKLIST.md)
@@ -65,33 +55,16 @@ This repository contains:
 
 ## What's Included
 
-### Framework Levels
-
-**Minimal Framework** (2 files, 10-15 min setup)
-- For single scripts, throwaway projects, personal automation
-- Basic README with "Why This Exists" section
-
-**Light Framework** (7 files, 30-60 min setup)
-- For small tools with medium lifespan
-- Version tracking (PROJECT-STATUS.md)
-- Change history (CHANGELOG.md)
-- Decision documentation
-
-**Standard Framework** (50+ files)
-- For applications, teams, ongoing projects
 - Complete documentation suite
 - File-based kanban workflow
-- 19 templates for planning, work items, and decisions
-- Research phase support (5 templates)
-- CMD wrappers for PowerShell scripts (4 variants)
+- Templates for planning, work items, and decisions
+- Research phase support
+- CMD wrappers for PowerShell scripts
 - AI integration (CLAUDE.md)
 
 ---
 
 ## Key Features
-
-### Multi-Level Scaling
-Choose the right amount of structure for your project. Start small, upgrade as your project grows.
 
 ### Research-Driven Development
 Built-in research phase with 5 templates helps you answer: "Are we recreating the wheel, or do we have something useful to add?"
@@ -111,20 +84,15 @@ Two-tier ADR system (Major/Minor) with upgrade path for documenting important de
 ### PowerShell CMD Wrappers
 Four production-ready CMD wrapper templates let users double-click PowerShell scripts in Windows.
 
-### Upgrade Paths
-Clear migration guides for moving between framework levels as your project evolves.
-
 ---
 
 ## Documentation
 
 ### Core Documentation
-- **[README-TEMPLATE-SELECTION.md](templates/README-TEMPLATE-SELECTION.md)** - Choose your framework level ⭐
 - **[NEW-PROJECT-CHECKLIST.md](templates/NEW-PROJECT-CHECKLIST.md)** - Setup instructions ⭐
 - **[framework/PROJECT-STATUS.md](framework/PROJECT-STATUS.md)** - Current version and status
 - **[framework/CHANGELOG.md](framework/CHANGELOG.md)** - Version history
 - **[framework/INDEX.md](framework/INDEX.md)** - Complete documentation index
-- [UPGRADE-PATH.md](templates/UPGRADE-PATH.md) - Migration between levels
 - [STRUCTURE.md](templates/STRUCTURE.md) - Template structure reference
 
 ### Template Package
@@ -136,11 +104,11 @@ Clear migration guides for moving between framework levels as your project evolv
 
 ### Core Principles
 
-1. **Right-Sized Framework** - Use appropriate structure for project size
-2. **Research Before Build** - Validate problem before investing in solution
-3. **Single Source of Truth** - PROJECT-STATUS.md for version/status (never duplicate)
-4. **Incremental Development** - One work item at a time, verify alignment
-5. **Document Deviations** - Customizations documented in CLAUDE.md
+1. **Research Before Build** - Validate problem before investing in solution
+2. **Single Source of Truth** - PROJECT-STATUS.md for version/status (never duplicate)
+3. **Incremental Development** - One work item at a time, verify alignment
+4. **Document Deviations** - Customizations documented in CLAUDE.md
+5. **Progressive Adoption** - Start simple, add structure as value becomes clear
 
 ### Workflow Phases
 
@@ -150,8 +118,6 @@ All projects follow this core workflow:
 3. **Plan** - Design implementation approach
 4. **Code** - Implement incrementally
 5. **Commit/Release** - Ship the value
-
-Depth varies by framework level.
 
 ---
 
@@ -187,12 +153,12 @@ Depth varies by framework level.
 See [framework/PROJECT-STATUS.md](framework/PROJECT-STATUS.md) for detailed status.
 
 ### What's Complete
-- ✅ Multi-level framework system (Minimal/Light/Standard)
-- ✅ 19 templates including research phase (5 templates)
-- ✅ CMD wrappers (4 variants)
-- ✅ Setup checklists and upgrade paths
 - ✅ Complete documentation suite
-- 🚧 Dogfooding (framework using its own Standard framework)
+- ✅ Templates including research phase
+- ✅ CMD wrappers (4 variants)
+- ✅ Setup checklists
+- ✅ File-based kanban workflow
+- 🚧 Dogfooding (framework managing itself)
 
 ### What's Next
 - 📋 ZIP distribution package
@@ -208,25 +174,25 @@ See [framework/CHANGELOG.md](framework/CHANGELOG.md) for version history.
 
 ### Scenario 1: Quick Automation Script
 **Project:** Daily backup automation (PowerShell)
-**Framework Level:** Minimal
-**Files:** 2 (README.md, backup.ps1)
+**Setup:** Basic README with "Why This Exists" section
+**Time:** 10-15 minutes
 
 ### Scenario 2: CLI Utility Tool
 **Project:** Data conversion utility
-**Framework Level:** Light
-**Files:** 7 core docs + tool code
+**Setup:** Version tracking, changelog, decision documentation
+**Time:** 30-60 minutes
 
 ### Scenario 3: Web Application
 **Project:** Internal dashboard application
-**Framework Level:** Standard
-**Features:** Full planning, kanban workflow, team collaboration
+**Setup:** Full planning, kanban workflow, team collaboration
+**Time:** Progressive adoption as project grows
 
 ---
 
 ## Real-World Usage
 
 **Projects Using Framework:**
-- HPC Job Queue Prototype (Standard framework) - Origin project
+- HPC Job Queue Prototype - Origin project
 
 **Feedback:**
 - Kanban workflow effective for solo developer
@@ -253,10 +219,10 @@ cd project-framework/templates
 
 **Manual Download:**
 - Download repository as ZIP
-- Extract and copy desired framework level
+- Extract and use starter template
 
 ### Planned
-- Pre-packaged ZIP files for each framework level
+- Pre-packaged distribution ZIP file
 - Interactive setup script
 - Automated distribution process
 
@@ -299,7 +265,7 @@ See [LICENSE](LICENSE) file for details.
 
 ## Dogfooding
 
-**Meta Note:** This framework project uses its own Standard framework for development. This serves as:
+**Meta Note:** This framework project manages itself using its own workflow system. This serves as:
 1. **Validation** - Proves framework works for framework development
 2. **Example** - Real-world example of framework usage
 3. **Improvement** - Surfaces pain points and areas for enhancement
@@ -326,4 +292,4 @@ Check [framework/project-hub/](framework/project-hub/) to see the framework in a
 
 ---
 
-**Get Started:** [README-TEMPLATE-SELECTION.md](templates/README-TEMPLATE-SELECTION.md) → [NEW-PROJECT-CHECKLIST.md](templates/NEW-PROJECT-CHECKLIST.md)
+**Get Started:** [NEW-PROJECT-CHECKLIST.md](templates/NEW-PROJECT-CHECKLIST.md)

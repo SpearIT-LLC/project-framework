@@ -6,7 +6,7 @@
 **Version Impact:** MINOR
 **Created:** 2026-02-04
 **Theme:** Distribution & Onboarding
-**Planning Period:** Sprint D&O 2
+**Planning Period:** Sprint D&O 0
 **Depends On:** DECISION-105
 
 ---
@@ -63,7 +63,7 @@ Update user-facing documentation with approved positioning statements from DECIS
 - `framework/docs/ref/GLOSSARY.md` - Remove any remaining multi-level references
 - `framework/docs/collaboration/workflow-guide.md` - Update framework description
 - `framework/docs/collaboration/architecture-guide.md` - Remove level references
-- `framework/docs/PROJECT-STRUCTURE-STANDARD.md` - Clarify this is THE structure (not "Standard level")
+- `framework/docs/PROJECT-STRUCTURE.md` - Clarify this is THE structure (not "Standard level")
 - `framework/docs/REPOSITORY-STRUCTURE.md` - Update positioning
 
 **Tier 3: Secondary Documentation**
@@ -79,14 +79,14 @@ Update user-facing documentation with approved positioning statements from DECIS
 
 ## Acceptance Criteria
 
-- [ ] All Tier 1 files updated with approved positioning (Version 1 or 2 as appropriate)
-- [ ] All Tier 2 core documentation updated
-- [ ] CHANGELOG.md entry added
-- [ ] No references to "Minimal/Light/Standard" in active user docs (excluding history/)
-- [ ] No instructions to "choose your framework level"
-- [ ] Positioning is consistent across all user-facing files
-- [ ] Templates synced (starter/ matches framework/)
-- [ ] GLOSSARY.md fully reflects unified framework model
+- [x] All Tier 1 files updated with approved positioning (Version 1 or 2 as appropriate)
+- [x] All Tier 2 core documentation updated
+- [x] CHANGELOG.md entry added
+- [x] No references to "Minimal/Light/Standard" in active user docs (excluding history/)
+- [x] No instructions to "choose your framework level"
+- [x] Positioning is consistent across all user-facing files
+- [x] Templates synced (starter/ matches framework/)
+- [x] GLOSSARY.md fully reflects unified framework model
 
 ---
 
@@ -95,35 +95,40 @@ Update user-facing documentation with approved positioning statements from DECIS
 <!-- ⚠️ AI: Complete items in order. STOP at each [ ] and wait for approval. -->
 <!-- User can say "continue to completion" to approve remaining steps at once. -->
 
-- [ ] **PRE-IMPLEMENTATION REVIEW COMPLETED**
+- [x] **PRE-IMPLEMENTATION REVIEW COMPLETED**
   - AI presents: Files to update, positioning statements to use, scope boundaries
   - User explicitly approves before proceeding
 
 ### Tier 1: Critical User-Facing Files
-- [ ] Update README.md (root) with Version 1 positioning
-- [ ] Update framework/README.md with Version 1 positioning
-- [ ] Simplify QUICK-START.md (remove "choose level" section)
-- [ ] Update framework/CLAUDE.md (remove level-based instructions)
-- [ ] Update templates/starter/framework/CLAUDE.md (sync)
-- [ ] Update framework/INDEX.md (remove level references)
+- [x] Update README.md (root) with Version 1 positioning
+- [x] Update framework/README.md with Version 1 positioning
+- [x] Simplify QUICK-START.md (remove "choose level" section)
+- [x] Update framework/CLAUDE.md (remove level-based instructions)
+- [x] Update templates/starter/framework/CLAUDE.md (sync)
+- [x] Update framework/INDEX.md (remove level references)
 
 ### Tier 2: Core Documentation
-- [ ] Update GLOSSARY.md (remove multi-level references)
-- [ ] Update workflow-guide.md (framework description)
-- [ ] Update architecture-guide.md (remove level references)
-- [ ] Update PROJECT-STRUCTURE-STANDARD.md (clarify naming)
-- [ ] Update REPOSITORY-STRUCTURE.md (positioning)
+- [x] Update GLOSSARY.md (remove multi-level references)
+- [x] Update workflow-guide.md (framework description)
+- [x] Update architecture-guide.md (remove level references)
+- [x] Update PROJECT-STRUCTURE.md (clarify naming)
+- [x] Update REPOSITORY-STRUCTURE.md (positioning)
 
 ### Tier 3: Meta Files
-- [ ] Update CHANGELOG.md (document change)
-- [ ] Update framework.yaml (positioning text if any)
-- [ ] Sync templates/starter/framework.yaml
+- [x] Update CHANGELOG.md (document change)
+- [x] Update framework.yaml (positioning text if any)
+- [x] Sync templates/starter/framework.yaml
+
+### Cleanup
+- [x] Rename PROJECT-STRUCTURE-STANDARD.md → PROJECT-STRUCTURE.md
+  - Updated 11 active file references (excluding history/)
+  - Used `git mv` to preserve history
 
 ### Validation
-- [ ] Grep search confirms no "Minimal/Light/Standard" in active docs (excluding history/)
-- [ ] Grep search confirms no "choose your framework level" in active docs
-- [ ] README positioning is clear and specific
-- [ ] Templates are synced
+- [x] Grep search confirms no "Minimal/Light/Standard" in active docs (excluding history/)
+- [x] Grep search confirms no "choose your framework level" in active docs
+- [x] README positioning is clear and specific
+- [x] Templates are synced
 
 ---
 

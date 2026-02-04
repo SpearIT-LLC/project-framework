@@ -13,7 +13,7 @@ This document defines the **repository root structure** for the project-framewor
 
 **Important distinction:**
 - This document defines **REPOSITORY** structure (source code repository for developing the framework)
-- For **USER PROJECT** structure, see [PROJECT-STRUCTURE-STANDARD.md](PROJECT-STRUCTURE-STANDARD.md)
+- For **USER PROJECT** structure, see [PROJECT-STRUCTURE.md](PROJECT-STRUCTURE.md)
 
 **This repository:**
 - Source code for developing the framework itself
@@ -35,7 +35,7 @@ project-framework/                    # REPOSITORY (not a project)
 ├── CONTRIBUTING.md                   # OPTIONAL - Contribution guidelines
 │
 ├── framework/                        # PROJECT (follows Standard Framework structure)
-│   └── [See PROJECT-STRUCTURE-STANDARD.md]
+│   └── [See PROJECT-STRUCTURE.md]
 │
 ├── templates/                        # Template packages for new projects
 │   └── starter/                     # Complete project scaffolding with framework
@@ -158,7 +158,7 @@ The framework project follows the Standard Framework structure.
 
 **Location:** Repository root only (single source)
 
-**Content:** See [PROJECT-STRUCTURE-STANDARD.md](PROJECT-STRUCTURE-STANDARD.md#gitignore-template) for complete template
+**Content:** See [PROJECT-STRUCTURE.md](PROJECT-STRUCTURE.md#gitignore-template) for complete template
 
 **Key sections:**
 - Security & Secrets (NEVER COMMIT)
@@ -279,7 +279,7 @@ my-awesome-project/         # User's repository root
     └── research/           # Research artifacts
 ```
 
-**They follow PROJECT-STRUCTURE-STANDARD.md directly at repository root.**
+**They follow PROJECT-STRUCTURE.md directly at repository root.**
 
 ---
 
@@ -302,7 +302,7 @@ To verify repository root matches this specification:
 
 **Structure validation:**
 - [ ] Project folders exist (framework/, templates/, tools/)
-- [ ] framework/ follows PROJECT-STRUCTURE-STANDARD.md
+- [ ] framework/ follows PROJECT-STRUCTURE.md
 - [ ] No project-specific files at root (PROJECT-STATUS.md, CHANGELOG.md, INDEX.md)
 
 ---
@@ -313,7 +313,7 @@ To verify repository root matches this specification:
 1. Initialize git repository
 2. Create all REQUIRED root files (5 files)
 3. Create project folders (framework/, templates/, tools/)
-4. Populate framework/ following PROJECT-STRUCTURE-STANDARD.md
+4. Populate framework/ following PROJECT-STRUCTURE.md
 5. Commit: `git commit -m "Initial repository setup"`
 
 **Migration (FEAT-026):**
@@ -324,7 +324,7 @@ To verify repository root matches this specification:
 
 ## References
 
-- [PROJECT-STRUCTURE-STANDARD.md](PROJECT-STRUCTURE-STANDARD.md) - Standard Framework project structure
+- [PROJECT-STRUCTURE.md](PROJECT-STRUCTURE.md) - Standard Framework project structure
 - [FEAT-026-structure-migration.md](FEAT-026-structure-migration.md) - Migration plan
 - [FEAT-026-universal-structure-decisions.md](FEAT-026-universal-structure-decisions.md) - Complete decision log
   - DECISION-012: Multi-Project Repository with Meta-Root
@@ -335,11 +335,9 @@ To verify repository root matches this specification:
 
 ## Notes
 
-**Scope:** This document defines repository root structure ONLY. For project structure, see PROJECT-STRUCTURE-*.md documents.
+**Scope:** This document defines repository root structure ONLY. For project structure, see PROJECT-STRUCTURE.md.
 
-**Scalability:** When adding new project types (LIGHT, MINIMAL), this document remains unchanged. Only PROJECT-STRUCTURE-*.md documents are added.
-
-**DRY Principle:** Single source of truth for repository root structure. Referenced by all project structure documents.
+**DRY Principle:** Single source of truth for repository root structure. Referenced by project structure documentation.
 
 ---
 

@@ -1,25 +1,24 @@
-# Standard Framework - Project Structure Definition
+# Project Framework - Structure Definition
 
 **Version:** 3.0.0
 **Status:** Published
-**Last Updated:** 2026-01-07
-**Purpose:** Definitive reference for Standard Framework project structure
+**Last Updated:** 2026-02-04
+**Purpose:** Definitive reference for framework project structure
 
 ---
 
 ## Overview
 
-This document defines the complete folder and file structure for **Standard Framework** level projects.
+This document defines the complete folder and file structure for projects using the **SpearIT Project Framework**.
 
 **Applies to:**
 - The framework project itself (dogfooding)
 - All user projects created from the framework
 - Validation of project structure compliance
 
-**Does NOT apply to:**
-- Repository root (meta-level container - see [REPOSITORY-STRUCTURE.md](REPOSITORY-STRUCTURE.md))
-- Light Framework level (different structure)
-- Minimal Framework level (different structure)
+**Scope:**
+- This document defines PROJECT structure only
+- For repository root structure, see [REPOSITORY-STRUCTURE.md](REPOSITORY-STRUCTURE.md)
 
 ---
 
@@ -31,7 +30,7 @@ The project-framework repository contains multiple projects (framework/, example
 
 **This document defines PROJECT structure only.**
 
-Standard user projects typically create a single-project repository and follow the structure below directly at root.
+User projects typically create a single-project repository and follow the structure below directly at root.
 
 ---
 
@@ -563,7 +562,7 @@ experiments/
 
 ## Initialization Checklist
 
-When creating a new Standard Framework project:
+When creating a new framework project:
 
 **Phase 1: Create folder structure**
 - [ ] Create all REQUIRED folders (use structure tree above)
@@ -590,7 +589,7 @@ When creating a new Standard Framework project:
 **Phase 5: Initialize git**
 - [ ] `git init`
 - [ ] `git add .`
-- [ ] `git commit -m "Initial project setup from Standard Framework"`
+- [ ] `git commit -m "Initial project setup using SpearIT Project Framework"`
 - [ ] `git tag -a v0.1.0 -m "Initial setup"`
 
 **Phase 6: Customize**
@@ -603,7 +602,7 @@ When creating a new Standard Framework project:
 
 ## Validation Checklist
 
-To verify a project matches Standard Framework structure:
+To verify a project matches framework structure:
 
 **Folder structure validation:**
 - [ ] All REQUIRED folders exist
@@ -680,9 +679,7 @@ The framework project intentionally deviates from Standard structure:
 
 ## Notes
 
-**Version:** This is the Standard Framework level structure. Light and Minimal levels have different (simpler) structures.
-
-**Flexibility:** User projects can add project-specific folders/files beyond this structure. Required items must remain.
+**Flexibility:** Projects can add project-specific folders/files beyond this structure. Required items must remain.
 
 **Validation:** Future tooling may validate projects against this specification automatically.
 

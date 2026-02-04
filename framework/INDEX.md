@@ -16,7 +16,7 @@ This index provides quick navigation to all documentation for the SpearIT Projec
 - [CHANGELOG.md](CHANGELOG.md) - Version history and changes
 
 ### Structure References
-- [docs/PROJECT-STRUCTURE-STANDARD.md](docs/PROJECT-STRUCTURE-STANDARD.md) - **Official Standard Framework structure specification** ⭐
+- [docs/PROJECT-STRUCTURE.md](docs/PROJECT-STRUCTURE.md) - **Official project structure specification** ⭐
 - [docs/REPOSITORY-STRUCTURE.md](docs/REPOSITORY-STRUCTURE.md) - Repository root structure (multi-project)
 
 ### For AI Assistants
@@ -33,9 +33,7 @@ This index provides quick navigation to all documentation for the SpearIT Projec
 
 ### For Users (Applying the Framework)
 - [templates/README.md](templates/README.md) - Template package overview
-- [README-TEMPLATE-SELECTION.md](templates/README-TEMPLATE-SELECTION.md) - Choose your framework level ⭐
 - [NEW-PROJECT-CHECKLIST.md](templates/NEW-PROJECT-CHECKLIST.md) - Setup instructions ⭐
-- [UPGRADE-PATH.md](templates/UPGRADE-PATH.md) - Migrate between framework levels
 - [STRUCTURE.md](templates/STRUCTURE.md) - Template structure reference
 
 ### For Framework Developers
@@ -68,17 +66,6 @@ This index provides quick navigation to all documentation for the SpearIT Projec
 
 #### Template Package Root
 - [templates/](templates/) - The complete template package
-
-#### Framework Level Templates
-- [minimal/](templates/minimal/) - Single script framework (2 files)
-- [light/](templates/light/) - Small tool framework (7 files)
-- [standard/](templates/standard/) - Full application framework (50+ files)
-
-#### Template Documentation
-- [README-TEMPLATE-SELECTION.md](project-framework-template/README-TEMPLATE-SELECTION.md) - How to choose framework level
-- [NEW-PROJECT-CHECKLIST.md](project-framework-template/NEW-PROJECT-CHECKLIST.md) - Setup for each level
-- [UPGRADE-PATH.md](project-framework-template/UPGRADE-PATH.md) - Migration guides
-- [STRUCTURE.md](project-framework-template/STRUCTURE.md) - Structure reference
 
 ---
 
@@ -171,42 +158,6 @@ This index provides quick navigation to all documentation for the SpearIT Projec
 
 ---
 
-## Documentation by Framework Level
-
-### Minimal Framework (2 files)
-**For:** Single scripts, throwaway projects
-- [minimal/README.md](templates/minimal/README.md) - Minimal README template
-- [minimal/.gitignore](templates/minimal/.gitignore) - Basic gitignore
-
-**Setup:** [NEW-PROJECT-CHECKLIST.md § Minimal Setup](templates/NEW-PROJECT-CHECKLIST.md#minimal-framework-setup)
-
----
-
-### Light Framework (7 files)
-**For:** Small tools, medium lifespan
-- [light/README.md](templates/light/README.md) - Light README template
-- [light/PROJECT-STATUS.md](templates/light/PROJECT-STATUS.md) - Light status template
-- [light/CHANGELOG.md](templates/light/CHANGELOG.md) - Light changelog template
-- [light/CLAUDE.md](templates/light/CLAUDE.md) - Light AI guidelines (optional)
-- [light/.gitignore](templates/light/.gitignore) - Light gitignore
-- [light/project-hub/project/history/](templates/light/project-hub/project/history/) - Session histories
-- [light/project-hub/project/research/justification-template.md](templates/light/project-hub/project/research/justification-template.md) - Simple justification
-
-**Setup:** [NEW-PROJECT-CHECKLIST.md § Light Setup](templates/NEW-PROJECT-CHECKLIST.md#light-framework-setup)
-
----
-
-### Standard Framework (50+ files)
-**For:** Applications, teams, ongoing projects
-- See [STRUCTURE.md](templates/STRUCTURE.md) for complete file listing
-- All templates and patterns included
-- Full kanban workflow
-- Complete research phase support
-
-**Setup:** [NEW-PROJECT-CHECKLIST.md § Standard Setup](templates/NEW-PROJECT-CHECKLIST.md#standard-framework-setup-new-projects)
-
----
-
 ## Special Topics
 
 ### Version Strategy
@@ -214,11 +165,6 @@ This index provides quick navigation to all documentation for the SpearIT Projec
 - **Framework version:** Tracked in [PROJECT-STATUS.md](PROJECT-STATUS.md)
 - **Document versions:** Each doc tracks independently via "Last Updated"
 - **Template versions:** Inherit framework version unless specified
-
-### Upgrade Paths
-- [UPGRADE-PATH.md](templates/UPGRADE-PATH.md) - Complete upgrade guide
-- Minimal → Light
-- Light → Standard
 
 ### Distribution
 - **ZIP package:** *(planned)* Pre-packaged framework levels
@@ -237,7 +183,6 @@ This index provides quick navigation to all documentation for the SpearIT Projec
 ### Diagrams
 - **Folder structure diagram:** *(planned)* Visual representation of project-hub/ structure
 - **Workflow diagram:** *(planned)* Kanban flow visualization
-- **Framework selection decision tree:** *(planned)* Visual guide to choosing level
 
 ---
 
@@ -257,9 +202,8 @@ This index provides quick navigation to all documentation for the SpearIT Projec
 ## How to Use This Index
 
 ### For New Framework Users
-1. Start with [README-TEMPLATE-SELECTION.md](templates/README-TEMPLATE-SELECTION.md)
-2. Follow [NEW-PROJECT-CHECKLIST.md](templates/NEW-PROJECT-CHECKLIST.md)
-3. Refer to specific templates as needed
+1. Follow [NEW-PROJECT-CHECKLIST.md](templates/NEW-PROJECT-CHECKLIST.md)
+2. Refer to specific templates as needed
 
 ### For Framework Developers
 1. Check [PROJECT-STATUS.md](PROJECT-STATUS.md) for current state

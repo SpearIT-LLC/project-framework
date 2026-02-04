@@ -57,7 +57,7 @@ cat PROJECT-STATUS.md | grep "Current Version"
 2. **Are you violating WIP limits?** Count files in work/doing/, should be ≤ .limit value
 3. **Is git clean?** Run `git status`, should see "nothing to commit, working tree clean" after releases
 4. **Is version consistent?** PROJECT-STATUS.md, CHANGELOG.md, and latest git tag should match
-5. **Are you in right framework level?** Check if project matches Minimal/Light/Standard criteria
+5. **Is your workflow appropriate?** Consider if you're tracking the right level of detail for your project's needs
 
 ---
 

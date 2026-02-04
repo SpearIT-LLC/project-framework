@@ -47,15 +47,11 @@ sources:
   ai-checkpoint-policy: framework/CLAUDE.md#ai-workflow-checkpoint-policy-critical---adr-001
 
   # Project Structure
-  structure-standard: framework/docs/PROJECT-STRUCTURE-STANDARD.md
-  structure-light: framework/docs/PROJECT-STRUCTURE-LIGHT.md
-  structure-minimal: framework/docs/PROJECT-STRUCTURE-MINIMAL.md
-  structure-repository: framework/docs/REPOSITORY-STRUCTURE.md
+  project-structure: framework/docs/PROJECT-STRUCTURE-STANDARD.md
+  repository-structure: framework/docs/REPOSITORY-STRUCTURE.md
 
   # Templates & Setup
-  template-selection: templates/README-TEMPLATE-SELECTION.md
   new-project-setup: templates/NEW-PROJECT-CHECKLIST.md
-  upgrade-path: templates/UPGRADE-PATH.md
 
   # Patterns
   pattern-cmd-wrappers: framework/docs/patterns/cmd-wrappers.md

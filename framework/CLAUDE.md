@@ -25,11 +25,7 @@
 
 ### What Is This?
 
-The **SpearIT Project Framework** is a comprehensive, multi-level project management framework designed to bring structure, consistency, and AI integration to software projects of any size.
-
-**Key Innovation:** Scales from single scripts to full applications using a 3-dimension classification system.
-
-**This Project Uses:** Standard Framework (see Framework Levels Overview below)
+The **SpearIT Project Framework** is a file-based workflow and AI collaboration partner for solo developers and small teams building software or documentation projects.
 
 ---
 
@@ -502,4 +498,3 @@ Framework commands provide workflow shortcuts with mechanical enforcement.
 ---
 
 **Last Updated:** 2026-01-16
-**Framework Level:** Standard (see [PROJECT-STATUS.md](PROJECT-STATUS.md) for current version)

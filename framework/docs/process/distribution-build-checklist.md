@@ -18,7 +18,7 @@ This checklist ensures the `templates/standard/` package contains everything nee
 
 ### 1. Core Structure Verification
 
-- [ ] Verify structure matches [PROJECT-STRUCTURE-STANDARD.md](../docs/PROJECT-STRUCTURE-STANDARD.md)
+- [ ] Verify structure matches [PROJECT-STRUCTURE.md](../docs/PROJECT-STRUCTURE.md)
 - [ ] Run structure comparison:
   ```powershell
   # List all files in template
@@ -60,7 +60,7 @@ This checklist ensures the `templates/standard/` package contains everything nee
 ### 4. Framework Documentation
 
 - [ ] `framework/docs/README.md`
-- [ ] `framework/docs/PROJECT-STRUCTURE-STANDARD.md`
+- [ ] `framework/docs/PROJECT-STRUCTURE.md`
 - [ ] `framework/docs/REPOSITORY-STRUCTURE.md`
 - [ ] `framework/docs/collaboration/` - All workflow guides
 - [ ] `framework/docs/process/` - All process docs
@@ -254,7 +254,7 @@ Before releasing a version with template changes:
 
 ## References
 
-- [PROJECT-STRUCTURE-STANDARD.md](../docs/PROJECT-STRUCTURE-STANDARD.md) - Canonical structure
+- [PROJECT-STRUCTURE.md](../docs/PROJECT-STRUCTURE.md) - Canonical structure
 - [NEW-PROJECT-CHECKLIST.md](../../templates/standard/NEW-PROJECT-CHECKLIST.md) - User setup guide
 - [version-control-workflow.md](version-control-workflow.md) - Release process
 

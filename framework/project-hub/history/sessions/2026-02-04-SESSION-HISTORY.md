@@ -243,4 +243,479 @@ planning:
 
 ---
 
-**Last Updated:** 2026-02-04
+## Afternoon Session: Sprint D&O 0 Planning & DECISION-105
+
+**Session Focus:** Sprint planning POC - Setup Sprint D&O 0 (Prerequisites) and complete DECISION-105
+
+### Summary
+
+Identified prerequisites for Sprint D&O 1 (DECISION-105, TECH-106, DECISION-037), created Sprint D&O 0 as prerequisite sprint, moved work items to todo/, and completed DECISION-105. This served as a lightweight sprint planning proof-of-concept (POC) without full FEAT-092 implementation overhead.
+
+### Work Completed
+
+#### Sprint D&O 0 Setup
+
+**Context:** User asked "What are the prerequisites for Sprint D&O 1?" after completing FEAT-095.
+
+**Analysis:**
+- Reviewed roadmap and work items
+- Identified DECISION-105 (Retire Multi-Level Framework) blocks FEAT-107 (System Requirements)
+- FEAT-107 depends on approved positioning statements from DECISION-105
+- TECH-106 (documentation cleanup) depends on DECISION-105
+- DECISION-037 (project-hub location) also relevant to Sprint D&O 1
+
+**Sprint Planning POC:**
+- Created Sprint D&O 0 (Prerequisites) in roadmap as current planning period
+- Moved Sprint D&O 1 to "Next Planning Period"
+- Duration: ~3-5 days
+- Goal: Complete foundational decisions and cleanup before Sprint D&O 1
+- Committed work: DECISION-105, TECH-106, DECISION-037
+
+**Work Item Management:**
+- Updated all three work items with Planning Period: Sprint D&O 0
+- Moved DECISION-105, TECH-106, DECISION-037 from backlog/ → todo/
+- Changed DECISION-037 status from "Deferred" → "Active"
+- Moved DECISION-105 from todo/ → doing/
+
+#### DECISION-105: Retire Multi-Level Framework Concept - Completed
+
+**Pre-Implementation Review:**
+- Verified positioning statements at lines 115-119 were correct
+- Confirmed decision already fully documented
+- Only administrative tasks remained
+
+**Completion Tasks:**
+1. Updated implementation checklist (marked 5 items complete)
+2. Updated FEAT-089 (Project Patterns) with DECISION-105 as prerequisite
+3. Updated FEAT-095 with follow-up note documenting completion
+4. User reviewed and approved decision record
+5. Added completion metadata (Completed: 2026-02-04, Status: Done)
+6. Moved DECISION-105 from doing/ → done/
+
+**Decision Summary:**
+- **Option Chosen:** Unified Framework with Project Templates (Option B)
+- **Approved Positioning Statements:**
+  - Version 1 (Concise): "The SpearIT Project Framework is a file-based workflow and AI collaboration partner for solo developers and small teams building software or documentation projects."
+  - Version 2 (Verbose): Adds details about markdown files, Kanban tracking, roadmaps, no external dependencies
+- **Key Principle:** Adaptive not tiered - framework adapts to project needs, not predefined levels
+- **Follow-up Work:** TECH-106 executes documentation cleanup
+
+### Decisions Made
+
+#### 1. Create Sprint D&O 0 as Prerequisite Sprint
+
+**Context:** Sprint D&O 1 has prerequisites (DECISION-105, TECH-106, DECISION-037) that must complete first.
+
+**Decision:** Create Sprint D&O 0 (Prerequisites) to handle foundational work before starting Sprint D&O 1.
+
+**Rationale:**
+- Clear separation of prerequisite work from main sprint work
+- Demonstrates sprint planning workflow without full FEAT-092 overhead (POC)
+- Allows focused completion of blockers before distribution work begins
+- Provides realistic test case for future sprint planning features
+
+**Impact:**
+- Sprint D&O 0 is now current planning period
+- Sprint D&O 1 moved to "Next Planning Period"
+- Three work items committed to Sprint D&O 0
+- Validates roadmap structure works for actual sprint execution
+
+#### 2. Sprint Planning POC Approach
+
+**Context:** Don't have formal sprint planning process (FEAT-092) yet, but need to plan Sprint D&O 0.
+
+**Decision:** Implement "rough sprint planning POC" on the fly without documentation overhead.
+
+**What This Means:**
+- Use existing tools (/fw-move, manual roadmap updates)
+- Focus on workflow mechanics over documentation
+- Learn what sprint planning needs through actual usage
+- Inform future FEAT-092 implementation with real experience
+
+**Rationale:**
+- Better to learn from doing than theorizing
+- Framework should dogfood its own features
+- Sprint D&O 0 provides realistic test case
+- User explicitly requested this approach
+
+**Impact:**
+- Roadmap manually updated with Sprint D&O 0
+- Work items manually moved between folders
+- Process documented in session history for reference
+- Insights will inform FEAT-092 design
+
+### Files Modified
+
+#### Roadmap
+- `framework/docs/project/ROADMAP.md` - Added Sprint D&O 0, moved Sprint D&O 1 to "Next"
+  - Sprint D&O 0: Duration ~3-5 days, goal "Complete foundational decisions"
+  - Success criteria: DECISION-105 retired, positioning approved, TECH-106 executed
+  - Committed work: DECISION-105, TECH-106, DECISION-037
+
+#### Work Items
+- `DECISION-105-retire-multi-level-framework-concept.md` - Completed
+  - Updated Planning Period: Sprint D&O 0
+  - Marked 5 checklist items complete
+  - Added completion metadata (Completed: 2026-02-04, Status: Done)
+  - Moved backlog/ → todo/ → doing/ → done/
+
+- `TECH-106-remove-multi-level-framework-references.md`
+  - Updated Planning Period: Sprint D&O 2 → Sprint D&O 0
+
+- `DECISION-037-project-hub-location.md`
+  - Updated Planning Period: (none) → Sprint D&O 0
+  - Updated Status: Deferred → Active
+  - Added Theme: Distribution & Onboarding
+
+- `FEAT-089-project-patterns.md`
+  - Added DECISION-105 as prerequisite in Dependencies section
+
+- `FEAT-095-ai-roadmap-questionnaire.md` (done/)
+  - Added follow-up note documenting DECISION-105 completion in Sprint D&O 0
+
+### Files Moved
+
+- `DECISION-105-retire-multi-level-framework-concept.md`: backlog/ → todo/ → doing/ → done/
+- `TECH-106-remove-multi-level-framework-references.md`: backlog/ → todo/
+- `DECISION-037-project-hub-location.md`: backlog/ → todo/
+
+### Current State
+
+#### Sprint D&O 0 Progress
+- ✅ DECISION-105: Retire Multi-Level Framework Concept (DONE)
+- 📋 TECH-106: Remove Multi-Level Framework References (TODO - depends on DECISION-105)
+- 📋 DECISION-037: Project-Hub Location (TODO)
+
+#### In done/ (awaiting release)
+- FEAT-095: AI-Guided Roadmap Questionnaire v1.3
+- DECISION-105: Retire Multi-Level Framework Concept
+
+#### In todo/
+- TECH-106: Remove Multi-Level Framework References
+- DECISION-037: Project-Hub Location
+- FEAT-093: Planning Period Archival
+
+#### In backlog/
+- FEAT-107: System Requirements Documentation (Sprint D&O 1)
+- FEAT-089: Project Organization (blocked by DECISION-105) ✅ Now unblocked
+
+### Key Learnings
+
+**Sprint Planning POC:**
+- Creating a prerequisite sprint (Sprint D&O 0) worked well for handling blockers
+- Manual process revealed what could be automated in FEAT-092
+- Roadmap structure supports both strategic planning and tactical execution
+- Work item metadata (Planning Period, Theme) helps organize sprint work
+
+**Decision Records:**
+- DECISION-105 was already complete when moved to doing/
+- Pre-implementation review confirmed no open questions remained
+- Administrative tasks (updating related items) are part of completion
+- Decision records can be "done" without implementation (TECH-106 executes it)
+
+**Work Item Dependencies:**
+- Explicit dependencies (FEAT-107 → DECISION-105) drive sprint planning
+- Related work (FEAT-089) also benefits from prerequisite completion
+- Identifying prerequisites before sprint start prevents mid-sprint blocks
+
+**Positioning Statements:**
+- Version 1 (Concise) and Version 2 (Verbose) pattern works well
+- Different contexts need different detail levels
+- Positioning statements belong in DECISION records, not scattered across docs
+
+---
+
+## Evening Session: TECH-106 Documentation Cleanup
+
+**Session Focus:** Execute TECH-106 Tier 1 and Tier 2 documentation updates
+
+### Summary
+
+Systematically removed multi-level framework references (Minimal/Light/Standard) from all Tier 1 critical user-facing files and began Tier 2 core documentation updates. Applied approved positioning statements from DECISION-105 throughout, following step-by-step enforcement protocol with user approval at each checkpoint.
+
+### Work Completed
+
+#### TECH-106: Remove Multi-Level Framework References - In Progress
+
+**Context:** After DECISION-105 approval, began systematic cleanup of documentation to remove obsolete multi-level framework concept and apply unified positioning.
+
+**Approach:** Three-tier implementation with stop-and-approval protocol at each item.
+
+**Tier 1: Critical User-Facing Files (COMPLETE - 6/6)**
+
+1. **README.md (root)**
+   - Replaced "comprehensive, multi-level project management framework" with Version 1 positioning
+   - Removed "3-level system (Minimal, Light, Standard)" reference
+   - Removed entire "Choose your framework level" section
+   - Removed "Framework Levels" detailed breakdown
+   - Removed "Multi-Level Scaling" from Key Features
+   - Updated Core Principles: replaced "Right-Sized Framework" with "Progressive Adoption"
+   - Simplified Examples and Distribution sections
+
+2. **framework/README.md**
+   - Changed opening to Version 1 positioning
+   - Removed "three scaling levels" reference
+   - Removed "Multi-Level Scaling" feature section
+   - Updated Quick Start to remove level selection
+   - Removed PROJECT-STRUCTURE-LIGHT.md and PROJECT-STRUCTURE-MINIMAL.md references
+   - Updated Philosophy with "Progressive Adoption" principle
+
+3. **QUICK-START.md**
+   - Removed entire "Choose Your Framework Level" section
+   - Consolidated setup from 3 level-specific sections to 1 unified section
+   - Removed Minimal/Light/Standard splits from all operations
+   - Simplified "Key Framework Rules" from split levels to unified rules
+   - Renumbered all sections (11 → 10 sections total)
+
+4. **framework/CLAUDE.md**
+   - Replaced "comprehensive, multi-level project management framework" with Version 1 positioning
+   - Removed "Key Innovation: Scales from single scripts using 3-dimension classification"
+   - Removed "This Project Uses: Standard Framework" line
+   - Removed footer "Framework Level: Standard"
+
+5. **templates/starter/framework/CLAUDE.md**
+   - Synced with framework/CLAUDE.md changes
+   - Applied same 4 edits to maintain consistency
+
+6. **framework/INDEX.md**
+   - Removed "Standard Framework" → "Official project structure specification"
+   - Removed "Choose your framework level" and "Migrate between framework levels" links
+   - Removed entire "Framework Level Templates" section (minimal/light/standard)
+   - Removed entire "Documentation by Framework Level" section (~30 lines)
+   - Removed "Upgrade Paths" section
+   - Removed "Framework selection decision tree" from Visual References
+   - Removed README-TEMPLATE-SELECTION.md references
+
+**Tier 2: Core Documentation (Started - 1/5)**
+
+1. **framework/docs/ref/GLOSSARY.md (COMPLETE)**
+   - Updated Framework definition to use Version 1 positioning
+   - Removed "Available in Standard, Light, and Minimal levels"
+
+**Tier 2 Remaining:**
+- workflow-guide.md (framework description)
+- architecture-guide.md (remove level references)
+- PROJECT-STRUCTURE-STANDARD.md (clarify naming)
+- REPOSITORY-STRUCTURE.md (positioning)
+
+**Tier 3: Meta Files (Pending)**
+- CHANGELOG.md (document change)
+- framework.yaml (positioning text if any)
+- templates/starter/framework.yaml (sync)
+
+**Validation (Pending)**
+- Grep searches to confirm cleanup complete
+- Template sync verification
+
+### Files Modified
+
+**Tier 1 Updates:**
+- `README.md` - 10+ edits removing multi-level references, applied Version 1 positioning
+- `framework/README.md` - 7 edits with unified positioning
+- `QUICK-START.md` - 13 edits, major simplification, removed level selection
+- `framework/CLAUDE.md` - 2 edits removing level-based instructions
+- `templates/starter/framework/CLAUDE.md` - Synced with framework/CLAUDE.md
+- `framework/INDEX.md` - 7 edits removing level references, ~80 lines removed
+
+**Tier 2 Updates:**
+- `framework/docs/ref/GLOSSARY.md` - Updated Framework definition
+
+**Work Item:**
+- `TECH-106-remove-multi-level-framework-references.md` - Updated checklist (7 items marked complete)
+
+### Current State
+
+#### Sprint D&O 0 Progress
+- ✅ DECISION-105: Retire Multi-Level Framework Concept (DONE)
+- 🔄 TECH-106: Remove Multi-Level Framework References (IN PROGRESS - Tier 1 complete, Tier 2 started)
+- 📋 DECISION-037: Project-Hub Location (TODO)
+
+#### In done/ (awaiting release)
+- FEAT-095: AI-Guided Roadmap Questionnaire v1.3
+- DECISION-105: Retire Multi-Level Framework Concept
+
+#### In doing/
+- TECH-106: Remove Multi-Level Framework References (Tier 1 ✅, Tier 2 1/5, Tier 3 pending)
+
+#### In todo/
+- DECISION-037: Project-Hub Location
+- FEAT-093: Planning Period Archival
+
+### Key Learnings
+
+**Step-by-Step Enforcement Protocol:**
+- Stop-and-approval at each item prevented errors and ensured user alignment
+- User could verify each change before proceeding to next
+- Clear progress tracking (checklist + TodoWrite) maintained focus
+- Protocol caught positioning statement error early (used wrong source initially)
+
+**Systematic Documentation Cleanup:**
+- Tier 1 files had extensive multi-level references requiring careful removal
+- INDEX.md was most affected (~80 lines removed, entire sections)
+- QUICK-START.md required section renumbering after content removal
+- Consistent positioning statements critical across all files
+
+**Positioning Statement Consistency:**
+- Version 1 (Concise) used for opening paragraphs and elevator pitches
+- Exact wording from DECISION-105 lines 113-121 applied throughout
+- No variations or paraphrasing - verbatim application ensured consistency
+
+**Progressive Adoption vs Tiered Framework:**
+- Replaced "Right-Sized Framework" principle with "Progressive Adoption"
+- Emphasis shifted from choosing level to starting simple and adding structure
+- "Framework serves you, not the other way around" messaging maintained throughout
+
+---
+
+## Late Session: TECH-106 Tier 2 Core Documentation
+
+**Session Focus:** Complete Tier 2 documentation updates (workflow-guide, architecture-guide, PROJECT-STRUCTURE-STANDARD)
+
+### Summary
+
+Completed remaining Tier 2 core documentation files for TECH-106, removing multi-level framework references and applying unified positioning. Made significant architectural simplifications based on user guidance that Kanban workflow stays universal while project detail varies. Added cleanup task for renaming PROJECT-STRUCTURE-STANDARD.md.
+
+### Work Completed
+
+#### TECH-106: Tier 2 Core Documentation Updates (COMPLETE - 4/4)
+
+**Approach:** User requested one-at-a-time handling for careful review of each file.
+
+2. **workflow-guide.md (COMPLETE)**
+   - Changed "depth varying by framework level" → "depth varying by project needs"
+   - Updated Research/Explore documentation guidance: removed level-based structure, now shows options teams can use
+   - Updated Define phase documentation: removed level labels, shows options as comprehensive or simple
+   - Updated Plan phase documentation: removed level distinctions, presents framework structure with simpler alternatives
+   - **Replaced entire "Research Depth by Framework Level" section** → "Research Depth Based on Project Needs"
+     - Removed Minimal/Light/Standard/Full subsections
+     - Reframed as Lightweight/Mid-Depth/Comprehensive based on project complexity, risk, uncertainty
+     - Kept examples but presented as proportional application, not framework levels
+   - Removed "Standard/Full:" and "Light/Minimal:" labels from Commit/Release section
+   - Updated "Always Ask First" section: changed "Minimal needs less than Full" → "scripts need less than multi-year systems"
+
+3. **architecture-guide.md (COMPLETE)**
+   - Table of Contents: Changed "Multi-Level Design Philosophy" → "Framework Flexibility"
+   - **Framework Overview** - Complete rewrite:
+     - Applied Version 2 positioning (verbose)
+     - Changed key innovation from "3-dimension classification" to "Universal Kanban workflow with flexible rigor"
+     - Updated core problem/solution to emphasize universal workflow vs multi-level structure
+     - Updated Core Principles: removed "Right-Sized Structure" and "Upgrade Path"
+   - **Replaced entire "Multi-Level Design Philosophy" section** → "Framework Flexibility"
+     - Initially wrote with Lightweight/Moderate/Comprehensive application guidance
+     - User requested further simplification: "Remove decision factors and Light/moderate/comprehensive references. The detail for rigor will be decided and added with FEAT-089"
+     - **Final simplification**: Removed all application depth guidance
+     - **Key insight from user:** "Kanban workflow stays the same, Kanban is Kanban regardless if project is big or small. Only the detail and rigor on a project level changes"
+     - Kept universal Kanban workflow description, removed prescriptive rigor guidance
+     - Added reference: "Project types defined in framework.yaml under project.types"
+   - **Design Decisions**: Updated "Multi-Level Framework" → "Universal Workflow with Flexible Rigor"
+   - Updated Last Updated to 2026-02-04
+
+4. **PROJECT-STRUCTURE-STANDARD.md (COMPLETE)**
+   - Title: "Standard Framework - Project Structure Definition" → "Project Framework - Structure Definition"
+   - Purpose: "Standard Framework project structure" → "framework project structure"
+   - Overview: Removed "Standard Framework level projects" and entire "Does NOT apply to" section listing Light/Minimal levels
+   - Repository Root Reference: Changed "Standard user projects" → "User projects"
+   - Initialization Checklist: "Standard Framework project" → "framework project"
+   - Git commit message: "Initial project setup from Standard Framework" → "Initial project setup using SpearIT Project Framework"
+   - Validation Checklist: "Standard Framework structure" → "framework structure"
+   - Notes: Removed "Standard Framework level structure. Light and Minimal levels have different structures."
+   - Updated Last Updated to 2026-02-04
+
+**User Insight - Return to Baseline:**
+
+User clarified direction: "I'm trying to return the docs to a simple baseline, Kanban with the project types defined in framework.yaml. We'll build the detail back after. The project size references are clouding direction of the framework."
+
+**Impact:**
+- Removed all prescriptive guidance about Lightweight/Moderate/Comprehensive application
+- Framework Flexibility section now simply describes universal Kanban workflow
+- Detail about how much rigor to apply will come later with FEAT-089 (Project Organization)
+- Focus: Universal workflow structure + teams use what they need
+
+**Cleanup Task Added:**
+
+User identified PROJECT-STRUCTURE-STANDARD.md filename still has "STANDARD" implying levels.
+
+**Decision:** Add cleanup task to TECH-106 to rename PROJECT-STRUCTURE-STANDARD.md → PROJECT-STRUCTURE.md
+
+**Added to TECH-106:**
+- New "Cleanup" section in implementation checklist
+- Task: Rename file + update ~10-12 active references (excluding history/)
+- Use `git mv` to preserve history
+- Scoped within TECH-106 as separate cleanup step
+
+### Files Modified
+
+**Tier 2 Documentation:**
+- `framework/docs/collaboration/workflow-guide.md` - Removed multi-level references, updated research depth section to project-needs-based approach
+- `framework/docs/collaboration/architecture-guide.md` - Complete rewrite of Framework Overview and Multi-Level Design Philosophy → Framework Flexibility, simplified to baseline per user guidance
+- `framework/docs/PROJECT-STRUCTURE-STANDARD.md` - Removed "Standard level" positioning throughout
+
+**Work Item:**
+- `TECH-106-remove-multi-level-framework-references.md` - Marked 3 more items complete (workflow-guide, architecture-guide, PROJECT-STRUCTURE-STANDARD), added Cleanup section for file rename task
+
+### Current State
+
+#### Sprint D&O 0 Progress
+- ✅ DECISION-105: Retire Multi-Level Framework Concept (DONE)
+- 🔄 TECH-106: Remove Multi-Level Framework References (IN PROGRESS - Tier 1 ✅, Tier 2 ✅, Tier 3 + Cleanup pending)
+- 📋 DECISION-037: Project-Hub Location (TODO)
+
+#### TECH-106 Status
+- ✅ Tier 1: Critical User-Facing Files (6/6 complete)
+- ✅ Tier 2: Core Documentation (4/4 complete)
+- 📋 Tier 3: Meta Files (CHANGELOG.md, framework.yaml, templates/starter/framework.yaml)
+- 📋 Cleanup: Rename PROJECT-STRUCTURE-STANDARD.md → PROJECT-STRUCTURE.md
+- 📋 Validation: Grep searches, template sync verification
+
+#### In doing/
+- TECH-106: Remove Multi-Level Framework References (Tier 1 ✅, Tier 2 ✅, Tier 3 pending)
+
+#### Next Steps (TECH-106)
+- Update REPOSITORY-STRUCTURE.md (last Tier 2 file - may already be complete from earlier work)
+- Update CHANGELOG.md with MINOR version entry
+- Update framework.yaml positioning text
+- Sync templates/starter/framework.yaml
+- Execute Cleanup: rename file + update references
+- Run validation grep searches
+
+### Key Learnings
+
+**Return to Baseline Strategy:**
+- User's approach: Strip back to simple baseline first, build detail back later with FEAT-089
+- Removing prescriptive guidance (Lightweight/Moderate/Comprehensive) clarifies core concept
+- "Kanban with project types in framework.yaml" is the essential message
+- Project size/complexity references were "clouding direction" - removed for clarity
+
+**Universal Kanban Insight:**
+- **Critical insight from user:** "The Kanban workflow stays the same, Kanban is Kanban regardless if project is big or small"
+- What varies: documentation depth, planning rigor, process formality - NOT the workflow itself
+- This distinction simplifies the framework dramatically
+- Focus shifted from "how to apply rigor" to "universal workflow + use what you need"
+
+**Architecture-guide.md Simplification:**
+- Started with Lightweight/Moderate/Comprehensive application guidance
+- User requested removal of decision factors and application tiers
+- Final version: Universal workflow description + reference to framework.yaml for project types
+- Detail about rigor will come from FEAT-089 (Project Organization)
+
+**Filename Cleanup:**
+- PROJECT-STRUCTURE-STANDARD.md filename still implies "Standard level"
+- Renaming to PROJECT-STRUCTURE.md removes level implication entirely
+- 48 files reference it (mostly historical - those stay unchanged per TECH-106 scope)
+- ~10-12 active files need reference updates
+- Added as cleanup task within TECH-106 scope
+
+**Step-by-Step Review:**
+- User's request to handle files "1 at a time" enabled careful review
+- Each file required different approach based on content
+- User provided clarifying direction mid-implementation (return to baseline)
+- Iterative refinement (architecture-guide went through 2 rounds) ensured final simplicity
+
+**FEAT-089 Dependency:**
+- Project organization patterns (FEAT-089) will add back detail about rigor/depth
+- Current work establishes baseline positioning and removes obsolete multi-level concept
+- FEAT-089 can build on clean foundation without legacy confusion
+
+---
+
+**Last Updated:** 2026-02-04 (Late Session)

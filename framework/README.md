@@ -8,18 +8,11 @@
 
 ## What Is This?
 
-This is the **Standard Project Framework** - a comprehensive, multi-level project management framework designed to bring structure, consistency, and AI integration to software projects of any size.
-
-The framework provides three scaling levels (Minimal, Light, Standard) that adapt to your project's scope, lifespan, and team size.
+The **SpearIT Project Framework** is a file-based workflow and AI collaboration partner for solo developers and small teams building software or documentation projects.
 
 ---
 
 ## Key Features
-
-**Multi-Level Scaling**
-- Choose the right amount of structure for your project
-- Start small, upgrade as your project grows
-- Three levels: Minimal (2 files) → Light (7 files) → Standard (50+ files)
 
 **Research-Driven Development**
 - Built-in research phase with 5 templates
@@ -92,9 +85,8 @@ framework/
 See [../README.md](../README.md) for repository structure and getting started.
 
 **For New Projects:**
-1. Read [../templates/README-TEMPLATE-SELECTION.md](../templates/README-TEMPLATE-SELECTION.md)
-2. Choose your framework level (Minimal, Light, or Standard)
-3. Follow [../templates/NEW-PROJECT-CHECKLIST.md](../templates/NEW-PROJECT-CHECKLIST.md)
+1. Follow [../templates/NEW-PROJECT-CHECKLIST.md](../templates/NEW-PROJECT-CHECKLIST.md)
+2. Customize templates with your project details
 
 **To Create a New Project:**
 Use `../tools/Build-FrameworkArchive.ps1` to create a distribution, then run `Setup-Project.ps1` to scaffold a new project.
@@ -111,9 +103,7 @@ Use `../tools/Build-FrameworkArchive.ps1` to create a distribution, then run `Se
 
 **Key Documentation:**
 - [docs/collaboration/](docs/collaboration/) - Universal collaboration guides (humans & AI)
-- [docs/PROJECT-STRUCTURE-STANDARD.md](docs/PROJECT-STRUCTURE-STANDARD.md) - Standard level structure spec
-- [docs/PROJECT-STRUCTURE-LIGHT.md](docs/PROJECT-STRUCTURE-LIGHT.md) - Light level structure spec
-- [docs/PROJECT-STRUCTURE-MINIMAL.md](docs/PROJECT-STRUCTURE-MINIMAL.md) - Minimal level structure spec
+- [docs/PROJECT-STRUCTURE.md](docs/PROJECT-STRUCTURE.md) - Project structure specification
 
 **Templates:**
 - [templates/](templates/) - 19 production-ready templates
@@ -129,11 +119,11 @@ Use `../tools/Build-FrameworkArchive.ps1` to create a distribution, then run `Se
 
 **Core Principles:**
 
-1. **Right-Sized Framework** - Use appropriate structure for project size
-2. **Research Before Build** - Validate problem before investing in solution
-3. **Single Source of Truth** - PROJECT-STATUS.md for version/status (never duplicate)
-4. **Incremental Development** - One work item at a time, verify alignment
-5. **Document Deviations** - Customizations documented in CLAUDE.md
+1. **Research Before Build** - Validate problem before investing in solution
+2. **Single Source of Truth** - PROJECT-STATUS.md for version/status (never duplicate)
+3. **Incremental Development** - One work item at a time, verify alignment
+4. **Document Deviations** - Customizations documented in CLAUDE.md
+5. **Progressive Adoption** - Start simple, add structure as value becomes clear
 
 **Workflow Phases:**
 
@@ -144,13 +134,11 @@ All projects follow this core workflow:
 4. Code - Implement incrementally
 5. Commit/Release - Ship the value
 
-Depth varies by framework level.
-
 ---
 
 ## Dogfooding
 
-**Meta Note:** This framework uses its own Standard framework for development.
+**Meta Note:** This framework manages itself using its own workflow system.
 
 This serves as:
 1. **Validation** - Proves framework works for framework development
@@ -169,4 +157,4 @@ Check [project-hub/](project-hub/) to see the framework in action on itself.
 
 ---
 
-**Get Started:** [../README.md](../README.md) → [../templates/README-TEMPLATE-SELECTION.md](../templates/README-TEMPLATE-SELECTION.md)
+**Get Started:** [../README.md](../README.md) → [../templates/NEW-PROJECT-CHECKLIST.md](../templates/NEW-PROJECT-CHECKLIST.md)

@@ -384,7 +384,7 @@ This decision affects:
 ## References
 
 - [FEAT-025-ALIGNMENT-ANALYSIS.md](FEAT-025-ALIGNMENT-ANALYSIS.md) - Discovered this issue
-- [PROJECT-STRUCTURE-STANDARD.md](../../docs/PROJECT-STRUCTURE-STANDARD.md) - Project structure spec
+- [PROJECT-STRUCTURE.md](../../docs/PROJECT-STRUCTURE.md) - Project structure spec
 - [NEW-PROJECT-CHECKLIST.md](../../../templates/NEW-PROJECT-CHECKLIST.md) - Will be updated based on decision
 
 ---

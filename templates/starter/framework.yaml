@@ -45,7 +45,7 @@ sources:
   ai-role-definitions: framework/docs/ref/framework-roles.yaml
 
   # Project Structure
-  structure-standard: framework/docs/PROJECT-STRUCTURE-STANDARD.md
+  project-structure: framework/docs/PROJECT-STRUCTURE.md
 
   # Patterns
   pattern-cmd-wrappers: framework/docs/patterns/cmd-wrappers.md

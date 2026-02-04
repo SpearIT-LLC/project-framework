@@ -54,6 +54,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - **Origin:** FEAT-091 was committed with incomplete metadata - root cause was advisory-only checklists
 
 ### Changed
+- **TECH-106: Remove Multi-Level Framework References**
+  - Unified framework positioning following DECISION-105
+  - Updated all user-facing documentation with new positioning: "file-based workflow and AI collaboration partner for solo developers and small teams"
+  - Removed obsolete "Minimal/Light/Standard" framework levels concept from active documentation
+  - Removed "choose your framework level" instructions
+  - Updated 15+ files: README.md, QUICK-START.md, CLAUDE.md, INDEX.md, workflow-guide.md, architecture-guide.md, PROJECT-STRUCTURE.md, REPOSITORY-STRUCTURE.md, GLOSSARY.md, templates
+  - Historical files preserved unchanged (project-hub/history/)
+
 - **TECH-061: CLAUDE.md Cleanup and Streamlining**
   - Reduced framework/CLAUDE.md from 728 to 500 lines (31% reduction)
   - Added glossary reference at top - establishes GLOSSARY.md as term authority
@@ -72,7 +80,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - **TECH-086: Align POC folder location with ADR-004**
   - Moved `poc/` from project root to `project-hub/poc/` per ADR-004 decision
-  - Updated PROJECT-STRUCTURE-STANDARD.md, distribution-build-checklist.md
+  - Updated PROJECT-STRUCTURE.md, distribution-build-checklist.md
   - Updated Build-FrameworkArchive.ps1 output text
   - Moved starter template poc folder to correct location
 
@@ -171,7 +179,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Unified enforcement prompts in workflow transitions
   - Clearer checklist formatting
 
-- Updated PROJECT-STRUCTURE-STANDARD.md to include `poc/` as required folder
+- Updated PROJECT-STRUCTURE.md to include `poc/` as required folder
 - Updated `.gitkeep` count from 6 to 7 (added `poc/.gitkeep`)
 
 ### Known Gaps (tracked in backlog)
@@ -331,7 +339,7 @@ This release contains 6 work items grouped together, establishing the foundation
 
 ### Added
 - **FEAT-039: Verify Hello-World Compliance**
-  - Validated examples/hello-world/ against PROJECT-STRUCTURE-STANDARD.md
+  - Validated examples/hello-world/ against PROJECT-STRUCTURE.md
   - Comprehensive audit of all required files, folders, and structure
   - Validation report confirms 100% compliance with Standard Framework specification
   - Establishes hello-world as verified reference implementation
@@ -393,7 +401,7 @@ This release contains 3 work items grouped together.
   - All references changed: project-hub/project/planning/ → project-hub/work/
   - Fixed template package path: project-framework-template/ → templates/
   - Removed 4-level structure references (now 3-level)
-  - Aligned all documentation with PROJECT-STRUCTURE-STANDARD.md
+  - Aligned all documentation with PROJECT-STRUCTURE.md
 
 ---
 
@@ -413,7 +421,7 @@ This release contains 3 work items grouped together.
   - Root-level `QUICK-START.md` for navigation
   - Root-level `CLAUDE.md` for repository navigation
 - **Universal Structure Definitions**
-  - `framework/docs/PROJECT-STRUCTURE-STANDARD.md` - Definitive project structure specification
+  - `framework/docs/PROJECT-STRUCTURE.md` - Definitive project structure specification
   - `framework/docs/REPOSITORY-STRUCTURE.md` - Repository root structure specification
   - `framework/project-hub/research/README.md` - Research folder purpose documentation
 - **Idea Collection Pattern**

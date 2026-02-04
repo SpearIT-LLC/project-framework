@@ -946,6 +946,11 @@ During FEAT-095 completion, discovered extensive references to the abandoned "Mi
 **Rationale for deferral:**
 Discovered issue is too large to address within FEAT-095 scope. Better to formally document decision (DECISION-105), create dedicated cleanup work item (TECH-106), then complete FEAT-095 v1.3 with what's already done.
 
+**Follow-up (2026-02-04):**
+- DECISION-105 moved to Sprint D&O 0 and completed during sprint planning POC
+- Approved positioning statements documented in DECISION-105
+- FEAT-089 updated to include DECISION-105 as prerequisite
+
 ---
 
 ## Completion Summary (v1.3)
