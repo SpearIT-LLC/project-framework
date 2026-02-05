@@ -85,17 +85,17 @@ All default checks PLUS:
 ### Validation Checks
 
 **Level Detection:**
-- Check for presence of framework/project-hub/ → Standard
+- Check for presence of project-hub/ → Standard
 - Check for PROJECT-STATUS.md + basic structure → Light
 - Check for README.md only → Minimal
 
 **Folder Structure (Standard):**
 ```
-✓ framework/project-hub/work/backlog/ exists
-✓ framework/project-hub/work/todo/ exists
-✓ framework/project-hub/work/doing/ exists
-✓ framework/project-hub/work/done/ exists
-✓ framework/project-hub/history/ exists
+✓ project-hub/work/backlog/ exists
+✓ project-hub/work/todo/ exists
+✓ project-hub/work/doing/ exists
+✓ project-hub/work/done/ exists
+✓ project-hub/history/ exists
 ✓ framework/docs/ exists
 ✓ framework/templates/ exists
 ```
@@ -111,7 +111,7 @@ All default checks PLUS:
 
 **WIP Limits (Standard):**
 ```
-✓ framework/project-hub/work/doing/.limit exists
+✓ project-hub/work/doing/.limit exists
 ✓ Content is valid number (typically 2)
 ```
 
