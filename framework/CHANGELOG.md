@@ -21,6 +21,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- Build script folder copy operations creating nested folder structures
+  - Fixed PowerShell Copy-Item behavior causing framework/docs/docs/ instead of framework/docs/
+  - Setup-Project.ps1 can now find framework-schema.yaml at correct path
+  - Affects framework/docs/, framework/templates/, framework/tools/ in distribution archive
 - Build script now correctly checks for unreleased items in project-hub/work/done/ (BUG-108)
   - Was checking old location (framework/project-hub/) after DECISION-037 move
 - Updated ROADMAP.md to reference correct future location for FEAT-093 (BUG-108)
