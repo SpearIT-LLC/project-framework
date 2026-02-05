@@ -1,0 +1,10 @@
+a750ffe docs(DECISION-037): Revise execution plan to systematic file-by-file approach
+55e53c9 docs: Add session history for 2026-02-05 (v4.1.0 release and DECISION-037 planning)
+64cc6c8 release: v4.1.0 - Workflow enforcement and documentation improvements
+a218f24 docs: Update session history with TECH-108 completion
+7071e8d feat(TECH-108): Remove Status field contradiction from all enforcement layers
+69d23d7 chore: Move TECH-108 to todo (commit to fixing Status field contradiction)
+92ffd09 docs(TECH-106): Update all files with unified framework positioning
+bfff121 feat: Complete TECH-106 and create TECH-108
+1316536 docs(DECISION-105): Update Version 2 positioning statement
+9a00a53 feat(FEAT-107): Add system requirements documentation work item
