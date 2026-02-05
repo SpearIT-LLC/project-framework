@@ -14,6 +14,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+
+### Changed
+
+### Removed
+
+### Fixed
+
+---
+
+## [4.1.0] - 2026-02-05
+
+### Added
 - **FEAT-088: Framework Glossary**
   - Created GLOSSARY.md in framework/docs/ref/ defining framework terminology
   - 30 terms defined with cross-references to detailed documentation
@@ -22,10 +34,32 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Synced to templates/starter/ for distribution
   - Single source of truth for term definitions
 
+- **FEAT-091: Feature Roadmap Framework**
+  - Created /fw-roadmap command for AI-guided strategic planning
+  - Interactive questionnaire system for capturing project goals and constraints
+  - Automated roadmap generation with themed work items
+  - Integration with backlog for roadmap-to-work-item flow
+
+- **FEAT-095: AI Roadmap Questionnaire**
+  - Comprehensive questionnaire template for roadmap planning sessions
+  - Sections: project goals, constraints, priorities, user needs, technical considerations
+  - Captures context for AI-assisted planning
+  - Integrated with /fw-roadmap command
+
 - **TECH-061: Framework Commands Reference**
   - Created framework-commands.md in framework/docs/ref/
   - Comprehensive documentation for all /fw-* commands
   - Added to framework/INDEX.md reference documentation section
+
+- **TECH-081: Setup Suggestions and Onboarding Improvements**
+  - Enhanced new project onboarding experience
+  - Added setup guidance and best practices
+  - Improved template documentation
+
+- **TECH-087: Project Type Selection Guidance**
+  - Added documentation for selecting appropriate project type
+  - Guidance for software vs documentation projects
+  - Framework adaptation strategies
 
 - **TECH-094: Workflow Enforcement System**
   - **Three-Layer Enforcement Architecture**
@@ -33,13 +67,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     - Layer 2: Implementation Checklist with step-by-step execution protocol in templates
     - Layer 3: Pre-commit hook validating work items before commits (Claude Code hook)
   - **Pre-Commit Hook** (`.claude/hooks/Validate-WorkItems.ps1`)
-    - Validates work items in done/ have Status=Done, Completed date, all criteria checked
+    - Validates work items in done/ have Completed date and all criteria checked
     - Only validates staged files (not entire done/ folder)
     - Respects --no-verify for emergency bypasses
     - Catches issues after "## Acceptance Criteria" heading only (ignores Requirements section)
   - **Enhanced /fw-move Skill**
     - Embedded transition checklists directly in command (no references)
-    - Verifies preconditions before executing git mv (Status, dependencies, WIP limits)
+    - Verifies preconditions before executing git mv (dependencies, WIP limits)
     - Blocks transitions when requirements not met, offers to fix issues
     - Added "During Implementation" checklist enforcement protocol
   - **Template Enhancements**
@@ -52,6 +86,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     - All enforcement layers documented with examples and philosophy
   - **Known Limitation:** Enforcement only applies when Claude performs operations (see TECH-096)
   - **Origin:** FEAT-091 was committed with incomplete metadata - root cause was advisory-only checklists
+
+- **DECISION-105: Retire Multi-Level Framework Concept**
+  - Decided to retire "Minimal/Light/Standard" framework levels
+  - Unified positioning: "file-based workflow and AI collaboration partner"
+  - Rationale: levels caused confusion, didn't match actual usage patterns
+  - Implementation via TECH-106
 
 ### Changed
 - **TECH-106: Remove Multi-Level Framework References**
@@ -84,9 +124,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Updated Build-FrameworkArchive.ps1 output text
   - Moved starter template poc folder to correct location
 
-### Planned
-- Visual diagrams for folder structure and workflow
-- Task-based project templates (FEAT-052) - replacing size-based templates
+- **TECH-108: Fix Status Field Contradiction**
+  - Removed redundant "Status: Done" field requirement from all enforcement layers
+  - Aligned with Kanban principle: folder location IS the status
+  - Updated workflow-guide.md, fw-move.md, and pre-commit hook
+  - Completed date remains (tracks when work finished)
+  - Eliminates contradiction between documentation and enforcement
 
 ---
 
