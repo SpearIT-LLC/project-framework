@@ -361,7 +361,7 @@ New framework commands should follow these guidelines:
 
 **Framework Command Feature:**
 - Work Item: FEAT-018 (Claude Command Framework)
-- Location: `framework/project-hub/work/` (varies by status)
+- Location: `project-hub/work/` (varies by status)
 
 **Related Documentation:**
 - [workflow-guide.md](../collaboration/workflow-guide.md) - Workflow transitions and policies

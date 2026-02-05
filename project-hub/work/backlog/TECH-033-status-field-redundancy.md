@@ -214,7 +214,7 @@ Current situation:
 
 ## References
 
-- Source: framework/project-hub/research/backlog-ideas-from-feat-026.md (Item #5)
+- Source: project-hub/research/backlog-ideas-from-feat-026.md (Item #5)
 - Origin: FEAT-026-followup.md line 33-34 (Step 7 discussion)
 - Related: FEAT-030 (hold/ folder - related to status tracking)
 

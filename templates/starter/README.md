@@ -73,19 +73,19 @@ See [QUICK-START.md](QUICK-START.md) for common operations and workflow referenc
 
 ```powershell
 # Copy a feature template
-Copy-Item framework/templates/work-items/FEATURE-TEMPLATE.md framework/project-hub/work/backlog/FEAT-001-feature-name.md
+Copy-Item framework/templates/work-items/FEATURE-TEMPLATE.md project-hub/work/backlog/FEAT-001-feature-name.md
 
 # Move through workflow (use git mv to preserve history)
-git mv framework/project-hub/work/backlog/FEAT-001-*.md framework/project-hub/work/todo/
-git mv framework/project-hub/work/todo/FEAT-001-*.md framework/project-hub/work/doing/
-git mv framework/project-hub/work/doing/FEAT-001-*.md framework/project-hub/work/done/
+git mv project-hub/work/backlog/FEAT-001-*.md project-hub/work/todo/
+git mv project-hub/work/todo/FEAT-001-*.md project-hub/work/doing/
+git mv project-hub/work/doing/FEAT-001-*.md project-hub/work/done/
 ```
 
 ### Making Decisions
 
 ```powershell
 # Copy ADR template for architectural decisions
-Copy-Item framework/templates/decisions/ADR-MINOR-TEMPLATE.md framework/project-hub/research/adr/ADR-0001-decision-name.md
+Copy-Item framework/templates/decisions/ADR-MINOR-TEMPLATE.md project-hub/research/adr/ADR-0001-decision-name.md
 ```
 
 ---

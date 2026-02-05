@@ -41,7 +41,7 @@ When the user asks to create a work item (feature, bug, tech debt, spike, decisi
 
 1. Run this command first to get the next ID
 2. Use that ID in the filename: `{TYPE}-{ID}-{description}.md`
-3. Place in appropriate folder (`framework/project-hub/work/backlog/` for new items)
+3. Place in appropriate folder (`project-hub/work/backlog/` for new items)
 
 **Execute:**
 

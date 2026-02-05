@@ -69,7 +69,7 @@ Currently:
 ### 1. Reorganized Structure
 
 ```
-framework/project-hub/
+project-hub/
 ├── project/                       # Active planning (NEW)
 │   ├── ROADMAP.md                 # Moved from docs/project/
 │   └── (future: OKRs, milestones, etc.)

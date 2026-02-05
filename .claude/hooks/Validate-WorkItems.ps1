@@ -33,7 +33,7 @@ if (-not $projectDir) {
     exit 0
 }
 
-$donePath = "framework/project-hub/work/done"
+$donePath = "project-hub/work/done"
 
 # Get staged files from git
 Push-Location $projectDir

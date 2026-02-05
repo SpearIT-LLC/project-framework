@@ -72,41 +72,41 @@ Location: `framework/templates/`
 
 ## Project Documentation
 
-Location: `framework/project-hub/`
+Location: `project-hub/`
 
 ### Active Work (Kanban)
 
-Location: `framework/project-hub/work/`
+Location: `project-hub/work/`
 
-- **[backlog/](framework/project-hub/work/backlog/)** - Future work (not yet committed)
-- **[todo/](framework/project-hub/work/todo/)** - Committed next work (limit: 10)
-- **[doing/](framework/project-hub/work/doing/)** - Active work (limit: 1)
-- **[done/](framework/project-hub/work/done/)** - Completed, awaiting release
+- **[backlog/](project-hub/work/backlog/)** - Future work (not yet committed)
+- **[todo/](project-hub/work/todo/)** - Committed next work (limit: 10)
+- **[doing/](project-hub/work/doing/)** - Active work (limit: 1)
+- **[done/](project-hub/work/done/)** - Completed, awaiting release
 
 ### History
 
-Location: `framework/project-hub/history/`
+Location: `project-hub/history/`
 
-- **[sessions/](framework/project-hub/history/sessions/)** - Daily session history files
-- **[releases/](framework/project-hub/history/releases/)** - Archived work items by version
-- **[spikes/](framework/project-hub/history/spikes/)** - Completed research investigations
-- **[archive/](framework/project-hub/history/archive/)** - Superseded documents
+- **[sessions/](project-hub/history/sessions/)** - Daily session history files
+- **[releases/](project-hub/history/releases/)** - Archived work items by version
+- **[spikes/](project-hub/history/spikes/)** - Completed research investigations
+- **[archive/](project-hub/history/archive/)** - Superseded documents
 
 ### Research
 
-Location: `framework/project-hub/research/`
+Location: `project-hub/research/`
 
-- **[adr/](framework/project-hub/research/adr/)** - Architecture Decision Records
+- **[adr/](project-hub/research/adr/)** - Architecture Decision Records
 
 ### Retrospectives
 
-Location: `framework/project-hub/retrospectives/`
+Location: `project-hub/retrospectives/`
 
 - Project retrospectives after major milestones
 
 ### External References
 
-Location: `framework/project-hub/external-references/`
+Location: `project-hub/external-references/`
 
 - Cached authoritative references (RFCs, specs, standards)
 
@@ -145,12 +145,12 @@ Get-ChildItem -Recurse project-hub/work -Filter "*FEAT-001*"
 
 **Find all ADRs:**
 ```powershell
-Get-ChildItem framework/project-hub/research/adr/
+Get-ChildItem project-hub/research/adr/
 ```
 
 **Find recent session histories:**
 ```powershell
-Get-ChildItem framework/project-hub/history/sessions/ | Sort-Object LastWriteTime -Descending | Select-Object -First 5
+Get-ChildItem project-hub/history/sessions/ | Sort-Object LastWriteTime -Descending | Select-Object -First 5
 ```
 
 ---

@@ -188,8 +188,8 @@ for smooth handoffs:
 ✅ **Do:** Use `git mv oldpath newpath` to preserve history
 
 Example:
-git mv framework/project-hub/work/backlog/FEAT-031.md \
-        framework/project-hub/work/todo/FEAT-031.md
+git mv project-hub/work/backlog/FEAT-031.md \
+        project-hub/work/todo/FEAT-031.md
 
 ### Staging Work Before AI Session
 

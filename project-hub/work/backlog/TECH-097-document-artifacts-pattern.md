@@ -168,7 +168,7 @@ Add optional "Artifacts" section to templates:
 - Designed during 2026-01-30 session analyzing TECH-094 cleanup
 - User insight: "What if all associated docs lived in a sub-folder and followed the parent?"
 - Implemented immediately for TEST files cleanup
-- Session history: `framework/project-hub/history/sessions/2026-01-30-SESSION-HISTORY.md`
+- Session history: `project-hub/history/sessions/2026-01-30-SESSION-HISTORY.md`
 
 **Current Implementation:**
 - TECH-094 demonstrates pattern with 6 test files
@@ -189,7 +189,7 @@ Add optional "Artifacts" section to templates:
 ## Related
 
 - TECH-094: Workflow Enforcement System (demonstrates artifacts pattern)
-- Session history: `framework/project-hub/history/sessions/2026-01-30-SESSION-HISTORY.md`
+- Session history: `project-hub/history/sessions/2026-01-30-SESSION-HISTORY.md`
 - Pre-commit hook: `.claude/hooks/Validate-WorkItems.ps1` (lines 50-53)
 - FEAT-015: (Future) Stakeholder reports handling
 - (Future work item): Large files and binary artifact strategies

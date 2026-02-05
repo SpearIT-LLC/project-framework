@@ -10,7 +10,7 @@
     - Project scaffolding (from templates/starter/)
 
     Excludes:
-    - framework/project-hub/ (framework's own work items)
+    - project-hub/ (framework's own work items)
     - framework root files (CLAUDE.md, README.md, etc.)
 
     Pre-build checks:

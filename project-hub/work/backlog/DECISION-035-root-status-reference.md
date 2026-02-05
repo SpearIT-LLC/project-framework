@@ -212,7 +212,7 @@ Choose based on:
 
 ## References
 
-- Source: framework/project-hub/research/backlog-ideas-from-feat-026.md (Item #8)
+- Source: project-hub/research/backlog-ideas-from-feat-026.md (Item #8)
 - Origin: FEAT-026-followup.md line 20-21
 - Related: FEAT-026 (external-readiness)
 
