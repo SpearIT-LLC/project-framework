@@ -97,8 +97,8 @@ if [[ ! $VERSION =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
 fi
 
 # Define paths
-RELEASE_DIR="framework/project-hub/history/releases/$VERSION"
-DONE_DIR="framework/project-hub/work/done"
+RELEASE_DIR="project-hub/history/releases/$VERSION"
+DONE_DIR="project-hub/work/done"
 
 # Check if files exist in done/
 FILE_COUNT=$(ls "$DONE_DIR"/*.md 2>/dev/null | wc -l)
@@ -156,8 +156,8 @@ if ($Version -notmatch '^v\d+\.\d+\.\d+$') {
 }
 
 # Define paths
-$releaseDir = "framework/project-hub/history/releases/$Version"
-$doneDir = "framework/project-hub/work/done"
+$releaseDir = "project-hub/history/releases/$Version"
+$doneDir = "project-hub/work/done"
 
 # Check for files
 $files = Get-ChildItem "$doneDir/*.md" -ErrorAction SilentlyContinue
