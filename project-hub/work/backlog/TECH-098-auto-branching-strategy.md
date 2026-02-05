@@ -256,7 +256,7 @@ For now, framework project likely stays trunk-based:
 - `.claude/commands/fw-move.md` - Will add auto-branch logic
 - `framework/docs/ref/framework-schema.yaml` - Configuration schema
 - FEAT-089: Project Patterns - Will inform project-type recommendations
-- Session history: `framework/project-hub/history/sessions/2026-01-30-SESSION-HISTORY.md`
+- Session history: `project-hub/history/sessions/2026-01-30-SESSION-HISTORY.md`
 
 ---
 
