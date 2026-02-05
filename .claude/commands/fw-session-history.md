@@ -14,7 +14,7 @@ Generate or update the session history document for today, capturing work comple
 
 ## Behavior
 
-1. **Determine file path**: `framework/project-hub/history/sessions/YYYY-MM-DD-SESSION-HISTORY.md`
+1. **Determine file path**: `project-hub/history/sessions/YYYY-MM-DD-SESSION-HISTORY.md`
 2. **Check if file exists**:
    - If exists: Read and update/append to existing content
    - If new: Create from template structure below
