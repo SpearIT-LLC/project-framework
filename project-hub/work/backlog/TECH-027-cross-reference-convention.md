@@ -97,7 +97,7 @@ For framework documentation (process/, patterns/, collaboration/, docs/):
 - Process: See framework/docs/process/workflow-guide.md
 - Pattern: See framework/docs/patterns/error-handling.md
 - Collaboration: See framework/collaboration/ai-workflow.md
-- ADR: See framework/project-hub/research/adr/ADR-003.md
+- ADR: See project-hub/research/adr/ADR-003.md
 ```
 
 **Why absolute from repository root:**
