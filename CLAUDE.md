@@ -57,7 +57,7 @@ The framework project contains:
 - Collaboration guides ([framework/docs/collaboration/](framework/docs/collaboration/))
 - Templates ([framework/templates/](framework/templates/))
 - Patterns ([framework/docs/patterns/](framework/docs/patterns/))
-- Framework work items and history ([framework/project-hub/](framework/project-hub/))
+- Framework work items and history ([project-hub/](project-hub/))
 
 ### Working on Template Packages?
 
@@ -83,9 +83,9 @@ This folder contains the `starter/` template for creating new projects. The temp
 
 ### Work Item Tracking
 
-Framework work items: [framework/project-hub/work/](framework/project-hub/work/)
+Framework work items: [project-hub/work/](project-hub/work/)
 
-**Current active work:** Always check `framework/project-hub/work/doing/` for in-progress framework improvements.
+**Current active work:** Always check `project-hub/work/doing/` for in-progress framework improvements.
 
 ---
 
@@ -93,7 +93,7 @@ Framework work items: [framework/project-hub/work/](framework/project-hub/work/)
 
 1. **Read** [README.md](README.md) - Understand what the framework is
 2. **Read** [framework/CLAUDE.md](framework/CLAUDE.md) - Framework-specific context
-3. **Check** [framework/project-hub/work/doing/](framework/project-hub/work/doing/) - See what's in progress
+3. **Check** [project-hub/work/doing/](project-hub/work/doing/) - See what's in progress
 4. **Consult** [framework/collaboration/](framework/collaboration/) - Detailed collaboration guides
 
 ---
