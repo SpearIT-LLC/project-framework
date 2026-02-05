@@ -79,7 +79,7 @@ Copy-Item -Recurse framework/tools path/to/your-project/framework/
 
 ## Future: Task-Based Project Templates
 
-The framework will evolve to include **task-based project templates** that guide appropriate rigor based on what you're building (not project size). See [misc-thoughts-and-planning.md](../framework/project-hub/research/misc-thoughts-and-planning.md#Project-Templates) for the concept.
+The framework will evolve to include **task-based project templates** that guide appropriate rigor based on what you're building (not project size). See [misc-thoughts-and-planning.md](../project-hub/research/misc-thoughts-and-planning.md#Project-Templates) for the concept.
 
 ---
 
