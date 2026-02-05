@@ -3,11 +3,12 @@
 **ID:** DECISION-037
 **Type:** Decision
 **Priority:** Low
-**Version Impact:** MAJOR (if moved to root)
+**Version Impact:** MAJOR
 **Created:** 2026-01-27
+**Completed:** 2026-02-05
 **Theme:** Distribution & Onboarding
 **Planning Period:** Sprint D&O 0
-**Status:** Active
+**Status:** Completed
 
 ---
 
@@ -15,7 +16,7 @@
 
 Decide whether project-hub/ should move to repository root as `project-hub/` or remain at `framework/project-hub/`.
 
-**Current Status:** Decision deferred. Would expand scope of current work (FEAT-093). Revisit after internal reorganization is complete.
+**Final Decision:** Move project-hub/ to repository root. Implemented 2026-02-05.
 
 ---
 
@@ -220,12 +221,12 @@ When FEAT-093 is complete and we revisit this decision, evaluate:
 - [x] Related work item (FEAT-093) aware of deferral
 - [ ] Trigger conditions defined for revisiting
 
-**For Final Decision (when revisited):**
-- [ ] FEAT-093 complete and stable
-- [ ] Evaluation completed: does root location solve remaining problems?
-- [ ] Decision made: move or keep
-- [ ] If moving: Migration plan executed, all references updated
-- [ ] If keeping: Final rationale documented
+**For Final Decision (completed 2026-02-05):**
+- [x] FEAT-093 complete and stable (deferred - decision made without waiting)
+- [x] Evaluation completed: root location clarifies repository structure
+- [x] Decision made: **MOVE to root**
+- [x] Migration plan executed, all references updated (34 commits)
+- [x] Final rationale documented (see Implementation Notes below)
 
 ---
 
@@ -266,4 +267,39 @@ During roadmap planning, discussed moving project-hub/ to root:
 
 ---
 
-**Last Updated:** 2026-01-27
+## Implementation Notes (2026-02-05)
+
+**Final Decision: MOVE TO ROOT**
+
+**Rationale for proceeding:**
+- Repository structure needed clarification NOW (v5.0.0 release pending)
+- Dogfooding principle clarified: framework uses framework structure, and having project-hub at root IS the framework structure
+- Separating meta (project management) from product (framework source) improves repository navigation
+- BREAKING CHANGE appropriate for MAJOR version bump already planned
+
+**Implementation Summary:**
+- **Execution Date:** 2026-02-05
+- **Branch:** `feat/move-project-hub-to-root`
+- **Commits:** 34 individual commits (1 move + 33 file updates)
+- **Files Updated:** 33 files (skills, tools, docs, templates, work items)
+- **Approach:** File-by-file with validation (systematic, safe execution)
+
+**Migrations Performed:**
+1. Moved `framework/project-hub/` → `project-hub/` (git mv, preserves history)
+2. Updated all functional code (skills, PowerShell tools, hooks, build scripts)
+3. Updated all user navigation (CLAUDE.md, READMEs, templates)
+4. Updated all work items (backlog, todo) to prevent future confusion
+
+**Historical Records Preserved:**
+- CHANGELOG.md unchanged (historical record)
+- history/sessions/ unchanged (historical record)
+- history/releases/ unchanged (completed work)
+- research/ unchanged (historical notes)
+
+**Testing:** All PowerShell tools and skills tested and verified functional.
+
+**Version Impact:** MAJOR version bump (v4.1.0 → v5.0.0)
+
+---
+
+**Last Updated:** 2026-02-05
