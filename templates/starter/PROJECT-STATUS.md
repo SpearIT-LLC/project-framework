@@ -53,7 +53,7 @@
 - None
 
 ### Backlog (work/backlog/)
-- See [framework/project-hub/work/backlog/](framework/project-hub/work/backlog/) for planned work
+- See [project-hub/work/backlog/](project-hub/work/backlog/) for planned work
 
 ---
 
