@@ -169,7 +169,7 @@ Items in hold/ are temporarily paused due to:
 
 ## References
 
-- Source: framework/project-hub/research/backlog-ideas-from-feat-026.md (Item #1)
+- Source: project-hub/research/backlog-ideas-from-feat-026.md (Item #1)
 - Origin: FEAT-026-followup.md line 8
 - Related: TECH-027 (cross-reference conventions)
 
