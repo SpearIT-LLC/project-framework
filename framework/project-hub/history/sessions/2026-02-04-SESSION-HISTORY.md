@@ -957,4 +957,174 @@ Missing 'Completed' date
 
 ---
 
-**Last Updated:** 2026-02-04 (Final Session)
+## Continuation Session: TECH-108 Implementation
+
+**Session Focus:** Fix Status field contradiction across all enforcement layers
+
+### Summary
+
+Implemented TECH-108 to remove redundant Status field requirement from all three enforcement layers (workflow-guide.md, fw-move.md, Validate-WorkItems.ps1). Successfully validated the fix by moving TECH-108 to done/ without `--no-verify` flag - pre-commit hook passed using only Completed date and acceptance criteria validation. System now fully aligned with Kanban principle: folder location = status.
+
+### Work Completed
+
+#### TECH-108: Fix Status Field Contradiction - COMPLETED
+
+**Context:** Moved TECH-108 from todo/ → doing/ and completed implementation.
+
+**Implementation (all 7 acceptance criteria met):**
+
+1. **workflow-guide.md** (3 updates)
+   - Line 426: Removed "Status field updated to 'Done'" from → done/ checklist
+   - Added "Completed date is set (format: YYYY-MM-DD)" requirement
+   - Line 571: Updated required fields description
+   - Line 588: Removed Status field from error message example
+   - Line 632-634: Updated pre-commit hook validation rules documentation
+   - Added note: "Status is determined by folder location (done/), not a metadata field"
+
+2. **fw-move.md** (3 updates)
+   - Lines 164-169: Removed Status field requirement from → done/ checklist (was line 167)
+   - Lines 171-177: Removed "Status field not set to Done" from error examples
+   - Lines 280-283: Removed Status field from missing preconditions example
+   - Synced to templates/starter/.claude/commands/fw-move.md
+
+3. **Validate-WorkItems.ps1**
+   - Lines 73-79: Removed Status field check entirely
+   - Kept Completed date validation
+   - Kept acceptance criteria validation
+   - Hook now validates only: Completed date + acceptance criteria
+
+4. **troubleshooting-guide.md** (bonus cleanup)
+   - Lines 153-180: Updated "Work Items in Wrong Folder" troubleshooting section
+   - Removed Status field mismatch guidance
+   - Updated to reflect folder location = status (no metadata field)
+   - Changed examples from "update status field" to "use /fw-move or git mv"
+
+**Validation:**
+- Verified no remaining "Status field" references in enforcement layers
+- All three layers now have identical validation rules
+- Sync warning in workflow-guide.md already present (line 397)
+
+**Testing:**
+- Moved TECH-108 from doing/ → done/ using `git mv`
+- Committed WITHOUT `--no-verify` flag
+- **Pre-commit hook passed!** - validated using only Completed date + acceptance criteria
+- Proves the fix works as designed
+
+### Decisions Made
+
+#### 1. Update troubleshooting-guide.md Proactively
+
+**Context:** Found Status field mismatch guidance in troubleshooting-guide.md during grep validation.
+
+**Decision:** Update troubleshooting section to reflect new Kanban model (folder location = status).
+
+**Rationale:**
+- Prevents future confusion for users debugging workflow issues
+- Aligns troubleshooting guidance with actual enforcement behavior
+- Removes outdated "update status field when moving files" advice
+- Part of comprehensive fix - not just enforcement layers, but user guidance too
+
+**Impact:**
+- Troubleshooting section now directs users to /fw-move command
+- Emphasizes folder location as single source of truth
+- No mention of redundant status metadata field
+
+#### 2. Test Fix Immediately with TECH-108 Itself
+
+**Context:** TECH-108 was the work item being completed - perfect test case.
+
+**Decision:** Use TECH-108's own move to done/ as validation of the fix.
+
+**Rationale:**
+- Dogfooding - framework tests its own fixes
+- Immediate validation - know if fix works before committing
+- If pre-commit hook passes, proves Status field removal succeeded
+- If hook fails, indicates incomplete implementation
+
+**Impact:**
+- Commit succeeded without `--no-verify` - proof fix works
+- Pre-commit hook validated TECH-108 using new rules
+- No Status field required, only Completed date + acceptance criteria
+- Demonstrates the fix resolves the original TECH-106 blocking issue
+
+### Files Modified
+
+**Enforcement Layers:**
+- `.claude/commands/fw-move.md` - Removed Status field requirement from → done/ checklist, updated error examples
+- `.claude/hooks/Validate-WorkItems.ps1` - Removed Status field validation (lines 77-78)
+- `framework/docs/collaboration/workflow-guide.md` - Removed Status field from → done/ checklist, updated validation documentation
+- `templates/starter/.claude/commands/fw-move.md` - Synced with main fw-move.md
+
+**User Guidance:**
+- `framework/docs/collaboration/troubleshooting-guide.md` - Updated "Work Items in Wrong Folder" section to reflect folder location = status
+
+**Work Item:**
+- `TECH-108-fix-status-field-contradiction.md` - Marked all 7 acceptance criteria complete, added Completed date, moved to done/
+
+### Files Moved
+
+- `TECH-108-fix-status-field-contradiction.md`: todo/ → doing/ → done/
+
+### Current State
+
+#### Sprint D&O 0 Progress
+- ✅ DECISION-105: Retire Multi-Level Framework Concept (DONE)
+- ✅ TECH-106: Remove Multi-Level Framework References (DONE)
+- ✅ TECH-108: Fix Status Field Contradiction (DONE - completed same session)
+- 📋 DECISION-037: Project-Hub Location (TODO)
+
+#### In done/ (awaiting release) - 14 items
+- FEAT-095: AI-Guided Roadmap Questionnaire v1.3
+- DECISION-105: Retire Multi-Level Framework Concept
+- TECH-106: Remove Multi-Level Framework References
+- TECH-108: Fix Status Field Contradiction (NEW)
+- (Plus 10 other completed items)
+
+#### In doing/
+- None
+
+#### In todo/
+- DECISION-037: Project-Hub Location
+- FEAT-093: Planning Period Archival
+
+### Key Learnings
+
+**System-Wide Fixes Require Comprehensive Updates:**
+- TECH-108 affected 3 enforcement layers + 1 guidance document
+- Grep validation found unexpected file (troubleshooting-guide.md)
+- Can't just fix enforcement - must update user-facing guidance too
+- Search for concepts, not just exact strings (e.g., "Status field" + "status metadata")
+
+**Testing Validates Implementation:**
+- Using TECH-108 itself as test case proved fix works
+- Commit succeeding without `--no-verify` was definitive validation
+- Pre-commit hook behavior demonstrates the exact fix implemented
+- Immediate testing prevents deploying broken fixes
+
+**Kanban Model Simplification:**
+- Removing redundant Status field reduces cognitive load
+- Folder location as single source of truth eliminates sync issues
+- Completed date still provides useful tracking information
+- Acceptance criteria validation ensures work quality
+
+**Documentation Synchronization:**
+- workflow-guide.md has sync warning at line 397
+- Changes must propagate to fw-move.md (duplicated enforcement)
+- Starter template must stay in sync with main commands
+- Pre-commit hook must match documented validation rules
+
+**Quick Turnaround:**
+- TECH-108 moved from todo/ → doing/ → done/ in single session
+- High priority + clear scope enabled fast completion
+- Well-documented issue (from TECH-106 discovery) made implementation straightforward
+- Immediate testing validated success
+
+### Next Steps
+
+**Options for next session:**
+1. Continue Sprint D&O 0 with DECISION-037 (project-hub location) - Last item in sprint
+2. Plan release with 14 completed items in done/
+
+---
+
+**Last Updated:** 2026-02-04 (Continuation Session - TECH-108)
