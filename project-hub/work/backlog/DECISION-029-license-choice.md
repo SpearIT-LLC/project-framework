@@ -149,7 +149,7 @@ Once license is chosen:
 
 ## References
 
-- Source: framework/project-hub/research/backlog-ideas-from-feat-026.md (Item #6)
+- Source: project-hub/research/backlog-ideas-from-feat-026.md (Item #6)
 - Origin: FEAT-026-followup.md line 26
 - Related: FEAT-026 (external-readiness work)
 - License comparison: https://choosealicense.com/
