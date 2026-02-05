@@ -278,7 +278,7 @@ Featured projects using the Standard Project Framework:
 
 ## References
 
-- Source: framework/project-hub/research/backlog-ideas-from-feat-026.md (Item #7)
+- Source: project-hub/research/backlog-ideas-from-feat-026.md (Item #7)
 - Origin: FEAT-026-followup.md line 24
 - Related: FEAT-026, DECISION-029
 
