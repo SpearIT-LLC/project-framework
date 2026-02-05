@@ -5,6 +5,7 @@
 **Priority:** High
 **Version Impact:** None
 **Created:** 2026-01-08
+**Theme:** Distribution & Onboarding
 
 ---
 

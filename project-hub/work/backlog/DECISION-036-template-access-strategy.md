@@ -5,6 +5,7 @@
 **Priority:** Low
 **Version Impact:** None
 **Created:** 2026-01-10
+**Theme:** Distribution & Onboarding
 
 ---
 
@@ -389,5 +390,5 @@ This decision affects:
 
 ---
 
-**Last Updated:** 2026-01-10
-**Status:** Proposed - Awaiting decision and implementation
+**Last Updated:** 2026-01-12
+**Status:** Resolved - Decision made via DECISION-050 (Embedded Framework model adopted)

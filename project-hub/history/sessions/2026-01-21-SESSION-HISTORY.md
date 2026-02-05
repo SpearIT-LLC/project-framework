@@ -68,7 +68,7 @@ Implemented FEAT-031 - a machine-readable source-of-truth registry for framework
 
 - Tested `/fw-index` command, discussed output format consistency
 - Discussed script vs Claude-direct-read performance tradeoffs for slash commands
-- Created TECH-067 (backlog) to capture slash command performance optimization ideas
+- Created TECH-102 (backlog) to capture slash command performance optimization ideas (originally TECH-067, renumbered 2026-02-05 due to ID conflict)
 - Fixed misplaced session history files:
   - Merged `history/2026-01-17-SESSION-HISTORY.md` content into `sessions/` file (Session 3)
   - Merged `history/2026-01-20-SESSION-HISTORY.md` content into `sessions/` file (Session 0)
@@ -78,7 +78,7 @@ Implemented FEAT-031 - a machine-readable source-of-truth registry for framework
 
 ### Files Created
 
-- `framework/thoughts/work/backlog/TECH-067-slash-command-performance-optimization.md`
+- `framework/thoughts/work/backlog/TECH-102-slash-command-performance-optimization.md` (originally TECH-067, renumbered 2026-02-05)
 
 ### Files Modified
 

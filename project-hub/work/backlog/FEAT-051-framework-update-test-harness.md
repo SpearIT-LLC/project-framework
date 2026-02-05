@@ -5,6 +5,8 @@
 **Priority:** Low
 **Version Impact:** MINOR
 **Created:** 2026-01-12
+**Theme:** Distribution & Onboarding
+**Planning Period:** Sprint D&O 2
 
 ---
 

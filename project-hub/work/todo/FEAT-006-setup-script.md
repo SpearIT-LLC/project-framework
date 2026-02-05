@@ -5,6 +5,7 @@
 **Priority:** Medium
 **Version Impact:** MINOR
 **Created:** 2025-12-19
+**Theme:** Distribution & Onboarding
 
 ---
 

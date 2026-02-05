@@ -5,6 +5,7 @@
 **Priority:** Medium
 **Version Impact:** MINOR
 **Created:** 2026-01-27
+**Theme:** Developer Guidance
 
 ---
 

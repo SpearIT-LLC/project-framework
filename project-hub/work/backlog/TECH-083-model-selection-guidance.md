@@ -5,6 +5,7 @@
 **Priority:** Low
 **Version Impact:** PATCH
 **Created:** 2026-01-23
+**Theme:** Project Guidance
 
 ---
 

@@ -5,6 +5,7 @@
 **Priority:** Medium
 **Version Impact:** PATCH
 **Created:** 2025-12-31
+**Theme:** Distribution & Onboarding
 **Severity:** Medium
 
 ---

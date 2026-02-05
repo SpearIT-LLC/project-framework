@@ -1006,4 +1006,166 @@ Created comprehensive sprint planning tracker: `scratch/sprint-do-planning.md`
 
 ---
 
-**Last Updated:** 2026-02-05 (Final Session - Sprint D&O 0 Complete)
+---
+
+## Sprint D&O 1 Session: Planning and FEAT-005 Evaluation
+
+**Session Focus:** Sprint D&O 1 initiation, FEAT-005 analysis against current implementation
+
+### Work Completed
+
+**Sprint D&O 1 Planning:**
+
+**Scope Refinement:**
+- Moved 4 Sprint D&O 1 items from backlog → todo:
+  - FEAT-005 - ZIP Distribution Package
+  - FEAT-006 - Interactive Setup Script
+  - FEAT-011 - Trivial Sample Project
+  - DECISION-029 - License Choice for Framework
+- Evaluated FEAT-107 (System Requirements Documentation)
+- **Decision:** Move FEAT-107 from Sprint D&O 1 → Sprint D&O 4 (Polish)
+- **Rationale:** System requirements documentation is polish-level work, not MVP-critical
+
+**Final Sprint D&O 1 Scope:** 4 items (down from 5)
+
+**FEAT-005 Analysis:**
+
+**Status:** ✅ COMPLETE (moved to done/)
+
+**Key Finding:** FEAT-005 requirements largely superseded by DECISION-050 (Framework-as-Dependency Model) implementation completed in v4.0.0.
+
+**What Was Already Complete:**
+- ✅ Automated ZIP creation via Build-FrameworkArchive.ps1
+- ✅ Version-numbered distribution packages
+- ✅ Self-contained packages with framework and starter template
+- ✅ .framework-version tracking
+- ✅ Pre-build validation checks
+
+**What Was Superseded:**
+- ~~Three-level framework packages (Minimal/Light/Standard)~~ → Single comprehensive package per DECISION-050
+- ~~Original multi-package design~~ → Framework-as-dependency model
+
+**What Was Deferred:**
+- README-FIRST.txt quick start guide → DECISION-110 (evaluate if needed)
+- GitHub Releases hosting automation → Separate work (blocked on DECISION-029)
+- Documentation updates → Pending hosting decision
+
+**DECISION-110 Created:**
+
+Created new decision work item for Sprint D&O 4 (Polish): "README-FIRST.txt Quick Start Guide"
+
+**Purpose:** Evaluate whether to include README-FIRST.txt in distribution package or if existing documentation (README.md, Setup-Project.ps1 -Help) is sufficient.
+
+**Options Considered:**
+- Option A: Add README-FIRST.txt (immediate visibility)
+- Option B: Enhance README.md header (leverage existing docs)
+- Option C: No additional documentation (current state)
+- Option D: Interactive quick start in Setup-Project.ps1
+
+**Deferred to:** Sprint D&O 4 for user experience evaluation
+
+---
+
+### Decisions Made (Sprint D&O 1 Session)
+
+1. **FEAT-107 Sprint Assignment:**
+   - **Decision:** Move from Sprint D&O 1 to Sprint D&O 4 (Polish)
+   - **Rationale:** System requirements documentation enhances polish but isn't required for MVP distribution validation
+
+2. **FEAT-005 Completion Status:**
+   - **Decision:** Mark complete with deferred/superseded items documented
+   - **Rationale:** Core objective (downloadable ZIP for non-Git users) achieved via DECISION-050 implementation; remaining items are polish (README-FIRST) or separate concerns (hosting)
+
+3. **README-FIRST.txt Evaluation:**
+   - **Decision:** Defer to DECISION-110 in Sprint D&O 4
+   - **Rationale:** Distribution system works; quick start guide value needs user experience validation before implementation
+
+4. **GitHub Releases Hosting:**
+   - **Decision:** Defer to separate work item
+   - **Rationale:** Separate distribution concern; blocked on DECISION-029 (license choice)
+
+---
+
+### Files Modified (Sprint D&O 1 Session)
+
+**Work Items:**
+- `project-hub/work/backlog/FEAT-107-system-requirements-documentation.md` → `project-hub/work/backlog/` (moved back, Sprint D&O 4 assignment)
+- `project-hub/work/backlog/DECISION-029-license-choice.md` → `project-hub/work/todo/`
+- `project-hub/work/backlog/feature-005-zip-distribution.md` → `project-hub/work/todo/FEAT-005-zip-distribution.md`
+- `project-hub/work/backlog/feature-006-setup-script.md` → `project-hub/work/todo/FEAT-006-setup-script.md`
+- `project-hub/work/backlog/feature-011-sample-project.md` → `project-hub/work/todo/FEAT-011-sample-project.md`
+- `project-hub/work/todo/FEAT-005-zip-distribution.md` → `project-hub/work/doing/` (started work)
+- `project-hub/work/doing/FEAT-005-zip-distribution.md` - Updated with completion status:
+  - Added Completed date: 2026-02-05
+  - Marked completed requirements
+  - Documented superseded items (three-level ZIPs)
+  - Documented deferred items (README-FIRST.txt, hosting)
+  - Added completion notes explaining DECISION-050 relationship
+  - Added related work item cross-references
+- `project-hub/work/doing/FEAT-005-zip-distribution.md` → `project-hub/work/done/` (completed)
+
+### Files Created (Sprint D&O 1 Session)
+
+- `project-hub/work/backlog/DECISION-110-readme-first-guide.md` - Decision work item for Sprint D&O 4 (~140 lines)
+  - Four options evaluated with pros/cons
+  - Current user experience documented
+  - Evaluation questions for decision-making
+  - Related to FEAT-005, DECISION-050, Build-FrameworkArchive.ps1
+
+---
+
+### Current State (After Sprint D&O 1 Session)
+
+**Sprint Status:**
+- **Sprint D&O 0:** ✅ COMPLETE (1/1 items - BUG-109)
+- **Sprint D&O 1:** In progress (4 items committed, 1 complete)
+  - ✅ FEAT-005 - ZIP Distribution Package (COMPLETE)
+  - ⏳ FEAT-006 - Interactive Setup Script (next)
+  - ⏳ FEAT-011 - Trivial Sample Project
+  - ⏳ DECISION-029 - License Choice
+- **Sprint D&O 4:** Updated scope (8 items, added DECISION-110)
+
+**In done/ (awaiting release):**
+- BUG-108 - Ghost References to framework/project-hub
+- BUG-109 - Starter Template project-hub Location
+- DECISION-037 - Project-Hub Location
+- DECISION-037-execution-plan.md
+- **FEAT-005 - ZIP Distribution Package** ✅ NEW
+
+**In doing/:**
+- (empty - clean slate after FEAT-005 completion)
+
+**In todo/:**
+- FEAT-006 - Interactive Setup Script (Sprint D&O 1, Priority 2)
+- FEAT-011 - Trivial Sample Project (Sprint D&O 1, Priority 3)
+- DECISION-029 - License Choice (Sprint D&O 1, Priority 4)
+- FEAT-092 - Optional Sprint Support (Project Guidance, Sprint PG 1)
+- FEAT-093 - Planning Period Archival System (Workflow, Sprint WF 1)
+- TECH-070 - Issue Response Process (Workflow, Sprint WF 1)
+- TECH-070.1 - Validate Issue Response Process (Workflow, Sprint WF 1)
+
+---
+
+### Notes (Sprint D&O 1 Session)
+
+**FEAT-005 Discovery:**
+- Work item created Dec 2025, before DECISION-050 (Jan 2026) changed distribution model
+- Analysis revealed ~85% already complete via existing Build-FrameworkArchive.ps1
+- Only concrete missing piece: README-FIRST.txt (deferred to DECISION-110)
+- Demonstrates value of thorough pre-implementation review
+
+**Sprint D&O 1 Progress:**
+- 1 of 4 items complete (25%)
+- Next item: FEAT-006 (Interactive Setup Script)
+- All items now in todo/ ready for work
+- DECISION-029 (License Choice) identified as prerequisite for hosting decisions
+
+**Distribution System Status:**
+- Core functionality operational
+- Build script creates valid distribution packages
+- Framework-as-dependency model working as designed
+- Remaining work is polish (quick start guide) and distribution strategy (hosting)
+
+---
+
+**Last Updated:** 2026-02-05 (Sprint D&O 1 Session - FEAT-005 Complete)

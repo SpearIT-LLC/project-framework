@@ -5,6 +5,7 @@
 **Priority:** Medium
 **Version Impact:** MINOR
 **Created:** 2026-01-26
+**Theme:** Project Guidance
 
 ---
 

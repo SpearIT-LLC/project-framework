@@ -5,6 +5,7 @@
 **Priority:** Medium
 **Version Impact:** MINOR
 **Created:** 2026-01-30
+**Theme:** Workflow
 
 **Depends On:** DECISION-097, TECH-079
 

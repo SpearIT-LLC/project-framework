@@ -6,6 +6,7 @@
 **Priority:** Medium
 **Version Impact:** None (validation only)
 **Created:** 2026-01-23
+**Theme:** Workflow
 
 ---
 

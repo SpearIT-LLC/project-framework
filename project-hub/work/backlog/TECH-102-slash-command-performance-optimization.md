@@ -1,4 +1,14 @@
-# TECH-067: Slash Command Performance Optimization
+# TECH-102: Slash Command Performance Optimization
+
+**ID:** TECH-102
+**Type:** Tech Debt
+**Priority:** Low
+**Version Impact:** PATCH
+**Created:** 2026-01-21
+**Theme:** Workflow
+**Planning Period:** Sprint WF 2
+
+---
 
 ## Summary
 
@@ -7,8 +17,6 @@ Investigate and implement performance improvements for `/fw-*` slash commands, b
 ## Status
 
 - **Status:** Backlog
-- **Priority:** Low
-- **Created:** 2026-01-21
 
 ## Context
 
