@@ -25,7 +25,6 @@ function Find-WorkFolder {
     param()
 
     $candidates = @(
-        "framework/project-hub/work",
         "project-hub/work",
         "../project-hub/work"
     )
@@ -112,7 +111,6 @@ function Find-ThoughtsFolder {
     param()
 
     $candidates = @(
-        "framework/project-hub",
         "project-hub",
         "../project-hub"
     )
@@ -161,7 +159,7 @@ function Get-NextWorkItemId {
         # Returns: 68
 
     .EXAMPLE
-        Get-NextWorkItemId -ProjectHubPath "framework/project-hub"
+        Get-NextWorkItemId -ProjectHubPath "project-hub"
         # Returns: "068"
     #>
     [CmdletBinding()]
