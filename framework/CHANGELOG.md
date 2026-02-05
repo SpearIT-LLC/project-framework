@@ -23,6 +23,41 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [5.0.0] - 2026-02-05
+
+### BREAKING CHANGES
+
+#### project-hub/ Moved to Repository Root
+
+**Change:** `framework/project-hub/` → `project-hub/`
+
+**Rationale:**
+- Separates framework (product) from project management (meta-context)
+- Clarifies that project-hub is for the repository, not part of framework package
+- Establishes pattern: user projects should have project-hub/ at root
+- Improves repository navigation and structure clarity
+
+**Migration for existing users:**
+
+1. Move your project-hub directory:
+   ```bash
+   git mv framework/project-hub project-hub
+   ```
+
+2. Update skill files in `.claude/commands/`:
+   - Find: `framework/project-hub/`
+   - Replace: `project-hub/`
+
+3. Update any custom scripts/tools that reference the old path
+
+4. Update `CLAUDE.md` structure diagram if present
+
+**Impact:** All skills, documentation, and tools now reference `project-hub/` directly.
+
+**Related:** DECISION-037
+
+---
+
 ## [4.1.0] - 2026-02-05
 
 ### Added
