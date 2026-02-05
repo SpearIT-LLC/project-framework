@@ -5,6 +5,7 @@
 **Priority:** High
 **Version Impact:** PATCH
 **Created:** 2026-02-05
+**Completed:** 2026-02-05
 **Theme:** DECISION-037 Cleanup
 
 ---
@@ -175,15 +176,15 @@ Removes leftover directory structure from pre-DECISION-037 state. Git already tr
 
 ### Regression Testing
 
-- [ ] Build script successfully detects items in project-hub/work/done/ if any exist
+- [x] Build script successfully detects items in project-hub/work/done/ if any exist
 - [ ] Build script completes successfully when done/ is empty
-- [ ] No broken links in documentation
-- [ ] FEAT-093 work item is still accurate
+- [x] No broken links in documentation
+- [x] FEAT-093 work item is still accurate
 
 ### Test Cases Added
 
-- [ ] Manual: Place test item in project-hub/work/done/, verify build script warns
-- [ ] Manual: Grep for `framework/project-hub` and confirm only historical references remain
+- [x] Manual: Place test item in project-hub/work/done/, verify build script warns
+- [x] Manual: Grep for `framework/project-hub` and confirm only historical references remain
 
 ---
 
@@ -225,7 +226,7 @@ Removes leftover directory structure from pre-DECISION-037 state. Git already tr
 
 - [x] `tools/Build-FrameworkArchive.ps1` - Build script path fix
 - [x] `framework/docs/project/ROADMAP.md` - Future location comment
-- [ ] CHANGELOG.md - Document bug fix when released
+- [x] CHANGELOG.md - Document bug fix when released
 
 ---
 
@@ -245,7 +246,7 @@ Removes leftover directory structure from pre-DECISION-037 state. Git already tr
 - [x] Build script tested with empty done/ folder
 - [x] Build script tested with item in done/ folder (warns correctly)
 - [x] CHANGELOG.md updated
-- [ ] Git commit with message referencing BUG-108 and DECISION-037 cleanup
+- [x] Git commit with message referencing BUG-108 and DECISION-037 cleanup
 
 ---
 

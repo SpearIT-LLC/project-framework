@@ -370,4 +370,161 @@ This conversation clarified the framework repo's unique dual nature:
 
 ---
 
-**Last Updated:** 2026-02-05
+## Evening Session: BUG-108 Implementation and Completion
+
+**Session Focus:** Implementing and verifying the fix for ghost references to framework/project-hub
+
+### Work Completed
+
+**BUG-108: Ghost References to framework/project-hub**
+
+**Status:** ✅ COMPLETE (moved to done/)
+
+**Implementation:**
+1. Moved BUG-108 from todo/ → doing/
+2. Conducted pre-implementation review (per /fw-move workflow)
+3. Fixed all ghost references:
+   - tools/Build-FrameworkArchive.ps1:77 - Changed `$FrameworkDir/project-hub` → `$RepoRoot/project-hub`
+   - framework/docs/project/ROADMAP.md:230 - Updated future location reference to `project-hub/project/ROADMAP.md`
+   - project-hub/research/claude-hooks-research.md:134 - Fixed hook example path
+4. Removed ghost directory: framework/project-hub/
+5. Updated framework/CHANGELOG.md with bug fix notes
+
+**Verification:**
+- Comprehensive grep search confirmed only historical references remain (88 occurrences in 25 files, all appropriate)
+- Build script tested successfully (detected unreleased items in project-hub/work/done/)
+- FEAT-093 accuracy verified (all paths correct)
+- Created detailed verification report: VERIFICATION-REPORT.md
+
+**Testing Results:**
+- ✅ Build script now checks correct path for unreleased items
+- ✅ No broken documentation links
+- ✅ Only historical references to framework/project-hub remain (CHANGELOG, session history, archived work items)
+- ✅ Ghost directory removed successfully
+
+**Commits:**
+```
+d014589 feat: Create BUG-108 - Ghost references to framework/project-hub
+```
+
+**Outcome:** All DECISION-037 cleanup complete. Structure is now fully aligned with intent.
+
+---
+
+## Files Modified (Evening)
+
+### Bug Fixes
+- `tools/Build-FrameworkArchive.ps1` - Line 77 path correction
+- `framework/docs/project/ROADMAP.md` - Line 230 future location fix
+- `project-hub/research/claude-hooks-research.md` - Line 134 hook example path
+- `framework/CHANGELOG.md` - Added BUG-108 fix notes under [Unreleased]
+
+### Work Items
+- `project-hub/work/todo/BUG-108-ghost-references-to-framework-project-hub.md` → `project-hub/work/doing/` (started implementation)
+- `project-hub/work/doing/BUG-108-ghost-references-to-framework-project-hub.md` - Updated implementation checklist and regression testing
+- `project-hub/work/doing/BUG-108-ghost-references-to-framework-project-hub.md` → `project-hub/work/done/` (completed)
+
+## Files Created (Evening)
+
+- `VERIFICATION-REPORT.md` - Comprehensive verification report documenting all 88 framework/project-hub references, categorized by type, with structure validation and testing results
+
+## Files Removed (Evening)
+
+- `framework/project-hub/` - Ghost directory structure (via rm -rf)
+
+---
+
+## Current State (Final)
+
+### In done/ (awaiting release)
+- **BUG-108:** Ghost References to framework/project-hub ✅ COMPLETE
+- **DECISION-037:** Project-Hub Location ✅ COMPLETE (from earlier today)
+- **DECISION-037-execution-plan.md:** Execution plan ✅ COMPLETE (from earlier today)
+
+### In doing/
+- (empty - clean slate)
+
+### In todo/
+- TECH-070: Issue Response Process
+- TECH-070.1: Validate Issue Response Process
+- FEAT-092: Sprint Support
+- FEAT-093: Planning Period Archival
+
+### Next Steps (Final)
+1. ✅ ~~Fix BUG-108~~ COMPLETE
+2. ✅ ~~Verify DECISION-037 cleanup~~ COMPLETE
+3. Release v5.0.1 (PATCH) or include BUG-108 in next release
+4. Optional: Update FEAT-093 note about DECISION-037 being complete
+
+---
+
+## Decisions Made (Evening)
+
+1. **Verification thoroughness:**
+   - **Question:** User asked to "double-check the whole structure" before moving on
+   - **Decision:** Create comprehensive verification report instead of quick grep
+   - **Rationale:** Big structural change warrants thorough documentation of what was verified and why
+   - **Deliverable:** VERIFICATION-REPORT.md with complete reference analysis
+
+2. **Historical reference preservation:**
+   - **Decision:** Keep all 88 references to framework/project-hub in historical documents unchanged
+   - **Rationale:** Session histories, archived work items, and CHANGELOG document actual history - changing them would make history inaccurate
+   - **Categories preserved:** CHANGELOG (6), archived work items (57), session histories (22), completed decisions (2), research metadata (1)
+
+---
+
+## Verification Summary
+
+**Total framework/project-hub references found:** 88 occurrences in 25 files
+
+**Breakdown:**
+- CHANGELOG.md: 6 references (documents v5.0.0 breaking change) ✅ KEEP
+- Archived work items in history/releases/: 57 references ✅ KEEP
+- Session histories: 22 references ✅ KEEP
+- Completed work items (DECISION-037): 2 references ✅ KEEP
+- Research files (location metadata): 1 reference ✅ KEEP
+
+**Active files verified:**
+- ✅ Build script uses correct path
+- ✅ ROADMAP references correct future location
+- ✅ FEAT-093 paths accurate
+- ✅ No broken links
+
+**Structure verification:**
+- ✅ project-hub/ exists at repository root
+- ✅ framework/project-hub/ does NOT exist
+- ✅ Git history preserved (all moves used git mv)
+
+**Risk assessment:** NONE - All systems aligned
+
+---
+
+## Notes (Evening)
+
+**Workflow adherence:**
+- Followed /fw-move pre-implementation review requirements
+- Completed all implementation checklist items before marking done
+- Added Completed date (2026-02-05) to work item
+- Updated regression testing checklist
+- Created session history entry
+
+**Quality practices:**
+- User's request for thorough verification led to comprehensive documentation
+- VERIFICATION-REPORT.md serves as audit trail for DECISION-037 cleanup
+- All changes tracked in git with clear commit messages
+- Historical references preserved to maintain accurate project history
+
+**Implementation efficiency:**
+- Total fixes: 3 files edited, 1 directory removed
+- Verification: 88 references analyzed and categorized
+- Time investment: Thorough but worthwhile for structural change of this magnitude
+
+**Session theme:**
+- Morning: Release v4.1.0, plan DECISION-037
+- Afternoon: Execute DECISION-037, discover incomplete cleanup
+- Evening: Fix BUG-108, verify complete cleanup
+- Outcome: DECISION-037 now fully complete with all ghost references resolved
+
+---
+
+**Last Updated:** 2026-02-05 (Evening Session)
