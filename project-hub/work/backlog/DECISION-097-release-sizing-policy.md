@@ -182,7 +182,7 @@ Currently have 9 items in done/ awaiting release - the most we've accumulated. T
 - `framework/docs/process/version-control-workflow.md` - Will add Release Sizing section
 - `framework/.claude/commands/fw-status.md` - Will add item count indicators
 - FEAT-089: Project Patterns - May inform project-type-specific variations
-- Session history: `framework/project-hub/history/sessions/2026-01-30-SESSION-HISTORY.md`
+- Session history: `project-hub/history/sessions/2026-01-30-SESSION-HISTORY.md`
 
 ---
 
