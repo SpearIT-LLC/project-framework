@@ -2,7 +2,8 @@
 
 **Work Item:** DECISION-037
 **Created:** 2026-02-05
-**Status:** Pre-execution (awaiting post-release)
+**Updated:** 2026-02-05
+**Status:** Ready for execution
 
 ---
 
@@ -21,9 +22,25 @@ Moving project-hub to root clarifies: "This is the repo's project management, se
 ## Impact Summary
 
 - **Breaking Change:** YES (MAJOR version bump required)
-- **Files to Update:** ~50-60 files
+- **Files to Update:** 33 files (excluding historical records)
 - **Git History:** Preserved via `git mv`
 - **Testing Required:** All PowerShell tools and skills
+- **Approach:** File-by-file with validation
+
+---
+
+## Principles
+
+**What we UPDATE:**
+- Functional code (skills, tools, hooks, scripts)
+- User navigation (CLAUDE.md, README files, templates)
+- Active and backlog work items (prevent future confusion)
+
+**What we NEVER UPDATE (historical records):**
+- `framework/CHANGELOG.md` - Historical record of what WAS
+- `framework/project-hub/history/sessions/` - Session histories
+- `framework/project-hub/history/releases/` - Completed work items
+- `framework/project-hub/research/` - Historical research notes
 
 ---
 
@@ -32,6 +49,7 @@ Moving project-hub to root clarifies: "This is the repo's project management, se
 - [x] Release current items in done/ (blocks this work)
 - [x] Decision documented in DECISION-037
 - [x] Impact analysis complete
+- [x] File list finalized (33 files)
 - [ ] Backup/branch created (execute during implementation)
 
 ---
@@ -47,12 +65,13 @@ git checkout -b feat/move-project-hub-to-root
 
 #### 1.2 Verify Clean State
 ```bash
-git status  # Should be clean after release
+git status  # Should be clean
 ```
 
 #### 1.3 Document Current Structure
 ```bash
-tree framework/project-hub -L 2 > pre-move-structure.txt
+# Create snapshot for reference
+git log --oneline -10 > pre-move-commits.txt
 ```
 
 ---
@@ -73,239 +92,297 @@ ls project-hub/
 git status
 ```
 
----
-
-### Phase 3: Update File References
-
-**Strategy:** Update files in logical groups, commit incrementally for safety.
-
-#### 3.1 Root Documentation (2 files)
-
-**Files:**
-- `CLAUDE.md`
-- `QUICK-START.md`
-
-**Search/Replace:**
-- `framework/project-hub/` → `project-hub/`
-
-**Changes:**
-- CLAUDE.md: Update bootstrap block, structure diagram
-- QUICK-START.md: Update any path references
-
-**Commit:**
+#### 2.3 Commit Move
 ```bash
-git add CLAUDE.md QUICK-START.md
-git commit -m "docs: Update root docs for project-hub move"
+git commit -m "feat: Move project-hub to repository root
+
+BREAKING CHANGE: project-hub/ moved from framework/ to root.
+
+This separates framework source (product) from project management (meta).
+All path references will be updated in subsequent commits.
+
+Related: DECISION-037"
 ```
 
 ---
 
-#### 3.2 Framework Core Documentation (8 files)
+### Phase 3: Update Files (File-by-File with Validation)
 
-**Files:**
-- `framework/CLAUDE.md`
-- `framework/docs/collaboration/workflow-guide.md`
-- `framework/docs/collaboration/architecture-guide.md`
-- `framework/docs/collaboration/troubleshooting-guide.md`
-- `framework/docs/REPOSITORY-STRUCTURE.md`
-- `framework/docs/PROJECT-STRUCTURE.md`
-- `framework/docs/ref/framework-commands.md`
-- `framework/docs/process/distribution-build-checklist.md`
+**Strategy:** One file at a time. Edit → Validate → Commit → Next.
 
-**Search/Replace:**
-- `framework/project-hub/` → `project-hub/`
+**Total files:** 33 (plus DECISION-037 itself)
 
-**Special attention:**
-- Structure diagrams need ASCII tree updates
-- Example paths in documentation
-- Links using markdown format
+#### Per-File Workflow Template
 
-**Commit:**
+For each file in the list below:
+
 ```bash
-git add framework/docs/
-git add framework/CLAUDE.md
-git commit -m "docs(framework): Update docs for project-hub move"
+# 1. EDIT: Update paths in file
+#    Find: framework/project-hub/
+#    Replace: project-hub/
+
+# 2. REVIEW: Check changes
+git diff <file>
+
+# 3. VALIDATE: File-specific validation (see validation guide below)
+
+# 4. COMMIT: Individual commit with context
+git add <file>
+git commit -m "<type>(<scope>): Update paths for project-hub move
+
+File: <filename>
+Changes: framework/project-hub/ → project-hub/"
 ```
 
 ---
 
-#### 3.3 Skills - Root Commands (11 files)
+#### Validation Guide by File Type
 
-**Files in `.claude/commands/`:**
-- `fw-status.md`
-- `fw-backlog.md`
-- `fw-move.md`
-- `fw-session-history.md`
-- `fw-roadmap.md`
-- `fw-next-id.md`
-- `fw-wip.md`
-- `fw-help.md`
-- `fw-topic-index.md`
-- Plus any others
-
-**Search/Replace:**
-- `framework/project-hub/` → `project-hub/`
-- Check for hardcoded paths in:
-  - Data sources sections
-  - Example paths
-  - Implementation notes
-
-**Commit:**
-```bash
-git add .claude/commands/
-git commit -m "feat(skills): Update skill paths for project-hub move"
-```
-
----
-
-#### 3.4 Skills - Template Commands (11 files)
-
-**Files in `templates/starter/.claude/commands/`:**
-- Same files as 3.3, but in template package
-
-**Search/Replace:**
-- `framework/project-hub/` → `project-hub/`
-
-**Note:** These are what users will copy, so CRITICAL to update correctly.
-
-**Commit:**
-```bash
-git add templates/starter/.claude/commands/
-git commit -m "feat(templates): Update template skills for project-hub move"
-```
-
----
-
-#### 3.5 PowerShell Tools (5 files)
-
-**Files:**
-- `framework/tools/FrameworkWorkflow.psm1`
-- `framework/tools/Get-BacklogItems.ps1`
-- `framework/tools/Get-WorkflowStatus.ps1`
-- `framework/tools/Move-WorkItem.ps1`
-- `.claude/hooks/Validate-WorkItems.ps1`
-
-**Search/Replace:**
-- `framework/project-hub/` → `project-hub/`
-- Check for path construction logic
-- Verify relative path assumptions
-
-**Testing Required:** Each script must be tested after update.
-
-**Commit:**
-```bash
-git add framework/tools/ .claude/hooks/
-git commit -m "feat(tools): Update PowerShell tools for project-hub move"
-```
-
----
-
-#### 3.6 Build Scripts (1 file)
-
-**File:**
-- `tools/Build-FrameworkArchive.ps1`
-
-**Changes:**
-- Update any references to framework/project-hub/
-- Check if build script includes project-hub in archive (it shouldn't)
-- Verify exclusion logic still works
-
-**Commit:**
-```bash
-git add tools/Build-FrameworkArchive.ps1
-git commit -m "build: Update archive script for project-hub move"
-```
-
----
-
-#### 3.7 Template Documentation (10-15 files)
-
-**Files in `templates/starter/`:**
-- `CLAUDE.md`
-- `README.md`
-- `INDEX.md`
-- `PROJECT-STATUS.md`
-- `QUICK-START.md`
-- `framework/CLAUDE.md` (template copy)
-- Plus others in `templates/starter/framework/docs/`
-
-**Search/Replace:**
-- `framework/project-hub/` → `project-hub/`
-
-**Commit:**
-```bash
-git add templates/starter/
-git commit -m "feat(templates): Update template docs for project-hub move"
-```
-
----
-
-#### 3.8 Active Work Items (5-10 files)
-
-**Files in `project-hub/work/`:**
-- Scan all folders (backlog, todo, doing) for references
-- Notable ones:
-  - `FEAT-093-planning-period-archival.md` (mentions project-hub structure)
-  - `DECISION-037-project-hub-location.md` (this decision!)
-  - `TECH-098-auto-branching-strategy.md`
-  - Others as found
-
-**Search/Replace:**
-- `framework/project-hub/` → `project-hub/`
-
-**Note:** Session histories in `project-hub/history/sessions/` are historical - leave as-is.
-
-**Commit:**
-```bash
-git add project-hub/work/
-git commit -m "docs(work-items): Update active work items for new structure"
-```
-
----
-
-#### 3.9 Update DECISION-037 Itself
-
-**File:**
-- `project-hub/work/doing/DECISION-037-project-hub-location.md`
-
-**Changes:**
-- Update Status to "Completed"
-- Add Completed date
-- Add implementation notes section
-- Document final decision and rationale
-- Check all acceptance criteria
-
-**Commit:**
-```bash
-git add project-hub/work/doing/DECISION-037-project-hub-location.md
-git commit -m "docs(DECISION-037): Document final decision and implementation"
-```
-
----
-
-### Phase 4: Testing
-
-#### 4.1 Test PowerShell Tools
+**PowerShell files (*.ps1, *.psm1):**
 ```powershell
-# Test each script
+# Syntax check
+Get-Command <path-to-script> -Syntax
+# Or run with -WhatIf if supported
+```
+
+**Markdown files (*.md):**
+```bash
+# Visual review for:
+# - Broken structure/formatting
+# - Link syntax issues
+# - Code block formatting
+# Just review the diff carefully
+```
+
+**Skills (.claude/commands/*.md):**
+```bash
+# Check markdown formatting
+# Verify paths in "Data sources" section match
+# Check example code blocks for path references
+```
+
+**Work items:**
+```bash
+# Visual review only
+# Check that context makes sense with new paths
+```
+
+---
+
+#### Priority 1: Functional Files (Will Break) - 10 files
+
+**1. `.claude/commands/fw-session-history.md`**
+- Update: Path construction logic
+- Validate: Review diff for correct path references
+- Commit: `feat(skills): Update fw-session-history paths for project-hub move`
+
+**2. `.claude/hooks/Validate-WorkItems.ps1`**
+- Update: Path construction in validation logic
+- Validate: PowerShell syntax check
+- Commit: `feat(hooks): Update Validate-WorkItems paths for project-hub move`
+
+**3. `framework/tools/FrameworkWorkflow.psm1`**
+- Update: Module path references
+- Validate: PowerShell syntax check, test import
+- Commit: `feat(tools): Update FrameworkWorkflow paths for project-hub move`
+
+**4. `framework/tools/Get-BacklogItems.ps1`**
+- Update: Backlog path construction
+- Validate: Run with -WhatIf if available, or syntax check
+- Commit: `feat(tools): Update Get-BacklogItems paths for project-hub move`
+
+**5. `framework/tools/Get-WorkflowStatus.ps1`**
+- Update: Status lookup paths
+- Validate: Run with -WhatIf if available, or syntax check
+- Commit: `feat(tools): Update Get-WorkflowStatus paths for project-hub move`
+
+**6. `tools/Build-FrameworkArchive.ps1`**
+- Update: Archive exclusion logic
+- Validate: PowerShell syntax check
+- Commit: `build: Update Build-FrameworkArchive paths for project-hub move`
+
+**7. `templates/starter/.claude/commands/fw-backlog.md`**
+- Update: Path references
+- Validate: Markdown formatting check
+- Commit: `feat(templates): Update fw-backlog paths for project-hub move`
+
+**8. `templates/starter/.claude/commands/fw-next-id.md`**
+- Update: Path references
+- Validate: Markdown formatting check
+- Commit: `feat(templates): Update fw-next-id paths for project-hub move`
+
+**9. `templates/starter/.claude/commands/fw-session-history.md`**
+- Update: Path construction logic
+- Validate: Markdown formatting check
+- Commit: `feat(templates): Update fw-session-history paths for project-hub move`
+
+**10. `templates/starter/.claude/commands/fw-status.md`**
+- Update: Path references
+- Validate: Markdown formatting check
+- Commit: `feat(templates): Update fw-status paths for project-hub move`
+
+---
+
+#### Priority 2: User Navigation - 10 files
+
+**11. `CLAUDE.md`**
+- Update: Bootstrap block, structure diagrams, navigation paths
+- Validate: Check structure diagram formatting
+- Commit: `docs: Update CLAUDE.md paths for project-hub move`
+
+**12. `README.md`**
+- Update: Any path references to project-hub
+- Validate: Markdown formatting
+- Commit: `docs: Update README paths for project-hub move`
+
+**13. `framework/docs/ref/framework-commands.md`**
+- Update: Command location references
+- Validate: Markdown formatting
+- Commit: `docs(framework): Update framework-commands paths for project-hub move`
+
+**14. `templates/README.md`**
+- Update: Template documentation paths
+- Validate: Markdown formatting
+- Commit: `docs(templates): Update templates README paths for project-hub move`
+
+**15. `templates/starter/CLAUDE.md`**
+- Update: Structure diagrams, navigation
+- Validate: Check structure diagram formatting
+- Commit: `feat(templates): Update starter CLAUDE.md paths for project-hub move`
+
+**16. `templates/starter/INDEX.md`**
+- Update: Index path references
+- Validate: Markdown formatting
+- Commit: `feat(templates): Update starter INDEX paths for project-hub move`
+
+**17. `templates/starter/PROJECT-STATUS.md`**
+- Update: Status file path references
+- Validate: Markdown formatting
+- Commit: `feat(templates): Update starter PROJECT-STATUS paths for project-hub move`
+
+**18. `templates/starter/QUICK-START.md`**
+- Update: Quick start path references
+- Validate: Markdown formatting
+- Commit: `feat(templates): Update starter QUICK-START paths for project-hub move`
+
+**19. `templates/starter/README.md`**
+- Update: Template readme path references
+- Validate: Markdown formatting
+- Commit: `feat(templates): Update starter README paths for project-hub move`
+
+**20. `templates/starter/framework/docs/ref/framework-commands.md`**
+- Update: Command references in template
+- Validate: Markdown formatting
+- Commit: `feat(templates): Update starter framework-commands paths for project-hub move`
+
+---
+
+#### Priority 3: Work Items (Prevent Future Confusion) - 13 files
+
+**21. `project-hub/work/todo/FEAT-093-planning-period-archival.md`**
+- Update: Work item path references
+- Validate: Visual review of context
+- Commit: `docs(work): Update FEAT-093 paths for project-hub move`
+
+**22. `project-hub/work/backlog/DECISION-029-license-choice.md`**
+- Update: Cross-references
+- Validate: Visual review
+- Commit: `docs(work): Update DECISION-029 paths for project-hub move`
+
+**23. `project-hub/work/backlog/DECISION-035-root-status-reference.md`**
+- Update: References
+- Validate: Visual review
+- Commit: `docs(work): Update DECISION-035 paths for project-hub move`
+
+**24. `project-hub/work/backlog/DECISION-097-release-sizing-policy.md`**
+- Update: References
+- Validate: Visual review
+- Commit: `docs(work): Update DECISION-097 paths for project-hub move`
+
+**25. `project-hub/work/backlog/FEAT-028-release-automation-script.md`**
+- Update: Script path references
+- Validate: Visual review
+- Commit: `docs(work): Update FEAT-028 paths for project-hub move`
+
+**26. `project-hub/work/backlog/FEAT-030-add-hold-folder.md`**
+- Update: Folder path references
+- Validate: Visual review
+- Commit: `docs(work): Update FEAT-030 paths for project-hub move`
+
+**27. `project-hub/work/backlog/FEAT-034-projects-showcase.md`**
+- Update: References
+- Validate: Visual review
+- Commit: `docs(work): Update FEAT-034 paths for project-hub move`
+
+**28. `project-hub/work/backlog/feature-007-validation-script.md`**
+- Update: Script references
+- Validate: Visual review
+- Commit: `docs(work): Update feature-007 paths for project-hub move`
+
+**29. `project-hub/work/backlog/TECH-027-cross-reference-convention.md`**
+- Update: Convention references
+- Validate: Visual review
+- Commit: `docs(work): Update TECH-027 paths for project-hub move`
+
+**30. `project-hub/work/backlog/TECH-033-status-field-redundancy.md`**
+- Update: References
+- Validate: Visual review
+- Commit: `docs(work): Update TECH-033 paths for project-hub move`
+
+**31. `project-hub/work/backlog/TECH-049-human-ai-work-handoff-policy.md`**
+- Update: Policy references
+- Validate: Visual review
+- Commit: `docs(work): Update TECH-049 paths for project-hub move`
+
+**32. `project-hub/work/backlog/TECH-097-document-artifacts-pattern.md`**
+- Update: Pattern references
+- Validate: Visual review
+- Commit: `docs(work): Update TECH-097 paths for project-hub move`
+
+**33. `project-hub/work/backlog/TECH-098-auto-branching-strategy.md`**
+- Update: Strategy references
+- Validate: Visual review
+- Commit: `docs(work): Update TECH-098 paths for project-hub move`
+
+---
+
+### Phase 4: Update DECISION-037 Documents
+
+**34. `project-hub/work/doing/DECISION-037-project-hub-location.md`**
+- Update: Status to "Completed", add completion date
+- Add: Implementation notes section
+- Validate: Check all acceptance criteria marked
+- Commit: `docs(DECISION-037): Mark decision as completed`
+
+**35. `project-hub/work/doing/DECISION-037-execution-plan.md`**
+- Update: Status to "Completed"
+- Add: Execution completion notes
+- Validate: Visual review
+- Commit: `docs(DECISION-037): Mark execution plan as completed`
+
+---
+
+### Phase 5: Comprehensive Testing
+
+#### 5.1 Test PowerShell Tools
+```powershell
+# Test each updated script
 .\framework\tools\Get-WorkflowStatus.ps1
 .\framework\tools\Get-BacklogItems.ps1
-.\framework\tools\Move-WorkItem.ps1 -ItemId "TEST-001" -TargetFolder "backlog" -WhatIf
 
-# Test hooks (if applicable)
+# Test hooks
 .\.claude\hooks\Validate-WorkItems.ps1
 ```
 
-#### 4.2 Test Skills
+#### 5.2 Test Skills (via Claude Code)
 ```bash
-# Test each skill via Claude Code
 /fw-status
 /fw-backlog
 /fw-wip
-/fw-next-id
+/fw-session-history
 ```
 
-#### 4.3 Verify File Structure
+#### 5.3 Verify File Structure
 ```bash
 # Verify project-hub at root
 ls project-hub/
@@ -317,22 +394,28 @@ ls framework/  # Should NOT have project-hub/
 git log --follow project-hub/work/doing/ | head -20
 ```
 
-#### 4.4 Test Build Process
+#### 5.4 Test Build Process
 ```powershell
-# Run build script
+# Run build script to ensure it still works
 .\tools\Build-FrameworkArchive.ps1 -Version "test-build"
 
-# Verify archive structure
-# Extract and check that project-hub is NOT included (it's repo-specific)
+# Verify project-hub is NOT included in archive (repo-specific)
+```
+
+#### 5.5 Final Path Check
+```bash
+# Check for any missed references (excluding historical)
+git grep "framework/project-hub" | grep -v "history/" | grep -v "CHANGELOG.md"
+# Should return no results
 ```
 
 ---
 
-### Phase 5: Documentation Updates
+### Phase 6: Documentation & Finalization
 
-#### 5.1 Update CHANGELOG.md
+#### 6.1 Add New CHANGELOG Entry
 
-Add entry for breaking change:
+Create new section in `framework/CHANGELOG.md` for next release:
 
 ```markdown
 ## [Unreleased]
@@ -345,79 +428,80 @@ Add entry for breaking change:
 
 **Rationale:**
 - Separates framework (product) from project management (meta-context)
-- Clarifies that project-hub is for the repository, not part of the framework package
-- Sets precedent: user projects have project-hub/ at root
+- Clarifies that project-hub is for the repository, not part of framework package
+- Establishes pattern: user projects should have project-hub/ at root
 
 **Migration for existing users:**
 
-1. Move your project-hub:
+1. Move your project-hub directory:
    ```bash
    git mv framework/project-hub project-hub
    ```
 
-2. Update `.claude/commands/` skills:
+2. Update skill files in `.claude/commands/`:
    - Find: `framework/project-hub/`
    - Replace: `project-hub/`
 
-3. Update any custom scripts or tools that reference the old path
+3. Update any custom scripts/tools that reference the old path
 
-4. Update `CLAUDE.md` structure diagram if you have one
+4. Update `CLAUDE.md` structure diagram if present
 
-**Impact:** Skills, documentation, and tools now reference `project-hub/` directly.
+**Impact:** All skills, documentation, and tools now reference `project-hub/` directly.
 
 **Related:** DECISION-037
 ```
 
-#### 5.2 Update PROJECT-STATUS.md
+**Commit:**
+```bash
+git add framework/CHANGELOG.md
+git commit -m "docs(CHANGELOG): Document project-hub move (DECISION-037)"
+```
 
-Update version to next MAJOR (e.g., v5.0.0)
+#### 6.2 Update PROJECT-STATUS.md
 
-#### 5.3 Update DECISION-037
+Update version to next MAJOR (v5.0.0)
 
-Move to done/ after testing complete.
+**Commit:**
+```bash
+git add framework/PROJECT-STATUS.md
+git commit -m "chore: Bump version to v5.0.0 (MAJOR - breaking change)"
+```
 
 ---
 
-### Phase 6: Final Commit & Merge
+### Phase 7: Final Review & Merge
 
-#### 6.1 Final Review
+#### 7.1 Review All Changes
 ```bash
-# Review all changes
+# Review commit history
 git log --oneline origin/main..HEAD
 
-# Check for any missed references
-git grep "framework/project-hub" | grep -v "history/sessions"
+# Should see ~37 commits (1 move + 33 files + 2 DECISION-037 + CHANGELOG + STATUS)
+
+# Review files changed
+git diff --stat origin/main..HEAD
 ```
 
-#### 6.2 Create Summary Commit (Optional)
+#### 7.2 Final Verification
 ```bash
-# If needed, create a summary commit that references all the changes
-git commit --allow-empty -m "feat!: Move project-hub to root (DECISION-037)
-
-BREAKING CHANGE: project-hub/ moved from framework/ to repository root.
-
-This separates framework source (product) from project management (meta).
-
-Impact:
-- Updated ~50 files (skills, docs, tools, templates)
-- All references now use project-hub/ instead of framework/project-hub/
-- PowerShell tools and skills tested and verified
-- Migration guide added to CHANGELOG.md
-
-Closes: DECISION-037
-Version: MAJOR bump required"
+# Run verification checklist (see below)
 ```
 
-#### 6.3 Merge to Main
+#### 7.3 Merge to Main
 ```bash
-# Merge branch
+# Switch to main
 git checkout main
+
+# Merge with no-fast-forward to preserve branch structure
 git merge --no-ff feat/move-project-hub-to-root
 
-# Tag the release
-git tag -a v5.0.0 -m "Release v5.0.0: project-hub moved to root"
+# Verify merge
+git log --oneline -10
 
-# Push
+# Tag the release
+git tag -a v5.0.0 -m "Release v5.0.0: project-hub moved to root (DECISION-037)"
+
+# Push (when ready)
 git push origin main --tags
 ```
 
@@ -425,18 +509,42 @@ git push origin main --tags
 
 ## Verification Checklist
 
-After completion, verify:
+Run before merging to main:
 
+**File Structure:**
 - [ ] `project-hub/` exists at repository root
 - [ ] `framework/project-hub/` does NOT exist
-- [ ] All skills work correctly (`/fw-status`, `/fw-backlog`, etc.)
-- [ ] All PowerShell tools work correctly
-- [ ] Build script produces correct archive
-- [ ] `git log --follow project-hub/` shows full history
-- [ ] No remaining references to `framework/project-hub/` (except in session histories)
-- [ ] CHANGELOG.md documents breaking change
-- [ ] PROJECT-STATUS.md shows new MAJOR version
-- [ ] DECISION-037 moved to done/ and marked complete
+- [ ] All subdirectories intact: work/, history/, research/, external-references/
+
+**Git History:**
+- [ ] `git log --follow project-hub/work/` shows full history
+- [ ] All 33+ files committed individually
+- [ ] Commit messages follow convention
+
+**Functional Testing:**
+- [ ] `/fw-status` works correctly
+- [ ] `/fw-backlog` works correctly
+- [ ] `/fw-wip` works correctly
+- [ ] `/fw-session-history` works correctly
+- [ ] `Get-WorkflowStatus.ps1` runs without errors
+- [ ] `Get-BacklogItems.ps1` runs without errors
+- [ ] `Validate-WorkItems.ps1` runs without errors
+- [ ] `Build-FrameworkArchive.ps1` produces correct archive
+
+**Path References:**
+- [ ] No remaining active references to `framework/project-hub/` (check with grep)
+- [ ] Historical files (history/, CHANGELOG) unchanged
+- [ ] Research files unchanged
+
+**Documentation:**
+- [ ] CHANGELOG.md has new entry documenting breaking change
+- [ ] PROJECT-STATUS.md shows v5.0.0
+- [ ] DECISION-037 files marked complete
+- [ ] Migration guide in CHANGELOG is clear
+
+**Build Validation:**
+- [ ] Test build archive does NOT include project-hub/
+- [ ] Archive structure is correct
 
 ---
 
@@ -456,26 +564,59 @@ git reset --hard origin/main
 
 ## Estimated Effort
 
-- **Phase 1 (Prep):** 5 minutes
-- **Phase 2 (Move):** 2 minutes
-- **Phase 3 (Updates):** 30-45 minutes (search/replace across 50+ files)
-- **Phase 4 (Testing):** 15-20 minutes
-- **Phase 5 (Docs):** 10 minutes
-- **Phase 6 (Merge):** 5 minutes
+**File-by-file systematic approach:**
 
-**Total: 1-1.5 hours**
+- **Phase 1 (Preparation):** 5 minutes
+- **Phase 2 (Move directory):** 2 minutes
+- **Phase 3 (33 files × 2-3 min each):** 60-90 minutes
+  - Edit, validate, commit for each file
+  - Functional files may take longer (testing)
+- **Phase 4 (DECISION-037 updates):** 5 minutes
+- **Phase 5 (Testing):** 15-20 minutes
+- **Phase 6 (Documentation):** 10 minutes
+- **Phase 7 (Final review & merge):** 10 minutes
+
+**Total: 2-2.5 hours**
+
+**Note:** Systematic approach takes longer but provides:
+- Better validation at each step
+- Easier rollback if issues found
+- Clear audit trail
+- Safer execution
 
 ---
 
 ## Notes
 
-- **Session histories:** Leave historical records unchanged (they document what existed at the time)
-- **Git history:** Using `git mv` preserves full history, accessible via `git log --follow`
-- **Template impact:** Critical that template skills are updated - users copy these
-- **Testing:** Don't skip PowerShell tool testing - path logic can be fragile
+**Historical Integrity:**
+- Session histories in `history/sessions/` are NEVER updated (historical record)
+- Completed work in `history/releases/` is NEVER updated (frozen at release)
+- `CHANGELOG.md` is NEVER updated for past entries (only add new section)
+- Research files are historical unless actively needed
+
+**Git Practices:**
+- Using `git mv` preserves full history, accessible via `git log --follow`
+- File-by-file commits provide clear audit trail
+- Each commit is independently revertable if issues found
+
+**Critical Areas:**
+- Template skills (templates/starter/.claude/commands/) - users copy these exactly
+- PowerShell tools - path logic can be fragile, test thoroughly
+- Build script - must correctly exclude project-hub from archive
+
+**Validation Discipline:**
+- Don't skip validation steps, even for simple markdown files
+- PowerShell scripts MUST be syntax-checked at minimum
+- Visual review catches context issues that automated checks miss
+
+**Why File-by-File:**
+- Previous structural updates succeeded with this approach
+- Easier to identify which change caused an issue
+- Better documentation of what changed in each file
+- Safer rollback (revert specific file changes)
 
 ---
 
-**Status:** Ready for execution after v5.0.0 release
+**Status:** Ready for execution
 
 **Last Updated:** 2026-02-05
