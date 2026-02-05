@@ -4,7 +4,7 @@
 >
 > 1. **Ask:** "What kind of work are we doing today?" (unless user already stated intent)
 > 2. **Read:** `framework.yaml` → check project configuration
-> 3. **On work item actions** (move, create, status change): Use `git mv` for file operations in `framework/project-hub/work/`
+> 3. **On work item actions** (move, create, status change): Use `git mv` for file operations in `project-hub/work/`
 > 4. **Before writing code:** State what you plan to do and wait for approval
 
 **Last Updated:** {{DATE}}
@@ -73,7 +73,7 @@ Read `framework.yaml` at the project root for machine-readable project context.
 
 ## Workflow Quick Reference
 
-**Work item flow:** `framework/project-hub/work/backlog/` → `todo/` → `doing/` → `done/`
+**Work item flow:** `project-hub/work/backlog/` → `todo/` → `doing/` → `done/`
 
 **WIP Limits:** `doing/` = 1, `todo/` = 10
 
