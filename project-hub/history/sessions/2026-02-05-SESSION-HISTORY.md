@@ -527,4 +527,483 @@ d014589 feat: Create BUG-108 - Ghost references to framework/project-hub
 
 ---
 
-**Last Updated:** 2026-02-05 (Evening Session)
+## Late Evening Session: Theme Classification & Sprint D&O 1 Planning
+
+**Session Focus:** Comprehensive theme classification for all work items and Sprint D&O 1 finalization
+
+### Context
+
+After completing BUG-108 and BUG-109 work, shifted focus to strategic planning: applying themes to all work items and finalizing Sprint D&O 1 scope based on the framework's roadmap structure.
+
+### Work Completed
+
+**Phase 1: Planning Document Creation**
+- Created comprehensive analysis document: `scratch/work-item-theme-mapping.md`
+- Documented four framework themes from ROADMAP:
+  1. Distribution & Onboarding - Packaging, installation, setup automation
+  2. Workflow - File-based Kanban, templates, documentation, skill commands
+  3. Project Guidance - AI-guided strategic/planning level guidance (PM/Scrum Master role)
+  4. Developer Guidance - AI-guided tactical/implementation level guidance (Senior Developer/Tester role)
+- Analyzed all 62 work items (5 TODO/DOING + 57 backlog) for theme assignment
+- Identified Sprint D&O 1-4 work item candidates
+
+**Phase 2: Theme Application (62 items)**
+
+Batch updated all work items with theme metadata:
+- 5 TODO/DOING items:
+  - FEAT-092: "Developer Guidance & Patterns" → "Project Guidance"
+  - FEAT-093: "Workflow Enhancements" → "Workflow"
+  - TECH-070: Added "Workflow"
+  - TECH-070.1: Added "Workflow"
+  - BUG-109: "DECISION-037 Cleanup" → "Distribution & Onboarding"
+
+- 57 backlog items by theme:
+  - 16 Distribution & Onboarding items
+  - 32 Workflow items
+  - 5 Project Guidance items
+  - 4 Developer Guidance items
+
+**Phase 3: Planning Period Assignments**
+
+Assigned specific items to sprints:
+- BUG-109 → Sprint D&O 1 (critical structural fix for distribution)
+- FEAT-011 (Trivial Sample Project) → Sprint D&O 1 (validates MVP distribution experience)
+- FEAT-051 (Framework Update Test Harness) → Sprint D&O 2 (validation infrastructure)
+
+**Phase 4: Sprint D&O 1 Finalization**
+
+Confirmed 6-item scope for Sprint D&O 1:
+1. FEAT-107 - System Requirements Documentation (already committed in ROADMAP)
+2. DECISION-029 - License Choice for Framework
+3. FEAT-005 - ZIP Distribution Package
+4. FEAT-006 - Interactive Setup Script
+5. FEAT-011 - Trivial Sample Project
+6. BUG-109 - Starter Template project-hub Location
+
+**Phase 5: Duplicate ID Resolution**
+
+Resolved TECH-067 duplicate ID conflict:
+- Identified two unrelated work items sharing TECH-067 ID
+- Renumbered "Slash Command Performance Optimization" → TECH-102
+- Kept "Consolidate AI sections" as TECH-067 (created earlier in session history)
+- Updated all cross-references in mapping document and 2026-01-21 session history
+- Used git mv for proper history preservation
+
+**Phase 6: Work Item Status Updates**
+
+- Updated DECISION-036 status: "Proposed" → "Resolved - Decision made via DECISION-050"
+- Confirmed DECISION-036 ready for archiving (resolved by Framework-as-Dependency Model decision)
+
+---
+
+## Decisions Made (Late Evening)
+
+### 1. Theme Classification Approach
+**Decision:** Applied all four themes immediately to both TODO and backlog items
+**Rationale:** Complete theme metadata enables better filtering, reporting, and sprint planning. The mapping document provides clear justification for each assignment. Better to have complete data upfront than apply incrementally.
+
+### 2. BUG-109 Planning Period Assignment
+**Decision:** Assigned to Sprint D&O 1 (not D&O 0)
+**Rationale:** While foundational, D&O 0 focused on decisions/documentation. BUG-109 structural fix fits better with D&O 1's distribution package work where it can be validated immediately.
+
+### 3. FEAT-011 Planning Period Assignment
+**Decision:** Assigned to Sprint D&O 1 (not deferred to D&O 4)
+**Rationale:** Trivial sample project validates the distribution package and setup script work happening in D&O 1, providing immediate feedback on MVP experience. Better to test early than polish without validation.
+
+### 4. FEAT-051 Planning Period Assignment
+**Decision:** Assigned to Sprint D&O 2 (not D&O 3)
+**Rationale:** Test harness provides validation infrastructure needed in D&O 2 (Validation sprint focus) more than D&O 3 (Upgrade sprint focus).
+
+### 5. TECH-067 Duplicate ID Resolution Strategy
+**Decision:** Renumbered "Slash Command Performance Optimization" to TECH-102
+**Rationale:** Two unrelated work items shared TECH-067. Keeping "Consolidate AI sections" as TECH-067 (documented in 2026-01-21 session history as original) and renumbering the performance work avoids sub-task pattern confusion and preserves chronological order.
+
+### 6. DECISION-036 Status Clarification
+**Decision:** Updated status to explicitly show "Resolved" with reference to DECISION-050
+**Rationale:** Work item had resolution content but contradictory "Proposed" status at bottom. Clarifying completion status enables proper archiving workflow.
+
+---
+
+## Files Created (Late Evening)
+
+- `scratch/work-item-theme-mapping.md` - Comprehensive work item theme and planning period mapping analysis (~290 lines)
+  - Four theme definitions with examples
+  - Complete 62-item mapping tables organized by theme
+  - Sprint D&O 1-4 proposed work breakdown
+  - Implementation approach and decision framework
+  - Summary statistics and next steps
+
+---
+
+## Files Modified (Late Evening)
+
+**Work Items - Theme Updates (62 files):**
+- `project-hub/work/todo/FEAT-092-sprint-support.md` - Theme updated
+- `project-hub/work/todo/FEAT-093-planning-period-archival.md` - Theme updated
+- `project-hub/work/todo/TECH-070-issue-response-process.md` - Theme added
+- `project-hub/work/todo/TECH-070.1-validate-issue-response-process.md` - Theme added
+- `project-hub/work/todo/BUG-109-starter-template-project-hub-location.md` - Theme updated, Planning Period added
+- 57 backlog items - Theme field added (16 D&O, 32 Workflow, 5 PG, 4 DG)
+
+**Work Items - Planning Period Assignments:**
+- `project-hub/work/backlog/feature-011-sample-project.md` - Added Sprint D&O 1
+- `project-hub/work/backlog/FEAT-051-framework-update-test-harness.md` - Added Sprint D&O 2
+
+**Work Items - Status Updates:**
+- `project-hub/work/backlog/DECISION-036-template-access-strategy.md` - Status: "Proposed" → "Resolved - Decision made via DECISION-050"
+
+**TECH-067 Duplicate Resolution:**
+- `project-hub/work/backlog/TECH-102-slash-command-performance-optimization.md` - ID updated from TECH-067, frontmatter standardized
+- `scratch/work-item-theme-mapping.md` - All TECH-067b references → TECH-102, marked duplicate as resolved
+- `project-hub/history/sessions/2026-01-21-SESSION-HISTORY.md` - Lines 71, 81 clarified which TECH-067 was renumbered
+
+---
+
+## Files Moved (Late Evening)
+
+- `project-hub/work/backlog/TECH-067-slash-command-performance-optimization.md` → `project-hub/work/backlog/TECH-102-slash-command-performance-optimization.md` (via git mv)
+
+---
+
+## Current State (Late Evening)
+
+### Sprint D&O 1 Scope (6 items committed)
+- FEAT-107 - System Requirements Documentation
+- DECISION-029 - License Choice for Framework
+- FEAT-005 - ZIP Distribution Package
+- FEAT-006 - Interactive Setup Script
+- FEAT-011 - Trivial Sample Project
+- BUG-109 - Starter Template project-hub Location
+
+### Theme Distribution (62 total items)
+- Distribution & Onboarding: 17 items (27%)
+- Workflow: 30 items (48%)
+- Project Guidance: 6 items (10%)
+- Developer Guidance: 4 items (6%)
+
+### In done/ (awaiting release)
+- BUG-108 - Ghost References to framework/project-hub ✅
+- DECISION-037 - Project-Hub Location ✅
+- DECISION-037-execution-plan.md ✅
+
+### In doing/
+- (empty)
+
+### In todo/
+- FEAT-092 - Optional Sprint Support (Project Guidance, Sprint PG 1)
+- FEAT-093 - Planning Period Archival System (Workflow, Sprint WF 1)
+- TECH-070 - Issue Response Process (Workflow, Sprint WF 1)
+- TECH-070.1 - Validate Issue Response Process (Workflow, Sprint WF 1)
+- BUG-109 - Starter Template project-hub Location (Distribution & Onboarding, Sprint D&O 1)
+
+---
+
+## Outstanding Items (Late Evening)
+
+### Remaining Implementation Steps:
+1. Add Theme and Planning Period fields to work item templates
+2. Define Sprint WF 1 in ROADMAP (30 workflow items reference it)
+3. Archive DECISION-036 to done/ (status now shows "Resolved")
+4. Verify framework.yaml includes theme definitions
+5. Implement tooling updates (/fw-status, /fw-backlog theme filtering)
+
+### Decisions Still Needed:
+- Planning Period Definition Strategy: Define Sprint WF 1 now or defer until after D&O sprints?
+- Planning Period Field Semantics: Required field, optional, or structured format?
+- Theme requirement: Required for all work items or optional?
+
+---
+
+## Notes (Late Evening)
+
+**Theme Classification Insights:**
+- Workflow theme dominates (48% of items) - reflects framework's focus on file-based process
+- Distribution & Onboarding second largest (27%) - aligns with current Sprint D&O 0 focus
+- Project/Developer Guidance themes smaller (16% combined) - future growth areas
+
+**Sprint D&O 1 Planning:**
+- Balanced scope: 1 decision, 3 features, 1 sample project, 1 critical bug
+- MVP-focused: All items contribute to end-to-end distribution experience
+- Validation-oriented: Sample project provides immediate feedback on setup flow
+
+**Duplicate ID Resolution:**
+- Found via comprehensive backlog review during theme classification
+- Both TECH-067 items created same session (2026-01-21) but different work
+- Resolution preserves chronological integrity (earlier item keeps ID)
+
+**Session Efficiency:**
+- Used parallel Tool agent invocations for batch updates (4 concurrent agents)
+- Completed 62-item theme classification in single session
+- Created comprehensive planning document for future reference
+
+**Next Session Preparation:**
+- Work item templates need Theme/Planning Period field additions
+- Sprint WF 1 definition decision pending
+- DECISION-036 ready for archiving workflow
+
+---
+
+---
+
+## Final Session: Sprint D&O 0 Completion & Sprint Planning Finalization
+
+**Session Focus:** Complete BUG-109, finalize Sprint D&O 0-4 planning, create sprint tracking document
+
+### Context
+
+After completing theme classification and planning period assignments, shifted to implementing BUG-109 (the last blocker for Sprint D&O 0) and creating operational sprint tracking document for Distribution & Onboarding work.
+
+### Work Completed
+
+**BUG-109: Starter Template project-hub Location**
+
+**Status:** ✅ COMPLETE (moved to done/)
+
+**Implementation:**
+1. Moved BUG-109 from todo/ → doing/ (via /fw-move)
+2. Pre-implementation review: Verified fix design, no open questions
+3. Executed template structure fix:
+   - Moved templates/starter/framework/project-hub/ → templates/starter/project-hub/ (git mv)
+   - Verified template structure correct (project-hub at root, NOT in framework/)
+4. Rebuilt framework distribution archive (v5.0.0)
+5. Extracted and verified distribution structure
+6. Tested Setup-Project.ps1 creates projects with correct structure
+7. Updated framework/CHANGELOG.md with fix notes
+8. Moved BUG-109 to done/ with Completed date (2026-02-05)
+
+**Testing Results:**
+- ✅ Distribution archive has project-hub at root
+- ✅ Distribution archive does NOT have framework/project-hub
+- ✅ Setup-Project.ps1 creates new projects with project-hub at root
+- ✅ New projects do NOT have framework/project-hub
+- ✅ All implementation and regression testing checklists complete
+
+**Sprint D&O Planning Documentation**
+
+Created comprehensive sprint planning tracker: `scratch/sprint-do-planning.md`
+
+**Structure:**
+- Overview with item counts by sprint
+- Sprint D&O 0-4 detailed breakdowns
+- Work order for each sprint
+- Success criteria by sprint
+- Sprint dependencies diagram
+- Placement decisions documentation
+
+**Scope Decisions:**
+- BUG-109 → Sprint D&O 0 (foundational fix, completed ✅)
+- FEAT-011 → Sprint D&O 1 (MVP validation sample project)
+- FEAT-051 → Sprint D&O 2 (validation focus)
+
+**Sprint Commitments:**
+- D&O 0 (Current): 1 item - BUG-109 ✅ COMPLETE
+- D&O 1 (Next): 5 items - FEAT-005, FEAT-006, FEAT-011, DECISION-029, FEAT-107
+- D&O 2 (Future): 2 items - FEAT-007, FEAT-051
+- D&O 3 (Future): 1 item - FEAT-008
+- D&O 4 (Future): 7 items - Polish and documentation
+
+**Work Order Defined (D&O 1):**
+1. FEAT-005 - ZIP Distribution Package (may already be complete)
+2. FEAT-006 - Interactive Setup Script (has existing version, needs modifications)
+3. FEAT-011 - Trivial Sample Project
+4. DECISION-029 - License Choice
+5. FEAT-107 - System Requirements Documentation
+
+---
+
+## Decisions Made (Final Session)
+
+### 1. BUG-109 Sprint Assignment
+**Decision:** Assigned to Sprint D&O 0 (not D&O 1)
+**Rationale:** Foundational structure must be correct before building distribution artifacts. This is a prerequisite for Sprint D&O 1 work.
+**Outcome:** Completed same session, Sprint D&O 0 now 100% complete
+
+### 2. Sprint Planning Tracking Approach
+**Decision:** Created scratch file (sprint-do-planning.md) instead of implementing FEAT-092 now
+**Rationale:** FEAT-092 (Optional Sprint Support) is Project Guidance theme scheduled for Sprint PG 1. Simple scratch file sufficient for tracking 16 D&O items across 4 sprints. Avoid scope creep by staying focused on D&O work.
+
+### 3. Checkbox Semantics in Sprint Planning
+**Decision:** Checkboxes indicate completion only, not commitment
+**Rationale:** User questioned meaning of checked FEAT-107. Clarified that commitment shown via section headers ("Committed Items") and status fields, while checkboxes track actual completion.
+
+### 4. Sprint D&O 1 Work Order
+**Decision:** Defined specific work order: FEAT-005 → FEAT-006 → FEAT-011 → DECISION-029 → FEAT-107
+**Rationale:** Logical dependencies - build distribution package first, then setup script, then sample project to validate, then documentation. License decision (DECISION-029) needed before public distribution.
+
+### 5. BUG-109 Planning Period Correction
+**Decision:** Changed from "Sprint D&O 1" to "Sprint D&O 0" in work item
+**Rationale:** Work item metadata should reflect actual sprint assignment (D&O 0), not original proposed sprint (D&O 1).
+
+---
+
+## Files Modified (Final Session)
+
+### Framework Changes
+- `framework/CHANGELOG.md` - Added BUG-109 fix notes under [Unreleased]
+  - Starter template now has project-hub at root
+  - Completes DECISION-037 migration
+  - New projects get correct structure
+
+### Work Items
+- `project-hub/work/todo/BUG-109-starter-template-project-hub-location.md` → `project-hub/work/doing/` (started work)
+- `project-hub/work/doing/BUG-109-starter-template-project-hub-location.md` - Updated:
+  - Implementation Checklist: All 8 items marked complete
+  - Regression Testing: All 5 items marked complete
+  - Test Cases Added: 2/3 marked complete
+  - Documentation Updates: 2/3 marked complete
+  - Completed date: 2026-02-05
+  - Planning Period: "Sprint D&O 1" → "Sprint D&O 0"
+- `project-hub/work/doing/BUG-109-starter-template-project-hub-location.md` → `project-hub/work/done/` (completed)
+
+### Template Structure
+- `templates/starter/framework/project-hub/` → `templates/starter/project-hub/` (git mv, 17 files)
+  - Moved: external-references/, history/, poc/, research/, retrospectives/, work/
+  - All subdirectories and .gitkeep files preserved
+  - No content changes, pure structural move
+
+## Files Created (Final Session)
+
+- `scratch/sprint-do-planning.md` - Sprint D&O 0-4 tracking document (~285 lines)
+  - Overview and statistics (16 total items)
+  - Sprint D&O 0-4 detailed breakdowns with committed items
+  - Work order for Sprint D&O 1
+  - Sprint dependencies and success criteria
+  - Placement decisions (resolved)
+  - Notes and next actions
+
+## Files Modified (Build Process)
+
+- `distrib/spearit_framework_v5.0.0.zip` - Rebuilt with correct template structure
+  - Archive now contains project-hub/ at root (not in framework/)
+  - Size: 233.24 KB
+  - Verified via extraction and Setup-Project.ps1 testing
+
+---
+
+## Current State (Final)
+
+### Sprint Status
+- **Sprint D&O 0:** ✅ COMPLETE (1/1 items done)
+  - BUG-109 - Starter Template project-hub Location ✅
+- **Sprint D&O 1:** Ready to start (5 items committed, work order defined)
+- **Sprint D&O 2-4:** Planned (10 items committed across 3 sprints)
+
+### In done/ (awaiting release)
+- BUG-108 - Ghost References to framework/project-hub ✅
+- BUG-109 - Starter Template project-hub Location ✅
+- DECISION-037 - Project-Hub Location ✅
+- DECISION-037-execution-plan.md ✅
+
+### In doing/
+- (empty - clean slate after BUG-109 completion)
+
+### In todo/
+- FEAT-092 - Optional Sprint Support (Project Guidance, Sprint PG 1)
+- FEAT-093 - Planning Period Archival System (Workflow, Sprint WF 1)
+- TECH-070 - Issue Response Process (Workflow, Sprint WF 1)
+- TECH-070.1 - Validate Issue Response Process (Workflow, Sprint WF 1)
+
+### In backlog/ (Sprint D&O 1 candidates)
+- FEAT-005 - ZIP Distribution Package (Priority 1)
+- FEAT-006 - Interactive Setup Script (Priority 2)
+- FEAT-011 - Trivial Sample Project (Priority 3)
+- DECISION-029 - License Choice (Priority 4)
+- FEAT-107 - System Requirements Documentation (Priority 5)
+
+---
+
+## Git Commits (Final Session)
+
+```
+6bbd7ee fix: Move project-hub to root in starter template (BUG-109)
+```
+
+**Commit Details:**
+- 20 files changed, 22 insertions(+), 17 deletions(-)
+- Template structure: framework/project-hub/ → project-hub/ (17 files via git mv)
+- CHANGELOG.md updated with BUG-109 fix
+- BUG-109 implementation and testing checklists completed
+- Preserves git history via git mv (no file content changes)
+
+**Additional Changes (staged but not yet committed):**
+- Theme classification for 62 work items
+- TECH-067 duplicate resolution (→ TECH-102)
+- Sprint planning document creation
+- Session history updates
+
+---
+
+## Verification Summary (BUG-109)
+
+**Template Structure:**
+- ✅ templates/starter/project-hub/ EXISTS at root
+- ✅ templates/starter/framework/project-hub/ REMOVED
+- ✅ All subdirectories intact (work/, history/, poc/, research/, etc.)
+
+**Distribution Archive:**
+- ✅ Archive contains project-hub/ at root
+- ✅ Archive does NOT contain framework/project-hub/
+- ✅ Extract to /tmp/test-framework verified structure
+
+**Setup-Project.ps1 Testing:**
+- ✅ Created test project at /tmp/new-test-project
+- ✅ Test project has project-hub/ at root
+- ✅ Test project does NOT have framework/project-hub/
+- ✅ All expected directories present
+
+**DECISION-037 Completion:**
+1. ✅ Source repository structure (project-hub moved to root)
+2. ✅ Code and documentation references (BUG-108)
+3. ✅ Starter template structure (BUG-109) - **COMPLETE**
+
+---
+
+## Notes (Final Session)
+
+**Sprint D&O 0 Achievement:**
+- Single-item sprint focused on foundational prerequisite
+- Completed same day as planning
+- Clears the way for Sprint D&O 1 MVP distribution work
+- All verification tests passed on first try
+
+**BUG-109 Impact:**
+- Critical for framework distribution - would have shipped wrong template structure
+- Discovered during DECISION-037 cleanup review
+- Fixed proactively before any users affected
+- Validates importance of comprehensive verification (VERIFICATION-REPORT.md from BUG-108)
+
+**Sprint Planning Tool Evolution:**
+- Started with comprehensive analysis (work-item-theme-mapping.md)
+- Created operational tracker (sprint-do-planning.md)
+- Deferred FEAT-092 implementation to avoid scope creep
+- Simple markdown sufficient for current needs (16 items, 4 sprints)
+
+**Workflow Adherence:**
+- Followed /fw-move pre-implementation review protocol
+- Completed all implementation checklist items before marking done
+- Added Completed date before moving to done/
+- Used git mv for all file operations (preserves history)
+- Updated CHANGELOG.md immediately
+- Generated session history via /fw-session-history
+
+**Session Efficiency:**
+- Reviewed sprint roadmap → Identified BUG-109 as blocker → Implemented → Verified → Completed
+- Created sprint tracking document for ongoing work
+- Set clear work order for Sprint D&O 1
+- Clean handoff: Sprint D&O 0 complete, Sprint D&O 1 ready
+
+**Quality Practices:**
+- Comprehensive testing (template structure, distribution archive, Setup-Project.ps1)
+- Multiple verification points before marking complete
+- Documentation updated (CHANGELOG) before code committed
+- All acceptance criteria verified before move to done/
+
+**Next Session Preparation:**
+- Sprint D&O 0: ✅ COMPLETE
+- Sprint D&O 1: Ready to start with FEAT-005 (ZIP Distribution Package)
+- 4 items in done/ ready for release (BUG-108, BUG-109, DECISION-037 + plan)
+- Clean doing/ folder (ready for new work)
+
+---
+
+**Last Updated:** 2026-02-05 (Final Session - Sprint D&O 0 Complete)

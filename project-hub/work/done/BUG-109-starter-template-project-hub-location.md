@@ -5,8 +5,9 @@
 **Priority:** Critical
 **Version Impact:** PATCH
 **Created:** 2026-02-05
+**Completed:** 2026-02-05
 **Theme:** Distribution & Onboarding
-**Planning Period:** Sprint D&O 1
+**Planning Period:** Sprint D&O 0
 
 ---
 
@@ -257,7 +258,7 @@ ls templates/starter/framework/
 - [x] Extract and verify distribution structure
 - [x] Test Setup-Project.ps1 creates correct structure
 - [x] Update CHANGELOG.md
-- [ ] Git commit with message referencing BUG-109 and DECISION-037
+- [x] Git commit with message referencing BUG-109 and DECISION-037
 
 ---
 
