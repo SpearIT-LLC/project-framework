@@ -227,4 +227,4 @@ _No completed planning periods yet - this is the initial roadmap._
 **Created:** 2026-02-04
 **Owner:** Gary Elliott / SpearIT, LLC
 
-**Temporary Location:** This roadmap currently lives at `framework/docs/project/ROADMAP.md` pending FEAT-093 completion. Final location will be `framework/project-hub/project/ROADMAP.md`.
+**Temporary Location:** This roadmap currently lives at `framework/docs/project/ROADMAP.md` pending FEAT-093 completion. Final location will be `project-hub/project/ROADMAP.md`.

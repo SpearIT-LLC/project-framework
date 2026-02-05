@@ -21,6 +21,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- Build script now correctly checks for unreleased items in project-hub/work/done/ (BUG-108)
+  - Was checking old location (framework/project-hub/) after DECISION-037 move
+- Updated ROADMAP.md to reference correct future location for FEAT-093 (BUG-108)
+- Updated claude-hooks-research.md example to use correct project-hub path (BUG-108)
+- Removed leftover framework/project-hub/ directory from incomplete DECISION-037 cleanup (BUG-108)
+
 ---
 
 ## [5.0.0] - 2026-02-05

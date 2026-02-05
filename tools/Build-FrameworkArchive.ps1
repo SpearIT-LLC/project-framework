@@ -74,7 +74,7 @@ if ($StatusContent -match '\*\*Current Version:\*\*\s*v?(\d+\.\d+\.\d+)') {
 }
 
 # Check for unreleased items in done/
-$DoneDir = Join-Path $FrameworkDir "project-hub\work\done"
+$DoneDir = Join-Path $RepoRoot "project-hub\work\done"
 $DoneItems = Get-ChildItem "$DoneDir\*.md" -ErrorAction SilentlyContinue
 if ($DoneItems) {
     Write-Host "`nUnreleased items in done/:" -ForegroundColor Yellow

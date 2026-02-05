@@ -131,7 +131,7 @@ if ($command -notmatch 'git commit') {
 }
 
 $projectDir = $env:CLAUDE_PROJECT_DIR
-$donePath = Join-Path $projectDir "framework/project-hub/work/done"
+$donePath = Join-Path $projectDir "project-hub/work/done"
 
 $errors = @()
 

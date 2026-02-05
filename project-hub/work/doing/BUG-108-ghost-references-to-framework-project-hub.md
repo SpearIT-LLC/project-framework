@@ -231,20 +231,20 @@ Removes leftover directory structure from pre-DECISION-037 state. Git already tr
 
 ## Implementation Checklist
 
-- [ ] **PRE-IMPLEMENTATION REVIEW COMPLETED**
+- [x] **PRE-IMPLEMENTATION REVIEW COMPLETED**
   - Root cause: Incomplete DECISION-037 verification
   - Fix: Update 2 files, remove 1 directory
   - Testing: Verify build script works, grep for remaining references
   - Scope: Minimal, isolated changes
 
-- [ ] Search confirmed for all `framework/project-hub` references
-- [ ] Build script path updated
-- [ ] ROADMAP comment updated
-- [ ] Ghost directory removed
-- [ ] Comprehensive grep verification shows only historical references
-- [ ] Build script tested with empty done/ folder
-- [ ] Build script tested with item in done/ folder (warns correctly)
-- [ ] CHANGELOG.md updated
+- [x] Search confirmed for all `framework/project-hub` references
+- [x] Build script path updated
+- [x] ROADMAP comment updated
+- [x] Ghost directory removed
+- [x] Comprehensive grep verification shows only historical references
+- [x] Build script tested with empty done/ folder
+- [x] Build script tested with item in done/ folder (warns correctly)
+- [x] CHANGELOG.md updated
 - [ ] Git commit with message referencing BUG-108 and DECISION-037 cleanup
 
 ---
