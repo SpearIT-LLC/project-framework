@@ -21,6 +21,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- Starter template now has project-hub at repository root (BUG-109)
+  - Was incorrectly located in framework/project-hub/ from incomplete DECISION-037 migration
+  - New projects created with Setup-Project.ps1 now have correct structure
+  - Aligns with DECISION-037 architectural decision
 - Build script folder copy operations creating nested folder structures
   - Fixed PowerShell Copy-Item behavior causing framework/docs/docs/ instead of framework/docs/
   - Setup-Project.ps1 can now find framework-schema.yaml at correct path

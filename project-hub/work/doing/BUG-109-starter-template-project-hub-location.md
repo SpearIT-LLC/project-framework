@@ -5,7 +5,8 @@
 **Priority:** Critical
 **Version Impact:** PATCH
 **Created:** 2026-02-05
-**Theme:** DECISION-037 Cleanup
+**Theme:** Distribution & Onboarding
+**Planning Period:** Sprint D&O 1
 
 ---
 
@@ -181,16 +182,16 @@ ls templates/starter/framework/
 
 ### Regression Testing
 
-- [ ] Build script completes successfully
-- [ ] Distribution archive contains correct structure
-- [ ] Setup-Project.ps1 creates projects with project-hub at root
-- [ ] No references to framework/project-hub in new projects
-- [ ] Framework folder in new projects matches documentation
+- [x] Build script completes successfully
+- [x] Distribution archive contains correct structure
+- [x] Setup-Project.ps1 creates projects with project-hub at root
+- [x] No references to framework/project-hub in new projects
+- [x] Framework folder in new projects matches documentation
 
 ### Test Cases Added
 
-- [ ] Manual: Verify templates/starter/ structure before and after fix
-- [ ] Manual: Create test project and verify structure
+- [x] Manual: Verify templates/starter/ structure before and after fix
+- [x] Manual: Create test project and verify structure
 - [ ] Automated: Could add to build script verification
 
 ---
@@ -241,21 +242,21 @@ ls templates/starter/framework/
 
 ### Files to Update
 
-- [ ] templates/starter/ - Restructure to match DECISION-037
-- [ ] CHANGELOG.md - Document template structure fix
+- [x] templates/starter/ - Restructure to match DECISION-037
+- [x] CHANGELOG.md - Document template structure fix
 - [ ] VERIFICATION-REPORT.md - Update with template verification (optional)
 
 ---
 
 ## Implementation Checklist
 
-- [ ] Move templates/starter/framework/project-hub/ → templates/starter/project-hub/
-- [ ] Verify templates/starter/project-hub/ exists with work folders
-- [ ] Verify templates/starter/framework/project-hub/ is removed
-- [ ] Rebuild framework archive
-- [ ] Extract and verify distribution structure
-- [ ] Test Setup-Project.ps1 creates correct structure
-- [ ] Update CHANGELOG.md
+- [x] Move templates/starter/framework/project-hub/ → templates/starter/project-hub/
+- [x] Verify templates/starter/project-hub/ exists with work folders
+- [x] Verify templates/starter/framework/project-hub/ is removed
+- [x] Rebuild framework archive
+- [x] Extract and verify distribution structure
+- [x] Test Setup-Project.ps1 creates correct structure
+- [x] Update CHANGELOG.md
 - [ ] Git commit with message referencing BUG-109 and DECISION-037
 
 ---
