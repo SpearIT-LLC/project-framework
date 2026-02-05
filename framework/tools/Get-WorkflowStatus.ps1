@@ -9,7 +9,7 @@
 
 .PARAMETER Path
     Path to the project-hub/work/ folder. If not specified, searches common locations:
-    - framework/project-hub/work
+    - project-hub/work
     - project-hub/work
     - ../project-hub/work
 
@@ -142,7 +142,7 @@ function Find-PocFolder {
     param()
 
     $candidates = @(
-        "framework/project-hub/poc",
+        "project-hub/poc",
         "project-hub/poc",
         "../project-hub/poc"
     )
