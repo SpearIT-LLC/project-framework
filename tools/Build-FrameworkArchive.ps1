@@ -131,19 +131,22 @@ New-Item -ItemType Directory -Path $ArchiveFrameworkDir -Force | Out-Null
 Write-Host "  Copying framework/docs/..." -ForegroundColor Gray
 $SourceDocs = Join-Path $FrameworkDir "docs"
 $DestDocs = Join-Path $ArchiveFrameworkDir "docs"
-Copy-Item -Recurse -Force $SourceDocs $DestDocs
+New-Item -ItemType Directory -Path $DestDocs -Force | Out-Null
+Copy-Item -Path (Join-Path $SourceDocs "*") -Destination $DestDocs -Recurse -Force
 
 # Step 4: Copy framework/templates/
 Write-Host "  Copying framework/templates/..." -ForegroundColor Gray
 $SourceTemplates = Join-Path $FrameworkDir "templates"
 $DestTemplates = Join-Path $ArchiveFrameworkDir "templates"
-Copy-Item -Recurse -Force $SourceTemplates $DestTemplates
+New-Item -ItemType Directory -Path $DestTemplates -Force | Out-Null
+Copy-Item -Path (Join-Path $SourceTemplates "*") -Destination $DestTemplates -Recurse -Force
 
 # Step 5: Copy framework/tools/
 Write-Host "  Copying framework/tools/..." -ForegroundColor Gray
 $SourceTools = Join-Path $FrameworkDir "tools"
 $DestTools = Join-Path $ArchiveFrameworkDir "tools"
-Copy-Item -Recurse -Force $SourceTools $DestTools
+New-Item -ItemType Directory -Path $DestTools -Force | Out-Null
+Copy-Item -Path (Join-Path $SourceTools "*") -Destination $DestTools -Recurse -Force
 
 # Step 6: Create .framework-version file
 Write-Host "  Creating .framework-version file..." -ForegroundColor Gray
