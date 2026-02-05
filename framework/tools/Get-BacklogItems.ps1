@@ -9,7 +9,6 @@
 
 .PARAMETER Path
     Path to the backlog folder. If not specified, searches common locations:
-    - framework/project-hub/work/backlog
     - project-hub/work/backlog
     - ../project-hub/work/backlog
 
