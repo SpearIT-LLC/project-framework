@@ -423,7 +423,7 @@ When moving a work item, complete the checklist for the target folder. Use `git 
 #### → done/
 - [ ] Transition is valid (check matrix above)
 - [ ] All completion criteria in work item are checked
-- [ ] Status field updated to "Done"
+- [ ] Completed date is set (format: YYYY-MM-DD)
 - [ ] User has approved the completed work
 - [ ] Use `git mv` to move file
 
@@ -568,7 +568,7 @@ The `/fw-move` command mechanically enforces transition policies:
 **Precondition Validation:**
 - Checks transition validity against the matrix
 - Reads work item file completely
-- Verifies required fields (Status, Completed date, Priority)
+- Verifies required fields (Completed date for done/, Priority for todo/)
 - Checks dependencies (all must be in done/)
 - Validates WIP limits not exceeded
 - Scans for unchecked acceptance criteria
@@ -584,7 +584,6 @@ The `/fw-move` command mechanically enforces transition policies:
 User: /fw-move FEAT-042 done
 
 AI: ❌ Cannot move FEAT-042 to done - preconditions not met:
-   - Status field not set to "Done"
    - Completed date missing
    - 2 acceptance criteria still unchecked
 
@@ -630,9 +629,10 @@ Work item templates include an Implementation Checklist with enforcement comment
 
 **Validation Rules:**
 The hook validates ALL files in `done/` before allowing commits:
-1. **Status field** must be "Done"
-2. **Completed date** must exist
-3. **Acceptance Criteria** must all be checked (no `- [ ]` after the "## Acceptance Criteria" heading)
+1. **Completed date** must exist (format: YYYY-MM-DD)
+2. **Acceptance Criteria** must all be checked (no `- [ ]` after the "## Acceptance Criteria" heading)
+
+**Note:** Status is determined by folder location (done/), not a metadata field.
 
 **Behavior:**
 - Runs automatically before git commit commands (Claude Code PreToolUse hook)
@@ -654,7 +654,6 @@ Use `--no-verify` for:
 **Example Output:**
 ```
 Work item validation failed:
-  FEAT-042-api-endpoint.md: Missing 'Status: Done'
   FEAT-042-api-endpoint.md: Has unchecked acceptance criteria
   TECH-081-setup.md: Missing 'Completed' date
 

@@ -73,11 +73,6 @@ foreach ($relativePath in $stagedInDone) {
     $content = Get-Content $fullPath -Raw
     $name = Split-Path -Leaf $relativePath
 
-        # Check Status field
-        if ($content -notmatch '\*\*Status:\*\*\s*Done') {
-            $errors += "${name}: Missing 'Status: Done'"
-        }
-
         # Check Completed date
         if ($content -notmatch '\*\*Completed:\*\*') {
             $errors += "${name}: Missing 'Completed' date"

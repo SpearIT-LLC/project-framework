@@ -5,6 +5,7 @@
 **Priority:** High
 **Version Impact:** PATCH
 **Created:** 2026-02-04
+**Completed:** 2026-02-04
 **Theme:** Workflow & Process
 
 ---
@@ -78,13 +79,13 @@ Status is determined by location:
 
 ## Acceptance Criteria
 
-- [ ] workflow-guide.md → done/ checklist removes Status field requirement
-- [ ] fw-move.md → done/ checklist removes Status field requirement
-- [ ] Validate-WorkItems.ps1 removes Status field validation
-- [ ] All three enforcement layers use same validation rules
-- [ ] Completed date validation remains in all three layers
-- [ ] Acceptance criteria validation remains in all three layers
-- [ ] Sync warning in workflow-guide.md notes these must stay aligned
+- [x] workflow-guide.md → done/ checklist removes Status field requirement
+- [x] fw-move.md → done/ checklist removes Status field requirement
+- [x] Validate-WorkItems.ps1 removes Status field validation
+- [x] All three enforcement layers use same validation rules
+- [x] Completed date validation remains in all three layers
+- [x] Acceptance criteria validation remains in all three layers
+- [x] Sync warning in workflow-guide.md notes these must stay aligned
 
 ---
 

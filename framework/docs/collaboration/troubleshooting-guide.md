@@ -152,32 +152,30 @@ mv project-hub/work/doing/feature-XYZ.md project-hub/work/todo/
 
 **Diagnosis:**
 ```bash
-# List all work items with status
-grep -r "Status:" project-hub/work/ project-hub/work/
-
-# Compare folder location vs status field
+# List work items in each folder
+ls project-hub/work/backlog/
+ls project-hub/work/todo/
+ls project-hub/work/doing/
+ls project-hub/work/done/
 ```
 
 **Solutions:**
 
-**Fix Mismatched Status:**
+**Move to Correct Folder:**
 ```bash
-# Move to correct folder based on actual status
-mv project-hub/work/backlog/feature-123.md project-hub/work/doing/
-
-# Update status field in document
-# Edit file and change "Status: Backlog" to "Status: Doing"
+# Use git mv to preserve file history
+git mv project-hub/work/backlog/FEAT-123-*.md project-hub/work/doing/
 ```
 
 **Establish Single Source of Truth:**
-- Folder location = authoritative status
-- Status field in document = secondary (for context)
-- When mismatch: folder location wins
+- Folder location = status (Kanban model)
+- No status metadata field required
+- Use /fw-move command to enforce transition rules
 
 **Prevention:**
-- Update status field when moving files
+- Always use /fw-move or git mv to move work items
 - Use git commits to track moves
-- AI should update both folder and status field atomically
+- Never manually move files with file explorer
 
 ---
 

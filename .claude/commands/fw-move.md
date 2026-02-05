@@ -164,16 +164,14 @@ AI: [Proceeds to next checklist item]
 1. ✅ Validate transition (check matrix above)
 2. ✅ Read work item file COMPLETELY
 3. ✅ Verify ALL acceptance criteria are checked `[x]` (scan for `- [ ]`)
-4. ✅ Verify `Status` field = "Done"
-5. ✅ Verify `Completed` date is set (format: YYYY-MM-DD)
-6. ✅ Verify user has approved the completed work
+4. ✅ Verify `Completed` date is set (format: YYYY-MM-DD)
+5. ✅ Verify user has approved the completed work
 
 **If ANY check fails:**
 - STOP and report what's missing
 - Offer to fix:
   - "FEAT-042 has 2 unchecked acceptance criteria. Mark them complete?"
-  - "Status field not set to Done. Update it?"
-  - "No Completed date. Set it to today (2026-01-29)?"
+  - "No Completed date. Set it to today (2026-02-04)?"
 - Do NOT proceed with move until ALL criteria are met
 
 **Execute move:**
@@ -278,7 +276,6 @@ git mv project-hub/work/done/*.md project-hub/history/releases/vX.Y.Z/
 **Missing preconditions:**
 ```
 ❌ Cannot move FEAT-042 to done - preconditions not met:
-   - Status field not set to "Done"
    - Completed date missing
    - 2 acceptance criteria still unchecked
 
