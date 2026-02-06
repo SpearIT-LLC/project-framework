@@ -1,7 +1,7 @@
 # Distribution & Onboarding Sprint Planning
 
 **Created:** 2026-02-05
-**Last Updated:** 2026-02-05
+**Last Updated:** 2026-02-06
 **Purpose:** Track work item allocation across Distribution & Onboarding sprints
 
 ---
@@ -12,10 +12,10 @@ The Distribution & Onboarding theme focuses on packaging, installation, setup au
 
 **Total D&O Items:** 17 work items (18 minus DECISION-036 to be archived)
 **Completed Sprints:** D&O 0 ✅ (1/1 items complete - 2026-02-05)
-**Current Sprint:** D&O 1 (MVP Distribution Package) - 5 items
-**Future Sprints:** D&O 2 (2 items), D&O 3 (1 item), D&O 4 (8 items)
+**Current Sprint:** D&O 1 (MVP Distribution Package) - 3 items (2 complete - 67%)
+**Future Sprints:** D&O 2 (2 items), D&O 3 (1 item), D&O 4 (10 items)
 
-**Sprint D&O 0 Complete!** All placement decisions resolved. Ready for Sprint D&O 1.
+**Sprint D&O 1 streamlined!** DECISION-029 and FEAT-107 moved to D&O 4 (polish). Ready to release v5.1.0.
 
 ---
 
@@ -44,10 +44,10 @@ The Distribution & Onboarding theme focuses on packaging, installation, setup au
 
 ## Sprint D&O 1 (Next) - MVP Distribution Package and Setup Process
 
-**Goal:** Core distribution package and first-time user experience
-**Status:** In Progress (2/5 complete - 40%)
-**Items:** 5
-**Work Order:** FEAT-005 → FEAT-006 → FEAT-011 → DECISION-029 → FEAT-107
+**Goal:** Minimal viable distribution package
+**Status:** In Progress (2/3 complete - 67%)
+**Items:** 3
+**Work Order:** FEAT-005 → FEAT-006 → FEAT-011
 
 ### Committed Items
 
@@ -66,26 +66,14 @@ The Distribution & Onboarding theme focuses on packaging, installation, setup au
 - [ ] **FEAT-011** - Trivial Sample Project
   - **Status:** Backlog
   - **Theme:** Distribution & Onboarding
-  - **Priority:** 3 - Work third
-  - **Notes:** Helps onboarding and validates setup process
-
-- [ ] **DECISION-029** - License Choice for Framework
-  - **Status:** Backlog
-  - **Theme:** Distribution & Onboarding
-  - **Priority:** 4 - Work fourth
-  - **Notes:** Foundation for public distribution
-
-- [ ] **FEAT-107** - System Requirements Documentation
-  - **Status:** Backlog
-  - **Theme:** Distribution & Onboarding
-  - **Priority:** 5 - Work fifth
-  - **Notes:** Documents environment requirements
+  - **Priority:** 3 - Complete the MVP
+  - **Notes:** Final piece of MVP - validates setup process and helps onboarding
 
 **Sprint Notes:**
-- Focus on creating a working distribution package that users can download and install
-- Setup script should guide users through initial project configuration
-- License choice must be finalized before public distribution
-- BUG-109 must be completed in Sprint D&O 0 before starting this sprint
+- MVP = Package to download (FEAT-005) + Script to set it up (FEAT-006) + Sample project to try (FEAT-011)
+- License already exists (GPL-3.0) - review deferred to polish sprint
+- System requirements documentation deferred to polish sprint
+- Ready to release v5.1.0 with FEAT-005 + FEAT-006, then v5.2.0 after FEAT-011
 
 ---
 
@@ -139,9 +127,14 @@ The Distribution & Onboarding theme focuses on packaging, installation, setup au
 
 **Goal:** Documentation, community features, and refinement
 **Status:** Future
-**Items:** 8
+**Items:** 10
 
 ### Committed Items
+
+- [ ] **DECISION-029** - License Choice for Framework
+  - **Status:** Backlog
+  - **Theme:** Distribution & Onboarding
+  - **Notes:** Review/confirm GPL-3.0 license (moved from Sprint D&O 1 - license already exists)
 
 - [ ] **DECISION-035** - Root Status Reference Strategy
   - **Status:** Backlog
@@ -173,6 +166,11 @@ The Distribution & Onboarding theme focuses on packaging, installation, setup au
   - **Theme:** Distribution & Onboarding
   - **Notes:** Community/adoption polish
 
+- [ ] **FEAT-107** - System Requirements Documentation
+  - **Status:** Backlog
+  - **Theme:** Distribution & Onboarding
+  - **Notes:** Documents environment requirements (moved from Sprint D&O 1 - polish/documentation work)
+
 - [ ] **BUGFIX-045** - Complete Bash/Write/Edit Permissions
   - **Status:** Backlog
   - **Theme:** Distribution & Onboarding
@@ -202,11 +200,19 @@ All placement decisions have been resolved:
 
 ### ✅ FEAT-011 - Trivial Sample Project
 - **Decision:** Sprint D&O 1
-- **Reasoning:** Helps validate MVP distribution and setup process
+- **Reasoning:** Helps validate MVP distribution and setup process (completes the MVP)
 
 ### ✅ FEAT-051 - Framework Update Test Harness
 - **Decision:** Sprint D&O 2
 - **Reasoning:** Primarily supports validation, will be leveraged in D&O 3 for upgrade testing
+
+### ✅ DECISION-029 - License Choice for Framework
+- **Decision:** Moved from Sprint D&O 1 → Sprint D&O 4 (Polish) - 2026-02-06
+- **Reasoning:** GPL-3.0 already in place; review/confirmation can wait for polish sprint
+
+### ✅ FEAT-107 - System Requirements Documentation
+- **Decision:** Moved from Sprint D&O 1 → Sprint D&O 4 (Polish) - 2026-02-06
+- **Reasoning:** Documentation work; fits better with other docs in polish sprint; not blocking MVP
 
 ---
 
