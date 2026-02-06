@@ -96,4 +96,46 @@ Completed final review and documentation cleanup for FEAT-006 (Interactive Setup
 
 ---
 
-**Last Updated:** 2026-02-06
+## Sprint Planning Review (Continuation)
+
+**Continuation:** Reviewed Sprint D&O 1 composition after FEAT-006 completion
+
+### Sprint D&O 1 Streamlining
+
+**Context:** After completing FEAT-006, reviewed remaining Sprint D&O 1 items and release timing
+
+**Decision:** Move DECISION-029 and FEAT-107 from Sprint D&O 1 to Sprint D&O 4 (Polish)
+
+**Items Moved:**
+1. **DECISION-029 - License Choice for Framework:**
+   - **Rationale:** GPL-3.0 already exists; review/confirmation is polish work
+   - **Original placement:** Sprint D&O 1 (thought to be required for distribution)
+   - **Actual state:** License file already present, not blocking MVP
+
+2. **FEAT-107 - System Requirements Documentation:**
+   - **Rationale:** Documentation polish work; users discover requirements during setup
+   - **Better fit:** Sprint D&O 4 with other documentation items
+   - **Not blocking:** MVP distribution already functional
+
+**Updated Sprint D&O 1 (MVP):**
+- [x] FEAT-005 - ZIP Distribution Package
+- [x] FEAT-006 - Interactive Setup Script
+- [ ] FEAT-011 - Trivial Sample Project (final MVP piece)
+
+**Progress:** 2/3 complete (67%) - streamlined from 5 items to 3
+
+**Release Plan:**
+- Release v5.1.0 now with FEAT-005 + FEAT-006 (distribution + setup)
+- Complete FEAT-011 (sample project)
+- Release v5.2.0 with complete MVP
+- Proceed to Sprint D&O 2 (Validation)
+
+---
+
+## Updated Files Modified
+
+- `scratch/sprint-do-planning.md` - Moved DECISION-029 and FEAT-107 to Sprint D&O 4; updated item counts and progress tracking
+
+---
+
+**Last Updated:** 2026-02-06 (Afternoon - Sprint planning review)
