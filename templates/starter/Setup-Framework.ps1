@@ -127,11 +127,30 @@ function Get-ProjectTypes {
     return $types
 }
 
+function Test-LaunchedByExplorer {
+    <#
+    .SYNOPSIS
+        Detects if script was launched via right-click "Run with PowerShell"
+    .DESCRIPTION
+        Checks if the parent process is explorer.exe, which indicates the script
+        was launched by right-clicking and selecting "Run with PowerShell"
+    #>
+    try {
+        $parentId = (Get-CimInstance Win32_Process -Filter "ProcessId = $PID").ParentProcessId
+        $parentProcess = Get-Process -Id $parentId -ErrorAction SilentlyContinue
+        return $parentProcess.Name -eq "explorer"
+    }
+    catch {
+        return $false
+    }
+}
+
 Write-Host "`nSpearIT Framework Project Setup" -ForegroundColor Cyan
 Write-Host "================================`n" -ForegroundColor Cyan
 
 # Prompt for destination if not provided
 if ([string]::IsNullOrWhiteSpace($Destination)) {
+    Write-Host "Tip: Use -Destination parameter for tab completion: .\Setup-Framework.ps1 -Destination <Tab>" -ForegroundColor DarkGray
     $Destination = Read-Host "Destination path for new project"
     if ([string]::IsNullOrWhiteSpace($Destination)) {
         Write-Error "Destination path is required"
@@ -383,3 +402,9 @@ Write-Host "`nKey commands:" -ForegroundColor Cyan
 Write-Host "  /fw-help    - Show available framework commands" -ForegroundColor Gray
 Write-Host "  /fw-status  - Check project status" -ForegroundColor Gray
 Write-Host "  /fw-backlog - Review backlog items" -ForegroundColor Gray
+
+# Pause if launched via right-click to allow user to read summary
+if (Test-LaunchedByExplorer) {
+    Write-Host "`nPress any key to exit..." -ForegroundColor Gray
+    $null = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown")
+}

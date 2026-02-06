@@ -188,6 +188,14 @@ The Distribution & Onboarding theme focuses on packaging, installation, setup au
 - Final polish before wider release
 - BUGFIX-045 may remain blocked depending on VSCode extension availability
 
+### Considerations (Not Yet Committed)
+
+**Setup Script UX Improvements:**
+- Folder picker dialog for path selection (currently prompts lack tab completion)
+- Would provide GUI alternative for users who prefer visual browsing
+- Low priority - parameter-based invocation already supports tab completion
+- Consider during sprint planning whether this warrants a work item
+
 ---
 
 ## Placement Decisions (RESOLVED)
