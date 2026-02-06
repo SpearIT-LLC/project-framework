@@ -55,6 +55,9 @@ Users don't know what they need before attempting to use the framework:
 - [ ] Git (version control)
   - Why required: Work item management uses `git mv`, version control built-in
   - Minimum version: Git 2.x+
+  - **Branch requirement:** Repository must use "main" as primary branch
+    - Why: Eliminates tension between documentation, scripts, and actual repo state
+    - Migration: Setup script provides automated migration helper for "master" → "main"
 - [ ] Scripting environment
   - Current: PowerShell 5.1+ (Windows)
   - Planned: Bash or Python (Unix/Mac - FUTURE)
@@ -70,6 +73,20 @@ Users don't know what they need before attempting to use the framework:
 - [ ] Currently supported: Windows (PowerShell-based)
 - [ ] Planned support: Unix/Mac (requires cross-platform scripting - see roadmap)
 - [ ] Note: File-based workflow is OS-agnostic, only scripts are platform-specific
+
+### Prerequisite Validation (Setup Script)
+
+- [ ] Setup-Framework.ps1 validates prerequisites before proceeding:
+  - [ ] Git installed and accessible (minimum 2.x)
+  - [ ] PowerShell version adequate (minimum 5.1)
+  - [ ] Branch name is "main" (or offer migration)
+  - [ ] Git user configured (user.name, user.email)
+- [ ] Clear, actionable error messages:
+  - [ ] "Git not found. Install from https://git-scm.com/"
+  - [ ] "PowerShell 4.0 detected. Framework requires 5.1+"
+  - [ ] Include links to installation/upgrade guides
+- [ ] Success confirmation when all prerequisites met
+- [ ] Option to skip checks (--skip-prereq-check) for advanced users
 
 ### Non-Functional Requirements
 
@@ -125,6 +142,7 @@ Users don't know what they need before attempting to use the framework:
   - See [AI assistant setup guide](link) for configuration
 - **Git 2.x+** - Version control system
   - Work item management and history tracking use Git
+  - Repository must use "main" as primary branch (setup script assists with migration)
 - **PowerShell 5.1+** (Windows) - Scripting environment
   - Cross-platform support (Bash/Python) planned for future release
 - **Text Editor** - Any markdown-capable editor
@@ -157,6 +175,12 @@ Users don't know what they need before attempting to use the framework:
 - [ ] Referenced from README and QUICK-START
 - [ ] Included in distribution package
 - [ ] Synced to starter template
+- [ ] Setup script validates prerequisites before proceeding
+  - [ ] Checks Git installation and version (2.x+)
+  - [ ] Checks PowerShell version (5.1+)
+  - [ ] Checks branch name ("main" requirement)
+  - [ ] Clear error messages if requirements not met
+  - [ ] Links to installation guides for missing tools
 
 ---
 
@@ -211,6 +235,76 @@ Users don't know what they need before attempting to use the framework:
 
 **Decision:** Specify Git 2.x+ (safe baseline)
 
+### 4. Git Branch Naming Requirement
+
+**Question:** Should framework require "main" as primary branch, or support arbitrary branch names?
+
+**Context:**
+- Discovered in FEAT-011 validation: hello-father project initially had "master" branch
+- Supporting arbitrary branch names creates ongoing tension:
+  - Documentation must use variables ("your primary branch") instead of concrete examples
+  - Every script must look up branch name (performance overhead)
+  - Skills must parameterize all git commands
+  - Users must mentally translate documentation to their branch name
+- Modern standard: GitHub, GitLab, Bitbucket all default to "main" since 2020-2021
+
+**Options Evaluated:**
+- A: Support arbitrary branch names (auto-detect from `framework.yaml` or git)
+  - Pros: Maximum flexibility, no migration needed
+  - Cons: Ongoing complexity, performance overhead, unclear documentation
+- B: Require "main" branch with migration helper (SELECTED)
+  - Pros: Zero ongoing tension, clear docs, standard git usage, aligns with industry
+  - Cons: One-time migration needed (30 seconds)
+- C: Support whitelist (main, master, develop)
+  - Pros: Handles common cases
+  - Cons: Still creates tension, just for fewer branches
+
+**Decision (2026-02-06):** Require "main" branch with automated migration helper
+- Setup-Framework.ps1 detects branch name on initialization
+- If not "main", prompts user to migrate with one-click option
+- Clear error if user declines migration
+- Document as hard requirement in system requirements
+- Rationale: One-time 30-second migration cost vs perpetual complexity/overhead
+
+### 5. Prerequisite Validation Scope
+
+**Question:** How comprehensive should the setup script's prerequisite checking be?
+
+**Context:**
+- Discovered in FEAT-011: Need to validate requirements before setup
+- Prevents confusing errors mid-setup
+- Better user experience (fail fast with clear guidance)
+
+**What to check:**
+
+**Critical (must validate):**
+- Git installed and version 2.x+
+- PowerShell version 5.1+
+- Branch name is "main" (or offer migration)
+
+**Helpful (should validate):**
+- Git user configured (user.name, user.email)
+- Repository initialized (or offer to init)
+
+**Optional (nice to have):**
+- AI assistant detection (how? check for Claude Code?)
+- VS Code installed
+- Disk space available
+
+**Decision:** Validate critical + helpful, skip optional
+- Critical checks block setup (hard requirement)
+- Helpful checks warn but allow continuation
+- Optional checks not implemented (too complex, low value)
+
+**Error Message Strategy:**
+```
+❌ Prerequisites not met:
+   - Git not found. Install: https://git-scm.com/
+   - PowerShell 4.0 detected (need 5.1+). Upgrade: https://...
+
+Setup cancelled. Fix prerequisites and retry.
+```
+
 ---
 
 ## CHANGELOG Notes
@@ -220,10 +314,16 @@ Users don't know what they need before attempting to use the framework:
 ```markdown
 ### Added
 - System requirements documentation
-  - Required: AI coding assistant, Git 2.x+, PowerShell (Windows)
+  - Required: AI coding assistant, Git 2.x+ with "main" branch, PowerShell (Windows)
   - Optional: VS Code, Windows Terminal
   - Operating system compatibility clearly stated
   - Rationale provided for each requirement
+  - Git "main" branch requirement with migration helper in setup script
+- Prerequisite validation in Setup-Framework.ps1
+  - Checks Git installation and version before proceeding
+  - Validates PowerShell version (5.1+)
+  - Verifies "main" branch or offers migration
+  - Clear error messages with installation links
 ```
 
 ---
@@ -242,4 +342,4 @@ This work supports the Distribution & Onboarding theme's goal of creating a clea
 
 ---
 
-**Last Updated:** 2026-02-04
+**Last Updated:** 2026-02-06
