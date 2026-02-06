@@ -5,6 +5,7 @@
 **Priority:** High
 **Version Impact:** PATCH
 **Created:** 2026-02-06
+**Completed:** 2026-02-06
 **Theme:** Workflow
 
 ---
@@ -78,11 +79,11 @@ Post-Release:
 
 ## Acceptance Criteria
 
-- [ ] Release checklist includes build archive step
-- [ ] Build archive step positioned logically in workflow
-- [ ] Build archive step includes script path and purpose
-- [ ] Note added about version being read from PROJECT-STATUS.md
-- [ ] Following updated checklist produces complete release (git tag + ZIP)
+- [x] Release checklist includes build archive step - ✅ Added to Post-Release section
+- [x] Build archive step positioned logically in workflow - ✅ First step in Post-Release (after tag created)
+- [x] Build archive step includes script path and purpose - ✅ Includes .\tools\Build-FrameworkArchive.ps1
+- [x] Note added about version being read from PROJECT-STATUS.md - ✅ Documented in checklist
+- [x] Following updated checklist produces complete release (git tag + ZIP) - ✅ Ready to validate with v5.1.0
 
 ---
 
