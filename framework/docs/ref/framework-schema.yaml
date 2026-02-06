@@ -39,6 +39,23 @@ fields:
       hybrid:
         description: "Both code and documentation are primary outputs"
 
+  project.author:
+    type: object
+    required: false
+    description: "Author/maintainer information (Source of Truth for project authorship)"
+
+  project.author.name:
+    type: string
+    required: false
+    description: "Primary author or maintainer name"
+    example: "Jane Smith"
+
+  project.author.email:
+    type: string
+    required: false
+    description: "Primary author or maintainer email"
+    example: "jane.smith@example.com"
+
   policies:
     type: object
     required: false

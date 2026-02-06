@@ -1,7 +1,7 @@
 # {{PROJECT_NAME}} - Project Status
 
 **Last Updated:** {{DATE}}
-**Updated By:** [Name]
+**Updated By:** {{AUTHOR_NAME}}
 **Current Version:** v0.1.0 ({{DATE}})
 **Core Implementation:** Initial setup
 **Ongoing Enhancements:** None

@@ -22,7 +22,7 @@ This repository contains:
 
 **Want the fastest path?** See [QUICK-START.md](QUICK-START.md) for a bare-bones, get-functional guide. ⚡
 
-**Create a new project:** Use `tools/Build-FrameworkArchive.ps1` to create a distribution, then run `Setup-Project.ps1` to scaffold a new project.
+**Create a new project:** Use `tools/Build-FrameworkArchive.ps1` to create a distribution, then run `Setup-Framework.ps1` to scaffold a new project.
 
 ### For New Projects
 
@@ -33,7 +33,7 @@ This repository contains:
 
 2. **Run the setup script:**
    ```bash
-   Setup-Project.ps1
+   Setup-Framework.ps1
    ```
 
 3. **Follow the setup checklist:**

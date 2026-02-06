@@ -10,10 +10,10 @@
 
 The Distribution & Onboarding theme focuses on packaging, installation, setup automation, and first-time user experience. This plan covers 4 sprints progressing from MVP to polish.
 
-**Total D&O Items:** 16 work items (17 minus DECISION-036 to be archived)
+**Total D&O Items:** 17 work items (18 minus DECISION-036 to be archived)
 **Completed Sprints:** D&O 0 ✅ (1/1 items complete - 2026-02-05)
 **Current Sprint:** D&O 1 (MVP Distribution Package) - 5 items
-**Future Sprints:** D&O 2 (2 items), D&O 3 (1 item), D&O 4 (7 items)
+**Future Sprints:** D&O 2 (2 items), D&O 3 (1 item), D&O 4 (8 items)
 
 **Sprint D&O 0 Complete!** All placement decisions resolved. Ready for Sprint D&O 1.
 
@@ -45,23 +45,23 @@ The Distribution & Onboarding theme focuses on packaging, installation, setup au
 ## Sprint D&O 1 (Next) - MVP Distribution Package and Setup Process
 
 **Goal:** Core distribution package and first-time user experience
-**Status:** Planned
+**Status:** In Progress (1/5 complete - 20%)
 **Items:** 5
 **Work Order:** FEAT-005 → FEAT-006 → FEAT-011 → DECISION-029 → FEAT-107
 
 ### Committed Items
 
-- [ ] **FEAT-005** - ZIP Distribution Package
-  - **Status:** Backlog (may be complete)
+- [x] **FEAT-005** - ZIP Distribution Package
+  - **Status:** DONE (Completed 2026-02-05)
   - **Theme:** Distribution & Onboarding
   - **Priority:** 1 - Work first
-  - **Notes:** Core MVP distribution artifact
+  - **Notes:** Core MVP distribution artifact - requirements met via DECISION-050 implementation
 
 - [ ] **FEAT-006** - Interactive Setup Script
-  - **Status:** Backlog (has existing version, needs modifications)
+  - **Status:** In Progress (implementation complete, addressing documentation quality)
   - **Theme:** Distribution & Onboarding
   - **Priority:** 2 - Work second
-  - **Notes:** Core MVP setup experience
+  - **Notes:** Enhanced with author info collection, git config fallback, renamed to Setup-Framework.ps1; working on README.md duplication concerns
 
 - [ ] **FEAT-011** - Trivial Sample Project
   - **Status:** Backlog
@@ -139,7 +139,7 @@ The Distribution & Onboarding theme focuses on packaging, installation, setup au
 
 **Goal:** Documentation, community features, and refinement
 **Status:** Future
-**Items:** 7
+**Items:** 8
 
 ### Committed Items
 
@@ -177,6 +177,12 @@ The Distribution & Onboarding theme focuses on packaging, installation, setup au
   - **Status:** Backlog
   - **Theme:** Distribution & Onboarding
   - **Notes:** Setup polish (blocked on VSCode extension)
+
+- [ ] **FEAT-111** - Data-Driven Setup Script Questions
+  - **Status:** Backlog
+  - **Theme:** Distribution & Onboarding
+  - **Notes:** Refactor setup script for maintainability and user customization
+  - **Depends On:** FEAT-006
 
 **Sprint Notes:**
 - Focus on documentation completeness and community engagement

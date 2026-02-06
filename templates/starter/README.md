@@ -11,6 +11,14 @@
 
 ---
 
+## Author
+
+**{{AUTHOR_NAME}}** {{AUTHOR_EMAIL}}
+
+> *Source of Truth: See `framework.yaml` → `project.author` for authoritative author information.*
+
+---
+
 ## Quick Start
 
 ```powershell
@@ -25,30 +33,38 @@
 ```
 {{PROJECT_NAME}}/
 ├── README.md                   # This file
-├── PROJECT-STATUS.md           # Current version and status
+├── PROJECT-STATUS.md           # Current version and status (SSOT)
 ├── CHANGELOG.md                # Version history
 ├── CLAUDE.md                   # AI assistant instructions
 ├── INDEX.md                    # Documentation navigation
-├── framework.yaml              # Project configuration
-│
-├── framework/                  # Framework documentation, templates, and project hub
-│   ├── docs/                   # Collaboration guides, patterns, process docs
-│   ├── templates/              # Work item and documentation templates
-│   └── project-hub/            # Project thinking and workflow
-│       ├── work/               # Kanban workflow
-│       │   ├── backlog/        # Future work (not yet committed)
-│       │   ├── todo/           # Committed next work
-│       │   ├── doing/          # Active work (WIP limit: 1)
-│       │   └── done/           # Completed, awaiting release
-│       ├── history/            # Session logs and archived releases
-│       ├── research/           # Research and decisions (ADRs)
-│       ├── retrospectives/     # Project retrospectives
-│       └── external-references/# Cached authoritative references
+├── QUICK-START.md              # Quick reference guide
+├── framework.yaml              # Project configuration (SSOT for metadata)
 │
 ├── src/                        # Source code
 ├── tests/                      # Test files
-└── docs/                       # Project-specific documentation
+├── docs/                       # Project-specific documentation
+│
+├── framework/                  # Framework documentation and tools
+│   ├── docs/                   # Collaboration guides, patterns, process
+│   ├── templates/              # Work item and documentation templates
+│   └── tools/                  # PowerShell workflow tools
+│
+└── project-hub/                # Project workflow and history (at root level)
+    ├── work/                   # Active work items (Kanban workflow)
+    │   ├── backlog/            # Future work (not yet committed)
+    │   ├── todo/               # Committed next work
+    │   ├── doing/              # Active work (WIP limit: 1-2)
+    │   └── done/               # Completed, awaiting release
+    ├── history/                # Completed work and history
+    │   ├── sessions/           # Session history logs
+    │   ├── releases/           # Released work items by version
+    │   └── archive/            # Cancelled or superseded work
+    ├── research/               # Research and ADRs
+    ├── retrospectives/         # Project retrospectives
+    └── external-references/    # Cached authoritative references
 ```
+
+**See also:** [framework/docs/PROJECT-STRUCTURE.md](framework/docs/PROJECT-STRUCTURE.md) for complete specification
 
 ---
 

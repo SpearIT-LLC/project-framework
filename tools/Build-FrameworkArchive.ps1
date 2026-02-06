@@ -181,9 +181,9 @@ Write-Host "    tools/         - PowerShell workflow tools" -ForegroundColor Gra
 Write-Host "    project-hub/   - Project workflow structure" -ForegroundColor Gray
 Write-Host "  src/, tests/, docs/ - Empty scaffolding" -ForegroundColor White
 Write-Host "  *.md, framework.yaml - Project root files (with placeholders)" -ForegroundColor White
-Write-Host "  Setup-Project.ps1 - Project creation script" -ForegroundColor White
+Write-Host "  Setup-Framework.ps1 - Project creation script" -ForegroundColor White
 
 Write-Host "`nUsage:" -ForegroundColor Yellow
 Write-Host "  1. Extract the archive to a convenient location" -ForegroundColor White
-Write-Host "  2. Run: .\Setup-Project.ps1 -Destination `"C:\Projects\MyApp`"" -ForegroundColor White
+Write-Host "  2. Run: .\Setup-Framework.ps1 -Destination `"C:\Projects\MyApp`"" -ForegroundColor White
 Write-Host "  3. Repeat step 2 for additional projects" -ForegroundColor White

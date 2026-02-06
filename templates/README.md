@@ -60,7 +60,7 @@ your-project/
 .\tools\Build-FrameworkArchive.ps1
 
 # Setup new project from archive
-.\templates\starter\Setup-Project.ps1 -ArchivePath ".\distrib\spearit-framework-v3.7.0.zip"
+.\templates\starter\Setup-Framework.ps1 -ArchivePath ".\distrib\spearit-framework-v3.7.0.zip"
 ```
 
 ### Method 2: Manual Copy

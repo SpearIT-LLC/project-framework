@@ -3,9 +3,9 @@
 **Purpose:** Comprehensive quick reference for working with the framework.
 **For overview:** See [README.md](README.md) for project introduction and philosophy.
 
-**Version:** 3.0.0 | **Last Updated:** 2026-01-07
+**Version:** 5.0.0 | **Last Updated:** 2026-02-05
 
-**See It In Action:** Use `tools/Build-FrameworkArchive.ps1` to create a distribution, then `Setup-Project.ps1` to scaffold a new project.
+**See It In Action:** Extract the framework distribution and run `Setup-Framework.ps1` to scaffold a new project.
 
 ---
 
@@ -13,17 +13,19 @@
 
 ### Quick Setup
 ```bash
-# Create distribution
-tools/Build-FrameworkArchive.ps1
+# 1. Extract the framework distribution archive
+Expand-Archive .\spearit_framework_v5.0.0.zip
 
-# Run setup script
-Setup-Project.ps1
-
-# Follow the checklist
-# See templates/NEW-PROJECT-CHECKLIST.md
+# 2. Run the setup script (prompts for project details)
+cd .\spearit_framework_v5.0.0
+.\Setup-Framework.ps1
 ```
 
-**Detailed Setup:** [NEW-PROJECT-CHECKLIST.md](templates/NEW-PROJECT-CHECKLIST.md)
+**After Setup:**
+- Review [NEW-PROJECT-CHECKLIST.md](NEW-PROJECT-CHECKLIST.md) for post-setup tasks
+- Author info stored in `framework.yaml` (Source of Truth)
+
+**Detailed Setup:** [NEW-PROJECT-CHECKLIST.md](NEW-PROJECT-CHECKLIST.md)
 
 ---
 
@@ -43,31 +45,25 @@ Setup-Project.ps1
 
 ## 3. Common Operations
 
-### Start New Feature
-```bash
-# Copy template from framework
-cp framework/templates/work-items/FEAT-NNN-template.md \
-   project-hub/work/backlog/FEAT-NNN-name.md
-# Edit feature file
-# Move to work/todo/ when ready to plan
-# Move to work/doing/ when ready to implement (max 1 in doing/)
-```
+### Work Item Types
 
-### Fix a Bug
-```bash
-# Copy template from framework
-cp framework/templates/work-items/BUG-NNN-template.md \
-   project-hub/work/backlog/BUG-NNN-name.md
-# Document bug, implement fix, test
-# Move through workflow: backlog → todo → doing → done
-```
+When creating work items (typically done by AI), use these prefixes:
 
-### Make Architectural Decision
-```bash
-# Use ADR template from framework
-cp framework/templates/decisions/ADR-NNNN-template.md \
-   project-hub/research/adr/ADR-NNNN-decision-name.md
-```
+| Type | Prefix | Description | Example |
+|------|--------|-------------|---------|
+| Feature | `FEAT-` | New functionality | `FEAT-042-user-authentication.md` |
+| Bug Fix | `BUG-` | Defect corrections | `BUG-015-login-timeout.md` |
+| Technical Debt | `TECH-` | Code improvements | `TECH-008-refactor-api-layer.md` |
+| Spike | `SPIKE-` | Research/investigation | `SPIKE-003-database-options.md` |
+| Decision | `DECISION-` | Architectural decisions | `DECISION-012-auth-strategy.md` |
+
+**Workflow:**
+- Create in `project-hub/work/backlog/`
+- Move to `todo/` when committing to work
+- Move to `doing/` when starting (WIP limit: 1-2)
+- Move to `done/` when complete
+
+**With AI:** Just ask "Create a feature for user authentication" - AI will handle the template
 
 ### Create Release
 ```bash
@@ -101,16 +97,23 @@ When working with AI assistants, framework commands (`/fw-*`) provide shortcuts 
 | `/fw-help` | List available commands or get help on a specific command |
 | `/fw-move` | Move work item between folders with policy enforcement |
 | `/fw-status` | Show project status summary |
-| `/fw-wip-check` | Check WIP limits and current work |
+| `/fw-wip` | Check WIP limits and current work in progress |
 | `/fw-backlog` | Review and prioritize backlog items |
+| `/fw-next-id` | Get next available work item ID |
+| `/fw-session-history` | Generate or update session history |
+| `/fw-roadmap` | AI-guided roadmap creation through strategic questioning |
+| `/fw-topic-index` | Framework topic index and documentation navigation |
+
+> **Note:** Keep this list updated as new commands are added. See `.claude/commands/` for all available commands.
 
 ### Quick Examples
 
 ```
 /fw-status                  # Show project status
-/fw-wip-check               # Check WIP limit
+/fw-wip                     # Check WIP limit
 /fw-move FEAT-042 todo      # Move item to todo/
 /fw-backlog                 # Review backlog items
+/fw-next-id                 # Get next work item number
 /fw-help move               # Get help on /fw-move
 ```
 

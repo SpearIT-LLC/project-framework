@@ -22,15 +22,22 @@ This checklist guides setup of a new project using the SpearIT Project Framework
 ### Option 1: Using Setup Script (Recommended)
 
 ```powershell
-# Run the setup script with the framework archive
-.\tools\Setup-Project.ps1 -ArchivePath ".\distrib\spearit_framework_v3.0.0.zip" -Destination "C:\Projects\my-app"
+# 1. Extract the framework archive
+Expand-Archive .\spearit_framework_v5.0.0.zip -DestinationPath .\framework-template
+
+# 2. Run the setup script from the extracted location
+cd .\framework-template
+.\Setup-Framework.ps1 -Destination "C:\Projects\my-app"
+
+# Or run with no arguments and it will prompt for everything
+.\Setup-Framework.ps1
 ```
 
 The script will:
-- Prompt for project name and description
-- Extract the archive to your destination
+- Prompt for project details (name, description, author, etc.)
+- Copy template files to your destination
 - Replace all `{{PLACEHOLDER}}` tokens automatically
-- Initialize git repository with initial commit
+- Initialize git repository with initial commit (optional)
 
 **Setup Complete!** Begin development.
 

@@ -44,6 +44,7 @@ User projects typically create a single-project repository and follow the struct
 ├── CHANGELOG.md                      # REQUIRED - Version history (Keep a Changelog)
 ├── CLAUDE.md                         # REQUIRED - AI collaboration guide
 ├── INDEX.md                          # REQUIRED - Documentation navigation
+├── framework.yaml                    # REQUIRED - Project config (SSOT for metadata)
 │
 ├── src/                              # REQUIRED - Source code
 │   └── .gitkeep                     # REQUIRED (if empty)
@@ -192,6 +193,28 @@ User projects typically create a single-project repository and follow the struct
 - Links to project management (project-hub/)
 
 **Template:** Use `INDEX-TEMPLATE.md` from framework templates
+
+---
+
+#### `framework.yaml` (REQUIRED)
+**Purpose:** Project configuration and metadata (Source of Truth)
+
+**Minimum content:**
+- `project.name` - Project name
+- `project.type` - Project type (application, library, toolbox, framework)
+- `project.deliverable` - Primary output type (code, documentation, hybrid)
+- `project.author.name` - Primary author/maintainer name (optional)
+- `project.author.email` - Primary author/maintainer email (optional)
+- `policies` - References to workflow policy documents
+- `roles` - AI role definitions and defaults
+- `sources` - Topic index mapping to documentation
+
+**Source of Truth Declaration:**
+- Author information stored here is authoritative
+- Other locations (README.md) reference this as the canonical source
+- See `framework/docs/ref/framework-schema.yaml` for complete schema
+
+**Schema:** See `framework/docs/ref/framework-schema.yaml` for valid fields and values
 
 ---
 

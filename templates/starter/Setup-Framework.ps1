@@ -13,12 +13,19 @@
 
 .PARAMETER Destination
     Path for the new project. Will be created if it doesn't exist.
+    (Optional - will prompt if not provided)
 
 .PARAMETER ProjectName
     Name of the project (optional - will prompt if not provided)
 
 .PARAMETER ProjectDescription
     Description of the project (optional - will prompt if not provided)
+
+.PARAMETER AuthorName
+    Author name (optional - will use git config user.name or prompt if not provided)
+
+.PARAMETER AuthorEmail
+    Author email (optional - will use git config user.email or prompt if not provided)
 
 .PARAMETER NoGit
     Skip git repository initialization
@@ -27,15 +34,18 @@
     Overwrite existing files in destination
 
 .EXAMPLE
-    .\Setup-Project.ps1 -Destination "C:\Projects\my-app"
+    .\Setup-Framework.ps1
 
 .EXAMPLE
-    .\Setup-Project.ps1 -Destination ".\my-app" -ProjectName "My Application" -ProjectDescription "A sample application"
+    .\Setup-Framework.ps1 -Destination "C:\Projects\my-app"
+
+.EXAMPLE
+    .\Setup-Framework.ps1 -Destination ".\my-app" -ProjectName "My Application" -ProjectDescription "A sample application" -AuthorName "John Smith" -AuthorEmail "john@example.com"
 #>
 
 [CmdletBinding()]
 param(
-    [Parameter(Mandatory = $true)]
+    [Parameter()]
     [string]$Destination,
 
     [Parameter()]
@@ -43,6 +53,12 @@ param(
 
     [Parameter()]
     [string]$ProjectDescription,
+
+    [Parameter()]
+    [string]$AuthorName,
+
+    [Parameter()]
+    [string]$AuthorEmail,
 
     [Parameter()]
     [switch]$NoGit,
@@ -56,9 +72,8 @@ $ErrorActionPreference = "Stop"
 # Get the template directory (where this script lives)
 $TemplateDir = Split-Path -Parent $MyInvocation.MyCommand.Path
 
-# Get absolute paths
+# Get absolute path for template directory
 $TemplateDir = [System.IO.Path]::GetFullPath($TemplateDir)
-$Destination = [System.IO.Path]::GetFullPath($Destination)
 
 function Get-ProjectTypes {
     <#
@@ -112,6 +127,21 @@ function Get-ProjectTypes {
     return $types
 }
 
+Write-Host "`nSpearIT Framework Project Setup" -ForegroundColor Cyan
+Write-Host "================================`n" -ForegroundColor Cyan
+
+# Prompt for destination if not provided
+if ([string]::IsNullOrWhiteSpace($Destination)) {
+    $Destination = Read-Host "Destination path for new project"
+    if ([string]::IsNullOrWhiteSpace($Destination)) {
+        Write-Error "Destination path is required"
+        exit 1
+    }
+}
+
+# Get absolute path for destination
+$Destination = [System.IO.Path]::GetFullPath($Destination)
+
 # Prevent copying to self
 if ($TemplateDir -eq $Destination) {
     Write-Error "Destination cannot be the same as the template directory."
@@ -127,9 +157,6 @@ if (Test-Path $Destination) {
     }
 }
 
-Write-Host "`nSpearIT Framework Project Setup" -ForegroundColor Cyan
-Write-Host "================================`n" -ForegroundColor Cyan
-
 # Prompt for project name if not provided
 if ([string]::IsNullOrWhiteSpace($ProjectName)) {
     $ProjectName = Read-Host "Project name"
@@ -144,6 +171,26 @@ if ([string]::IsNullOrWhiteSpace($ProjectDescription)) {
     $ProjectDescription = Read-Host "Project description"
     if ([string]::IsNullOrWhiteSpace($ProjectDescription)) {
         $ProjectDescription = "A new project"
+    }
+}
+
+# Get author name (git config → prompt → empty)
+if ([string]::IsNullOrWhiteSpace($AuthorName)) {
+    $gitAuthorName = & git config user.name 2>$null
+    if (-not [string]::IsNullOrWhiteSpace($gitAuthorName)) {
+        $AuthorName = $gitAuthorName
+    } else {
+        $AuthorName = Read-Host "Author name (optional, press Enter to skip)"
+    }
+}
+
+# Get author email (git config → prompt → empty)
+if ([string]::IsNullOrWhiteSpace($AuthorEmail)) {
+    $gitAuthorEmail = & git config user.email 2>$null
+    if (-not [string]::IsNullOrWhiteSpace($gitAuthorEmail)) {
+        $AuthorEmail = $gitAuthorEmail
+    } else {
+        $AuthorEmail = Read-Host "Author email (optional, press Enter to skip)"
     }
 }
 
@@ -197,8 +244,12 @@ Write-Host "`nConfiguration:" -ForegroundColor Yellow
 Write-Host "  Project Name: $ProjectName" -ForegroundColor White
 Write-Host "  Description:  $ProjectDescription" -ForegroundColor White
 Write-Host "  Project Type: $ProjectType" -ForegroundColor White
+Write-Host "  Author Name:  $(if ($AuthorName) { $AuthorName } else { '(not set)' })" -ForegroundColor White
+Write-Host "  Author Email: $(if ($AuthorEmail) { $AuthorEmail } else { '(not set)' })" -ForegroundColor White
 Write-Host "  Destination:  $Destination" -ForegroundColor White
 Write-Host "  Date:         $CurrentDate" -ForegroundColor White
+
+Write-Host "`nNote: Author info can be updated later in framework.yaml and README.md" -ForegroundColor Gray
 
 # Confirm
 $confirm = Read-Host "`nProceed with setup? (y/n)"
@@ -231,6 +282,8 @@ $placeholders = @{
     "{{PROJECT_NAME}}" = $ProjectName
     "{{PROJECT_DESCRIPTION}}" = $ProjectDescription
     "{{PROJECT_TYPE}}" = $ProjectType
+    "{{AUTHOR_NAME}}" = if ($AuthorName) { $AuthorName } else { "" }
+    "{{AUTHOR_EMAIL}}" = if ($AuthorEmail) { $AuthorEmail } else { "" }
     "{{DATE}}" = $CurrentDate
 }
 
@@ -296,12 +349,22 @@ Write-Host "`nProject created at: $Destination" -ForegroundColor White
 
 Write-Host "`nProject structure:" -ForegroundColor Cyan
 Write-Host "  $Destination/" -ForegroundColor White
-Write-Host "    README.md             - Project overview" -ForegroundColor Gray
-Write-Host "    CLAUDE.md             - AI assistant instructions" -ForegroundColor Gray
-Write-Host "    PROJECT-STATUS.md     - Version and status tracking" -ForegroundColor Gray
-Write-Host "    framework.yaml        - Project configuration" -ForegroundColor Gray
-Write-Host "    framework/            - Documentation, templates, and project hub" -ForegroundColor Gray
-Write-Host "    src/, tests/, docs/   - Code and documentation" -ForegroundColor Gray
+Write-Host "    README.md                  - Project overview" -ForegroundColor Gray
+Write-Host "    CLAUDE.md                  - AI assistant instructions" -ForegroundColor Gray
+Write-Host "    PROJECT-STATUS.md          - Version and status tracking" -ForegroundColor Gray
+Write-Host "    CHANGELOG.md               - Version history" -ForegroundColor Gray
+Write-Host "    INDEX.md                   - Documentation navigation" -ForegroundColor Gray
+Write-Host "    framework.yaml             - Project configuration (SSOT for metadata)" -ForegroundColor Gray
+Write-Host "    src/                       - Source code" -ForegroundColor Gray
+Write-Host "    tests/                     - Test files" -ForegroundColor Gray
+Write-Host "    docs/                      - Project documentation" -ForegroundColor Gray
+Write-Host "    framework/                 - Framework documentation and tools" -ForegroundColor Gray
+Write-Host "      docs/                    - Collaboration guides, patterns, process" -ForegroundColor Gray
+Write-Host "      templates/               - Work item and documentation templates" -ForegroundColor Gray
+Write-Host "      tools/                   - PowerShell workflow tools" -ForegroundColor Gray
+Write-Host "    project-hub/               - Project workflow and history" -ForegroundColor Gray
+Write-Host "      work/                    - Active work items (backlog, todo, doing, done)" -ForegroundColor Gray
+Write-Host "      history/                 - Completed work and releases" -ForegroundColor Gray
 
 Write-Host "`nNext steps:" -ForegroundColor Yellow
 Write-Host "  1. cd `"$Destination`"" -ForegroundColor White

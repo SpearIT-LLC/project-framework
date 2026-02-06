@@ -7,6 +7,12 @@ project:
   type: {{PROJECT_TYPE}}
   deliverable: code  # code | documentation | hybrid
 
+  # Author information (Source of Truth)
+  # This is the authoritative location for author/maintainer details
+  author:
+    name: "{{AUTHOR_NAME}}"
+    email: "{{AUTHOR_EMAIL}}"
+
 policies:
   workflow: framework/docs/collaboration/workflow-guide.md
   onTransition: framework/docs/collaboration/workflow-guide.md#workflow-transitions

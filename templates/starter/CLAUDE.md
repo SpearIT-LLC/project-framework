@@ -53,21 +53,13 @@ Read `framework.yaml` at the project root for machine-readable project context.
 
 ## Project Structure
 
-```
-{{PROJECT_NAME}}/
-├── framework/              # Framework docs, templates, and project hub
-│   ├── docs/               # Process and collaboration documentation
-│   ├── templates/          # Work item and documentation templates
-│   └── project-hub/
-│       ├── work/           # Kanban: backlog → todo → doing → done
-│       ├── history/        # Sessions, releases, archive
-│       ├── research/       # ADRs and investigations
-│       ├── retrospectives/ # Project retrospectives
-│       └── external-references/
-├── src/                    # Source code
-├── tests/                  # Test files
-└── docs/                   # Project documentation
-```
+**Full structure:** See [framework/docs/PROJECT-STRUCTURE.md](framework/docs/PROJECT-STRUCTURE.md)
+
+**Key locations:**
+- `project-hub/work/` - Work items (backlog → todo → doing → done)
+- `project-hub/history/` - Session logs and archived releases
+- `framework.yaml` - Project configuration (SSOT for metadata)
+- `src/`, `tests/`, `docs/` - Code and documentation
 
 ---
 

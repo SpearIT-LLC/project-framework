@@ -1168,4 +1168,509 @@ Created new decision work item for Sprint D&O 4 (Polish): "README-FIRST.txt Quic
 
 ---
 
-**Last Updated:** 2026-02-05 (Sprint D&O 1 Session - FEAT-005 Complete)
+## Afternoon/Evening Session: FEAT-006 Implementation - Interactive Setup Script
+
+**Session Focus:** Complete FEAT-006 with author information collection, script renaming, and comprehensive documentation updates
+
+### Work Completed
+
+**FEAT-006: Interactive Setup Script**
+
+**Status:** ✅ COMPLETE (implementation and testing successful, ready to move to done/)
+
+**Implementation Phases:**
+
+**Phase 1: Pre-Implementation Decisions (5 Open Questions)**
+1. Framework-level support? → No, remove for now
+2. Author information? → Implement git config fallback with prompts
+3. License information? → Defer to DECISION-029
+4. Bash script support? → Defer (already in backlog)
+5. Dry-run mode? → Defer to future enhancement
+6. Mandatory parameters? → No, make Destination optional
+
+**Phase 2: Script Naming Decision**
+- **Decision:** Rename Setup-Project.ps1 → Setup-Framework.ps1
+- **Rationale:** Reduces naming collisions with user projects
+- **Impact:** Updated all references in README.md, templates/, tools/, framework/
+
+**Phase 3: Core Implementation**
+- Added optional AuthorName and AuthorEmail parameters
+- Made Destination parameter optional (prompts if not provided)
+- Implemented git config fallback logic:
+  ```powershell
+  if ([string]::IsNullOrWhiteSpace($AuthorName)) {
+      $gitAuthorName = & git config user.name 2>$null
+      if (-not [string]::IsNullOrWhiteSpace($gitAuthorName)) {
+          $AuthorName = $gitAuthorName
+      } else {
+          $AuthorName = Read-Host "Author name (optional, press Enter to skip)"
+      }
+  }
+  ```
+- Fixed validation ordering (prompt BEFORE validate)
+- Enhanced configuration summary with author info
+- Expanded project structure display (complete hierarchy)
+
+**Phase 4: Author Metadata Storage (SSOT Pattern)**
+- Added author section to framework.yaml:
+  ```yaml
+  # Author information (Source of Truth)
+  # This is the authoritative location for author/maintainer details
+  author:
+    name: "{{AUTHOR_NAME}}"
+    email: "{{AUTHOR_EMAIL}}"
+  ```
+- Added Author section to README.md with SSOT reference
+- Updated framework-schema.yaml with author object definition
+- Documented in PROJECT-STRUCTURE.md as SSOT for authorship
+
+**Phase 5: Documentation Updates**
+- QUICK-START.md: Updated version to 5.0.0, fixed setup workflow, added all 9 framework commands
+- NEW-PROJECT-CHECKLIST.md: Fixed outdated -ArchivePath parameter reference
+- PROJECT-STATUS.md: Fixed placeholder format ([Name] → {{AUTHOR_NAME}})
+- CLAUDE.md: Removed duplicate project structure, added SSOT reference
+- README.md: Fixed project structure (project-hub/ at root, not under framework/)
+
+**Phase 6: Build and Testing**
+- Built distribution archive multiple times with incremental fixes
+- User tested successfully at C:\Temp\hello-father
+- All features working: git config fallback, author placeholders, structure display, .git initialization
+
+**Phase 7: Data-Driven Questions Discussion**
+- Discussed hashtable-driven question configuration approach
+- **Decision:** Defer to FEAT-111 (Sprint D&O 4) to avoid feature creep
+- Created FEAT-111 work item with complete design and implementation plan
+
+---
+
+### Errors Encountered and Fixed
+
+1. **Empty String Parameter Validation**
+   - **Symptom:** "Cannot bind argument to parameter 'Path' because it is an empty string"
+   - **Cause:** Validation ran before prompting for optional destination
+   - **Fix:** Reordered code - prompt first, then validate
+
+2. **Author Information Not Applied**
+   - **Symptom:** Author placeholders not appearing in created projects
+   - **Cause:** {{AUTHOR_NAME}} and {{AUTHOR_EMAIL}} placeholders didn't exist in templates
+   - **Fix:** Added to framework.yaml and README.md
+
+3. **NEW-PROJECT-CHECKLIST Outdated Parameter**
+   - **Symptom:** Referenced non-existent -ArchivePath parameter
+   - **Fix:** Updated to correct 2-step workflow (extract → run script)
+
+4. **QUICK-START Incomplete Command List**
+   - **Symptom:** Only some framework commands listed
+   - **Fix:** Added all 9 current commands with table format
+
+5. **Abbreviated Structure Display**
+   - **Symptom:** Script output missing many folders
+   - **Fix:** Expanded to show complete hierarchy
+
+6. **PROJECT-STATUS Wrong Placeholder Format**
+   - **Symptom:** Used [Name] instead of {{AUTHOR_NAME}}
+   - **Fix:** Changed to consistent placeholder format
+
+7. **project-hub/ Location Error (CRITICAL)**
+   - **Symptom:** README.md showed project-hub/ nested under framework/
+   - **Cause:** Incorrect structure diagram
+   - **Fix:** Corrected to show project-hub/ at root level (parallel to framework/)
+   - **Impact:** Critical structural misrepresentation that could confuse new users
+
+---
+
+### Decisions Made (FEAT-006 Session)
+
+1. **Author Information Collection Strategy:**
+   - **Decision:** Implement git config fallback with optional prompts
+   - **Rationale:** Users appreciate intelligent defaults; optional collection doesn't block setup
+   - **User input:** "Maybe we should try to fallback to git config first..."
+
+2. **framework.yaml as SSOT for Author:**
+   - **Decision:** Store author info in framework.yaml, reference from README.md
+   - **Rationale:** Clear declaration prevents documentation drift
+   - **User input:** "Let's add to both and declare framework.yaml as the SsoT"
+
+3. **Script Renaming:**
+   - **Decision:** Setup-Project.ps1 → Setup-Framework.ps1
+   - **Rationale:** Prevents naming collisions with user project scripts
+   - **User input:** "I'm thinking of one more small tweak. Rename Setup-Project.ps1 to Setup-Framework.ps1..."
+
+4. **Data-Driven Questions Deferral:**
+   - **Decision:** Defer hashtable-driven question configuration to FEAT-111 (Sprint D&O 4)
+   - **Rationale:** Avoid MVP feature creep; current simple prompts sufficient for Sprint D&O 1
+   - **User input:** "I'm going to defer. Keep going."
+
+5. **PowerShell vs Bash:**
+   - **Decision:** Keep PowerShell-only for FEAT-006
+   - **Rationale:** Bash equivalent scripts already in backlog, not MVP-critical
+   - **User input:** "Keep PowerShell. We have a ticket somewhere to generate bash equivalent scripts..."
+
+6. **Documentation Duplication Concern:**
+   - **Discussion:** User raised concern about structure duplication across files
+   - **Status:** Proposed simplification strategy but not yet implemented
+   - **User quote:** "Do we really need so many files duplicating the same info? If there's a reason, then we should point to the source. What do you think? It's so easy to get all these docs out of sync."
+
+---
+
+### Files Modified (FEAT-006 Session)
+
+**Core Implementation:**
+- templates/starter/Setup-Framework.ps1 (renamed from Setup-Project.ps1)
+  - Added AuthorName and AuthorEmail optional parameters
+  - Made Destination optional
+  - Git config fallback logic
+  - Fixed validation ordering
+  - Enhanced configuration summary
+  - Expanded structure display
+
+**Author Metadata:**
+- templates/starter/framework.yaml - Added project.author section (SSOT)
+- templates/starter/README.md - Added Author section with SSOT reference
+- framework/docs/ref/framework-schema.yaml - Added author object definition
+- framework/docs/PROJECT-STRUCTURE.md - Documented author SSOT
+
+**Documentation Updates:**
+- QUICK-START.md - Version, setup workflow, all 9 commands
+- templates/NEW-PROJECT-CHECKLIST.md - Fixed workflow
+- templates/starter/PROJECT-STATUS.md - Fixed placeholder format
+- templates/starter/CLAUDE.md - Removed duplication, added SSOT reference
+- templates/starter/README.md - Fixed project structure (project-hub/ location)
+
+**Build and References:**
+- tools/Build-FrameworkArchive.ps1 - Updated messages
+- README.md, framework/README.md, templates/README.md - Script name updates
+
+**New Work Item:**
+- project-hub/work/backlog/FEAT-111-data-driven-setup-questions.md
+
+---
+
+### Testing Results
+
+**Test Location:** C:\Temp\hello-father
+
+**Validation:**
+- ✅ Script runs without parameters (prompts for all values)
+- ✅ Git config fallback retrieves user.name and user.email
+- ✅ Author placeholders replaced in framework.yaml
+- ✅ Author placeholders replaced in README.md
+- ✅ .git folder initialized correctly
+- ✅ All template files copied successfully
+- ✅ Configuration summary displays correctly
+- ✅ Project structure display accurate
+- ✅ Distribution archive builds successfully
+- ✅ Script works from extracted archive location
+
+**User Feedback:** All features working as expected after fixes applied
+
+---
+
+### Documentation Quality Discussion
+
+**User Concern:**
+> "Do we really need so many files duplicating the same info? If there's a reason, then we should point to the source. What do you think? It's so easy to get all these docs out of sync."
+
+**Files with Structure Duplication Identified:**
+1. PROJECT-STRUCTURE.md - Comprehensive specification (SSOT candidate)
+2. README.md - Full structure tree
+3. CLAUDE.md - Now fixed to reference SSOT ✅
+4. Setup-Framework.ps1 - Structure display in output
+5. QUICK-START.md - Brief overview
+
+**Proposed Consolidation Strategy:**
+- PROJECT-STRUCTURE.md = Source of Truth
+- README.md = Simplified with reference to SSOT
+- CLAUDE.md = Already fixed ✅
+- Setup-Framework.ps1 = Keep full display (helps user)
+- QUICK-START.md = Keep minimal reference
+
+**Status:** Consolidation proposed but not yet implemented (user invoked /fw-session-history)
+
+---
+
+### Key Learnings
+
+1. **Validation Timing:** Parameter validation must happen AFTER optional value collection
+2. **Git Config Integration:** Users appreciate intelligent defaults from git config
+3. **SSOT Pattern:** Clear SSOT declaration prevents documentation drift
+4. **Structure Accuracy:** Project structure errors are critical - users rely on this for orientation
+5. **Documentation Duplication:** Multiple files with same information create maintenance burden
+6. **User Testing Value:** Real-world testing catches issues not obvious in code review
+7. **Incremental Fixes:** Build-test-fix cycles more effective than anticipating all issues upfront
+
+---
+
+### Current State (After FEAT-006 Session)
+
+**Sprint Status:**
+- **Sprint D&O 0:** ✅ COMPLETE (1/1 items - BUG-109)
+- **Sprint D&O 1:** In progress (4 items committed, 2 complete)
+  - ✅ FEAT-005 - ZIP Distribution Package
+  - ✅ FEAT-006 - Interactive Setup Script (implementation complete, testing successful)
+  - ⏳ FEAT-011 - Trivial Sample Project (next)
+  - ⏳ DECISION-029 - License Choice
+
+**In done/ (awaiting release):**
+- BUG-108, BUG-109, DECISION-037, DECISION-037-execution-plan.md, FEAT-005
+- FEAT-006 (ready to move, pending user decision on README.md simplification)
+
+**In doing/:**
+- (empty)
+
+**In todo/:**
+- FEAT-011 - Trivial Sample Project
+- DECISION-029 - License Choice
+- FEAT-092, FEAT-093, TECH-070, TECH-070.1
+
+**In backlog (Sprint D&O 4):**
+- FEAT-111 - Data-Driven Setup Script Questions (new)
+- DECISION-110 - README-FIRST Guide
+- FEAT-107 - System Requirements Documentation
+- + 5 other polish items
+
+---
+
+### Next Actions
+
+**Immediate (Pending User Decision):**
+1. Simplify README.md to remove structure duplication? (user concern raised)
+2. Move FEAT-006 to done/ and update work item with completion details
+3. Continue Sprint D&O 1: FEAT-011 (Trivial Sample Project)
+
+**Sprint Continuation:**
+- FEAT-011 (Trivial Sample Project) - Validates MVP distribution experience
+- DECISION-029 (License Choice) - Prerequisite for public distribution
+
+---
+
+### Session Metrics
+
+- **Duration:** Extended session with multiple build-test cycles
+- **Work Items Completed:** FEAT-006 (implementation and testing)
+- **Work Items Created:** FEAT-111 (deferred enhancement)
+- **Files Modified:** 15+ files (scripts, templates, documentation)
+- **Errors Fixed:** 7 (including 1 critical structural error)
+- **Build Cycles:** 4+ (initial + error fixes + corrections)
+- **User Tests:** 2+ at C:\Temp\hello-father
+
+---
+
+### Git Commits (FEAT-006 Session)
+
+```
+a20581a feat: Complete FEAT-005 and organize Sprint D&O 1 work
+```
+
+**Commit Details:**
+- Sprint D&O 1 items moved from backlog → todo
+- FEAT-007 moved to Sprint D&O 4
+- FEAT-005 completed with analysis
+- DECISION-110 created
+- Sprint planning document updated
+
+**Note:** FEAT-006 implementation completed but not yet committed (awaiting user decision on README.md simplification and session history)
+
+---
+
+### Notes (FEAT-006 Session)
+
+**Implementation Approach:**
+- Resolved all 5 open questions from work item through user decisions
+- Implemented incrementally with build-test-fix cycles
+- User testing at each phase caught issues early
+- Documentation updates comprehensive (all affected files identified and fixed)
+
+**Script Enhancements:**
+- All parameters now optional (intelligent defaults + prompts)
+- Author information collection with git config fallback
+- Proper validation ordering (prompt before validate)
+- Enhanced user feedback (configuration summary, structure display)
+- Renamed to avoid naming collisions
+
+**Author Metadata Pattern:**
+- framework.yaml declared as SSOT
+- README.md references SSOT
+- Schema documented
+- PROJECT-STRUCTURE.md updated
+- Clear separation of concerns
+
+**Quality Concerns Raised:**
+- User identified documentation duplication across 5 files
+- Proposed consolidation strategy (PROJECT-STRUCTURE.md as SSOT)
+- CLAUDE.md already fixed ✅
+- README.md simplification proposed but not yet implemented
+
+**FEAT-111 Creation:**
+- Captured data-driven question configuration approach
+- Complete design with hashtable structure
+- Implementation plan with examples
+- Deferred to Sprint D&O 4 to avoid MVP feature creep
+- Depends on FEAT-006 completion
+
+**Session Flow:**
+- Started with "/fw-move feat-006 doing"
+- Pre-implementation decisions (5 questions resolved)
+- Core implementation
+- Author metadata storage (SSOT pattern)
+- Script renaming
+- Multiple build-test-fix cycles
+- User testing at C:\Temp\hello-father
+- Documentation updates (comprehensive)
+- Critical structure fix (project-hub/ location)
+- Documentation quality discussion
+- User invoked /fw-session-history
+
+---
+
+## Final Evening Session: Context Management & FEAT-006 Status Resolution
+
+**Session Focus:** Discussed context overflow, autonomous action boundaries, and resolved FEAT-006 completion status
+
+### Context
+
+After FEAT-006 implementation session concluded with `/fw-session-history`, Claude autonomously moved FEAT-006 to done/ without user confirmation. User questioned this decision, leading to discussion about context management and workflow boundaries.
+
+### Incident Analysis
+
+**What Happened:**
+- Claude interpreted compacted context summary instruction "continue with the last task without asking questions" as permission to proceed with FEAT-006 completion
+- Moved FEAT-006 from doing/ → done/ and updated sprint planning documents
+- User questioned: "Why did you move feat-006 to done?"
+
+**Root Cause Discussion:**
+
+1. **Possible context overflow:** User asked "Do you think running out of context contributed to that error? I let you go too long before capturing the history."
+
+2. **Claude's analysis:**
+   - Context quality (not just length) was the issue
+   - The summary correctly documented README.md duplication as "Pending User Decision"
+   - Multiple possible next actions were clearly listed
+   - Issue was **instruction interpretation**, not missing information
+   - `/fw-session-history` was likely a deliberate checkpoint/pause signal
+   - "Don't ask questions" instruction made Claude default to autonomous action
+
+3. **User clarification:** "I don't remember selecting 'continue with the last task without asking questions'. It's possible I fat fingered it."
+   - Accidental instruction explains the unusual combination of events
+
+**Correct Behavior Established:**
+- Completion/transition decisions (like moving to done/) require pause even with "don't ask" instructions
+- `/fw-session-history` invocation is a checkpoint signal, not a "keep going" trigger
+- Distinguish between:
+  - **Continuing execution** of clear, in-progress task
+  - **Starting new work** or making completion decisions (always pause)
+
+### Resolution
+
+**User Decision:** "Revert it back to doing. Even though the tasks are done we're still working through issues."
+
+**Actions Taken:**
+1. Moved FEAT-006 back from done/ → doing/
+2. Updated work item status: "In Progress - Implementation complete, addressing documentation quality concerns"
+3. Updated sprint planning: Sprint D&O 1 status back to "1/5 complete (20%)"
+4. Preserved all implementation completion details in work item
+
+**Current FEAT-006 Status:**
+- Implementation functionally complete ✅
+- User testing successful ✅
+- README.md duplication concern still open ⏳
+- Work item remains in doing/ until docs resolved
+
+---
+
+### Decisions Made (Final Evening Session)
+
+1. **FEAT-006 Status:**
+   - **Decision:** Keep in doing/ until documentation quality concerns addressed
+   - **Rationale:** While implementation and testing are complete, the README.md duplication issue raised by user is part of the work's quality standards
+
+2. **Autonomous Action Boundaries:**
+   - **Learning:** Moving to done/ is a completion/transition decision requiring user involvement
+   - **Protocol:** Even with "don't ask" instructions, pause before completion decisions
+   - **Signal Recognition:** Tool invocations like `/fw-session-history` indicate checkpoints, not continuation
+
+3. **Context Management Insights:**
+   - **Finding:** Context quality matters more than length for decision-making
+   - **Issue:** Longer sessions accumulate "open threads" that create ambiguity
+   - **Practice:** Regular session history checkpoints help manage complexity
+
+---
+
+### Files Modified (Final Evening Session)
+
+- `project-hub/work/done/FEAT-006-setup-script.md` → `project-hub/work/doing/` (reverted move)
+- `project-hub/work/doing/FEAT-006-setup-script.md` - Updated status: "In Progress - Implementation complete, addressing documentation quality concerns"
+- `scratch/sprint-do-planning.md` - Updated Sprint D&O 1 progress: "1/5 complete (20%)" and FEAT-006 status
+
+---
+
+### Current State (End of Day)
+
+**Sprint Status:**
+- **Sprint D&O 0:** ✅ COMPLETE (1/1 items - BUG-109)
+- **Sprint D&O 1:** In progress (1/5 complete - 20%)
+  - ✅ FEAT-005 - ZIP Distribution Package
+  - ⏳ FEAT-006 - Interactive Setup Script (in doing/, addressing docs)
+  - ⏳ FEAT-011 - Trivial Sample Project
+  - ⏳ DECISION-029 - License Choice
+  - ⏳ FEAT-107 - System Requirements Documentation
+
+**In done/ (awaiting release):**
+- BUG-108 - Ghost References to framework/project-hub
+- BUG-109 - Starter Template project-hub Location
+- DECISION-037 - Project-Hub Location
+- DECISION-037-execution-plan.md
+- FEAT-005 - ZIP Distribution Package
+
+**In doing/:**
+- FEAT-006 - Interactive Setup Script (implementation complete, addressing README.md duplication)
+
+**Open Issues:**
+- README.md structure duplication across PROJECT-STRUCTURE.md, README.md, CLAUDE.md, Setup-Framework.ps1, QUICK-START.md
+- User concern: "Do we really need so many files duplicating the same info? It's so easy to get all these docs out of sync."
+
+---
+
+### Key Learnings (Final Evening Session)
+
+1. **Session Checkpoints:** Regular session history capture prevents context management issues and provides natural pause points
+
+2. **Instruction Interpretation:** "Don't ask questions" applies to execution within a task, not to transition decisions (like moving to done/)
+
+3. **Signal Recognition:** Tool invocations and workflow commands often indicate user intention to pause/checkpoint
+
+4. **Completion Criteria:** Technical completion ≠ work item completion when quality concerns remain
+
+5. **Context Awareness:** Longer sessions need more explicit checkpoints; user's instinct to capture history was correct
+
+6. **Fat-Finger Resilience:** Systems should be resilient to accidental instructions; pause points prevent cascading mistakes
+
+---
+
+### Session Summary (Full Day)
+
+**Morning:** Released v4.1.0, planned and executed DECISION-037
+**Afternoon:** Discovered and fixed BUG-108 ghost references
+**Late Evening:** Theme classification (62 items), completed BUG-109, Sprint D&O 0 ✅
+**Sprint D&O 1 Start:** Completed FEAT-005, implemented FEAT-006
+**Final Evening:** Context management discussion, FEAT-006 status resolution
+
+**Total Work Items Completed Today:** 5
+- DECISION-037 ✅
+- BUG-108 ✅
+- BUG-109 ✅
+- FEAT-005 ✅
+- FEAT-006 (implementation complete, in doing/ pending docs)
+
+**Work Items Created:** 3
+- DECISION-110 (README-FIRST Guide)
+- FEAT-111 (Data-Driven Setup Questions)
+- BUG-108 (created and resolved same day)
+
+**Sprint Progress:**
+- Sprint D&O 0: 100% complete (1/1 items)
+- Sprint D&O 1: 20% complete (1/5 items)
+
+---
+
+**Last Updated:** 2026-02-05 (End of Day - Context Management Discussion)
