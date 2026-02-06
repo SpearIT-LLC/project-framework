@@ -15,19 +15,58 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+None
+
 ### Changed
+
+None
 
 ### Removed
 
+None
+
 ### Fixed
 
-- Starter template now has project-hub at repository root (BUG-109)
+None
+
+---
+
+## [5.1.0] - 2026-02-06
+
+### Added
+
+- **FEAT-005: ZIP Distribution Package**
+  - Automated ZIP distribution package creation (Build-FrameworkArchive.ps1)
+  - Framework-as-dependency distribution model
+  - Version tracking in distribution packages (.framework-version)
+  - Self-contained distribution with framework and starter template
+
+- **FEAT-006: Interactive Setup Script**
+  - Setup-Framework.ps1 - Interactive framework setup script (PowerShell 7+)
+  - Automated project initialization with customization
+  - Project type selection from framework-schema.yaml
+  - Author metadata prompts with git config fallback
+  - Transparent display of git config file path when reading author info
+  - Edge case enhancements tracked in FEAT-112
+
+### Changed
+
+None
+
+### Removed
+
+None
+
+### Fixed
+
+- **BUG-109: Starter Template project-hub Location**
+  - Starter template now has project-hub at repository root
   - Was incorrectly located in framework/project-hub/ from incomplete DECISION-037 migration
-  - New projects created with Setup-Project.ps1 now have correct structure
+  - New projects created with Setup-Framework.ps1 now have correct structure
   - Aligns with DECISION-037 architectural decision
 - Build script folder copy operations creating nested folder structures
   - Fixed PowerShell Copy-Item behavior causing framework/docs/docs/ instead of framework/docs/
-  - Setup-Project.ps1 can now find framework-schema.yaml at correct path
+  - Setup-Framework.ps1 can now find framework-schema.yaml at correct path
   - Affects framework/docs/, framework/templates/, framework/tools/ in distribution archive
 - Build script now correctly checks for unreleased items in project-hub/work/done/ (BUG-108)
   - Was checking old location (framework/project-hub/) after DECISION-037 move
