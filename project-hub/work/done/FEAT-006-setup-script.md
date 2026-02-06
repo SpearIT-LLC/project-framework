@@ -5,6 +5,7 @@
 **Priority:** Medium
 **Version Impact:** MINOR
 **Created:** 2025-12-19
+**Completed:** 2026-02-06
 **Theme:** Distribution & Onboarding
 
 ---
@@ -68,32 +69,43 @@ Manual following of NEW-PROJECT-CHECKLIST.md (2-4 hours for Standard).
 
 ```
 1. Welcome message
-2. Ask: "Project Name?"
-3. Ask: "Author Name?"
-4. Ask: "Author Email?"
-5. Ask: "Project Description?"
-6.
-7. Framework Selection:
-8. Ask: "Scope & Complexity?" (Script/Tool/Application/System)
-9. Ask: "Lifespan & Evolution?" (Throwaway/Short-term/Maintained/Critical)
-10. Ask: "Team & Collaboration?" (Solo-Personal/Solo-Professional/Small-Team/Large-Team)
-11.
-12. Display: "Recommended: [Level] Framework"
-13. Ask: "Use this level? (Y/n)"
-14.
-15. Display: "Preview of files to be created..."
-16. Ask: "Proceed with setup? (Y/n)"
-17.
-18. Execute:
-19. - Copy template files
-20. - Replace placeholders with user input
-21. - Create folder structure
-22. - Set WIP limits (if Standard)
-23.
-24. Ask: "Initialize git repository? (Y/n)"
-25. If yes: git init, git add, git commit
-26.
-27. Display: "Setup complete! Next steps..."
+2. Prompt: "Destination path for new project" (if not provided via parameter)
+3. Validate destination path:
+   - Verify not copying to self
+   - Check destination not occupied (or -Force required)
+4. Prompt: "Project name" (if not provided via parameter)
+5. Prompt: "Project description" (if not provided via parameter, defaults to "A new project")
+6. Get author name:
+   - Try global git config user.name (from user's .gitconfig)
+   - If not found, prompt "Author name (optional, press Enter to skip)"
+7. Get author email:
+   - Try global git config user.email (from user's .gitconfig)
+   - If not found, prompt "Author email (optional, press Enter to skip)"
+8. Project type selection:
+   - Read project types from framework-schema.yaml
+   - Display numbered menu of types with descriptions
+   - Prompt: "Project type [1-N]" (defaults to "application" if empty)
+9. Display configuration summary:
+   - Project Name, Description, Type
+   - Author Name, Author Email (shows "(not set)" if empty)
+   - Destination, Date
+   - Note: "Author info can be updated later in framework.yaml and README.md"
+10. Confirm: "Proceed with setup? (y/n)"
+11. Execute if confirmed:
+    - Create destination directory (if doesn't exist)
+    - Copy template files (excluding Setup-Framework.ps1 itself)
+    - Replace placeholders in all text files:
+      * {{PROJECT_NAME}}, {{PROJECT_DESCRIPTION}}, {{PROJECT_TYPE}}
+      * {{AUTHOR_NAME}}, {{AUTHOR_EMAIL}}, {{DATE}}
+    - Initialize git repository (unless -NoGit switch provided):
+      * git init --quiet
+      * git add -A
+      * git commit -m "Initial project setup from SpearIT Framework"
+12. Display completion summary:
+    - Project location
+    - Complete project structure with descriptions
+    - Next steps (NEW-PROJECT-CHECKLIST.md)
+    - Key commands (/fw-help, /fw-status, /fw-backlog)
 ```
 
 ### Placeholder Replacement
@@ -137,45 +149,13 @@ Manual following of NEW-PROJECT-CHECKLIST.md (2-4 hours for Standard).
 ## CHANGELOG Notes
 
 **Added:**
-- setup-framework.ps1 - Interactive framework setup script (PowerShell 7+)
-- setup-framework.sh - Interactive framework setup script (Bash)
+- Setup-Framework.ps1 - Interactive framework setup script (PowerShell 7+)
 - Automated project initialization with customization
-- Framework level recommendation based on user responses
+- Project type selection from framework-schema.yaml
+- Author metadata prompts with git config fallback
+- Transparent display of git config file path when reading author info
 
 ---
-
-## Partial Implementation (v3.7.0)
-
-A basic `Setup-Framework.ps1` (originally `Setup-Project.ps1`) was created in v3.7.0 as part of the distribution archive work. It covers:
-- [x] Project name prompt
-- [x] Project description prompt
-- [x] Placeholder replacement (`{{PROJECT_NAME}}`, `{{PROJECT_DESCRIPTION}}`, `{{DATE}}`)
-- [x] Git initialization (optional)
-- [x] Initial commit
-- [x] Works in-place from extracted archive
-
-**Still needed for full feature:**
-- [ ] Author name/email prompts
-- [ ] Framework level selection questions (Scope, Lifespan, Team)
-- [ ] Framework level recommendation logic
-- [ ] Dry-run mode (-WhatIf)
-- [ ] Cross-platform bash script
-- [ ] License selection
-- [ ] Validation of destination path
-
----
-
-## Decisions to Make
-
-1. **Framework level support** - Current archive is "Standard" only. Do we need Minimal/Light variants, or is Standard the only distribution target?
-
-2. **Author info** - Should we prompt for author name/email, or rely on git config?
-
-3. **License selection** - Offer license picker (MIT, Apache, etc.) or leave as placeholder?
-
-4. **Bash script** - Is cross-platform support needed, or is PowerShell-only acceptable?
-
-5. **Dry-run mode** - Is -WhatIf valuable for a setup script, or unnecessary complexity?
 
 ---
 
@@ -217,6 +197,7 @@ A basic `Setup-Framework.ps1` (originally `Setup-Project.ps1`) was created in v3
 - **Prerequisite:** DECISION-050 - Framework-as-Dependency Model (v4.0.0)
 - **Prerequisite:** DECISION-105 - Retire Multi-Level Framework (v4.1.0)
 - **Follow-up:** FEAT-111 - Data-Driven Setup Script Questions (Sprint D&O 4)
+- **Follow-up:** FEAT-112 - Setup Script Edge Cases and Polish (Backlog - Polish Sprint)
 - **Related:** DECISION-029 - License Choice for Framework (Sprint D&O 1)
 
 **Testing:**
@@ -234,6 +215,7 @@ A basic `Setup-Framework.ps1` (originally `Setup-Project.ps1`) was created in v3
 - Enhanced user experience with intelligent defaults
 - Comprehensive documentation updates (15+ files)
 - Fixed critical project structure error (project-hub/ location)
+- Added transparency for git config reading (shows file path when reading author info)
 
-**Last Updated:** 2026-02-05
-**Status:** In Progress - Implementation complete, addressing documentation quality concerns
+**Last Updated:** 2026-02-06
+**Status:** ✅ Complete - Script flow documented, edge cases tracked in FEAT-112

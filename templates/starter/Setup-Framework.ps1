@@ -179,6 +179,8 @@ if ([string]::IsNullOrWhiteSpace($AuthorName)) {
     $gitAuthorName = & git config user.name 2>$null
     if (-not [string]::IsNullOrWhiteSpace($gitAuthorName)) {
         $AuthorName = $gitAuthorName
+        $gitConfigPath = if ($env:USERPROFILE) { "$env:USERPROFILE\.gitconfig" } else { "~/.gitconfig" }
+        Write-Host "Author name found in git config ($gitConfigPath): $AuthorName" -ForegroundColor Gray
     } else {
         $AuthorName = Read-Host "Author name (optional, press Enter to skip)"
     }
@@ -189,6 +191,8 @@ if ([string]::IsNullOrWhiteSpace($AuthorEmail)) {
     $gitAuthorEmail = & git config user.email 2>$null
     if (-not [string]::IsNullOrWhiteSpace($gitAuthorEmail)) {
         $AuthorEmail = $gitAuthorEmail
+        $gitConfigPath = if ($env:USERPROFILE) { "$env:USERPROFILE\.gitconfig" } else { "~/.gitconfig" }
+        Write-Host "Author email found in git config ($gitConfigPath): $AuthorEmail" -ForegroundColor Gray
     } else {
         $AuthorEmail = Read-Host "Author email (optional, press Enter to skip)"
     }

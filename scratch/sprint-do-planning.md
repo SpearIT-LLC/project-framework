@@ -45,7 +45,7 @@ The Distribution & Onboarding theme focuses on packaging, installation, setup au
 ## Sprint D&O 1 (Next) - MVP Distribution Package and Setup Process
 
 **Goal:** Core distribution package and first-time user experience
-**Status:** In Progress (1/5 complete - 20%)
+**Status:** In Progress (2/5 complete - 40%)
 **Items:** 5
 **Work Order:** FEAT-005 → FEAT-006 → FEAT-011 → DECISION-029 → FEAT-107
 
@@ -57,11 +57,11 @@ The Distribution & Onboarding theme focuses on packaging, installation, setup au
   - **Priority:** 1 - Work first
   - **Notes:** Core MVP distribution artifact - requirements met via DECISION-050 implementation
 
-- [ ] **FEAT-006** - Interactive Setup Script
-  - **Status:** In Progress (implementation complete, addressing documentation quality)
+- [x] **FEAT-006** - Interactive Setup Script
+  - **Status:** DONE (Completed 2026-02-06)
   - **Theme:** Distribution & Onboarding
   - **Priority:** 2 - Work second
-  - **Notes:** Enhanced with author info collection, git config fallback, renamed to Setup-Framework.ps1; working on README.md duplication concerns
+  - **Notes:** Enhanced with author info, git config fallback, project type selection, transparency features; edge cases tracked in FEAT-112
 
 - [ ] **FEAT-011** - Trivial Sample Project
   - **Status:** Backlog
