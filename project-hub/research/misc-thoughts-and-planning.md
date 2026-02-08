@@ -145,3 +145,42 @@ Trivial questionaire for POC
 3. What color is snow?
 AI prompts each question and records the answer.
 
+## Claude Plugins
+Claude recently released a plugin marketplace library.
+
+https://claude.com/plugins
+
+Plugin Submission
+https://docs.google.com/forms/d/e/1FAIpQLSc31jdYDs_1z649BmFfX85mSSdyTXi0GOLsHD7tWKj0F_k9Dg/viewform?pli=1
+
+GitHub Claude Plugins
+https://github.com/anthropics/claude-plugins-official
+
+Apparent Unauthorized Site?
+https://claudemarketplaces.com/
+
+
+https://claude-plugins.dev/
+
+### What I've learned so far
+Plugins are just folders with files - very simple structure. "Plugin Create" is a helper tool (one of the 11 official plugins) that walks you through building plugins, but you can create the structure manually if you prefer.
+
+Basic Plugin Structure
+your-plugin-name/
+├── .claude-plugin/
+│   └── plugin.json      # Metadata (name, description, version)
+├── .mcp.json            # Optional: connections to external tools
+├── commands/            # Optional: slash commands
+└── skills/              # Optional: domain knowledge in markdown
+
+Minimum Viable Plugin
+Just need:
+1. .claude-plugin/plugin.json
+json{
+  "name": "my-plugin",
+  "description": "What it does",
+  "version": "1.0.0"
+}
+2. A skills/ folder with markdown files containing your domain knowledge/workflows
+That's it! Then zip it up and upload to Cowork.
+
