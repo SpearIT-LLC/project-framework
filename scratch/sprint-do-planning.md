@@ -63,7 +63,7 @@ The Distribution & Onboarding theme focuses on packaging, installation, setup au
   - **Priority:** 2 - Work second
   - **Notes:** Enhanced with author info, git config fallback, project type selection, transparency features; edge cases tracked in FEAT-112
 
-- [ ] **FEAT-011** - Trivial Sample Project
+- [x] **FEAT-011** - Trivial Sample Project
   - **Status:** Backlog
   - **Theme:** Distribution & Onboarding
   - **Priority:** 3 - Complete the MVP
