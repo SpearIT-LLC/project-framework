@@ -834,4 +834,244 @@ plugins/spearit-framework-light/
 
 ---
 
-**Last Updated:** 2026-02-09 (Late session - Milestones 6-7 with optimization)
+## Final Session: FEAT-119 - Plugin "new" Command Implementation
+
+**Session continuation:** Licensing decision and FEAT-119 implementation
+
+### Work Completed
+
+**FEAT-118 - Licensing Decision (Milestone 8 Partial):**
+1. **License Decision Made: MIT**
+   - Changed repository from GPL-3.0 to MIT
+   - Rationale: Attribution protection + maximum adoption + plugin ecosystem standard
+   - Updated root LICENSE file
+   - Created plugin LICENSE file (MIT)
+   - Updated plugin.json with license field
+   - Committed licensing changes
+
+**FEAT-119 - Plugin "new" Command:**
+1. **Critical Gap Identified**
+   - Realized users have no way to CREATE work items with plugin
+   - Current workflow incomplete (move/track but can't create)
+   - User friction: Must manually understand file format
+   - Created FEAT-119 work item to address gap
+
+2. **Implementation Completed**
+   - Created `plugins/spearit-framework-light/commands/new.md` (556 lines)
+   - Interactive prompts: type, title, priority, summary
+   - Auto-generates next ID using `:next-id` logic
+   - Sanitizes title to kebab-case filename
+   - Creates file in `project-hub/work/backlog/`
+   - Git adds automatically
+   - Graceful directory creation if missing
+
+3. **Documentation Updated**
+   - Updated `help.md` - Added `:new` to command table (5 commands)
+   - Updated `README.md` - Revised Quick Start workflow, added `:new` documentation
+   - Updated all references from "4 commands" to "5 commands"
+
+4. **Testing Completed**
+   - Tested command with test work item (CHORE-120)
+   - Verified ID generation (correctly found 119, generated 120)
+   - Verified interactive prompts work
+   - Verified title sanitization ("Test Command Functionality" → "test-command-functionality")
+   - Verified file format and frontmatter
+   - Verified git add operations
+   - All tests passed successfully
+
+### Decisions Made
+
+**Decision 14: Licensing - MIT License** ⭐ **CRITICAL**
+- **Context:** Framework was GPL-3.0 by default choice (no deep thought)
+- **Issue:** Pre-release, so can reconsider without breaking changes
+- **Options evaluated:**
+  - Keep GPL-3.0 (copyleft, ensures derivatives stay open) ❌
+  - Switch to MIT (permissive, plugin ecosystem standard) ✅ **CHOSEN**
+  - Apache 2.0 (middle ground with patent protection) ❌
+- **Decision:** MIT License for both framework and plugin
+- **User requirement:** "Only care about attribution"
+- **MIT protection:** ✅ Requires copyright notice in all copies (meets requirement)
+- **Benefits:**
+  - ~80% of Claude Code plugins use MIT
+  - Lower barrier to adoption
+  - No GPL concerns for commercial users
+  - Simple, trusted, industry standard
+  - Still protects attribution (primary concern)
+- **Result:** Repository and plugin now MIT licensed
+
+**Decision 15: MVP Scope Expansion - Add :new Command** ⭐ **CRITICAL**
+- **Problem identified:** Users can't CREATE work items
+  - Plugin has move, track, reference commands
+  - But missing the most fundamental operation: create
+  - High friction = user abandonment
+- **Options:**
+  - Ship without `:new` (document file format in README) ❌
+  - Add `:new` to MVP scope ✅ **CHOSEN**
+  - Defer to v1.1 ❌
+- **Decision:** Add `:new` command to MVP (4 → 5 commands)
+- **Impact:**
+  - +1 day to timeline (7 days → 8 days)
+  - Completes minimum viable workflow (create → move → track)
+  - Critical for first-time user success
+- **Rationale:** This is NOT scope creep - it's COMPLETING the MVP
+  - Without `:new`, workflow is broken for new users
+  - Better to ship complete workflow late than incomplete on time
+
+**Decision 16: Command Scope - Plugin Only**
+- **Clarification:** `:new` command for plugin only, NOT for local framework
+- **Rationale:**
+  - Framework users (119 items created manually) comfortable with current workflow
+  - Plugin users (new, unfamiliar) need guided creation
+  - Keeps plugin self-contained
+  - Framework workflow stays as-is
+- **File locations:**
+  - `plugins/spearit-framework-light/commands/new.md` ← Create
+  - `.claude/commands/` ← Leave alone (no fw-new.md)
+
+**Decision 17: Command Naming - Drop fw- Prefix (Confirmed)**
+- **Decision:** Command uses `:new` not `:fw-new`
+- **File name:** `new.md` (not `fw-new.md`)
+- **Rationale:** Namespace provides context, prefix redundant
+- **Pattern confirmed:** Matches other commands (`:move`, `:help`)
+
+### Files Created
+
+**Plugin Command:**
+- `plugins/spearit-framework-light/commands/new.md` (556 lines)
+  - Interactive prompt specification
+  - File creation logic with template
+  - Directory handling (graceful creation)
+  - Git operations
+  - Error handling
+  - Examples and usage guide
+
+**Work Items:**
+- `project-hub/work/backlog/FEAT-119-plugin-new-command.md` (434 lines)
+  - Problem statement and requirements
+  - Implementation plan (4 phases)
+  - Acceptance criteria
+  - Design decisions
+  - Impact on FEAT-118
+
+**License Files:**
+- `LICENSE` (root) - MIT License (replaced GPL-3.0, 675 lines removed, 21 added)
+- `plugins/spearit-framework-light/LICENSE` - MIT License copy for plugin
+
+### Files Modified
+
+**Plugin Documentation:**
+- `plugins/spearit-framework-light/commands/help.md`
+  - Added `:new` to command table (line 26)
+  - Updated command count (4 → 5)
+  - Updated available files list (line 54)
+
+- `plugins/spearit-framework-light/README.md`
+  - Updated Quick Start workflow (lines 43-68) - Use `:new` instead of manual creation
+  - Updated features table (lines 74-82) - Added `:new` command
+  - Added detailed `:new` command documentation (lines 117-151)
+  - Updated "What's included" (line 309) - "5 core workflow commands"
+
+- `plugins/spearit-framework-light/.claude-plugin/plugin.json`
+  - Added `license: "MIT"` field
+
+**Work Items:**
+- `project-hub/work/doing/FEAT-118-claude-code-plugin.md`
+  - Added FEAT-119 to Related Work Items (lines 748-761)
+  - Marked licensing tasks complete in Milestone 8 (lines 380-381)
+  - Added changelog entry for licensing decision (lines 818-823)
+  - Added changelog entry for FEAT-119 creation (lines 825-832)
+
+- `project-hub/work/todo/FEAT-119-plugin-new-command.md` → `project-hub/work/doing/FEAT-119-plugin-new-command.md`
+  - Moved from todo → doing (started implementation)
+
+### Work Item Transitions
+
+**Workflow moves:**
+1. FEAT-119: backlog → todo (committed to work)
+2. FEAT-119: todo → doing (started implementation)
+
+**Status:**
+- FEAT-119: Now in doing/, implementation complete, ready for done
+
+### Current State
+
+**FEAT-118 Status:**
+- ✅ Milestone 1-7 complete
+- 🔄 Milestone 8 in progress:
+  - ✅ Licensing decision (MIT)
+  - ✅ LICENSE files created
+  - ⏳ Repository visibility (deferred)
+  - ⏳ Final packaging
+  - ⏳ Framework README update
+  - ⏳ Version tagging
+- ⏳ Milestone 9 pending (submission)
+- **Blocked by:** FEAT-119 completion
+
+**FEAT-119 Status:**
+- ✅ Command file created (new.md)
+- ✅ Help command updated
+- ✅ README updated
+- ✅ Testing complete
+- **Ready to move to done/**
+
+**Plugin Package Status:**
+```
+plugins/spearit-framework-light/
+├── .claude-plugin/
+│   └── plugin.json                    ✅ (with MIT license)
+├── commands/                          ✅ (5 commands - 1,206 lines total)
+│   ├── help.md                        (56 lines)
+│   ├── new.md                         (556 lines) ← NEW
+│   ├── move.md                        (327 lines)
+│   ├── next-id.md                     (120 lines)
+│   └── session-history.md             (147 lines)
+├── skills/                            ✅ (450 lines total)
+│   ├── kanban-workflow.md             (133 lines)
+│   ├── work-items.md                  (129 lines)
+│   └── moving-items.md                (188 lines)
+├── LICENSE                            ✅ MIT
+└── README.md                          ✅ (341 lines)
+```
+
+**Total: 2,014 lines of focused, professional documentation (+556 from FEAT-119)**
+
+### Key Learnings
+
+**1. Product Thinking Prevents Broken Launches**
+- User asked critical question: "How do users CREATE work items?"
+- Caught before shipping incomplete workflow
+- Better to ship complete and late than incomplete and on time
+
+**2. Licensing Decisions Should Be Intentional**
+- Original GPL-3.0 was default, not thoughtful choice
+- MIT better aligns with goals (attribution + adoption)
+- Pre-release timing allowed change without disruption
+
+**3. Command Completeness Matters for MVP**
+- create → move → track is minimum viable workflow
+- Missing any piece breaks user experience
+- "Lightweight" ≠ "incomplete"
+
+**4. Scope Changes Can Be Right**
+- FEAT-119 adds +1 day but prevents user abandonment
+- Not scope creep when completing core functionality
+- Better UX justifies timeline extension
+
+### Next Steps
+
+**Immediate:**
+1. Move FEAT-119 to done/ (implementation and testing complete)
+2. Update FEAT-118 to unblock Milestone 8
+3. Commit work
+
+**Then (Complete FEAT-118):**
+1. Repository visibility decision
+2. Final build with all 5 commands
+3. Final testing
+4. Framework README update
+5. Tag v1.0.0
+6. Marketplace submission
+
+---
+
+**Last Updated:** 2026-02-09 (Final session - FEAT-119 complete)
