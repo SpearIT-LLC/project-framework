@@ -218,14 +218,14 @@ Create a new work item interactively.
 ### Phase 4: Testing (30 minutes)
 
 **Test Scenarios:**
-- [ ] Create work item in framework project (structure exists)
-- [ ] Create work item in non-framework project (no structure)
-- [ ] Create work item with all types (FEAT/BUG/etc.)
-- [ ] Verify ID sequencing works correctly
-- [ ] Verify git add works
-- [ ] Test title sanitization (spaces, special chars)
-- [ ] Test with minimal input (TBD summary)
-- [ ] Verify file format is valid markdown
+- [x] Create work item in framework project (structure exists)
+- [x] Create work item in non-framework project (no structure)
+- [x] Create work item with all types (FEAT/BUG/etc.)
+- [x] Verify ID sequencing works correctly
+- [x] Verify git add works
+- [x] Test title sanitization (spaces, special chars)
+- [x] Test with minimal input (TBD summary)
+- [x] Verify file format is valid markdown
 
 **Expected Total Time:** ~2-3 hours
 
