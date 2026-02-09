@@ -5,7 +5,7 @@
 **Priority:** High
 **Version Impact:** MINOR
 **Created:** 2026-02-08
-**Updated:** 2026-02-08 (Scope refined to MVP)
+**Updated:** 2026-02-09 (Structure finalized, namespacing decided)
 **Theme:** Distribution & Integration
 **Target:** Ship within 7 days
 
@@ -71,34 +71,45 @@ Create a **Minimum Viable Plugin** ("Lightweight Edition") of the SpearIT Projec
 **Repository Structure:**
 ```
 project-framework/
-├── plugin/                     # 🆕 Plugin package (subdirectory in current repo)
-│   ├── .claude-plugin/
-│   │   └── plugin.json
-│   ├── commands/               # 4 commands only
-│   │   ├── fw-move.md
-│   │   ├── fw-next-id.md
-│   │   ├── fw-session-history.md
-│   │   └── fw-help.md
-│   ├── skills/                 # 3 condensed skills
-│   │   ├── kanban-workflow.md
-│   │   ├── work-items.md
-│   │   └── moving-items.md
-│   └── README.md
-└── tools/Build-Plugin.ps1      # 🆕 Creates distributable ZIP
+├── framework/                  # Framework source (existing)
+├── templates/                  # Project templates (existing)
+├── tools/
+│   └── Build-Plugin.ps1        # 🆕 Creates distributable ZIP
+├── distrib/
+│   └── plugin-light/           # 🆕 Build output folder
+│       └── spearit-framework-light-v1.0.0.zip
+└── plugins/                    # 🆕 Plugin development (matches Anthropic pattern)
+    └── spearit-framework-light/    # Lightweight edition plugin
+        ├── .claude-plugin/
+        │   └── plugin.json     # name: "spearit-framework-light"
+        ├── commands/           # 4 commands only
+        │   ├── fw-move.md
+        │   ├── fw-next-id.md
+        │   ├── fw-session-history.md
+        │   └── fw-help.md
+        ├── skills/             # 3 condensed skills
+        │   ├── kanban-workflow.md
+        │   ├── work-items.md
+        │   └── moving-items.md
+        └── README.md
 ```
 
+**Note:** Full framework plugin will be `plugins/spearit-framework/` (future)
+
 **Commands to Package (4 core commands - MVP):**
-- [ ] `/fw-move` - Move work items through workflow (CORE - most used)
-- [ ] `/fw-next-id` - Get next work item ID (CORE - most used)
-- [ ] `/fw-session-history` - Document work (DEPENDENCY - auto-called by fw-move)
-- [ ] `/fw-help` - Command reference (STANDARD - user expectation)
+- [ ] `/spearit-framework-light:move` - Move work items through workflow (CORE - most used)
+- [ ] `/spearit-framework-light:next-id` - Get next work item ID (CORE - most used)
+- [ ] `/spearit-framework-light:session-history` - Document work (DEPENDENCY - auto-called by move)
+- [ ] `/spearit-framework-light:help` - Command reference (STANDARD - user expectation)
+
+**Note:** Files keep `fw-` prefix for clarity (`fw-move.md`), but commands drop it (`:move`)
 
 **Deferred to v1.1+ (after user feedback):**
-- `/fw-status` - Project status summary
-- `/fw-wip` - Show current work in progress
-- `/fw-backlog` - Backlog review and prioritization
-- `/fw-topic-index` - Framework reference
-- `/fw-roadmap` - AI-guided roadmap creation
+- `/spearit-framework-light:status` - Project status summary
+- `/spearit-framework-light:wip` - Show current work in progress
+- `/spearit-framework-light:backlog` - Backlog review and prioritization
+- `/spearit-framework-light:topic-index` - Framework reference
+- `/spearit-framework-light:roadmap` - AI-guided roadmap creation
 
 **Skills Documentation (3 files, ~250 lines total):**
 - [ ] `kanban-workflow.md` - File-based Kanban concept (~100 lines)
@@ -106,16 +117,18 @@ project-framework/
 - [ ] `moving-items.md` - Workflow transitions and policies (~75 lines)
 
 **Plugin Metadata:**
-- [ ] Name: "SpearIT Project Framework"
+- [ ] Name: "spearit-framework-light" (internal name/namespace)
 - [ ] Display Name: "SpearIT Project Framework - Lightweight Edition"
 - [ ] Version: 1.0.0
 - [ ] Author: Gary Elliott / SpearIT Solutions
 - [ ] Keywords: kanban, project-management, workflow, solo-developer, small-team, file-based
+- [ ] Homepage: https://github.com/spearit-solutions/project-framework
 
 **Distribution:**
-- [ ] Build script creates `spearit-project-framework-v1.0.0.zip`
+- [ ] Build script creates `distrib/plugin-light/spearit-framework-light-v1.0.0.zip`
 - [ ] Submit to official Anthropic plugin directory only (defer third-party to v1.1+)
 - [ ] Update framework README with plugin installation option
+- [ ] Full framework plugin will use namespace: `spearit-framework` (future)
 
 ### Quality Standards
 
@@ -212,15 +225,16 @@ Perfect for: Solo developers, small teams, lightweight project tracking
 
 ### Day 1-2: Create Plugin Package
 
-**Create plugin directory:**
-- [ ] Create `plugin/` subdirectory in current repo
-- [ ] Create `.claude-plugin/` folder
-- [ ] Write `plugin.json` with metadata
-- [ ] Copy 4 commands from `.claude/commands/`:
+**Create plugin directory (matching Anthropic's pattern):**
+- [ ] Create `plugins/spearit-framework-light/` directory
+- [ ] Create `plugins/spearit-framework-light/.claude-plugin/` folder
+- [ ] Write `plugin.json` with metadata (name: "spearit-framework-light")
+- [ ] Copy 4 commands from `.claude/commands/` to `plugins/spearit-framework-light/commands/`:
   - fw-move.md
   - fw-next-id.md
   - fw-session-history.md
   - fw-help.md
+- [ ] Update command invocation to namespaced format without fw- prefix (e.g., `/spearit-framework-light:move`)
 - [ ] Test commands work from plugin location
 
 ### Day 3: Create Skills Documentation
@@ -243,9 +257,10 @@ Perfect for: Solo developers, small teams, lightweight project tracking
 
 **Build Script:**
 - [ ] Create `tools/Build-Plugin.ps1`
-- [ ] Packages `plugin/` directory into ZIP
-- [ ] Output: `dist/spearit-project-framework-v1.0.0.zip`
-- [ ] Verify structure matches plugin standards
+- [ ] Packages `plugins/spearit-framework-light/` directory into ZIP
+- [ ] Output: `distrib/plugin-light/spearit-framework-light-v1.0.0.zip`
+- [ ] Verify structure matches Anthropic plugin standards
+- [ ] Ensure ZIP contains the named plugin folder structure
 
 ### Day 5: Testing
 
@@ -276,16 +291,118 @@ Perfect for: Solo developers, small teams, lightweight project tracking
 
 ---
 
+## Implementation Checklist
+
+<!-- ⚠️ AI: Complete items in order. STOP at each [ ] and wait for approval. -->
+
+### Milestone 1: Research Anthropic Plugin Standards
+- [x] Research official Anthropic plugin structure and standards
+- [x] Document findings in `project-hub/research/anthropic-plugin-standards.md`
+- [x] Identify required files, structure, and metadata format
+- [x] Verify namespace and command naming conventions
+- [x] **STOP - Review findings before proceeding**
+
+### Milestone 2: Create Plugin Package Structure
+- [x] Create `plugins/spearit-framework-light/` directory
+- [x] Create `.claude-plugin/` subdirectory
+- [x] Write `plugin.json` with proper metadata matching Anthropic standards
+- [x] Create `commands/` and `skills/` directories
+- [x] Verify structure matches Anthropic pattern exactly
+- [x] **STOP - Review structure before copying commands**
+
+### Milestone 3: Adapt Commands for Standalone Operation
+
+**Approach:** Prototype each command, test standalone operation, iterate based on learnings.
+
+**Milestone 3a: Prototype fw-next-id (Standalone)**
+- [x] Remove PowerShell script dependency
+- [x] Update command to use AI-driven directory scanning
+- [x] Handle case: project-hub/ structure exists
+- [x] Handle case: No structure exists (start at 001 or offer setup)
+- [x] Test standalone operation
+- [x] **STOP - Review fw-next-id prototype**
+
+**Milestone 3b: Prototype fw-help (Standalone)**
+- [x] Verify command reads from plugin's commands/ directory
+- [x] Update references to be plugin-relative
+- [x] Test standalone operation
+- [x] **STOP - Review fw-help prototype**
+
+**Milestone 3c: Prototype fw-session-history (Standalone)**
+- [x] Remove framework template dependencies
+- [x] Update to generate from git history + conversation context
+- [x] Create self-contained markdown structure
+- [x] Test standalone operation
+- [x] **STOP - Review fw-session-history prototype**
+
+**Milestone 3d: Prototype fw-move (Standalone)**
+- [x] Remove framework.yaml and workflow-guide.md references
+- [x] Keep embedded transition rules and checklists
+- [x] Simplify validation (self-contained)
+- [x] Test standalone operation
+- [x] **STOP - Review fw-move prototype**
+
+### Milestone 4: Create Skills Documentation
+- [x] Extract and condense `skills/kanban-workflow.md` (~100 lines)
+- [x] Create `skills/work-items.md` (~75 lines)
+- [x] Create `skills/moving-items.md` (~75 lines)
+- [x] Verify total under 300 lines (Claude context limits)
+- [x] **STOP - Review skills documentation**
+
+### Milestone 5: Write README and Documentation
+- [x] Write `README.md` with installation instructions
+- [x] Add quick start guide (5-minute workflow)
+- [x] Add command reference with examples
+- [x] Add link to full framework
+- [x] Verify professional tone and completeness
+- [x] **STOP - Review README**
+
+### Milestone 6: Create Build Script
+- [x] Create `tools/Build-Plugin.ps1`
+- [x] Script packages plugin directory into ZIP
+- [x] Output to `distrib/plugin-light/spearit-framework-light-v1.0.0.zip`
+- [x] Verify ZIP structure matches Anthropic standards
+- [x] Test build process
+- [x] **STOP - Review build output**
+
+### Milestone 7: Testing
+- [x] Install plugin locally and test each command
+- [x] Verify skills load in Claude context
+- [x] Check for broken references/links
+- [x] Test in framework project (no conflicts)
+- [x] Test in non-framework project (graceful behavior)
+- [x] Fix any bugs found
+- [x] **STOP - Review test results**
+
+### Milestone 8: Package and Documentation
+- [ ] Run build script, create final ZIP
+- [ ] Final testing of packaged plugin
+- [ ] Decide on plugin license (MIT recommended)
+- [ ] Create LICENSE file in plugin directory
+- [ ] Make repository public (or document access plan)
+- [ ] Update framework README with plugin option
+- [ ] Tag version: v1.0.0
+- [ ] **STOP - Review before submission**
+
+### Milestone 9: Submit to Marketplace
+- [ ] Submit to Anthropic marketplace
+- [ ] Complete submission form
+- [ ] Document submission status
+- [ ] **COMPLETE**
+
+---
+
 ## Acceptance Criteria
 
 ### MVP Plugin Package (v1.0)
-- [ ] Plugin structure in `plugin/` subdirectory of current repo
-- [ ] Follows official Anthropic plugin standards
-- [ ] 4 core commands functional (fw-move, fw-next-id, fw-session-history, fw-help)
+- [ ] Plugin structure in `plugins/spearit-framework-light/` (matches Anthropic pattern)
+- [ ] Follows official Anthropic plugin standards exactly
+- [ ] 4 core commands functional with namespace (e.g., `/spearit-framework-light:move`)
 - [ ] 3 skills files (~250 lines total)
 - [ ] README.md professional and complete
-- [ ] Build script creates distributable ZIP
+- [ ] Build script creates `distrib/plugin-light/spearit-framework-light-v1.0.0.zip`
 - [ ] ZIP package successfully installs locally
+- [ ] No conflicts with local `.claude/commands/` (different namespace)
 
 ### Quality Bar Met
 - [ ] **Professional:** Clean README, proper metadata, examples for each command
@@ -346,14 +463,42 @@ Perfect for: Solo developers, small teams, lightweight project tracking
 - Plugin subdirectory in framework repo ✅ **CHOSEN**
 - Plugin replaces framework (massive restructure) ❌ (deferred)
 
-**Chosen:** `plugin/` subdirectory in current framework repository
+**Chosen:** `plugins/spearit-framework-light/` in current framework repository (matches Anthropic pattern)
 
 **Rationale:**
 - Single repo to maintain for MVP
+- Matches official Anthropic plugin development structure exactly
 - Build script packages plugin for distribution
 - Can extract to separate repo later if needed
-- Commands copied from `.claude/commands/` to `plugin/commands/`
+- Commands copied from `.claude/commands/` to `plugins/spearit-framework-light/commands/`
+- Supports multiple plugin editions side-by-side (light + full future)
 - Fast to ship, low risk
+
+### Decision 2a: Plugin Naming and Namespace
+
+**Options:**
+- Use short namespace like `fw` ❌ (conflicts with command prefix)
+- Use `spearit-framework` for both editions ❌ (can't distinguish light vs full)
+- Use descriptive namespaces per edition ✅ **CHOSEN**
+
+**Chosen:**
+- Lightweight edition: `spearit-framework-light` → `/spearit-framework-light:move`
+- Full edition (future): `spearit-framework` → `/spearit-framework:move`
+- Local commands (unchanged): `/fw-move` (no namespace, prefix needed)
+
+**Command name strategy:**
+- Files keep `fw-` prefix for clarity in filesystem (`fw-move.md`)
+- Commands drop prefix (namespace provides context: `:move` not `:fw-move`)
+- Follows Anthropic pattern (`/commit-commands:commit` not `:git-commit`)
+
+**Rationale:**
+- Clear distinction between plugin editions
+- No conflicts with local `.claude/commands/` (different namespace)
+- Enables dogfooding both plugin and local commands simultaneously
+- Full edition gets cleaner namespace (upgrade incentive)
+- Shorter commands improve UX (namespace already verbose)
+- Namespace provides sufficient context (no need for fw- prefix)
+- Branding: "SpearIT" is permitted (no Anthropic policy against branded plugins)
 
 ### Decision 3: Product Positioning - Plugin vs Framework
 
@@ -400,6 +545,87 @@ Perfect for: Solo developers, small teams, lightweight project tracking
 - Third-party marketplaces can follow if successful
 - Focus on single high-quality submission
 
+### Decision 6: Licensing and Repository Visibility
+
+**Status:** DEFERRED (decide before submission)
+
+**Repository Visibility:**
+- **Current state:** Private GitHub repository
+- **Required for submission:** Likely public (for transparency/trust model)
+- **Decision point:** Before Milestone 9 (submission)
+
+**Plugin License Options:**
+- **MIT License** ✅ (most common for Claude Code plugins, simple, permissive)
+- **Apache 2.0** (also popular, includes patent protection)
+- **Proprietary** ❌ (conflicts with transparency/trust model)
+
+**Considerations:**
+- Anthropic has no explicit license requirement for third-party plugins
+- Marketplace emphasizes transparency and user trust
+- Public repos with permissive licenses align with ecosystem norms
+- Plugin license can differ from framework license
+- Users must be able to inspect code before trusting/installing
+
+**Rationale for deferring:**
+- Focus on functionality first (Milestones 1-7)
+- License decision needed before submission (Milestone 9)
+- Repository visibility can be changed anytime
+- No technical blockers while private during development
+
+**Action items (added to Milestone 8 checklist):**
+- [ ] Decide on plugin license (MIT recommended)
+- [ ] Create LICENSE file in plugin directory
+- [ ] Make repository public (or document access plan)
+- [ ] Update plugin.json with license field (if required)
+
+### Decision 7: Standalone vs Framework-Dependent Model
+
+**Issue discovered:** Commands have framework dependencies (PowerShell scripts, framework.yaml policies, documentation references) that won't exist in plugin-only installation.
+
+**Options:**
+- **Gateway model** ❌ - Plugin requires full framework structure (not truly lightweight)
+- **Standalone model** ✅ **CHOSEN** - Plugin works independently in any project
+
+**Chosen:** Standalone model - Commands adapted to work without framework files
+
+**Key Adaptations:**
+
+**fw-next-id:**
+- ❌ Remove: PowerShell script dependency (`framework/tools/Get-NextWorkItemId.ps1`)
+- ✅ Use: AI-driven scanning of project-hub/work/ and history/ directories
+- Logic: Find highest existing ID, return next number
+- Graceful: If no structure exists, start at 001 or offer to create structure
+
+**fw-move:**
+- ❌ Remove: References to `framework.yaml` policies, `workflow-guide.md` documentation
+- ✅ Simplify: Embedded transition rules (keep matrix and checklists in command itself)
+- ✅ Keep: Git operations, validation logic, policy enforcement
+- Trade-off: No external policy file, but self-contained rules
+
+**fw-session-history:**
+- ❌ Remove: Framework template dependencies
+- ✅ Use: AI-generated content from git history and conversation context
+- Logic: Analyze recent commits, changes, and work completed
+- Format: Standard markdown structure, adaptable to any project
+
+**fw-help:**
+- ✅ Already standalone: Reads from plugin's own commands/ directory
+- No changes needed
+
+**Rationale:**
+- Plugin must work in any project (not just framework projects)
+- AI-driven approach leverages Claude's capabilities (no external scripts)
+- Self-contained commands with embedded rules/templates
+- True "lightweight" experience - install and use immediately
+- Performance trade-off acceptable for MVP (optimize later if needed)
+
+**Validation Strategy:**
+- Prototype each command one at a time (start with fw-next-id)
+- Test standalone operation before moving to next command
+- Iterate based on what works in practice
+
+**Status:** CHOSEN - Implementing standalone model with prototype-and-test approach
+
 ---
 
 ## Optional Sub-Tasks (For Hierarchical Tracking)
@@ -407,9 +633,9 @@ Perfect for: Solo developers, small teams, lightweight project tracking
 **Note:** Can track as flat FEAT-118 or break into sub-tasks if desired.
 
 **FEAT-118.1: Create Plugin Package** (Day 1-2)
-- Create `plugin/` directory structure
-- Write `plugin.json` metadata
-- Copy 4 core commands
+- Create `plugins/spearit-framework-light/` directory structure (matches Anthropic)
+- Write `plugin.json` metadata (name: "spearit-framework-light")
+- Copy 4 core commands with namespaced invocation
 - Test commands work from plugin location
 
 **FEAT-118.2: Create Skills** (Day 3)
@@ -589,6 +815,17 @@ The plugin maintains the framework's core philosophy:
 
 ## Changelog
 
+**2026-02-09 - Repository Structure and Namespacing Finalized:**
+- **Structure:** Changed from `plugin/` to `plugins/spearit-framework-light/` (matches Anthropic pattern exactly)
+- **Namespacing:** Commands use `/spearit-framework-light:move` format (dropped fw- prefix, namespace provides context)
+- **Command naming:** Files keep fw- prefix (`fw-move.md`), commands drop it (`:move`) - follows Anthropic pattern
+- **Future plugin:** Full framework will use `plugins/spearit-framework/` with namespace `spearit-framework`
+- **Build output:** Changed to `distrib/plugin-light/spearit-framework-light-v1.0.0.zip`
+- **Branding:** Confirmed "SpearIT" is permitted (no Anthropic policy against branded plugins)
+- **Design decisions:** Follow Anthropic's plugin development process exactly, structure bootstrapping (auto-create on first use), AI-generated templates from skills
+- **Dogfooding strategy:** Different namespaces allow testing plugin while developing local commands
+- **Updated:** Repository structure, command references, build paths, acceptance criteria
+
 **2026-02-08 - Scope Refined to MVP (Product Owner Role):**
 - **Strategic decision:** Plugin + Framework as complementary products
 - **MVP scope:** 4 commands only (fw-move, fw-next-id, fw-session-history, fw-help)
@@ -611,5 +848,5 @@ The plugin maintains the framework's core philosophy:
 
 ---
 
-**Last Updated:** 2026-02-08
+**Last Updated:** 2026-02-09
 **Status:** Backlog (Ready to move to doing/)
