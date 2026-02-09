@@ -23,6 +23,7 @@ Show this exact table:
 | Command | Description |
 |---------|-------------|
 | `/spearit-framework-light:help` | Show this help message |
+| `/spearit-framework-light:new` | Create a new work item interactively |
 | `/spearit-framework-light:move` | Move work item between folders with policy enforcement |
 | `/spearit-framework-light:next-id` | Get next available work item ID |
 | `/spearit-framework-light:session-history` | Generate or update session history |
@@ -47,16 +48,17 @@ Use a clean, readable format with horizontal rules and tables where appropriate.
 
 ## Help Content Source
 
-**IMPORTANT:** This command operates ONLY on the 4 commands included in this plugin.
+**IMPORTANT:** This command operates ONLY on the 5 commands included in this plugin.
 
 **Where to find command files:**
 - Read from: `plugins/spearit-framework-light/commands/` directory
-- Available files: `help.md`, `move.md`, `next-id.md`, `session-history.md`
+- Available files: `help.md`, `new.md`, `move.md`, `next-id.md`, `session-history.md`
 - Do NOT read from: `.claude/commands/` or any other location
 
 **Command list (no arguments):**
-When invoked with no arguments, show the table above listing these 4 commands:
+When invoked with no arguments, show the table above listing these 5 commands:
 - `/spearit-framework-light:help`
+- `/spearit-framework-light:new`
 - `/spearit-framework-light:move`
 - `/spearit-framework-light:next-id`
 - `/spearit-framework-light:session-history`

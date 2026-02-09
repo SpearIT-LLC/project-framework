@@ -40,32 +40,19 @@ Perfect for solo developers who want simple, transparent project tracking that w
 
 ### 5-Minute Workflow
 
-**1. Get next work item ID:**
+**1. Create a work item:**
 ```
-/spearit-framework-light:next-id
+/spearit-framework-light:new
 ```
-Returns: `FEAT-001`
+Follow the interactive prompts:
+- Type: `FEAT`
+- Title: `Add user login`
+- Priority: `High`
+- Summary: `Add basic username/password login functionality`
 
-**2. Create a work item:**
-Create `project-hub/work/backlog/FEAT-001-add-login.md`:
-```markdown
-# Feature: Add User Login
+Creates: `project-hub/work/backlog/FEAT-001-add-user-login.md`
 
-**ID:** FEAT-001
-**Type:** Feature
-**Priority:** High
-**Created:** 2026-02-09
-
-## Summary
-Add basic username/password login functionality.
-
-## Acceptance Criteria
-- [ ] Users can log in with username/password
-- [ ] Invalid credentials show error message
-- [ ] Successful login redirects to dashboard
-```
-
-**3. Move through workflow:**
+**2. Move through workflow:**
 ```
 /spearit-framework-light:move FEAT-001 todo      # Commit to work
 /spearit-framework-light:move FEAT-001 doing     # Start work
@@ -73,7 +60,7 @@ Add basic username/password login functionality.
 /spearit-framework-light:move FEAT-001 done      # Complete work
 ```
 
-**4. Track your session:**
+**3. Track your session:**
 ```
 /spearit-framework-light:session-history "FEAT-001 implementation"
 ```
@@ -84,10 +71,11 @@ That's it! You now have a complete audit trail of your work in git.
 
 ## Features
 
-### 4 Core Commands
+### 5 Core Commands
 
 | Command | Purpose |
 |---------|---------|
+| `/spearit-framework-light:new` | Create a new work item interactively |
 | `/spearit-framework-light:move` | Move work items through workflow with policy enforcement |
 | `/spearit-framework-light:next-id` | Get next available work item ID |
 | `/spearit-framework-light:session-history` | Generate session history from git and conversation |
@@ -113,6 +101,44 @@ Claude will understand your workflow and help enforce best practices automatical
 ---
 
 ## Commands Reference
+
+### `/spearit-framework-light:new`
+
+Create a new work item interactively with guided prompts.
+
+**Syntax:**
+```
+/spearit-framework-light:new
+```
+
+**Interactive Prompts:**
+- **Type:** FEAT, BUG, CHORE, TASK, DOCS, REFACTOR, DECISION, TECH
+- **Title:** Short description (auto-converted to kebab-case filename)
+- **Priority:** High, Medium, Low
+- **Summary:** Brief description (optional, can use "TBD")
+
+**Examples:**
+```
+/spearit-framework-light:new
+→ Type: FEAT
+→ Title: Add dark mode
+→ Priority: High
+→ Summary: Implement dark mode theme with toggle
+
+✓ Created: project-hub/work/backlog/FEAT-043-add-dark-mode.md
+```
+
+**Creates file in:** `project-hub/work/backlog/` (all new items start in backlog)
+
+**Auto-generates:**
+- Next available ID (scans existing work items)
+- Kebab-case filename from title
+- Work item template with frontmatter
+- Git adds file automatically
+
+**Graceful:** Creates `project-hub/work/backlog/` directory if it doesn't exist.
+
+---
 
 ### `/spearit-framework-light:move`
 
@@ -306,7 +332,7 @@ This plugin embodies:
 This plugin is the **Lightweight Edition** - a subset of the comprehensive SpearIT Project Framework.
 
 **What's included in this plugin:**
-- 4 core workflow commands
+- 5 core workflow commands (create, move, track, reference)
 - Works in any git repository
 - Install and use immediately
 - Perfect for existing projects
