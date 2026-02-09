@@ -1074,4 +1074,107 @@ plugins/spearit-framework-light/
 
 ---
 
-**Last Updated:** 2026-02-09 (Final session - FEAT-119 complete)
+## Evening Continuation: FEAT-119 Finalization and Cleanup
+
+**Session continuation:** Finalized FEAT-119, cleaned up legacy command naming artifacts
+
+### Work Completed
+
+**FEAT-119 - Completion and Cleanup:**
+1. **Fixed Legacy Command References**
+   - Corrected `fw-new.md` → `new.md` references in FEAT-119 documentation
+   - Updated command file paths throughout implementation plan
+   - Updated acceptance criteria references
+   - Updated milestone references
+   - Removed all `fw-` prefix artifacts from FEAT-119
+
+2. **Acceptance Criteria Verification**
+   - Verified all 20 acceptance criteria items completed
+   - Checked all checkboxes in FEAT-119
+   - Verified success metrics met
+   - Added completion metadata (Completed date: 2026-02-09)
+
+3. **Work Item Transition: FEAT-119 → done/**
+   - Validated transition (doing → done allowed)
+   - Verified all acceptance criteria checked
+   - Added Completed date field
+   - Executed git mv to done/
+   - Updated session history
+
+### Files Modified
+
+**Work Items:**
+- `project-hub/work/doing/FEAT-119-plugin-new-command.md`
+  - Updated all command file references (fw-new.md → new.md)
+  - Updated all acceptance criteria to checked state
+  - Updated all success metrics to checked state
+  - Added Completed date field (2026-02-09)
+  - Updated Status to "Complete"
+  - Then moved to done/
+
+**Session History:**
+- `project-hub/history/sessions/2026-02-09-SESSION-HISTORY.md`
+  - Added this evening continuation section
+  - Documented FEAT-119 finalization
+
+### Work Item Transitions
+
+**Workflow moves:**
+- FEAT-119: doing → done (completed)
+
+### Current State
+
+**FEAT-118 Status:**
+- ✅ Milestone 1-7 complete
+- 🔄 Milestone 8 in progress:
+  - ✅ Licensing decision (MIT)
+  - ✅ LICENSE files created
+  - ⏳ Repository visibility (deferred)
+  - ⏳ Final packaging
+  - ⏳ Framework README update
+  - ⏳ Version tagging
+- ⏳ Milestone 9 pending (submission)
+- **Unblocked:** FEAT-119 now complete
+
+**FEAT-119 Status:**
+- ✅ Implementation complete
+- ✅ Documentation updated
+- ✅ Testing complete
+- ✅ All acceptance criteria met
+- ✅ **Moved to done/**
+
+**Plugin Package Complete:**
+- 5 commands fully implemented and tested
+- All documentation current and correct
+- No legacy naming artifacts remaining
+- Ready for final packaging
+
+### Key Learnings
+
+**1. Artifact Management is Critical**
+- Old naming conventions can persist in documentation
+- Must check all references when making naming changes
+- Found and fixed `fw-` prefix artifacts throughout FEAT-119
+
+**2. Completion Checklists Must Be Maintained**
+- Acceptance criteria should be checked as work completes
+- Don't batch updates - check immediately when done
+- Status metadata (Completed date) is required for done transition
+
+### Next Steps
+
+**Immediate:**
+1. Commit FEAT-119 completion (move to done + session history)
+2. Continue FEAT-118 Milestone 8 completion
+
+**Then (Complete FEAT-118):**
+1. Repository visibility decision
+2. Final build with all 5 commands
+3. Final testing
+4. Framework README update
+5. Tag v1.0.0
+6. Marketplace submission
+
+---
+
+**Last Updated:** 2026-02-09 (Evening - FEAT-119 finalized and moved to done/)

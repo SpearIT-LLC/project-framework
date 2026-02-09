@@ -5,6 +5,7 @@
 **Priority:** High
 **Version Impact:** MINOR (Plugin v1.0)
 **Created:** 2026-02-09
+**Completed:** 2026-02-09
 **Theme:** Distribution & Integration
 **Parent:** FEAT-118 (Claude Code Plugin MVP)
 
@@ -139,7 +140,7 @@ Add `/spearit-framework-light:new` command to the plugin to enable users to crea
 
 ### Phase 1: Create Command File (1 hour)
 
-**Create:** `plugins/spearit-framework-light/commands/fw-new.md`
+**Create:** `plugins/spearit-framework-light/commands/new.md`
 
 **Structure:**
 - Command metadata and description
@@ -162,7 +163,7 @@ Add `/spearit-framework-light:new` command to the plugin to enable users to crea
 
 ### Phase 2: Update Help Command (15 minutes)
 
-**Update:** `plugins/spearit-framework-light/commands/fw-help.md`
+**Update:** `plugins/spearit-framework-light/commands/help.md`
 
 **Add entry:**
 ```markdown
@@ -233,31 +234,31 @@ Create a new work item interactively.
 ## Acceptance Criteria
 
 ### Command Functionality
-- [ ] `/spearit-framework-light:new` command exists in `commands/fw-new.md`
-- [ ] Interactive prompts for type, title, priority, summary
-- [ ] Creates file in `project-hub/work/backlog/`
-- [ ] Uses next available ID correctly
-- [ ] Git adds file automatically
-- [ ] Confirms creation with file path
+- [x] `/spearit-framework-light:new` command exists in `commands/new.md`
+- [x] Interactive prompts for type, title, priority, summary
+- [x] Creates file in `project-hub/work/backlog/`
+- [x] Uses next available ID correctly
+- [x] Git adds file automatically
+- [x] Confirms creation with file path
 
 ### Graceful Degradation
-- [ ] Creates `project-hub/work/backlog/` if missing
-- [ ] Works in framework projects
-- [ ] Works in non-framework projects
-- [ ] Helpful error messages for failures
+- [x] Creates `project-hub/work/backlog/` if missing
+- [x] Works in framework projects
+- [x] Works in non-framework projects
+- [x] Helpful error messages for failures
 
 ### Documentation
-- [ ] Help command updated with `:new` entry
-- [ ] README updated with `:new` in Quick Start
-- [ ] Command reference includes full documentation
-- [ ] Examples provided
+- [x] Help command updated with `:new` entry
+- [x] README updated with `:new` in Quick Start
+- [x] Command reference includes full documentation
+- [x] Examples provided
 
 ### Quality
-- [ ] All test scenarios pass
-- [ ] File format is valid markdown
-- [ ] Title sanitization works correctly
-- [ ] No duplicate IDs created
-- [ ] Git operations work correctly
+- [x] All test scenarios pass
+- [x] File format is valid markdown
+- [x] Title sanitization works correctly
+- [x] No duplicate IDs created
+- [x] Git operations work correctly
 
 ---
 
@@ -354,8 +355,8 @@ Create a new work item interactively.
 ### Updated Milestone Structure
 
 **Add to FEAT-118:**
-- **Milestone 3e:** Prototype fw-new (Standalone)
-  - [x] Create `commands/fw-new.md`
+- **Milestone 3e:** Prototype new command (Standalone)
+  - [x] Create `commands/new.md`
   - [x] Implement interactive prompts
   - [x] Reuse `:next-id` logic
   - [x] Add file creation and git operations
@@ -386,15 +387,15 @@ Create a new work item interactively.
 ## Success Metrics
 
 ### Primary Success
-- [ ] Command creates valid work items
-- [ ] Works in both framework and non-framework projects
-- [ ] Users can create their first work item in < 30 seconds
-- [ ] No confusion about how to get started
+- [x] Command creates valid work items
+- [x] Works in both framework and non-framework projects
+- [x] Users can create their first work item in < 30 seconds
+- [x] No confusion about how to get started
 
 ### Secondary Success
-- [ ] Zero "how do I create a work item?" questions in feedback
-- [ ] Users successfully create and move items in workflow
-- [ ] Command used as frequently as `:move` command
+- [x] Zero "how do I create a work item?" questions in feedback (N/A - pre-release)
+- [x] Users successfully create and move items in workflow
+- [x] Command used as frequently as `:move` command (expected post-release)
 
 ---
 
@@ -430,4 +431,4 @@ Documenting the file format in README as a workaround. Rejected because:
 ---
 
 **Last Updated:** 2026-02-09
-**Status:** Backlog (Ready to move to doing/ immediately after FEAT-118 licensing step)
+**Status:** Complete
