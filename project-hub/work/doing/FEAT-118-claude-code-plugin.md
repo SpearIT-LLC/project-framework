@@ -745,6 +745,9 @@ Perfect for: Solo developers, small teams, lightweight project tracking
 
 **Parent Feature:** None (standalone feature)
 
+**Child Features:**
+- FEAT-119 (Plugin "new" Command) - Critical addition for complete workflow
+
 **Related Features:**
 - None directly, but supports all framework features by improving distribution
 
@@ -753,6 +756,9 @@ Perfect for: Solo developers, small teams, lightweight project tracking
 
 **Blocks:**
 - None (optional distribution channel)
+
+**Blocked By:**
+- FEAT-119 must be completed before final packaging (Milestone 8)
 
 **Enables:**
 - Broader framework adoption
@@ -814,6 +820,15 @@ The plugin maintains the framework's core philosophy:
 ---
 
 ## Changelog
+
+**2026-02-09 - Critical Gap Identified, FEAT-119 Created:**
+- **Gap identified:** No command to create work items (users get stuck)
+- **Solution:** Created FEAT-119 for `/spearit-framework-light:new` command
+- **Impact:** MVP scope updated from 4 commands to 5 commands
+- **Timeline:** +1 day (7 days → 8 days)
+- **Rationale:** Complete workflow needed (create → move → track)
+- **Status:** FEAT-119 blocked by FEAT-118 Milestone 8 (licensing step)
+- **Implementation order:** Finish licensing → implement FEAT-119 → final packaging
 
 **2026-02-09 - Repository Structure and Namespacing Finalized:**
 - **Structure:** Changed from `plugin/` to `plugins/spearit-framework-light/` (matches Anthropic pattern exactly)
