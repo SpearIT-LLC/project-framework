@@ -4,5 +4,6 @@
   "description": "File-based Kanban workflow for solo developers",
   "author": {
     "name": "Gary Elliott / SpearIT Solutions"
-  }
+  },
+  "license": "MIT"
 }
