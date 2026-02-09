@@ -377,8 +377,8 @@ Perfect for: Solo developers, small teams, lightweight project tracking
 ### Milestone 8: Package and Documentation
 - [ ] Run build script, create final ZIP
 - [ ] Final testing of packaged plugin
-- [ ] Decide on plugin license (MIT recommended)
-- [ ] Create LICENSE file in plugin directory
+- [x] Decide on plugin license (MIT recommended)
+- [x] Create LICENSE file in plugin directory
 - [ ] Make repository public (or document access plan)
 - [ ] Update framework README with plugin option
 - [ ] Tag version: v1.0.0
@@ -820,6 +820,13 @@ The plugin maintains the framework's core philosophy:
 ---
 
 ## Changelog
+
+**2026-02-09 - Licensing Decision: MIT License:**
+- **Decision:** Changed from GPL-3.0 to MIT license
+- **Scope:** Both framework and plugin now MIT licensed
+- **Rationale:** Attribution protection + maximum adoption + ecosystem fit
+- **Files updated:** Root LICENSE, plugin LICENSE, plugin.json
+- **Status:** Milestone 8 licensing steps complete, ready for FEAT-119
 
 **2026-02-09 - Critical Gap Identified, FEAT-119 Created:**
 - **Gap identified:** No command to create work items (users get stuck)
