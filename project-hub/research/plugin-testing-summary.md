@@ -71,8 +71,8 @@ claude --plugin-dir C:\temp\test\spearit-framework-light
 
 ### Documentation
 - **`plugins/TESTING.md`** (root) - Quick reference guide
-- **`project-hub/research/claude-plugin-best-practices.md`** - Updated with full testing workflow section
-- **`project-hub/research/anthropic-plugin-standards.md`** - Added testing cross-references
+- **`project-hub/research/plugin-best-practices.md`** - Updated with full testing workflow section
+- **`project-hub/research/plugin-anthropic-standards.md`** - Added testing cross-references
 - **`project-hub/research/plugin-testing-summary.md`** (this file)
 
 ---
@@ -227,8 +227,8 @@ git tag -a v1.0.0 -m "Release v1.0.0"
 ## Resources
 
 - **Quick reference:** `/plugins/TESTING.md`
-- **Full workflow:** `/project-hub/research/claude-plugin-best-practices.md#plugin-testing-workflow`
-- **Standards:** `/project-hub/research/anthropic-plugin-standards.md`
+- **Full workflow:** `/project-hub/research/plugin-best-practices.md#plugin-testing-workflow`
+- **Standards:** `/project-hub/research/plugin-anthropic-standards.md`
 - **Helper script:** `/tools/Install-PluginToCache.ps1`
 - **Build script:** `/tools/Build-Plugin.ps1`
 

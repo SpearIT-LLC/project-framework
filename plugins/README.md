@@ -50,8 +50,8 @@ claude --plugin-dir ./plugins/spearit-framework-light
 - **[TESTING.md](TESTING.md)** - Testing workflow, helper scripts, common issues
 
 ### Detailed Guides
-- **[../project-hub/research/anthropic-plugin-standards.md](../project-hub/research/anthropic-plugin-standards.md)** - Official Anthropic plugin structure and requirements
-- **[../project-hub/research/claude-plugin-best-practices.md](../project-hub/research/claude-plugin-best-practices.md)** - Lessons learned, performance optimization, testing strategies
+- **[../project-hub/research/plugin-anthropic-standards.md](../project-hub/research/plugin-anthropic-standards.md)** - Official Anthropic plugin structure and requirements
+- **[../project-hub/research/plugin-best-practices.md](../project-hub/research/plugin-best-practices.md)** - Lessons learned, performance optimization, testing strategies
 - **[../project-hub/research/plugin-testing-summary.md](../project-hub/research/plugin-testing-summary.md)** - Implementation summary and key findings
 
 ### Helper Scripts

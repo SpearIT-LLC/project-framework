@@ -297,7 +297,7 @@ Perfect for: Solo developers, small teams, lightweight project tracking
 
 ### Milestone 1: Research Anthropic Plugin Standards
 - [x] Research official Anthropic plugin structure and standards
-- [x] Document findings in `project-hub/research/anthropic-plugin-standards.md`
+- [x] Document findings in `project-hub/research/plugin-anthropic-standards.md`
 - [x] Identify required files, structure, and metadata format
 - [x] Verify namespace and command naming conventions
 - [x] **STOP - Review findings before proceeding**

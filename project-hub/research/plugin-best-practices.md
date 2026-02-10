@@ -604,4 +604,4 @@ This document will grow as we learn more. Areas to explore:
 
 **Started:** 2026-02-09 (during FEAT-118 testing)
 **Status:** Active - Growing with experience
-**Related:** See `anthropic-plugin-standards.md` for official documentation
+**Related:** See `plugin-anthropic-standards.md` for official documentation

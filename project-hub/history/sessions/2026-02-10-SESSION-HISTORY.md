@@ -339,5 +339,96 @@ project-hub/research/
 
 ---
 
+## Afternoon Session: Documentation Organization
+
+**Continuation:** Resumed work to improve plugin documentation discoverability
+
+### Work Completed
+
+**Documentation Naming Standardization:**
+- Renamed research files with common `plugin-` prefix for better grouping
+- Applied consistent naming convention across all plugin documentation
+
+**File Renames:**
+1. `anthropic-plugin-standards.md` → `plugin-anthropic-standards.md`
+2. `claude-plugin-best-practices.md` → `plugin-best-practices.md`
+3. `plugin-testing-summary.md` (unchanged - already had prefix)
+
+**Cross-Reference Updates:**
+Updated links in 6 files to reflect new names:
+- `plugins/README.md` - Documentation links section
+- `plugins/TESTING.md` - Resources section
+- `plugin-anthropic-standards.md` - Internal cross-references (2 locations)
+- `plugin-best-practices.md` - Related documentation reference
+- `plugin-testing-summary.md` - Resource links (4 locations)
+- `FEAT-118-claude-code-plugin.md` - Milestone 1 reference
+
+**Decision Preserved:**
+- Session history files intentionally left unchanged (historical records)
+- Old references preserved in `2026-02-09-SESSION-HISTORY.md` and `2026-02-10-SESSION-HISTORY.md`
+- Shows evolution of naming convention over time
+
+### Rationale
+
+**Problem:** Three plugin-related research docs had inconsistent naming:
+- `anthropic-plugin-standards.md`
+- `claude-plugin-best-practices.md`
+- `plugin-testing-summary.md`
+
+Files scattered alphabetically in directory listings instead of grouping together.
+
+**Solution:** Common `plugin-` prefix creates visual grouping
+- All three files now sort together
+- Easier to find related documentation
+- Consistent with framework naming patterns
+- Maintains descriptive suffixes for differentiation
+
+**Result:**
+```
+project-hub/research/
+├── plugin-anthropic-standards.md  ← grouped
+├── plugin-best-practices.md       ← grouped
+└── plugin-testing-summary.md      ← grouped
+```
+
+### Files Modified (Afternoon)
+
+**Research Documentation:**
+- `plugin-anthropic-standards.md` (renamed + 2 internal links updated)
+- `plugin-best-practices.md` (renamed + 1 internal link updated)
+- `plugin-testing-summary.md` (4 resource links updated)
+
+**Plugin Documentation:**
+- `plugins/README.md` (2 documentation links updated)
+- `plugins/TESTING.md` (2 resource links updated)
+
+**Work Item:**
+- `project-hub/work/doing/FEAT-118-claude-code-plugin.md` (Milestone 1 reference updated)
+
+### Current State (End of Day)
+
+**Plugin Documentation Structure:**
+```
+plugins/
+├── README.md                        # Overview with links to research docs
+├── TESTING.md                       # Quick reference with links to research docs
+└── spearit-framework-light/         # Plugin source
+
+project-hub/research/
+├── plugin-anthropic-standards.md    # Official Anthropic standards ← renamed
+├── plugin-best-practices.md         # Lessons learned & patterns ← renamed
+└── plugin-testing-summary.md        # Testing implementation summary
+```
+
+**Cross-Reference Status:**
+- ✅ All active documentation links updated
+- ✅ Session history preserved with original names (intentional)
+- ✅ Git tracks renames correctly (RM status)
+- ✅ No broken links remain
+
+**Ready for commit:** Documentation naming standardization complete
+
+---
+
 **Last Updated:** 2026-02-10
-**Status:** Session complete - Testing infrastructure ready for use
+**Status:** Session complete - Documentation organized and testing infrastructure ready

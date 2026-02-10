@@ -270,7 +270,7 @@ spearit-framework-light/
 
 ## 14. Testing Recommendations
 
-**⚠️ IMPORTANT:** For comprehensive testing workflow, see [claude-plugin-best-practices.md](./claude-plugin-best-practices.md#plugin-testing-workflow)
+**⚠️ IMPORTANT:** For comprehensive testing workflow, see [plugin-best-practices.md](./plugin-best-practices.md#plugin-testing-workflow)
 
 **Before submission:**
 1. ✅ Install plugin locally (test installation process)
@@ -396,7 +396,7 @@ spearit-framework-light/
 
 ## Additional Resources
 
-**Best Practices:** See `claude-plugin-best-practices.md` for lessons learned during plugin development, including:
+**Best Practices:** See `plugin-best-practices.md` for lessons learned during plugin development, including:
 - Command performance optimization
 - Command isolation strategies
 - Schema validation approaches

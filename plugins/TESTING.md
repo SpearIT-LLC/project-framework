@@ -188,8 +188,8 @@ claude --plugin-dir ./plugins/spearit-framework-light --debug
 ## Resources
 
 - **Plugin overview:** [README.md](README.md)
-- **Detailed workflow:** [../project-hub/research/claude-plugin-best-practices.md](../project-hub/research/claude-plugin-best-practices.md#plugin-testing-workflow)
-- **Plugin standards:** [../project-hub/research/anthropic-plugin-standards.md](../project-hub/research/anthropic-plugin-standards.md)
+- **Detailed workflow:** [../project-hub/research/plugin-best-practices.md](../project-hub/research/plugin-best-practices.md#plugin-testing-workflow)
+- **Plugin standards:** [../project-hub/research/plugin-anthropic-standards.md](../project-hub/research/plugin-anthropic-standards.md)
 - **Build process:** [../tools/Build-Plugin.ps1](../tools/Build-Plugin.ps1)
 
 ---
