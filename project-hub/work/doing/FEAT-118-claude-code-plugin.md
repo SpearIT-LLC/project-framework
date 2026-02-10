@@ -5,9 +5,11 @@
 **Priority:** High
 **Version Impact:** MINOR
 **Created:** 2026-02-08
-**Updated:** 2026-02-09 (Structure finalized, namespacing decided)
+**Updated:** 2026-02-10 (Paused for testing infrastructure refactor)
+**Status:** ⏸️ PAUSED - Blocked by FEAT-120
+**Blocked By:** FEAT-120 (Plugin testing infrastructure refactor)
 **Theme:** Distribution & Integration
-**Target:** Ship within 7 days
+**Target:** Ship within 7 days (still on track)
 
 ---
 
@@ -820,6 +822,18 @@ The plugin maintains the framework's core philosophy:
 ---
 
 ## Changelog
+
+**2026-02-10 - PAUSED: Testing Infrastructure Refactor (FEAT-120):**
+- **Status:** FEAT-118 paused at Milestone 7 (testing complete)
+- **Reason:** Research discovered better testing approach (local marketplace vs cache manipulation)
+- **What happened:** Built cache scripts (Install/Uninstall-PluginFromCache.ps1), then discovered Anthropic officially supports local marketplaces
+- **Decision:** Pivot to official Anthropic pattern before final packaging
+- **New work item:** FEAT-120 created to implement local marketplace approach
+- **Impact:** Replaces cache scripts (~800 lines) with single Publish-ToLocalMarketplace.ps1 (~200 lines)
+- **Benefits:** Uses official plugin system, tests real installation flow, simpler maintenance
+- **Timeline:** Still on track (ahead of schedule, time for quality improvement)
+- **Next step:** Complete FEAT-120, then resume FEAT-118 Milestone 8 (packaging)
+- **Reference:** See FEAT-120 for detailed implementation plan
 
 **2026-02-09 - Licensing Decision: MIT License:**
 - **Decision:** Changed from GPL-3.0 to MIT license

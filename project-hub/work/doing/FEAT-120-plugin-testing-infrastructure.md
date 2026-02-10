@@ -1,0 +1,350 @@
+# Feature: Plugin Testing Infrastructure - Local Marketplace Approach
+
+**ID:** FEAT-120
+**Type:** Feature (Infrastructure)
+**Priority:** High
+**Version Impact:** PATCH
+**Created:** 2026-02-10
+**Theme:** Developer Experience
+**Blocks:** FEAT-118 (Milestone 8)
+**Target:** Complete before FEAT-118 final packaging
+
+---
+
+## Summary
+
+Refactor plugin testing infrastructure to use Anthropic's official local marketplace pattern instead of manual cache manipulation. This aligns our testing workflow with Anthropic's documented best practices and provides better testing of the actual user installation experience.
+
+**Key Change:** Replace `Install-PluginToCache.ps1` / `Uninstall-PluginFromCache.ps1` with `Publish-ToLocalMarketplace.ps1` that uses `/plugin install` workflow.
+
+---
+
+## Problem Statement
+
+### Current Approach (Cache Manipulation)
+
+**What we built (Feb 10):**
+- `Install-PluginToCache.ps1` - Manually copies plugin to `~/.claude/plugins/cache/`
+- `Uninstall-PluginFromCache.ps1` - Manually removes plugin from cache
+
+**Problems:**
+1. **Bypasses official plugin system** - Direct cache manipulation, not using `/plugin install`
+2. **Doesn't test real installation flow** - Users will use `/plugin install`, we should too
+3. **No scope management** - Cache has no concept of user/project/local scope
+4. **Non-standard approach** - Anthropic doesn't document this method
+5. **Brittle** - Depends on cache implementation details that could change
+
+### Discovered Better Approach (Feb 10 Research)
+
+**Anthropic officially supports local marketplaces:**
+
+From [official docs](https://code.claude.com/docs/en/discover-plugins#add-from-local-paths):
+```shell
+/plugin marketplace add ./my-marketplace
+/plugin install test-plugin@marketplace-name
+```
+
+**This is THE documented way to test plugins locally.**
+
+---
+
+## Research Findings
+
+### Key Discovery: Local Marketplace Support
+
+**Source:** https://code.claude.com/docs/en/plugin-marketplaces
+
+Anthropic's plugin system supports **four marketplace sources:**
+1. GitHub repositories (`owner/repo`)
+2. Git URLs (GitLab, Bitbucket, self-hosted)
+3. **Local paths** (`./my-marketplace`) ← THIS!
+4. Remote URLs (`https://example.com/marketplace.json`)
+
+### How Local Marketplaces Work
+
+**One-time setup:**
+1. Create `plugins/.claude-plugin/marketplace.json` (catalog)
+2. Add marketplace: `/plugin marketplace add ./plugins`
+3. Install plugin: `/plugin install plugin-name@plugins --scope local`
+
+**After changes:**
+1. Update marketplace: `/plugin marketplace update plugins`
+2. Restart Claude Code (auto-update picks up changes)
+
+**Benefits:**
+- ✅ Uses official plugin system
+- ✅ Tests actual installation UX
+- ✅ Proper scope management (user/project/local)
+- ✅ Version tracking
+- ✅ Can enable auto-update for dev
+- ✅ Works in both CLI and VSCode
+- ✅ Documented and supported by Anthropic
+
+---
+
+## Proposed Solution
+
+### New Script: `Publish-ToLocalMarketplace.ps1`
+
+**Purpose:** Generate/update ephemeral local marketplace for testing
+
+**Features:**
+- Creates `plugins/.claude-plugin/marketplace.json`
+- Reads plugin metadata from existing `plugin.json` (no version bumping)
+- `-Clean` flag to delete and recreate marketplace
+- `-Build` flag to run Build-Plugin.ps1 first
+- Clear instructions for first-time setup and iteration
+
+**Marketplace is ephemeral:**
+- Disposable testing infrastructure
+- Can be deleted/recreated anytime
+- Not tracked in git (add to .gitignore)
+- No version complexity during development
+
+### Remove Cache Scripts
+
+**Delete:**
+- `tools/Install-PluginToCache.ps1` (570 lines)
+- `tools/Uninstall-PluginFromCache.ps1` (228 lines)
+
+**Rationale:**
+- Local marketplace provides same functionality via official path
+- Simpler mental model (one way to do things)
+- Less code to maintain
+- Better documentation
+
+---
+
+## Implementation Plan
+
+<!-- ⚠️ AI: Complete items in order. STOP at each [ ] and wait for approval. -->
+
+### Milestone 1: Research and Documentation (COMPLETE)
+- [x] Research Anthropic's local marketplace support
+- [x] Document findings in session history
+- [x] Compare cache manipulation vs local marketplace approach
+- [x] Create FEAT-120 work item with comprehensive plan
+- [x] **STOP - Review research and plan**
+
+### Milestone 2: Create Publish-ToLocalMarketplace.ps1
+- [ ] Create script skeleton with parameter definitions
+- [ ] Implement marketplace.json generation logic
+- [ ] Add `-Clean` flag for marketplace reset
+- [ ] Add `-Build` flag integration
+- [ ] Implement plugin auto-detection from plugins/ directory
+- [ ] Add validation (plugin.json exists, required fields present)
+- [ ] Add clear status messages and next-step instructions
+- [ ] Test script creates valid marketplace.json
+- [ ] **STOP - Review script implementation**
+
+### Milestone 3: Update Documentation
+- [ ] Update `plugins/TESTING.md` with local marketplace workflow
+- [ ] Update `plugins/README.md` references
+- [ ] Update `project-hub/research/plugin-best-practices.md`
+- [ ] Update `project-hub/research/plugin-testing-summary.md`
+- [ ] Create migration guide (old → new workflow)
+- [ ] **STOP - Review documentation updates**
+
+### Milestone 4: Remove Cache Scripts
+- [ ] Remove `tools/Install-PluginToCache.ps1`
+- [ ] Remove `tools/Uninstall-PluginFromCache.ps1`
+- [ ] Update references in documentation
+- [ ] Update git history (commit with clear message)
+- [ ] **STOP - Review cleanup**
+
+### Milestone 5: Add .gitignore Entry
+- [ ] Add `plugins/.claude-plugin/` to .gitignore
+- [ ] Document why (ephemeral testing infrastructure)
+- [ ] Verify marketplace.json not tracked
+- [ ] **STOP - Review gitignore changes**
+
+### Milestone 6: End-to-End Testing
+- [ ] Clean test: Delete any existing marketplace/cache
+- [ ] Run `Publish-ToLocalMarketplace.ps1`
+- [ ] Verify marketplace.json created correctly
+- [ ] Test in Claude Code: `/plugin marketplace add ./plugins`
+- [ ] Test install: `/plugin install spearit-framework-light@plugins --scope local`
+- [ ] Test all commands work
+- [ ] Make changes to plugin, test update workflow
+- [ ] Test `-Clean` flag
+- [ ] Test `-Build` flag
+- [ ] Document any issues found
+- [ ] **STOP - Review test results**
+
+### Milestone 7: Final Documentation
+- [ ] Update session history with outcomes
+- [ ] Document lessons learned
+- [ ] Update FEAT-118 dependencies (unblock Milestone 8)
+- [ ] Mark FEAT-120 complete
+- [ ] **COMPLETE**
+
+---
+
+## Acceptance Criteria
+
+### Script Functionality
+- ✅ `Publish-ToLocalMarketplace.ps1` creates valid marketplace.json
+- ✅ Supports `-Clean` flag for marketplace reset
+- ✅ Supports `-Build` flag to build first
+- ✅ Auto-detects plugin from plugins/ directory
+- ✅ Shows clear next-step instructions
+- ✅ Handles errors gracefully
+
+### Documentation
+- ✅ TESTING.md updated with new workflow
+- ✅ Clear migration guide from old approach
+- ✅ Best practices doc reflects official pattern
+- ✅ All references to cache scripts removed
+
+### Testing
+- ✅ Marketplace creation works
+- ✅ Plugin installation via `/plugin install` works
+- ✅ Update workflow (marketplace update + restart) works
+- ✅ All plugin commands function correctly
+- ✅ Can reset marketplace with `-Clean`
+
+### Quality
+- ✅ Uses official Anthropic patterns
+- ✅ Simpler than previous approach
+- ✅ Well-documented rationale
+- ✅ Tests actual user installation flow
+
+---
+
+## Technical Details
+
+### Marketplace.json Structure
+
+```json
+{
+  "name": "plugins",
+  "owner": {
+    "name": "Development"
+  },
+  "plugins": [
+    {
+      "name": "spearit-framework-light",
+      "source": "./spearit-framework-light",
+      "description": "File-based Kanban workflow for solo developers",
+      "version": "1.0.0"
+    }
+  ]
+}
+```
+
+### Testing Workflow
+
+**One-time setup:**
+```powershell
+# 1. Create marketplace
+.\tools\Publish-ToLocalMarketplace.ps1
+
+# 2. Add to Claude Code
+/plugin marketplace add ./plugins
+
+# 3. Install plugin
+/plugin install spearit-framework-light@plugins --scope local
+```
+
+**After changes:**
+```powershell
+# Update marketplace (if metadata changed)
+.\tools\Publish-ToLocalMarketplace.ps1
+
+# Refresh in Claude Code
+/plugin marketplace update plugins
+
+# Restart Claude Code (picks up changes)
+```
+
+**Reset testing environment:**
+```powershell
+# Clean slate
+.\tools\Publish-ToLocalMarketplace.ps1 -Clean
+
+# Reinstall
+/plugin install spearit-framework-light@plugins --scope local
+```
+
+---
+
+## Dependencies
+
+### Blocks
+- **FEAT-118 Milestone 8** - Final packaging requires proper testing infrastructure
+
+### Related Work
+- Built on research from FEAT-118 Milestone 7 (testing phase)
+- Informed by `plugin-anthropic-standards.md` research
+- Leverages `Build-Plugin.ps1` (existing)
+
+---
+
+## Risks and Mitigation
+
+### Risk: Marketplace update doesn't pick up changes
+**Mitigation:** Document restart requirement clearly, test auto-update behavior
+
+### Risk: Users confused by new workflow
+**Mitigation:** Clear migration guide, examples in TESTING.md
+
+### Risk: Plugin.json missing required fields
+**Mitigation:** Script validates before generating marketplace.json
+
+---
+
+## Success Metrics
+
+### Quantitative
+- Lines of code reduced (570 + 228 = 798 → ~200 for new script)
+- Testing workflow steps (old: 3 scripts, new: 1 script + /plugin commands)
+- Documentation pages updated (4 files)
+
+### Qualitative
+- Uses official Anthropic patterns ✅
+- Easier to understand ✅
+- Tests actual installation flow ✅
+- Simpler maintenance ✅
+
+---
+
+## Alternatives Considered
+
+### Alternative 1: Keep Cache Scripts (Rejected)
+**Pros:** Already built, working
+**Cons:** Non-standard, doesn't test real flow, more complex
+**Decision:** Reject - local marketplace is strictly better
+
+### Alternative 2: Hybrid Approach (Rejected)
+**Pros:** Offers both methods
+**Cons:** Confusing, more documentation, unclear which to use
+**Decision:** Reject - one clear path is better
+
+### Alternative 3: CLI Testing Only (Rejected)
+**Pros:** Simple (claude --plugin-dir)
+**Cons:** Doesn't test VSCode, misses installation UX issues
+**Decision:** Reject - need VSCode testing
+
+---
+
+## Notes
+
+### Timeline
+- **Created:** 2026-02-10
+- **Discovered:** Local marketplace support during FEAT-118 testing research
+- **Decision:** Pivot to official approach before final packaging
+- **Target:** Complete before FEAT-118 Milestone 8
+
+### Key Insight
+> "The local marketplace isn't a workaround - it's THE documented way to test plugins locally. We should use it."
+
+### Related Documentation
+- [Discover and install plugins - Claude Code Docs](https://code.claude.com/docs/en/discover-plugins)
+- [Create and distribute a plugin marketplace - Claude Code Docs](https://code.claude.com/docs/en/plugin-marketplaces)
+- `project-hub/research/plugin-anthropic-standards.md`
+- `project-hub/research/plugin-best-practices.md`
+
+---
+
+**Status:** Ready to implement
+**Next Step:** Begin Milestone 2 (Create script)
