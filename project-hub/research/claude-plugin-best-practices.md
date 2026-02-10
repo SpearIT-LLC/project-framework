@@ -356,11 +356,21 @@ Use the helper script to install to cache:
 3. Type `/plugin list` to verify installation
 4. Test commands: `/spearit-framework-light:help`
 
+**Return to baseline:**
+```powershell
+# Uninstall plugin completely
+.\tools\Uninstall-PluginFromCache.ps1 -Plugin spearit-framework-light -Force
+
+# Restart VSCode
+# Verify removal with /plugin list
+```
+
 **Pros:**
 - ✅ Tests VSCode integration
 - ✅ Tests actual installation experience
 - ✅ Shared cache with CLI (works in both)
 - ✅ Automated via script
+- ✅ Easy uninstall for baseline testing
 
 **Cons:**
 - ❌ Requires VSCode restart after updates

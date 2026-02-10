@@ -70,6 +70,34 @@ claude --plugin-dir ./plugins/spearit-framework-light --debug
 4. Copies to `%USERPROFILE%\.claude\plugins\cache\`
 5. Verifies installation
 
+### Uninstall-PluginFromCache.ps1
+
+```powershell
+# List installed plugins
+.\tools\Uninstall-PluginFromCache.ps1
+
+# Uninstall specific plugin (with confirmation)
+.\tools\Uninstall-PluginFromCache.ps1 -Plugin spearit-framework-light
+
+# Uninstall without confirmation
+.\tools\Uninstall-PluginFromCache.ps1 -Plugin spearit-framework-light -Force
+
+# Clear entire cache (nuclear option)
+.\tools\Uninstall-PluginFromCache.ps1 -All -Force
+```
+
+**What it does:**
+1. Lists installed plugins (if no args)
+2. Shows plugin info before removal
+3. Removes from cache
+4. Verifies removal
+
+**Use cases:**
+- Return to baseline state for clean testing
+- Remove development versions before marketplace install
+- Clear cache when troubleshooting
+- Test fresh installation experience
+
 ### Build-Plugin.ps1
 
 ```powershell
@@ -92,6 +120,14 @@ claude --plugin-dir ./plugins/spearit-framework-light --debug
 1. Check cache: `dir %USERPROFILE%\.claude\plugins\cache\`
 2. Reinstall: `.\tools\Install-PluginToCache.ps1 -Force`
 3. Restart VSCode
+
+### Need clean baseline for testing
+
+**Solution:**
+1. Uninstall: `.\tools\Uninstall-PluginFromCache.ps1 -Plugin spearit-framework-light -Force`
+2. Restart VSCode
+3. Verify removal: `/plugin list`
+4. Reinstall fresh: `.\tools\Install-PluginToCache.ps1 -Force`
 
 ### Changes not reflected after cache install
 
