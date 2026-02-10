@@ -270,6 +270,8 @@ spearit-framework-light/
 
 ## 14. Testing Recommendations
 
+**⚠️ IMPORTANT:** For comprehensive testing workflow, see [claude-plugin-best-practices.md](./claude-plugin-best-practices.md#plugin-testing-workflow)
+
 **Before submission:**
 1. ✅ Install plugin locally (test installation process)
 2. ✅ Test each command from plugin location (not local)
@@ -280,10 +282,20 @@ spearit-framework-light/
 7. ✅ Verify no conflicts with local commands
 8. ✅ Test ZIP package structure
 
+**Testing methods:**
+- **CLI (fastest):** `claude --plugin-dir ./plugins/plugin-name`
+- **VSCode:** Use `Install-PluginToCache.ps1` helper script (see tools/)
+- **Package:** Build ZIP and test extracted version
+
 **Debug tools:**
+- `--debug` flag for detailed logging
 - `/plugin` → **Errors** tab for loading issues
-- `rm -rf ~/.claude/plugins/cache` to clear cache
+- `rm -rf ~/.claude/plugins/cache` to clear cache (Windows: `%USERPROFILE%\.claude\plugins\cache`)
 - Check `$PATH` for binary dependencies (if any)
+
+**Helper scripts:**
+- `tools/Install-PluginToCache.ps1` - Install plugin to cache for VSCode testing
+- `tools/Build-Plugin.ps1` - Build distributable ZIP package
 
 ---
 

@@ -276,7 +276,194 @@ C:\Users\{username}\.claude\debug\{session-id}.txt
 
 ---
 
-## Testing Strategy
+## Plugin Testing Workflow
+
+### Overview
+
+Claude Code plugins are **copied to cache** rather than symlinked (for security). This means you must manually update the cache after making changes during development.
+
+**Cache Location (Windows):** `%USERPROFILE%\.claude\plugins\cache\`
+
+**Cache Location (Mac/Linux):** `~/.claude/plugins/cache/`
+
+### Testing Methods
+
+There are **three** ways to test plugins during development:
+
+#### Method 1: CLI with --plugin-dir (Fastest for Iteration)
+
+**Best for:** Quick iterations during active development
+
+```bash
+# Navigate to repository root
+cd C:\...\project-framework
+
+# Test plugin directly from development directory
+claude --plugin-dir ./plugins/spearit-framework-light
+```
+
+**Pros:**
+- ✅ No cache management needed
+- ✅ Changes reflected immediately
+- ✅ Fast iteration cycle
+- ✅ Debug output available with --debug flag
+
+**Cons:**
+- ❌ CLI only (doesn't test VSCode integration)
+- ❌ Must be in correct working directory
+
+**Usage:**
+```bash
+# Start with debug logging
+claude --plugin-dir ./plugins/spearit-framework-light --debug
+
+# Test commands
+/spearit-framework-light:help
+/spearit-framework-light:next-id
+```
+
+#### Method 2: Manual Cache Installation (VSCode Testing)
+
+**Best for:** Testing VSCode integration, testing "real" installation experience
+
+Use the helper script to install to cache:
+
+```powershell
+# Install plugin to cache (builds first)
+.\tools\Install-PluginToCache.ps1
+
+# Force reinstall (for updates)
+.\tools\Install-PluginToCache.ps1 -Force
+
+# Skip build step (faster for minor changes)
+.\tools\Install-PluginToCache.ps1 -NoBuild -Force
+
+# Specific plugin
+.\tools\Install-PluginToCache.ps1 -Plugin spearit-framework-light -Force
+```
+
+**What the script does:**
+1. Validates plugin structure
+2. Runs `Build-Plugin.ps1` (unless `-NoBuild`)
+3. Clears existing cache (if `-Force`)
+4. Copies plugin to `%USERPROFILE%\.claude\plugins\cache\`
+5. Verifies installation
+6. Shows next steps
+
+**After installation:**
+1. Restart VSCode (required for changes to take effect)
+2. Open Claude Code in VSCode
+3. Type `/plugin list` to verify installation
+4. Test commands: `/spearit-framework-light:help`
+
+**Pros:**
+- ✅ Tests VSCode integration
+- ✅ Tests actual installation experience
+- ✅ Shared cache with CLI (works in both)
+- ✅ Automated via script
+
+**Cons:**
+- ❌ Requires VSCode restart after updates
+- ❌ Manual cache clearing needed for changes
+- ❌ Slower iteration cycle
+
+#### Method 3: Build and Test ZIP Package (Pre-Release Testing)
+
+**Best for:** Final validation before marketplace submission
+
+```powershell
+# Build distributable ZIP
+.\tools\Build-Plugin.ps1
+
+# Extract to temp location
+Expand-Archive distrib\plugin-light\spearit-framework-light-v1.0.0.zip -Destination C:\temp\plugin-test
+
+# Test from extracted location
+cd C:\...\project-framework
+claude --plugin-dir C:\temp\plugin-test\spearit-framework-light
+```
+
+**Pros:**
+- ✅ Tests exact package users will receive
+- ✅ Validates build process
+- ✅ Catches packaging issues
+
+**Cons:**
+- ❌ Slowest method (full build each time)
+- ❌ Not suitable for active development
+
+### Recommended Testing Workflow
+
+**During Active Development:**
+```powershell
+# 1. Make changes to plugin files
+# 2. Test immediately with CLI
+claude --plugin-dir ./plugins/spearit-framework-light
+
+# 3. If changes work, commit
+git add plugins/spearit-framework-light/
+git commit -m "feat: Add X to Y command"
+```
+
+**Before Major Milestones:**
+```powershell
+# 1. Install to cache for VSCode testing
+.\tools\Install-PluginToCache.ps1 -Force
+
+# 2. Restart VSCode
+
+# 3. Test all commands in VSCode
+/spearit-framework-light:help
+/spearit-framework-light:new
+/spearit-framework-light:move FEAT-001 todo
+/spearit-framework-light:next-id
+/spearit-framework-light:session-history
+
+# 4. If all tests pass, proceed
+```
+
+**Before Release:**
+```powershell
+# 1. Build final package
+.\tools\Build-Plugin.ps1
+
+# 2. Extract and test ZIP
+Expand-Archive distrib\plugin-light\spearit-framework-light-v1.0.0.zip -Destination C:\temp\release-test
+claude --plugin-dir C:\temp\release-test\spearit-framework-light
+
+# 3. If tests pass, tag release
+git tag -a v1.0.0 -m "Release v1.0.0"
+git push --tags
+```
+
+### Testing Checklist
+
+**For Each Command:**
+- [ ] Command invokes correctly with namespace
+- [ ] Help text displays correctly
+- [ ] Required parameters validated
+- [ ] Optional parameters work as expected
+- [ ] Error messages are clear and actionable
+- [ ] Performance is acceptable (<5s for utilities, <30s for complex)
+- [ ] No unexpected Task agent spawning
+- [ ] Works in target environment (with project structure)
+- [ ] Graceful degradation (without project structure)
+
+**For Plugin Overall:**
+- [ ] Plugin loads without errors (`--debug` shows no issues)
+- [ ] All commands listed in `/plugin:help`
+- [ ] No conflicts with local commands
+- [ ] README documentation matches reality
+- [ ] Version number is correct in plugin.json
+- [ ] LICENSE file present and correct
+- [ ] Skills load properly (check Claude's context understanding)
+
+**For VSCode Integration:**
+- [ ] Plugin appears in `/plugin list`
+- [ ] Commands auto-complete with namespace
+- [ ] Commands work identically to CLI
+- [ ] No VSCode-specific errors in console
+- [ ] Restart VSCode makes changes take effect
 
 ### Test in Correct Environment
 
@@ -294,24 +481,67 @@ claude --plugin-dir ./plugins/spearit-framework-light
 ```
 Commands can access project files if needed.
 
-### Test Phases
+### Common Testing Mistakes
 
-1. **Plugin loads** - Verify with `--debug` flag
-2. **Help command** - Test command listing
-3. **Simple utility** - Test non-destructive commands (like next-id)
-4. **Complex commands** - Test commands that modify files
-5. **Error cases** - Test with missing directories, bad input
-6. **Performance** - Measure token usage and time
+**1. Testing from wrong directory**
+```bash
+# ❌ Wrong - plugin can't find project files
+cd C:\temp
+claude --plugin-dir C:\...\plugins\spearit-framework-light
 
-### What to Test
+# ✅ Right - plugin has access to project structure
+cd C:\...\project-framework
+claude --plugin-dir ./plugins/spearit-framework-light
+```
 
-- ✅ Command invocation works
-- ✅ Namespace is correct
-- ✅ Help displays correct commands
-- ✅ Performance is reasonable
-- ✅ No conflicts with local commands
-- ✅ Error messages are clear
-- ✅ Commands work in target environment
+**2. Forgetting to restart VSCode after cache update**
+```powershell
+# ❌ Wrong - changes won't be visible
+.\tools\Install-PluginToCache.ps1 -Force
+# ... continues testing in same VSCode session
+
+# ✅ Right - restart VSCode first
+.\tools\Install-PluginToCache.ps1 -Force
+# Close VSCode → Reopen → Test commands
+```
+
+**3. Testing old version after rebuild**
+```powershell
+# ❌ Wrong - cache still has old version
+.\tools\Build-Plugin.ps1
+# Tests in VSCode without updating cache
+
+# ✅ Right - update cache after rebuild
+.\tools\Build-Plugin.ps1
+.\tools\Install-PluginToCache.ps1 -Force
+# Restart VSCode → Test
+```
+
+**4. Not using --debug flag when troubleshooting**
+```bash
+# ❌ Wrong - can't see what's happening
+claude --plugin-dir ./plugins/spearit-framework-light
+
+# ✅ Right - see loading and execution details
+claude --plugin-dir ./plugins/spearit-framework-light --debug
+```
+
+### Performance Testing
+
+**Track these metrics for each command:**
+- Token usage (from debug logs or CLI output)
+- Execution time (from debug logs)
+- Task agent spawning (from debug logs)
+
+**Performance budgets:**
+- Simple utilities: <1k tokens, <5 seconds
+- File operations: <2k tokens, <10 seconds
+- Complex operations: <5k tokens, <30 seconds
+
+**Red flags:**
+- Simple command uses >2k tokens → Likely spawning agents
+- Command takes >10 seconds → Check for inefficient operations
+- Inconsistent execution time → May be making external calls
 
 ---
 
