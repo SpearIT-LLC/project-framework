@@ -430,5 +430,189 @@ project-hub/research/
 
 ---
 
+## Evening Session: Testing Strategy Pivot
+
+**Continuation:** Critical research discovery led to strategic pivot in testing approach
+
+### Research: Local Marketplace Support
+
+**Question posed:** "Is there a way to install plugins from local sources using /plugin install?"
+
+**Research findings:**
+- Anthropic officially supports local marketplace installation
+- Four marketplace sources: GitHub, Git URLs, **local paths**, remote URLs
+- Local marketplaces are THE documented way to test plugins locally
+- Documentation: https://code.claude.com/docs/en/discover-plugins
+
+**Key discovery from docs:**
+```shell
+# Local marketplace is officially supported!
+/plugin marketplace add ./plugins
+/plugin install spearit-framework-light@plugins --scope local
+```
+
+### Problem Identified: Cache Scripts Are Non-Standard
+
+**Current approach (built earlier today):**
+- `Install-PluginToCache.ps1` - Manually copies to `~/.claude/plugins/cache/`
+- `Uninstall-PluginFromCache.ps1` - Manually removes from cache
+
+**Problems discovered:**
+1. Bypasses official plugin system (doesn't use `/plugin install`)
+2. Doesn't test actual user installation flow
+3. No scope management (user/project/local)
+4. Not documented by Anthropic (custom workaround)
+5. Brittle (depends on cache implementation details)
+
+**Realization:** We built a workaround when an official solution exists.
+
+### Decision: Pivot to Official Approach
+
+**Senior developer evaluation:**
+- Questioned default behavior (list vs require parameter)
+- Questioned `-All` flag implications (re-download behavior)
+- Questioned scope management complexity
+- Asked: "How does Anthropic test their plugins?"
+
+**Research led to discovery that:**
+- Local marketplace is official testing method
+- No cache manipulation scripts in Anthropic's toolkit
+- CLI: `claude --plugin-dir` (fast iteration)
+- VSCode: Local marketplace + `/plugin install` (integration testing)
+
+**Decision rationale:**
+1. **Use official patterns** - Align with Anthropic's documented workflow
+2. **Test real installation** - Users will use `/plugin install`, we should too
+3. **Simpler is better** - One approach (local marketplace) vs two (cache scripts)
+4. **Better maintenance** - Less custom code, follows standards
+5. **Educational value** - Tests actual user experience
+
+### FEAT-120 Created: Plugin Testing Infrastructure Refactor
+
+**New work item:** `FEAT-120-plugin-testing-infrastructure.md`
+
+**Scope:**
+- Create `Publish-ToLocalMarketplace.ps1` (replaces cache scripts)
+- Remove `Install-PluginToCache.ps1` and `Uninstall-PluginFromCache.ps1`
+- Update all documentation to reflect official pattern
+- End-to-end testing of new workflow
+
+**Key features:**
+- Generates `plugins/.claude-plugin/marketplace.json` (ephemeral)
+- `-Clean` flag for marketplace reset
+- `-Build` flag to build first
+- Clear instructions for first-time setup and iteration
+- No version bumping (testing current code, not managing releases)
+
+**Benefits:**
+- Reduces code: 800 lines (cache scripts) → ~200 lines (marketplace script)
+- Uses official Anthropic patterns
+- Tests actual installation flow
+- Simpler mental model
+- Better documentation
+
+### FEAT-118 Paused
+
+**Status:** Paused at Milestone 7 (testing complete)
+**Blocked by:** FEAT-120 (testing infrastructure refactor)
+**Still on track:** Ahead of schedule, time for quality improvement
+
+**Changelog entry added:**
+```
+2026-02-10 - PAUSED: Testing Infrastructure Refactor (FEAT-120)
+- Built cache scripts, then discovered official local marketplace support
+- Decision: Pivot to Anthropic's documented pattern
+- Created FEAT-120 to implement local marketplace approach
+- Benefits: Official pattern, tests real flow, simpler maintenance
+- Timeline: Still on track (quality improvement opportunity)
+```
+
+### Key Insights from Session
+
+**1. Question everything:**
+- "Why would I bump version for testing?" → Led to understanding ephemeral nature
+- "Is source fixed?" → Led to discovery of local marketplace support
+- "How does Anthropic test?" → Led to researching official patterns
+
+**2. Research before custom solutions:**
+- Built cache scripts without fully researching official methods
+- Local marketplace was documented all along
+- Custom workarounds often unnecessary
+
+**3. Senior developer mindset:**
+- Challenge assumptions
+- Ask "why" repeatedly
+- Seek official patterns before creating custom solutions
+- Simplicity over complexity
+
+**4. Pivot when discovery warrants:**
+- Better to pivot now (before final packaging) than ship non-standard approach
+- Already ahead of schedule (room for quality improvement)
+- Foundation matters more than speed
+
+**5. Ephemeral testing infrastructure:**
+- Local marketplace is disposable
+- No version complexity during development
+- Can delete/recreate anytime
+- Purpose: Enable VSCode testing via official system
+
+### Files Created/Modified (Evening)
+
+**Created:**
+- `project-hub/work/doing/FEAT-120-plugin-testing-infrastructure.md` (366 lines)
+  - Comprehensive plan with 7 milestones
+  - Research findings documented
+  - Clear acceptance criteria
+  - Migration strategy
+
+**Modified:**
+- `project-hub/work/doing/FEAT-118-claude-code-plugin.md`
+  - Status: ⏸️ PAUSED
+  - Blocked by: FEAT-120
+  - Changelog entry added
+
+### Current State (End of Evening)
+
+**FEAT-118:** Paused at Milestone 7
+- Testing complete with cache scripts
+- Waiting for FEAT-120 (better testing infrastructure)
+- Still on track for 7-day target
+
+**FEAT-120:** Ready to implement
+- Milestone 1 complete (research and planning)
+- Ready to begin Milestone 2 (create script)
+- Clear path forward
+
+**Next Steps:**
+1. Implement `Publish-ToLocalMarketplace.ps1`
+2. Update documentation
+3. Remove cache scripts
+4. Test end-to-end
+5. Resume FEAT-118 Milestone 8
+
+### Lessons Learned
+
+**Research thoroughly before building:**
+- Cache scripts were ~800 lines of unnecessary code
+- Official solution existed all along
+- Could have saved 2-3 hours by researching first
+
+**Ask "how do the experts do it?"**
+- Anthropic documented their preferred approach
+- Following official patterns = better outcomes
+- Custom solutions should be last resort
+
+**Quality > Speed when ahead of schedule:**
+- Pausing to pivot was the right call
+- Better foundation for final product
+- Still ahead of original timeline
+
+**Document the journey:**
+- Session history captures decision evolution
+- Rationale preserved for future reference
+- Learning process visible
+
+---
+
 **Last Updated:** 2026-02-10
-**Status:** Session complete - Documentation organized and testing infrastructure ready
+**Status:** Session complete - FEAT-120 created, FEAT-118 paused, ready to implement official testing approach
