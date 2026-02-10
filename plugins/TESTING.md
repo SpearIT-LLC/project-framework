@@ -10,7 +10,7 @@ Quick reference for testing Claude Code plugins during development.
 
 ```bash
 # Navigate to repo root
-cd C:\Users\gelliott\OneDrive\Documents\SpearIT\Projects\project-framework
+cd %USERPROFILE%\OneDrive\Documents\SpearIT\Projects\project-framework
 
 # Test plugin directly
 claude --plugin-dir ./plugins/spearit-framework-light
@@ -187,9 +187,10 @@ claude --plugin-dir ./plugins/spearit-framework-light --debug
 
 ## Resources
 
-- **Detailed workflow:** [project-hub/research/claude-plugin-best-practices.md](project-hub/research/claude-plugin-best-practices.md#plugin-testing-workflow)
-- **Plugin standards:** [project-hub/research/anthropic-plugin-standards.md](project-hub/research/anthropic-plugin-standards.md)
-- **Build process:** [tools/Build-Plugin.ps1](tools/Build-Plugin.ps1)
+- **Plugin overview:** [README.md](README.md)
+- **Detailed workflow:** [../project-hub/research/claude-plugin-best-practices.md](../project-hub/research/claude-plugin-best-practices.md#plugin-testing-workflow)
+- **Plugin standards:** [../project-hub/research/anthropic-plugin-standards.md](../project-hub/research/anthropic-plugin-standards.md)
+- **Build process:** [../tools/Build-Plugin.ps1](../tools/Build-Plugin.ps1)
 
 ---
 
