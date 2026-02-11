@@ -1,3 +1,5 @@
+#Requires -Version 7.0
+
 <#
 .SYNOPSIS
     Publishes plugins to a local Claude Code marketplace for testing.
@@ -230,7 +232,7 @@ try {
     Write-Status "   /plugin marketplace add $marketplaceRoot" -Type Info
     Write-Status ""
     Write-Status "2. Install plugin:"
-    Write-Status "   /plugin install <plugin-name>@dev-marketplace --scope local" -Type Info
+    Write-Status "   /plugin install {plugin-name}@dev-marketplace --scope local" -Type Info
     Write-Status ""
     Write-Status "Available plugins:"
     foreach ($entry in $pluginEntries) {

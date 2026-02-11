@@ -19,18 +19,28 @@ claude --plugin-dir ./plugins/spearit-framework-light
 claude --plugin-dir ./plugins/spearit-framework-light --debug
 ```
 
-### VSCode Testing
+### VSCode Testing (One-Time Setup)
 
 ```powershell
-# Install to cache
-.\tools\Install-PluginToCache.ps1 -Force
+# 1. Create local marketplace
+.\tools\Publish-ToLocalMarketplace.ps1
 
-# Restart VSCode
+# 2. Add marketplace to Claude Code (in Claude CLI or VSCode)
+/plugin marketplace add ../claude-local-marketplace
 
-# Test commands
-/spearit-framework-light:help
-/spearit-framework-light:new
-/spearit-framework-light:next-id
+# 3. Install plugin
+/plugin install spearit-framework-light@dev-marketplace --scope local
+```
+
+**After changes to plugin:**
+```powershell
+# Update marketplace (if metadata changed)
+.\tools\Publish-ToLocalMarketplace.ps1
+
+# Refresh in Claude Code
+/plugin marketplace update dev-marketplace
+
+# Restart Claude Code/VSCode
 ```
 
 ---
@@ -40,63 +50,39 @@ claude --plugin-dir ./plugins/spearit-framework-light --debug
 | Method | Speed | VSCode | Use Case |
 |--------|-------|--------|----------|
 | `--plugin-dir` | ⚡ Fast | ❌ No | Active development |
-| Cache install | 🐌 Slow | ✅ Yes | Integration testing |
+| Local marketplace | 🐌 Moderate | ✅ Yes | Integration testing |
 | ZIP package | 🐌 Slowest | ✅ Yes | Pre-release validation |
 
 ---
 
 ## Helper Scripts
 
-### Install-PluginToCache.ps1
+### Publish-ToLocalMarketplace.ps1
 
 ```powershell
-# Basic usage (builds and installs)
-.\tools\Install-PluginToCache.ps1
+# Create/update local marketplace
+.\tools\Publish-ToLocalMarketplace.ps1
 
-# Force reinstall
-.\tools\Install-PluginToCache.ps1 -Force
+# Build plugin first, then update marketplace
+.\tools\Publish-ToLocalMarketplace.ps1 -Build
 
-# Skip build (faster for minor changes)
-.\tools\Install-PluginToCache.ps1 -NoBuild -Force
-
-# Specific plugin
-.\tools\Install-PluginToCache.ps1 -Plugin spearit-framework-light -Force
+# Reset marketplace (delete and recreate)
+.\tools\Publish-ToLocalMarketplace.ps1 -Clean
 ```
 
 **What it does:**
-1. Validates plugin structure
-2. Runs Build-Plugin.ps1 (unless `-NoBuild`)
-3. Clears cache (if `-Force`)
-4. Copies to `%USERPROFILE%\.claude\plugins\cache\`
-5. Verifies installation
+1. Auto-detects plugins in `plugins/` directory
+2. Reads metadata from `plugin.json`
+3. Creates marketplace.json at `../claude-local-marketplace/`
+4. Shows next-step instructions for first-time setup
 
-### Uninstall-PluginFromCache.ps1
-
-```powershell
-# List installed plugins
-.\tools\Uninstall-PluginFromCache.ps1
-
-# Uninstall specific plugin (with confirmation)
-.\tools\Uninstall-PluginFromCache.ps1 -Plugin spearit-framework-light
-
-# Uninstall without confirmation
-.\tools\Uninstall-PluginFromCache.ps1 -Plugin spearit-framework-light -Force
-
-# Clear entire cache (nuclear option)
-.\tools\Uninstall-PluginFromCache.ps1 -All -Force
-```
-
-**What it does:**
-1. Lists installed plugins (if no args)
-2. Shows plugin info before removal
-3. Removes from cache
-4. Verifies removal
+**Marketplace location:** `../claude-local-marketplace/` (parallel to project repo)
 
 **Use cases:**
-- Return to baseline state for clean testing
-- Remove development versions before marketplace install
-- Clear cache when troubleshooting
-- Test fresh installation experience
+- Initial setup for local testing
+- Update marketplace after metadata changes
+- Reset testing environment with `-Clean`
+- Build and publish in one step with `-Build`
 
 ### Build-Plugin.ps1
 
@@ -117,31 +103,34 @@ claude --plugin-dir ./plugins/spearit-framework-light --debug
 ### "Plugin not found" in VSCode
 
 **Solution:**
-1. Check cache: `dir %USERPROFILE%\.claude\plugins\cache\`
-2. Reinstall: `.\tools\Install-PluginToCache.ps1 -Force`
-3. Restart VSCode
+1. Check marketplace: `/plugin marketplace list`
+2. Check installed: `/plugin list`
+3. If marketplace not added: `/plugin marketplace add ../claude-local-marketplace`
+4. If not installed: `/plugin install spearit-framework-light@dev-marketplace --scope local`
+5. Restart VSCode
 
 ### Need clean baseline for testing
 
 **Solution:**
-1. Uninstall: `.\tools\Uninstall-PluginFromCache.ps1 -Plugin spearit-framework-light -Force`
+1. Uninstall: `/plugin uninstall spearit-framework-light`
 2. Restart VSCode
 3. Verify removal: `/plugin list`
-4. Reinstall fresh: `.\tools\Install-PluginToCache.ps1 -Force`
+4. Reinstall fresh: `/plugin install spearit-framework-light@dev-marketplace --scope local`
 
-### Changes not reflected after cache install
+### Changes not reflected after installation
 
 **Solution:**
-1. Close VSCode completely
-2. Reopen VSCode
-3. Test commands again
+1. Update marketplace: `.\tools\Publish-ToLocalMarketplace.ps1`
+2. Refresh in Claude: `/plugin marketplace update dev-marketplace`
+3. Restart VSCode/Claude Code
+4. Changes should now be visible
 
 ### Command works in CLI but not VSCode
 
 **Solution:**
-1. Verify you installed to cache: `.\tools\Install-PluginToCache.ps1 -Force`
+1. Verify plugin installed: `/plugin list` (should show spearit-framework-light)
 2. Restart VSCode (required for changes)
-3. Check `/plugin list` to verify installation
+3. If still missing, reinstall via marketplace
 
 ### Performance issues (slow commands)
 
@@ -180,17 +169,26 @@ claude --plugin-dir ./plugins/spearit-framework-light --debug
 
 ---
 
-## Cache Locations
+## Local Marketplace
 
-- **Windows:** `%USERPROFILE%\.claude\plugins\cache\`
-- **Mac/Linux:** `~/.claude/plugins/cache/`
+**Location:** `../claude-local-marketplace/` (parallel to project repo)
+**Purpose:** Ephemeral testing infrastructure for local development
+**Can be deleted/recreated anytime** - it's just testing infrastructure
 
 ## Resources
 
 - **Plugin overview:** [README.md](README.md)
 - **Detailed workflow:** [../project-hub/research/plugin-best-practices.md](../project-hub/research/plugin-best-practices.md#plugin-testing-workflow)
 - **Plugin standards:** [../project-hub/research/plugin-anthropic-standards.md](../project-hub/research/plugin-anthropic-standards.md)
-- **Build process:** [../tools/Build-Plugin.ps1](../tools/Build-Plugin.ps1)
+- **Marketplace script:** [../tools/Publish-ToLocalMarketplace.ps1](../tools/Publish-ToLocalMarketplace.ps1)
+- **Build script:** [../tools/Build-Plugin.ps1](../tools/Build-Plugin.ps1)
+- **Migration guide:** [MIGRATION-CACHE-TO-MARKETPLACE.md](MIGRATION-CACHE-TO-MARKETPLACE.md)
+
+## Official Documentation
+
+- [Discover and install plugins](https://code.claude.com/docs/en/discover-plugins)
+- [Create and distribute a plugin marketplace](https://code.claude.com/docs/en/plugin-marketplaces)
+- [Add from local paths](https://code.claude.com/docs/en/discover-plugins#add-from-local-paths)
 
 ---
 

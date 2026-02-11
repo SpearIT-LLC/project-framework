@@ -27,9 +27,10 @@ See **[TESTING.md](TESTING.md)** for complete testing workflow.
 # CLI testing (fastest)
 claude --plugin-dir ./plugins/spearit-framework-light
 
-# VSCode testing
-.\tools\Install-PluginToCache.ps1 -Force
-# Restart VSCode
+# VSCode testing (one-time setup)
+.\tools\Publish-ToLocalMarketplace.ps1
+/plugin marketplace add ../claude-local-marketplace
+/plugin install spearit-framework-light@dev-marketplace --scope local
 
 # Build package
 .\tools\Build-Plugin.ps1
@@ -56,8 +57,7 @@ claude --plugin-dir ./plugins/spearit-framework-light
 
 ### Helper Scripts
 - **[../tools/Build-Plugin.ps1](../tools/Build-Plugin.ps1)** - Build distributable ZIP package
-- **[../tools/Install-PluginToCache.ps1](../tools/Install-PluginToCache.ps1)** - Install plugin to cache for VSCode testing
-- **[../tools/Uninstall-PluginFromCache.ps1](../tools/Uninstall-PluginFromCache.ps1)** - Remove plugin from cache (return to baseline)
+- **[../tools/Publish-ToLocalMarketplace.ps1](../tools/Publish-ToLocalMarketplace.ps1)** - Create/update local marketplace for testing
 
 ---
 
@@ -81,18 +81,22 @@ The SpearIT Project Framework is distributed as multiple plugin editions:
 ### Active Development
 ```bash
 # Make changes to plugin files
-# Test immediately with CLI (no cache management)
+# Test immediately with CLI (no marketplace needed)
 cd %USERPROFILE%\OneDrive\Documents\SpearIT\Projects\project-framework
 claude --plugin-dir ./plugins/spearit-framework-light --debug
 ```
 
-### Integration Testing
+### Integration Testing (VSCode)
 ```powershell
-# Install to cache for VSCode testing
-.\tools\Install-PluginToCache.ps1 -Force
+# One-time setup: Create and add local marketplace
+.\tools\Publish-ToLocalMarketplace.ps1
+/plugin marketplace add ../claude-local-marketplace
+/plugin install spearit-framework-light@dev-marketplace --scope local
 
+# After changes: Update marketplace and restart
+.\tools\Publish-ToLocalMarketplace.ps1
+/plugin marketplace update dev-marketplace
 # Restart VSCode
-# Test all commands in VSCode
 ```
 
 ### Pre-Release Testing

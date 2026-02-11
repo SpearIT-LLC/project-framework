@@ -280,11 +280,10 @@ C:\Users\{username}\.claude\debug\{session-id}.txt
 
 ### Overview
 
-Claude Code plugins are **copied to cache** rather than symlinked (for security). This means you must manually update the cache after making changes during development.
+Claude Code supports **local marketplaces** for plugin testing during development. This uses Anthropic's official plugin installation system rather than manual cache manipulation.
 
-**Cache Location (Windows):** `%USERPROFILE%\.claude\plugins\cache\`
-
-**Cache Location (Mac/Linux):** `~/.claude/plugins/cache/`
+**Local Marketplace:** `../claude-local-marketplace/` (parallel to project repo)
+**Approach:** Uses `/plugin install` workflow with marketplace pointing to plugin source
 
 ### Testing Methods
 
@@ -322,60 +321,71 @@ claude --plugin-dir ./plugins/spearit-framework-light --debug
 /spearit-framework-light:next-id
 ```
 
-#### Method 2: Manual Cache Installation (VSCode Testing)
+#### Method 2: Local Marketplace Installation (VSCode Testing)
 
-**Best for:** Testing VSCode integration, testing "real" installation experience
+**Best for:** Testing VSCode integration, testing actual installation flow
 
-Use the helper script to install to cache:
+Use Anthropic's official local marketplace pattern:
 
 ```powershell
-# Install plugin to cache (builds first)
-.\tools\Install-PluginToCache.ps1
+# One-time setup: Create local marketplace
+.\tools\Publish-ToLocalMarketplace.ps1
 
-# Force reinstall (for updates)
-.\tools\Install-PluginToCache.ps1 -Force
+# Add marketplace to Claude Code (in Claude CLI or VSCode)
+/plugin marketplace add ../claude-local-marketplace
 
-# Skip build step (faster for minor changes)
-.\tools\Install-PluginToCache.ps1 -NoBuild -Force
+# Install plugin with local scope
+/plugin install spearit-framework-light@dev-marketplace --scope local
+```
 
-# Specific plugin
-.\tools\Install-PluginToCache.ps1 -Plugin spearit-framework-light -Force
+**After changes to plugin:**
+```powershell
+# Update marketplace (if metadata changed)
+.\tools\Publish-ToLocalMarketplace.ps1
+
+# Refresh in Claude Code
+/plugin marketplace update dev-marketplace
+
+# Restart VSCode/Claude Code
 ```
 
 **What the script does:**
-1. Validates plugin structure
-2. Runs `Build-Plugin.ps1` (unless `-NoBuild`)
-3. Clears existing cache (if `-Force`)
-4. Copies plugin to `%USERPROFILE%\.claude\plugins\cache\`
-5. Verifies installation
-6. Shows next steps
-
-**After installation:**
-1. Restart VSCode (required for changes to take effect)
-2. Open Claude Code in VSCode
-3. Type `/plugin list` to verify installation
-4. Test commands: `/spearit-framework-light:help`
+1. Auto-detects plugins in `plugins/` directory
+2. Reads metadata from `plugin.json`
+3. Creates `marketplace.json` at `../claude-local-marketplace/`
+4. Points marketplace to plugin source directory
+5. Shows next-step instructions
 
 **Return to baseline:**
 ```powershell
-# Uninstall plugin completely
-.\tools\Uninstall-PluginFromCache.ps1 -Plugin spearit-framework-light -Force
+# Uninstall plugin
+/plugin uninstall spearit-framework-light
 
 # Restart VSCode
 # Verify removal with /plugin list
 ```
 
+**Reset marketplace:**
+```powershell
+# Delete and recreate
+.\tools\Publish-ToLocalMarketplace.ps1 -Clean
+
+# Reinstall
+/plugin install spearit-framework-light@dev-marketplace --scope local
+```
+
 **Pros:**
-- ✅ Tests VSCode integration
-- ✅ Tests actual installation experience
-- ✅ Shared cache with CLI (works in both)
-- ✅ Automated via script
-- ✅ Easy uninstall for baseline testing
+- ✅ Uses official Anthropic plugin system
+- ✅ Tests actual installation UX
+- ✅ Proper scope management (user/project/local)
+- ✅ Works in both CLI and VSCode
+- ✅ Version tracking
+- ✅ Documented and supported approach
 
 **Cons:**
 - ❌ Requires VSCode restart after updates
-- ❌ Manual cache clearing needed for changes
-- ❌ Slower iteration cycle
+- ❌ One-time marketplace setup needed
+- ❌ Slower than `--plugin-dir` for iteration
 
 #### Method 3: Build and Test ZIP Package (Pre-Release Testing)
 
@@ -417,19 +427,22 @@ git commit -m "feat: Add X to Y command"
 
 **Before Major Milestones:**
 ```powershell
-# 1. Install to cache for VSCode testing
-.\tools\Install-PluginToCache.ps1 -Force
+# 1. Update local marketplace
+.\tools\Publish-ToLocalMarketplace.ps1
 
-# 2. Restart VSCode
+# 2. Refresh marketplace in Claude Code
+/plugin marketplace update dev-marketplace
 
-# 3. Test all commands in VSCode
+# 3. Restart VSCode
+
+# 4. Test all commands in VSCode
 /spearit-framework-light:help
 /spearit-framework-light:new
 /spearit-framework-light:move FEAT-001 todo
 /spearit-framework-light:next-id
 /spearit-framework-light:session-history
 
-# 4. If all tests pass, proceed
+# 5. If all tests pass, proceed
 ```
 
 **Before Release:**
@@ -504,26 +517,28 @@ cd C:\...\project-framework
 claude --plugin-dir ./plugins/spearit-framework-light
 ```
 
-**2. Forgetting to restart VSCode after cache update**
+**2. Forgetting to restart VSCode after marketplace update**
 ```powershell
 # ❌ Wrong - changes won't be visible
-.\tools\Install-PluginToCache.ps1 -Force
+.\tools\Publish-ToLocalMarketplace.ps1
+/plugin marketplace update dev-marketplace
 # ... continues testing in same VSCode session
 
-# ✅ Right - restart VSCode first
-.\tools\Install-PluginToCache.ps1 -Force
+# ✅ Right - restart VSCode after update
+.\tools\Publish-ToLocalMarketplace.ps1
+/plugin marketplace update dev-marketplace
 # Close VSCode → Reopen → Test commands
 ```
 
 **3. Testing old version after rebuild**
 ```powershell
-# ❌ Wrong - cache still has old version
+# ❌ Wrong - marketplace not updated
 .\tools\Build-Plugin.ps1
-# Tests in VSCode without updating cache
+# Tests in VSCode without updating marketplace
 
-# ✅ Right - update cache after rebuild
-.\tools\Build-Plugin.ps1
-.\tools\Install-PluginToCache.ps1 -Force
+# ✅ Right - update marketplace after changes
+.\tools\Publish-ToLocalMarketplace.ps1
+/plugin marketplace update dev-marketplace
 # Restart VSCode → Test
 ```
 
