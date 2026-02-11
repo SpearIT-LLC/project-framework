@@ -17,6 +17,8 @@ Refactor plugin testing infrastructure to use Anthropic's official local marketp
 
 **Key Change:** Replace `Install-PluginToCache.ps1` / `Uninstall-PluginFromCache.ps1` with `Publish-ToLocalMarketplace.ps1` that uses `/plugin install` workflow.
 
+**Scope Note:** This is **testing infrastructure only** - not release automation. Release automation for plugins was deferred (see session history 2026-02-10, Late Evening Session). This work enables local testing via official Anthropic patterns.
+
 ---
 
 ## Problem Statement
@@ -88,17 +90,20 @@ Anthropic's plugin system supports **four marketplace sources:**
 
 **Purpose:** Generate/update ephemeral local marketplace for testing
 
+**Scope:** Testing infrastructure ONLY - not release automation (deferred to plugin-full)
+
 **Features:**
-- Creates `plugins/.claude-plugin/marketplace.json`
+- Creates `../claude-local-marketplace/.claude-plugin/marketplace.json`
 - Reads plugin metadata from existing `plugin.json` (no version bumping)
 - `-Clean` flag to delete and recreate marketplace
 - `-Build` flag to run Build-Plugin.ps1 first
 - Clear instructions for first-time setup and iteration
 
 **Marketplace is ephemeral:**
+- Located parallel to project repo: `../claude-local-marketplace/`
 - Disposable testing infrastructure
 - Can be deleted/recreated anytime
-- Not tracked in git (add to .gitignore)
+- Not tracked in git (outside repo)
 - No version complexity during development
 
 ### Remove Cache Scripts
@@ -152,18 +157,12 @@ Anthropic's plugin system supports **four marketplace sources:**
 - [ ] Update git history (commit with clear message)
 - [ ] **STOP - Review cleanup**
 
-### Milestone 5: Add .gitignore Entry
-- [ ] Add `plugins/.claude-plugin/` to .gitignore
-- [ ] Document why (ephemeral testing infrastructure)
-- [ ] Verify marketplace.json not tracked
-- [ ] **STOP - Review gitignore changes**
-
-### Milestone 6: End-to-End Testing
+### Milestone 5: End-to-End Testing
 - [ ] Clean test: Delete any existing marketplace/cache
 - [ ] Run `Publish-ToLocalMarketplace.ps1`
-- [ ] Verify marketplace.json created correctly
-- [ ] Test in Claude Code: `/plugin marketplace add ./plugins`
-- [ ] Test install: `/plugin install spearit-framework-light@plugins --scope local`
+- [ ] Verify marketplace.json created correctly in `../claude-local-marketplace/`
+- [ ] Test in Claude Code: `/plugin marketplace add ../claude-local-marketplace`
+- [ ] Test install: `/plugin install spearit-framework-light@dev-marketplace --scope local`
 - [ ] Test all commands work
 - [ ] Make changes to plugin, test update workflow
 - [ ] Test `-Clean` flag
@@ -171,7 +170,7 @@ Anthropic's plugin system supports **four marketplace sources:**
 - [ ] Document any issues found
 - [ ] **STOP - Review test results**
 
-### Milestone 7: Final Documentation
+### Milestone 6: Final Documentation
 - [ ] Update session history with outcomes
 - [ ] Document lessons learned
 - [ ] Update FEAT-118 dependencies (unblock Milestone 8)
@@ -183,10 +182,10 @@ Anthropic's plugin system supports **four marketplace sources:**
 ## Acceptance Criteria
 
 ### Script Functionality
-- ✅ `Publish-ToLocalMarketplace.ps1` creates valid marketplace.json
+- ✅ `Publish-ToLocalMarketplace.ps1` creates valid marketplace.json at `../claude-local-marketplace/`
 - ✅ Supports `-Clean` flag for marketplace reset
 - ✅ Supports `-Build` flag to build first
-- ✅ Auto-detects plugin from plugins/ directory
+- ✅ Auto-detects plugins from plugins/ directory
 - ✅ Shows clear next-step instructions
 - ✅ Handles errors gracefully
 
@@ -215,16 +214,18 @@ Anthropic's plugin system supports **four marketplace sources:**
 
 ### Marketplace.json Structure
 
+**Location:** `../claude-local-marketplace/.claude-plugin/marketplace.json`
+
 ```json
 {
-  "name": "plugins",
+  "name": "dev-marketplace",
   "owner": {
     "name": "Development"
   },
   "plugins": [
     {
       "name": "spearit-framework-light",
-      "source": "./spearit-framework-light",
+      "source": "../project-framework/plugins/spearit-framework-light",
       "description": "File-based Kanban workflow for solo developers",
       "version": "1.0.0"
     }
@@ -232,18 +233,20 @@ Anthropic's plugin system supports **four marketplace sources:**
 }
 ```
 
+**Note:** `source` points back to actual plugin directory in project repo.
+
 ### Testing Workflow
 
 **One-time setup:**
 ```powershell
-# 1. Create marketplace
+# 1. Create marketplace (from project-framework directory)
 .\tools\Publish-ToLocalMarketplace.ps1
 
 # 2. Add to Claude Code
-/plugin marketplace add ./plugins
+/plugin marketplace add ../claude-local-marketplace
 
 # 3. Install plugin
-/plugin install spearit-framework-light@plugins --scope local
+/plugin install spearit-framework-light@dev-marketplace --scope local
 ```
 
 **After changes:**
@@ -252,7 +255,7 @@ Anthropic's plugin system supports **four marketplace sources:**
 .\tools\Publish-ToLocalMarketplace.ps1
 
 # Refresh in Claude Code
-/plugin marketplace update plugins
+/plugin marketplace update dev-marketplace
 
 # Restart Claude Code (picks up changes)
 ```
@@ -263,7 +266,7 @@ Anthropic's plugin system supports **four marketplace sources:**
 .\tools\Publish-ToLocalMarketplace.ps1 -Clean
 
 # Reinstall
-/plugin install spearit-framework-light@plugins --scope local
+/plugin install spearit-framework-light@dev-marketplace --scope local
 ```
 
 ---

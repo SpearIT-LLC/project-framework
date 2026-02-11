@@ -614,5 +614,512 @@ project-hub/research/
 
 ---
 
+## Late Evening Session: Release Process Architecture
+
+**Continuation:** Deep dive into release process complexity and architectural decisions
+
+### Context
+
+With FEAT-120 ready to implement, discussion revealed broader architectural questions about managing multiple releasable artifacts (framework, plugin-light, plugin-full) from a single repository.
+
+### Research: Monorepo Release Management
+
+**Question posed:** "How do other teams manage multiple deliverables out of the same repo?"
+
+**Web research conducted:**
+1. Monorepo versioning strategies (Nx, Lerna, Changesets)
+2. GitHub releases with multiple products in same repository
+3. Tool comparisons: Lerna vs Changesets vs Release-please
+
+**Key findings:**
+
+**Tag Prefix Strategy (Industry Standard):**
+- Use descriptive prefixes: `framework-v1.0.0`, `plugin-light-v1.0.0`, `plugin-full-v1.0.0`
+- GitHub fully supports multiple release streams via prefixed tags
+- Each tag gets its own release page with independent assets
+- GitHub Actions can trigger different workflows based on tag patterns
+
+**Independent Versioning:**
+- Each package/product maintains own version and release cycle
+- Standard for monorepos with components at different maturity levels
+- Changes in one product don't force version bumps in others
+- Recommended by Nx, Streamdal, Microsoft ISE blogs
+
+**Automation Tools (JavaScript-focused):**
+- **Changesets**: File-based changelog management, monorepo-first design
+- **Release-please**: Google's tool, automates versioning from conventional commits
+- **Lerna**: Classic monorepo tool (had maintenance issues, now maintained by Nx)
+- Pattern: Automate version bumping, changelog generation, tagging, publishing
+
+**Multi-Component Work Items:**
+- Changesets allows one changeset file to affect multiple packages
+- Specified in frontmatter: `"plugin-light": minor` and `"plugin-full": minor`
+- Work item appears in multiple CHANGELOGs
+- Tracks cross-package relationships
+
+**Web sources:**
+- [Microsoft ISE - Monorepo with Independent Release Cycles](https://devblogs.microsoft.com/ise/streamlining-development-through-monorepo-with-independent-release-cycles/)
+- [Nx Blog - Versioning in a Monorepo](https://nx.dev/blog/versioning-and-releasing-packages-in-a-monorepo)
+- [GitHub Actions - Releasing different tags](https://www.atkinsondev.com/post/github-actions-releasing-different-tags/)
+- [Changesets vs Lerna comparison](https://www.hamzak.xyz/blog-posts/release-management-for-nx-monorepos-semantic-release-vs-changesets-vs-release-it-)
+- [GitHub community - Separate releases discussion](https://github.com/orgs/community/discussions/137773)
+
+### Architectural Discussion
+
+**Multi-Component Work Items Problem:**
+- Question: "What happens if the same feature applies to multiple releases?"
+- Example: FEAT-120 affects both plugin-light and plugin-full
+- Challenge: File-based system vs distributed changelogs
+
+**Options Considered:**
+
+**Option 1: Multi-Component Field (Recommended for plugin-full)**
+- Work items include `Components: plugin-light, plugin-full` field
+- Release script copies (not moves) multi-component items to each release folder
+- Work item preserved in all affected release histories
+- After ALL components released, archive original to `releases/shared/`
+
+**Option 2: Shared Release Folder**
+- Cross-component items in `history/releases/shared/`
+- CHANGELOGs reference shared items with paths
+- Single source of truth, but not physically in component release folder
+
+**Option 3: Changesets-Style Approach**
+- Create `project-hub/changesets/` directory
+- Changeset files specify affected components and version impact
+- Release script consumes changesets and archives them
+
+### Critical Realization: Scope Creep Warning
+
+**User insight:** "We're so close to having this ready for shipping but now we're trying to solve a bigger problem"
+
+**Problem identified:**
+- Primary goal: Ship plugin-light ASAP
+- Getting blocked by: Multi-component release architecture
+- Risk: Over-engineering for hypothetical future needs
+- Concern: "What if we pivot to smaller plugins? We've boxed ourselves in."
+
+**Three separate problems conflated:**
+1. How do users release their simple projects? (plugin-light target audience)
+2. How do we release this complex multi-component repo? (internal problem)
+3. What's the light vs full plugin architecture? (future decision)
+
+### Decisions Made
+
+#### 1. Plugin-Light vs Plugin-Full Scope Differentiation
+
+**Decision:** Clear separation of complexity
+
+**Plugin-Light:**
+- Target: Solo dev, single-component projects
+- Work items: Simple structure, NO Components field
+- Release: Single stream (`v1.0.0` tags)
+- Scope: Work item management, NOT complex release automation
+- Ship ASAP with minimal features
+
+**Plugin-Full:**
+- Target: Teams, multi-component monorepos
+- Work items: Support `Component/Components` field
+- Release: Multi-stream with component parameter
+- Scope: Advanced release management
+- Future development, more complex
+
+**This Repo (Framework Development):**
+- Uses custom/manual release process for now
+- Can use plugin-full when it exists (dogfooding)
+- Multi-component complexity (framework + 2 plugins)
+- Don't need to solve this for plugin-light
+
+**Rationale:**
+- Plugin-light users don't need multi-component support
+- Multi-component is plugin-full feature
+- Separate concerns: user needs vs internal needs
+- Defer architectural decisions until validated by real usage
+
+#### 2. Defer Release Automation (Critical Decision)
+
+**Decision:** Ship plugin-light WITHOUT release automation in v1.0.0
+
+**What plugin-light includes:**
+- Work item management commands ✅
+- Simple workflow (to-do → doing → done) ✅
+- Session history, status, backlog commands ✅
+- Documentation for the workflow ✅
+
+**What plugin-light defers:**
+- Automated release tooling ❌ (maybe v1.1 or plugin-full)
+- Multi-component support ❌ (plugin-full only)
+- Complex version management ❌ (plugin-full only)
+
+**Rationale:**
+- Don't solve problems we don't have yet
+- Learn from real usage before building automation
+- Release automation is SEPARATE from work item management
+- Can add in v1.1 or plugin-full based on user feedback
+- Prevents being "boxed in" by premature decisions
+
+**Alternative considered:**
+- Progressive disclosure (one plugin, adaptive complexity) ❌
+  - Risk: Coupling decisions we might regret
+  - Risk: Architecture pivot becomes harder
+  - Better: Separate editions with clear scopes
+
+#### 3. Basic Manual Release Process (Pragmatic)
+
+**Decision:** Define minimal release process with manual steps acceptable
+
+**Process agreed:**
+1. **Prepare Release (Manual):**
+   - Update `plugin.json` version manually
+   - Update `CHANGELOG.md` manually (or script-assisted)
+   - Optional: Move completed work items `done/` → `releases/vX.X.X/`
+
+2. **Build Plugin:**
+   - Run `Build-Plugin.ps1` to create `.cpk`
+
+3. **Commit and Tag:**
+   - Git commit, tag (`plugin-light-vX.X.X`), push
+   - Can be scripted simply
+
+4. **Test Locally:**
+   - Use FEAT-120 workflow (local marketplace)
+
+5. **Publish to Marketplace:**
+   - Anthropic submission process (TBD)
+   - Or GitHub Releases
+
+**Optional helper:** `Prepare-Release.ps1`
+- Shows checklist for manual steps
+- Automates scriptable parts (build, commit, tag)
+- Room to enhance later
+- Doesn't over-engineer now
+
+**Rationale:**
+- Manual steps prevent premature coupling
+- Can iterate based on experience
+- Simple is better than complex
+- Easy to automate later if patterns emerge
+
+#### 4. Local Marketplace Location
+
+**Decision:** Place at `../claude-local-marketplace/` (parallel to project repo)
+
+**Full path:** `C:\Users\gelliott\OneDrive\Documents\SpearIT\Projects\claude-local-marketplace\`
+
+**Structure:**
+```
+claude-local-marketplace\
+├── .claude-plugin\
+│   └── marketplace.json
+└── spearit-framework-light\  # Symlink or reference
+```
+
+**Rationale:**
+- Easy to find and navigate
+- Won't get auto-deleted (unlike temp folders)
+- Keeps main repo clean
+- Clearly labeled as ephemeral testing infrastructure
+- Relative path works: `../claude-local-marketplace/`
+
+**Alternatives considered:**
+- Inside repo, gitignored ❌ (clutters repo)
+- In temp folder ❌ (might get deleted)
+- `anthropic-local-marketplace` ❌ (less specific than `claude-local-marketplace`)
+
+### Strategic Insights
+
+**1. Separate Concerns:**
+- Plugin-light users ≠ Framework developers
+- Their needs are different
+- Don't solve our internal problems in their tool
+- Custom internal tooling is acceptable
+
+**2. Defer Decisions:**
+- Don't commit to architecture before validation
+- Ship minimal, learn from usage, iterate
+- "What if we pivot?" = keep options open
+- Manual process now, automate later if needed
+
+**3. Quality > Feature Scope:**
+- Better to ship simple tool that works
+- Than complex tool that might be wrong
+- Can add features in v1.1, v1.2, plugin-full
+- Foundation matters more than completeness
+
+**4. Research Informs Architecture:**
+- Industry patterns (Changesets, Lerna) provide ideas
+- But don't blindly copy JavaScript tooling
+- PowerShell + file-based system has different constraints
+- Adapt patterns, don't adopt wholesale
+
+**5. Scope Creep Awareness:**
+- Caught ourselves solving bigger problem than needed
+- Refocused on actual goal: ship plugin-light
+- Deferred complex problems (release automation, multi-component)
+- Progress > perfection
+
+### Current State (End of Late Evening)
+
+**FEAT-120:**
+- Milestone 1 complete (research and planning) ✅
+- Ready to implement Milestone 2 (create `Publish-ToLocalMarketplace.ps1`) ⏩
+- Local marketplace location decided: `../claude-local-marketplace/`
+- Clear path forward
+
+**FEAT-118:**
+- Paused at Milestone 7 (testing) ⏸️
+- Blocked by: FEAT-120 completion
+- Still on track: Quality improvement, not schedule risk
+
+**Release Process Architecture:**
+- Plugin-light: Minimal/manual release process (defer automation) ✅
+- Plugin-full: Multi-component support (future) 🔮
+- Framework development: Custom internal process (acceptable for now) ✅
+- Tag strategy: Prefixed tags per component ✅
+- Multi-component work items: Deferred to plugin-full ✅
+
+**Decisions Deferred:**
+- Release automation details (wait for user feedback)
+- Light vs Full architecture details (wait for validation)
+- Multi-component work item handling (plugin-full scope)
+- Anthropic marketplace submission process (research when needed)
+
+### Files Modified (Late Evening)
+
+**Work Items:**
+- `project-hub/work/doing/FEAT-120-plugin-testing-infrastructure.md` (reviewed, no changes)
+
+**Session History:**
+- This file - appended Late Evening Session
+
+### Next Actions
+
+**Immediate (Next Session):**
+1. Implement `Publish-ToLocalMarketplace.ps1` (FEAT-120 Milestone 2)
+   - Create `../claude-local-marketplace/` structure
+   - Generate `marketplace.json` from plugin metadata
+   - Support `-Clean` and `-Build` flags
+   - Auto-detect plugins from `plugins/` directory
+   - Show clear next-step instructions
+
+2. Test local marketplace workflow
+3. Update documentation (TESTING.md, etc.)
+4. Remove cache scripts
+5. Complete FEAT-120
+
+**Then:**
+- Resume FEAT-118 Milestone 8 (final packaging)
+- Ship plugin-light v1.0.0
+
+### Key Learnings
+
+**Listen to nervousness:**
+- User's concern: "I'm nervous about it. Feels like risk waiting to happen."
+- Valid concern about being boxed in by architecture decisions
+- Solution: Defer decisions, keep options open, ship minimal
+
+**Know when to stop planning:**
+- "We're so close to shipping but solving a bigger problem"
+- Recognizing scope creep is critical skill
+- Refocus on actual goal vs interesting problems
+
+**Manual processes are OK:**
+- Automation can wait until patterns emerge
+- Manual steps prevent premature optimization
+- Can always automate later based on real experience
+
+**Research provides options, not mandates:**
+- Industry tools (Changesets) show what's possible
+- But different tech stack = different solutions
+- Adapt ideas, don't copy implementations
+
+**Progressive disclosure has risks:**
+- Couples decisions that might need to change
+- Better: Clear editions with clear scopes
+- Easier to pivot when products are separate
+
+---
+
+## Night Session: FEAT-120 Milestone 2 Implementation
+
+**Continuation:** Implemented Publish-ToLocalMarketplace.ps1 script for local testing infrastructure
+
+### Work Completed
+
+**FEAT-120 Milestone 2: Create Publish-ToLocalMarketplace.ps1**
+
+Implemented complete script for publishing plugins to local Claude Code marketplace:
+
+**Script Features:**
+- Auto-detects plugins from `plugins/` directory
+- Reads metadata from `.claude-plugin/plugin.json` (no version bumping)
+- Creates marketplace at `../claude-local-marketplace/` (parallel to repo)
+- Generates valid `marketplace.json` with Anthropic-compliant structure
+- `-Clean` flag deletes and recreates marketplace
+- `-Build` flag integration (runs Build-Plugin.ps1 first)
+- Color-coded status messages for clarity
+- Comprehensive next-step instructions
+- Error handling with helpful messages and validation
+
+**Testing:**
+- Script executed successfully on first run
+- Fixed PowerShell array handling issue (single item array)
+- Marketplace directory created correctly
+- marketplace.json generated with valid structure
+- `-Clean` flag tested and working
+- Plugin metadata read correctly from spearit-framework-light
+
+**Generated Structure:**
+```
+claude-local-marketplace\
+└── .claude-plugin\
+    └── marketplace.json
+```
+
+**Marketplace.json validated:**
+- Name: "dev-marketplace"
+- Source paths relative from marketplace to plugin directory
+- All required fields present
+- Valid JSON format
+
+### Technical Implementation Details
+
+**Script Architecture (215 lines):**
+1. **Parameter Handling:** `-Clean` and `-Build` switches
+2. **Path Resolution:** Automatic detection of project and marketplace locations
+3. **Plugin Discovery:** Scans `plugins/` for `.claude-plugin/plugin.json` files
+4. **Metadata Extraction:** Reads plugin.json, validates required fields
+5. **Marketplace Generation:** Creates JSON structure per Anthropic specs
+6. **User Guidance:** Clear next-step instructions with examples
+
+**Key Implementation Decisions:**
+
+**1. Array Handling Fix:**
+- **Problem:** `$pluginFolders.Count` failed when single plugin (not an array)
+- **Solution:** Wrap `Get-ChildItem` result in `@()` to force array
+- **Impact:** Script works with 1+ plugins
+
+**2. Relative Paths:**
+- Source in marketplace.json: `../project-framework/plugins/spearit-framework-light`
+- Relative from marketplace location to plugin directory
+- Works regardless of absolute path differences
+
+**3. Validation Strategy:**
+- Check for plugin.json existence
+- Validate required fields (name, version, description)
+- Graceful handling of missing/invalid plugins
+- Clear error messages
+
+### FEAT-120 Status Update
+
+**Milestones Complete:**
+- ✅ Milestone 1: Research and Documentation
+- ✅ Milestone 2: Create Publish-ToLocalMarketplace.ps1
+
+**Next Milestones:**
+- ⏭️ Milestone 3: Update Documentation
+- ⏭️ Milestone 4: Remove Cache Scripts
+- ⏭️ Milestone 5: End-to-End Testing
+- ⏭️ Milestone 6: Final Documentation
+
+**Updated FEAT-120 Work Item:**
+- Reviewed and confirmed alignment with latest decisions
+- Updated marketplace location references
+- Removed .gitignore milestone (not needed - outside repo)
+- Updated all command examples
+- Added scope note about deferred release automation
+
+### Files Created
+
+**Scripts:**
+- `tools/Publish-ToLocalMarketplace.ps1` (215 lines)
+  - PowerShell script for local marketplace management
+  - Testing infrastructure ONLY (not release automation)
+  - Auto-detects plugins, generates marketplace.json
+  - Supports `-Clean` and `-Build` flags
+
+**Marketplace (Ephemeral):**
+- `../claude-local-marketplace/.claude-plugin/marketplace.json`
+  - Generated by script
+  - Points to spearit-framework-light plugin
+  - Dev marketplace for testing
+
+### Files Modified
+
+**Work Items:**
+- `project-hub/work/doing/FEAT-120-plugin-testing-infrastructure.md`
+  - Updated marketplace location references throughout
+  - Removed Milestone 5 (gitignore - not needed)
+  - Renumbered remaining milestones
+  - Updated all command examples to use correct paths
+  - Added scope note clarifying testing-only purpose
+
+**Session History:**
+- This file - appended Night Session
+
+### Current State (End of Night)
+
+**FEAT-120 Progress:**
+- Milestone 2 complete ✅
+- Script working and tested ✅
+- Marketplace created successfully ✅
+- Ready for Milestone 3 (documentation updates) ⏭️
+
+**FEAT-118:**
+- Still paused at Milestone 7 (testing) ⏸️
+- Blocked by: FEAT-120 Milestones 3-6
+- On track: Quality improvement, not schedule risk
+
+**Testing Infrastructure:**
+- Local marketplace functional ✅
+- Script handles single or multiple plugins ✅
+- Clear workflow documented ✅
+- Ready for VSCode testing (Milestone 5) ⏭️
+
+### Next Steps
+
+**Immediate (Milestone 3):**
+1. Update `plugins/TESTING.md` with local marketplace workflow
+2. Update `plugin-best-practices.md` with official pattern
+3. Update `plugin-testing-summary.md` with implementation
+4. Create migration guide from cache scripts approach
+
+**Then (Milestone 4):**
+5. Remove `Install-PluginToCache.ps1` (570 lines)
+6. Remove `Uninstall-PluginFromCache.ps1` (228 lines)
+7. Update documentation references
+
+**Then (Milestone 5):**
+8. Test in actual Claude Code VSCode extension
+9. Verify `/plugin marketplace add ../claude-local-marketplace` works
+10. Test `/plugin install spearit-framework-light@dev-marketplace --scope local`
+11. Test update workflow
+
+### Key Learnings
+
+**PowerShell Array Handling:**
+- Single items don't automatically become arrays
+- Wrap in `@()` to ensure consistent `.Count` behavior
+- Affects all collection operations
+
+**Path Resolution:**
+- Relative paths more portable than absolute
+- Source paths relative from marketplace to plugin
+- Works across different environments
+
+**Script Development:**
+- Clear status messages critical for user experience
+- Color coding helps distinguish info/success/warning/error
+- Next-step instructions reduce friction
+- Validation upfront prevents downstream errors
+
+**Testing First:**
+- Ran script immediately after creation
+- Caught array handling bug early
+- Fixed and re-tested before proceeding
+- Iterative testing reduces compound errors
+
+---
+
 **Last Updated:** 2026-02-10
-**Status:** Session complete - FEAT-120 created, FEAT-118 paused, ready to implement official testing approach
+**Status:** Session complete - FEAT-120 Milestone 2 implemented and tested, ready for Milestone 3
