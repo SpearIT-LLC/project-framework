@@ -330,6 +330,106 @@ Anthropic's plugin system supports **four marketplace sources:**
 
 ---
 
+## Plugin System Internals (Discovered 2026-02-11)
+
+### Storage Structure
+
+During troubleshooting of plugin uninstall issues, discovered Claude's internal plugin storage structure:
+
+```
+~/.claude/plugins/
+├── marketplaces/
+│   └── claude-plugins-official/     # GitHub marketplaces are cloned here
+├── cache/
+│   ├── claude-plugins-official/     # Installed plugins from official marketplace
+│   └── dev-marketplace/             # Installed plugins from local marketplace
+│       └── spearit-framework-light/
+│           └── 1.0.0/               # Plugin files cached here
+├── known_marketplaces.json          # Marketplace registry
+└── installed_plugins.json           # Plugin installation metadata
+```
+
+### Marketplace Types Behavior
+
+**GitHub-based marketplaces** (official):
+- Claude clones the entire marketplace to `marketplaces/` directory
+- `known_marketplaces.json` → `installLocation` points to the cloned directory
+- Example: `claude-plugins-official`
+
+**Directory-based marketplaces** (local dev):
+- Claude does NOT copy the marketplace
+- `known_marketplaces.json` → `installLocation` points to original source directory
+- Example: `../claude-local-marketplace` stays in place
+
+**Plugin installation** (both types):
+- When you run `/plugin install`, files are ALWAYS cached to `cache/{marketplace}/{plugin}/{version}/`
+- This happens regardless of marketplace type
+- Cached files are what Claude actually loads when using the plugin
+
+### Metadata Files
+
+**known_marketplaces.json:**
+```json
+{
+  "dev-marketplace": {
+    "source": {
+      "source": "directory",
+      "path": "c:\\Users\\...\\claude-local-marketplace"
+    },
+    "installLocation": "c:\\Users\\...\\claude-local-marketplace",
+    "lastUpdated": "2026-02-11T02:33:35.500Z"
+  }
+}
+```
+
+**installed_plugins.json:**
+```json
+{
+  "version": 2,
+  "plugins": {
+    "spearit-framework-light@dev-marketplace": [
+      {
+        "scope": "local",
+        "installPath": "C:\\Users\\...\\cache\\dev-marketplace\\spearit-framework-light\\1.0.0",
+        "version": "1.0.0",
+        "installedAt": "2026-02-11T14:03:54.639Z",
+        "lastUpdated": "2026-02-11T14:03:54.639Z",
+        "projectPath": "c:\\Users\\...\\project-framework"
+      }
+    ]
+  }
+}
+```
+
+### Bug: Uninstall Fails for Local-Scoped Plugins
+
+**Problem:** `claude plugin uninstall` command has contradictory error messages:
+
+- **From VSCode UI:** "Plugin is installed in local scope, not user. Use --scope local to uninstall."
+- **From CLI with --scope local:** "Plugin is not installed in local scope. Use --scope to specify the correct scope."
+- **From plugin list:** Shows correctly as "Scope: local"
+
+**Root cause:** Bug in Claude CLI's uninstall logic when dealing with local-scoped plugins installed from directory-based marketplaces.
+
+**Workaround - Manual Uninstall:**
+
+1. Delete cached plugin:
+   ```powershell
+   Remove-Item -Recurse -Force "~/.claude/plugins/cache/{marketplace}/{plugin-name}"
+   ```
+
+2. Edit `~/.claude/plugins/installed_plugins.json`:
+   - Remove the plugin entry from `plugins` object
+   - Save the file
+
+3. Restart VSCode/Claude Code
+
+4. Verify with `claude plugin list`
+
+**Key insight:** The plugin storage is well-structured and can be safely edited manually when CLI commands fail.
+
+---
+
 ## Notes
 
 ### Timeline

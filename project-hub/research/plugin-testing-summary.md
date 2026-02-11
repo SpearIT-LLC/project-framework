@@ -1,7 +1,7 @@
 # Plugin Testing - Implementation Summary
 
 **Date:** 2026-02-10
-**Updated:** 2026-02-10 (FEAT-120 - Local marketplace approach)
+**Updated:** 2026-02-11 (Added two-level plugin architecture and project-level enablement)
 **Related:** FEAT-118 (Claude Code Plugin MVP), FEAT-120 (Plugin Testing Infrastructure)
 
 ---
@@ -224,10 +224,15 @@ git tag -a v1.0.0 -m "Release v1.0.0"
 
 ### Issue: Changes not reflected
 **Solution:**
-1. Update marketplace: `.\tools\Publish-ToLocalMarketplace.ps1`
-2. Refresh in Claude: `/plugin marketplace update dev-marketplace`
-3. Restart VSCode
-4. Changes should now be visible
+1. **Did you change `plugin.json`?**
+   - **No** (just command files): Just restart VSCode - symlink handles it
+   - **Yes** (metadata changed):
+     1. Update marketplace: `.\tools\Publish-ToLocalMarketplace.ps1`
+     2. Refresh in Claude: `/plugin marketplace update dev-marketplace`
+     3. Restart VSCode
+2. If still not working, check plugin is installed: `/plugin list`
+
+**Why this happens:** The marketplace uses directory junctions (symlinks) to the plugin source. Code changes are immediately visible through the symlink - only `plugin.json` metadata requires republishing to the marketplace.
 
 ### Issue: Command works in CLI, not VSCode
 **Solution:**
@@ -272,6 +277,173 @@ New-Item -ItemType Junction -Path "$marketplace/$pluginName" -Target "$source/$p
 - ❌ Backslashes: `"..\\project\\plugins\\plugin"`
 - ✅ Local relative with forward slash: `"./plugin-name"` (inside marketplace)
 
+### Issue: Plugin uninstall fails with contradictory errors
+**Symptom:** VSCode UI and CLI give different error messages about plugin scope:
+- VSCode: "Plugin is installed in local scope, not user. Use --scope local to uninstall."
+- CLI with `--scope local`: "Plugin is not installed in local scope."
+- `claude plugin list` shows: "Scope: local"
+
+**Root Cause:** Bug in Claude CLI's uninstall logic when dealing with local-scoped plugins installed from directory-based marketplaces.
+
+**Solution - Manual Uninstall:**
+
+1. **Delete cached plugin directory:**
+   ```powershell
+   Remove-Item -Recurse -Force "~/.claude/plugins/cache/{marketplace-name}/{plugin-name}"
+   ```
+
+2. **Edit installed_plugins.json:**
+   - Location: `~/.claude/plugins/installed_plugins.json`
+   - Remove the plugin entry from the `plugins` object:
+   ```json
+   {
+     "version": 2,
+     "plugins": {
+       "plugin-name@marketplace": [...]  // Delete this entire entry
+     }
+   }
+   ```
+
+3. **Restart VSCode/Claude Code**
+
+4. **Verify removal:** `claude plugin list`
+
+**Understanding Claude's Plugin Storage:**
+
+During troubleshooting, we discovered Claude's internal plugin storage structure:
+
+```
+~/.claude/plugins/
+├── marketplaces/
+│   └── claude-plugins-official/     # GitHub marketplaces cloned here
+├── cache/
+│   ├── claude-plugins-official/     # Installed plugins from official
+│   └── dev-marketplace/             # Installed plugins from local marketplace
+│       └── spearit-framework-light/
+│           └── 1.0.0/               # Plugin files cached here
+├── known_marketplaces.json          # Marketplace registry
+└── installed_plugins.json           # Plugin installation metadata
+```
+
+**Key insights:**
+- **GitHub marketplaces** are cloned to `marketplaces/` directory
+- **Directory marketplaces** (local dev) are NOT copied, just referenced
+- **All installed plugins** are cached to `cache/{marketplace}/{plugin}/{version}/` regardless of source type
+- **Metadata is separate** from cache - both must be cleaned for manual uninstall
+- **Storage is well-structured JSON** that can be safely edited manually when CLI fails
+
+**known_marketplaces.json structure:**
+```json
+{
+  "dev-marketplace": {
+    "source": {
+      "source": "directory",
+      "path": "c:\\Users\\...\\claude-local-marketplace"
+    },
+    "installLocation": "c:\\Users\\...\\claude-local-marketplace",
+    "lastUpdated": "2026-02-11T02:33:35.500Z"
+  }
+}
+```
+
+**installed_plugins.json structure:**
+```json
+{
+  "version": 2,
+  "plugins": {
+    "spearit-framework-light@dev-marketplace": [
+      {
+        "scope": "local",
+        "installPath": "C:\\Users\\...\\cache\\dev-marketplace\\spearit-framework-light\\1.0.0",
+        "version": "1.0.0",
+        "installedAt": "2026-02-11T14:03:54.639Z",
+        "lastUpdated": "2026-02-11T14:03:54.639Z",
+        "projectPath": "c:\\Users\\...\\project-framework"
+      }
+    ]
+  }
+}
+```
+
+### Issue: Plugin reinstalls after manual removal
+**Symptom:** After deleting cache and clearing `installed_plugins.json`, restarting Claude CLI reinstalls the plugin automatically.
+
+**Root Cause:** Project-level `enabledPlugins` setting in `.claude/settings.local.json` tells Claude CLI to auto-install the plugin for this project.
+
+**Solution - Understanding Plugin Architecture:**
+
+Claude Code uses a **two-level plugin architecture**:
+
+#### Global Level: `~/.claude/plugins/`
+- **Installed plugins** (`installed_plugins.json`) - which plugins exist on the system
+- **Plugin cache** (`cache/{marketplace}/{plugin}/{version}/`) - the actual plugin files
+- **Scope metadata** - whether plugin is `user` (all projects) or `local` (specific project)
+- **Marketplace registry** (`known_marketplaces.json`) - available plugin sources
+
+#### Project Level: `.claude/settings.local.json`
+- **Enabled plugins** (`enabledPlugins` object) - which installed plugins are active for *this* project
+- Can enable/disable any installed plugin regardless of its installation scope
+- Setting is checked on CLI startup and triggers auto-installation if needed
+
+#### Plugin States in Project Settings
+
+```json
+// Enabled: Plugin is active for this project
+"enabledPlugins": {
+  "plugin-name@marketplace": true
+}
+
+// Disabled: Plugin is associated but not loaded (fast re-enable)
+"enabledPlugins": {
+  "plugin-name@marketplace": false
+}
+
+// Removed: Plugin has no association with this project
+"enabledPlugins": {}
+```
+
+#### Managing Plugin State During Development
+
+**For active testing:**
+```json
+"enabledPlugins": {
+  "spearit-framework-light@dev-marketplace": true
+}
+```
+
+**To pause testing (keeps cache, fast resume):**
+```json
+"enabledPlugins": {
+  "spearit-framework-light@dev-marketplace": false
+}
+```
+
+**To completely remove from project (deletes cache):**
+```json
+"enabledPlugins": {}
+```
+
+#### Complete Uninstall Procedure
+
+To remove a plugin from ALL projects:
+
+1. **Remove from project settings** (`.claude/settings.local.json`):
+   - Set to `false` (disable) or `{}` (remove)
+
+2. **Delete global cache:**
+   ```powershell
+   Remove-Item -Recurse -Force "~/.claude/plugins/cache/{marketplace}/{plugin}"
+   ```
+
+3. **Edit global metadata** (`~/.claude/plugins/installed_plugins.json`):
+   - Remove the plugin entry from `plugins` object
+
+4. **Restart VSCode/Claude Code**
+
+5. **Verify:** `claude plugin list` should not show the plugin
+
+**Key Insight:** Project settings drive installation. Even if you clear global state, Claude CLI will reinstall if project has `enabledPlugins: true`. Always start with project settings when uninstalling.
+
 ---
 
 ## Resources
@@ -294,5 +466,5 @@ New-Item -ItemType Junction -Path "$marketplace/$pluginName" -Target "$source/$p
 
 ---
 
-**Last Updated:** 2026-02-10 (Updated for FEAT-120 - Local marketplace approach)
+**Last Updated:** 2026-02-11 (Added two-level plugin architecture and project-level enablement)
 **Status:** Complete - Testing infrastructure uses official Anthropic patterns

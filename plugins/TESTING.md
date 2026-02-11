@@ -33,15 +33,22 @@ claude --plugin-dir ./plugins/spearit-framework-light --debug
 ```
 
 **After changes to plugin:**
+
 ```powershell
-# Update marketplace (if metadata changed)
+# For command file changes (*.md, source code):
+# Just restart VSCode - changes are already reflected via symlink
+
+# For metadata changes (plugin.json - version, description, etc.):
 .\tools\Publish-ToLocalMarketplace.ps1
-
-# Refresh in Claude Code
 /plugin marketplace update dev-marketplace
-
-# Restart Claude Code/VSCode
+# Then restart VSCode
 ```
+
+**Why this works:** The marketplace uses a directory junction (symlink) pointing to your actual plugin source:
+```
+marketplace/plugin-name → plugins/plugin-name
+```
+VSCode loads from the symlink, so code changes are immediately available. Only metadata in `plugin.json` requires republishing.
 
 ---
 
@@ -120,10 +127,13 @@ claude --plugin-dir ./plugins/spearit-framework-light --debug
 ### Changes not reflected after installation
 
 **Solution:**
-1. Update marketplace: `.\tools\Publish-ToLocalMarketplace.ps1`
-2. Refresh in Claude: `/plugin marketplace update dev-marketplace`
-3. Restart VSCode/Claude Code
-4. Changes should now be visible
+1. **Did you change `plugin.json`?**
+   - **No** (just command files): Just restart VSCode - symlink handles it
+   - **Yes** (metadata changed):
+     1. Update marketplace: `.\tools\Publish-ToLocalMarketplace.ps1`
+     2. Refresh in Claude: `/plugin marketplace update dev-marketplace`
+     3. Restart VSCode
+2. If still not working, check plugin is installed: `/plugin list`
 
 ### Command works in CLI but not VSCode
 
@@ -175,6 +185,12 @@ claude --plugin-dir ./plugins/spearit-framework-light --debug
 **Purpose:** Ephemeral testing infrastructure for local development
 **Can be deleted/recreated anytime** - it's just testing infrastructure
 
+**How it works:**
+- Uses directory junctions (symlinks) pointing to plugin source
+- VSCode loads plugins through the symlink
+- Code changes are immediately available (just restart VSCode)
+- Only `plugin.json` metadata changes require republishing
+
 ## Resources
 
 - **Plugin overview:** [README.md](README.md)
@@ -192,4 +208,4 @@ claude --plugin-dir ./plugins/spearit-framework-light --debug
 
 ---
 
-**Last Updated:** 2026-02-10
+**Last Updated:** 2026-02-11
