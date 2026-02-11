@@ -185,13 +185,22 @@ try {
             continue
         }
 
-        # Create marketplace entry
-        # Source path is relative from marketplace to plugin directory
-        $relativePath = Join-Path ".." "project-framework" "plugins" $folder.Name
+        # Create symlink to plugin in marketplace
+        # This allows live development - changes in source are immediately reflected
+        $pluginLinkPath = Join-Path $marketplaceRoot $folder.Name
 
+        if (Test-Path $pluginLinkPath) {
+            Remove-Item $pluginLinkPath -Force -Recurse -ErrorAction SilentlyContinue
+        }
+
+        # Create directory junction (symlink) on Windows
+        $null = New-Item -ItemType Junction -Path $pluginLinkPath -Target $folder.FullName -Force
+
+        # Create marketplace entry
+        # Source is relative path within marketplace (where the symlink points)
         $entry = @{
             name = $metadata.name
-            source = $relativePath
+            source = "./$($folder.Name)"
             description = if ($metadata.description) { $metadata.description } else { "No description" }
             version = if ($metadata.version) { $metadata.version } else { "0.0.0" }
         }

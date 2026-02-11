@@ -353,8 +353,56 @@ Use Anthropic's official local marketplace pattern:
 1. Auto-detects plugins in `plugins/` directory
 2. Reads metadata from `plugin.json`
 3. Creates `marketplace.json` at `../claude-local-marketplace/`
-4. Points marketplace to plugin source directory
-5. Shows next-step instructions
+4. **Creates directory junction** from marketplace to plugin source
+5. Sets source field to local path within marketplace
+6. Shows next-step instructions
+
+**Technical Details: How the Marketplace Source Field Works**
+
+Claude Code's marketplace validation requires the `source` field to point to plugin files **within or relative to the marketplace directory**. You cannot use external absolute or relative paths.
+
+**Directory Structure Created:**
+```
+claude-local-marketplace/
+├── .claude-plugin/
+│   └── marketplace.json
+└── spearit-framework-light/  ← Junction to project/plugins/spearit-framework-light
+```
+
+**marketplace.json Format:**
+```json
+{
+  "name": "dev-marketplace",
+  "plugins": [{
+    "name": "spearit-framework-light",
+    "source": "./spearit-framework-light",  ← Relative path within marketplace
+    "version": "1.0.0",
+    "description": "..."
+  }]
+}
+```
+
+**The Junction Approach:**
+The script creates a **directory junction** (Windows symlink) that makes the plugin source appear to be inside the marketplace while actually pointing to the original source directory:
+
+```powershell
+# Script creates junction
+New-Item -ItemType Junction `
+  -Path "$marketplace/spearit-framework-light" `
+  -Target "$project/plugins/spearit-framework-light"
+```
+
+**Why This Works:**
+- ✅ Satisfies Claude Code validation (source resolves within marketplace)
+- ✅ Enables live development (changes immediately reflected, no copying)
+- ✅ Cross-platform compatible (uses forward slashes in JSON)
+- ✅ Official Anthropic pattern for local plugin testing
+
+**What Doesn't Work:**
+- ❌ Absolute paths: `"C:/path/to/plugin"` → Validation error
+- ❌ External relative paths: `"../project-framework/plugins/plugin"` → Validation error
+- ❌ Backslashes: `"..\\project\\plugins\\plugin"` → Validation error
+- ✅ **Local relative with forward slash:** `"./plugin-name"` → Works!
 
 **Return to baseline:**
 ```powershell

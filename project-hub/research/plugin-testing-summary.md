@@ -242,6 +242,36 @@ git tag -a v1.0.0 -m "Release v1.0.0"
 3. Add "Do NOT use Task tool" instructions
 4. Add performance budgets
 
+### Issue: Marketplace validation error "plugins.0.source: Invalid input"
+**Root Cause:** Local marketplaces require plugin files to be **inside** the marketplace directory structure, not externally referenced.
+
+**Solution:**
+1. Use **directory junctions** (symlinks) to make plugin source appear inside marketplace
+2. Script creates junction: `marketplace/plugin-name → project/plugins/plugin-name`
+3. Set source field to: `"source": "./plugin-name"`
+4. This enables live development while satisfying Claude Code validation
+
+**Why this works:**
+- Claude Code validates that source path resolves within marketplace
+- Junction makes external plugin directory appear local
+- Changes to source files are immediately reflected (no copying needed)
+- Cross-platform compatible with forward slashes
+
+**Technical Details:**
+```powershell
+# Create junction on Windows (symlink equivalent)
+New-Item -ItemType Junction -Path "$marketplace/$pluginName" -Target "$source/$pluginName"
+
+# marketplace.json source field
+"source": "./$pluginName"  # Points to junction within marketplace
+```
+
+**What doesn't work:**
+- ❌ Absolute paths: `"C:/path/to/plugin"`
+- ❌ External relative paths: `"../project/plugins/plugin"`
+- ❌ Backslashes: `"..\\project\\plugins\\plugin"`
+- ✅ Local relative with forward slash: `"./plugin-name"` (inside marketplace)
+
 ---
 
 ## Resources
