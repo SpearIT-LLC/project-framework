@@ -202,192 +202,25 @@ Get user confirmation before proceeding.
 
 ### Step 5: Generate Detailed Work Item
 
-Create comprehensive content based on type:
-
-#### FEAT Template (Detailed):
-```markdown
-# Feature: {Title}
-
-**ID:** {TYPE-ID}
-**Type:** Feature
-**Priority:** {Inferred from conversation - High/Medium/Low}
-**Created:** {Current Date YYYY-MM-DD}
-
----
-
-## Summary
-
-{2-3 sentence summary from discovery}
-
----
-
-## Problem Statement
-
-{Detailed problem from conversation}
-
-**Context:**
-{Why now? What's driving this?}
-
-**Impact:**
-{Who benefits? How much?}
-
----
-
-## Requirements
-
-{Functional requirements discovered}
-
-**Must Have:**
-- {Core requirement 1}
-- {Core requirement 2}
-
-**Out of Scope (for this version):**
-- {Explicitly excluded item 1}
-- {Explicitly excluded item 2}
-
----
-
-## Proposed Solution
-
-{High-level approach discussed}
-
-**Technical Approach:**
-{If discussed in discovery}
-
-**Constraints:**
-{Technical or business constraints}
-
----
-
-## Acceptance Criteria
-
-{Testable criteria from conversation}
-- [ ] {Criterion 1}
-- [ ] {Criterion 2}
-- [ ] {Criterion 3}
-
----
-
-## Implementation Notes
-
-{Any technical details, dependencies, or considerations from discovery}
-
----
-
-## Questions / Open Issues
-
-{Unresolved items to address during implementation}
-
----
-
-**Last Updated:** {Current Date YYYY-MM-DD}
-**Status:** Backlog
-```
-
-#### BUG Template (Detailed):
-```markdown
-# Bug: {Title}
-
-**ID:** {TYPE-ID}
-**Type:** Bug
-**Priority:** {Based on severity/impact}
-**Created:** {Current Date YYYY-MM-DD}
-
----
-
-## Summary
-
-{Brief description}
-
----
-
-## Bug Description
-
-**Observed Behavior:**
-{What actually happens}
-
-**Expected Behavior:**
-{What should happen}
-
-**Impact:**
-- Severity: {Critical/High/Medium/Low}
-- Users Affected: {Who/how many}
-- Workaround: {If available}
-
----
-
-## Reproduction Steps
-
-{Clear steps to reproduce}
-1. {Step 1}
-2. {Step 2}
-3. {Observe: incorrect behavior}
-
----
-
-## Root Cause
-
-{If identified during discovery, otherwise "To be determined"}
-
----
-
-## Fix Criteria
-
-- [ ] {Specific fix criterion 1}
-- [ ] {Specific fix criterion 2}
-- [ ] Regression tests added
-
----
-
-## Notes
-
-{Any additional context or observations}
-
----
-
-**Last Updated:** {Current Date YYYY-MM-DD}
-**Status:** Backlog
-```
-
-#### CHORE Template (Simplified):
-```markdown
-# Chore: {Title}
-
-**ID:** {TYPE-ID}
-**Type:** Chore
-**Priority:** {Priority}
-**Created:** {Current Date YYYY-MM-DD}
-
----
-
-## Summary
-
-{What needs to be done}
-
----
-
-## Scope
-
-{Detailed scope from discovery}
-
----
-
-## Completion Criteria
-
-- [ ] {Criterion 1}
-- [ ] {Criterion 2}
-
----
-
-## Dependencies
-
-{If any}
-
----
-
-**Last Updated:** {Current Date YYYY-MM-DD}
-**Status:** Backlog
-```
+**Templates Location:** `plugins/spearit-framework-light/templates/`
+
+Use the appropriate template based on work item type:
+- **FEAT:** Read `templates/FEAT-template.md`
+- **BUG:** Read `templates/BUG-template.md`
+- **CHORE:** Read `templates/CHORE-template.md`
+
+**Process:**
+1. Read the template file for the work item type
+2. Replace all `{placeholders}` with information gathered during conversation:
+   - `{Title}` - Original title from user
+   - `{TYPE-ID}` - e.g., "FEAT-043"
+   - `{Priority}` - High/Medium/Low (inferred from conversation)
+   - `{Date}` or `{Current Date YYYY-MM-DD}` - Current date (YYYY-MM-DD)
+   - `{Summary}` - 2-3 sentence summary from discovery
+   - `{Problem}` - Problem statement from conversation
+   - All other placeholders specific to the template
+3. Remove any sections that weren't discussed (e.g., if no constraints, remove "Constraints:" section)
+4. Ensure all placeholder text is replaced with actual content from conversation
 
 ### Step 6: Create File
 
@@ -459,6 +292,7 @@ Work item ready! Use /spearit-framework-light:move FEAT-043 todo when ready to c
 
 **Tools to use:**
 - Glob: Find existing work items for ID assignment
+- Read: Read template files from templates/ directory
 - Write: Create work item file
 - Bash: Git add file
 - (NO AskUserQuestion - just converse naturally)
