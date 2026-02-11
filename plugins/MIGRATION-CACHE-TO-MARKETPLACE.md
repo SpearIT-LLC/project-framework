@@ -193,7 +193,7 @@ cd C:\Users\gelliott\OneDrive\Documents\SpearIT\Projects\project-framework
 
 ### Do I need to keep the old scripts?
 
-**No.** The cache scripts (`Install-PluginToCache.ps1` and `Uninstall-PluginFromCache.ps1`) are deprecated and will be removed. Use the marketplace approach going forward.
+**No.** The cache scripts (`Install-PluginToCache.ps1` and `Uninstall-PluginFromCache.ps1`) have been removed as of 2026-02-11. Use the marketplace approach instead.
 
 ### Can I still use `--plugin-dir` for CLI testing?
 

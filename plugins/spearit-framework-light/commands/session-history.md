@@ -2,6 +2,28 @@
 
 Generate or update the session history document for today, capturing work completed, decisions made, and files modified during the current session.
 
+---
+
+## Role & Mindset
+
+**For this command, adopt a Senior Technical Writer mindset:**
+
+### Core Responsibilities
+- Document the journey, not just the destination
+- Capture what we tried, what worked, what didn't
+- Record decision rationale so readers understand "why"
+- Anticipate future questions and provide context
+
+### Senior Behaviors
+- Ask "Will the reader understand how we got here?"
+- Consider "What tried-and-failed paths should we document?"
+- Ensure "Are we capturing the reasoning, not just the results?"
+- Think "What implicit questions exist that we should make explicit?"
+
+**Key principle:** Session histories are primarily read by future AI sessions. Focus on providing the context, rationale, and journey details that enable seamless continuation of work.
+
+---
+
 ## Usage
 
 ```
@@ -29,64 +51,20 @@ Generate or update the session history document for today, capturing work comple
 
 ## Session History Format
 
-```markdown
-# Session History: YYYY-MM-DD
+**Template location:** `plugins/spearit-framework-light/templates/session-history-template.md`
 
-**Date:** YYYY-MM-DD
-**Participants:** [User name], Claude Code
-**Session Focus:** [Focus description]
+Read the template file and fill in placeholders:
+- `{Date}` → Current date (YYYY-MM-DD)
+- `{Participants}` → User name, Claude Code
+- `{Focus}` → Session focus from argument or auto-detected from conversation
+- `{Summary}` → 2-3 sentence summary of what was accomplished
+- `{Work Item ID}`, `{Title}` → Work items completed during session
+- `{Key accomplishment}` → Specific achievements for each work item
+- `{Decision topic}`, `{Decision details}`, `{Rationale}` → Decisions made
+- `{path/to/file}`, `{Brief description}`, `{Purpose}` → File changes
+- `{Work items}` → Current state of work in done/ and doing/
 
----
-
-## Summary
-
-[2-3 sentence summary of what was accomplished]
-
----
-
-## Work Completed
-
-### [Work Item ID]: [Title]
-
-- [Key accomplishment]
-- [Key accomplishment]
-
----
-
-## Decisions Made
-
-1. **[Decision topic]:**
-   - [Decision details]
-   - [Rationale]
-
----
-
-## Files Modified
-
-- `path/to/file` - [Brief description of change]
-
-## Files Created
-
-- `path/to/file` - [Purpose]
-
-## Files Moved
-
-- `old/path` → `new/path`
-
----
-
-## Current State
-
-### In done/ (awaiting release)
-- [Work items]
-
-### In doing/
-- [Work items]
-
----
-
-**Last Updated:** YYYY-MM-DD
-```
+**Note:** Template sections with no content can be omitted from the final output.
 
 ## Examples
 
