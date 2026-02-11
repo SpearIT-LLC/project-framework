@@ -143,12 +143,12 @@ Anthropic's plugin system supports **four marketplace sources:**
 - [x] **STOP - Review script implementation**
 
 ### Milestone 3: Update Documentation
-- [ ] Update `plugins/TESTING.md` with local marketplace workflow
-- [ ] Update `plugins/README.md` references
-- [ ] Update `project-hub/research/plugin-best-practices.md`
-- [ ] Update `project-hub/research/plugin-testing-summary.md`
-- [ ] Create migration guide (old → new workflow)
-- [ ] **STOP - Review documentation updates**
+- [x] Update `plugins/TESTING.md` with local marketplace workflow
+- [x] Update `plugins/README.md` references
+- [x] Update `project-hub/research/plugin-best-practices.md`
+- [x] Update `project-hub/research/plugin-testing-summary.md`
+- [x] Create migration guide (old → new workflow)
+- [x] **STOP - Review documentation updates**
 
 ### Milestone 4: Remove Cache Scripts
 - [ ] Remove `tools/Install-PluginToCache.ps1`
@@ -349,5 +349,5 @@ Anthropic's plugin system supports **four marketplace sources:**
 
 ---
 
-**Status:** Milestone 2 complete - Script implemented and tested
-**Next Step:** Begin Milestone 3 (Update documentation)
+**Status:** Milestone 3 complete - Documentation updated
+**Next Step:** Begin Milestone 4 (Remove cache scripts)
