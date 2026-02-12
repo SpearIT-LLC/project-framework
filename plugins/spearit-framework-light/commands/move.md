@@ -43,51 +43,42 @@ Move a work item between workflow folders with policy enforcement, transition va
 
 ---
 
-## Embedded Transition Checklists
+## Execution Approach
 
-**CRITICAL:** Follow these checklists completely before executing any move. If ANY check fails, STOP and report what's missing.
+**Philosophy:** Trust user judgment. Only enforce critical gates that add real value.
+
+**When to read the work item file:**
+- **→ doing/**: YES - Pre-implementation review is critical
+- **All other moves**: NO - Just validate transition and execute
+
+---
+
+## Embedded Transition Checklists
 
 ### → backlog/
 
-**Use case:** Creating new work items
+**Use case:** Deprioritizing work or creating new items
 
-**Before moving:**
-1. ✅ Verify work item created from template
-2. ✅ Verify ID assigned (scan ALL work/ locations and history/releases/ first)
+**Execution:**
+1. Validate transition is legal (check matrix above)
+2. Execute: `git mv project-hub/work/[source]/ITEM-NNN-*.md project-hub/work/backlog/`
+3. Done
 
-**Execute move:**
-```bash
-git mv project-hub/work/[source]/ITEM-NNN-*.md project-hub/work/backlog/
-```
-
-**After move:**
-- Commit new work item(s) (immediately or after batch creation)
+**No file read required.** User is asserting this should go to backlog.
 
 ---
 
 ### → todo/
 
-**Use case:** Committing to work (from backlog) or deprioritizing (from doing)
+**Use case:** Committing to work (from backlog) or pausing work (from doing)
 
-**Before moving:**
-1. ✅ Validate transition (check matrix above)
-2. ✅ Read work item file
-3. ✅ Verify `Priority` field is set
-4. ✅ Verify user has approved the work
-5. ✅ Check `todo/.limit` file (if exists) - WIP limit not exceeded
+**Execution:**
+1. Validate transition is legal (check matrix above)
+2. Optional: Check `todo/.limit` file (if exists) and warn if WIP limit exceeded, but don't block
+3. Execute: `git mv project-hub/work/[source]/ITEM-NNN-*.md project-hub/work/todo/`
+4. Done
 
-**If ANY check fails:**
-- STOP and report what's missing
-- Offer to fix (e.g., "FEAT-042 has no Priority set. Set it now?")
-- Do NOT proceed with move
-
-**Execute move:**
-```bash
-git mv project-hub/work/[source]/ITEM-NNN-*.md project-hub/work/todo/
-```
-
-**After move:**
-- No additional actions required
+**No file read required.** User is asserting this work should be in todo queue.
 
 ---
 
@@ -96,36 +87,23 @@ git mv project-hub/work/[source]/ITEM-NNN-*.md project-hub/work/todo/
 **Use case:** Starting work on a committed item
 
 **Before moving:**
-1. ✅ Validate transition (check matrix above)
-2. ✅ Read work item file COMPLETELY
-3. ✅ Check `Depends On` field - all dependencies must be in done/
-4. ✅ Check `doing/.limit` file (if exists) - verify WIP not exceeded
-   - Default limit: 1 for solo developers, 2 for teams
-   - Count current items in doing/ (including subdirectories)
-
-**If ANY check fails:**
-- STOP and report what's missing
-- Examples:
-  - "FEAT-042 depends on FEAT-038 which is still in todo. Complete FEAT-038 first?"
-  - "WIP limit reached (2/2). Complete or pause current work first?"
-- Do NOT proceed with move
-
-**Execute move:**
-```bash
-git mv project-hub/work/[source]/ITEM-NNN-*.md project-hub/work/doing/
-```
+1. ✅ Validate transition is legal (check matrix above)
+2. ✅ Optional: Check `doing/.limit` file (if exists) and warn if WIP exceeded, but don't block
+3. ✅ Execute: `git mv project-hub/work/[source]/ITEM-NNN-*.md project-hub/work/doing/`
 
 **After move - Pre-Implementation Review (REQUIRED):**
-1. ✅ Identify open questions in the work item:
+1. ✅ Read work item file COMPLETELY
+2. ✅ Check `Depends On` field - warn if dependencies not in done/, but don't block
+3. ✅ Identify open questions in the work item:
    - Search for: TODO, TBD, DECIDE, Question, "Option A/B/C"
    - Check for incomplete design sections
    - Note any assumptions that need validation
-2. ✅ Present pre-implementation summary to user:
+4. ✅ Present pre-implementation summary to user:
    - What we're building
    - Key design decisions
    - Open questions found
    - Implementation scope
-3. ✅ **STOP - Wait for user confirmation before implementing**
+5. ✅ **STOP - Wait for user confirmation before implementing**
 
 **Do NOT start implementation until user approves the plan.**
 
@@ -169,32 +147,14 @@ AI: [Proceeds to next checklist item]
 
 **Use case:** Completing work
 
-**Before moving:**
-1. ✅ Validate transition (check matrix above)
-2. ✅ Read work item file COMPLETELY
-3. ✅ Verify ALL acceptance criteria are checked `[x]` (scan for `- [ ]`)
-4. ✅ Verify `Completed` date is set (format: YYYY-MM-DD)
-5. ✅ Verify user has approved the completed work
+**Execution:**
+1. Validate transition is legal (check matrix above)
+2. Execute: `git mv project-hub/work/doing/ITEM-NNN-*.md project-hub/work/done/`
+3. Done
 
-**If ANY check fails:**
-- STOP and report what's missing
-- Offer to fix:
-  - "FEAT-042 has 2 unchecked acceptance criteria. Mark them complete?"
-  - "No Completed date. Set it to today (2026-02-04)?"
-- Do NOT proceed with move until ALL criteria are met
+**No file read required.** User is asserting the work is complete.
 
-**Execute move:**
-```bash
-git mv project-hub/work/doing/ITEM-NNN-*.md project-hub/work/done/
-```
-
-**After move (REQUIRED):**
-1. ✅ Update session history using `/spearit-framework-light:session-history`
-2. ✅ Commit the changes:
-   ```bash
-   git add .
-   git commit -m "feat: Complete ITEM-NNN - [brief description]"
-   ```
+**Optional:** Remind user they can document completion in session history, but don't require it.
 
 ---
 
@@ -214,30 +174,14 @@ git mv project-hub/work/doing/ITEM-NNN-*.md project-hub/work/done/
 
 **Rule of thumb:** If the work item as written will *never* be done, cancel it. If it *might* be done later, deprioritize it.
 
-**Before moving:**
-1. ✅ Validate transition (check matrix above)
-2. ✅ Read work item file
-3. ✅ Verify cancellation metadata added:
-   - `**Status:** Cancelled`
-   - `**Cancelled Date:** YYYY-MM-DD`
-   - `**Cancellation Reason:** [Brief explanation]`
-4. ✅ Optional but recommended:
-   - `**Superseded By:** ITEM-NNN` (if applicable)
-   - `**Lessons Learned:** [What we learned]`
+**Execution:**
+1. Validate transition is legal (check matrix above)
+2. Execute: `git mv project-hub/work/[source]/ITEM-NNN-*.md project-hub/history/archive/`
+3. Done
 
-**If metadata missing:**
-- STOP and offer to add it
-- Ask user for cancellation reason
-- Suggest lessons learned if valuable
+**No file read required.** User is asserting this work should be cancelled.
 
-**Execute move:**
-```bash
-git mv project-hub/work/[source]/ITEM-NNN-*.md project-hub/history/archive/
-```
-
-**After move:**
-1. ✅ Update session history noting the cancellation
-2. ✅ Commit: `git commit -m "chore: Cancel ITEM-NNN - [brief reason]"`
+**Optional:** After move, suggest adding cancellation metadata (Status: Cancelled, Cancelled Date, Reason) but don't block the move if missing.
 
 ---
 
@@ -267,11 +211,11 @@ git mv project-hub/work/done/*.md project-hub/history/releases/vX.Y.Z/
 ## Examples
 
 ```bash
-/spearit-framework-light:move FEAT-042 todo      # Move from backlog to todo (committing)
-/spearit-framework-light:move FEAT-042 doing     # Start work (with pre-implementation review)
-/spearit-framework-light:move FEAT-042 done      # Complete work (with validation)
-/spearit-framework-light:move BUGFIX-001 backlog # Deprioritize back to backlog
-/spearit-framework-light:move FEAT-099 archive   # Cancel work (add metadata first)
+/spearit-framework-light:move FEAT-042 todo      # Move to todo (instant)
+/spearit-framework-light:move FEAT-042 doing     # Start work (triggers pre-implementation review)
+/spearit-framework-light:move FEAT-042 done      # Complete work (instant)
+/spearit-framework-light:move BUGFIX-001 backlog # Deprioritize (instant)
+/spearit-framework-light:move FEAT-099 archive   # Cancel work (instant, metadata suggested after)
 ```
 
 ## Error Handling
@@ -283,29 +227,20 @@ git mv project-hub/work/done/*.md project-hub/history/releases/vX.Y.Z/
    Would you like me to move it to todo first?
 ```
 
-**Missing preconditions:**
+**WIP limit warning (doing/ only):**
 ```
-❌ Cannot move FEAT-042 to done - preconditions not met:
-   - Completed date missing
-   - 2 acceptance criteria still unchecked
-
-   Would you like me to fix these issues?
-```
-
-**WIP limit exceeded:**
-```
-❌ Cannot move FEAT-042 to doing - WIP limit reached.
-   Current: 2 items in doing/ (limit: 2)
+⚠️  Moving FEAT-042 to doing/
+   Current WIP: 2 items (limit: 2)
    Items in progress: FEAT-038, TECH-041
-   Complete or pause current work first.
+
+   Proceeding with move. Consider completing current work first.
 ```
 
-**Dependency not met:**
+**Dependency check (doing/ only):**
 ```
-❌ Cannot move FEAT-042 to doing - dependency not satisfied:
-   Depends on: FEAT-038 (currently in doing/)
+⚠️  FEAT-042 depends on: FEAT-038 (currently in todo/)
 
-   FEAT-038 must be completed and moved to done/ first.
+   Proceeding with move. Complete dependencies for best workflow.
 ```
 
 **Item not found:**
@@ -320,8 +255,11 @@ git mv project-hub/work/done/*.md project-hub/history/releases/vX.Y.Z/
 
 ## Notes
 
-- This command enforces file-based Kanban workflow with policy validation
-- All transition rules and checklists are embedded in this command (self-contained)
+- **Fast and friction-free:** Trusts user judgment for routine moves
+- **Critical gate:** Pre-implementation review (→ doing/) is the only moment requiring deep validation
+- **Warnings, not blocks:** WIP limits and dependencies warn but don't prevent moves
 - Uses `git mv` for proper version control tracking
 - Graceful behavior if project-hub/ structure doesn't exist (offers to create)
 - Compatible with any git repository
+
+**Philosophy:** The move command should feel instant for routine operations, with the valuable "pause and review" moment reserved for when you're about to start implementation.

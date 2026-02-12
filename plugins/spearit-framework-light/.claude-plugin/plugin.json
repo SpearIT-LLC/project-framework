@@ -1,6 +1,6 @@
 {
   "name": "spearit-framework-light",
-  "version": "1.0.0-dev1",
+  "version": "1.0.0-dev2",
   "description": "File-based Kanban workflow for solo developers",
   "author": {
     "name": "Gary Elliott / SpearIT Solutions"
