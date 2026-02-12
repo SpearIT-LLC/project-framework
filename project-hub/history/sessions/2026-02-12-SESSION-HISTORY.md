@@ -568,4 +568,329 @@ Examples of VALID versions:
 
 ---
 
-**Last Updated:** 2026-02-12 (Late evening session appended - version validation)
+## Continuation Session: VSCode Testing and Move Command Performance
+
+**Resumed:** 2026-02-12 (Continuation session - morning of 2026-02-13 calendar date)
+**Session Focus:** VSCode plugin testing, move command performance optimization, WIP limit implementation
+**Work Item:** TASK-126 final testing
+
+### Summary (Continuation)
+
+Completed VSCode testing of framework-light plugin, identifying and fixing critical performance and validation issues. Move command was sluggish due to excessive file reading; streamlined to "trust user judgment" philosophy with pre-implementation review only when moving to doing/. WIP limit check was bypassed; implemented proper unique work item counting by TYPE-ID pattern. Version progression: 1.0.0-dev1 → dev2 (performance) → dev3 (WIP fix).
+
+### Work Completed (Continuation)
+
+#### Documentation Updates
+
+**TESTING.md Enhancement:**
+- Added comprehensive "Version Bumping Workflow" section
+- Documented cache architecture: marketplace (junction) vs cache (copy)
+- Explained why cache updates require version changes
+- Added development versioning strategy (1.0.0-dev1, dev2, dev3)
+- Key insight: Same version = no recopy, even with marketplace update
+- **Rationale:** Evening session discoveries about cache management needed documentation
+
+**Git Cleanup:**
+- Committed TESTING.md update
+- Batch committed 5 outstanding commits from 2026-02-12 work:
+  - docs: Document afternoon session (FEAT-120, role design)
+  - feat: Complete FEAT-120 testing infrastructure
+  - refactor: Extract work item templates to external files (FEAT-118)
+  - docs: Document two-level plugin architecture (FEAT-120)
+  - feat: Prototype conversational work item creation (FEAT-118)
+
+#### VSCode Plugin Testing (v1.0.0-dev1)
+
+**Test 1: `/spearit-framework-light:help`**
+- ✅ Command executed successfully
+- ✅ Displayed exactly 3 commands (help, new, move)
+- ✅ No references to removed commands (session-history, next-id)
+- **Result:** PASS - Command isolation working correctly
+
+**Test 2: `/spearit-framework-light:new`**
+- ✅ Conversational discovery workflow executed
+- ✅ Auto-assigned ID 127 (FEAT-127)
+- ✅ Created work item: "Full Framework Plugin"
+- ✅ Comprehensive template populated with 5 commands scope
+- ✅ File created: `project-hub/work/backlog/FEAT-127-full-framework-plugin.md`
+- **Dogfooding:** Used plugin's own command to create placeholder for full framework plugin
+- **Result:** PASS - Auto-ID assignment and file creation working
+
+**Test 3: `/spearit-framework-light:move`**
+- ✅ Moved FEAT-127: backlog → todo → backlog (tested transitions)
+- ⚠️ **Performance issue identified:** Command was slow and sluggish
+- ⚠️ **WIP limit bypassed:** Doing/ had 4 items with .limit = 2, but no warning shown
+- ✅ **Pre-implementation review worked:** When moving to doing/, review was presented
+- **Diagnosis:** Excessive file reading for all transitions, WIP check logic missing
+
+#### Move Command Performance Optimization (v1.0.0-dev2)
+
+**Problem Analysis:**
+- Command was reading work item files for ALL transitions (backlog, todo, doing, done, archive)
+- User feedback: "Do we really need to read the work item just to move it?"
+- Performance impact: Sluggish operations would frustrate users → plugin removal
+
+**Philosophy Shift: Trust User Judgment**
+
+**Old approach:** Defensive validation at every transition
+**New approach:** Only enforce validation that adds real value
+
+**Implementation Changes:**
+
+**→ backlog/ (Deprioritizing):**
+- Removed: File read requirement
+- New: Instant move - user is asserting deprioritization
+- Execution: 1. Validate transition, 2. Execute git mv, 3. Done
+
+**→ todo/ (Committing to work):**
+- Removed: File read for priority check, approval requirement
+- Kept: Optional WIP limit warning (if .limit file exists)
+- New: Instant move - user is asserting commitment
+
+**→ done/ (Completing work):**
+- Removed: File read for acceptance criteria validation
+- New: Instant move - user is asserting completion
+- Optional: Suggest session history update (don't require)
+
+**→ archive/ (Cancelling work):**
+- Removed: File read for metadata validation
+- New: Instant move - user is asserting cancellation
+- Optional: Suggest metadata after move (don't block)
+
+**→ doing/ (Starting work) - PRESERVED:**
+- **CRITICAL VALUE MOMENT:** Pre-implementation review
+- Kept ALL validation:
+  1. Read work item file COMPLETELY
+  2. Check dependencies (warn if not in done/)
+  3. Check WIP limit (warn if exceeded)
+  4. Identify open questions (TODO, TBD, DECIDE)
+  5. Present summary and wait for user approval
+- **Why preserve:** This is the one moment where deep validation adds clear value
+
+**Key Insight:** "The only time we need to read the work item is AFTER moving to doing/ so we can open it for review before working on it."
+
+**Documentation Updates:**
+- Added "Execution Approach" section to move.md
+- Changed validation gates from blocking to warnings (WIP limits, dependencies)
+- Updated all transition checklists with streamlined instructions
+- Added explicit "No file read required" statements
+- Preserved comprehensive checklist ONLY for → doing/
+
+**Version & Build:**
+- Version bumped: 1.0.0-dev1 → 1.0.0-dev2
+- Rebuilt plugin: 22.13 KB (reduced from 22.46 KB)
+- Published to local marketplace
+
+**Commits:**
+- perf: Streamline move command to trust user judgment
+- docs: Track TASK-126 testing progress
+
+#### WIP Limit Check Implementation (v1.0.0-dev3)
+
+**Problem Discovery:**
+- Tested move command with v1.0.0-dev2
+- WIP limit check was bypassed completely
+- doing/.limit = 2, but 4 work items in doing/ with no warning
+
+**Root Cause Analysis:**
+- Word "Optional" in move.md instructions caused AI to skip the check
+- Initial WIP counting approach was too simple (counting .md files)
+
+**User Requirement Clarification:**
+- Count unique work items by `{TYPE}-{ID}` pattern
+- Multiple files with same TYPE-ID = 1 work item
+- Example: FEAT-118.md + FEAT-118-notes.md + FEAT-118-PLAN-template.md = 1 work item
+- **Rationale:** Limiting work items, not files (allows supporting docs)
+- **Documentation:** This is already documented in framework workflow-guide or version-control-workflow
+
+**Implementation:**
+
+**For → todo/ section:**
+```markdown
+2. **Check WIP limit:** Read `todo/.limit` file (if exists) and warn if WIP exceeded
+   - Read limit as integer from file
+   - Count unique work items in todo/ using pattern: `{TYPE}-{ID}*`
+   - Extract TYPE-ID pairs from all files
+   - Count unique work items (multiple files with same TYPE-ID = 1 work item)
+   - If count >= limit, warn but don't block
+```
+
+**For → doing/ section:**
+```markdown
+2. **Check WIP limit:** Read `doing/.limit` file (if exists) and warn if WIP exceeded
+   - Read limit as integer from file
+   - Count unique work items in doing/ using pattern: `{TYPE}-{ID}*`
+   - Extract TYPE-ID pairs (e.g., FEAT-118, TECH-042) from all files
+   - Count unique work items (multiple files with same TYPE-ID = 1 work item)
+   - If count >= limit, warn but don't block
+   - Example warning: "⚠️ WIP limit: 4/2 work items (TASK-126, FEAT-118, TECH-042, DECISION-029)"
+```
+
+**Key Changes:**
+- Removed "Optional" wording that caused skipping
+- Made instructions explicit and mandatory
+- Added detailed counting logic with regex pattern
+- Provided example warning message format
+- Changed from blocking to warning (aligns with trust-based philosophy)
+
+**Version & Build:**
+- Version bumped: 1.0.0-dev2 → 1.0.0-dev3
+- Rebuilt plugin: 22.29 KB
+- Published to local marketplace
+- **Status:** Ready for testing after VSCode restart
+
+### Decisions Made (Continuation)
+
+**1. Move Command Philosophy: Trust User Judgment**
+- **Decision:** Only enforce validation at critical moments (pre-implementation review)
+- **Rationale:** Sluggish commands create friction → users remove plugin
+- **Quote:** "If the moves are too sluggish users will get frustrated and remove it."
+- **Impact:** Instant operations for routine moves, thoughtful pause when starting work
+- **Alternative:** Could have optimized file reading instead of removing it
+- **Why rejected:** Reading still unnecessary - user is making explicit state assertion
+
+**2. WIP Limit Check: Unique Work Item Counting**
+- **Decision:** Count by `{TYPE}-{ID}` pattern, not file count
+- **Rationale:** Multiple files can belong to one work item (PLAN docs, notes, etc.)
+- **User quote:** "Count {type}-{id}*. We are not limiting this to .md files we're limiting it to common work items."
+- **Implementation:** Regex extraction + unique set counting
+- **Mode:** Warn but don't block (aligns with trust-based philosophy)
+
+**3. Development Versioning for Iterative Testing**
+- **Decision:** Continue dev versioning: dev1 → dev2 → dev3
+- **Rationale:** Each iteration requires version bump for cache updates
+- **Pattern:** Pre-release versions signal development status
+- **For release:** Will reset to clean 1.0.0 before marketplace submission
+
+### Files Modified (Continuation)
+
+**Documentation:**
+- `plugins/TESTING.md` - Added version bumping workflow and cache architecture
+
+**Plugin Commands:**
+- `plugins/spearit-framework-light/commands/move.md` - Two major updates:
+  - Added "Execution Approach" section (dev2)
+  - Streamlined all transition checklists except doing/ (dev2)
+  - Added proper WIP limit counting logic (dev3)
+  - Removed "Optional" wording from WIP checks (dev3)
+
+**Plugin Metadata:**
+- `plugins/spearit-framework-light/.claude-plugin/plugin.json` - Version progression:
+  - 1.0.0-dev1 → 1.0.0-dev2 (performance optimization)
+  - 1.0.0-dev2 → 1.0.0-dev3 (WIP fix)
+
+**Work Items:**
+- `project-hub/work/doing/TASK-126-finalize-plugin-mvp.md` - Updated completion log
+
+**Distribution:**
+- `distrib/plugin-light/spearit-framework-light-v1.0.0-dev2.zip` - 22.13 KB
+- `distrib/plugin-light/spearit-framework-light-v1.0.0-dev3.zip` - 22.29 KB
+
+### Files Created (Continuation)
+
+**Dogfooding Test:**
+- `project-hub/work/backlog/FEAT-127-full-framework-plugin.md` - Created via `/spearit-framework-light:new` command
+  - Purpose: Placeholder for full framework plugin (5 commands: help, new, move, session-history, roadmap)
+  - ID: 127 (auto-assigned)
+  - Priority: Medium (lower than light plugin submission)
+
+### Technical Insights (Continuation)
+
+**Command File Instruction Precision:**
+
+**Discovery:** AI-interpreted command files need defensive instructions about what NOT to do.
+
+**Example - Word choice matters:**
+- ❌ "Optional: Check WIP limit" → AI skips the check
+- ✅ "Check WIP limit: Read .limit file (if exists) and warn if WIP exceeded" → AI executes
+
+**Pattern:** Use positive framing ("YOU do X directly") rather than vague framing ("extract X", "check Y").
+
+**Performance Lesson:** Simple file operations (scan, read .limit, count files) should NOT require Task agents or AI reasoning. Be explicit in command instructions.
+
+**User Experience Philosophy:**
+
+**Insight:** Users tolerate validation when it adds clear value, but reject friction for routine operations.
+
+**Application to move command:**
+- Routine moves (backlog, todo, done, archive): INSTANT
+- Critical moment (→ doing/): THOUGHTFUL PAUSE with comprehensive review
+- Result: Fast workflow with valuable intervention at the right time
+
+**Value-add moments:**
+1. **Pre-implementation review (→ doing/):**
+   - Pauses before starting work
+   - Reviews scope and open questions
+   - Identifies dependencies
+   - Gets user sign-off on approach
+2. **All other moves:** State changes that don't benefit from deep validation
+
+**WIP Counting Pattern:**
+
+**Problem:** Naive file counting breaks when work items have multiple supporting files.
+
+**Solution:** Extract work item identifier from filename:
+- Regex: `([A-Z]+)-(\d+)` → captures TYPE and ID
+- Group by unique TYPE-ID pairs
+- Count unique groups, not files
+- Example: FEAT-118 has 3 files but counts as 1 work item
+
+**Framework alignment:** This pattern is already documented in framework workflow guides - plugin implementation should match framework methodology.
+
+### Current State (End of Session)
+
+**Plugin Status:**
+- **Current version:** 1.0.0-dev3
+- **Size:** 22.29 KB
+- **Commands:** 3 (help, new, move)
+- **Build status:** ✅ Built and published to local marketplace
+- **CLI testing:** Not performed for dev3
+- **VSCode testing:** ⏳ Requires restart to test dev3
+
+**Work Items in doing/:**
+- **TASK-126:** Finalize framework-light Plugin MVP ✅ (implementation complete, final testing pending)
+- **FEAT-118:** Claude Code Plugin (ON HOLD, blocked by TASK-126)
+- **FEAT-127:** Full Framework Plugin (created this session, moved to backlog)
+
+**Unique work items in doing/ by TYPE-ID count:** 3 (TASK-126, FEAT-118 with 2 files, FEAT-127)
+- Note: FEAT-127 was created then moved to backlog during testing
+
+**Version Progression:**
+- 1.0.0 (morning) → Production build before scope reduction
+- 1.0.0-dev1 (afternoon) → MVP scope reduction (5 → 3 commands)
+- 1.0.0-dev2 (continuation) → Performance optimization (trust user judgment)
+- 1.0.0-dev3 (continuation) → WIP limit fix (unique work item counting)
+
+### Next Steps (Updated)
+
+**Immediate:**
+1. ⏳ Test v1.0.0-dev3 in VSCode (requires restart)
+2. ⏳ Verify WIP limit check executes and warns correctly
+3. ⏳ Verify performance feels instant for routine moves
+4. ⏳ Complete TASK-126 final testing checklist
+
+**Before Marketplace Submission:**
+1. Version reset: 1.0.0-dev3 → 1.0.0 (clean version for production)
+2. Run Build-Plugin.ps1 in strict mode (validates clean version)
+3. Final build verification
+4. Mark TASK-126 complete
+5. Resume FEAT-118 Milestone 8 → Milestone 9 (marketplace submission)
+
+**Documentation:**
+- Consider updating plugin README with move command philosophy
+- Update MEMORY.md with command instruction precision pattern
+- Session history for 2026-02-13 (if work continues)
+
+### Session Notes (Continuation)
+
+**Dogfooding Success:** Used plugin's own `/new` command to create FEAT-127 placeholder during testing. This validated auto-ID assignment (127) and conversational discovery workflow.
+
+**Performance vs. Safety Trade-off:** Chose to trust user judgment over defensive validation. The pre-implementation review (→ doing/) remains the critical safety gate. All other moves optimized for speed.
+
+**Development Iteration Speed:** Three version iterations (dev1, dev2, dev3) in single session demonstrates responsive testing workflow. Version bumping enables clean cache updates without manual intervention.
+
+**Command Design Insight:** AI-interpreted command files require explicit, defensive instructions. Precision in wording directly impacts AI behavior during command execution.
+
+---
+
+**Last Updated:** 2026-02-12 (Continuation session appended - VSCode testing and performance optimization)
