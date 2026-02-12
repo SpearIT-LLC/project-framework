@@ -166,8 +166,14 @@ spearit-framework-light/
 - Transparent behavior
 - Clear homepage with plugin info
 
+**Package Format:**
+- **File format:** ZIP archive (`.zip`)
+- **Not:** CPK format (no evidence of `.cpk` format for Claude Code plugins as of 2026-02-12)
+- **Contents:** Complete plugin directory structure (see section 1)
+- **Naming:** `{plugin-name}-v{version}.zip` (e.g., `spearit-framework-light-v1.0.0.zip`)
+
 **Submission Process:**
-1. Create plugin package (complete structure)
+1. Create plugin package (ZIP archive with complete structure)
 2. Test thoroughly (local installation)
 3. Submit via form: https://clau.de/plugin-directory-submission
 4. Wait for Anthropic review/approval
