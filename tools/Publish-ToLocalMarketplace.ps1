@@ -164,7 +164,8 @@ try {
         else {
             foreach ($folder in $pluginFolders) {
                 Write-Status "Building $($folder.Name)..."
-                & $buildScript -Plugin $folder.Name
+                # Use -AllowPrerelease for testing builds (e.g., 1.0.0-dev1)
+                & $buildScript -Plugin $folder.Name -AllowPrerelease
                 if ($LASTEXITCODE -ne 0) {
                     throw "Build failed for $($folder.Name)"
                 }

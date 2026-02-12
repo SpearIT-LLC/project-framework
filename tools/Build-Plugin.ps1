@@ -26,13 +26,22 @@
 .PARAMETER KeepTemp
     If specified, keeps the temp folder after creating the archive
 
+.PARAMETER AllowPrerelease
+    If specified, allows pre-release versions (e.g., 1.0.0-dev1, 1.0.0-alpha).
+    By default, only clean X.Y.Z versions are allowed for marketplace safety.
+    Use this flag ONLY for development/testing builds.
+
 .EXAMPLE
     .\tools\Build-Plugin.ps1
-    Builds all plugins in plugins/ directory
+    Builds all plugins in plugins/ directory (strict version validation)
 
 .EXAMPLE
     .\tools\Build-Plugin.ps1 -Plugin spearit-framework-light
     Builds only the lightweight edition plugin
+
+.EXAMPLE
+    .\tools\Build-Plugin.ps1 -AllowPrerelease
+    Builds all plugins, allowing pre-release versions like 1.0.0-dev1
 
 .EXAMPLE
     .\tools\Build-Plugin.ps1 -OutputPath "C:\Releases"
@@ -48,7 +57,10 @@ param(
     [string]$OutputPath,
 
     [Parameter()]
-    [switch]$KeepTemp
+    [switch]$KeepTemp,
+
+    [Parameter()]
+    [switch]$AllowPrerelease
 )
 
 $ErrorActionPreference = "Stop"
@@ -113,8 +125,8 @@ function Test-PluginStructure {
 
     if ($errors.Count -gt 0) {
         Write-Host "  Plugin structure validation FAILED:" -ForegroundColor Red
-        foreach ($error in $errors) {
-            Write-Host "    - $error" -ForegroundColor Red
+        foreach ($errorString in $errors) {
+            Write-Host "    - $errorString" -ForegroundColor Red
         }
         return $false
     }
@@ -126,7 +138,8 @@ function Test-PluginStructure {
 # Function to read plugin metadata
 function Get-PluginMetadata {
     param(
-        [string]$PluginPath
+        [string]$PluginPath,
+        [bool]$AllowPrerelease
     )
 
     $pluginJson = Join-Path $PluginPath ".claude-plugin\plugin.json"
@@ -145,8 +158,90 @@ function Get-PluginMetadata {
         }
 
         # Validate version format (semantic versioning)
-        if ($metadata.version -notmatch '^\d+\.\d+\.\d+$') {
-            Write-Error "Invalid version format: $($metadata.version). Expected: X.Y.Z"
+        # Parse version into base version and optional suffix
+        # Use [version] type for type-safe validation of base version
+        # Semver-compliant regex enforces:
+        #   - Pre-release: -identifier[.identifier]* (no leading/trailing dots, no empty identifiers)
+        #   - Build metadata: +identifier[.identifier]* (same rules)
+
+        if ($metadata.version -match '^(\d+\.\d+\.\d+)(-[0-9A-Za-z-]+(\.[0-9A-Za-z-]+)*)?(\+[0-9A-Za-z-]+(\.[0-9A-Za-z-]+)*)?$') {
+            # Capture groups: [1]=base, [2]=pre-release, [3]=last pre-release identifier, [4]=build metadata, [5]=last build identifier
+            $baseVersionString = $matches[1]  # e.g., "1.0.0"
+            $devSuffix = $matches[2]           # e.g., "-dev1" or "-alpha.1" or $null
+            $buildMetadata = $matches[4]       # e.g., "+build.123" or $null
+
+            # Type-safe validation of base version using PowerShell [version] type
+            # The [version] cast validates format - assignment is for validation only
+            try {
+                [version]$version = $baseVersionString
+                # Suppress PSUseDeclaredVarsMoreThanAssignments - used for type validation
+                $null = $version
+            }
+            catch {
+                Write-Error @"
+Invalid version numbers: $baseVersionString
+
+The version base must be valid numeric format (X.Y.Z).
+Error: $_
+
+Examples of VALID base versions:
+  - 1.0.0
+  - 2.1.3
+  - 0.1.0
+"@
+                return $null
+            }
+
+            # Handle suffix based on mode
+            if ($devSuffix -or $buildMetadata) {
+                if (-not $AllowPrerelease) {
+                    # Strict mode: reject any suffix
+                    $fullSuffix = "$devSuffix$buildMetadata"
+                    Write-Error @"
+Invalid version format: $($metadata.version)
+
+STRICT MODE (default): Only clean versions allowed for marketplace submission.
+Expected format: X.Y.Z (e.g., 1.0.0, 2.1.3)
+
+Your version has pre-release or build metadata: $fullSuffix
+This will likely cause marketplace submission to FAIL.
+
+To build with pre-release versions for testing, use:
+  Build-Plugin.ps1 -AllowPrerelease
+
+Examples of INVALID versions in strict mode:
+  - 1.0.0-dev1      (pre-release suffix)
+  - 1.0.0-alpha     (pre-release suffix)
+  - 1.0.0+build123  (build metadata)
+  - 1.0.0-rc.1      (release candidate)
+
+Examples of VALID versions:
+  - 1.0.0
+  - 2.1.3
+  - 0.1.0
+"@
+                    return $null
+                }
+                else {
+                    # Permissive mode: warn about pre-release
+                    if ($devSuffix) {
+                        Write-Host "    WARNING: Building with pre-release version: $($metadata.version)" -ForegroundColor Yellow
+                    }
+                }
+            }
+        }
+        else {
+            # Version doesn't match semver format at all
+            Write-Error @"
+Invalid version format: $($metadata.version)
+
+Version must follow semantic versioning (semver) format.
+Expected: X.Y.Z or X.Y.Z-prerelease (with -AllowPrerelease flag)
+
+Examples: 1.0.0, 2.1.3, 1.0.0-dev1, 1.2.3+build.456
+
+For more info: https://semver.org/
+"@
             return $null
         }
 
@@ -177,7 +272,7 @@ function Build-SinglePlugin {
 
     # Read plugin metadata
     Write-Host "  Reading metadata..." -ForegroundColor Gray
-    $metadata = Get-PluginMetadata -PluginPath $PluginPath
+    $metadata = Get-PluginMetadata -PluginPath $PluginPath -AllowPrerelease $AllowPrerelease
     if (-not $metadata) {
         Write-Host "  Build FAILED for $PluginName" -ForegroundColor Red
         return $false
