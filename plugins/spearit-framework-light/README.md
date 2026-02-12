@@ -60,26 +60,19 @@ Creates: `project-hub/work/backlog/FEAT-001-add-user-login.md`
 /spearit-framework-light:move FEAT-001 done      # Complete work
 ```
 
-**3. Track your session:**
-```
-/spearit-framework-light:session-history "FEAT-001 implementation"
-```
-
-That's it! You now have a complete audit trail of your work in git.
+That's it! Your work items are tracked as files in git with complete history.
 
 ---
 
 ## Features
 
-### 5 Core Commands
+### 3 Core Commands
 
 | Command | Purpose |
 |---------|---------|
-| `/spearit-framework-light:new` | Create a new work item interactively |
-| `/spearit-framework-light:move` | Move work items through workflow with policy enforcement |
-| `/spearit-framework-light:next-id` | Get next available work item ID |
-| `/spearit-framework-light:session-history` | Generate session history from git and conversation |
 | `/spearit-framework-light:help` | Command reference and documentation |
+| `/spearit-framework-light:new` | Create a new work item with auto-assigned ID |
+| `/spearit-framework-light:move` | Move work items through workflow with policy enforcement |
 
 ### Workflow Enforcement
 
@@ -131,12 +124,14 @@ Create a new work item interactively with guided prompts.
 **Creates file in:** `project-hub/work/backlog/` (all new items start in backlog)
 
 **Auto-generates:**
-- Next available ID (scans existing work items)
+- Next available ID (scans existing work items automatically)
 - Kebab-case filename from title
 - Work item template with frontmatter
 - Git adds file automatically
 
 **Graceful:** Creates `project-hub/work/backlog/` directory if it doesn't exist.
+
+**Note:** ID assignment is fully automatic - you don't need to think about work item IDs.
 
 ---
 
@@ -165,55 +160,6 @@ Move work items between workflow folders with policy enforcement.
 - WIP limits (default: 1 item in doing/ for solo developers)
 - Dependency satisfaction (all dependencies must be in done/)
 - Completion criteria (all acceptance criteria checked)
-
----
-
-### `/spearit-framework-light:next-id`
-
-Get the next available work item ID by scanning existing work items.
-
-**Syntax:**
-```
-/spearit-framework-light:next-id [type]
-```
-
-**Examples:**
-```
-/spearit-framework-light:next-id          # Returns next available ID
-/spearit-framework-light:next-id FEAT     # Get next FEAT ID specifically
-```
-
-**Scans:**
-- All workflow folders (backlog, todo, doing, done)
-- Archive and release history
-- Returns next sequential number
-
----
-
-### `/spearit-framework-light:session-history`
-
-Generate or update session history document from git commits and conversation context.
-
-**Syntax:**
-```
-/spearit-framework-light:session-history [focus]
-```
-
-**Examples:**
-```
-/spearit-framework-light:session-history
-/spearit-framework-light:session-history "FEAT-042 implementation"
-```
-
-**Creates:** `project-hub/history/sessions/YYYY-MM-DD-SESSION-HISTORY.md`
-
-**Includes:**
-- Work completed
-- Decisions made and rationale
-- Files created/modified/moved
-- Current project state
-
-**Philosophy:** Session history shows the journey, not just the destination (append-only).
 
 ---
 
@@ -332,12 +278,13 @@ This plugin embodies:
 This plugin is the **Lightweight Edition** - a subset of the comprehensive SpearIT Project Framework.
 
 **What's included in this plugin:**
-- 5 core workflow commands (create, move, track, reference)
+- 3 core workflow commands (help, new, move)
+- Automatic work item ID assignment
 - Works in any git repository
 - Install and use immediately
 - Perfect for existing projects
 
-**Coming soon:** A comprehensive edition with complete project scaffolding, templates, and additional commands is in development.
+**Coming soon:** A full framework edition with additional commands (session history, status tracking, backlog management, roadmap planning) is in development.
 
 For more information: **https://github.com/spearit-solutions/project-framework**
 
@@ -360,4 +307,4 @@ Copyright (c) 2026 Gary Elliott / SpearIT Solutions
 ---
 
 **Version:** 1.0.0
-**Last Updated:** 2026-02-09
+**Last Updated:** 2026-02-12

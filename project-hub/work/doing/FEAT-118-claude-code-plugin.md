@@ -5,11 +5,34 @@
 **Priority:** High
 **Version Impact:** MINOR
 **Created:** 2026-02-08
-**Updated:** 2026-02-10 (Paused for testing infrastructure refactor)
-**Status:** ⏸️ PAUSED - Blocked by FEAT-120
-**Blocked By:** FEAT-120 (Plugin testing infrastructure refactor)
+**Updated:** 2026-02-12 (Scope refined - continued in TASK-126)
+**Status:** ⏸️ ON HOLD - Scope refinement in progress
+**Blocked By:** TASK-126 (MVP scope reduction)
 **Theme:** Distribution & Integration
 **Target:** Ship within 7 days (still on track)
+
+---
+
+## ⚠️ SCOPE CHANGE (2026-02-12)
+
+**Pre-submission product review identified scope reduction opportunity.**
+
+**Original scope:** 5 commands (help, new, move, next-id, session-history)
+**Refined MVP scope:** 3 commands (help, new, move)
+
+**Removed from v1.0:**
+- **session-history** → Deferred to full framework plugin (documentation feature, not core workflow)
+- **next-id** → Integrated into `new` command (implementation detail should not be user-facing)
+
+**Rationale:**
+- Focused MVP on core workflow (discover, create, organize)
+- Reduced cognitive load and command bloat
+- Cleaner upgrade path to full framework plugin
+- Better user experience (auto-ID assignment vs manual query)
+
+**Implementation:** See [TASK-126](TASK-126-finalize-plugin-mvp.md) for scope reduction work.
+
+**Timeline impact:** None - ahead of schedule, refinement improves quality
 
 ---
 
@@ -17,7 +40,7 @@
 
 Create a **Minimum Viable Plugin** ("Lightweight Edition") of the SpearIT Project Framework to distribute file-based Kanban workflow through the Claude Code plugin marketplace.
 
-**MVP Scope:** 4 core commands, 3 condensed skills, professional documentation. Ship in 1 week, iterate based on user feedback.
+**MVP Scope:** 3 core commands, 3 condensed skills, professional documentation. Ship in 1 week, iterate based on user feedback.
 
 **Strategic Positioning:** Plugin and Framework are complementary products - plugin is the gateway, framework is the comprehensive solution.
 
@@ -98,20 +121,23 @@ project-framework/
 
 **Note:** Full framework plugin will be `plugins/spearit-framework/` (future)
 
-**Commands to Package (4 core commands - MVP):**
-- [ ] `/spearit-framework-light:move` - Move work items through workflow (CORE - most used)
-- [ ] `/spearit-framework-light:next-id` - Get next work item ID (CORE - most used)
-- [ ] `/spearit-framework-light:session-history` - Document work (DEPENDENCY - auto-called by move)
-- [ ] `/spearit-framework-light:help` - Command reference (STANDARD - user expectation)
+**Commands to Package (3 core commands - MVP v1.0):**
+- [ ] `/spearit-framework-light:help` - Command reference (STANDARD - discovery)
+- [ ] `/spearit-framework-light:new` - Create work items with auto-ID assignment (CORE - creation)
+- [ ] `/spearit-framework-light:move` - Move work items through workflow (CORE - organization)
 
 **Note:** Files keep `fw-` prefix for clarity (`fw-move.md`), but commands drop it (`:move`)
 
-**Deferred to v1.1+ (after user feedback):**
-- `/spearit-framework-light:status` - Project status summary
-- `/spearit-framework-light:wip` - Show current work in progress
-- `/spearit-framework-light:backlog` - Backlog review and prioritization
-- `/spearit-framework-light:topic-index` - Framework reference
-- `/spearit-framework-light:roadmap` - AI-guided roadmap creation
+**Deferred to full framework plugin (based on product review):**
+- `/spearit-framework:session-history` - Document work sessions (documentation feature)
+- `/spearit-framework:status` - Project status summary
+- `/spearit-framework:wip` - Show current work in progress
+- `/spearit-framework:backlog` - Backlog review and prioritization
+- `/spearit-framework:topic-index` - Framework reference
+- `/spearit-framework:roadmap` - AI-guided roadmap creation
+
+**Removed from v1.0 (implementation details):**
+- `next-id` - Integrated into `new` command (users shouldn't think about IDs)
 
 **Skills Documentation (3 files, ~250 lines total):**
 - [ ] `kanban-workflow.md` - File-based Kanban concept (~100 lines)
@@ -297,94 +323,108 @@ Perfect for: Solo developers, small teams, lightweight project tracking
 
 <!-- ⚠️ AI: Complete items in order. STOP at each [ ] and wait for approval. -->
 
-### Milestone 1: Research Anthropic Plugin Standards
+### Milestone 1: Research Anthropic Plugin Standards ✅ COMPLETE
 - [x] Research official Anthropic plugin structure and standards
 - [x] Document findings in `project-hub/research/plugin-anthropic-standards.md`
 - [x] Identify required files, structure, and metadata format
 - [x] Verify namespace and command naming conventions
-- [x] **STOP - Review findings before proceeding**
+- [x] **STOP - Review findings before proceeding** ✅ Reviewed 2026-02-09
 
-### Milestone 2: Create Plugin Package Structure
+### Milestone 2: Create Plugin Package Structure ✅ COMPLETE
 - [x] Create `plugins/spearit-framework-light/` directory
 - [x] Create `.claude-plugin/` subdirectory
 - [x] Write `plugin.json` with proper metadata matching Anthropic standards
 - [x] Create `commands/` and `skills/` directories
 - [x] Verify structure matches Anthropic pattern exactly
-- [x] **STOP - Review structure before copying commands**
+- [x] **STOP - Review structure before copying commands** ✅ Reviewed 2026-02-09
 
-### Milestone 3: Adapt Commands for Standalone Operation
+### Milestone 3: Adapt Commands for Standalone Operation ✅ COMPLETE
 
 **Approach:** Prototype each command, test standalone operation, iterate based on learnings.
 
-**Milestone 3a: Prototype fw-next-id (Standalone)**
+**Milestone 3a: Prototype fw-next-id (Standalone)** ✅
 - [x] Remove PowerShell script dependency
 - [x] Update command to use AI-driven directory scanning
 - [x] Handle case: project-hub/ structure exists
 - [x] Handle case: No structure exists (start at 001 or offer setup)
 - [x] Test standalone operation
-- [x] **STOP - Review fw-next-id prototype**
+- [x] **STOP - Review fw-next-id prototype** ✅ Reviewed 2026-02-09
 
-**Milestone 3b: Prototype fw-help (Standalone)**
+**Milestone 3b: Prototype fw-help (Standalone)** ✅
 - [x] Verify command reads from plugin's commands/ directory
 - [x] Update references to be plugin-relative
 - [x] Test standalone operation
-- [x] **STOP - Review fw-help prototype**
+- [x] **STOP - Review fw-help prototype** ✅ Reviewed 2026-02-09
 
-**Milestone 3c: Prototype fw-session-history (Standalone)**
+**Milestone 3c: Prototype fw-session-history (Standalone)** ✅
 - [x] Remove framework template dependencies
 - [x] Update to generate from git history + conversation context
 - [x] Create self-contained markdown structure
 - [x] Test standalone operation
-- [x] **STOP - Review fw-session-history prototype**
+- [x] **STOP - Review fw-session-history prototype** ✅ Reviewed 2026-02-09
+- [x] Template extraction completed (2026-02-11) - Uses external template file
 
-**Milestone 3d: Prototype fw-move (Standalone)**
+**Milestone 3d: Prototype fw-move (Standalone)** ✅
 - [x] Remove framework.yaml and workflow-guide.md references
 - [x] Keep embedded transition rules and checklists
 - [x] Simplify validation (self-contained)
 - [x] Test standalone operation
-- [x] **STOP - Review fw-move prototype**
+- [x] **STOP - Review fw-move prototype** ✅ Reviewed 2026-02-09
 
-### Milestone 4: Create Skills Documentation
+**Milestone 3e: Prototype fw-new (FEAT-119 - Completed 2026-02-09)** ✅
+- [x] Created conversational work item creation command
+- [x] Embedded PM/PO mindset directly in command
+- [x] Template extraction completed (2026-02-11) - Uses external template files
+
+### Milestone 4: Create Skills Documentation ✅ COMPLETE
 - [x] Extract and condense `skills/kanban-workflow.md` (~100 lines)
 - [x] Create `skills/work-items.md` (~75 lines)
 - [x] Create `skills/moving-items.md` (~75 lines)
 - [x] Verify total under 300 lines (Claude context limits)
-- [x] **STOP - Review skills documentation**
+- [x] **STOP - Review skills documentation** ✅ Reviewed 2026-02-09
 
-### Milestone 5: Write README and Documentation
+### Milestone 5: Write README and Documentation ✅ COMPLETE
 - [x] Write `README.md` with installation instructions
 - [x] Add quick start guide (5-minute workflow)
 - [x] Add command reference with examples
 - [x] Add link to full framework
 - [x] Verify professional tone and completeness
-- [x] **STOP - Review README**
+- [x] **STOP - Review README** ✅ Reviewed 2026-02-09
 
-### Milestone 6: Create Build Script
+### Milestone 6: Create Build Script ✅ COMPLETE
 - [x] Create `tools/Build-Plugin.ps1`
 - [x] Script packages plugin directory into ZIP
 - [x] Output to `distrib/plugin-light/spearit-framework-light-v1.0.0.zip`
 - [x] Verify ZIP structure matches Anthropic standards
 - [x] Test build process
-- [x] **STOP - Review build output**
+- [x] **STOP - Review build output** ✅ Reviewed 2026-02-09
 
-### Milestone 7: Testing
+### Milestone 7: Testing ✅ COMPLETE
 - [x] Install plugin locally and test each command
 - [x] Verify skills load in Claude context
 - [x] Check for broken references/links
 - [x] Test in framework project (no conflicts)
 - [x] Test in non-framework project (graceful behavior)
 - [x] Fix any bugs found
-- [x] **STOP - Review test results**
+- [x] **STOP - Review test results** ✅ Reviewed 2026-02-10
+- [x] FEAT-120 created to improve testing infrastructure (completed 2026-02-11)
+- [x] Template extraction validated (2026-02-11) - Custom folders copy to cache successfully
 
-### Milestone 8: Package and Documentation
-- [ ] Run build script, create final ZIP
+### Milestone 8: Package and Documentation 🔄 IN PROGRESS
+- [x] Run build script, create final ZIP ✅ Built 2026-02-12 (25.45 KB)
+  - Verified contents: 5 commands, 3 skills, 4 templates, LICENSE, README.md
+  - Location: `distrib/plugin-light/spearit-framework-light-v1.0.0.zip`
 - [ ] Final testing of packaged plugin
-- [x] Decide on plugin license (MIT recommended)
-- [x] Create LICENSE file in plugin directory
+- [x] Decide on plugin license (MIT recommended) ✅ Decided 2026-02-09
+- [x] Create LICENSE file in plugin directory ✅ Created 2026-02-09
 - [ ] Make repository public (or document access plan)
 - [ ] Update framework README with plugin option
 - [ ] Tag version: v1.0.0
 - [ ] **STOP - Review before submission**
+
+**Blockers resolved:**
+- [x] FEAT-120 (Testing infrastructure) ✅ Completed 2026-02-11
+- [x] FEAT-119 (New command) ✅ Completed 2026-02-09
 
 ### Milestone 9: Submit to Marketplace
 - [ ] Submit to Anthropic marketplace
@@ -823,6 +863,23 @@ The plugin maintains the framework's core philosophy:
 
 ## Changelog
 
+**2026-02-12 - RESUMED: Ready for Final Packaging:**
+- **Status:** Work resumed - FEAT-120 complete, FEAT-119 complete
+- **Progress:** Milestones 1-7 all complete
+- **Template extraction:** External templates validated (copy to cache successfully)
+- **Testing infrastructure:** Local marketplace approach fully working
+- **Next:** Milestone 8 - Final packaging and submission
+- **Updated:** Work item checkboxes to reflect actual completion status
+
+**2026-02-11 - FEAT-120 Completed:**
+- **Testing infrastructure:** Local marketplace approach implemented and validated
+- **Template extraction:** Custom `templates/` folder proven to work in plugins
+- **Cache scripts removed:** 798 lines of deprecated code eliminated
+- **Documentation:** Comprehensive testing workflow documented
+- **Session history role:** Senior Technical Writer mindset established
+- **Plugin storage internals:** Two-level architecture documented
+- **FEAT-120 moved to done/** - All milestones complete
+
 **2026-02-10 - PAUSED: Testing Infrastructure Refactor (FEAT-120):**
 - **Status:** FEAT-118 paused at Milestone 7 (testing complete)
 - **Reason:** Research discovered better testing approach (local marketplace vs cache manipulation)
@@ -884,5 +941,5 @@ The plugin maintains the framework's core philosophy:
 
 ---
 
-**Last Updated:** 2026-02-09
-**Status:** Backlog (Ready to move to doing/)
+**Last Updated:** 2026-02-12
+**Status:** Active (Milestone 8 in progress)

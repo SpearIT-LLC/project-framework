@@ -158,14 +158,42 @@ You: Any constraints - major versions OK, or stay within minor/patch?
 [Continues...]
 ```
 
-### Step 3: Get Next ID
+### Step 3: Determine Next Available ID
 
-**Reuse `:next-id` logic:**
-1. Use Glob to scan: `project-hub/work/**/*.md` and `project-hub/history/**/*.md`
-2. Parse filenames with regex: `([A-Z]+)-(\d{3})-.*\.md`
-3. Extract numeric IDs, find max, add 1
-4. Format as 3-digit number: `043`
-5. If no files found, start at `001`
+**CRITICAL: Do NOT use Task tool or spawn agents. This must be done directly with Glob tool and simple regex parsing.**
+
+**Scan for Existing Work Items:**
+
+1. **Use Glob tool ONLY** to search for work items in these locations (if they exist):
+   ```
+   Call Glob with pattern: project-hub/work/**/*.md
+   Call Glob with pattern: project-hub/history/**/*.md
+   ```
+
+2. **YOU parse the filenames directly** (no Task agent needed):
+   - Regex pattern: `([A-Z]+)-(\d{3})-.*\.md`
+   - Extract group 2 (the numeric portion)
+   - Example: `FEAT-042-description.md` → extract "042"
+   - Convert each to integer: "042" → 42
+
+3. **YOU find maximum ID directly** (no Task agent needed):
+   - Take all extracted integers
+   - Use simple max() operation
+   - Add 1 to get next ID
+
+4. **Format result:**
+   - Zero-pad to 3 digits
+   - Example: 43 → "043"
+
+**Edge Case Handling:**
+
+- **No project-hub/ structure exists:** Start at ID 001, create directory structure
+- **Structure exists but no work items:** Start at ID 001
+- **Work items exist:** Use highest ID + 1
+- **If glob fails or returns empty:** Assume no structure, start at 001
+- **If ID extraction fails for some files:** Skip those files, continue with valid IDs
+
+**PERFORMANCE REQUIREMENT:** ID determination should complete in under 5 seconds and use under 1k tokens. It is a simple file scanning and regex operation - NO AI reasoning or Task agents required.
 
 ### Step 4: Propose Structure
 
