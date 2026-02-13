@@ -1,6 +1,6 @@
 # /spearit-framework-light:move - Move Work Item Between Folders
 
-Move a work item between workflow folders with policy enforcement, transition validation, and proper git operations.
+Move a work item between workflow folders using optimized script-based execution.
 
 ## Usage
 
@@ -10,256 +10,261 @@ Move a work item between workflow folders with policy enforcement, transition va
 
 ## Arguments
 
-- `item-id` (required): Work item ID (e.g., FEAT-018, BUGFIX-001) or partial filename
-- `target-folder` (required): One of: `backlog`, `todo`, `doing`, `done`, `archive`, `releases`
-
-## Prerequisites
-
-**Expected structure:** `project-hub/work/{backlog,todo,doing,done}/` and `project-hub/history/{archive,releases}/`
-
-**If structure doesn't exist:**
-- Offer to create the directory structure
-- Provide guidance on setting up file-based Kanban workflow
-- See plugin skills for methodology overview
-
-## Transition Validity Matrix
-
-| From | To | Valid? | Reason |
-|------|----|----|--------|
-| backlog | todo | ✅ | Standard flow - committing to work |
-| backlog | doing | ❌ | Must commit to work (todo) first |
-| backlog | archive | ✅ | Cancelling work |
-| todo | doing | ✅ | Starting work |
-| todo | backlog | ✅ | Deprioritizing work |
-| todo | archive | ✅ | Cancelling work |
-| doing | done | ✅ | Completing work |
-| doing | todo | ✅ | Pausing work |
-| doing | archive | ✅ | Cancelling work |
-| done | releases | ✅ | Post-release archival |
-| done | archive | ✅ | Cancelling/superseding work |
-| done | backlog | ❌ | No reopening - create new item |
-| done | todo | ❌ | No reopening - create new item |
-| done | doing | ❌ | No reopening - create new item |
+- `item-id` (required): Work item ID (e.g., FEAT-018, feat-127) - case insensitive
+- `target-folder` (required): One of: `backlog`, `todo`, `doing`, `done`, `archive`
 
 ---
 
-## Execution Approach
+## Execution Instructions
 
-**Philosophy:** Trust user judgment. Only enforce critical gates that add real value.
+**Based on the target folder, execute the corresponding bash script below.**
 
-**When to read the work item file:**
-- **→ doing/**: YES - Pre-implementation review is critical
-- **All other moves**: NO - Just validate transition and execute
+**Substitute `ITEM_ID` with the user's item-id argument (preserve their casing).**
 
 ---
 
-## Embedded Transition Checklists
+### When target is: `todo`
 
-### → backlog/
+**Execute this EXACT bash command:**
 
-**Use case:** Deprioritizing work or creating new items
-
-**Execution:**
-1. Validate transition is legal (check matrix above)
-2. Execute: `git mv project-hub/work/[source]/ITEM-NNN-*.md project-hub/work/backlog/`
-3. Done
-
-**No file read required.** User is asserting this should go to backlog.
-
----
-
-### → todo/
-
-**Use case:** Committing to work (from backlog) or pausing work (from doing)
-
-**Execution:**
-1. Validate transition is legal (check matrix above)
-2. Optional: Check `todo/.limit` file (if exists) and warn if WIP limit exceeded, but don't block
-3. Execute: `git mv project-hub/work/[source]/ITEM-NNN-*.md project-hub/work/todo/`
-4. Done
-
-**No file read required.** User is asserting this work should be in todo queue.
-
----
-
-### → doing/
-
-**Use case:** Starting work on a committed item
-
-**Before moving:**
-1. ✅ Validate transition is legal (check matrix above)
-2. ✅ Optional: Check `doing/.limit` file (if exists) and warn if WIP exceeded, but don't block
-3. ✅ Execute: `git mv project-hub/work/[source]/ITEM-NNN-*.md project-hub/work/doing/`
-
-**After move - Pre-Implementation Review (REQUIRED):**
-1. ✅ Read work item file COMPLETELY
-2. ✅ Check `Depends On` field - warn if dependencies not in done/, but don't block
-3. ✅ Identify open questions in the work item:
-   - Search for: TODO, TBD, DECIDE, Question, "Option A/B/C"
-   - Check for incomplete design sections
-   - Note any assumptions that need validation
-4. ✅ Present pre-implementation summary to user:
-   - What we're building
-   - Key design decisions
-   - Open questions found
-   - Implementation scope
-5. ✅ **STOP - Wait for user confirmation before implementing**
-
-**Do NOT start implementation until user approves the plan.**
-
-**During Implementation - Checklist Enforcement:**
-
-If the work item has an "Implementation Checklist" section with the enforcement comment:
-```markdown
-<!-- ⚠️ AI: Complete items in order. STOP at each [ ] and wait for approval. -->
-```
-
-**You MUST follow this step-by-step execution protocol:**
-
-1. ✅ **Complete items in strict order** - Do not skip ahead
-2. ✅ **Mark items complete immediately** - Update `[ ]` to `[x]` as soon as finished
-3. ✅ **STOP at each unchecked item** - Wait for explicit user approval before proceeding
-   - Exception: User says "continue to completion" to approve all remaining steps at once
-4. ✅ **Read the file before every edit** - Work item may be updated during implementation
-5. ✅ **Use TodoWrite tool** - Track progress and provide visibility to user
-
-**Step-by-step execution example:**
-```
-Current item: "[ ] Design API endpoint structure"
-AI: "I'll design the API endpoint structure now..."
-[AI completes the work]
-AI: [Marks item complete in work item file]
-AI: "API endpoint structure designed. Next step is implementing the handler. Continue?"
-[Waits for user approval]
-User: "yes"
-AI: [Proceeds to next checklist item]
-```
-
-**User override phrases:**
-- "continue to completion" → Approve all remaining checklist items at once
-- "skip to step N" → Jump ahead (only if user explicitly requests)
-
-**CRITICAL:** The enforcement comment indicates user wants control over implementation pace. Respect this by stopping at each step unless explicitly told to continue.
-
----
-
-### → done/
-
-**Use case:** Completing work
-
-**Execution:**
-1. Validate transition is legal (check matrix above)
-2. Execute: `git mv project-hub/work/doing/ITEM-NNN-*.md project-hub/work/done/`
-3. Done
-
-**No file read required.** User is asserting the work is complete.
-
-**Optional:** Remind user they can document completion in session history, but don't require it.
-
----
-
-### → history/archive/ (Cancellation)
-
-**Use case:** Cancelling, superseding, or archiving work that won't be completed
-
-**When to Cancel vs Deprioritize:**
-
-| Situation | Action | Destination |
-|-----------|--------|-------------|
-| Work no longer needed | Cancel | archive/ |
-| Requirements changed fundamentally | Cancel | archive/ |
-| Superseded by different approach | Cancel | archive/ |
-| Lower priority, may do later | Deprioritize | backlog/ |
-| Blocked temporarily | Pause | todo/ or backlog/ |
-
-**Rule of thumb:** If the work item as written will *never* be done, cancel it. If it *might* be done later, deprioritize it.
-
-**Execution:**
-1. Validate transition is legal (check matrix above)
-2. Execute: `git mv project-hub/work/[source]/ITEM-NNN-*.md project-hub/history/archive/`
-3. Done
-
-**No file read required.** User is asserting this work should be cancelled.
-
-**Optional:** After move, suggest adding cancellation metadata (Status: Cancelled, Cancelled Date, Reason) but don't block the move if missing.
-
----
-
-### → history/releases/vX.Y.Z/
-
-**Use case:** Post-release archival of completed work
-
-**Before moving:**
-1. ✅ Validate transition (done → releases only)
-2. ✅ Verify release version exists: `history/releases/vX.Y.Z/` directory
-3. ✅ Verify all items in done/ are ready for release
-
-**Execute move:**
 ```bash
-git mv project-hub/work/done/*.md project-hub/history/releases/vX.Y.Z/
+ITEM_ID="<item-id>"
+
+# Find the work item
+SOURCE=$(find project-hub/work -type f \( -iname "${ITEM_ID}*.md" -o -iname "${ITEM_ID^^}*.md" \) 2>/dev/null | head -1)
+
+if [ -z "$SOURCE" ]; then
+  echo "❌ Could not find work item: $ITEM_ID"
+  exit 1
+fi
+
+# Validate transition
+SOURCE_DIR=$(dirname "$SOURCE")
+SOURCE_FOLDER=$(basename "$SOURCE_DIR")
+
+case "$SOURCE_FOLDER" in
+  todo)
+    echo "⚠️ Item already in todo/"
+    exit 0
+    ;;
+  done)
+    echo "❌ Cannot move from done/ to todo/ (no reopening - create new item instead)"
+    exit 1
+    ;;
+esac
+
+# Check WIP limit
+if [ -f "project-hub/work/todo/.limit" ]; then
+  LIMIT=$(cat project-hub/work/todo/.limit | tr -d '[:space:]')
+  COUNT=$(find project-hub/work/todo -type f -name "*.md" 2>/dev/null | wc -l | tr -d '[:space:]')
+  if [ "$COUNT" -ge "$LIMIT" ]; then
+    echo "⚠️ WIP limit: $COUNT/$LIMIT items in todo/"
+  fi
+fi
+
+# Execute move
+git mv "$SOURCE" project-hub/work/todo/
+
+if [ $? -eq 0 ]; then
+  ITEM_NAME=$(basename "$SOURCE")
+  NEW_COUNT=$(find project-hub/work/todo -type f -name "*.md" 2>/dev/null | wc -l | tr -d '[:space:]')
+  LIMIT_TEXT=$(cat project-hub/work/todo/.limit 2>/dev/null || echo '∞')
+  echo "✅ Moved $ITEM_NAME to todo/"
+  echo "📊 WIP: $NEW_COUNT/$LIMIT_TEXT items"
+fi
 ```
 
-**After move:**
-1. ✅ Verify done/ is empty
-2. ✅ Create release notes and tag the version
-3. ✅ Update project changelog
+---
 
-**Note:** This is typically done as part of a full release, not for individual items.
+### When target is: `doing`
+
+**Execute this EXACT bash command:**
+
+```bash
+ITEM_ID="<item-id>"
+
+# Find the work item
+SOURCE=$(find project-hub/work -type f \( -iname "${ITEM_ID}*.md" -o -iname "${ITEM_ID^^}*.md" \) 2>/dev/null | head -1)
+
+if [ -z "$SOURCE" ]; then
+  echo "❌ Could not find work item: $ITEM_ID"
+  exit 1
+fi
+
+# Validate transition
+SOURCE_DIR=$(dirname "$SOURCE")
+SOURCE_FOLDER=$(basename "$SOURCE_DIR")
+
+case "$SOURCE_FOLDER" in
+  doing)
+    echo "⚠️ Item already in doing/"
+    exit 0
+    ;;
+  backlog)
+    echo "❌ Cannot move directly from backlog/ to doing/"
+    echo "   Valid path: backlog → todo → doing"
+    exit 1
+    ;;
+  done)
+    echo "❌ Cannot move from done/ to doing/ (no reopening - create new item instead)"
+    exit 1
+    ;;
+esac
+
+# Check WIP limit
+if [ -f "project-hub/work/doing/.limit" ]; then
+  LIMIT=$(cat project-hub/work/doing/.limit | tr -d '[:space:]')
+  COUNT=$(find project-hub/work/doing -type f -name "*.md" 2>/dev/null | wc -l | tr -d '[:space:]')
+  if [ "$COUNT" -ge "$LIMIT" ]; then
+    echo "⚠️ WIP limit: $COUNT/$LIMIT items in doing/"
+  fi
+fi
+
+# Execute move
+git mv "$SOURCE" project-hub/work/doing/
+
+if [ $? -eq 0 ]; then
+  ITEM_NAME=$(basename "$SOURCE")
+  echo "✅ Moved $ITEM_NAME to doing/"
+fi
+```
+
+**After the script completes, perform AI review:**
+
+1. Read the work item file at `project-hub/work/doing/$ITEM_NAME`
+2. Extract key information:
+   - Summary: What we're building (1-2 sentences)
+   - Dependencies: Check "Depends On" field
+   - Open questions: Search for TODO, TBD, DECIDE markers
+3. Present concise review:
+   ```
+   📋 Pre-Implementation Review: ITEM-NNN
+
+   Building: [1-2 sentence summary]
+   Dependencies: [list or "None"]
+   Open Questions: [list or "None"]
+
+   Ready to proceed?
+   ```
+4. **STOP - Wait for user confirmation**
+
+---
+
+### When target is: `done`
+
+**Execute this EXACT bash command:**
+
+```bash
+ITEM_ID="<item-id>"
+
+# Find the work item
+SOURCE=$(find project-hub/work -type f \( -iname "${ITEM_ID}*.md" -o -iname "${ITEM_ID^^}*.md" \) 2>/dev/null | head -1)
+
+if [ -z "$SOURCE" ]; then
+  echo "❌ Could not find work item: $ITEM_ID"
+  exit 1
+fi
+
+# Validate transition
+SOURCE_DIR=$(dirname "$SOURCE")
+SOURCE_FOLDER=$(basename "$SOURCE_DIR")
+
+if [ "$SOURCE_FOLDER" != "doing" ]; then
+  echo "⚠️ Moving from $SOURCE_FOLDER to done/ (typically done → from doing/)"
+fi
+
+# Execute move
+git mv "$SOURCE" project-hub/work/done/
+
+if [ $? -eq 0 ]; then
+  ITEM_NAME=$(basename "$SOURCE")
+  echo "✅ Moved $ITEM_NAME to done/"
+  echo ""
+  echo "Optional: Document completion in session history with /fw-session-history"
+fi
+```
+
+---
+
+### When target is: `backlog`
+
+**Execute this EXACT bash command:**
+
+```bash
+ITEM_ID="<item-id>"
+
+# Find the work item
+SOURCE=$(find project-hub/work -type f \( -iname "${ITEM_ID}*.md" -o -iname "${ITEM_ID^^}*.md" \) 2>/dev/null | head -1)
+
+if [ -z "$SOURCE" ]; then
+  echo "❌ Could not find work item: $ITEM_ID"
+  exit 1
+fi
+
+# Validate transition
+SOURCE_DIR=$(dirname "$SOURCE")
+SOURCE_FOLDER=$(basename "$SOURCE_DIR")
+
+if [ "$SOURCE_FOLDER" = "backlog" ]; then
+  echo "⚠️ Item already in backlog/"
+  exit 0
+fi
+
+# Execute move
+git mv "$SOURCE" project-hub/work/backlog/
+
+if [ $? -eq 0 ]; then
+  ITEM_NAME=$(basename "$SOURCE")
+  echo "✅ Moved $ITEM_NAME to backlog/"
+fi
+```
+
+---
+
+### When target is: `archive`
+
+**Execute this EXACT bash command:**
+
+```bash
+ITEM_ID="<item-id>"
+
+# Find the work item
+SOURCE=$(find project-hub/work -type f \( -iname "${ITEM_ID}*.md" -o -iname "${ITEM_ID^^}*.md" \) 2>/dev/null | head -1)
+
+if [ -z "$SOURCE" ]; then
+  echo "❌ Could not find work item: $ITEM_ID"
+  exit 1
+fi
+
+# Execute move
+git mv "$SOURCE" project-hub/history/archive/
+
+if [ $? -eq 0 ]; then
+  ITEM_NAME=$(basename "$SOURCE")
+  echo "✅ Moved $ITEM_NAME to archive/ (cancelled)"
+  echo ""
+  echo "Optional: Add cancellation metadata (Status: Cancelled, Cancelled Date, Reason)"
+fi
+```
 
 ---
 
 ## Examples
 
-```bash
-/spearit-framework-light:move FEAT-042 todo      # Move to todo (instant)
-/spearit-framework-light:move FEAT-042 doing     # Start work (triggers pre-implementation review)
-/spearit-framework-light:move FEAT-042 done      # Complete work (instant)
-/spearit-framework-light:move BUGFIX-001 backlog # Deprioritize (instant)
-/spearit-framework-light:move FEAT-099 archive   # Cancel work (instant, metadata suggested after)
 ```
-
-## Error Handling
-
-**Invalid transition:**
-```
-❌ Cannot move FEAT-042 directly from backlog to doing.
-   Valid path: backlog → todo → doing
-   Would you like me to move it to todo first?
-```
-
-**WIP limit warning (doing/ only):**
-```
-⚠️  Moving FEAT-042 to doing/
-   Current WIP: 2 items (limit: 2)
-   Items in progress: FEAT-038, TECH-041
-
-   Proceeding with move. Consider completing current work first.
-```
-
-**Dependency check (doing/ only):**
-```
-⚠️  FEAT-042 depends on: FEAT-038 (currently in todo/)
-
-   Proceeding with move. Complete dependencies for best workflow.
-```
-
-**Item not found:**
-```
-❌ Could not find work item 'FEAT-999'.
-   Did you mean one of these?
-   - FEAT-098 (in backlog/)
-   - FEAT-042 (in doing/)
+/spearit-framework-light:move feat-127 todo      # Move to todo
+/spearit-framework-light:move FEAT-127 doing     # Start work (with review)
+/spearit-framework-light:move feat-127 done      # Complete work
+/spearit-framework-light:move FEAT-127 backlog   # Deprioritize
+/spearit-framework-light:move feat-127 archive   # Cancel work
 ```
 
 ---
 
-## Notes
+## Performance
 
-- **Fast and friction-free:** Trusts user judgment for routine moves
-- **Critical gate:** Pre-implementation review (→ doing/) is the only moment requiring deep validation
-- **Warnings, not blocks:** WIP limits and dependencies warn but don't prevent moves
-- Uses `git mv` for proper version control tracking
-- Graceful behavior if project-hub/ structure doesn't exist (offers to create)
-- Compatible with any git repository
+**Target times:**
+- → backlog/todo/done/archive: 5-8 seconds (script execution)
+- → doing (with AI review): 12-18 seconds (script + review)
 
-**Philosophy:** The move command should feel instant for routine operations, with the valuable "pause and review" moment reserved for when you're about to start implementation.
+**Note:** Performance is limited by Claude Code's architecture (API latency per command ~2-3 seconds unavoidable).

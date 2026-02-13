@@ -71,7 +71,7 @@ That's it! Your work items are tracked as files in git with complete history.
 | Command | Purpose |
 |---------|---------|
 | `/spearit-framework-light:help` | Command reference and documentation |
-| `/spearit-framework-light:new` | Create a new work item with auto-assigned ID |
+| `/spearit-framework-light:new` | AI-guided work item planning with interactive breakdown and approval |
 | `/spearit-framework-light:move` | Move work items through workflow with policy enforcement |
 
 ### Workflow Enforcement
@@ -97,18 +97,30 @@ Claude will understand your workflow and help enforce best practices automatical
 
 ### `/spearit-framework-light:new`
 
-Create a new work item interactively with guided prompts.
+**AI-guided work item planning** - Let Claude help you think through what you're building.
 
 **Syntax:**
 ```
 /spearit-framework-light:new
 ```
 
+**How it works:**
+1. **You describe** what you want to build (high-level idea)
+2. **Claude analyzes** your codebase and proposes a breakdown
+3. **You review** the suggested approach, scope, and acceptance criteria
+4. **Claude creates** a structured work item ready for implementation
+
 **Interactive Prompts:**
 - **Type:** FEAT, BUG, CHORE, TASK, DOCS, REFACTOR, DECISION, TECH
 - **Title:** Short description (auto-converted to kebab-case filename)
 - **Priority:** High, Medium, Low
-- **Summary:** Brief description (optional, can use "TBD")
+- **Summary:** Describe your idea at any level of detail
+
+**What makes this powerful:**
+- 🤖 **AI analyzes your codebase** - Understands existing patterns and architecture
+- 📋 **Structured breakdown** - Suggests tasks, dependencies, and acceptance criteria
+- ✅ **You stay in control** - Review and approve before creating the work item
+- 🎯 **Better planning** - Catch issues and clarify scope before coding starts
 
 **Examples:**
 ```
@@ -116,8 +128,15 @@ Create a new work item interactively with guided prompts.
 → Type: FEAT
 → Title: Add dark mode
 → Priority: High
-→ Summary: Implement dark mode theme with toggle
+→ Summary: Users want a dark theme option. Should persist preference.
 
+[Claude analyzes codebase and proposes:]
+- Theme context with localStorage persistence
+- CSS variable system for colors
+- Toggle component in settings
+- Migration path for existing users
+
+[You review and approve]
 ✓ Created: project-hub/work/backlog/FEAT-043-add-dark-mode.md
 ```
 
@@ -126,12 +145,12 @@ Create a new work item interactively with guided prompts.
 **Auto-generates:**
 - Next available ID (scans existing work items automatically)
 - Kebab-case filename from title
-- Work item template with frontmatter
+- AI-generated implementation plan with tasks and criteria
 - Git adds file automatically
 
 **Graceful:** Creates `project-hub/work/backlog/` directory if it doesn't exist.
 
-**Note:** ID assignment is fully automatic - you don't need to think about work item IDs.
+**Note:** The planning conversation is the secret sauce - Claude helps you think through edge cases, dependencies, and scope before you commit to building.
 
 ---
 
@@ -287,6 +306,37 @@ This plugin is the **Lightweight Edition** - a subset of the comprehensive Spear
 **Coming soon:** A full framework edition with additional commands (session history, status tracking, backlog management, roadmap planning) is in development.
 
 For more information: **https://github.com/spearit-solutions/project-framework**
+
+---
+
+## Performance Notes
+
+**Move command execution time:** 9-16 seconds per operation
+
+Claude Code plugins work by providing instructions that the AI interprets and executes. Each operation requires API round-trips (network + LLM processing), which introduces latency that cannot be eliminated without architectural changes to Claude Code itself.
+
+**What we've optimized:**
+- ✅ Script-based execution (reduced from 38s to 9-16s - **58% faster**)
+- ✅ Single bash call per operation (minimized API round-trips)
+- ✅ Embedded validation logic (no unnecessary AI reasoning)
+
+**Performance breakdown:**
+- Simple moves (backlog/todo/done/archive): **9-11 seconds**
+- Move to doing (includes pre-implementation review): **12-18 seconds**
+
+**Why the review adds value:**
+The extra time when moving to `doing/` includes:
+- Reading the work item to understand scope
+- Checking dependencies and open questions
+- Presenting a pre-implementation summary
+- Getting your approval before starting work
+
+This "pause and review" moment prevents costly mistakes and is intentionally preserved.
+
+**Future improvements:**
+If Claude Code adds support for direct script execution (bypassing AI interpretation), performance could improve to 1-2 seconds per operation. Until then, this plugin represents the optimal performance achievable within current architectural constraints.
+
+**For power users:** If you need instant execution, the framework repository includes standalone bash scripts that can be run directly without plugin overhead.
 
 ---
 

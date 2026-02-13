@@ -23,7 +23,7 @@ Show this exact table:
 | Command | Description |
 |---------|-------------|
 | `/spearit-framework-light:help` | Show this help message |
-| `/spearit-framework-light:new` | Create a new work item with auto-assigned ID |
+| `/spearit-framework-light:new` | AI-guided work item planning with interactive breakdown and approval |
 | `/spearit-framework-light:move` | Move work item between folders with policy enforcement |
 
 When invoked with a command name (e.g., `/spearit-framework-light:help move`), show detailed help for that command including:
