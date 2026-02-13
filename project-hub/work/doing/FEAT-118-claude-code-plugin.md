@@ -154,7 +154,7 @@ project-framework/
 - [ ] Version: 1.0.0
 - [ ] Author: Gary Elliott / SpearIT Solutions
 - [ ] Keywords: kanban, project-management, workflow, solo-developer, small-team, file-based
-- [ ] Homepage: https://github.com/spearit-solutions/project-framework
+- [ ] Homepage: https://github.com/SpearIT-LLC/project-framework
 
 **Distribution:**
 - [ ] Build script creates `distrib/plugin-light/spearit-framework-light-v1.0.0.zip`
@@ -234,7 +234,7 @@ Features:
 
 Part of the SpearIT Project Framework. For complete project
 scaffolding with templates and full methodology, see:
-https://github.com/spearit-solutions/project-framework
+https://github.com/SpearIT-LLC/project-framework
 
 Perfect for: Solo developers, small teams, lightweight project tracking
 ```

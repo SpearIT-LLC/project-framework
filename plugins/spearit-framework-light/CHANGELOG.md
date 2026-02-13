@@ -62,4 +62,4 @@ If upgrading from development versions with 5 commands:
 
 **Maintained by:** Gary Elliott / SpearIT Solutions
 **License:** MIT
-**Repository:** https://github.com/spearit-solutions/project-framework
+**Repository:** https://github.com/SpearIT-LLC/project-framework

@@ -962,8 +962,8 @@ This release contains 3 work items grouped together.
 
 ## Links
 
-- [Framework Repository](https://github.com/spearit-solutions/project-framework) *(if applicable)*
-- [Issue Tracker](https://github.com/spearit-solutions/project-framework/issues) *(if applicable)*
+- [Framework Repository](https://github.com/SpearIT-LLC/project-framework) *(if applicable)*
+- [Issue Tracker](https://github.com/SpearIT-LLC/project-framework/issues) *(if applicable)*
 - [HPC Job Queue Prototype](../HPCJobQueuePrototype/) *(original source project)*
 
 ---

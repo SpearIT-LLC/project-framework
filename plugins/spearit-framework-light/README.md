@@ -305,7 +305,7 @@ This plugin is the **Lightweight Edition** - a subset of the comprehensive Spear
 
 **Coming soon:** A full framework edition with additional commands (session history, status tracking, backlog management, roadmap planning) is in development.
 
-For more information: **https://github.com/spearit-solutions/project-framework**
+For more information: **https://github.com/SpearIT-LLC/project-framework**
 
 ---
 
