@@ -653,4 +653,271 @@ From TASK-129:
 
 ---
 
-**Last Updated:** 2026-02-13 (Evening Session)
+## Late Evening Session - TASK-129 Completion and Repository Publication
+
+**Session Focus:** Pre-publication review, contribution policy, release tagging, repository publication
+
+---
+
+### Work Completed
+
+#### TASK-129: Pre-Publication Repository Review - ✅ COMPLETE
+
+**Moved:** todo/ → doing/ (via `/spearit-framework-light:move` command - WIP limit warning)
+
+**All 8 sections completed:**
+
+1. **README.md Updated ✅**
+   - Completed in earlier evening session
+   - Two-product strategy, complete version history
+
+2. **Repository Branding Verified ✅**
+   - Branding standard documented: "SpearIT, LLC" (official) / "SpearIT Solutions" (informal)
+   - Found 5 files with incorrect GitHub org URL (`spearit-solutions`)
+   - Corrected all URLs to: `https://github.com/SpearIT-LLC/project-framework`
+   - Files updated:
+     - FEAT-118 (line 237 marketplace description, line 157 homepage)
+     - Plugin CHANGELOG.md
+     - Plugin README.md
+     - Framework CHANGELOG.md
+   - Plugin rebuilt: v1.0.0 (21.88 KB) with corrected URLs
+
+3. **CONTRIBUTING.md Created ✅**
+   - Approach: Model 1 ("Feedback Welcome, Code by Discussion")
+   - Content: Project status, feedback channels, contribution policy, contact info
+   - Policy: Not actively soliciting code contributions (discuss first)
+   - Rationale: Conservative start, protects time, professional appearance
+   - Evolution path: Can expand to Model 2/3 later if community grows
+
+4. **.gitignore Reviewed ✅**
+   - Already verified in earlier session
+   - Comprehensive exclusions for sensitive data
+
+5. **Commit History Reviewed ✅**
+   - Already verified in earlier session
+   - Clean and professional
+
+6. **Release Tagged ✅**
+   - Created annotated tag: `plugin-light-v1.0.0`
+   - Tag message includes: features, package size, marketplace ready status
+   - Format reserves `plugin-vX.X.X` for future full framework plugin
+
+7. **Publication Process Documented ✅**
+   - Created: `project-hub/docs/PUBLICATION-CHECKLIST.md`
+   - 7 major sections (docs, hygiene, security, content, tagging, GitHub settings, verification)
+   - Includes rollback plan and lessons learned section
+   - Captured this publication experience for future reference
+
+8. **Final Verification Complete ✅**
+   - All pre-push checks passed
+   - No sensitive data, professional presentation
+   - Plugin tested, URLs corrected
+
+**All acceptance criteria met** - Ready for publication
+
+#### Repository Publication
+
+**Actions taken:**
+- Committed TASK-129 completion (commit `af00412`)
+- Pushed commits and tags to origin/main
+- Made repository public on GitHub (user action)
+
+**Public repository now live:**
+- URL: https://github.com/SpearIT-LLC/project-framework
+- Tag: `plugin-light-v1.0.0` visible
+- README displays two-product strategy
+- CONTRIBUTING.md sets expectations
+- Professional external presentation
+
+---
+
+### Decisions Made
+
+1. **Contribution Model - Conservative Start:**
+   - **Decision:** Use Model 1 ("Feedback Welcome, Code by Discussion")
+   - **Discussion:** User asked for explanation of contribution models and pros/cons
+   - **Options considered:**
+     - Model 1: No active solicitation, feedback welcome (CHOSEN)
+     - Model 2: Selective contributions (docs/bugs OK, features need discussion)
+     - Model 3: Fully open (active solicitation, detailed contributor guide)
+   - **Rationale:**
+     - Plugin is brand new (v1.0.0) - need to stabilize first
+     - Framework still evolving (v5.1.0) - architecture not locked
+     - User new to OSS contribution management - protect time
+     - Can always expand later, hard to close down
+     - Professional appearance without obligation
+   - **User quote:** "Minimal sounds right"
+
+2. **Tag Naming Convention:**
+   - **Decision:** Use `plugin-light-v1.0.0` format
+   - **Reserves:** `plugin-vX.X.X` for future full framework plugin (FEAT-127)
+   - **Consistency:** Distinguishes light edition from future comprehensive plugin
+
+3. **Branding Flexibility:**
+   - **Decision:** Both "SpearIT, LLC" and "SpearIT Solutions" are acceptable
+   - **Official:** SpearIT, LLC (legal entity)
+   - **Informal:** SpearIT Solutions (also used)
+   - **GitHub:** SpearIT-LLC (organization name)
+   - **Email:** spearit.solutions (domain)
+
+4. **Publication Timing - Now:**
+   - **Decision:** Proceed with repository publication immediately
+   - **All checks complete:** Documentation, branding, security, tagging
+   - **Plugin ready:** Tested, packaged, marketplace-ready
+   - **Confidence:** TASK-129 systematic review addressed publication concerns
+
+---
+
+### Files Modified
+
+#### Documentation (Publication Preparation)
+- `CONTRIBUTING.md` (created)
+  - Model 1 contribution policy
+  - Project status (Plugin v1.0.0, Framework v5.1.0)
+  - Feedback welcome, code by discussion only
+
+- `project-hub/docs/PUBLICATION-CHECKLIST.md` (created)
+  - Reusable checklist for future releases
+  - 7-section comprehensive review process
+  - Rollback plan and lessons learned
+
+#### Branding Corrections
+- `FEAT-118-claude-code-plugin.md`
+  - Line 237: Marketplace description URL corrected
+  - Line 157: Homepage field URL corrected
+
+- `plugins/spearit-framework-light/CHANGELOG.md`
+  - Repository URL corrected
+
+- `plugins/spearit-framework-light/README.md`
+  - "For more information" URL corrected
+
+- `framework/CHANGELOG.md`
+  - Framework repository URLs corrected (2 instances)
+
+#### Work Items
+- `TASK-129-pre-publication-repository-review.md`
+  - Moved: todo/ → doing/
+  - All 8 sections marked complete
+  - All acceptance criteria met
+
+#### Build Artifacts
+- `distrib/plugin-light/spearit-framework-light-v1.0.0.zip`
+  - Rebuilt: 21.88 KB
+  - All GitHub URLs corrected
+
+---
+
+### Technical Insights
+
+#### Contribution Policy Discussion - Educational
+
+**User benefit:** Thorough explanation of three contribution models helped inform decision without pressure.
+
+**Models explained:**
+1. **Model 1 (chosen):** Sets boundaries, protects time, professional
+2. **Model 2 (future option):** Selective areas (docs, bugs), still controlled
+3. **Model 3 (if needed):** Fully open, significant time investment
+
+**Key insight:** Starting conservative is reversible; starting open is not. Better to expand later than contract.
+
+**Decision factors presented:**
+- Time investment (0 hours vs 1-2 hours vs 5+ hours/week)
+- Comfort with rejection (avoiding vs neutral vs fine)
+- What help is wanted (nothing vs specific areas vs everything)
+
+**Result:** User made informed choice aligned with current capacity and project stage.
+
+#### Branding URL Audit - Systematic
+
+**Discovery method:** Used `grep -r "spearit-solutions"` to find all instances
+
+**Found 5 critical files + 3 historical files:**
+- Critical: Plugin and framework user-facing docs
+- Historical: Session histories, research notes, old README backup
+
+**Decision:** Fix critical files (user-facing), leave historical files (accurate record)
+
+**Impact:** Consistent branding for all marketplace users and external visitors
+
+#### Plugin Move Command - Working in Production
+
+**Test:** Used `/spearit-framework-light:move task-129 doing` to move work item
+
+**Result:**
+- ✅ Found work item correctly (case-insensitive search)
+- ⚠️ WIP limit warning displayed (2/2 items in doing/)
+- ✅ Executed git mv successfully
+- ✅ Pre-implementation review displayed
+- ✅ Workflow enforced as designed
+
+**Validation:** Plugin's own commands used to manage plugin development (dogfooding at meta level)
+
+---
+
+## Current State
+
+### In done/ (awaiting release)
+- **TASK-126:** Finalize framework-light Plugin MVP ✅
+  - All testing complete
+  - Package: 51.3 KB, version 1.0.0
+  - Ready for marketplace submission
+
+### In doing/
+- **FEAT-118:** Claude Code Plugin (Ready for Submission)
+  - Milestones 1-8 complete ✅
+  - Milestone 9 pending: Submit to Anthropic marketplace
+  - **NEXT ACTION:** Marketplace submission
+
+- **TASK-129:** Pre-Publication Repository Review ✅ COMPLETE
+  - All 8 sections complete
+  - All acceptance criteria met
+  - Repository now public
+
+### Repository Status
+- **Visibility:** Public ✅
+- **URL:** https://github.com/SpearIT-LLC/project-framework
+- **Tag:** plugin-light-v1.0.0 (published)
+- **Commits pushed:** 3 commits ahead → now synchronized
+
+---
+
+## Next Steps
+
+1. **Submit plugin to Anthropic marketplace (FEAT-118 Milestone 9)**
+   - Package: spearit-framework-light-v1.0.0.zip
+   - Documentation: Complete
+   - Repository: Public
+
+2. **Move TASK-129 to done/**
+   - All work complete
+   - Document completion date
+
+3. **Monitor initial feedback**
+   - Watch for first GitHub issues
+   - Respond to marketplace questions
+   - Track early adoption
+
+4. **Plan FEAT-127 (Full Framework Plugin)**
+   - Lower priority than marketplace submission
+   - Depends on light plugin success
+
+---
+
+## Session Notes
+
+**Publication milestone achieved:** Repository is now public with professional presentation for external users.
+
+**Systematic approach validated:** TASK-129's structured review caught URL inconsistencies, ensured branding consistency, and provided publication confidence.
+
+**Contribution policy:** Conservative Model 1 approach sets realistic expectations while remaining welcoming to feedback. Can evolve as project grows.
+
+**Dogfooding success:** Used plugin's own `/move` command to manage plugin work item. Workflow enforcement working correctly (WIP limits, pre-implementation review).
+
+**User confidence:** Systematic review process addressed "publication nervousness" through methodical verification and professional polish.
+
+**Ready for marketplace:** Plugin Light v1.0.0 is tested, packaged, documented, and repository is public. All prerequisites met for Anthropic marketplace submission.
+
+---
+
+**Last Updated:** 2026-02-13 (Late Evening Session - Publication Complete)
