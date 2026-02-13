@@ -1,7 +1,7 @@
 # SpearIT Project Framework
 
 **Current Version & Status:** See [framework/PROJECT-STATUS.md](framework/PROJECT-STATUS.md)
-**Last Updated:** 2026-01-06
+**Last Updated:** 2026-02-13
 **Maintainer:** Gary Elliott (gary.elliott@spearit.solutions)
 **Organization:** SpearIT, LLC
 
@@ -11,20 +11,52 @@
 
 The **SpearIT Project Framework** is a file-based workflow and AI collaboration partner for solo developers and small teams building software or documentation projects.
 
-This repository contains:
-- **framework/** - The Standard Project Framework implementation and documentation
-- **templates/** - Template packages for new projects
-- **tools/** - Build and setup scripts for distribution
+This repository contains **two complementary products:**
+
+### 🔌 Plugin (Lightweight Edition)
+Install in any project to get file-based Kanban workflow immediately. No project restructuring required.
+
+### 📚 Framework (Comprehensive Edition)
+Complete project scaffolding with templates, documentation patterns, and full methodology.
+
+**Note:** The full Framework is **not a plugin** - it's a complete project template package. A full Framework plugin is planned (see FEAT-127).
+
+**Choose your path:** Plugin for quick start → Framework when you're ready for comprehensive structure.
 
 ---
 
 ## Quick Start
 
-**Want the fastest path?** See [QUICK-START.md](QUICK-START.md) for a bare-bones, get-functional guide. ⚡
+### Option 1: Install the Plugin (Recommended for First-Time Users)
 
-**Create a new project:** Use `tools/Build-FrameworkArchive.ps1` to create a distribution, then run `Setup-Framework.ps1` to scaffold a new project.
+**Try the workflow in minutes:**
 
-### For New Projects
+```bash
+# Via Anthropic Marketplace (coming soon)
+# Search for: SpearIT Framework - Lightweight Edition
+
+# Via GitHub (development)
+# See: plugins/spearit-framework-light/README.md
+```
+
+**What you get:**
+- ✅ File-based Kanban workflow (backlog → todo → doing → done)
+- ✅ AI-assisted work item creation with auto-ID assignment
+- ✅ Workflow management with AI-guided planning
+- ✅ Works in any project structure
+- ✅ No external dependencies
+
+**Perfect for:**
+- Trying before committing to full framework
+- Adding workflow to existing projects
+- Lightweight project tracking
+- Solo developers and small teams
+
+**Learn more:** [plugins/spearit-framework-light/README.md](plugins/spearit-framework-light/README.md)
+
+### Option 2: Use the Full Framework (For New Projects)
+
+**Get complete project scaffolding:**
 
 1. **Create a distribution package:**
    ```bash
@@ -41,26 +73,73 @@ This repository contains:
    - Follow the setup instructions
    - Customize templates with your project details
 
-### For Existing Projects
+**What you get:**
+- ✅ Complete documentation suite
+- ✅ All workflow commands and automation
+- ✅ Project templates and patterns
+- ✅ Research phase support
+- ✅ Architecture decision records
+- ✅ PowerShell scripts and wrappers
+- ✅ AI integration (CLAUDE.md)
 
-1. **Assess your project:**
-   - Determine current scope, lifespan, and team size
-
-2. **Integrate the framework:**
-   - Follow "Existing Project Integration" section in [NEW-PROJECT-CHECKLIST.md](templates/NEW-PROJECT-CHECKLIST.md)
-   - Migrate existing documentation
-   - Adopt workflow incrementally
+**Perfect for:**
+- New projects starting from scratch
+- Teams wanting comprehensive structure
+- Long-term professional projects
+- Full project lifecycle support
 
 ---
 
-## What's Included
+## Repository Contents
 
-- Complete documentation suite
-- File-based kanban workflow
-- Templates for planning, work items, and decisions
-- Research phase support
-- CMD wrappers for PowerShell scripts
-- AI integration (CLAUDE.md)
+### 🔌 `/plugins/` - Plugin Development
+- **spearit-framework-light/** - Lightweight Edition plugin (v1.0.0)
+  - 3 core commands (help, new, move)
+  - 3 skills for AI context
+  - Standalone operation (no framework required)
+
+### 📚 `/framework/` - Framework Source
+- **docs/** - Process documentation, collaboration guides, patterns
+- **templates/** - Work items, decisions, planning documents
+- **tools/** - PowerShell scripts for workflow automation
+
+### 📦 `/templates/` - Project Templates
+- **starter/** - Complete project scaffolding with framework included
+
+### 🛠️ `/tools/` - Build Scripts
+- Distribution archive creation
+- Plugin packaging
+- Setup automation
+
+### 📊 `/project-hub/` - Development Tracking
+- **Purpose:** Dogfooding - framework managing itself
+- **Contents:** Work items, decisions, session histories
+- **Note:** This shows the framework in action! Feel free to explore to see how we use it.
+
+---
+
+## Plugin vs Framework: Which Should I Choose?
+
+### Choose the Plugin if:
+- ✅ You have an existing project
+- ✅ You want to try the workflow quickly
+- ✅ You need lightweight tracking only
+- ✅ You don't want to restructure your project
+- ✅ You're evaluating before full commitment
+
+**Time to start:** 5 minutes
+
+### Choose the Framework if:
+- ✅ You're starting a new project
+- ✅ You want comprehensive scaffolding
+- ✅ You need templates, patterns, and guides
+- ✅ You're building a long-term professional project
+- ✅ You want the complete methodology
+
+**Time to start:** 30-60 minutes
+
+### Use Both:
+Many users start with the plugin, then graduate to the full framework when starting their next project. They're designed to work together!
 
 ---
 
@@ -88,15 +167,16 @@ Four production-ready CMD wrapper templates let users double-click PowerShell sc
 
 ## Documentation
 
+### Getting Started
+- **[QUICK-START.md](QUICK-START.md)** - Bare-bones, get-functional guide ⚡
+- **[NEW-PROJECT-CHECKLIST.md](templates/NEW-PROJECT-CHECKLIST.md)** - Setup instructions for framework
+- **[Plugin README](plugins/spearit-framework-light/README.md)** - Plugin installation and usage
+
 ### Core Documentation
-- **[NEW-PROJECT-CHECKLIST.md](templates/NEW-PROJECT-CHECKLIST.md)** - Setup instructions ⭐
 - **[framework/PROJECT-STATUS.md](framework/PROJECT-STATUS.md)** - Current version and status
 - **[framework/CHANGELOG.md](framework/CHANGELOG.md)** - Version history
 - **[framework/INDEX.md](framework/INDEX.md)** - Complete documentation index
-- [STRUCTURE.md](templates/STRUCTURE.md) - Template structure reference
-
-### Template Package
-- [templates/starter/](templates/starter/) - Complete project scaffolding with framework included
+- **[STRUCTURE.md](templates/STRUCTURE.md)** - Template structure reference
 
 ---
 
@@ -145,28 +225,73 @@ All projects follow this core workflow:
 
 ---
 
+## Version Strategy
+
+**Plugin Version:** v1.0.0 (production-ready)
+- Semantic versioning independent from framework
+- See: [plugins/spearit-framework-light/CHANGELOG.md](plugins/spearit-framework-light/CHANGELOG.md)
+
+**Framework Version:** v5.1.0 (production-ready)
+- Major version for breaking structure changes
+- Minor version for new features/templates
+- Patch version for bug fixes/documentation
+- See: [framework/PROJECT-STATUS.md](framework/PROJECT-STATUS.md)
+
+**Why different versions?**
+- Plugin is a new product (starting at v1.0.0)
+- Framework is mature (evolved through 5 major versions since Dec 2025)
+- Each can evolve independently based on user feedback
+
+---
+
 ## Project Status
 
-**Current Version:** v3.0.0 (2026-01-07)
-**Status:** In Development (Migration Branch)
+### Plugin (Lightweight Edition) - v1.0.0
+**Status:** ✅ Production-ready, marketplace submission pending
 
-See [framework/PROJECT-STATUS.md](framework/PROJECT-STATUS.md) for detailed status.
+**What's Complete:**
+- ✅ 3 core commands (help, new, move)
+- ✅ 3 skills for AI context
+- ✅ Professional documentation
+- ✅ Comprehensive testing (CLI + VSCode)
+- ✅ ZIP package (51.3 KB)
 
-### What's Complete
+**What's Next:**
+- 📋 Anthropic marketplace submission
+- 📋 User feedback collection
+- 📋 v1.1 feature planning based on adoption
+
+### Framework (Comprehensive Edition) - v5.1.0
+**Status:** ✅ Production-ready
+
+**What's Complete:**
 - ✅ Complete documentation suite
 - ✅ Templates including research phase
 - ✅ CMD wrappers (4 variants)
-- ✅ Setup checklists
+- ✅ ZIP distribution package
+- ✅ Interactive setup script (Setup-Framework.ps1)
 - ✅ File-based kanban workflow
-- 🚧 Dogfooding (framework managing itself)
+- ✅ Dogfooding (framework managing itself)
 
-### What's Next
-- 📋 ZIP distribution package
-- 📋 Interactive setup script
+**What's Next:**
+- 📋 Full Framework plugin (FEAT-127 - in planning)
 - 📋 Validation script
 - 📋 Visual diagrams
 
-See [framework/CHANGELOG.md](framework/CHANGELOG.md) for version history.
+---
+
+## Real-World Usage
+
+**Projects Using Framework:**
+- SpearIT Project Framework (dogfooding - this project manages itself)
+- HPC Job Queue Prototype (origin project)
+
+**Lessons Learned:**
+- Initial setup time investment pays off within first month
+- Framework prevents "documentation drift"
+- WIP limits (doing=1) enforce focus
+- Research phase templates save time by avoiding unnecessary features
+- CLAUDE.md integration significantly improves AI assistance quality
 
 ---
 
@@ -176,109 +301,106 @@ See [framework/CHANGELOG.md](framework/CHANGELOG.md) for version history.
 **Project:** Daily backup automation (PowerShell)
 **Setup:** Basic README with "Why This Exists" section
 **Time:** 10-15 minutes
+**Recommendation:** Use plugin for quick tracking
 
 ### Scenario 2: CLI Utility Tool
 **Project:** Data conversion utility
 **Setup:** Version tracking, changelog, decision documentation
 **Time:** 30-60 minutes
+**Recommendation:** Use framework with basic templates
 
 ### Scenario 3: Web Application
 **Project:** Internal dashboard application
 **Setup:** Full planning, kanban workflow, team collaboration
 **Time:** Progressive adoption as project grows
+**Recommendation:** Start with plugin, graduate to framework
 
 ---
 
-## Real-World Usage
+## Installation
 
-**Projects Using Framework:**
-- HPC Job Queue Prototype - Origin project
+### Installing the Plugin
 
-**Feedback:**
-- Kanban workflow effective for solo developer
-- Research phase templates saved time by avoiding unnecessary features
-- CLAUDE.md integration significantly improved AI assistance quality
-
-**Lessons Learned:**
-- Initial setup time investment pays off within first month
-- Framework prevents "documentation drift"
-- WIP limits (doing=1) enforce focus
-
----
-
-## Distribution
-
-### Current Options
-
-**Git Clone:**
 ```bash
-git clone https://github.com/spearit-solutions/project-framework.git
-cd project-framework/templates
-# Copy appropriate level to your project
+# Via Anthropic Marketplace (coming soon)
+# 1. Open Claude Code
+# 2. Search plugins: "SpearIT Framework"
+# 3. Install "Lightweight Edition"
+
+# Via GitHub (development/testing)
+# See detailed instructions in: plugins/spearit-framework-light/README.md
 ```
 
-**Manual Download:**
-- Download repository as ZIP
-- Extract and use starter template
+### Installing the Framework
 
-### Planned
-- Pre-packaged distribution ZIP file
-- Interactive setup script
-- Automated distribution process
+```bash
+# Clone repository
+git clone https://github.com/SpearIT-LLC/project-framework.git
+cd project-framework
 
----
+# Create distribution archive
+tools/Build-FrameworkArchive.ps1
 
-## Version Strategy
-
-**Framework Version:** See [framework/PROJECT-STATUS.md](framework/PROJECT-STATUS.md) for current version
-- Major version for breaking structure changes
-- Minor version for new features/templates
-- Patch version for bug fixes/documentation
-
-**Document Versions:** Each document tracks its own "Last Updated" date
-- No version bump required for unrelated changes
-- Maintains clarity about when specific docs were modified
-
-**Template Versions:** Inherit framework version unless independently versioned
-
-See [Version Strategy Documentation](project-hub/external-references/version-strategy.md) for details.
+# Extract to your project and run setup
+# Follow: templates/NEW-PROJECT-CHECKLIST.md
+```
 
 ---
 
 ## Contributing
 
-**Status:** Framework currently maintained by SpearIT, LLC
-
-**Future:** CONTRIBUTING.md planned for future release
+**Current Status:** Framework and plugin maintained by SpearIT, LLC
 
 **Feedback Welcome:**
-- Issues, suggestions, and pull requests welcome
-- Contact: gary.elliott@spearit.solutions
+- 🐛 Issues and bug reports
+- 💡 Feature suggestions
+- ❓ Questions about usage
+- 📖 Documentation improvements
+
+**How to provide feedback:**
+- Open an issue on GitHub
+- Email: gary.elliott@spearit.solutions
+
+**Future Plans:**
+- Detailed CONTRIBUTING.md coming soon
+- Community contributions welcomed after v1.0 plugin stabilizes
 
 ---
 
 ## License
 
-See [LICENSE](LICENSE) file for details.
+MIT License - See [LICENSE](LICENSE) file for details.
+
+Both the plugin and framework are MIT licensed for maximum flexibility and adoption.
 
 ---
 
 ## Dogfooding
 
-**Meta Note:** This framework project manages itself using its own workflow system. This serves as:
-1. **Validation** - Proves framework works for framework development
-2. **Example** - Real-world example of framework usage
-3. **Improvement** - Surfaces pain points and areas for enhancement
+**Meta Note:** This framework project manages itself using its own workflow system.
 
-Check [project-hub/](project-hub/) to see the framework in action on itself, or use the starter template ([templates/starter/](templates/starter/)) to create a new project.
+Check out [`project-hub/`](project-hub/) to see:
+- ✅ How we track work items (backlog → doing → done)
+- ✅ How we document decisions
+- ✅ How we plan features
+- ✅ How we manage releases
+
+This serves as:
+1. **Validation** - Proves framework works for framework development
+2. **Example** - Real-world example of framework in action
+3. **Improvement** - Surfaces pain points and areas for enhancement
 
 ---
 
 ## Support
 
-**Maintainer:** Gary Elliott (gary.elliott@spearit.solutions)
+**Maintainer:** Gary Elliott
+**Email:** gary.elliott@spearit.solutions
 **Organization:** SpearIT, LLC
-**Documentation:** See [framework/INDEX.md](framework/INDEX.md) for complete doc navigation
+
+**Documentation:**
+- Framework: [framework/INDEX.md](framework/INDEX.md)
+- Plugin: [plugins/spearit-framework-light/README.md](plugins/spearit-framework-light/README.md)
 
 ---
 
@@ -287,9 +409,19 @@ Check [project-hub/](project-hub/) to see the framework in action on itself, or 
 **Created By:** Gary Elliott
 **Organization:** SpearIT, LLC
 **Inspired By:** Practical experience with HPC Job Queue Prototype project
-**First Release:** 2025-12-18 (v1.0.0)
-**Multi-Level Framework:** 2025-12-19 (v2.0.0)
+
+**Key Milestones:**
+- **2025-12-18** - Framework v1.0.0 (first release)
+- **2025-12-19** - Framework v2.0.0 (multi-level support)
+- **2026-01-08** - Framework v3.0.0 (framework-as-dependency)
+- **2026-01-26** - Framework v4.0.0 (framework distribution model)
+- **2026-02-05** - Framework v5.0.0 (project-hub to root)
+- **2026-02-06** - Framework v5.1.0 (ZIP distribution + setup script)
+- **2026-02-13** - Plugin Light v1.0.0 (marketplace-ready)
 
 ---
 
-**Get Started:** [NEW-PROJECT-CHECKLIST.md](templates/NEW-PROJECT-CHECKLIST.md)
+**Ready to start?**
+- **Try it quickly:** [Plugin README](plugins/spearit-framework-light/README.md)
+- **Full setup:** [NEW-PROJECT-CHECKLIST.md](templates/NEW-PROJECT-CHECKLIST.md)
+- **Learn more:** [framework/INDEX.md](framework/INDEX.md)

@@ -447,4 +447,210 @@ From TASK-129:
 
 ---
 
-**Last Updated:** 2026-02-13 (Afternoon Session)
+## Evening Session - Plugin Testing and README Finalization
+
+**Session Focus:** Plugin command testing (help, new), README-DRAFT finalization, pre-commit preparation
+
+---
+
+### Work Completed
+
+#### Plugin Testing - All Commands Verified
+
+**Command testing after VSCode restart:**
+- ✅ `/spearit-framework-light:help` - Displayed 3-command table correctly
+- ✅ `/spearit-framework-light:help new` - Showed detailed help for new command (428 lines)
+- ✅ `/spearit-framework-light:new FEAT "hello world poc script"` - Successfully created FEAT-130
+  - Proper discovery conversation (PowerShell, 3 languages, 3 colors, poc location)
+  - Auto-ID assignment working (ID 130)
+  - Template properly populated from conversation context
+  - File created in project-hub/work/backlog/
+  - Git add executed automatically
+
+**Test work items created and cleaned:**
+- FEAT-130: Hello World POC Script (created via plugin, tested workflow)
+- CHORE-128: Test work item (from earlier testing)
+- Both cleaned up after testing complete
+
+#### README-DRAFT.md Finalization
+
+**User feedback incorporated:**
+1. **Missing version milestones (v4.0.0, v5.0.0):**
+   - Added v4.0.0 (2026-01-26) - framework distribution model
+   - Added v5.0.0 (2026-02-05) - project-hub to root
+   - Added v5.1.0 (2026-02-06) - ZIP distribution + setup script
+   - Fixed v3.0.0 date (2026-01-07 → 2026-01-08)
+
+2. **Framework vs Plugin clarity:**
+   - Added explicit note: "The full Framework is **not a plugin** - it's a complete project template package."
+   - Noted full Framework plugin planned (FEAT-127)
+   - Updated all framework version references: v3.0.0 → v5.1.0
+   - Updated framework status: "In Development" → "Production-ready"
+
+3. **Milestone naming:**
+   - Changed "Plugin v1.0.0" → "Plugin Light v1.0.0" for clarity
+   - Distinguishes from future full Framework plugin
+
+4. **Project Status section updated:**
+   - Framework v5.1.0 marked production-ready
+   - Added completed features (ZIP package, setup script)
+   - Updated "What's Next" with FEAT-127 reference
+
+**README.md replaced:**
+- Old README.md → README-OLD.md (backup preserved)
+- README-DRAFT.md → README.md (now primary)
+- Git tracked the rename/replacement
+
+---
+
+### Decisions Made
+
+1. **Complete Version History Required:**
+   - **Decision:** Show ALL major versions in README milestones (v1-v5)
+   - **Rationale:** Demonstrates framework maturity and evolution
+   - **User quote:** "The Key Milestones section is missing v4 and v5. Is that intentional?"
+   - **Impact:** More transparent, shows 2-month development timeline (Dec 2025 - Feb 2026)
+
+2. **Framework Not a Plugin - Explicit Messaging:**
+   - **Decision:** Add prominent note that full Framework is a template package, not a plugin
+   - **Rationale:** Prevent user confusion between Plugin Light (available now) and Framework (template package)
+   - **Future:** FEAT-127 will create full Framework plugin eventually
+   - **Current:** Plugin Light is the only plugin product
+
+3. **Plugin Light Naming Consistency:**
+   - **Decision:** Use "Plugin Light" in milestones, not just "Plugin"
+   - **Rationale:** Distinguishes from future full plugin, sets expectations
+   - **Applied to:** Key Milestones section (2026-02-13 entry)
+
+4. **README Replacement Ready:**
+   - **User:** "yes" (to replacing README.md with README-DRAFT.md)
+   - **Action:** Executed git mv to replace primary README
+   - **Safety:** Old version preserved as README-OLD.md
+
+---
+
+### Files Modified
+
+#### Documentation
+- `README-DRAFT.md` → `README.md`
+  - Added v4.0.0 and v5.0.0 milestones
+  - Updated framework version references (v3.0.0 → v5.1.0)
+  - Updated framework status (in development → production-ready)
+  - Added explicit "not a plugin" note for Framework
+  - Changed "Plugin v1.0.0" → "Plugin Light v1.0.0" in milestones
+  - Updated "What's Complete" section for Framework
+  - Updated "What's Next" with FEAT-127 reference
+
+- `README-OLD.md` (renamed from README.md)
+  - Backup of original README for reference
+
+### Files Created (and Deleted)
+
+**Test work items (created then cleaned):**
+- `project-hub/work/backlog/FEAT-130-hello-world-poc-script.md`
+  - Created via `/spearit-framework-light:new` command
+  - Purpose: Test "new" command with realistic workflow
+  - Spec: PowerShell script outputting "Hello World" in 3 languages/colors
+  - Deleted after testing complete
+
+- `project-hub/work/backlog/CHORE-128-test-work-item-with-dummy-tasks.md`
+  - Earlier test work item
+  - Deleted after testing complete
+
+---
+
+### Technical Insights
+
+#### Plugin Command Performance - Excellent
+
+**Help command:**
+- Fast, clean output (3-command table)
+- Detailed help loaded on demand (428 lines for new.md)
+- No performance issues
+
+**New command:**
+- Natural discovery conversation flow
+- Context-aware (referenced earlier discussion about "hello world poc")
+- Auto-ID assignment working flawlessly (scanned all work items, assigned 130)
+- Template population accurate (from conversation, not placeholders)
+- Git integration smooth (automatic staging)
+
+**Overall assessment:** Plugin commands performing as designed. Ready for production use.
+
+#### README Evolution - Two-Product Strategy Clear
+
+**Before (README.md):**
+- Single product focus (Framework only)
+- Generic setup instructions
+- Last updated: 2026-01-06
+
+**After (README-DRAFT.md → README.md):**
+- Two complementary products (Plugin Light + Framework)
+- Progressive adoption path (try plugin → graduate to framework)
+- Clear decision guide (5 min vs 30-60 min setup)
+- Complete version history (v1.0.0 - v5.1.0)
+- Plugin-first presentation (marketplace will drive traffic)
+- Professional, transparent (dogfooding explained)
+- Last updated: 2026-02-13
+
+**Result:** Repository now tells a coherent story for new users arriving via marketplace.
+
+---
+
+## Current State
+
+### In done/ (awaiting release)
+- **TASK-126:** Finalize framework-light Plugin MVP ✅
+  - All testing complete
+  - Package: 51.3 KB, version 1.0.0
+  - Ready for marketplace submission
+
+### In doing/
+- **FEAT-118:** Claude Code Plugin (Ready for Submission)
+  - Milestones 1-8 complete ✅
+  - Milestone 9 pending: Submit to Anthropic marketplace
+  - Pre-submission: README now finalized ✅
+
+### Changes staged (ready for commit)
+- README.md (replaced with new two-product version)
+- README-OLD.md (backup created)
+- README-DRAFT.md (deleted - content now in README.md)
+
+### Test artifacts cleaned
+- FEAT-130 (created, tested, deleted)
+- CHORE-128 (created, tested, deleted)
+
+---
+
+## Next Steps
+
+1. **Commit session work:**
+   - README updates
+   - Session history
+   - Clean working tree
+
+2. **TASK-129 remaining items:**
+   - Branding verification (SpearIT LLC consistency)
+   - CONTRIBUTING.md creation
+   - Tag v1.0.0-plugin
+   - Make repository public
+
+3. **Marketplace submission (FEAT-118 Milestone 9):**
+   - Submit spearit-framework-light plugin
+   - User feedback collection plan
+
+---
+
+## Session Notes
+
+**Testing methodology:** Used plugin's own commands to test functionality (dogfooding). Commands performed excellently - no issues found.
+
+**README evolution:** User appropriately thorough with review ("missing v4 and v5?", "clarify Framework is not a plugin"). Final version is comprehensive and accurate.
+
+**Publication readiness:** Repository now has professional, clear README that explains both products. Marketplace-ready presentation achieved.
+
+**User satisfaction:** "All tests passed" - validation that plugin is ready for public release.
+
+---
+
+**Last Updated:** 2026-02-13 (Evening Session)
