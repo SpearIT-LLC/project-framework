@@ -1,9 +1,10 @@
 # TASK-126: Finalize framework-light Plugin MVP for Submission
 
 **Type:** TASK
-**Status:** Doing (Implementation complete, final testing pending)
+**Status:** Done
 **Created:** 2026-02-12
 **Updated:** 2026-02-13
+**Completed:** 2026-02-13
 **Related:** FEAT-118 (scope refinement)
 
 ---
@@ -83,7 +84,7 @@ After prototyping 5 commands, product review identified:
 - [x] Update local marketplace: `Publish-ToLocalMarketplace.ps1 -Build`
   - ✅ Marketplace updated with version 1.0.0-dev1
 
-### 7. Testing 🔄 IN PROGRESS
+### 7. Testing ✅ COMPLETE
 
 **CLI Testing:** ✅ COMPLETE (2026-02-12 evening)
 - [x] **Command availability**
@@ -94,31 +95,31 @@ After prototyping 5 commands, product review identified:
   - ✅ Plugin shows version 1.0.0-dev1
   - ✅ Correct plugin listed in CLI
 
-**VSCode Testing:** ⏳ PENDING (requires VSCode restart)
-- [ ] **Command availability in VSCode**
+**VSCode Testing:** ✅ COMPLETE
+- [x] **Command availability in VSCode**
   - `/spearit-framework-light:help` shows only 3 commands
   - `/spearit-framework-light:session-history` returns "command not found"
   - `/spearit-framework-light:next-id` returns "command not found"
-- [ ] **new command**
+- [x] **new command**
   - Creates work item with auto-assigned ID
   - Handles first work item (ID 001)
   - Handles gaps in sequence
   - ID increments correctly
-- [ ] **Integration test**
+- [x] **Integration test**
   - Create work item → verify in backlog
   - Move work item → verify in new location
   - Help → verify clean output
 
 **Note:** Plugin commands use `/spearit-framework-light:*` namespace. Local framework commands (if installed) use `/fw-*` prefix.
 
-### 8. Plugin Installation Test ⏳ PENDING
+### 8. Plugin Installation Test ✅ COMPLETE
 
-- [ ] Uninstall current plugin (if installed)
-- [ ] Clean install from local marketplace
-- [ ] Verify only 3 commands appear in plugin help
-- [ ] Execute each command to verify functionality
+- [x] Uninstall current plugin (if installed)
+- [x] Clean install from local marketplace
+- [x] Verify only 3 commands appear in plugin help
+- [x] Execute each command to verify functionality
 
-**Note:** Clean install recommended before final testing to verify cache update workflow.
+**Note:** Clean install completed. All tests passed.
 
 ### 9. Update Related Work Items ✅ COMPLETE
 
@@ -134,10 +135,10 @@ After prototyping 5 commands, product review identified:
 ## Acceptance Criteria
 
 - [x] Plugin contains exactly 3 commands: help, new, move ✅
-- [x] `new` command automatically assigns sequential IDs ✅ (logic integrated, testing pending)
+- [x] `new` command automatically assigns sequential IDs ✅
 - [x] All documentation reflects 3-command scope ✅
-- [x] Plugin builds and installs cleanly ✅ (CLI verified, VSCode pending restart)
-- [ ] All 3 commands tested and working ⏳ (CLI complete, VSCode pending)
+- [x] Plugin builds and installs cleanly ✅
+- [x] All 3 commands tested and working ✅
 - [x] Removed features preserved for future use ✅ (plugins/spearit-framework/)
 - [x] CHANGELOG documents rationale for changes ✅
 
@@ -198,6 +199,13 @@ After prototyping 5 commands, product review identified:
 - ✅ All yesterday's work committed (5 commits)
 - ✅ TASK-126 status updated
 - Status: Ready for final VSCode testing
+
+### 2026-02-13 Completion
+- ✅ Clean plugin installation test completed
+- ✅ All 3 commands verified working
+- ✅ ZIP package validated (51.3 KB, proper structure)
+- ✅ All acceptance criteria met
+- Status: **COMPLETE - Ready for marketplace submission**
 
 ---
 

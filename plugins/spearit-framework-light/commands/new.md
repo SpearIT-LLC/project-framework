@@ -402,4 +402,26 @@ Ready to refine or move to todo!
 
 ---
 
+---
+
+## Scope Guidelines
+
+**Keep work items focused:**
+- ✅ "Add user authentication flow" → FEAT (single feature)
+- ❌ "Build entire user management system" → Too broad (multiple features)
+- **Rule of thumb:** If you're tempted to write "and" in the title, split it into multiple items
+
+**Examples of too-broad items:**
+- "Add authentication **and** authorization" → Split into two FEATs
+- "Implement login **and** registration" → Two separate features
+- "Build dashboard **and** reports" → Multiple components
+
+**When to split:**
+- Work item has 10+ acceptance criteria
+- Implementation would span 5+ files
+- Multiple distinct user-facing capabilities
+- Would take more than a few days to implement
+
+---
+
 **Design Philosophy:** This command is a **conversation**, not a form. Use your intelligence to understand what's needed and create a solid foundation for implementation.

@@ -1648,4 +1648,233 @@ Added 4 key benefits with emojis:
 
 ---
 
-**Last Updated:** 2026-02-12 (Final session completed - Plugin messaging refinement for marketplace positioning)
+---
+
+## Post-Session: MEMORY.md Optimization and Plugin Architecture Discovery
+
+**Resumed:** 2026-02-12 (Post-session - Memory optimization and learning)
+**Session Focus:** Optimize MEMORY.md token usage, understand plugin skills architecture
+**Objective:** Reduce context consumption and document plugin behavior
+
+### Summary (Post-Session)
+
+Optimized MEMORY.md from 223 lines (~2.3k tokens) to 152 lines (~1.2k tokens) by restructuring as an index with links to detailed research files. Discovered that plugin skills don't appear in `/context` output despite plugin being enabled, leading to research into official Anthropic documentation on plugin token usage and the progressive disclosure pattern for skills.
+
+### Work Completed (Post-Session)
+
+#### MEMORY.md Restructuring
+
+**Problem:** MEMORY.md was 223 lines consuming ~2.3k tokens in context, with duplicate information in research files.
+
+**Solution:** Restructured as quick reference index with cross-links to detailed documentation:
+
+**New structure:**
+1. Critical reminder (version increment warning)
+2. Research files index with 1-line summaries
+3. Quick reference patterns (6 patterns) - Problem/Solution/Key/Details format
+4. Command development patterns
+5. Related work items
+
+**Results:**
+- Reduced from 223 lines to 152 lines (~50% reduction)
+- Estimated token savings: ~1.1k tokens
+- Detailed info remains in research files, loaded on-demand
+- Single source of truth maintained
+
+**Files modified:**
+- `C:\Users\gelliott\.claude\projects\...\memory\MEMORY.md`
+
+#### Plugin Skills Token Usage Investigation
+
+**Trigger:** User noticed plugin skills not showing in `/context` output despite plugin being enabled.
+
+**Investigation:**
+1. Checked `.claude/settings.local.json` → Plugin confirmed enabled
+2. Verified plugin commands work (tested `/spearit-framework-light:help`)
+3. Reviewed plugin skills (~449 lines, 3 files)
+4. Researched official Anthropic documentation
+
+**Key Findings from Official Docs:**
+
+**Progressive Disclosure Pattern:**
+- At startup: Only skill name + description loaded (~100 tokens per skill)
+- When invoked: Full skill content loads
+- Budget: 2% of context window (dynamic scaling)
+
+**Skills vs Commands:**
+- Commands with no frontmatter: 0 tokens at startup
+- Skills with default settings: ~100 tokens for description
+- Skills with `disable-model-invocation: true`: 0 tokens at startup
+
+**Plugin Architecture Discovery:**
+- Plugin skills exist (~449 lines across 3 files)
+- Skills NOT appearing in `/context` output
+- Possible explanations:
+  1. Progressive disclosure working correctly (only frontmatter loaded)
+  2. `/context` command doesn't report plugin skill tokens
+  3. Plugin skills handled differently than user skills
+
+**Known Issue (January 2026):**
+- User skills in `~/.claude/skills/` being fully loaded instead of frontmatter-only
+- Plugin skills may not have this bug
+
+**Your Plugin Commands Analysis:**
+- Commands have NO frontmatter (legacy `.claude/commands/` format)
+- Behave like `disable-model-invocation: true` by default
+- Token usage: 0 at startup, loads only when invoked
+- Claude cannot auto-invoke without frontmatter descriptions
+
+### Decisions Made (Post-Session)
+
+**1. MEMORY.md as Index Pattern**
+- **Decision:** Use MEMORY.md as quick reference index with links to detailed research
+- **Rationale:** Reduce token consumption while maintaining access to detailed docs
+- **Implementation:** Problem/Solution/Key/Details format with file links
+- **Benefit:** 50% token reduction, better maintainability
+
+**2. Document Plugin Skills Architecture Discovery**
+- **Decision:** Add findings to session history and research files
+- **Rationale:** Plugin token usage is non-obvious and poorly documented
+- **Value:** Future plugin developers benefit from understanding
+
+**3. Keep Commands Without Frontmatter (For Now)**
+- **Decision:** Don't add frontmatter to plugin commands yet
+- **Rationale:**
+  - Current behavior: 0 tokens at startup (efficient)
+  - User-invoked commands are design intent
+  - Can add later if natural language invocation becomes valuable
+- **Trade-off:** No auto-invocation vs. lower token cost
+
+### Technical Insights (Post-Session)
+
+**disable-model-invocation Behavior:**
+
+Understanding how `disable-model-invocation: true` works:
+
+**With the flag:**
+```yaml
+---
+name: new
+description: Create work items
+disable-model-invocation: true
+---
+```
+- User CAN invoke: `/new` works
+- Claude CANNOT invoke: Even with natural language like "create a work item"
+- Context cost: 0 tokens (description not loaded)
+
+**Without the flag (default):**
+```yaml
+---
+name: new
+description: Create work items with AI planning
+---
+```
+- User CAN invoke: `/new` works
+- Claude CAN invoke: Natural language triggers it
+- Context cost: ~100 tokens (description loaded for matching)
+
+**No frontmatter (your current state):**
+```markdown
+# /new - Create New Work Item
+```
+- User CAN invoke: `/new` works
+- Claude CANNOT invoke: No description for matching
+- Context cost: 0 tokens (behaves like disable-model-invocation: true)
+
+**Key Insight:** Commands without frontmatter are the most token-efficient but least discoverable to Claude. This is actually optimal for user-controlled workflows.
+
+**MEMORY.md Optimization Pattern:**
+
+**Before:** Detailed content duplicated across MEMORY.md and research files
+**After:** MEMORY.md as index pointing to authoritative sources
+
+**Pattern:**
+```markdown
+### Topic Name
+
+**Problem:** Brief problem description
+
+**Solution:** Quick solution summary
+
+**Key:** One-line key insight
+
+**Details:** [research-file.md](../../../path/to/file.md)
+```
+
+**Benefits:**
+- Fast scanning for recurring patterns
+- Deep diving on-demand via links
+- Single source of truth (research files)
+- Maintainable (update research, MEMORY stays stable)
+
+### Files Modified (Post-Session)
+
+**Memory System:**
+- `C:\Users\gelliott\.claude\projects\...\memory\MEMORY.md` - Restructured as index (223→152 lines)
+
+### Research Documentation Created
+
+**Plugin Token Usage Research:**
+- Official Anthropic docs: Progressive disclosure pattern
+- Skills budget: 2% of context window
+- Plugin skills don't show in `/context` (may be bug or design)
+- Commands without frontmatter: 0 token startup cost
+
+**Sources consulted:**
+- [Extend Claude with skills - Claude Code Docs](https://code.claude.com/docs/en/skills)
+- [User skills loaded fully into context - Issue #16616](https://github.com/anthropics/claude-code/issues/16616)
+- [Manage costs effectively - Claude Code Docs](https://code.claude.com/docs/en/costs)
+
+### Current State (End of Post-Session)
+
+**Memory Optimization:**
+- ✅ MEMORY.md optimized (50% reduction)
+- ✅ Index pattern established
+- ✅ Research files remain authoritative sources
+
+**Plugin Understanding:**
+- ✅ Token usage patterns documented
+- ✅ disable-model-invocation behavior clarified
+- ✅ Skills vs commands distinction understood
+- ⚠️ Plugin skills not appearing in `/context` (observed but unexplained)
+
+**Documentation Status:**
+- ✅ Session history updated with findings
+- ✅ MEMORY.md includes plugin development reminders
+- ✅ Research files comprehensive
+
+### Key Quotes (Post-Session)
+
+**User on MEMORY.md:**
+> "2.3k on a memory file? That's seems like a lot. What's in it?"
+
+**User on token efficiency:**
+> "So it SOUNDS like plugin commands are actually more efficient than regular commands?"
+
+**User on disable-model-invocation:**
+> "If 'disable-model-invocation: true', then is Claude able to invoke the command if I use natural language to request a new work item?"
+
+**From Official Docs:**
+> "Skill descriptions are loaded into context so Claude knows what's available. If you have many skills, they may exceed the character budget. The budget scales dynamically at 2% of the context window."
+
+### Next Steps
+
+**Immediate:**
+- Session complete, all work committed
+- MEMORY.md optimized and ready for next session
+
+**Future Considerations:**
+1. Monitor if plugin skills ever appear in `/context`
+2. Consider adding frontmatter if natural language invocation becomes valuable
+3. Track token usage in production to validate optimization
+
+**For Next Session:**
+- Version bump: 1.0.0-dev6 → 1.0.0 (production)
+- Build-Plugin.ps1 in strict mode
+- Mark TASK-126 complete
+- Resume FEAT-118 Milestone 8 → Marketplace submission
+
+---
+
+**Last Updated:** 2026-02-12 (Post-session completed - Memory optimization and plugin architecture discovery)

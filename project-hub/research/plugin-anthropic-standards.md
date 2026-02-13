@@ -412,8 +412,138 @@ spearit-framework-light/
 ---
 
 
-**Research completed:** 2026-02-09
-**Confidence level:** HIGH - Official sources, clear standards, consistent patterns
+## 18. Skills Token Usage and Progressive Disclosure (Added 2026-02-12)
+
+**Discovery:** Plugin skills don't appear in `/context` output despite plugin being enabled and working.
+
+### Progressive Disclosure Pattern
+
+**Official Documentation:** [Extend Claude with skills - Claude Code Docs](https://code.claude.com/docs/en/skills)
+
+**How skills load into context:**
+
+| Phase | What Loads | Token Cost |
+|-------|-----------|------------|
+| **Startup** | Skill name + description (frontmatter only) | ~100 tokens per skill |
+| **When invoked** | Full skill content | Variable (depends on content) |
+| **Budget** | 2% of context window (dynamic scaling) | Fallback: 16,000 characters |
+
+**Key Insight:** Skills use "progressive disclosure" - only metadata loads at startup, full content loads on-demand when skill is relevant.
+
+### Commands vs Skills Token Efficiency
+
+**Commands without frontmatter (legacy `.claude/commands/` format):**
+```markdown
+# /command-name - Description
+Instructions here...
+```
+- User CAN invoke: `/command-name` works
+- Claude CANNOT invoke: No description for auto-matching
+- **Token cost: 0 at startup** (most efficient)
+- Behavior: Like `disable-model-invocation: true` but simpler
+
+**Skills with disable-model-invocation:**
+```yaml
+---
+name: command-name
+description: Brief description
+disable-model-invocation: true
+---
+Instructions here...
+```
+- User CAN invoke: `/command-name` works
+- Claude CANNOT invoke: Explicitly blocked
+- **Token cost: 0 at startup** (description not loaded)
+- Use for: User-controlled workflows (deploy, commit, etc.)
+
+**Skills with default settings (auto-invocable):**
+```yaml
+---
+name: skill-name
+description: Brief description for Claude to match
+---
+Instructions here...
+```
+- User CAN invoke: `/skill-name` works
+- Claude CAN invoke: Auto-loads when description matches conversation
+- **Token cost: ~100 tokens at startup** (description loaded for matching)
+- Use for: AI-discoverable reference content
+
+### Plugin Skills Observation
+
+**Tested with:** spearit-framework-light plugin (3 skills, ~449 lines)
+
+**Behavior:**
+- Plugin enabled in `.claude/settings.local.json`
+- Commands work when invoked
+- Skills exist in `skills/` directory
+- **Skills do NOT appear in `/context` output**
+
+**Possible explanations:**
+1. Progressive disclosure working correctly (only frontmatter loaded, not reported)
+2. `/context` command doesn't report plugin skill tokens
+3. Plugin skills handled differently than user skills
+
+**Known Issue (January 2026):**
+- [Issue #16616](https://github.com/anthropics/claude-code/issues/16616): User skills in `~/.claude/skills/` being fully loaded instead of frontmatter-only
+- Plugin skills may not have this bug (or `/context` doesn't report them)
+
+### Token Budget and Limits
+
+**From official docs:**
+
+> "Skill descriptions are loaded into context so Claude knows what's available. If you have many skills, they may exceed the character budget. The budget scales dynamically at 2% of the context window, with a fallback of 16,000 characters."
+
+**To override the limit:**
+Set `SLASH_COMMAND_TOOL_CHAR_BUDGET` environment variable.
+
+### Recommendations for Plugin Developers
+
+**For user-controlled commands (deploy, commit, move):**
+- Use commands without frontmatter (0 tokens)
+- OR use `disable-model-invocation: true` (0 tokens, more explicit)
+- Benefit: No context consumption, user maintains control
+
+**For AI-discoverable skills (reference, guidelines):**
+- Use default skill settings with good descriptions
+- Cost: ~100 tokens per skill
+- Benefit: Claude can auto-invoke when relevant
+
+**For plugin efficiency:**
+- Commands: 0 tokens at startup (best for user-invoked workflows)
+- Skills: ~100 tokens × skill count (best for AI-assisted workflows)
+
+### Control Who Invokes a Skill
+
+**Frontmatter options:**
+
+| Frontmatter | You invoke | Claude invokes | Context cost | Use case |
+|-------------|-----------|----------------|--------------|----------|
+| (none) | Yes | No | 0 tokens | Legacy commands, most efficient |
+| `disable-model-invocation: true` | Yes | No | 0 tokens | Explicit user-only control |
+| `user-invocable: false` | No | Yes | ~100 tokens | Background knowledge |
+| (default settings) | Yes | Yes | ~100 tokens | AI-discoverable skills |
+
+**Natural language invocation:**
+- Without frontmatter: Claude cannot invoke even with "create a work item"
+- With `disable-model-invocation: true`: Claude cannot invoke even with natural language
+- With default settings: Claude can invoke when user says "create a work item"
+
+### Sources
+
+**Official Documentation:**
+- [Extend Claude with skills - Claude Code Docs](https://code.claude.com/docs/en/skills)
+- [Manage costs effectively - Claude Code Docs](https://code.claude.com/docs/en/costs)
+- [Understanding Claude Code: Skills vs Commands](https://www.youngleaders.tech/p/claude-skills-commands-subagents-plugins)
+
+**Known Issues:**
+- [User skills loaded fully into context - Issue #16616](https://github.com/anthropics/claude-code/issues/16616)
+
+---
+
+**Research completed:** 2026-02-12
+**Confidence level:** HIGH - Official sources, observed behavior, documented patterns
 **Ready to implement:** YES - All required information documented
 **Licensing:** Deferred decision (MIT recommended)
 **Performance:** Critical optimization patterns documented
+**Skills:** Token usage patterns and efficiency strategies documented

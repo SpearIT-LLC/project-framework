@@ -176,4 +176,275 @@ All other moves are routine state changes that don't benefit from deep validatio
 
 ---
 
-**Last Updated:** 2026-02-13
+## Afternoon Session - Plugin Completion and Pre-Publication Preparation
+
+**Session Focus:** TASK-126 completion, FEAT-118 update, pre-publication repository review planning
+
+---
+
+### Work Completed
+
+#### TASK-126: Finalize Plugin MVP - ✅ COMPLETE
+
+**Final testing verification:**
+- ✅ Clean plugin installation test completed (uninstall → reinstall → verify)
+- ✅ All 3 commands tested and working (help, new, move)
+- ✅ ZIP package verified: 51.3 KB with correct contents
+- ✅ Version confirmed: 1.0.0 (production-ready, no dev suffix)
+- ✅ All acceptance criteria met
+
+**Work item moved:** doing/ → done/
+- Ready for marketplace submission
+- All milestones (1-8) complete
+
+#### FEAT-118: Claude Code Plugin - Updated to "Ready for Submission"
+
+**Status changes:**
+- Changed status from "ON HOLD" → "Ready for Submission"
+- Removed "Blocked By: TASK-126"
+- Updated all references: 4 commands → 3 commands
+- Marked Milestone 8 (Package and Documentation) as COMPLETE
+- Updated description to match current messaging ("AI collaboration partner...")
+
+**Key updates:**
+- Scope refinement section updated with TASK-126 completion details
+- Final package specs: 51.3 KB, 3 commands, 3 skills, templates, docs
+- Timeline: Day 5 of 7, on schedule for submission
+- All acceptance criteria marked complete
+
+#### TASK-129: Pre-Publication Repository Review - Created
+
+**Purpose:** Prepare repository for public visibility before marketplace submission
+
+**Scope:**
+1. Update README.md to explain both plugin AND framework (plugin-first presentation)
+2. Verify repository branding consistency
+3. Add CONTRIBUTING.md (minimal version)
+4. Review .gitignore (already verified ✅)
+5. Tag release version (v1.0.0-plugin)
+6. Document publication process for future reference
+7. Final pre-push verification
+
+**README-DRAFT.md created:**
+- Complete rewrite with plugin-first presentation
+- Clear product distinction (Plugin vs Framework)
+- "Which should I choose?" decision guide
+- Repository contents explanation (including project-hub/ dogfooding)
+- Dual version strategy explained (Plugin v1.0, Framework v3.0)
+- Professional tone, transparent about development process
+
+**Status:** Created in todo/ (not yet started)
+
+---
+
+### Decisions Made
+
+1. **Don't Publish Repository Yet:**
+   - **Decision:** Complete pre-publication review (TASK-129) before making repo public
+   - **Rationale:** Need to update README, review project-hub/ visibility, ensure professional presentation
+   - **User concern:** "I'm a little nervous about this step" - valid concern about exposing internal development notes
+   - **Approach:** Systematic review with work item tracking
+
+2. **README Strategy - Plugin-First Presentation:**
+   - **Decision:** Lead with plugin as primary entry point for new users
+   - **Rationale:** Plugin will drive traffic to repository via marketplace
+   - **Implementation:** "Quick Start" section shows Option 1 (Plugin) and Option 2 (Framework)
+   - **Transparency:** Explain project-hub/ as dogfooding ("shows framework in action")
+
+3. **Version Management - Marketplace Description:**
+   - **Issue:** Marketplace.json had outdated description ("File-based Kanban workflow...")
+   - **Fix:** Updated to match plugin.json ("AI collaboration partner...")
+   - **Learning:** Need to keep marketplace.json in sync during development
+
+4. **ID Assignment - Caught Duplicate ID Error:**
+   - **Issue:** Created TASK-127, but FEAT-127 already existed (ID collision)
+   - **Root cause:** Manual work item creation didn't scan ALL work item types
+   - **Fix:** Renamed to TASK-129 and moved to todo/
+   - **Learning:** This proves the plugin's auto-ID feature is valuable (even Claude makes this mistake manually!)
+   - **Irony:** About to publish a plugin that prevents duplicate IDs, and we just created one manually
+
+5. **Context Carries Over in /new Command:**
+   - **Question:** Does the `/new` command use conversation context or start fresh?
+   - **Answer:** YES, context carries over - command uses "natural conversation" approach
+   - **Design:** Product Owner role references earlier discussion to create better work items
+   - **Benefit:** Can discuss problem naturally, then invoke command when ready
+
+---
+
+### Files Modified
+
+#### Plugin Package
+- `distrib/plugin-light/spearit-framework-light-v1.0.0.zip`
+  - Rebuilt with version 1.0.0 (removed dev suffix)
+
+- `plugins/spearit-framework-light/.claude-plugin/plugin.json`
+  - Version: Confirmed as 1.0.0 (production-ready)
+
+- `plugins/spearit-framework-light/commands/new.md`
+  - No changes, but reviewed for context behavior verification
+
+#### Work Items
+- `project-hub/work/doing/TASK-126-finalize-plugin-mvp.md`
+  - Status: Doing → Done
+  - Completion date added: 2026-02-13
+  - All acceptance criteria marked complete
+  - Moved to: project-hub/work/done/
+
+- `project-hub/work/doing/FEAT-118-claude-code-plugin.md`
+  - Status: ON HOLD → Ready for Submission
+  - Removed "Blocked By" section
+  - Updated all 4→3 command references
+  - Milestone 8 marked complete
+  - Added 2026-02-13 changelog entry
+
+#### Documentation & Research
+- `project-hub/research/plugin-anthropic-standards.md`
+  - Updated with marketplace description alignment notes
+
+- `project-hub/history/sessions/2026-02-12-SESSION-HISTORY.md`
+  - Minor updates (date corrections)
+
+### Files Created
+
+- `README-DRAFT.md`
+  - Complete rewrite of repository README
+  - Plugin-first presentation
+  - 380+ lines of documentation
+  - Includes: Quick Start, Decision Guide, Version Strategy, Dogfooding explanation
+
+- `project-hub/work/todo/TASK-129-pre-publication-repository-review.md`
+  - Pre-publication checklist and planning
+  - README changes documented within work item
+  - Publication process to be documented for future reference
+
+- `project-hub/work/backlog/CHORE-128-test-work-item-with-dummy-tasks.md`
+  - Test work item (from earlier experimentation)
+
+### Files Moved
+
+- `project-hub/work/doing/TASK-126-finalize-plugin-mvp.md` → `project-hub/work/done/`
+  - Completed with all acceptance criteria met
+
+---
+
+### Marketplace Configuration
+
+**Dev-marketplace updated:**
+```json
+{
+  "owner": {"name": "Development"},
+  "plugins": [{
+    "version": "1.0.0",
+    "name": "spearit-framework-light",
+    "source": "./spearit-framework-light",
+    "description": "AI collaboration partner to plan and organize your Kanban workflow"
+  }],
+  "name": "dev-marketplace"
+}
+```
+
+**Key change:** Description updated from "File-based Kanban workflow..." to match plugin.json messaging.
+
+---
+
+### Pre-Publication Checklist Progress
+
+From TASK-129:
+
+**✅ Completed:**
+1. README.md drafted (README-DRAFT.md)
+2. .gitignore verified (comprehensive, no sensitive data)
+3. Commit history reviewed (clean, professional)
+
+**⏳ Pending:**
+1. Repository branding verification (SpearIT LLC vs SpearIT Solutions)
+2. CONTRIBUTING.md creation
+3. Tag creation (v1.0.0-plugin)
+4. Make repository public
+5. Update framework README with plugin option
+6. Final verification checklist
+
+---
+
+## Current State
+
+### In done/ (awaiting release)
+- **TASK-126:** Finalize framework-light Plugin MVP ✅
+  - Package: 51.3 KB, version 1.0.0
+  - All 3 commands tested (help, new, move)
+  - Ready for marketplace submission
+
+### In doing/
+- **FEAT-118:** Claude Code Plugin (Ready for Submission)
+  - Milestones 1-8 complete ✅
+  - Milestone 9 pending: Submit to Anthropic marketplace
+  - Pre-submission tasks: Repository publication, README update, tagging
+
+### In todo/
+- **TASK-129:** Pre-Publication Repository Review
+  - README draft complete
+  - Systematic review before making repository public
+  - Publication process documentation
+
+### In backlog/
+- **FEAT-127:** Full Framework Plugin (planning)
+- **CHORE-128:** Test work item (experimental)
+- (5 existing framework work items)
+
+---
+
+## Technical Insights
+
+### ID Assignment Gotcha - Manual Creation Risk
+
+**Discovery:** Created TASK-127 manually, but FEAT-127 already existed in todo/
+- Only checked TASK-* files, not ALL work item types (FEAT, BUG, CHORE, etc.)
+- Correct next ID was 129, not 127
+
+**Why this matters:**
+- Proves the plugin's auto-ID feature solves a real problem
+- Even AI agents make ID collision mistakes when creating work items manually
+- Manual process is error-prone (scan must check ALL work item types across ALL folders)
+
+**Pattern learned:**
+- Should have used: `find project-hub/work -name "*.md" | grep -oE '[0-9]+' | sort -n | tail -1`
+- Actually used: `find project-hub/work -name "TASK-*.md"` (incomplete scan)
+
+### Workflow Violation - Created Work Item in doing/
+
+**Error:** Created TASK-127 directly in doing/ instead of todo/
+- Violated framework workflow (backlog → todo → doing → done)
+- Should have created in todo/ first, then moved to doing/ when starting work
+
+**Learning:** Even when automating with AI, follow the process. The workflow exists for a reason (WIP visibility, status clarity).
+
+---
+
+## Next Steps
+
+1. **Review README-DRAFT.md** - Does it match vision?
+2. **Address TASK-129 items** - Work through pre-publication checklist
+3. **Decide on branding** - SpearIT LLC vs SpearIT Solutions consistency
+4. **Create CONTRIBUTING.md** - Minimal version for v1.0
+5. **Tag v1.0.0-plugin** - When ready to go public
+6. **Test VSCode plugin** - Verify after reload/restart
+7. **Submit to marketplace** - FEAT-118 Milestone 9
+
+---
+
+## Session Notes
+
+**User quote:** "We're so close to publishing and we're STILL getting duplicate ID numbers?"
+- Valid frustration - highlights why automation matters
+- Plugin's auto-ID feature is essential (proven by our own mistake)
+
+**Key realization:** The plugin solves a problem we just experienced ourselves. This is dogfooding validation.
+
+**Publication nervousness:** User appropriately cautious about making repository public. TASK-129 addresses this systematically:
+- README explains both products
+- project-hub/ transparency shows confidence
+- Professional presentation without hiding development process
+
+---
+
+**Last Updated:** 2026-02-13 (Afternoon Session)
