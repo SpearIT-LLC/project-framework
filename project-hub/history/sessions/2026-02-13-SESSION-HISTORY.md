@@ -920,4 +920,549 @@ From TASK-129:
 
 ---
 
-**Last Updated:** 2026-02-13 (Late Evening Session - Publication Complete)
+## Final Session - TASK-129 Review and Completion
+
+**Session Focus:** TASK-129 work item review and completion
+
+---
+
+### Work Completed
+
+#### TASK-129: Pre-Publication Repository Review - ✅ MOVED TO DONE
+
+**Action:** User opened TASK-129 for review, verified all sections complete
+
+**Status verification:**
+- ✅ All 8 sections complete (README, branding, CONTRIBUTING, .gitignore, commits, tagging, publication process, verification)
+- ✅ All acceptance criteria met
+- ✅ Repository successfully published (public since late evening session)
+- ✅ Tag `plugin-light-v1.0.0` created and pushed
+- ✅ Professional presentation achieved
+
+**Move executed:**
+- Used `/spearit-framework-light:move task-129 done` command
+- Successfully moved from doing/ → done/
+- Work item now archived in project-hub/work/done/
+
+**Completion note:** TASK-129 served as systematic pre-publication review that:
+1. Updated README for plugin-first presentation
+2. Verified/corrected repository branding (all URLs to SpearIT-LLC)
+3. Created CONTRIBUTING.md (Model 1: feedback welcome, code by discussion)
+4. Documented publication process for future releases
+5. Tagged release (plugin-light-v1.0.0)
+6. Enabled confident repository publication
+
+---
+
+### Session History Generation
+
+**Action:** User invoked `/fw-session-history` to document completion
+
+**Purpose:** Capture final TASK-129 review and completion in session record
+
+**Context:** This is the 5th session update for 2026-02-13:
+1. Morning: TASK-126 VSCode testing and move command optimization
+2. Afternoon: TASK-126 completion, FEAT-118 update, TASK-129 planning
+3. Evening: Plugin testing, README finalization
+4. Late Evening: TASK-129 execution and repository publication
+5. **Final:** TASK-129 review and completion (this session)
+
+---
+
+## Current State (End of Day)
+
+### In done/ (completed today)
+- **TASK-126:** Finalize framework-light Plugin MVP ✅ (morning/afternoon)
+- **TASK-129:** Pre-Publication Repository Review ✅ (just completed)
+
+### In doing/
+- **FEAT-118:** Claude Code Plugin (Ready for Submission)
+  - All pre-submission work complete
+  - **NEXT ACTION:** Submit to Anthropic marketplace (Milestone 9)
+
+### Ready for Marketplace
+- Package: spearit-framework-light-v1.0.0.zip (51.3 KB)
+- Repository: Public (https://github.com/SpearIT-LLC/project-framework)
+- Documentation: Complete (README, CONTRIBUTING, plugin docs)
+- Tag: plugin-light-v1.0.0 (published)
+- Testing: All commands verified working
+
+---
+
+## Next Steps
+
+1. **FEAT-118 Milestone 9:** Submit plugin to Anthropic marketplace
+2. **Monitor feedback:** Track initial user responses
+3. **Iterate:** Address any marketplace review feedback
+
+---
+
+## Session Notes (Final)
+
+**Completion workflow:** Clean review → move to done → document in history (proper framework workflow)
+
+**Publication readiness:** All TASK-129 objectives achieved - repository is now professionally presented for external users discovering via marketplace
+
+**Work item lifecycle demonstrated:** TASK-129 moved through complete workflow (created in todo → moved to doing → systematic completion → moved to done)
+
+**Day summary:** Two major work items completed (TASK-126, TASK-129), repository published, plugin ready for marketplace submission. Excellent progress toward FEAT-118 completion.
+
+---
+
+## Marketplace Submission Session - FEAT-118 Complete
+
+**Session Focus:** Plugin marketplace submission and FEAT-118 completion
+
+---
+
+### Work Completed
+
+#### FEAT-118: Claude Code Plugin - ✅ SUBMITTED AND COMPLETE
+
+**Milestone 9 completion:**
+- ✅ Prepared submission form details aligned with actual Google Form
+- ✅ Updated plugin description to match agreed tone ("AI collaboration partner...")
+- ✅ Submitted plugin to Anthropic marketplace (2026-02-13)
+- ✅ Documented submission in marketplace-submission.md
+- ✅ Moved FEAT-118 to done/ folder
+
+**Form submitted with:**
+- Plugin Name: SpearIT Project Framework - Lightweight Edition
+- Description: 72-word AI collaboration partner positioning
+- GitHub: https://github.com/SpearIT-LLC/project-framework
+- Contact: gary.elliott@spearit.solutions
+- Company: https://www.spearit.solutions
+- Examples: 3 detailed use cases (planning, workflow, tracking)
+
+**Timeline achievement:**
+- Target: Ship within 7 days
+- Actual: Day 5 (2 days ahead of schedule)
+- All 9 milestones complete
+
+**Supporting work items completed:**
+- Created CHORE-131: Reorganize Releases by Product (backlog)
+- Created CHORE-131-affected-files.md (documentation analysis)
+
+---
+
+### Decisions Made
+
+1. **Marketplace Submission Description:**
+   - **Decision:** Use "AI collaboration partner" tone from short description
+   - **Rationale:** Better reflects the planning and collaboration aspects vs just "file-based Kanban"
+   - **Word count:** 72 words (within 50-100 requirement)
+
+2. **Repository Structure for Submission:**
+   - **Decision:** Submit with plugin at `plugins/spearit-framework-light/` (not root)
+   - **Rationale:** Preferred structure, reviewers can find it, can create dedicated repo if rejected
+   - **Risk:** Low - form accepts GitHub repos with non-root plugins
+
+3. **Company URL Concern:**
+   - **Question:** User concerned about simple one-page website
+   - **Decision:** Use www.spearit.solutions as-is
+   - **Rationale:** Professional domain matters more than site complexity, shows legitimacy
+
+4. **Release Organization (CHORE-131):**
+   - **Decision:** Defer releases/ reorganization until later
+   - **Rationale:** Not blocking submission, can organize after plugin approved
+   - **Structure planned:** `releases/{product}/vX.Y.Z/` pattern for scalability
+
+---
+
+### Files Modified
+
+- `project-hub/history/releases/plugin-light-v1.0.0-marketplace-submission.md`
+  - Updated with actual form fields
+  - Changed description to AI collaboration partner tone (72 words)
+  - Added plugin examples section
+  - Marked status as SUBMITTED
+
+- `project-hub/work/done/FEAT-118-claude-code-plugin.md`
+  - Milestone 9 marked complete
+  - Distribution checklist updated (submitted 2026-02-13)
+  - Last updated date corrected
+
+### Files Created
+
+- `project-hub/work/backlog/CHORE-131-reorganize-releases-by-product.md`
+  - Comprehensive plan for product-based release organization
+  - 3-phase implementation (plugin-light, framework, plugin-full)
+  - Benefits and migration strategy documented
+
+- `project-hub/work/backlog/CHORE-131-affected-files.md`
+  - Analysis of 11 files referencing releases/ structure
+  - Priority-based update strategy
+  - Before/after examples for documentation updates
+
+### Files Moved
+
+- `project-hub/work/doing/FEAT-118-claude-code-plugin.md` → `project-hub/work/done/`
+  - All 9 milestones complete
+  - Plugin submitted to Anthropic marketplace
+  - Ready for approval monitoring
+
+---
+
+## Current State (End of Day - Final Update)
+
+### In done/ (completed today - 3 work items!)
+- **TASK-126:** Finalize framework-light Plugin MVP ✅
+- **TASK-129:** Pre-Publication Repository Review ✅
+- **FEAT-118:** Claude Code Plugin ✅ SUBMITTED TO MARKETPLACE
+
+### In backlog/ (created today)
+- **CHORE-131:** Reorganize Releases by Product (future work)
+
+### Awaiting Marketplace Review
+- **Plugin:** SpearIT Project Framework - Lightweight Edition v1.0.0
+- **Status:** Submitted 2026-02-13
+- **Contact:** gary.elliott@spearit.solutions
+- **Next:** Monitor for Anthropic feedback
+
+---
+
+## Session Summary (Final)
+
+**Incredible milestone:** Plugin went from concept to marketplace submission in 5 days, completing FEAT-118 ahead of schedule. All work systematically tracked through the framework, demonstrating dogfooding at multiple levels (used plugin commands to manage plugin development).
+
+**Three major completions today:**
+1. TASK-126: Plugin testing and scope finalization
+2. TASK-129: Repository publication and professional presentation
+3. FEAT-118: Marketplace submission and completion
+
+**Quality maintained throughout:** Professional documentation, comprehensive testing, systematic review process, confident submission.
+
+**Framework validation:** Successfully managed complex multi-day feature development with multiple supporting tasks, proving the methodology works for real projects.
+
+---
+
+**Last Updated:** 2026-02-13 (Marketplace Submission Complete - FEAT-118 Done!)
+
+---
+
+## Night Session - Release Reorganization and Documentation Updates
+
+**Session Focus:** CHORE-131 implementation, DOCS-133 documentation updates, establishing product-based release structure
+
+---
+
+### Work Completed
+
+#### CHORE-131: Reorganize Releases by Product - ✅ COMPLETE
+
+**Implementation:**
+- Established nested release structure: `releases/{product}/{version}/`
+- Archived plugin-light v1.0.0 (7 work items + marketplace submission)
+- Archived framework v5.2.0 (6 work items)
+- Cleaned done/ folder (now empty except .gitkeep)
+
+**Product organization created:**
+```
+releases/
+├── plugin-light/
+│   └── v1.0.0/                    (7 work items + marketplace doc)
+├── framework/
+│   └── v5.2.0/                    (6 work items)
+└── v2.1.0/ - v5.1.0/              (historical - flat structure preserved)
+```
+
+**Files archived to plugin-light/v1.0.0/:**
+- marketplace-submission.md
+- FEAT-118-claude-code-plugin.md
+- FEAT-118-PLAN-template-extraction.md
+- FEAT-119-plugin-new-command.md
+- FEAT-120-plugin-testing-infrastructure.md
+- TASK-126-finalize-plugin-mvp.md
+- TASK-129-pre-publication-repository-review.md
+
+**Files archived to framework/v5.2.0/:**
+- BUG-108-ghost-references-to-framework-project-hub.md
+- BUG-109-starter-template-project-hub-location.md
+- BUG-113-incomplete-release-checklist.md
+- DECISION-037-execution-plan.md
+- DECISION-037-project-hub-location.md
+- FEAT-011-sample-project.md
+
+#### DOCS-133: Update Release Documentation - ✅ COMPLETE
+
+**Documentation updated (9 files):**
+
+**Priority 1 - Core Workflow:**
+1. framework/docs/collaboration/workflow-guide.md
+   - Updated archival examples to use product folders
+   - Added product selection step to release process
+   - Updated all instances of `releases/vX.Y.Z` → `releases/{product}/vX.Y.Z`
+
+2. framework/CLAUDE.md
+   - Updated troubleshooting examples
+   - Added product determination step
+
+3. framework/docs/PROJECT-STRUCTURE.md
+   - Updated structure diagram to show nested product folders
+   - Added plugin-light/, plugin-full/, framework/ examples
+
+**Priority 2 - Process Documentation:**
+4. framework/docs/process/version-control-workflow.md
+   - Updated archive step to include product
+
+5. framework/docs/collaboration/architecture-guide.md
+   - Updated 2 workflow diagrams with product-based paths
+
+**Priority 3 - Quick Reference:**
+6. QUICK-START.md
+   - Updated 2 workflow references
+
+7. README.md
+   - Updated workflow diagram
+
+8. framework/docs/collaboration/troubleshooting-guide.md
+   - Updated retroactive fix examples
+
+**Bonus:**
+9. framework/CLAUDE-QUICK-REFERENCE.md
+   - Updated 3 locations with new pattern
+
+**Pattern applied throughout:**
+- Old: `releases/vX.Y.Z`
+- New: `releases/{product}/vX.Y.Z`
+- Products: plugin-light, plugin-full (future), framework
+
+#### Work Items Created
+
+**CHORE-132: GitHub Community Templates (backlog)**
+- Scope: Issue templates, PR template, SUPPORT.md, Discussion categories, Labels
+- Purpose: Support community feedback for newly published plugin
+- Approach: Single focused chore to establish professional community templates
+
+**DOCS-134: Separate Release Processes (backlog)**
+- Scope: Create framework-release-process.md and plugin-release-process.md
+- Purpose: Separate framework and plugin release workflows (different build processes)
+- Rationale: Conditional logic confusing, separate docs clearer
+
+**DOCS-133-PLAN: Documentation Updates Plan (doing)**
+- Complete implementation plan for DOCS-133
+- 5 phases: Preparation, Core Docs, Process Docs, Quick Reference, Verification
+- Documented edge cases, rollback plan, testing strategy
+
+---
+
+### Decisions Made
+
+1. **Nested Release Structure - Product First:**
+   - **Decision:** Organize releases as `{product}/{version}` not `{version}`
+   - **Rationale:** Multi-product repository (framework + plugin-light + plugin-full future)
+   - **Benefit:** Clear separation, easy to find "what shipped in plugin v1.0.0"
+   - **Pattern:** All future releases follow this structure
+
+2. **Historical Releases - Leave in Place:**
+   - **Decision:** Don't reorganize v2.x - v5.1.0 historical framework releases
+   - **Rationale:**
+     - Paths reflect structure at time of writing (historical accuracy)
+     - Framework may be replaced by plugin-full in future (diminishing returns)
+     - New pattern established for future releases (mission accomplished)
+   - **Result:** Mixed structure by design (legacy flat + modern nested)
+
+3. **Documentation Update Strategy - Update Now:**
+   - **Decision:** Update all 9 docs immediately (with CHORE-131 implementation)
+   - **Rationale:** Releasing framework v5.2.0 now, docs must match current reality
+   - **Alternative rejected:** Wait until next release to update docs
+   - **Execution:** Created DOCS-133 with full implementation plan, executed systematically
+
+4. **Separate Release Processes - Future Work:**
+   - **Decision:** Create DOCS-134 to split release documentation by product
+   - **Problem:** Current docs are framework-centric (Build-FrameworkArchive.ps1)
+   - **Plugin needs:** Different build process (Build-Plugin.ps1, marketplace)
+   - **Solution:** framework-release-process.md and plugin-release-process.md
+   - **Status:** Backlog (not blocking current release)
+
+5. **GitHub Community Templates - Conservative Approach:**
+   - **Decision:** No FAQ redirects until there's content to link to
+   - **Template scope:** Bug report, feature request (with product dropdown)
+   - **Discussions:** Set up categories but don't pre-populate
+   - **Tone:** Friendly but professional, matches CONTRIBUTING.md
+
+---
+
+### Files Modified
+
+**Documentation (9 files updated):**
+- QUICK-START.md
+- README.md
+- framework/CLAUDE-QUICK-REFERENCE.md
+- framework/CLAUDE.md
+- framework/docs/PROJECT-STRUCTURE.md
+- framework/docs/collaboration/architecture-guide.md
+- framework/docs/collaboration/troubleshooting-guide.md
+- framework/docs/collaboration/workflow-guide.md
+- framework/docs/process/version-control-workflow.md
+
+**Work Items:**
+- CHORE-131-reorganize-releases-by-product.md (done)
+  - All acceptance criteria checked
+  - Completion summary added
+  - Optional README skipped (work items are self-documenting)
+
+- DOCS-133-update-release-documentation.md (done)
+  - All 9 files updated
+  - Implementation summary added
+  - Verification complete
+
+### Files Created
+
+**Work Items:**
+- project-hub/work/backlog/CHORE-131-affected-files.md
+  - Analysis of 11 files referencing releases/ structure
+  - Priority-based update strategy
+
+- project-hub/work/backlog/CHORE-132-github-community-templates.md
+  - Complete scope for community templates
+  - Issue templates, PR template, SUPPORT.md, labels strategy
+
+- project-hub/work/backlog/DOCS-134-separate-release-processes.md
+  - Plan to split release documentation by product
+  - Framework and plugin have different build workflows
+
+- project-hub/work/doing/DOCS-133-PLAN-documentation-updates.md
+  - Complete implementation plan for documentation updates
+  - 5 phases, edge cases, rollback strategy
+
+**Release Structure:**
+- project-hub/history/releases/plugin-light/v1.0.0/ (directory)
+- project-hub/history/releases/framework/v5.2.0/ (directory)
+
+### Files Moved
+
+**Plugin Light v1.0.0 (7 files):**
+- work/doing/FEAT-118-claude-code-plugin.md → releases/plugin-light/v1.0.0/
+- work/doing/FEAT-118-PLAN-template-extraction.md → releases/plugin-light/v1.0.0/
+- work/done/FEAT-119-plugin-new-command.md → releases/plugin-light/v1.0.0/
+- work/done/FEAT-120-plugin-testing-infrastructure.md → releases/plugin-light/v1.0.0/
+- work/done/TASK-126-finalize-plugin-mvp.md → releases/plugin-light/v1.0.0/
+- work/doing/TASK-129-pre-publication-repository-review.md → releases/plugin-light/v1.0.0/
+- history/releases/plugin-light-v1.0.0-marketplace-submission.md → releases/plugin-light/v1.0.0/marketplace-submission.md
+
+**Framework v5.2.0 (6 files):**
+- work/done/BUG-108-ghost-references-to-framework-project-hub.md → releases/framework/v5.2.0/
+- work/done/BUG-109-starter-template-project-hub-location.md → releases/framework/v5.2.0/
+- work/done/BUG-113-incomplete-release-checklist.md → releases/framework/v5.2.0/
+- work/done/DECISION-037-execution-plan.md → releases/framework/v5.2.0/
+- work/done/DECISION-037-project-hub-location.md → releases/framework/v5.2.0/
+- work/done/FEAT-011-sample-project.md → releases/framework/v5.2.0/
+
+**Work Items:**
+- work/backlog/CHORE-131-reorganize-releases-by-product.md → work/done/
+- work/doing/DOCS-133-update-release-documentation.md → work/done/
+
+---
+
+### Technical Insights
+
+#### Product-Based Release Organization
+
+**Why it matters:**
+- Repository now hosts 3 products: framework, plugin-light, plugin-full (future)
+- Each has independent versioning and release cadence
+- Flat structure would be confusing ("what's in v1.0.0?" depends on product)
+
+**Pattern benefits:**
+- Scalable: Easy to add plugin-full/v1.0.0/ when ready
+- Clear: `releases/plugin-light/v1.0.0/` is unambiguous
+- Historical: Framework v2.x-v5.1.0 preserved in flat structure (accurate)
+
+#### Documentation Update Strategy
+
+**Challenge:** 9 files with release path references scattered across docs
+
+**Solution approach:**
+1. Created implementation plan (DOCS-133-PLAN)
+2. Updated Priority 1 files first (core workflow)
+3. Used global search to verify completeness
+4. Backup branch created for safety
+
+**Result:** Zero remaining old-style references, consistent pattern applied
+
+#### Validation Hook Working
+
+**Discovery:** Pre-commit hook caught unchecked acceptance criteria in CHORE-131
+
+**Error:** "Has unchecked acceptance criteria" (optional README item)
+
+**Fix:** Checked optional item with skip note
+
+**Validation:** Commit hooks enforce work item quality standards
+
+---
+
+## Current State (End of Day - Night Session)
+
+### In done/ (completed today - 5 work items total!)
+- **TASK-126:** Finalize framework-light Plugin MVP ✅
+- **TASK-129:** Pre-Publication Repository Review ✅
+- **FEAT-118:** Claude Code Plugin ✅ (submitted to marketplace)
+- **CHORE-131:** Reorganize Releases by Product ✅
+- **DOCS-133:** Update Release Documentation ✅
+
+### In doing/
+- **DOCS-133-PLAN:** Documentation Updates Plan
+  - Implementation complete
+  - Kept for reference
+
+### In backlog/ (created today)
+- **CHORE-132:** GitHub Community Templates
+- **DOCS-134:** Separate Release Processes
+- **CHORE-131-affected-files:** Analysis document
+
+### Release Structure
+- ✅ plugin-light/v1.0.0/ archived (7 items)
+- ✅ framework/v5.2.0/ archived (6 items)
+- ✅ done/ folder clean (empty)
+- ✅ Pattern established for future releases
+
+---
+
+## Commits Made
+
+**Commit:** `a340027` - "chore: reorganize releases by product and update documentation"
+- 19 files changed, 1677 insertions
+- All work items archived to product-based release folders
+- All documentation updated with new pattern
+- CHORE-131 and DOCS-133 marked complete
+
+---
+
+## Next Steps
+
+1. **DOCS-134 implementation (future):**
+   - Create framework-release-process.md
+   - Create plugin-release-process.md
+   - Update version-control-workflow.md to reference both
+
+2. **CHORE-132 implementation (when ready):**
+   - Create GitHub issue templates
+   - Set up Discussion categories
+   - Create PR template and SUPPORT.md
+
+3. **Framework v5.2.0 release (when ready):**
+   - Tag release
+   - Build distribution archive
+   - Update CHANGELOG
+
+---
+
+## Session Notes (Final - Calling it a Night)
+
+**Major achievement:** Established product-based release organization pattern that will serve the repository for all future releases. Clean separation between plugin and framework releases.
+
+**Documentation thoroughness:** Updated 9 files systematically to ensure all examples match new structure. No old-style references remain in current docs.
+
+**Work item velocity:** Completed 2 major work items (CHORE-131, DOCS-133) and created 3 new work items for future work. Excellent progress.
+
+**Pattern validation:** Successfully used framework workflow to manage complex reorganization. Work item → implementation plan → systematic execution → completion verification.
+
+**Repository health:** done/ folder now clean, release structure scalable, documentation consistent. Professional foundation for continued development.
+
+**User satisfaction:** "Call it a night" - good stopping point after significant structural improvements.
+
+---
+
+**Last Updated:** 2026-02-13 23:59 (Night Session Complete - Release Reorganization Done!)
