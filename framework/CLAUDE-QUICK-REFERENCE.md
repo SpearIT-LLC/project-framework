@@ -103,7 +103,7 @@ During release (atomic):
 └─ Push with --tags
 
 After release:
-└─ Archive done/ items to history/releases/vX.Y.Z/
+└─ Archive done/ items to history/releases/{product}/vX.Y.Z/
 ```
 
 **Reference:** [CLAUDE.md step 9](CLAUDE.md) | [version-control-workflow.md](project-framework-template/standard/project-hub/framework/process/version-control-workflow.md)
@@ -176,15 +176,15 @@ cp templates/FEATURE-TEMPLATE.md project-hub/work/backlog/feature-123.md
 
 **5. Forgot to Archive After Release**
 ```bash
-# Create release archive
-mkdir -p project-hub/history/releases/v2.1.0
+# Create release archive (determine product: framework, plugin-light, plugin-full)
+mkdir -p project-hub/history/releases/framework/v2.1.0
 
 # Move completed items
-mv project-hub/work/done/*.md project-hub/history/releases/v2.1.0/
+mv project-hub/work/done/*.md project-hub/history/releases/framework/v2.1.0/
 
 # Commit
-git add project-hub/history/releases/v2.1.0/
-git commit -m "Archive: Move v2.1.0 items to history"
+git add project-hub/history/releases/framework/v2.1.0/
+git commit -m "Archive: Move framework v2.1.0 items to history"
 ```
 
 **Full Troubleshooting:** [collaboration/troubleshooting-guide.md](docs/collaboration/troubleshooting-guide.md)
@@ -204,7 +204,7 @@ git commit -m "Archive: Move v2.1.0 items to history"
 - `project-hub/work/todo/` - Ready to start (approved, not started)
 - `project-hub/work/doing/` - In progress (WIP limit enforced)
 - `project-hub/work/done/` - Complete (awaiting release)
-- `project-hub/history/releases/vX.Y.Z/` - Archived (released)
+- `project-hub/history/releases/{product}/vX.Y.Z/` - Archived (released)
 
 ### Version Info (Single Source of Truth)
 - `PROJECT-STATUS.md` - Current version and status

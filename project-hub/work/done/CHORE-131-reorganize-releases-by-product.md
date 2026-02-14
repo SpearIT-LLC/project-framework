@@ -146,12 +146,14 @@ project-hub/history/releases/
 
 ## Acceptance Criteria
 
-- [ ] Directory structure created: `releases/plugin-light/v1.0.0/`
-- [ ] Marketplace submission moved to new location
-- [ ] Work items for v1.0.0 moved from done/ to releases/plugin-light/v1.0.0/
-- [ ] (Optional) README.md created in v1.0.0/ summarizing the release
-- [ ] No broken references in moved files
-- [ ] Git history preserved (using git mv, not copy/delete)
+- [x] Directory structure created: `releases/plugin-light/v1.0.0/`
+- [x] Marketplace submission moved to new location
+- [x] Work items for v1.0.0 moved from done/ to releases/plugin-light/v1.0.0/
+- [x] Directory structure created: `releases/framework/v5.2.0/`
+- [x] Framework work items moved from done/ to releases/framework/v5.2.0/
+- [x] (Optional) README.md created in v1.0.0/ summarizing the release - SKIPPED: Not needed, work items are self-documenting
+- [x] No broken references in moved files
+- [x] Git history preserved (using git mv, not copy/delete)
 
 ---
 
@@ -243,4 +245,44 @@ This adds a final step to the workflow: archiving completed work with the releas
 ---
 
 **Created:** 2026-02-13
+**Completed:** 2026-02-13
 **Purpose:** Establish scalable release organization pattern for multiple products
+
+---
+
+## Implementation Summary
+
+**Completed:** 2026-02-13
+
+### Phase 1: Plugin Light v1.0.0 ✅
+
+Created nested structure and moved 7 items:
+- `releases/plugin-light/v1.0.0/marketplace-submission.md`
+- `releases/plugin-light/v1.0.0/FEAT-118-claude-code-plugin.md`
+- `releases/plugin-light/v1.0.0/FEAT-118-PLAN-template-extraction.md`
+- `releases/plugin-light/v1.0.0/FEAT-119-plugin-new-command.md`
+- `releases/plugin-light/v1.0.0/FEAT-120-plugin-testing-infrastructure.md`
+- `releases/plugin-light/v1.0.0/TASK-126-finalize-plugin-mvp.md`
+- `releases/plugin-light/v1.0.0/TASK-129-pre-publication-repository-review.md`
+
+### Framework v5.2.0 ✅
+
+Created nested structure and moved 6 items:
+- `releases/framework/v5.2.0/BUG-108-ghost-references-to-framework-project-hub.md`
+- `releases/framework/v5.2.0/BUG-109-starter-template-project-hub-location.md`
+- `releases/framework/v5.2.0/BUG-113-incomplete-release-checklist.md`
+- `releases/framework/v5.2.0/DECISION-037-execution-plan.md`
+- `releases/framework/v5.2.0/DECISION-037-project-hub-location.md`
+- `releases/framework/v5.2.0/FEAT-011-sample-project.md`
+
+### Results
+
+- ✅ Nested product/version pattern established
+- ✅ `done/` folder now clean (only .gitkeep)
+- ✅ All git history preserved (used `git mv`)
+- ✅ Pattern ready for future releases (plugin-full, framework v5.3.0, etc.)
+
+### Future Work
+
+- **Phase 2 (Deferred):** Reorganize historical framework releases (v2.x - v5.1.0) into nested structure
+- **Phase 3 (Future):** Create `plugin-full/v1.0.0/` when FEAT-127 ships

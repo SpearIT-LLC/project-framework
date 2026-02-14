@@ -151,7 +151,7 @@ Built-in research phase with 5 templates helps you answer: "Are we recreating th
 ### File-Based Kanban Workflow
 Simple folder-based work tracking:
 ```
-work/backlog → work/todo → work/doing → work/done → history/releases/
+work/backlog → work/todo → work/doing → work/done → history/releases/{product}/{version}/
 ```
 
 ### AI Integration

@@ -194,14 +194,15 @@ Ask this before elaborate planning. Keep planning proportional to project size.
   - File moves from doing/ → done/
 - **Archive work items:**
   - Immediately after release tag is created
-  - Create `project-hub/history/releases/vX.Y.Z/` folder
+  - Determine product (framework, plugin-light, plugin-full)
+  - Create `project-hub/history/releases/{product}/vX.Y.Z/` folder
   - Move ALL related work item files from done/ to release folder
     - Primary work items (FEAT-XXX.md, BUGFIX-XXX.md)
     - Supporting documents (FEAT-XXX-*.md, feature-XXX-*.md)
     - Test plans, results, migration matrices, planning docs
-  - **Command:** `git mv project-hub/work/done/WORK-ITEM-*.md project-hub/history/releases/vX.Y.Z/`
+  - **Command:** `git mv project-hub/work/done/WORK-ITEM-*.md project-hub/history/releases/{product}/vX.Y.Z/`
   - **CRITICAL:** Use `git mv` (move), NOT `cp` (copy) - prevents duplicates
-  - Commit: `git commit -m "chore: Archive vX.Y.Z work items"`
+  - Commit: `git commit -m "chore: Archive {product} vX.Y.Z work items"`
   - **Verify:** Check done/ is empty: `ls project-hub/work/done/*.md` (should return empty)
   - Result: done/ folder should be empty after archival
   - **See ADR-003 for complete archival process and common mistakes**
@@ -431,8 +432,9 @@ When moving a work item, complete the checklist for the target folder. Use `git 
 - [ ] Update session history (`/fw-session-history`)
 - [ ] Commit the changes
 
-#### → history/releases/vX.Y.Z/
+#### → history/releases/{product}/vX.Y.Z/
 - [ ] Transition is valid (check matrix above)
+- [ ] Determine product (framework, plugin-light, plugin-full)
 - [ ] Use `git mv` to move files
 - [ ] Verify done/ is empty after archival
 
@@ -1641,14 +1643,14 @@ Given current version and Version Impact from work item:
 
 3. **Create grouped release folder:**
    ```bash
-   mkdir -p project-hub/history/releases/v2.3.0
+   mkdir -p project-hub/history/releases/framework/v2.3.0
    ```
 
 4. **Move all items to release folder:**
    ```bash
-   git mv project-hub/work/done/FEAT-032-*.md project-hub/history/releases/v2.3.0/
-   git mv project-hub/work/done/DECISION-042-*.md project-hub/history/releases/v2.3.0/
-   git mv project-hub/work/done/FEAT-040-*.md project-hub/history/releases/v2.3.0/
+   git mv project-hub/work/done/FEAT-032-*.md project-hub/history/releases/framework/v2.3.0/
+   git mv project-hub/work/done/DECISION-042-*.md project-hub/history/releases/framework/v2.3.0/
+   git mv project-hub/work/done/FEAT-040-*.md project-hub/history/releases/framework/v2.3.0/
    ```
 
 5. **Update CHANGELOG.md** - Add all items under one version:

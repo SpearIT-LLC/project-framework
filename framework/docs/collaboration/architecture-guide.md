@@ -63,7 +63,7 @@ project-hub/work/
 ├── doing/           # Currently in progress (WIP limited)
 └── done/            # Completed, awaiting release
     ↓
-project-hub/history/releases/vX.Y.Z/  # Archived after release
+project-hub/history/releases/{product}/vX.Y.Z/  # Archived after release
 ```
 
 **Core components:**
@@ -193,7 +193,7 @@ work/done/
     ↓
     [Release to version]
     ↓
-history/releases/vX.Y.Z/
+history/releases/{product}/vX.Y.Z/
     feature-006.md         # Archived with release
     feature-007.md
 ```

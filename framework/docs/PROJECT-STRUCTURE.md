@@ -87,7 +87,10 @@ User projects typically create a single-project repository and follow the struct
     │       └── .gitkeep            # REQUIRED
     │
     ├── history/                      # REQUIRED
-    │   ├── releases/                # REQUIRED - Archived work items by version
+    │   ├── releases/                # REQUIRED - Archived work items by product/version
+    │   │   ├── framework/           # Framework releases (v5.2.0+)
+    │   │   ├── plugin-light/        # Plugin lightweight edition releases
+    │   │   └── plugin-full/         # Plugin full edition releases (future)
     │   ├── sessions/                # REQUIRED - Session history files
     │   ├── spikes/                  # REQUIRED - Experimental research
     │   └── archive/                 # REQUIRED - Cancelled/outdated/superseded items

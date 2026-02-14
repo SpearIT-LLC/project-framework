@@ -423,9 +423,9 @@ Perfect for: Solo developers, small teams, lightweight project tracking
 - [x] Final testing of packaged plugin ✅ TASK-126 complete
 - [x] Decide on plugin license (MIT recommended) ✅ Decided 2026-02-09
 - [x] Create LICENSE file in plugin directory ✅ Created 2026-02-09
-- [ ] Make repository public (or document access plan) ⏳ Pre-submission
-- [ ] Update framework README with plugin option ⏳ Pre-submission
-- [ ] Tag version: v1.0.0 ⏳ Pre-submission
+- [x] Make repository public ✅ TASK-129 complete (2026-02-13)
+- [x] Update framework README with plugin option ✅ TASK-129 complete (2026-02-13)
+- [x] Tag version: plugin-light-v1.0.0 ✅ TASK-129 complete (2026-02-13)
 - [x] **Review before submission** ✅ Ready
 
 **Blockers resolved:**
@@ -433,11 +433,11 @@ Perfect for: Solo developers, small teams, lightweight project tracking
 - [x] FEAT-119 (New command) ✅ Completed 2026-02-09
 - [x] TASK-126 (MVP scope reduction) ✅ Completed 2026-02-13
 
-### Milestone 9: Submit to Marketplace
-- [ ] Submit to Anthropic marketplace
-- [ ] Complete submission form
-- [ ] Document submission status
-- [ ] **COMPLETE**
+### Milestone 9: Submit to Marketplace ✅ COMPLETE
+- [x] Submit to Anthropic marketplace ✅ Submitted 2026-02-13
+- [x] Complete submission form ✅ All fields submitted
+- [x] Document submission status ✅ Documented in marketplace-submission.md
+- [x] **COMPLETE** ✅
 
 ---
 
@@ -467,9 +467,9 @@ Perfect for: Solo developers, small teams, lightweight project tracking
 - [x] Graceful behavior in non-framework project ✅
 
 ### Distribution
-- [ ] Submitted to official Anthropic plugin directory
-- [ ] Framework README updated with plugin installation option
-- [ ] Version 1.0.0 tagged
+- [x] Submitted to official Anthropic plugin directory ✅ 2026-02-13
+- [x] Framework README updated with plugin installation option ✅ TASK-129
+- [x] Version plugin-light-v1.0.0 tagged ✅ TASK-129
 
 ### Success Criteria (Week 1)
 - [ ] Plugin available for installation (or clear feedback on approval status)

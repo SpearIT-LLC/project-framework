@@ -129,7 +129,7 @@ When working with AI assistants, framework commands (`/fw-*`) provide shortcuts 
 - **WIP Limits:** Max 1-2 items in `work/doing/` at once (check `.limit` file)
 - **Research First:** Complete research phase before coding new projects
 - **Document Decisions:** Use ADRs for technical choices with alternatives
-- **Work Item Flow:** backlog → todo → doing → done → history/releases/
+- **Work Item Flow:** backlog → todo → doing → done → history/releases/{product}/{version}/
 
 ---
 
@@ -193,7 +193,7 @@ NEW PROJECT:
   └──────────────────────────────────── Complete research templates
 
 DAILY WORK:
-  work/backlog/ → work/todo/ → work/doing/ (max 1) → work/done/ → history/releases/
+  work/backlog/ → work/todo/ → work/doing/ (max 1) → work/done/ → history/releases/{product}/{version}/
 
   At end of day: Document in history/sessions/YYYY-MM-DD-session-N.md
 ```

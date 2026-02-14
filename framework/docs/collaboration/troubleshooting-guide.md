@@ -304,7 +304,7 @@ git push
 # Check if done/ folder has old items
 ls project-hub/work/done/
 
-# Check if history/releases/vX.Y.Z/ exists
+# Check if history/releases/{product}/vX.Y.Z/ exists
 ls project-hub/history/releases/
 ```
 
@@ -312,15 +312,15 @@ ls project-hub/history/releases/
 
 **Retroactive Fix:**
 ```bash
-# Create release folder
-mkdir -p project-hub/history/releases/v2.1.0
+# Create release folder (determine product: framework, plugin-light, plugin-full)
+mkdir -p project-hub/history/releases/framework/v2.1.0
 
 # Move completed items to release
-mv project-hub/work/done/*.md project-hub/history/releases/v2.1.0/
+mv project-hub/work/done/*.md project-hub/history/releases/framework/v2.1.0/
 
 # Commit
-git add project-hub/history/releases/v2.1.0/
-git commit -m "Archive: Move v2.1.0 completed items to history"
+git add project-hub/history/releases/framework/v2.1.0/
+git commit -m "Archive: Move framework v2.1.0 completed items to history"
 ```
 
 **Prevention:**

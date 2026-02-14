@@ -420,8 +420,9 @@ cp templates/FEATURE-TEMPLATE.md project-hub/work/backlog/feature-123.md
 
 **5. Forgot to Archive After Release**
 ```bash
-mkdir -p project-hub/history/releases/vX.Y.Z
-mv project-hub/work/done/*.md project-hub/history/releases/vX.Y.Z/
+# Determine product: framework, plugin-light, or plugin-full
+mkdir -p project-hub/history/releases/{product}/vX.Y.Z
+mv project-hub/work/done/*.md project-hub/history/releases/{product}/vX.Y.Z/
 ```
 
 **Full Troubleshooting:** [collaboration/troubleshooting-guide.md](docs/collaboration/troubleshooting-guide.md)

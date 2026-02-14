@@ -145,7 +145,7 @@ Post-Release:
     - Version automatically read from PROJECT-STATUS.md
     - Validates no unreleased items in done/ folder
 [ ] Verify tag pushed to origin: git tag -l vX.Y.Z
-[ ] Archive: work/done/*.md → history/releases/vX.Y.Z/
+[ ] Archive: work/done/*.md → history/releases/{product}/vX.Y.Z/
 [ ] Update CLAUDE.md if architecture/standards changed
 [ ] Update roadmap.md status for completed work items
 
