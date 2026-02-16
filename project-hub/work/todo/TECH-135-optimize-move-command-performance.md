@@ -1,9 +1,10 @@
 # Technical Improvement: Optimize Move Command Performance
 
-**ID:** TECH-071
+**ID:** TECH-135
 **Type:** Technical Improvement
 **Priority:** High
 **Created:** 2026-02-12
+**Note:** Originally created as TECH-071, renumbered to TECH-135 on 2026-02-16 due to ID collision
 
 ---
 
@@ -237,5 +238,5 @@ Current move command performance is inconsistent:
 
 ---
 
-**Last Updated:** 2026-02-12
-**Status:** Backlog (document created, not yet in todo)
+**Last Updated:** 2026-02-16 (ID changed from TECH-071 to TECH-135 due to collision)
+**Status:** Todo
