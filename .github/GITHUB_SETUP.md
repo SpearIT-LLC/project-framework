@@ -10,10 +10,10 @@ After the templates are merged to the repository:
 
 - [x] **Enable Discussions** - Settings → General → Features → ☑ Discussions ✅ **DONE**
 - [x] **Create Discussion Categories** - See [Discussion Categories](#discussion-categories) below ✅ **DONE**
-  - Q&A (Question/Answer format)
-  - Ideas (Open Discussion)
+  - Announcements (Announcement format)
   - General (Open Discussion)
-  - ~~Show and Tell~~ (removed - not needed initially)
+  - Ideas (Open Discussion)
+  - Q&A (Question/Answer format)
 - [ ] **Create Labels** - See [Labels](#labels) below or use [bulk creation commands](#bulk-label-creation)
 - [ ] **Test Templates** - See [Testing Templates](#testing-templates) below
 
@@ -61,15 +61,14 @@ GitHub creates some default categories. You'll want to customize them:
 
 ### Configured Categories ✅
 
-The following categories have been set up:
+The following 4 categories have been set up:
 
 | Category | Type | Description |
 |----------|------|-------------|
-| **Q&A** | Question/Answer | Ask questions about using the framework or plugin |
-| **Ideas** | Open Discussion | Brainstorm feature ideas and enhancements |
+| **Announcements** | Announcement | Official announcements and updates from maintainers |
 | **General** | Open Discussion | General conversation and community chat |
-
-**Note:** "Show and Tell" was intentionally omitted - can be added later if needed.
+| **Ideas** | Open Discussion | Brainstorm feature ideas and enhancements |
+| **Q&A** | Question/Answer | Ask questions about using the framework or plugin |
 
 **Notes:**
 - **Q&A format** allows users to mark answers as "accepted" - use for questions
