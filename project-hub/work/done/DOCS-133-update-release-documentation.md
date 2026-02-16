@@ -139,6 +139,34 @@ All instances of:
 
 ---
 
-**Last Updated:** 2026-02-13
+## Verification (2026-02-16)
+
+**Action:** Comprehensive review of all 9 files to verify updates were applied correctly.
+
+**Method:** File-by-file grep and read verification documented in [DOCS-133-scratch-updates.md](../doing/DOCS-133-scratch-updates.md)
+
+**Result:** ✅ All files confirmed correct:
+- All path examples use `releases/{product}/vX.Y.Z` or `releases/framework/vX.Y.Z`
+- Structure diagrams show product-based nesting
+- Workflow descriptions include product selection
+- Zero instances of old flat `releases/vX.Y.Z` pattern in current documentation
+
+**Grep verification:**
+```bash
+grep -r "releases/v[0-9]" framework/docs/ QUICK-START.md README.md framework/CLAUDE.md
+# Result: No matches (clean)
+```
+
+**Generic references preserved:**
+- Directory listings: `ls project-hub/history/releases/` (correct - shows top-level)
+- Glob patterns: `{work,releases,poc}/**/*.md` (correct - scans recursively)
+- English text: "after releases" (correct - not a path)
+
+**Conclusion:** DOCS-133 implementation verified complete and accurate.
+
+---
+
+**Last Updated:** 2026-02-16
 **Completed:** 2026-02-13
+**Verified:** 2026-02-16
 **Status:** Done
