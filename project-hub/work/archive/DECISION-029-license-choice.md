@@ -5,11 +5,35 @@
 **Priority:** High
 **Version Impact:** None
 **Created:** 2026-01-08
+**Archived:** 2026-02-16
+**Decision Made:** MIT License
 **Theme:** Distribution & Onboarding
 
 ---
 
-## Summary
+## Archival Summary
+
+**Decision:** MIT License chosen and implemented
+
+**Evidence:**
+- LICENSE file exists (created Feb 9, 2026)
+- README.md documents MIT License
+- Both framework and plugins use MIT License
+- Repository made public (Feb 13, 2026)
+
+**Implementation Checklist:**
+- [x] Add LICENSE file to repository root ✅
+- [x] Add license badge to README.md ✅
+- [ ] Add copyright headers to files (not required by MIT)
+- [x] Update CONTRIBUTING.md with license-related info ✅
+- [x] Verify compatibility with any dependencies ✅
+- [x] Document license choice reasoning ✅
+
+**Rationale:** MIT chosen for maximum adoption and flexibility, aligning with plugin marketplace strategy and open source distribution goals.
+
+---
+
+## Summary (Original Work Item)
 
 Decide which open source license to use for the Standard Project Framework before public release.
 
