@@ -4,17 +4,60 @@ This guide documents the manual configuration steps needed to complete the GitHu
 
 ---
 
+## Quick Start Checklist
+
+After the templates are merged to the repository:
+
+- [ ] **Enable Discussions** - Settings → General → Features → ☑ Discussions
+- [ ] **Create 4 Discussion Categories** - See [Discussion Categories](#discussion-categories) below
+  - Q&A (Question/Answer format)
+  - Ideas (Open Discussion)
+  - Show and Tell (Announcement format)
+  - General (Open Discussion)
+- [ ] **Create Labels** - See [Labels](#labels) below or use [bulk creation commands](#bulk-label-creation)
+- [ ] **Test Templates** - See [Testing Templates](#testing-templates) below
+
+**Estimated time:** 15-20 minutes
+
+---
+
 ## Discussion Categories
 
 GitHub Discussions must be configured manually via the GitHub UI.
 
 **To configure:**
 
-1. Navigate to repository **Settings → General**
-2. Scroll to **Features** section
-3. Enable **Discussions** (if not already enabled)
-4. Click **Set up discussions**
-5. Create the following categories:
+### Step 1: Enable Discussions
+
+1. Navigate to your repository on GitHub.com
+2. Click **Settings** tab (top navigation)
+3. In the left sidebar, click **General**
+4. Scroll down to the **Features** section
+5. Check the box next to **Discussions** to enable it
+6. GitHub will create a new **Discussions** tab in your repository
+
+### Step 2: Access Discussion Settings
+
+1. Click the **Discussions** tab (top navigation)
+2. If this is first time, GitHub may show a welcome screen - click **Start a discussion** or similar
+3. Click the **⚙️ gear icon** (top right, next to "New discussion" button)
+4. Or navigate directly to: `https://github.com/SpearIT-LLC/project-framework/discussions/categories`
+
+### Step 3: Create Categories
+
+GitHub creates some default categories. You'll want to customize them:
+
+1. In the Categories settings page, you'll see existing categories
+2. Click **New category** button (top right)
+3. For each category below, fill in:
+   - **Category name**: (from table below)
+   - **Description**: (from table below)
+   - **Discussion format**: (from table below)
+   - **Emoji** (optional): Choose an icon
+4. Click **Create** to save each category
+5. You can **Edit** or **Delete** default categories as needed
+
+### Step 4: Recommended Categories to Create
 
 ### Recommended Categories
 
@@ -26,9 +69,40 @@ GitHub Discussions must be configured manually via the GitHub UI.
 | **General** | Open Discussion | General conversation and community chat |
 
 **Notes:**
-- Q&A format allows marking answers as "accepted"
-- Let discussions emerge organically - don't pre-populate
+- **Q&A format** allows users to mark answers as "accepted" - use for questions
+- **Announcement format** allows only maintainers to create threads - use for Show and Tell
+- **Open Discussion format** allows anyone to create threads - use for Ideas and General
+- Let discussions emerge organically - don't pre-populate with content
 - Moderators can convert issues to discussions when appropriate
+
+### Quick Visual Guide
+
+**To create a category:**
+```
+Settings → General → Features → ☑ Discussions
+↓
+Discussions tab → ⚙️ Settings (gear icon) → Categories
+↓
+New category → Fill form → Create
+```
+
+**To edit/delete default categories:**
+```
+Discussions → ⚙️ Settings → Categories
+↓
+Click ⋯ (three dots) next to category name
+↓
+Choose Edit or Delete
+```
+
+### Suggested Default Categories to Remove/Modify
+
+GitHub creates these by default - you may want to:
+- **General** - Keep and use for general chat
+- **Announcements** - Delete (we don't need a separate announcements category)
+- **Ideas** - Keep but customize description
+- **Polls** - Delete (optional feature, not needed initially)
+- **Q&A** - Keep and customize description
 
 ---
 
