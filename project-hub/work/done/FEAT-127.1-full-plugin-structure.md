@@ -5,6 +5,7 @@
 **Type:** Feature
 **Priority:** High
 **Created:** 2026-02-16
+**Completed:** 2026-02-16
 
 ---
 
@@ -120,17 +121,17 @@ cp -r plugins/spearit-framework-light/templates/* plugins/spearit-framework/temp
 
 ## Acceptance Criteria
 
-- [ ] Directory `plugins/spearit-framework/` exists with correct structure
-- [ ] `.claude-plugin/plugin.json` configured (name: spearit-framework, v1.0.0-dev1)
-- [ ] Core commands copied: help.md, new.md, move.md
-- [ ] help.md updated to list 5 commands (placeholders OK for session-history, roadmap)
-- [ ] Skills copied from light plugin (3 skills: kanban-workflow, work-items, moving-items)
-- [ ] Templates copied from light plugin (3 templates: FEAT, BUG, CHORE)
-- [ ] README.md created (comprehensive edition positioning)
-- [ ] CHANGELOG.md created (v1.0.0-dev1 entry)
-- [ ] LICENSE file present (MIT)
-- [ ] No syntax errors in any .md files
-- [ ] Plugin structure validates (ready for build script extension)
+- [x] Directory `plugins/spearit-framework/` exists with correct structure
+- [x] `.claude-plugin/plugin.json` configured (name: spearit-framework, v1.0.0-dev1)
+- [x] Core commands copied: help.md, new.md, move.md
+- [x] help.md updated to list 5 commands (placeholders OK for session-history, roadmap)
+- [x] Skills copied from light plugin (3 skills: kanban-workflow, work-items, moving-items)
+- [x] Templates copied from light plugin (3 templates: FEAT, BUG, CHORE)
+- [x] README.md created (comprehensive edition positioning)
+- [x] CHANGELOG.md created (v1.0.0-dev1 entry)
+- [x] LICENSE file present (MIT)
+- [x] No syntax errors in any .md files
+- [x] Plugin structure validates (ready for build script extension)
 
 ---
 

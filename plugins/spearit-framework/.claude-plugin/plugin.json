@@ -1,0 +1,9 @@
+{
+  "name": "spearit-framework",
+  "version": "1.0.0-dev3",
+  "description": "Complete project management suite for power users - all framework features as Claude Code commands",
+  "author": {
+    "name": "Gary Elliott / SpearIT Solutions"
+  },
+  "license": "MIT"
+}

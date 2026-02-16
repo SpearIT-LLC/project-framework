@@ -1,4 +1,4 @@
-# /spearit-framework-light:session-history - Generate Session History
+# /spearit-framework:session-history - Generate Session History
 
 Generate or update the session history document for today, capturing work completed, decisions made, and files modified during the current session.
 
@@ -27,7 +27,7 @@ Generate or update the session history document for today, capturing work comple
 ## Usage
 
 ```
-/spearit-framework-light:session-history [focus]
+/spearit-framework:session-history [focus]
 ```
 
 ## Arguments
@@ -51,7 +51,7 @@ Generate or update the session history document for today, capturing work comple
 
 ## Session History Format
 
-**Template location:** `plugins/spearit-framework-light/templates/session-history-template.md`
+**Template location:** `plugins/spearit-framework/templates/session-history-template.md`
 
 Read the template file and fill in placeholders:
 - `{Date}` → Current date (YYYY-MM-DD)
@@ -69,14 +69,14 @@ Read the template file and fill in placeholders:
 ## Examples
 
 ```
-/spearit-framework-light:session-history                           # Generate with auto-detected focus
-/spearit-framework-light:session-history "FEAT-022 implementation" # Generate with explicit focus
+/spearit-framework:session-history                           # Generate with auto-detected focus
+/spearit-framework:session-history "FEAT-022 implementation" # Generate with explicit focus
 ```
 
 ## Integration Points
 
 This command should also be offered:
-- After `/spearit-framework-light:move X done` completes (prompt: "Would you like me to update session history?")
+- After `/spearit-framework:move X done` completes (prompt: "Would you like me to update session history?")
 - When user signals session end ("wrapping up", "that's all for today", etc.)
 
 ## Notes

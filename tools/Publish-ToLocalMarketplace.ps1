@@ -11,15 +11,23 @@
 
     SCOPE: Testing infrastructure ONLY - not release automation.
 
+.PARAMETER Plugin
+    Specific plugin to publish. If not specified, publishes all discovered plugins.
+    Valid values: spearit-framework-light, spearit-framework
+
 .PARAMETER Clean
     Delete and recreate the marketplace from scratch.
 
 .PARAMETER Build
-    Run Build-Plugin.ps1 for each plugin before publishing to marketplace.
+    Run Build-Plugin.ps1 for the specified plugin before publishing to marketplace.
+
+.EXAMPLE
+    .\tools\Publish-ToLocalMarketplace.ps1 -Plugin spearit-framework -Build
+    Builds only the spearit-framework plugin and publishes it to the local marketplace.
 
 .EXAMPLE
     .\tools\Publish-ToLocalMarketplace.ps1
-    Creates or updates the local marketplace with all plugins found in plugins/ directory.
+    Publishes all plugins found in plugins/ directory (no build).
 
 .EXAMPLE
     .\tools\Publish-ToLocalMarketplace.ps1 -Clean
@@ -37,6 +45,10 @@
 
 [CmdletBinding()]
 param(
+    [Parameter(Mandatory=$false)]
+    [ValidateSet("spearit-framework-light", "spearit-framework")]
+    [string]$Plugin,
+
     [Parameter(Mandatory=$false)]
     [switch]$Clean,
 
@@ -133,10 +145,23 @@ try {
     }
 
     # Discover plugins
-    Write-Status "Discovering plugins in $pluginsDir ..."
-    $pluginFolders = @(Get-ChildItem -Path $pluginsDir -Directory | Where-Object {
-        Test-Path (Join-Path $_.FullName ".claude-plugin\plugin.json")
-    })
+    if ($Plugin) {
+        Write-Status "Publishing specific plugin: $Plugin ..."
+        $pluginPath = Join-Path $pluginsDir $Plugin
+        if (-not (Test-Path $pluginPath)) {
+            throw "Plugin not found: $pluginPath"
+        }
+        if (-not (Test-Path (Join-Path $pluginPath ".claude-plugin\plugin.json"))) {
+            throw "Plugin missing .claude-plugin/plugin.json: $pluginPath"
+        }
+        $pluginFolders = @(Get-Item $pluginPath)
+    }
+    else {
+        Write-Status "Discovering all plugins in $pluginsDir ..."
+        $pluginFolders = @(Get-ChildItem -Path $pluginsDir -Directory | Where-Object {
+            Test-Path (Join-Path $_.FullName ".claude-plugin\plugin.json")
+        })
+    }
 
     if ($pluginFolders.Count -eq 0) {
         Write-Status "No plugins found with .claude-plugin/plugin.json" -Type Warning
@@ -149,7 +174,7 @@ try {
         exit 1
     }
 
-    Write-Status "Found $($pluginFolders.Count) plugin(s):" -Type Success
+    Write-Status "Found $($pluginFolders.Count) plugin(s) to publish:" -Type Success
     $pluginFolders | ForEach-Object { Write-Status "  - $($_.Name)" }
     Write-Status ""
 
@@ -165,14 +190,28 @@ try {
             foreach ($folder in $pluginFolders) {
                 Write-Status "Building $($folder.Name)..."
                 # Use -AllowPrerelease for testing builds (e.g., 1.0.0-dev1)
+                # Note: Build-Plugin.ps1 uses ErrorActionPreference=Stop, so failures will throw
                 & $buildScript -Plugin $folder.Name -AllowPrerelease
-                if ($LASTEXITCODE -ne 0) {
-                    throw "Build failed for $($folder.Name)"
-                }
             }
             Write-Status "All plugins built successfully." -Type Success
         }
         Write-Status ""
+    }
+
+    # Read existing marketplace entries (always, to preserve other plugins)
+    $existingEntries = @()
+    if (Test-Path $marketplaceJsonPath) {
+        Write-Status "Reading existing marketplace entries..."
+        try {
+            $existingMarketplace = Get-Content $marketplaceJsonPath -Raw | ConvertFrom-Json
+            if ($existingMarketplace.plugins) {
+                $existingEntries = @($existingMarketplace.plugins)
+                Write-Status "  Found $($existingEntries.Count) existing plugin(s)" -Type Info
+            }
+        }
+        catch {
+            Write-Status "  Warning: Could not read existing marketplace.json" -Type Warning
+        }
     }
 
     # Read plugin metadata
@@ -212,6 +251,28 @@ try {
 
     if ($pluginEntries.Count -eq 0) {
         throw "No valid plugins found to publish"
+    }
+
+    # Merge with existing entries (always preserve plugins not being updated)
+    if ($existingEntries.Count -gt 0) {
+        Write-Status "Merging with existing marketplace entries..."
+
+        # Get names of plugins we're updating
+        $updatingNames = @($pluginEntries | ForEach-Object { $_.name })
+
+        # Keep existing entries that aren't being updated
+        $preservedEntries = @($existingEntries | Where-Object {
+            $_.name -notin $updatingNames
+        })
+
+        # Combine: preserved + updated
+        $allEntries = @($preservedEntries) + @($pluginEntries)
+
+        Write-Status "  Preserved: $($preservedEntries.Count) plugin(s)" -Type Info
+        Write-Status "  Updated: $($pluginEntries.Count) plugin(s)" -Type Info
+        Write-Status "  Total: $($allEntries.Count) plugin(s)" -Type Success
+
+        $pluginEntries = $allEntries
     }
 
     Write-Status ""

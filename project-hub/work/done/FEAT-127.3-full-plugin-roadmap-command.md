@@ -5,6 +5,7 @@
 **Type:** Feature
 **Priority:** High
 **Created:** 2026-02-16
+**Completed:** 2026-02-16
 **Depends On:** FEAT-127.1
 
 ---
@@ -125,18 +126,18 @@ Create ROADMAP.md with:
 
 ## Acceptance Criteria
 
-- [ ] Roadmap command file created at `plugins/spearit-framework/commands/roadmap.md`
-- [ ] Command adapted from fw-roadmap.md
-- [ ] Simplified for standalone plugin use (no framework assumptions)
-- [ ] Command executes without errors
-- [ ] Conversational planning flow works
-- [ ] Reads existing work items for context
-- [ ] Proposes themes and structure
-- [ ] Generates ROADMAP.md in project root
-- [ ] Git adds file automatically
-- [ ] Help command updated (roadmap marked available)
-- [ ] CHANGELOG.md updated (v1.0.0-dev3 entry)
-- [ ] Works in projects without project-hub/ structure
+- [x] Roadmap command file created at `plugins/spearit-framework/commands/roadmap.md`
+- [x] Command adapted from fw-roadmap.md
+- [x] Simplified for standalone plugin use (no framework assumptions)
+- [x] Command executes without errors
+- [x] Conversational planning flow works
+- [x] Reads existing work items for context
+- [x] Proposes themes and structure
+- [x] Generates ROADMAP.md in project root
+- [x] Git adds file automatically
+- [x] Help command updated (roadmap marked available)
+- [x] CHANGELOG.md updated (v1.0.0-dev3 entry)
+- [x] Works in projects without project-hub/ structure
 
 ---
 

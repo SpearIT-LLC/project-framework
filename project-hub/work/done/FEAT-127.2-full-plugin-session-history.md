@@ -5,6 +5,7 @@
 **Type:** Feature
 **Priority:** High
 **Created:** 2026-02-16
+**Completed:** 2026-02-16
 **Depends On:** FEAT-127.1
 
 ---
@@ -89,17 +90,17 @@ Remove "🚧 Coming soon" status for session-history:
 
 ## Acceptance Criteria
 
-- [ ] Session-history command file exists and is valid
-- [ ] Session-history template exists and is valid
-- [ ] Command executes without errors
-- [ ] Prompts user for session details
-- [ ] Creates file in `project-hub/history/sessions/`
-- [ ] Filename format: `YYYY-MM-DD-SESSION-HISTORY.md`
-- [ ] Template applied correctly (all sections present)
-- [ ] Git add executed automatically
-- [ ] Help command updated (session-history marked available)
-- [ ] CHANGELOG.md updated (v1.0.0-dev2 entry)
-- [ ] No conflicts with light plugin when both installed
+- [x] Session-history command file exists and is valid
+- [x] Session-history template exists and is valid
+- [x] Command executes without errors
+- [x] Prompts user for session details
+- [x] Creates file in `project-hub/history/sessions/`
+- [x] Filename format: `YYYY-MM-DD-SESSION-HISTORY.md`
+- [x] Template applied correctly (all sections present)
+- [x] Git add executed automatically
+- [x] Help command updated (session-history marked available)
+- [x] CHANGELOG.md updated (v1.0.0-dev2 entry)
+- [x] No conflicts with light plugin when both installed
 
 ---
 

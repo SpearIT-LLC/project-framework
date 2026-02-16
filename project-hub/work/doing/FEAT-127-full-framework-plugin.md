@@ -188,7 +188,7 @@ This parent work item is decomposed into 4 incremental deliverables:
    - Recommendation: Adapt existing fw-roadmap.md, simplify if too complex
 
 3. **Build automation:** Auto-discover all plugins/ subdirectories, or explicit list?
-   - Recommendation: Auto-discover (future-proof for additional editions)
+   - **Decision:** Explicit plugin parameter required (prevents accidental changes)
 
 4. **Version strategy:** Independent versioning (v1.0 for both), or coupled?
    - Recommendation: Independent (light ships first as v1.0, full follows as v1.0)

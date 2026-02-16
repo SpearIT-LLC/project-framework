@@ -38,6 +38,7 @@
     "defaultMode": "dontAsk"
   },
   "enabledPlugins": {
-    "spearit-framework-light@dev-marketplace": true
+    "spearit-framework-light@dev-marketplace": true,
+    "spearit-framework@dev-marketplace": true
   }
 }

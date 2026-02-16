@@ -190,18 +190,21 @@ Get-ChildItem plugins/ -Directory | ForEach-Object {
 
 **Build Script Extensions:**
 
-**Option A: Plugin Parameter**
+**Option A: Plugin Parameter (SELECTED)**
 ```powershell
 .\tools\Build-Plugin.ps1 -Plugin spearit-framework-light  # Light plugin
 .\tools\Build-Plugin.ps1 -Plugin spearit-framework        # Full plugin
 ```
 
-**Option B: Auto-Discovery**
+**Option B: Auto-Discovery (REJECTED)**
 ```powershell
 .\tools\Build-Plugin.ps1 -BuildAll  # Builds both plugins
 ```
 
-**Recommendation:** Option A (explicit) - clearer, easier to debug
+**Decision:** Option A (explicit plugin parameter required)
+- **Rationale:** Prevents accidental changes to plugins not being actively worked on
+- Clearer intent, easier to debug
+- Safer during development (no unintended side effects)
 
 **Testing Strategy:**
 

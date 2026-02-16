@@ -1,27 +1,156 @@
-# SpearIT Project Framework - Full Edition Plugin
+# SpearIT Project Framework - Comprehensive Edition
 
-**Status:** Planned (not yet implemented)
+**Version:** 1.0.0-dev3 (Development)
 
-This directory will contain the full framework plugin with all commands and features.
+Complete project management suite for power users. This plugin includes all framework features as Claude Code commands, building on the lightweight edition with advanced capabilities.
 
-## Preserved Files from Light Edition
+---
 
-The following files were removed from the light edition MVP and preserved here for the full plugin:
+## Overview
 
-- **commands/session-history.md** - Session history documentation command
-- **templates/session-history-template.md** - Session history template
+The **SpearIT Project Framework - Comprehensive Edition** provides a complete project management toolset integrated directly into Claude Code. Perfect for power users who need the full framework feature set.
 
-**Date preserved:** 2026-02-12 (TASK-126 scope reduction)
+**What's included:**
+- ✅ Core workflow commands (help, new, move)
+- ✅ Session tracking (session-history)
+- ✅ Strategic planning (roadmap)
 
-## Future Development
+---
 
-The full framework plugin will include:
-- All commands from light edition (help, new, move)
-- Session history documentation (session-history)
-- Project status summary (status)
-- Work in progress tracking (wip)
-- Backlog review and prioritization (backlog)
-- Framework reference (topic-index)
-- AI-guided roadmap creation (roadmap)
+## Installation
 
-See FEAT-118 for historical context.
+**Requirements:**
+- Claude Code (VSCode extension or CLI)
+- Local dev-marketplace configured (for development)
+
+**Install from dev marketplace:**
+```
+/plugin install spearit-framework@dev-marketplace
+```
+
+---
+
+## Commands (5 Total)
+
+### Core Workflow
+- **`/spearit-framework:help`** - Command reference and help
+- **`/spearit-framework:new`** - AI-guided work item planning with interactive breakdown
+- **`/spearit-framework:move`** - Move work items through workflow with policy enforcement
+
+### Advanced Features
+- **`/spearit-framework:session-history`** - Document work sessions with structured templates ✅
+- **`/spearit-framework:roadmap`** - AI-guided roadmap planning and strategic organization ✅
+
+---
+
+## Upgrading from Light Edition
+
+**Can both plugins coexist?** Yes! Different namespaces prevent conflicts:
+- Light edition: `/spearit-framework-light:*`
+- Comprehensive edition: `/spearit-framework:*`
+
+**When to upgrade:**
+- You need session history tracking
+- You want AI-guided roadmap planning
+- You're ready for the complete feature set
+
+**Migration:** No migration needed - both plugins work independently with the same project-hub/ structure.
+
+---
+
+## Feature Comparison
+
+| Feature | Light Edition | Comprehensive Edition |
+|---------|---------------|----------------------|
+| Help command | ✅ | ✅ |
+| Create work items (`new`) | ✅ | ✅ |
+| Move items (`move`) | ✅ | ✅ |
+| Session history | ❌ | ✅ (v1.0.0) |
+| Roadmap planning | ❌ | ✅ (v1.0.0) |
+| Command count | 3 | 5 |
+| Namespace | `spearit-framework-light` | `spearit-framework` |
+
+**Deferred to v1.1+:**
+- Status summary (`status`)
+- Work in progress (`wip`)
+- Backlog review (`backlog`)
+- Topic index (`topic-index`)
+
+---
+
+## Quick Start
+
+1. **Install the plugin:**
+   ```
+   /plugin install spearit-framework@dev-marketplace
+   ```
+
+2. **See available commands:**
+   ```
+   /spearit-framework:help
+   ```
+
+3. **Create your first work item:**
+   ```
+   /spearit-framework:new
+   ```
+
+4. **Move items through workflow:**
+   ```
+   /spearit-framework:move FEAT-001 doing
+   ```
+
+---
+
+## Documentation
+
+**Skills (Background Knowledge):**
+- [kanban-workflow.md](skills/kanban-workflow.md) - Understanding the Kanban workflow
+- [work-items.md](skills/work-items.md) - Work item types and structure
+- [moving-items.md](skills/moving-items.md) - Workflow transitions and policies
+
+**Templates:**
+- [FEAT-template.md](templates/FEAT-template.md) - Feature work items
+- [BUG-template.md](templates/BUG-template.md) - Bug work items
+- [CHORE-template.md](templates/CHORE-template.md) - Chore/maintenance work items
+- [session-history-template.md](templates/session-history-template.md) - Session history
+
+---
+
+## Development Status
+
+**Current Version:** 1.0.0-dev3
+- ✅ Plugin structure complete (FEAT-127.1)
+- ✅ Core commands integrated (help, new, move)
+- ✅ Session history integration (FEAT-127.2)
+- ✅ Roadmap command adaptation (FEAT-127.3)
+- 🚧 Build & testing (FEAT-127.4)
+
+**Roadmap:**
+- v1.0.0: Ship with 5 commands (help, new, move, session-history, roadmap)
+- v1.1+: Additional commands based on feedback (status, wip, backlog, topic-index)
+
+---
+
+## About
+
+**Plugin Namespace:** `spearit-framework`
+**Author:** Gary Elliott / SpearIT Solutions
+**License:** MIT
+**Framework Version:** Compatible with SpearIT Project Framework v1.0+
+
+**Related Work:**
+- Light Edition: `spearit-framework-light` (3 commands, quick onboarding)
+- Full Framework: See [framework/](../../framework/) for complete documentation
+
+---
+
+## Support & Feedback
+
+**Issues:** Report at the framework repository
+**Documentation:** See framework docs for detailed process guides
+**Changelog:** See [CHANGELOG.md](CHANGELOG.md) for version history
+
+---
+
+**Last Updated:** 2026-02-16
