@@ -1,15 +1,18 @@
-# Feature: Full Framework Plugin
+# Feature: Full Framework Plugin (Parent/Epic)
 
 **ID:** FEAT-127
-**Type:** Feature
-**Priority:** Medium
+**Type:** Feature (Parent/Epic)
+**Priority:** High
 **Created:** 2026-02-13
+**Decomposed:** 2026-02-16
 
 ---
 
 ## Summary
 
 Create comprehensive edition of SpearIT Project Framework plugin (spearit-framework) that builds on the lightweight edition by adding advanced features for power users. Starts with 3 core commands from light plugin (help, new, move) and adds session-history and roadmap commands to provide complete project management capabilities.
+
+**This is a parent/epic work item.** Implementation is decomposed into 4 child work items for incremental delivery.
 
 ---
 
@@ -103,19 +106,43 @@ plugins/spearit-framework/
 
 ---
 
-## Acceptance Criteria
+## Child Work Items
 
-- [ ] Plugin structure created in `plugins/spearit-framework/`
-- [ ] All 5 commands present (help, new, move, session-history, roadmap)
-- [ ] Session-history command operational (already preserved, verify works)
-- [ ] Roadmap command adapted from fw-roadmap and operational
-- [ ] plugin.json configured with correct namespace (spearit-framework)
-- [ ] README distinguishes full from light edition
-- [ ] Can install alongside light plugin (no conflicts)
-- [ ] Build-Plugin.ps1 supports building full framework plugin
-- [ ] Skills documentation present (reuse or adapt from light)
-- [ ] LICENSE file present (MIT)
-- [ ] Basic validation (commands load without errors)
+This parent work item is decomposed into 4 incremental deliverables:
+
+1. **FEAT-127.1** - Structure & Core Commands
+   - Status: Backlog
+   - Duration: 1 session
+   - Creates plugin structure, copies help/new/move from light plugin
+
+2. **FEAT-127.2** - Session History Integration
+   - Status: Backlog (blocked by 127.1)
+   - Duration: 1 session
+   - Verifies and integrates preserved session-history command
+
+3. **FEAT-127.3** - Roadmap Command
+   - Status: Backlog (blocked by 127.1)
+   - Duration: 1-2 sessions
+   - Adapts fw-roadmap command for plugin use
+
+4. **FEAT-127.4** - Build & Testing
+   - Status: Backlog (blocked by 127.2, 127.3)
+   - Duration: 1 session
+   - Extends build script, tests all 5 commands, verifies coexistence
+
+**Total Estimated Duration:** 4-6 sessions (vs 3-5 for monolithic approach)
+
+---
+
+## Parent-Level Acceptance Criteria
+
+**Epic complete when:**
+- [ ] All 4 child work items complete (127.1, 127.2, 127.3, 127.4)
+- [ ] Plugin v1.0.0 built and packaged
+- [ ] All 5 commands tested and working
+- [ ] Both plugins (light + full) can coexist
+- [ ] Documentation complete (README, CHANGELOG)
+- [ ] Ready for eventual marketplace submission (separate decision)
 
 ---
 
@@ -171,5 +198,5 @@ plugins/spearit-framework/
 
 ---
 
-**Last Updated:** 2026-02-13
-**Status:** Backlog
+**Last Updated:** 2026-02-16 (Decomposed into child work items)
+**Status:** Todo (Parent/Epic - track via children)
