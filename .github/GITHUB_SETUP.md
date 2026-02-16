@@ -8,16 +8,16 @@ This guide documents the manual configuration steps needed to complete the GitHu
 
 After the templates are merged to the repository:
 
-- [ ] **Enable Discussions** - Settings → General → Features → ☑ Discussions
-- [ ] **Create 4 Discussion Categories** - See [Discussion Categories](#discussion-categories) below
+- [x] **Enable Discussions** - Settings → General → Features → ☑ Discussions ✅ **DONE**
+- [x] **Create Discussion Categories** - See [Discussion Categories](#discussion-categories) below ✅ **DONE**
   - Q&A (Question/Answer format)
   - Ideas (Open Discussion)
-  - Show and Tell (Announcement format)
   - General (Open Discussion)
+  - ~~Show and Tell~~ (removed - not needed initially)
 - [ ] **Create Labels** - See [Labels](#labels) below or use [bulk creation commands](#bulk-label-creation)
 - [ ] **Test Templates** - See [Testing Templates](#testing-templates) below
 
-**Estimated time:** 15-20 minutes
+**Estimated time:** 15-20 minutes (Discussions: ✅ Complete)
 
 ---
 
@@ -59,14 +59,17 @@ GitHub creates some default categories. You'll want to customize them:
 
 ### Step 4: Recommended Categories to Create
 
-### Recommended Categories
+### Configured Categories ✅
+
+The following categories have been set up:
 
 | Category | Type | Description |
 |----------|------|-------------|
 | **Q&A** | Question/Answer | Ask questions about using the framework or plugin |
 | **Ideas** | Open Discussion | Brainstorm feature ideas and enhancements |
-| **Show and Tell** | Announcement | Share projects you've built with the framework |
 | **General** | Open Discussion | General conversation and community chat |
+
+**Note:** "Show and Tell" was intentionally omitted - can be added later if needed.
 
 **Notes:**
 - **Q&A format** allows users to mark answers as "accepted" - use for questions
