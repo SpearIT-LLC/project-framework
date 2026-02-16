@@ -4,11 +4,31 @@
 **Type:** Technical Improvement
 **Priority:** High
 **Created:** 2026-02-12
+**Archived:** 2026-02-16
+**Status:** Completed - Architectural ceiling reached
 **Note:** Originally created as TECH-071, renumbered to TECH-135 on 2026-02-16 due to ID collision
 
 ---
 
-## Summary
+## Archival Summary
+
+**Optimizations already completed** in spearit-framework-light v1.0.0 (shipped 2026-02-13):
+- ✅ Script-based execution implemented (58% performance improvement: 38s → 16s)
+- ✅ Removed unnecessary file reads for routine moves
+- ✅ Preserved AI review only for → doing/ transitions
+- ✅ Architectural ceiling documented in `research/plugins-performance-optimization.md`
+
+**Conclusion:** Further optimization impossible without changes to Claude Code plugin architecture itself. Current performance (14-16s per command) represents the architectural ceiling - API round-trip latency (2-3s minimum) is unavoidable.
+
+**Realistic performance achieved:**
+- Simple moves: 5-8 seconds (1 API round-trip)
+- Moves with AI review (→ doing/): 12-18 seconds (2-3 round-trips)
+
+**Reference:** See `research/plugins-performance-optimization.md` for complete analysis.
+
+---
+
+## Summary (Original Work Item)
 
 Optimize the `/plugin:move` command to eliminate unnecessary AI reasoning for deterministic operations. AI should only engage for pre-implementation review (→ doing/), while all other transitions should execute as fast rule-based operations.
 
