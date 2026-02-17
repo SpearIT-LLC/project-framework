@@ -56,7 +56,7 @@ User projects typically create a single-project repository and follow the struct
 │   ├── README.md                    # REQUIRED - Documentation index
 │   │
 │   └── [OPTIONAL SUBFOLDERS - Create as needed]
-│       ├── project/                 # OPTIONAL - Project planning (roadmap)
+│       ├── planning/                # OPTIONAL - Project planning (roadmap)
 │       ├── patterns/                # OPTIONAL - Project-specific patterns
 │       ├── process/                 # OPTIONAL - Project-specific processes
 │       ├── collaboration/           # OPTIONAL - Project-specific AI guides

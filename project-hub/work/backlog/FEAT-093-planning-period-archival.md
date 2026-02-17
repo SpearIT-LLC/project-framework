@@ -46,8 +46,8 @@ Currently:
 
 ### Functional Requirements
 
-- [ ] Reorganize project-hub structure with project/ and history/archive/ folders
-- [ ] Move active ROADMAP.md to project-hub/project/
+- [ ] Reorganize project-hub structure with planning/ and history/archive/ folders
+- [ ] Move active ROADMAP.md to project-hub/planning/
 - [ ] Create /fw-retrospective skill for completion reporting
 - [ ] Create /fw-archive skill for archiving completed periods
 - [ ] Support multiple planning styles (sprint, quarterly, milestone)
@@ -70,8 +70,8 @@ Currently:
 
 ```
 project-hub/
-├── project/                       # Active planning (NEW)
-│   ├── ROADMAP.md                 # Moved from docs/project/
+├── planning/                      # Active planning (NEW)
+│   ├── ROADMAP.md                 # Active roadmap
 │   └── (future: OKRs, milestones, etc.)
 ├── work/                          # Existing kanban
 │   ├── backlog/
@@ -79,7 +79,8 @@ project-hub/
 │   ├── doing/
 │   └── done/
 ├── history/
-│   ├── archive/                   # Completed planning periods (NEW)
+│   ├── archive/                   # Completed planning periods + superseded roadmaps (NEW)
+│   │   ├── ROADMAP-YYYY-MM-DD.md  # Superseded roadmaps (dated snapshot)
 │   │   ├── sprint-01.md
 │   │   ├── sprint-02.md
 │   │   ├── q1-2026.md
@@ -91,8 +92,12 @@ project-hub/
 ```
 
 **Rationale:**
-- **project/** = Active planning and strategy
-- **history/archive/** = Completed planning periods with retrospectives
+- **planning/** = Active planning and strategy (clearer than "project/" — the whole hub is the project)
+- **history/archive/** = Completed planning periods with retrospectives + superseded roadmaps
+
+**Roadmap Archive Convention:**
+- When a roadmap is superseded, move to `history/archive/ROADMAP-YYYY-MM-DD.md` (date of supersession)
+- Active roadmap always lives at `project-hub/planning/ROADMAP.md`
 - **docs/** = Technical/solution documentation (separated from project management)
 
 ### 2. Archival Workflow

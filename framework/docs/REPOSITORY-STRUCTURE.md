@@ -229,7 +229,7 @@ project-framework/           # Repository root
 ├── .gitignore              # Repository-wide ignores
 │
 ├── docs/                   # Framework development project management
-│   └── project/            # Roadmap for framework development
+│   └── planning/           # Roadmap for framework development
 │       └── ROADMAP.md      # Strategic direction for this project
 │
 ├── framework/              # Packaged framework content (what users get)
@@ -262,7 +262,7 @@ my-awesome-project/         # User's repository root
 ├── .gitignore
 │
 ├── docs/                   # Project documentation
-│   └── project/            # Project planning (roadmap)
+│   └── planning/           # Project planning (roadmap)
 │       └── ROADMAP.md      # Strategic direction for this project
 │
 ├── src/                    # Source code
