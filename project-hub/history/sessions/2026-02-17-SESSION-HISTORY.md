@@ -385,4 +385,63 @@ Captured as placeholder in design doc (Section 8). Future capability — not spe
 
 ---
 
+---
+
+## Night Session - BUG-140 Fixed: Move Command Child Item Detection
+
+**Session Focus:** Fix move command `grep -v "\."` bug in both plugins
+
+### Work Completed
+
+#### BUG-140: Move Command Child Item Detection ✅
+
+Fixed the broken find filter in all 5 target branches (`todo`, `doing`, `done`, `backlog`, `archive`) of both plugin move commands.
+
+**Root cause:** `grep -v "\."` was intended to exclude child items (e.g. `FEAT-127.4`) when searching for a parent. But the dot in `project-hub/work/backlog/` path separators also matched, causing every single item lookup to fail.
+
+**Fix:** Replace with `grep -v "/${ITEM_ID_UPPER}\."` — anchors the exclusion to a dot immediately following the item ID in the filename. Parent items are found correctly; child items are found correctly; the path separator dots are ignored.
+
+**Also:** `ITEM_ID_UPPER` was moved to the top of each branch (previously set after the find, so unavailable when needed).
+
+### Files Modified
+
+- `plugins/spearit-framework/commands/move.md` — fix applied to all 5 target branches
+- `plugins/spearit-framework-light/commands/move.md` — same fix, namespace references preserved (`spearit-framework-light:move`)
+- `plugins/spearit-framework/.claude-plugin/plugin.json` — version `1.0.0` → `1.0.1`
+- `plugins/spearit-framework-light/.claude-plugin/plugin.json` — version `1.0.1` → `1.0.2`
+
+### Files Moved
+
+- `project-hub/work/doing/BUG-140-move-command-child-item-detection.md` → `done/`
+
+### Commit
+
+`d91ee0e` — Covers BUG-140 fix + all Late Evening session work (FEAT-136, FEAT-127 completion, new backlog items, session history)
+
+### Current State (End of Day — Final)
+
+#### In done/
+- BUG-140 - Move Command Fix ✅
+- FEAT-136 - Project Guidance Design Doc ✅
+- FEAT-127, FEAT-127.1–127.4 - Full Framework Plugin ✅
+
+#### In doing/
+- (empty)
+
+#### In todo/
+- FEAT-092 - Sprint Support
+
+#### In backlog/
+- FEAT-137 - Project Guidance Commands (v1.1) ← **next priority**
+- FEAT-138 - Developer Guidance Commands (v1.2)
+- FEAT-139 - claude-project.yaml Config (v1.3)
+- FEAT-141 - Move Command Batch Support (unblocked by BUG-140)
+
+### Next Steps
+
+1. Implement **FEAT-137** - `/swarm` command (Project Guidance v1.1)
+2. Build updated plugin packages (both plugins, new versions) for marketplace
+
+---
+
 **Last Updated:** 2026-02-17
