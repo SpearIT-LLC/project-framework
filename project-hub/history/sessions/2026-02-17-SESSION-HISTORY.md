@@ -444,4 +444,64 @@ Fixed the broken find filter in all 5 target branches (`todo`, `doing`, `done`, 
 
 ---
 
+---
+
+## Post-Night Session - FEAT-141: Move Command Batch Support
+
+**Session Focus:** Implement batch item support in both plugin move commands
+
+### Work Completed
+
+#### FEAT-141: Move Command Batch Support ✅
+
+Extended the `move` command in both plugins to accept multiple work item IDs in a single invocation.
+
+**What changed:**
+- Added **Parsing Rules** section documenting intent-first parsing behavior (target folder detection from last token, comma/space/mixed splitting, bare number resolution)
+- Changed per-folder scripts to **skip-and-continue** on errors rather than hard-stopping — not-found items, already-in-target items, and invalid transitions all report and continue the rest of the batch
+- WIP limit check moved to once-before-batch (for `doing` and `todo` targets)
+- WIP summary printed once after all items complete (for `todo` target)
+- AI review for `→ doing` still fires, now covers each moved item
+- **Backwards compatible** — single-item syntax unchanged
+
+**Key design choice:** Claude acts as the parser (not a shell script). If intent is clear, execute it. Forgiving inputs like bare numbers (`136`), no quotes, mixed full and bare IDs all work.
+
+**Bare number resolution guard:** If a bare number matches more than one file across all work folders → data integrity error, stop entire batch and report. This protects against duplicate IDs silently moving the wrong item.
+
+### Files Modified
+
+- `plugins/spearit-framework-light/commands/move.md` — batch support added
+- `plugins/spearit-framework/commands/move.md` — batch support added (identical logic, namespace references updated)
+- `plugins/spearit-framework-light/.claude-plugin/plugin.json` — version `1.0.2` → `1.0.3`
+- `plugins/spearit-framework/.claude-plugin/plugin.json` — version `1.0.1` → `1.0.2`
+
+### Files Moved
+
+- `project-hub/work/todo/FEAT-141-move-command-batch-support.md` → `doing/`
+
+### Current State
+
+#### In done/
+- BUG-140 - Move Command Fix ✅
+- FEAT-136 - Project Guidance Design Doc ✅
+- FEAT-127, FEAT-127.1–127.4 - Full Framework Plugin ✅
+
+#### In doing/
+- FEAT-141 - Move Command Batch Support *(implementation complete; pending move to done/ + plugin publish)*
+
+#### In todo/
+- FEAT-092 - Sprint Support
+
+#### In backlog/
+- FEAT-137 - Project Guidance Commands (v1.1) ← **next priority**
+- FEAT-138 - Developer Guidance Commands (v1.2)
+- FEAT-139 - claude-project.yaml Config (v1.3)
+
+### Next Steps
+
+1. Move **FEAT-141** to done/ and publish updated plugin packages
+2. Implement **FEAT-137** — `/swarm` command (Project Guidance v1.1)
+
+---
+
 **Last Updated:** 2026-02-17
