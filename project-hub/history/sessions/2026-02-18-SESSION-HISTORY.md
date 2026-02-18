@@ -81,3 +81,38 @@ Investigated and resolved two problems with the move command: a silent failure c
 ---
 
 **Last Updated:** 2026-02-18
+
+---
+
+## Continuation (Later — same session)
+
+### SPIKE-142: Move Command Test Harness
+
+- **Context:** After FEAT-141 was committed and closed, user requested the POC scripts be restored for personal testing
+- **Decision — keep permanently, not delete:** Rather than restoring to `tools/` as throwaway infrastructure, recognized the harness has ongoing value as the move command evolves
+- **Placed in `project-hub/poc/` per ADR-004:** Spike folder pattern — code experiment with spike doc, not subject to kanban workflow or WIP limits
+- **`Cleanup-PocTests.ps1` behavior changed:** Old version self-deleted all scripts; new version only removes 200-block test files, preserving the harness itself
+- **Note corrected:** Original summary stated "POC files cleaned up / deleted" — they were restored and properly homed in `poc/`
+
+### Files Created
+
+- `project-hub/poc/SPIKE-142-move-command-test-harness/SPIKE-142-move-command-test-harness.md` — Spike doc with findings, usage, and sync note
+- `project-hub/poc/SPIKE-142-move-command-test-harness/poc-move.sh` — Bash script (mirrors move.md logic)
+- `project-hub/poc/SPIKE-142-move-command-test-harness/Create-PocTestItems.ps1`
+- `project-hub/poc/SPIKE-142-move-command-test-harness/Reset-PocTests.ps1`
+- `project-hub/poc/SPIKE-142-move-command-test-harness/Run-PocMove.ps1`
+- `project-hub/poc/SPIKE-142-move-command-test-harness/Cleanup-PocTests.ps1`
+
+### Current State (updated)
+
+**In done/:**
+- FEAT-127: Full Framework Plugin (+ subtasks .1/.2/.3/.4)
+- BUG-140: Move Command Child Item Detection
+- FEAT-136: Project Guidance Design Doc
+- FEAT-141: Move Command Batch Item Support ✅
+
+**In doing/:** (empty)
+
+---
+
+**Last Updated:** 2026-02-18 (later)
