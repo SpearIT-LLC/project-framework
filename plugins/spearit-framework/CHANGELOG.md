@@ -7,10 +7,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
-## [Unreleased]
+## [1.0.0] - 2026-02-17
 
-### Planned for v1.0.0
-- Build script extension and coexistence testing (FEAT-127.4)
+### Added
+- Production build via `Build-Plugin.ps1 -Plugin spearit-framework`
+- Verified coexistence with spearit-framework-light (no conflicts)
+- All 5 commands tested end-to-end
+
+### Changed
+- Version promoted from 1.0.0-dev3 to 1.0.0 (production release)
+
+### Notes
+- Completes FEAT-127.4 (Build & Testing)
+- Package: `distrib/plugin-full/spearit-framework-v1.0.0.zip` (29 KB)
+- FEAT-127 parent epic complete
 
 ---
 
@@ -108,4 +118,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
-**Last Updated:** 2026-02-16
+**Last Updated:** 2026-02-17
