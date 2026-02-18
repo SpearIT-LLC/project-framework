@@ -29,11 +29,12 @@ Move a work item between workflow folders using optimized script-based execution
 
 ```bash
 ITEM_ID="<item-id>"
+ITEM_ID_UPPER=$(echo "$ITEM_ID" | tr '[:lower:]' '[:upper:]')
 
 # Find the work item (exact match for parent, not children)
-SOURCE=$(find project-hub/work -type f -iname "${ITEM_ID}-*.md" 2>/dev/null | grep -v "\." | head -1)
+SOURCE=$(find project-hub/work -type f -iname "${ITEM_ID}-*.md" 2>/dev/null | grep -v "/${ITEM_ID_UPPER}\." | head -1)
 if [ -z "$SOURCE" ]; then
-  SOURCE=$(find project-hub/work -type f -iname "${ITEM_ID^^}-*.md" 2>/dev/null | grep -v "\." | head -1)
+  SOURCE=$(find project-hub/work -type f -iname "${ITEM_ID_UPPER}-*.md" 2>/dev/null | grep -v "/${ITEM_ID_UPPER}\." | head -1)
 fi
 
 if [ -z "$SOURCE" ]; then
@@ -58,7 +59,6 @@ esac
 
 # Check if this is a parent/epic with children
 ITEM_NAME=$(basename "$SOURCE")
-ITEM_ID_UPPER=$(echo "$ITEM_ID" | tr '[:lower:]' '[:upper:]')
 CHILDREN=$(find project-hub/work -type f -iname "${ITEM_ID_UPPER}.*.md" 2>/dev/null)
 
 # Check WIP limit
@@ -106,12 +106,12 @@ fi
 
 ```bash
 ITEM_ID="<item-id>"
+ITEM_ID_UPPER=$(echo "$ITEM_ID" | tr '[:lower:]' '[:upper:]')
 
 # Find the work item (exact match for parent, not children)
-SOURCE=$(find project-hub/work -type f -iname "${ITEM_ID}-*.md" 2>/dev/null | grep -v "\." | head -1)
+SOURCE=$(find project-hub/work -type f -iname "${ITEM_ID}-*.md" 2>/dev/null | grep -v "/${ITEM_ID_UPPER}\." | head -1)
 if [ -z "$SOURCE" ]; then
-  # Try uppercase
-  SOURCE=$(find project-hub/work -type f -iname "${ITEM_ID^^}-*.md" 2>/dev/null | grep -v "\." | head -1)
+  SOURCE=$(find project-hub/work -type f -iname "${ITEM_ID_UPPER}-*.md" 2>/dev/null | grep -v "/${ITEM_ID_UPPER}\." | head -1)
 fi
 
 if [ -z "$SOURCE" ]; then
@@ -141,7 +141,6 @@ esac
 
 # Check if this is a parent/epic with children
 ITEM_NAME=$(basename "$SOURCE")
-ITEM_ID_UPPER=$(echo "$ITEM_ID" | tr '[:lower:]' '[:upper:]')
 CHILDREN=$(find project-hub/work -type f -iname "${ITEM_ID_UPPER}.*.md" 2>/dev/null)
 
 # Check WIP limit
@@ -204,11 +203,12 @@ fi
 
 ```bash
 ITEM_ID="<item-id>"
+ITEM_ID_UPPER=$(echo "$ITEM_ID" | tr '[:lower:]' '[:upper:]')
 
 # Find the work item (exact match for parent, not children)
-SOURCE=$(find project-hub/work -type f -iname "${ITEM_ID}-*.md" 2>/dev/null | grep -v "\." | head -1)
+SOURCE=$(find project-hub/work -type f -iname "${ITEM_ID}-*.md" 2>/dev/null | grep -v "/${ITEM_ID_UPPER}\." | head -1)
 if [ -z "$SOURCE" ]; then
-  SOURCE=$(find project-hub/work -type f -iname "${ITEM_ID^^}-*.md" 2>/dev/null | grep -v "\." | head -1)
+  SOURCE=$(find project-hub/work -type f -iname "${ITEM_ID_UPPER}-*.md" 2>/dev/null | grep -v "/${ITEM_ID_UPPER}\." | head -1)
 fi
 
 if [ -z "$SOURCE" ]; then
@@ -226,7 +226,6 @@ fi
 
 # Check if this is a parent/epic with children
 ITEM_NAME=$(basename "$SOURCE")
-ITEM_ID_UPPER=$(echo "$ITEM_ID" | tr '[:lower:]' '[:upper:]')
 CHILDREN=$(find project-hub/work -type f -iname "${ITEM_ID_UPPER}.*.md" 2>/dev/null)
 
 # Execute move (parent first)
@@ -264,11 +263,12 @@ fi
 
 ```bash
 ITEM_ID="<item-id>"
+ITEM_ID_UPPER=$(echo "$ITEM_ID" | tr '[:lower:]' '[:upper:]')
 
 # Find the work item (exact match for parent, not children)
-SOURCE=$(find project-hub/work -type f -iname "${ITEM_ID}-*.md" 2>/dev/null | grep -v "\." | head -1)
+SOURCE=$(find project-hub/work -type f -iname "${ITEM_ID}-*.md" 2>/dev/null | grep -v "/${ITEM_ID_UPPER}\." | head -1)
 if [ -z "$SOURCE" ]; then
-  SOURCE=$(find project-hub/work -type f -iname "${ITEM_ID^^}-*.md" 2>/dev/null | grep -v "\." | head -1)
+  SOURCE=$(find project-hub/work -type f -iname "${ITEM_ID_UPPER}-*.md" 2>/dev/null | grep -v "/${ITEM_ID_UPPER}\." | head -1)
 fi
 
 if [ -z "$SOURCE" ]; then
@@ -287,7 +287,6 @@ fi
 
 # Check if this is a parent/epic with children
 ITEM_NAME=$(basename "$SOURCE")
-ITEM_ID_UPPER=$(echo "$ITEM_ID" | tr '[:lower:]' '[:upper:]')
 CHILDREN=$(find project-hub/work -type f -iname "${ITEM_ID_UPPER}.*.md" 2>/dev/null)
 
 # Execute move (parent first)
@@ -322,11 +321,12 @@ fi
 
 ```bash
 ITEM_ID="<item-id>"
+ITEM_ID_UPPER=$(echo "$ITEM_ID" | tr '[:lower:]' '[:upper:]')
 
 # Find the work item (exact match for parent, not children)
-SOURCE=$(find project-hub/work -type f -iname "${ITEM_ID}-*.md" 2>/dev/null | grep -v "\." | head -1)
+SOURCE=$(find project-hub/work -type f -iname "${ITEM_ID}-*.md" 2>/dev/null | grep -v "/${ITEM_ID_UPPER}\." | head -1)
 if [ -z "$SOURCE" ]; then
-  SOURCE=$(find project-hub/work -type f -iname "${ITEM_ID^^}-*.md" 2>/dev/null | grep -v "\." | head -1)
+  SOURCE=$(find project-hub/work -type f -iname "${ITEM_ID_UPPER}-*.md" 2>/dev/null | grep -v "/${ITEM_ID_UPPER}\." | head -1)
 fi
 
 if [ -z "$SOURCE" ]; then
@@ -336,7 +336,6 @@ fi
 
 # Check if this is a parent/epic with children
 ITEM_NAME=$(basename "$SOURCE")
-ITEM_ID_UPPER=$(echo "$ITEM_ID" | tr '[:lower:]' '[:upper:]')
 CHILDREN=$(find project-hub/work -type f -iname "${ITEM_ID_UPPER}.*.md" 2>/dev/null)
 
 # Execute move (parent first)

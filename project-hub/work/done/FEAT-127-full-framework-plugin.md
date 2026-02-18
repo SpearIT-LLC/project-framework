@@ -5,6 +5,7 @@
 **Priority:** High
 **Created:** 2026-02-13
 **Decomposed:** 2026-02-16
+**Completed:** 2026-02-17
 
 ---
 
@@ -137,12 +138,12 @@ This parent work item is decomposed into 4 incremental deliverables:
 ## Parent-Level Acceptance Criteria
 
 **Epic complete when:**
-- [ ] All 4 child work items complete (127.1, 127.2, 127.3, 127.4)
-- [ ] Plugin v1.0.0 built and packaged
-- [ ] All 5 commands tested and working
-- [ ] Both plugins (light + full) can coexist
-- [ ] Documentation complete (README, CHANGELOG)
-- [ ] Ready for eventual marketplace submission (separate decision)
+- [x] All 4 child work items complete (127.1, 127.2, 127.3, 127.4)
+- [x] Plugin v1.0.0 built and packaged
+- [x] All 5 commands tested and working
+- [x] Both plugins (light + full) can coexist
+- [x] Documentation complete (README, CHANGELOG)
+- [x] Ready for eventual marketplace submission (separate decision)
 
 ---
 

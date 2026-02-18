@@ -1,6 +1,6 @@
 # /spearit-framework-light:move - Move Work Item Between Folders
 
-Move a work item between workflow folders using optimized script-based execution.
+Move a work item between workflow folders using optimized script-based execution. Automatically moves child work items when moving parent/epic items.
 
 ## Usage
 
@@ -29,9 +29,13 @@ Move a work item between workflow folders using optimized script-based execution
 
 ```bash
 ITEM_ID="<item-id>"
+ITEM_ID_UPPER=$(echo "$ITEM_ID" | tr '[:lower:]' '[:upper:]')
 
-# Find the work item
-SOURCE=$(find project-hub/work -type f \( -iname "${ITEM_ID}*.md" -o -iname "${ITEM_ID^^}*.md" \) 2>/dev/null | head -1)
+# Find the work item (exact match for parent, not children)
+SOURCE=$(find project-hub/work -type f -iname "${ITEM_ID}-*.md" 2>/dev/null | grep -v "/${ITEM_ID_UPPER}\." | head -1)
+if [ -z "$SOURCE" ]; then
+  SOURCE=$(find project-hub/work -type f -iname "${ITEM_ID_UPPER}-*.md" 2>/dev/null | grep -v "/${ITEM_ID_UPPER}\." | head -1)
+fi
 
 if [ -z "$SOURCE" ]; then
   echo "❌ Could not find work item: $ITEM_ID"
@@ -53,6 +57,10 @@ case "$SOURCE_FOLDER" in
     ;;
 esac
 
+# Check if this is a parent/epic with children
+ITEM_NAME=$(basename "$SOURCE")
+CHILDREN=$(find project-hub/work -type f -iname "${ITEM_ID_UPPER}.*.md" 2>/dev/null)
+
 # Check WIP limit
 if [ -f "project-hub/work/todo/.limit" ]; then
   LIMIT=$(cat project-hub/work/todo/.limit | tr -d '[:space:]')
@@ -62,14 +70,30 @@ if [ -f "project-hub/work/todo/.limit" ]; then
   fi
 fi
 
-# Execute move
+# Execute move (parent first)
 git mv "$SOURCE" project-hub/work/todo/
 
 if [ $? -eq 0 ]; then
-  ITEM_NAME=$(basename "$SOURCE")
+  echo "✅ Moved $ITEM_NAME to todo/"
+
+  # Move children if any exist
+  if [ -n "$CHILDREN" ]; then
+    CHILD_COUNT=0
+    for CHILD in $CHILDREN; do
+      git mv "$CHILD" project-hub/work/todo/ 2>/dev/null
+      if [ $? -eq 0 ]; then
+        CHILD_NAME=$(basename "$CHILD")
+        echo "   ↳ Moved child: $CHILD_NAME"
+        ((CHILD_COUNT++))
+      fi
+    done
+    if [ $CHILD_COUNT -gt 0 ]; then
+      echo "📦 Moved parent + $CHILD_COUNT children"
+    fi
+  fi
+
   NEW_COUNT=$(find project-hub/work/todo -type f -name "*.md" 2>/dev/null | wc -l | tr -d '[:space:]')
   LIMIT_TEXT=$(cat project-hub/work/todo/.limit 2>/dev/null || echo '∞')
-  echo "✅ Moved $ITEM_NAME to todo/"
   echo "📊 WIP: $NEW_COUNT/$LIMIT_TEXT items"
 fi
 ```
@@ -82,9 +106,13 @@ fi
 
 ```bash
 ITEM_ID="<item-id>"
+ITEM_ID_UPPER=$(echo "$ITEM_ID" | tr '[:lower:]' '[:upper:]')
 
-# Find the work item
-SOURCE=$(find project-hub/work -type f \( -iname "${ITEM_ID}*.md" -o -iname "${ITEM_ID^^}*.md" \) 2>/dev/null | head -1)
+# Find the work item (exact match for parent, not children)
+SOURCE=$(find project-hub/work -type f -iname "${ITEM_ID}-*.md" 2>/dev/null | grep -v "/${ITEM_ID_UPPER}\." | head -1)
+if [ -z "$SOURCE" ]; then
+  SOURCE=$(find project-hub/work -type f -iname "${ITEM_ID_UPPER}-*.md" 2>/dev/null | grep -v "/${ITEM_ID_UPPER}\." | head -1)
+fi
 
 if [ -z "$SOURCE" ]; then
   echo "❌ Could not find work item: $ITEM_ID"
@@ -111,6 +139,10 @@ case "$SOURCE_FOLDER" in
     ;;
 esac
 
+# Check if this is a parent/epic with children
+ITEM_NAME=$(basename "$SOURCE")
+CHILDREN=$(find project-hub/work -type f -iname "${ITEM_ID_UPPER}.*.md" 2>/dev/null)
+
 # Check WIP limit
 if [ -f "project-hub/work/doing/.limit" ]; then
   LIMIT=$(cat project-hub/work/doing/.limit | tr -d '[:space:]')
@@ -120,12 +152,27 @@ if [ -f "project-hub/work/doing/.limit" ]; then
   fi
 fi
 
-# Execute move
+# Execute move (parent first)
 git mv "$SOURCE" project-hub/work/doing/
 
 if [ $? -eq 0 ]; then
-  ITEM_NAME=$(basename "$SOURCE")
   echo "✅ Moved $ITEM_NAME to doing/"
+
+  # Move children if any exist
+  if [ -n "$CHILDREN" ]; then
+    CHILD_COUNT=0
+    for CHILD in $CHILDREN; do
+      git mv "$CHILD" project-hub/work/doing/ 2>/dev/null
+      if [ $? -eq 0 ]; then
+        CHILD_NAME=$(basename "$CHILD")
+        echo "   ↳ Moved child: $CHILD_NAME"
+        ((CHILD_COUNT++))
+      fi
+    done
+    if [ $CHILD_COUNT -gt 0 ]; then
+      echo "📦 Moved parent + $CHILD_COUNT children"
+    fi
+  fi
 fi
 ```
 
@@ -156,9 +203,13 @@ fi
 
 ```bash
 ITEM_ID="<item-id>"
+ITEM_ID_UPPER=$(echo "$ITEM_ID" | tr '[:lower:]' '[:upper:]')
 
-# Find the work item
-SOURCE=$(find project-hub/work -type f \( -iname "${ITEM_ID}*.md" -o -iname "${ITEM_ID^^}*.md" \) 2>/dev/null | head -1)
+# Find the work item (exact match for parent, not children)
+SOURCE=$(find project-hub/work -type f -iname "${ITEM_ID}-*.md" 2>/dev/null | grep -v "/${ITEM_ID_UPPER}\." | head -1)
+if [ -z "$SOURCE" ]; then
+  SOURCE=$(find project-hub/work -type f -iname "${ITEM_ID_UPPER}-*.md" 2>/dev/null | grep -v "/${ITEM_ID_UPPER}\." | head -1)
+fi
 
 if [ -z "$SOURCE" ]; then
   echo "❌ Could not find work item: $ITEM_ID"
@@ -173,14 +224,34 @@ if [ "$SOURCE_FOLDER" != "doing" ]; then
   echo "⚠️ Moving from $SOURCE_FOLDER to done/ (typically done → from doing/)"
 fi
 
-# Execute move
+# Check if this is a parent/epic with children
+ITEM_NAME=$(basename "$SOURCE")
+CHILDREN=$(find project-hub/work -type f -iname "${ITEM_ID_UPPER}.*.md" 2>/dev/null)
+
+# Execute move (parent first)
 git mv "$SOURCE" project-hub/work/done/
 
 if [ $? -eq 0 ]; then
-  ITEM_NAME=$(basename "$SOURCE")
   echo "✅ Moved $ITEM_NAME to done/"
+
+  # Move children if any exist
+  if [ -n "$CHILDREN" ]; then
+    CHILD_COUNT=0
+    for CHILD in $CHILDREN; do
+      git mv "$CHILD" project-hub/work/done/ 2>/dev/null
+      if [ $? -eq 0 ]; then
+        CHILD_NAME=$(basename "$CHILD")
+        echo "   ↳ Moved child: $CHILD_NAME"
+        ((CHILD_COUNT++))
+      fi
+    done
+    if [ $CHILD_COUNT -gt 0 ]; then
+      echo "📦 Moved parent + $CHILD_COUNT children"
+    fi
+  fi
+
   echo ""
-  echo "Optional: Document completion in session history with /fw-session-history"
+  echo "Optional: Document completion in session history with /spearit-framework:session-history"
 fi
 ```
 
@@ -192,9 +263,13 @@ fi
 
 ```bash
 ITEM_ID="<item-id>"
+ITEM_ID_UPPER=$(echo "$ITEM_ID" | tr '[:lower:]' '[:upper:]')
 
-# Find the work item
-SOURCE=$(find project-hub/work -type f \( -iname "${ITEM_ID}*.md" -o -iname "${ITEM_ID^^}*.md" \) 2>/dev/null | head -1)
+# Find the work item (exact match for parent, not children)
+SOURCE=$(find project-hub/work -type f -iname "${ITEM_ID}-*.md" 2>/dev/null | grep -v "/${ITEM_ID_UPPER}\." | head -1)
+if [ -z "$SOURCE" ]; then
+  SOURCE=$(find project-hub/work -type f -iname "${ITEM_ID_UPPER}-*.md" 2>/dev/null | grep -v "/${ITEM_ID_UPPER}\." | head -1)
+fi
 
 if [ -z "$SOURCE" ]; then
   echo "❌ Could not find work item: $ITEM_ID"
@@ -210,12 +285,31 @@ if [ "$SOURCE_FOLDER" = "backlog" ]; then
   exit 0
 fi
 
-# Execute move
+# Check if this is a parent/epic with children
+ITEM_NAME=$(basename "$SOURCE")
+CHILDREN=$(find project-hub/work -type f -iname "${ITEM_ID_UPPER}.*.md" 2>/dev/null)
+
+# Execute move (parent first)
 git mv "$SOURCE" project-hub/work/backlog/
 
 if [ $? -eq 0 ]; then
-  ITEM_NAME=$(basename "$SOURCE")
   echo "✅ Moved $ITEM_NAME to backlog/"
+
+  # Move children if any exist
+  if [ -n "$CHILDREN" ]; then
+    CHILD_COUNT=0
+    for CHILD in $CHILDREN; do
+      git mv "$CHILD" project-hub/work/backlog/ 2>/dev/null
+      if [ $? -eq 0 ]; then
+        CHILD_NAME=$(basename "$CHILD")
+        echo "   ↳ Moved child: $CHILD_NAME"
+        ((CHILD_COUNT++))
+      fi
+    done
+    if [ $CHILD_COUNT -gt 0 ]; then
+      echo "📦 Moved parent + $CHILD_COUNT children"
+    fi
+  fi
 fi
 ```
 
@@ -227,21 +321,45 @@ fi
 
 ```bash
 ITEM_ID="<item-id>"
+ITEM_ID_UPPER=$(echo "$ITEM_ID" | tr '[:lower:]' '[:upper:]')
 
-# Find the work item
-SOURCE=$(find project-hub/work -type f \( -iname "${ITEM_ID}*.md" -o -iname "${ITEM_ID^^}*.md" \) 2>/dev/null | head -1)
+# Find the work item (exact match for parent, not children)
+SOURCE=$(find project-hub/work -type f -iname "${ITEM_ID}-*.md" 2>/dev/null | grep -v "/${ITEM_ID_UPPER}\." | head -1)
+if [ -z "$SOURCE" ]; then
+  SOURCE=$(find project-hub/work -type f -iname "${ITEM_ID_UPPER}-*.md" 2>/dev/null | grep -v "/${ITEM_ID_UPPER}\." | head -1)
+fi
 
 if [ -z "$SOURCE" ]; then
   echo "❌ Could not find work item: $ITEM_ID"
   exit 1
 fi
 
-# Execute move
-git mv "$SOURCE" project-hub/history/archive/
+# Check if this is a parent/epic with children
+ITEM_NAME=$(basename "$SOURCE")
+CHILDREN=$(find project-hub/work -type f -iname "${ITEM_ID_UPPER}.*.md" 2>/dev/null)
+
+# Execute move (parent first)
+git mv "$SOURCE" project-hub/work/archive/
 
 if [ $? -eq 0 ]; then
-  ITEM_NAME=$(basename "$SOURCE")
   echo "✅ Moved $ITEM_NAME to archive/ (cancelled)"
+
+  # Move children if any exist
+  if [ -n "$CHILDREN" ]; then
+    CHILD_COUNT=0
+    for CHILD in $CHILDREN; do
+      git mv "$CHILD" project-hub/work/archive/ 2>/dev/null
+      if [ $? -eq 0 ]; then
+        CHILD_NAME=$(basename "$CHILD")
+        echo "   ↳ Moved child: $CHILD_NAME"
+        ((CHILD_COUNT++))
+      fi
+    done
+    if [ $CHILD_COUNT -gt 0 ]; then
+      echo "📦 Moved parent + $CHILD_COUNT children"
+    fi
+  fi
+
   echo ""
   echo "Optional: Add cancellation metadata (Status: Cancelled, Cancelled Date, Reason)"
 fi
@@ -251,12 +369,23 @@ fi
 
 ## Examples
 
+**Single work items:**
 ```
-/spearit-framework-light:move feat-127 todo      # Move to todo
-/spearit-framework-light:move FEAT-127 doing     # Start work (with review)
-/spearit-framework-light:move feat-127 done      # Complete work
-/spearit-framework-light:move FEAT-127 backlog   # Deprioritize
-/spearit-framework-light:move feat-127 archive   # Cancel work
+/spearit-framework-light:move feat-018 todo      # Move to todo
+/spearit-framework-light:move BUG-042 doing      # Start work (with review)
+/spearit-framework-light:move feat-018 done      # Complete work
+```
+
+**Parent/Epic items (automatically moves children):**
+```
+/spearit-framework-light:move feat-127 doing     # Moves FEAT-127 + all FEAT-127.x children
+/spearit-framework-light:move epic-050 done      # Moves EPIC-050 + all EPIC-050.x children
+/spearit-framework-light:move feat-127 backlog   # Deprioritizes parent + children
+```
+
+**Other operations:**
+```
+/spearit-framework-light:move feat-127 archive   # Cancel parent + children
 ```
 
 ---

@@ -6,6 +6,7 @@
 **Priority:** High
 **Created:** 2026-02-16
 **Depends On:** FEAT-127.2, FEAT-127.3
+**Completed:** 2026-02-17
 
 ---
 
@@ -155,34 +156,34 @@ Get-ChildItem plugins/ -Directory | ForEach-Object {
 ## Acceptance Criteria
 
 **Build Script:**
-- [ ] Build-Plugin.ps1 supports `-Plugin spearit-framework` parameter
-- [ ] OR auto-discovers all plugins/ subdirectories
-- [ ] Builds to `distrib/plugin-full/spearit-framework-v1.0.0.zip`
-- [ ] Package size reasonable (< 100 KB)
-- [ ] Package structure validates (correct .claude-plugin/ format)
+- [x] Build-Plugin.ps1 supports `-Plugin spearit-framework` parameter
+- [x] OR auto-discovers all plugins/ subdirectories
+- [x] Builds to `distrib/plugin-full/spearit-framework-v1.0.0.zip`
+- [x] Package size reasonable (< 100 KB)
+- [x] Package structure validates (correct .claude-plugin/ format)
 
 **Plugin Testing:**
-- [ ] Version set to 1.0.0 (no dev suffix)
-- [ ] All 5 commands execute without errors
-- [ ] `/spearit-framework:help` - Lists all commands correctly
-- [ ] `/spearit-framework:new` - Creates work item with auto-ID
-- [ ] `/spearit-framework:move` - Moves items correctly
-- [ ] `/spearit-framework:session-history` - Creates session file
-- [ ] `/spearit-framework:roadmap` - Creates ROADMAP.md
+- [x] Version set to 1.0.0 (no dev suffix)
+- [x] All 5 commands execute without errors
+- [x] `/spearit-framework:help` - Lists all commands correctly
+- [x] `/spearit-framework:new` - Creates work item with auto-ID
+- [x] `/spearit-framework:move` - Moves items correctly
+- [x] `/spearit-framework:session-history` - Creates session file
+- [x] `/spearit-framework:roadmap` - Creates ROADMAP.md
 
 **Coexistence Testing:**
-- [ ] Light plugin remains installed during testing
-- [ ] Full plugin installs without conflicts
-- [ ] Both plugins list correctly (`/plugin list`)
-- [ ] Commands use correct namespaces (`:light` vs no suffix)
-- [ ] No file conflicts (separate cache directories)
-- [ ] Skills load independently (no interference)
+- [x] Light plugin remains installed during testing
+- [x] Full plugin installs without conflicts
+- [x] Both plugins list correctly (`/plugin list`)
+- [x] Commands use correct namespaces (`:light` vs no suffix)
+- [x] No file conflicts (separate cache directories)
+- [x] Skills load independently (no interference)
 
 **Documentation:**
-- [ ] README.md updated (if needed)
-- [ ] CHANGELOG.md updated (v1.0.0 entry)
-- [ ] Build instructions documented
-- [ ] Testing checklist documented (for future)
+- [x] README.md updated (if needed)
+- [x] CHANGELOG.md updated (v1.0.0 entry)
+- [x] Build instructions documented
+- [x] Testing checklist documented (for future)
 
 ---
 
