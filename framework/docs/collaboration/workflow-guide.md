@@ -362,12 +362,19 @@ Not all transitions are valid. Use this matrix to determine if a transition is a
 | backlog | todo | ✅ | Standard flow - committing to work |
 | backlog | doing | ❌ | Must commit to work (todo) first |
 | backlog | done | ❌ | Must be worked on |
+| backlog | blocked | ✅ | External dependency identified |
 | todo | doing | ✅ | Starting work |
 | todo | backlog | ✅ | Deprioritizing |
 | todo | done | ❌ | Must actually do the work (doing first) |
+| todo | blocked | ✅ | External blocker discovered after committing |
 | doing | done | ✅ | Completing work |
 | doing | todo | ✅ | Pausing work |
 | doing | backlog | ❌ | Use todo as intermediate state |
+| doing | blocked | ✅ | External blocker hit mid-work |
+| blocked | todo | ✅ | External party resolved, ready to resume |
+| blocked | doing | ✅ | External party resolved, resuming work |
+| blocked | archive | ✅ | External party won't resolve, cancelling |
+| blocked | done | ✅ | External party resolved, no further work needed |
 | done | history | ✅ | Post-release archival |
 | done | * | ❌ | No reopening (create new work item) |
 | backlog | archive | ✅ | Cancellation (most common) |
@@ -440,6 +447,24 @@ When moving a work item, complete the checklist for the target folder. Use `git 
 
 **Full Release Process:** See [version-control-workflow.md#release-checklist](../process/version-control-workflow.md#release-checklist) for the complete release checklist.
 
+#### → blocked/
+- [ ] Transition is valid (check matrix above)
+- [ ] Add blocked metadata to work item:
+  - `**Blocked By:**` external party name/description
+  - `**External Reference:**` URL, ticket number, or email thread
+  - `**Reported Date:**` YYYY-MM-DD
+  - `**Expected Resolution:**` YYYY-MM-DD or "Unknown"
+  - `**Workaround:**` what is being done in the meantime, or "None"
+  - `**Follow-up Actions:**` what needs to happen when unblocked
+- [ ] Use `git mv` to move file
+
+**Periodic Review:**
+Items in `blocked/` should be reviewed periodically. The external party may have resolved the issue without notification, or the expected resolution date may have passed. Check `fw-status` output for stale blocked items.
+
+**When unblocked:**
+- Move back to `todo/` or `doing/` depending on next action
+- Update or remove blocked metadata fields
+
 #### → history/archive/ (Cancellation)
 - [ ] Transition is valid (check matrix above)
 - [ ] Cancellation reason documented in work item
@@ -459,7 +484,8 @@ When work items are cancelled, outdated, or superseded, they move to `history/ar
 | Requirements changed fundamentally | Cancel | archive/ |
 | Superseded by different approach | Cancel | archive/ |
 | Lower priority, may do later | Deprioritize | backlog/ |
-| Blocked temporarily | Pause | todo/ or backlog/ |
+| Blocked by external party | Block | blocked/ |
+| Blocked temporarily (internal) | Pause | todo/ or backlog/ |
 
 **Rule of thumb:** If the work item as written will *never* be done, cancel it. If it *might* be done later, deprioritize it.
 
@@ -691,6 +717,7 @@ project-hub/
 ├── work/backlog/         # Ideas and future work
 ├── work/todo/            # Committed next (prioritized)
 ├── work/doing/           # Currently in progress (WIP limited)
+├── work/blocked/         # Blocked on external party (vendor, client, team)
 ├── work/done/            # Completed (awaiting release)
 ├── poc/                  # POC spikes with code artifacts (no WIP limit)
 └── research/             # Analysis, ADRs, landscape reviews

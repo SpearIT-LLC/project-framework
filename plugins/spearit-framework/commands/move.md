@@ -11,14 +11,14 @@ Move one or more work items between workflow folders. Automatically moves child 
 ## Arguments
 
 - `item-id-or-list` (required): Single ID or multiple IDs — comma-separated, space-separated, or mixed. Full IDs (`FEAT-136`) or bare numbers (`136`) both work. Case insensitive. The numeric ID is what matters — type prefix (`FEAT-`, `BUG-`, etc.) is stripped before matching.
-- `target-folder` (required): One of: `backlog`, `todo`, `doing`, `done`, `archive`
+- `target-folder` (required): One of: `backlog`, `todo`, `doing`, `done`, `blocked`, `archive`
 
 ---
 
 ## Parsing Rules
 
 **Target folder detection:**
-- Last token is checked against valid folder names: `backlog`, `todo`, `doing`, `done`, `archive`
+- Last token is checked against valid folder names: `backlog`, `todo`, `doing`, `done`, `blocked`, `archive`
 - If last token is a valid folder → it's the target, everything else is the item list
 - If last token is NOT a valid folder → report error with valid folder names, stop
 
@@ -54,7 +54,7 @@ Move one or more work items between workflow folders. Automatically moves child 
 #!/usr/bin/env bash
 set -uo pipefail
 
-VALID_FOLDERS="backlog todo doing done archive"
+VALID_FOLDERS="backlog todo doing done blocked archive"
 TARGET="<target-folder>"
 ITEM_IDS=(<space-separated-list-of-resolved-ids>)
 
@@ -179,6 +179,18 @@ move_item() {
       if [ "$source_folder" = "backlog" ]; then
         echo "⚠️  $item_name already in backlog/ — skipped"
         ((SKIPPED++)) || true
+        return
+      fi
+      ;;
+    blocked)
+      if [ "$source_folder" = "blocked" ]; then
+        echo "⚠️  $item_name already in blocked/ — skipped"
+        ((SKIPPED++)) || true
+        return
+      fi
+      if [ "$source_folder" = "done" ]; then
+        echo "❌ $item_name: cannot move from done/ to blocked/ — skipped"
+        ((FAILED++)) || true
         return
       fi
       ;;

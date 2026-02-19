@@ -13,6 +13,15 @@
 **Depends On:** [ITEM-NNN, ITEM-NNN]
 -->
 
+<!-- Blocked fields - uncomment if item is in blocked/:
+**Blocked By:** [External party name/description]
+**External Reference:** [URL, ticket number, email thread, etc.]
+**Reported Date:** YYYY-MM-DD
+**Expected Resolution:** YYYY-MM-DD or "Unknown"
+**Workaround:** [What we're doing in the meantime, or "None"]
+**Follow-up Actions:** [What needs to happen when unblocked]
+-->
+
 ---
 
 ## Summary

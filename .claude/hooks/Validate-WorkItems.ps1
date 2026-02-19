@@ -5,9 +5,8 @@
 
 param()
 
-$ErrorActionPreference = 'Stop'
-
 # Read hook input from stdin
+$command = $null
 try {
     $jsonInput = $input | Out-String
     $hookData = $jsonInput | ConvertFrom-Json
@@ -16,6 +15,8 @@ try {
     # If we can't parse input, allow the command
     exit 0
 }
+
+$ErrorActionPreference = 'Stop'
 
 # Only check git commit commands
 if ($command -notmatch 'git commit') {

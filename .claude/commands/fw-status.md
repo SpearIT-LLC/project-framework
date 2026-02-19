@@ -31,6 +31,7 @@ Workflow Summary:
   Backlog:  12 items
   Todo:      3 items
   Doing:     1 item  (limit: 2) ✅
+  Blocked:   1 item  ⚠ Waiting on external party
   Done:      1 item  ⚠ Ready for release
 
 Currently In Progress:
@@ -52,13 +53,13 @@ FEAT-018: Claude Command Framework
 ## Status Indicators
 
 - ✅ Under WIP limit (can start more work)
-- ⚠ At WIP limit, or items in done/ awaiting release
+- ⚠ At WIP limit, items in done/ awaiting release, or items in blocked/ waiting on external parties
 - ❌ Over WIP limit (needs attention)
 
 ## Data Sources
 
 - **Version**: `framework/PROJECT-STATUS.md` or `PROJECT-STATUS.md`
-- **Work items**: `project-hub/work/{backlog,todo,doing,done}/`
+- **Work items**: `project-hub/work/{backlog,todo,doing,blocked,done}/`
 - **WIP limit**: `project-hub/work/doing/.limit` (default: 2)
 
 ## Examples
@@ -83,3 +84,4 @@ FEAT-018: Claude Command Framework
 - **PROJECT-STATUS.md missing**: Show warning, continue with available data
 - **Empty folders**: Show "0 items" (not an error)
 - **Items in done/**: Flag with ⚠ as ready for release
+- **Items in blocked/**: Flag with ⚠ as waiting on external party

@@ -652,6 +652,80 @@ claude --plugin-dir ./plugins/spearit-framework-light --debug
 
 ---
 
+## Plugin Command Namespace Collision — Known Limitation
+
+### Problem: Plugin Commands Can Be Silently Replaced by Similarly-Named Commands
+
+**Symptom:** User invokes a fully-qualified plugin command (e.g., `/spearit-framework:move`) but Claude executes a different command entirely — a local skill, a `.claude/commands/` file, or another plugin command with a similar name or intent.
+
+**Observed Example (2026-02-18):**
+- User invoked: `/spearit-framework:move feat-201 todo`
+- Claude executed: the `fw-move` skill (a local `.claude/commands/` file)
+- The move succeeded, output looked plausible, user had no visibility into the switch
+
+**Root Cause:**
+Claude Code has no runtime command dispatcher that enforces namespace routing. When a plugin command is invoked, the `<command-name>` tag is passed to Claude as text. Claude reads the expanded command file content and is expected to follow it — but there is no enforcement mechanism. If Claude pattern-matches the user's intent to something more familiar (a skill, a recently-used command, a similarly-named command in context), it may silently substitute it.
+
+The namespace (`spearit-framework:`) provides **human-readable disambiguation** only. It does **not** guarantee correct routing.
+
+### Why This Is Serious
+
+- The wrong command runs silently — no error, no warning
+- Output may look correct (especially if commands are similar)
+- User has no way to know the wrong command executed unless they investigate
+- Cannot be fixed by the plugin author — it is a Claude Code platform limitation
+
+**The observed case (fw-move executing instead of spearit-framework:move) was a benign coincidence** — both commands perform the same operation, so the outcome was correct even though the wrong command ran. This should NOT be taken as evidence the risk is manageable.
+
+**Catastrophic failure scenarios where silent mis-dispatch causes real damage:**
+- A `move` command in one plugin stages files for deployment; a similarly-named command in another context moves work items — wrong one runs, code is deployed unintentionally
+- A `cleanup` command deletes temp files; a collision causes it to run against production data
+- A `release` command tags and pushes a git release; collision triggers it prematurely
+- A `new` command in one context scaffolds a project; collision overwrites existing files
+
+In these cases the output still looks plausible, the operation completes successfully, and the damage may not be discovered until much later. **The risk scales with how destructive or irreversible the colliding command is.**
+
+### Conditions That Increase Risk
+
+- Plugin command name matches or is similar to a local command or skill name (e.g., both named `move`)
+- A skill or local command was recently invoked in the same session (recency bias)
+- The command's instruction content is ambiguous about what should execute it
+- Long sessions where context has accumulated many command references
+
+### Partial Mitigations (Imperfect)
+
+These reduce but do not eliminate the risk:
+
+1. **Explicit self-identification at top of command file:**
+   ```markdown
+   ⚠️ You are executing `/spearit-framework:move`. Do NOT invoke any skill,
+   local command, or other tool named "move" or "fw-move". This command is
+   self-contained and must be executed directly.
+   ```
+
+2. **Name plugin commands distinctly** from local commands — avoid overlap
+   - Plugin: `spearit-framework:move`
+   - Local: `fw-move` ← different enough, but still triggered wrong dispatch in testing
+
+3. **Avoid having both a plugin command and a local command/skill that cover the same operation** in the same project
+
+### What Cannot Fix This
+
+- Namespacing alone (e.g., `spearit-framework:move` vs `fw-move`) — demonstrated not sufficient
+- Documentation in the command file — Claude may not read it before dispatching
+- Version bumping, cache clearing — not a caching issue
+
+### Recommendation
+
+**Do not rely on plugin commands for operations where silent wrong-command execution would cause data loss, incorrect state, or security issues.** Plugin commands are best suited for:
+- Read-only operations (status, help, next-id)
+- Operations with visible, reversible output
+- Contexts where the project has no competing local commands/skills
+
+**For critical write operations** (moving work items, committing, archiving), consider requiring explicit confirmation output that names the command that ran, so the user can verify.
+
+---
+
 ## Future Best Practices
 
 This document will grow as we learn more. Areas to explore:

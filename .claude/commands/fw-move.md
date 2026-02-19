@@ -11,7 +11,7 @@ Move a work item between workflow folders with policy enforcement, transition va
 ## Arguments
 
 - `item-id` (required): Work item ID (e.g., FEAT-018, BUGFIX-001) or partial filename
-- `target-folder` (required): One of: `backlog`, `todo`, `doing`, `done`, `archive`, `releases`
+- `target-folder` (required): One of: `backlog`, `todo`, `doing`, `done`, `blocked`, `archive`, `releases`
 
 ## Transition Validity Matrix
 
@@ -19,13 +19,20 @@ Move a work item between workflow folders with policy enforcement, transition va
 |------|----|----|--------|
 | backlog | todo | ✅ | Standard flow - committing to work |
 | backlog | doing | ❌ | Must commit to work (todo) first |
+| backlog | blocked | ✅ | External dependency identified |
 | backlog | archive | ✅ | Cancelling work |
 | todo | doing | ✅ | Starting work |
 | todo | backlog | ✅ | Deprioritizing work |
+| todo | blocked | ✅ | External blocker discovered after committing |
 | todo | archive | ✅ | Cancelling work |
 | doing | done | ✅ | Completing work |
 | doing | todo | ✅ | Pausing work |
+| doing | blocked | ✅ | External blocker hit mid-work |
 | doing | archive | ✅ | Cancelling work |
+| blocked | todo | ✅ | External party resolved, ready to resume |
+| blocked | doing | ✅ | External party resolved, resuming work |
+| blocked | archive | ✅ | External party won't resolve, cancelling |
+| blocked | done | ✅ | External party resolved, no further work needed |
 | done | releases | ✅ | Post-release archival |
 | done | archive | ✅ | Cancelling/superseding work |
 | done | backlog | ❌ | No reopening - create new item |
@@ -189,11 +196,41 @@ git mv project-hub/work/doing/ITEM-NNN-*.md project-hub/work/done/
 
 ---
 
+### → blocked/
+
+**Use case:** Work blocked on an external party — vendor, client, other team, third-party API, procurement
+
+**Before moving:**
+1. ✅ Validate transition (check matrix above)
+2. ✅ Read work item file
+3. ✅ Add blocked metadata to work item:
+   - `**Blocked By:**` external party name/description
+   - `**External Reference:**` URL, ticket number, or email thread
+   - `**Reported Date:**` YYYY-MM-DD
+   - `**Expected Resolution:**` YYYY-MM-DD or "Unknown"
+   - `**Workaround:**` what is being done in the meantime, or "None"
+   - `**Follow-up Actions:**` what needs to happen when unblocked
+
+**Execute move:**
+```bash
+git mv project-hub/work/[source]/ITEM-NNN-*.md project-hub/work/blocked/
+```
+
+**After move:**
+- No commit required immediately — blocked items may sit for extended periods
+- Review periodically: check if external party has resolved the issue
+
+**When unblocked:**
+- Move back to `todo/` (ready to plan) or `doing/` (resuming active work)
+- Update or remove blocked metadata fields
+
+---
+
 ### → history/archive/ (Cancellation)
 
 **Use case:** Cancelling, superseding, or archiving work that won't be completed
 
-**When to Cancel vs Deprioritize:**
+**When to Cancel vs Deprioritize vs Block:**
 
 | Situation | Action | Destination |
 |-----------|--------|-------------|
@@ -201,7 +238,8 @@ git mv project-hub/work/doing/ITEM-NNN-*.md project-hub/work/done/
 | Requirements changed fundamentally | Cancel | archive/ |
 | Superseded by different approach | Cancel | archive/ |
 | Lower priority, may do later | Deprioritize | backlog/ |
-| Blocked temporarily | Pause | todo/ or backlog/ |
+| Blocked by external party | Block | blocked/ |
+| Blocked temporarily (internal) | Pause | todo/ or backlog/ |
 
 **Rule of thumb:** If the work item as written will *never* be done, cancel it. If it *might* be done later, deprioritize it.
 
@@ -262,6 +300,7 @@ git mv project-hub/work/done/*.md project-hub/history/releases/vX.Y.Z/
 /fw-move FEAT-042 done      # Complete work (with validation)
 /fw-move BUGFIX-001 backlog # Deprioritize back to backlog
 /fw-move FEAT-099 archive   # Cancel work (add metadata first)
+/fw-move BUG-144 blocked    # Block on external party (add metadata first)
 ```
 
 ## Error Handling
