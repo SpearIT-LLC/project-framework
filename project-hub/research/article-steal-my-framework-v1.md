@@ -36,8 +36,15 @@ If I tell you to do something you'll probably do it however you think it should 
 ## Scripts for automation tasks
 This bring me to another feature, using scripts to execute standard tasks so if either human or AI executes it we get the same result. AI saves some tokens and human doesn't have to worry they'll get a different result if they run it. 
 
-## Built in /Commands
-(still in planning. Commands for every major step in the process.)
+## I Command Thee, but only if you want to
+While building my own commands and a plugin equivilent, I stumbled on a major Claude bug that could be disastrous in the right circumstances. I have a project level command that I converted to a plugin command. They currently both exist but do the same thing. I called the plugin version but Claude decided to run the local command even though they have different namespaces. It turns out Claude decides on the fly whether to respect the namespace. The namespaces are not a guaranteed path like they are in your code. Now suppose I install some random plugin that happens to have the same or similar name. I call one command, but Claude thinks the other is close enough and runs it instead. I can only imagine the mess that could create. I filed a bug, <bug-number>, hopefully it's resolved quickly.
+
+## The Rebellious Child
+You know the one. Maybe you have one. You ask them to do one thing a specific way and they make up their own mind how or if it should be done at all. AI can be tempermental in it's own way. The fact is AI does not always like to be told how. We've setup policies together, gave an instruction related to the policy and it did it it's own way anyway. I'd follow up with what is our policy for 'X', and it would spit out the policy verbatim followed up with an "oops", I didn't do that. 
+
+<paragraph on solutions and workarounds>
+
+Hooks can help but don't solve everything.
 
 ## History
 Version 1 was what we established in the initial application. Version 2 was when we moved it to it's own project. Version 3 was a major reorg when the light bulb hit, the framework IS a project and is now structured the same as a "user" project. 
