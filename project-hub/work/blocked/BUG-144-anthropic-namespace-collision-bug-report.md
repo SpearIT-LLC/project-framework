@@ -44,8 +44,10 @@ When invoking a fully-qualified plugin command (e.g., `/spearit-framework:move`)
 **Root Cause:**
 No runtime dispatcher enforces namespace routing. The `<command-name>` tag is passed to Claude as text. Claude pattern-matches on intent rather than routing by exact namespace key.
 
-**Related Anthropic Issue:**
-[#24420](https://github.com/anthropics/claude-code/issues/24420) — skill name collision between multiple plugins (similar but distinct failure mode; that issue is about autocomplete, this is about execution dispatch)
+**Related Anthropic Issues:**
+- [#24420](https://github.com/anthropics/claude-code/issues/24420) — autocomplete resolves to first plugin when multiple plugins share a skill name; manually typing fully-qualified name works (opposite of our case)
+- [#22063](https://github.com/anthropics/claude-code/issues/22063) — skills with `name` field in SKILL.md frontmatter lose their plugin namespace prefix entirely
+- [#19290](https://github.com/anthropics/claude-code/issues/19290) — AI follows pre-loaded command instructions instead of invoking Skill tool when names collide (no explicit namespacing); closest to our issue but doesn't cover the explicit namespace case
 
 ---
 
@@ -170,4 +172,10 @@ irreversible damage with no indication anything went wrong.
 
 ---
 
-**Last Updated:** 2026-02-18
+## Follow-up Log
+
+**2026-02-19:** Bot flagged 3 possible duplicates (#22063, #24420, #19290). Reviewed all three — none are true duplicates. Key distinction: our case uses an explicit fully-qualified namespace that was still ignored; the suggested duplicates involve missing namespacing or autocomplete issues. Posted clarifying comment on #26906 to prevent auto-closure. **Check back by 2026-02-22** (3-day auto-close window).
+
+---
+
+**Last Updated:** 2026-02-19

@@ -184,3 +184,23 @@ json{
 2. A skills/ folder with markdown files containing your domain knowledge/workflows
 That's it! Then zip it up and upload to Cowork.
 
+## New Framing for the Framework?
+2026-02-19
+
+I think I'm getting more clarity on what I want this product to be. 
+
+The SpearIT Framework is an AI Consultant for Consultants.
+OR
+An AI Collaboration Partner for Consultants. Here Claude is a Team of resources available to the consultant.
+
+This is really what it was created for. Me. A consultant looking to leaverage AI to help me do my job faster, more accurately and more professionally.
+
+The consultant, in this scenario, could be an internal or external resource. Although, in my case, it's an external resource.
+
+- First address the needs of a solo consultant doing work for larger corporations.
+- Address the needs of a solo developer creating professional solutions.
+- Project guidance and Developer guidance still relevant.
+- Meeting notes/summaries can be helpful.
+- Corporate standards might become a requirement in the future. e.g. Adding PDFs, docx, and other file types with info that might guide or restrict what we can do.
+- Perhaps we give small teams some focus down the road but focus on the solo developer/consultant.
+- 
