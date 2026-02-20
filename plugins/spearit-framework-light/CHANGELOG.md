@@ -5,6 +5,47 @@ All notable changes to the SpearIT Project Framework - Lightweight Edition plugi
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.4] - 2026-02-19
+
+### Fixed
+
+- **FEAT-141/SPIKE-142: Pipefail bug in untracked file fallback**
+  - `elif ! git ls-files ...` silently aborted inside `set -uo pipefail` context
+  - Fixed by assigning result to explicit `is_tracked` variable using `&& ... || ...` pattern
+
+---
+
+## [1.0.3] - 2026-02-18
+
+### Changed
+
+- **FEAT-141: Move command script consolidation**
+  - Single consolidated script replaces 5 per-target scripts (80% code reduction)
+  - File matching now uses numeric ID only (strips FEAT-/BUG-/CHORE- prefix) — `feat-141`, `FEAT-141`, and `141` all resolve identically
+  - Added `cd "$(git rev-parse --show-toplevel)"` to fix CWD assumption bug
+  - `find | grep -E` pipeline replaces `find -iname` for cleaner regex matching
+  - `|| true` guards on all grep pipelines prevent pipefail abort on empty results
+
+---
+
+## [1.0.2] - 2026-02-17
+
+### Added
+
+- **FEAT-141: Batch Move Support**
+  - Move multiple items in one command via comma-separated IDs (e.g., `move 140,141 done`)
+  - Supports full IDs, bare numbers, and mixed formats
+  - Per-item skip-and-continue error handling (not-found, already-in-target, invalid transition)
+  - WIP limit checked once before batch, not per item
+  - Backwards compatible — single-item syntax unchanged
+
+### Fixed
+
+- **BUG-140: Child item detection** (applied during FEAT-141 implementation)
+  - Fixed inverted grep filter causing dotted IDs (e.g., FEAT-127.4) to fail move detection
+
+---
+
 ## [1.0.0] - 2026-02-12
 
 ### Added
