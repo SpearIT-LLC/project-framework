@@ -253,4 +253,26 @@ Files created/updated:
 
 ---
 
+## Post-Implementation Notes
+
+### Version Correction
+
+Plugin was incorrectly bumped to `1.1.0-dev1` during FEAT-146 implementation. Rule: during development, only N increments in `1.0.0-devN` — major/minor never change until a clean release. Corrected to `1.0.0-dev4`.
+
+**Rule now documented in project (not memory):**
+- Added explicit "never bump major/minor during development" clause to `framework/docs/plugin-development-guide.md`
+- Removed version rule from MEMORY.md — knowledge belongs in the project
+
+### Publish-ToLocalMarketplace.ps1 Bug Fix
+
+Script failed with "The property 'Name' cannot be found on this object" when `installed_plugins.json` had `"plugins": {}`.
+
+**Root cause:** `ConvertFrom-Json` on an empty `{}` object, combined with `.PSObject.Properties.Name` access, fails when the object has no properties.
+
+**Fix:** Switched to `-AsHashtable` flag on `ConvertFrom-Json`. Empty objects now come back as empty hashtables; `.Keys` and `.Remove()` work correctly on both empty and populated hashtables. No more PSObject gymnastics.
+
+**Publish now working:** `spearit-framework v1.0.0-dev4` and `spearit-framework-light v1.0.4` both publishing successfully.
+
+---
+
 **Last Updated:** 2026-02-20

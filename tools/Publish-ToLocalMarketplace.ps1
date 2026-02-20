@@ -118,13 +118,17 @@ try {
     }
 
     if (Test-Path $installedPluginsPath) {
-        $installedPlugins = Get-Content $installedPluginsPath -Raw | ConvertFrom-Json
-        $keysToRemove = @($installedPlugins.plugins.PSObject.Properties.Name | Where-Object { $_ -like "*@dev-marketplace" })
-        foreach ($key in $keysToRemove) {
-            $installedPlugins.plugins.PSObject.Properties.Remove($key)
+        $installedPlugins = Get-Content $installedPluginsPath -Raw | ConvertFrom-Json -AsHashtable
+        if ($installedPlugins.ContainsKey('plugins') -and $installedPlugins['plugins'] -is [hashtable]) {
+            $keysToRemove = @($installedPlugins['plugins'].Keys | Where-Object { $_ -like "*@dev-marketplace" })
+            foreach ($key in $keysToRemove) {
+                $installedPlugins['plugins'].Remove($key)
+            }
+            Set-Content -Path $installedPluginsPath -Value ($installedPlugins | ConvertTo-Json -Depth 10) -Encoding UTF8
+            Write-Status "Removed $($keysToRemove.Count) dev-marketplace entry/entries from installed_plugins.json." -Type Success
+        } else {
+            Write-Status "installed_plugins.json plugins entry is empty or not an object — nothing to remove." -Type Info
         }
-        Set-Content -Path $installedPluginsPath -Value ($installedPlugins | ConvertTo-Json -Depth 10) -Encoding UTF8
-        Write-Status "Removed $($keysToRemove.Count) dev-marketplace entry/entries from installed_plugins.json." -Type Success
     }
 
     Write-Status ""
