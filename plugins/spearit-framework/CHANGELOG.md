@@ -7,24 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
-## [1.0.0] - 2026-02-17
-
-### Added
-- Production build via `Build-Plugin.ps1 -Plugin spearit-framework`
-- Verified coexistence with spearit-framework-light (no conflicts)
-- All 5 commands tested end-to-end
-
-### Changed
-- Version promoted from 1.0.0-dev3 to 1.0.0 (production release)
-
-### Notes
-- Completes FEAT-127.4 (Build & Testing)
-- Package: `distrib/plugin-full/spearit-framework-v1.0.0.zip` (29 KB)
-- FEAT-127 parent epic complete
-
----
-
-## [1.0.0-dev3] - 2026-02-16
+## [1.0.0-dev3] - 2026-02-19
 
 ### Added
 - Roadmap command (`/spearit-framework:roadmap`)
@@ -33,16 +16,38 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Adapted from framework fw-roadmap command for standalone plugin use
   - Works in any project structure (with or without project-hub/)
   - Creates ROADMAP.md in project root with comprehensive strategic planning structure
+- **FEAT-141: Batch Move Support**
+  - Move multiple items via comma-separated IDs (e.g., `move 140,141 done`)
+  - Supports full IDs, bare numbers, and mixed formats
+  - Per-item skip-and-continue error handling (not-found, already-in-target, invalid transition)
+  - WIP limit checked once before batch, not per item
+  - Backwards compatible — single-item syntax unchanged
+- **FEAT-143: Blocked state support in move command**
+  - Move items to/from `blocked/` folder for external dependency tracking
 
 ### Changed
 - Updated `help.md` - Roadmap now marked as ✅ Available
 - All 5 commands now complete and functional
+- **FEAT-141: Move command script consolidation**
+  - Single consolidated script replaces per-target scripts (80% code reduction)
+  - File matching now uses numeric ID only (strips FEAT-/BUG-/CHORE- prefix)
+  - Added `cd "$(git rev-parse --show-toplevel)"` to fix CWD assumption bug
+  - `find | grep -E` pipeline replaces `find -iname` for cleaner regex matching
+  - `|| true` guards on all grep pipelines prevent pipefail abort on empty results
+
+### Fixed
+- **BUG-140: Child item detection**
+  - Fixed inverted grep filter causing dotted IDs (e.g., FEAT-127.4) to fail move detection
+- **Pipefail bug in untracked file fallback**
+  - `elif ! git ls-files ...` silently aborted inside `set -uo pipefail` context
+  - Fixed by assigning result to explicit `is_tracked` variable using `&& ... || ...` pattern
 
 ### Notes
-- Adapted from `.claude/commands/fw-roadmap.md` (framework command)
+- Roadmap adapted from `.claude/commands/fw-roadmap.md` (framework command)
 - Removed framework-specific dependencies (framework.yaml, project-hub assumptions)
-- Simplified for standalone plugin use while preserving strategic planning guidance
-- Completes FEAT-127.3 (Roadmap Command)
+- Completes FEAT-127.3, FEAT-127.4, BUG-140, FEAT-141, FEAT-143
+- Production build verified via `Build-Plugin.ps1 -Plugin spearit-framework`
+- Verified coexistence with spearit-framework-light (no conflicts)
 
 ---
 
