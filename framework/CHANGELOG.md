@@ -31,6 +31,44 @@ None
 
 ---
 
+## [5.2.0] - 2026-02-19
+
+### Added
+
+- **FEAT-143: External Dependency Tracking — Blocked/ Workflow**
+  - New `project-hub/work/blocked/` folder state for work blocked on external parties
+  - Transition rules and metadata schema for blocked items
+  - Updated `fw-move` and `fw-status` commands to support blocked state
+  - Starter template updated to include `blocked/` scaffold
+
+- **FEAT-141: Move Command — Batch Item Support**
+  - Batch move via comma-separated IDs (e.g., `fw-move 140,141 done`)
+  - Supports full IDs, bare numbers, and mixed formats
+  - Per-item error handling; WIP limit checked once for the batch
+  - Backwards compatible with single-item usage
+
+### Changed
+
+- **CHORE-147: Distribution Path Restructuring**
+  - Build-FrameworkArchive.ps1 output path updated to `distrib/framework/`
+  - `.gitignore` updated; ZIPs now committed as downloadable release artifacts
+  - Process doc path references updated to match new structure
+
+- **CHORE-146: fw-session-history Command Sync**
+  - Aligned local `fw-session-history` command with plugin version (Senior Technical Writer mindset, directory fallback)
+
+### Removed
+
+None
+
+### Fixed
+
+- **BUG-140: Move Command — Child Item Detection**
+  - Fixed inverted grep filter that caused items with dotted IDs (e.g., FEAT-127.4) to fail detection
+  - Fix applied to both plugin move commands and fw-move
+
+---
+
 ## [5.1.0] - 2026-02-06
 
 ### Added
