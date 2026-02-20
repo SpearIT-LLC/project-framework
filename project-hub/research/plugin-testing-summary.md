@@ -466,5 +466,49 @@ To remove a plugin from ALL projects:
 
 ---
 
-**Last Updated:** 2026-02-11 (Added two-level plugin architecture and project-level enablement)
+## Update: 2026-02-20 — Cache Accumulation Problem & Tooling Refactor
+
+### What We Learned
+
+The `/plugin marketplace update dev-marketplace` command does **not** clean stale cache
+versions. Each publish creates a new versioned folder under `~/.claude/plugins/cache/dev-marketplace/{plugin}/`.
+The `installed_plugins.json` file stays pinned to whichever version was first installed,
+regardless of how many times you update the marketplace.
+
+After several development cycles, this resulted in:
+- 10 stale version folders in cache
+- `installed_plugins.json` pointing to `1.0.3` while source was at `1.0.4`
+- Plugin commands loading from old cached versions
+
+### What Changed
+
+**`Publish-ToLocalMarketplace.ps1` was simplified to a single responsibility:**
+
+Always performs a full clean reset — no parameters needed:
+1. Wipes the marketplace directory
+2. Deletes `~/.claude/plugins/cache/dev-marketplace/` (all versions)
+3. Removes dev-marketplace entries from `installed_plugins.json`
+4. Recreates marketplace with fresh junctions
+
+Previous `-Clean`, `-Build`, and `-Plugin` flags were removed:
+- `-Clean` was inconsistently applied; now clean is always the default behavior
+- `-Build` belonged in `Build-Plugin.ps1`, not here — junctions make builds unnecessary for testing
+- `-Plugin` scoping on clean left the other plugin's stale cache intact
+
+**Bug fixed:** `Remove-Item -Recurse` on a Windows junction follows the junction and
+deletes the target contents (your source files). Replaced with `[System.IO.Directory]::Delete()`
+which removes only the junction point.
+
+### Revised Understanding of the Cache
+
+The version-per-folder cache structure means:
+- Old versions are never automatically evicted
+- `installed_plugins.json` must be manually updated to point to new versions
+- The only reliable way to get a clean state is to delete the entire plugin's cache folder
+
+This is why the script now always does a full wipe rather than attempting incremental updates.
+
+---
+
+**Last Updated:** 2026-02-20
 **Status:** Complete - Testing infrastructure uses official Anthropic patterns

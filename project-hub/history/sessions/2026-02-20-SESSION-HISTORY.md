@@ -64,4 +64,123 @@ Short session resuming from yesterday's releases. Reviewed roadmap progress agai
 
 ---
 
+## Continuation Session (Afternoon)
+
+### Plugin Cache Investigation - Continued
+
+- Moved FEAT-137 to `doing/` (again via manual script due to same cache issue)
+- Conducted deeper audit of the cache vs. source state
+- Confirmed `grep -v "\."` bug isolated to `move.md` only — no other commands (`new`, `session-history`, `roadmap`, `help`) use file-find logic
+- Identified full version misalignment across three sources:
+
+| Source | spearit-framework | spearit-framework-light |
+|--------|-------------------|-------------------------|
+| marketplace.json | `1.0.0-dev3` ✅ | `1.0.0` ❌ (stale) |
+| plugin.json (junction) | `1.0.0-dev3` ✅ | `1.0.4` ✅ |
+| installed_plugins.json | `1.0.0-dev2` ❌ | `1.0.3` ❌ |
+
+- Root cause: versions were published out of order (dev suffixes mixed with semver releases), leaving the cache pinned to old versions while the marketplace junction was updated separately
+
+### Fix Applied
+
+- Updated `marketplace.json` → set `spearit-framework-light` to `1.0.4`
+- Pending: run `/plugin marketplace update dev-marketplace` + VSCode restart to push cache to current versions
+
+### FEAT-137 Pre-Implementation Review
+
+- Reviewed work item in `doing/`
+- No open questions, no unmet dependencies
+- Ready to implement: 3 new command files (`status.md`, `backlog.md`, `plan.md`) + `help.md` update + plugin v1.1.0 bump
+
+---
+
+## Continuation Session (Later Afternoon) — Publish-ToLocalMarketplace Refactor
+
+### Context
+
+Continued investigating the plugin cache problem. The root cause was that
+`installed_plugins.json` pointed to stale cached versions even after running
+`/plugin marketplace update dev-marketplace`. Decided to fix the tooling to
+prevent this class of problem recurring.
+
+### Plugin Cache — Full Flush
+
+- Manually reset `installed_plugins.json` to `{}` (empty plugins)
+- Identified 10 stale version folders accumulated in `~/.claude/plugins/cache/dev-marketplace/`
+- Root cause of accumulation: each publish created a new versioned folder; the update
+  command never cleaned old ones, and `installed_plugins.json` stayed pinned to whatever
+  version was first installed
+
+### Publish-ToLocalMarketplace.ps1 Refactor
+
+Significant rethink of the script's purpose and scope through a series of design decisions:
+
+**Decision 1: `-Clean` should always purge the Claude cache too**
+- Original: `-Clean` only wiped the marketplace directory
+- Changed: `-Clean` now also deletes `~/.claude/plugins/cache/dev-marketplace/` and
+  removes dev-marketplace entries from `installed_plugins.json`
+- Rationale: the two are inseparable — cleaning one without the other is what caused
+  the stale cache problem
+
+**Decision 2: `-Plugin` scoping on `-Clean` is unnecessary complexity**
+- Initially added per-plugin clean logic (clean only one plugin's cache/junction)
+- Reversed: clean is always full wipe, regardless of `-Plugin`
+- Rationale: partial clean leaves the other plugin's stale state intact, which can
+  still interfere; full clean is always safe
+
+**Decision 3: `-Build` doesn't belong in this script**
+- `Build-Plugin.ps1` is a separate script for release preparation
+- The marketplace uses junctions pointing at source files — no build needed for testing
+- Rationale: junctions mean source changes are live immediately; `-Build` was solving
+  a problem that doesn't exist in the testing workflow
+
+**Decision 4: No parameters needed at all**
+- Since clean is always full and build is never needed for testing, the script has
+  one job: reset the env and republish all plugins
+- Running without arguments is now the correct and only invocation
+
+**Bug fixes applied during review:**
+- `Remove-Item -Recurse` on junction would follow the junction and delete actual plugin
+  source files — replaced with `[System.IO.Directory]::Delete()` (removes junction only)
+- Strict mode null guard: added `| Where-Object { $_ }` when reading existing
+  marketplace entries to prevent throw on null plugins array
+
+### Finalized Testing Workflow
+
+```
+Loop until satisfied:
+  1. .\tools\Publish-ToLocalMarketplace.ps1   ← reset + republish
+  2. /plugin marketplace update dev-marketplace
+  3. Restart Claude Code
+  4. Test
+
+When done:
+  5. Bump version in plugin.json
+  6. .\tools\Build-Plugin.ps1
+  7. Upload to GitHub (self-publish)
+  8. Submit to Anthropic (marketplace publish)
+```
+
+Key insight: steps 1-4 loop as a unit. Step 1 alone isn't sufficient — Claude
+needs the marketplace update + restart to pick up cache changes.
+
+### Documentation Updates (End of Session)
+
+After finalizing the script, updated documentation to match:
+
+- **`plugins/TESTING.md`** — Full rewrite. Now focused purely on *how* to test:
+  dev loop, CLI testing, one-time setup, release workflow, checklist, troubleshooting.
+  All references to old `-Clean`/`-Build`/`-Plugin` flags removed.
+
+- **`project-hub/research/plugin-testing-summary.md`** — Appended dated update section
+  explaining the cache accumulation root cause, what changed in the script, and the
+  revised understanding of the cache eviction model. Original content preserved per
+  append-only principle.
+
+**Separation of concerns established:**
+- Research doc = *what* the system does and *why* (architecture, findings, history)
+- TESTING.md = *how* to use it (current workflow, scripts, steps)
+
+---
+
 **Last Updated:** 2026-02-20
