@@ -4,7 +4,8 @@
 
 Status: Draft
 
-**Written By Gary Elliott**
+**Written By Gary Elliott** 
+
 **Edited By My Buddy Claude**
 
 ---
@@ -126,8 +127,10 @@ Items under discussion:
 So go ahead and download my framework. Hopefully you find it useful. I only ask that you keep it together as a whole and maintain credits. At this time I've not opened it up for contributions but may consider it in the future. I have to balance your ideas with internal workflow standards. Feel free to offer improvements or new features and I'll definitely consider them.
 
 ### Downloads
-[Plugin Light Version: Kanban Workflow Only]([github_link](https://github.com/SpearIT-LLC/project-framework/tree/main/distrib/plugin-light))
-[Plugin Full Version: Light + Planning and Guidance]([github_link](https://github.com/SpearIT-LLC/project-framework/tree/main/distrib/plugin-full))
-[Full Framework: Full Plugin + Performance and structural improvements]([github_link](https://github.com/SpearIT-LLC/project-framework/tree/main/distrib/framework))
+[Plugin Light Version]([github_link](https://github.com/SpearIT-LLC/project-framework/tree/main/distrib/plugin-light)) : Kanban Workflow Only
 
-Current version: spearit_framework_v5.1.0.zip
+[Plugin Full Version]([github_link](https://github.com/SpearIT-LLC/project-framework/tree/main/distrib/plugin-full)) : Light + Planning and Guidance
+
+[Full Framework]([github_link](https://github.com/SpearIT-LLC/project-framework/tree/main/distrib/framework)) : Local commands + Performance and structural improvements
+
+
