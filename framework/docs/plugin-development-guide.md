@@ -7,9 +7,10 @@
 When you make ANY change to the plugin (commands, skills, templates, README, etc.):
 
 1. **Increment the dev version** in `.claude-plugin/plugin.json`
-   - Current: `1.0.0-dev5`
-   - Next: `1.0.0-dev6`
    - Pattern: `1.0.0-devN` where N increments with each change
+   - Example: `1.0.0-dev3` → `1.0.0-dev4` → `1.0.0-dev5`
+   - **Never bump major or minor during development** — only N changes until a clean release
+   - `1.0.0` (no suffix) = production release only
 
 2. **Why this matters:**
    - Claude Code caches plugins by version

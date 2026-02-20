@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
-## [1.1.0-dev1] - 2026-02-20
+## [1.0.0-dev4] - 2026-02-20
 
 ### Added
 - **FEAT-146: `/spearit-framework:swarm` command**
