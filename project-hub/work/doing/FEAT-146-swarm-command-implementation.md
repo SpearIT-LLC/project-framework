@@ -88,18 +88,18 @@ Bottom-line only — skips team discussion, produces brief and outline directly.
 
 ### Functional Requirements
 
-- [ ] `/swarm` opens with a single warm direct question from the Product Owner
-- [ ] PO clarifying questions include "should we build this at all?"
-- [ ] PO assembles team by judgment based on conversation signals (not a fixed trigger list)
-- [ ] Each role speaks in turn with focused, scoped contributions (2-4 sentences max)
-- [ ] Phase 1 terminates when team has answered the 5 termination criteria
-- [ ] User approves direction before Phase 2 begins
-- [ ] Phase 2 produces brief and outline (PO + Architect/Senior Dev only)
-- [ ] User approves outputs before files are written
-- [ ] Meeting notes written to `project-hub/meetings/YYYY-MM-DD-swarm-kickoff.md`
-- [ ] Project brief written to `project-hub/planning/project-brief.md`
-- [ ] Project outline written to `project-hub/planning/project-outline.md`
-- [ ] Starter backlog (5-10 items) output to chat
+- [x] `/swarm` opens with a single warm direct question from the Product Owner
+- [x] PO clarifying questions include "should we build this at all?"
+- [x] PO assembles team by judgment based on conversation signals (not a fixed trigger list)
+- [x] Each role speaks in turn with focused, scoped contributions (2-4 sentences max)
+- [x] Phase 1 terminates when team has answered the 5 termination criteria
+- [x] User approves direction before Phase 2 begins
+- [x] Phase 2 produces brief and outline (PO + Architect/Senior Dev only)
+- [x] User approves outputs before files are written
+- [x] Meeting notes written to `project-hub/meetings/YYYY-MM-DD-swarm-kickoff.md`
+- [x] Project brief written to `project-hub/planning/project-brief.md`
+- [x] Project outline written to `project-hub/planning/project-outline.md`
+- [x] Starter backlog (5-10 items) output to chat
 - [ ] `--summary` flag bypasses team discussion
 - [ ] Archives existing brief/outline to `project-hub/planning/archive/` before overwriting
 - [ ] Degrades gracefully for trivially small projects (2-role team, 3-5 exchanges, single-phase outline)
@@ -146,15 +146,15 @@ Full conversation design, discipline roster, output templates, edge cases, and d
 
 ## Acceptance Criteria
 
-- [ ] `/spearit-framework:swarm` runs a two-phase facilitated kick-off conversation
-- [ ] Phase 1 ends with user direction approval before Phase 2 begins
+- [x] `/spearit-framework:swarm` runs a two-phase facilitated kick-off conversation
+- [x] Phase 1 ends with user direction approval before Phase 2 begins
 - [ ] `/spearit-framework:swarm --summary` produces brief and outline without team discussion
-- [ ] Meeting notes saved to correct location with correct format
-- [ ] Project brief saved to correct location matching template in design doc
-- [ ] Project outline saved to correct location matching template in design doc
-- [ ] Starter backlog output to chat (5-10 items)
+- [x] Meeting notes saved to correct location with correct format
+- [x] Project brief saved to correct location matching template in design doc
+- [x] Project outline saved to correct location matching template in design doc
+- [x] Starter backlog output to chat (5-10 items)
 - [ ] Existing brief/outline archived to `planning/archive/` before overwrite
-- [ ] `/spearit-framework:help` updated to list `/swarm`
+- [x] `/spearit-framework:help` updated to list `/swarm`
 - [ ] All tested in framework project
 - [ ] Plugin version bumped and rebuilt
 
