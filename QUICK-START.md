@@ -3,7 +3,7 @@
 **Purpose:** Comprehensive quick reference for working with the framework.
 **For overview:** See [README.md](README.md) for project introduction and philosophy.
 
-**Version:** 5.0.0 | **Last Updated:** 2026-02-05
+**Last Updated:** 2026-02-19
 
 **See It In Action:** Extract the framework distribution and run `Setup-Framework.ps1` to scaffold a new project.
 
@@ -13,11 +13,11 @@
 
 ### Quick Setup
 ```bash
-# 1. Extract the framework distribution archive
-Expand-Archive .\spearit_framework_v5.0.0.zip
+# 1. Extract the framework distribution archive (replace X.Y.Z with your version)
+Expand-Archive .\spearit_framework_vX.Y.Z.zip
 
 # 2. Run the setup script (prompts for project details)
-cd .\spearit_framework_v5.0.0
+cd .\spearit_framework_vX.Y.Z
 .\Setup-Framework.ps1
 ```
 

@@ -211,6 +211,20 @@ When plugin-full is ready:
 
 ---
 
+## Open Problem: Work Items That Ship Across Multiple Products
+
+**Observed 2026-02-19:** BUG-140, FEAT-141, FEAT-143 shipped in both plugin-light v1.0.4 and plugin-full v1.0.0-dev3. The release archival step (`git mv done/ → releases/{product}/vX.Y.Z/`) assumes a single product destination — creating ambiguity.
+
+**Options to evaluate during implementation:**
+1. **`shipped-in` metadata field** — Add to work item frontmatter; physical placement follows primary product
+2. **Reference file** — Place item in primary product folder; drop a stub in secondary (e.g., `BUG-140-see-plugin-light.md`)
+3. **Shared release folder** — `releases/shared/` for cross-product items, referenced from each product's release notes
+4. **Accept duplication** — Copy (not move) to both folders; track canonical in the item itself
+
+**Recommendation:** Option 1 (metadata field) is lowest overhead and keeps archival simple. Document in the release process checklist: "If item shipped in multiple products, set `shipped-in:` and place in primary product folder."
+
+---
+
 ## Related Work Items
 
 - **CHORE-131:** Reorganize Releases by Product (established product-based structure)
@@ -230,5 +244,5 @@ When plugin-full is ready:
 
 ---
 
-**Last Updated:** 2026-02-13
+**Last Updated:** 2026-02-19
 **Status:** Backlog

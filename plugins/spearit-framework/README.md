@@ -1,7 +1,5 @@
 # SpearIT Project Framework - Comprehensive Edition
 
-**Version:** 1.0.0-dev3 (Development)
-
 Complete project management suite for power users. This plugin includes all framework features as Claude Code commands, building on the lightweight edition with advanced capabilities.
 
 ---
@@ -65,8 +63,8 @@ The **SpearIT Project Framework - Comprehensive Edition** provides a complete pr
 | Help command | ✅ | ✅ |
 | Create work items (`new`) | ✅ | ✅ |
 | Move items (`move`) | ✅ | ✅ |
-| Session history | ❌ | ✅ (v1.0.0) |
-| Roadmap planning | ❌ | ✅ (v1.0.0) |
+| Session history | ❌ | ✅ |
+| Roadmap planning | ❌ | ✅ |
 | Command count | 3 | 5 |
 | Namespace | `spearit-framework-light` | `spearit-framework` |
 
@@ -117,18 +115,11 @@ The **SpearIT Project Framework - Comprehensive Edition** provides a complete pr
 
 ---
 
-## Development Status
+## Status
 
-**Current Version:** 1.0.0-dev3
-- ✅ Plugin structure complete (FEAT-127.1)
-- ✅ Core commands integrated (help, new, move)
-- ✅ Session history integration (FEAT-127.2)
-- ✅ Roadmap command adaptation (FEAT-127.3)
-- 🚧 Build & testing (FEAT-127.4)
+**Current release:** Pre-release (development) — see [CHANGELOG.md](CHANGELOG.md) for version history.
 
-**Roadmap:**
-- v1.0.0: Ship with 5 commands (help, new, move, session-history, roadmap)
-- v1.1+: Additional commands based on feedback (status, wip, backlog, topic-index)
+**Planned for v1.1+:** Additional commands based on feedback (status, wip, backlog, topic-index)
 
 ---
 
@@ -153,4 +144,4 @@ The **SpearIT Project Framework - Comprehensive Edition** provides a complete pr
 
 ---
 
-**Last Updated:** 2026-02-16
+**Last Updated:** 2026-02-19

@@ -279,3 +279,78 @@ Three article versions created during this session as iterative drafts:
 - *(none)*
 
 **Last Updated:** 2026-02-19 (Evening)
+
+---
+
+## Night Session — Release Cleanup & Plugin-Full Release
+
+### Distrib Cleanup
+
+- Reviewed which ZIP files to keep in `distrib/`; confirmed 3 current releases: framework v5.2.0, plugin-light v1.0.4, plugin-full v1.0.0-dev3
+- Old ZIPs (plugin-full v1.0.0, v1.0.0-dev2; plugin-light v1.0.0-dev2, v1.0.0-dev3) were already deleted in the working tree
+
+### Doc Cleanup: Version References
+
+- **README.md:** Removed hard-coded version numbers from "Version Strategy" and "Project Status" sections; dropped `(v1.0.0)` from plugin repo contents line; added 3 new milestone entries (framework v5.2.0, plugin-light v1.0.4, plugin-full v1.0.0-dev3); updated `Last Updated`
+- **QUICK-START.md:** Removed `Version: 5.0.0` from header; replaced `spearit_framework_v5.0.0` with `spearit_framework_vX.Y.Z` (generic placeholder with comment); updated `Last Updated`
+- **Design principle applied:** Let CHANGELOG own version history; README/QUICK-START should not duplicate it
+
+### Plugin-Full Release (v1.0.0-dev3)
+
+- Released plugin-full following same pattern as plugin-light
+- Moved 5 FEAT-127* work items from `done/` to `project-hub/history/releases/plugin-full/v1.0.0-dev3/`
+- Cleaned up plugin-full CHANGELOG: removed stale "Coming Soon" and "Development History" sections, cleaned up work item refs in notes, updated `Last Updated`
+- Cleaned up plugin-full README: removed version from header, dropped `(v1.0.0)` from feature comparison table, replaced "Development Status" section (with in-progress work item refs) with a clean "Status" block
+
+### Remaining Done Items — Distributed to Release Folders
+
+- 6 items remained in `done/` after plugin-full release; attributed to products:
+  - **plugin-light/v1.0.4/**: BUG-140, FEAT-141, FEAT-143 (batch move + bug fixes that shipped in both plugins; primary product = light)
+  - **framework/v5.2.0/**: FEAT-136, CHORE-146, CHORE-147
+- `done/` is now empty
+
+### Multi-Product Work Item Problem — Documented
+
+- Identified that BUG-140/FEAT-141/FEAT-143 shipped in both plugin-light and plugin-full, but the archival model assumes single-product destination
+- Added "Open Problem: Work Items That Ship Across Multiple Products" section to DOCS-134 with 4 options and a recommendation (metadata `shipped-in:` field + primary product placement)
+
+---
+
+## Decisions Made (Night Session)
+
+10. **Version numbers removed from README/QUICK-START:** README already defers to `PROJECT-STATUS.md` as canonical source; repeating versions in body text is maintenance burden with no added value. Exception: Credits/milestones section (historical record — appropriate to be specific).
+
+11. **Plugin-full release archival follows same pattern as plugin-light:** `done/` items → `releases/plugin-full/vX.X.X/`. Confirmed as consistent convention across all products.
+
+12. **Cross-product work items go to primary product folder:** BUG-140/FEAT-141/FEAT-143 shipped in both plugins but were archived under plugin-light (primary release vehicle). Problem documented in DOCS-134 for resolution when release process docs are written.
+
+---
+
+## Files Modified (Night Session)
+
+- `README.md` — Version cleanup, milestone additions, Last Updated
+- `QUICK-START.md` — Generic version placeholder, removed version header field, Last Updated
+- `plugins/spearit-framework/CHANGELOG.md` — Removed stale sections, updated Last Updated
+- `plugins/spearit-framework/README.md` — Version cleanup, Development Status → Status, Last Updated
+- `project-hub/work/backlog/DOCS-134-separate-release-processes.md` — Added multi-product work item open problem section
+
+## Files Moved (Night Session)
+
+- `done/FEAT-127*.md` (5 files) → `releases/plugin-full/v1.0.0-dev3/`
+- `done/BUG-140, FEAT-141, FEAT-143` → `releases/plugin-light/v1.0.4/`
+- `done/FEAT-136, CHORE-146, CHORE-147` → `releases/framework/v5.2.0/`
+
+---
+
+## Current State (Night — Final)
+
+### In done/
+- *(empty)*
+
+### In blocked/
+- BUG-144 (Anthropic namespace collision bug — issue #26906; check back by 2026-02-22)
+
+### In doing/
+- *(none)*
+
+**Last Updated:** 2026-02-19 (Night)

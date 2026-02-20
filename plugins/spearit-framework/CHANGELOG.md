@@ -45,7 +45,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Notes
 - Roadmap adapted from `.claude/commands/fw-roadmap.md` (framework command)
 - Removed framework-specific dependencies (framework.yaml, project-hub assumptions)
-- Completes FEAT-127.3, FEAT-127.4, BUG-140, FEAT-141, FEAT-143
 - Production build verified via `Build-Plugin.ps1 -Plugin spearit-framework`
 - Verified coexistence with spearit-framework-light (no conflicts)
 
@@ -96,31 +95,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Session history command (from FEAT-118 early development)
 - Session history template
 
-### Coming Soon
-- `/spearit-framework:session-history` - Session documentation (v1.0.0)
-- `/spearit-framework:roadmap` - AI-guided roadmap planning (v1.0.0)
-
 ### Notes
-- This is the foundation release (FEAT-127.1)
-- Session-history and roadmap commands marked as "coming soon" in help
+- Foundation release (FEAT-127.1)
 - Plugin can coexist with spearit-framework-light (different namespaces)
 
 ---
 
-## Development History
-
-**Parent Work Item:** FEAT-127 - Full Framework Plugin
-
-**Child Work Items:**
-- FEAT-127.1 - Structure & Core Commands (this release)
-- FEAT-127.2 - Session History Integration (next)
-- FEAT-127.3 - Roadmap Command (next)
-- FEAT-127.4 - Build & Testing (final)
-
-**Reference Implementation:**
-- Based on spearit-framework-light v1.0.0 (shipped 2026-02-13)
-- Inherits optimizations from TECH-135 (move command performance)
-
----
-
-**Last Updated:** 2026-02-17
+**Last Updated:** 2026-02-19

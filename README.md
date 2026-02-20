@@ -1,7 +1,7 @@
 # SpearIT Project Framework
 
 **Current Version & Status:** See [framework/PROJECT-STATUS.md](framework/PROJECT-STATUS.md)
-**Last Updated:** 2026-02-13
+**Last Updated:** 2026-02-19
 **Maintainer:** Gary Elliott (gary.elliott@spearit.solutions)
 **Organization:** SpearIT, LLC
 
@@ -93,7 +93,7 @@ Complete project scaffolding with templates, documentation patterns, and full me
 ## Repository Contents
 
 ### 🔌 `/plugins/` - Plugin Development
-- **spearit-framework-light/** - Lightweight Edition plugin (v1.0.0)
+- **spearit-framework-light/** - Lightweight Edition plugin
   - 3 core commands (help, new, move)
   - 3 skills for AI context
   - Standalone operation (no framework required)
@@ -227,26 +227,17 @@ All projects follow this core workflow:
 
 ## Version Strategy
 
-**Plugin Version:** v1.0.0 (production-ready)
-- Semantic versioning independent from framework
-- See: [plugins/spearit-framework-light/CHANGELOG.md](plugins/spearit-framework-light/CHANGELOG.md)
+**Plugin:** Semantic versioning independent from framework — see [plugins/spearit-framework-light/CHANGELOG.md](plugins/spearit-framework-light/CHANGELOG.md)
 
-**Framework Version:** v5.1.0 (production-ready)
-- Major version for breaking structure changes
-- Minor version for new features/templates
-- Patch version for bug fixes/documentation
-- See: [framework/PROJECT-STATUS.md](framework/PROJECT-STATUS.md)
+**Framework:** Semantic versioning — major for breaking structure changes, minor for new features/templates, patch for bug fixes — see [framework/CHANGELOG.md](framework/CHANGELOG.md)
 
-**Why different versions?**
-- Plugin is a new product (starting at v1.0.0)
-- Framework is mature (evolved through 5 major versions since Dec 2025)
-- Each can evolve independently based on user feedback
+Each product evolves independently based on user feedback. Current versions are always in [framework/PROJECT-STATUS.md](framework/PROJECT-STATUS.md).
 
 ---
 
 ## Project Status
 
-### Plugin (Lightweight Edition) - v1.0.0
+### Plugin (Lightweight Edition)
 **Status:** ✅ Production-ready, marketplace submission pending
 
 **What's Complete:**
@@ -254,14 +245,14 @@ All projects follow this core workflow:
 - ✅ 3 skills for AI context
 - ✅ Professional documentation
 - ✅ Comprehensive testing (CLI + VSCode)
-- ✅ ZIP package (51.3 KB)
+- ✅ ZIP package
 
 **What's Next:**
 - 📋 Anthropic marketplace submission
 - 📋 User feedback collection
 - 📋 v1.1 feature planning based on adoption
 
-### Framework (Comprehensive Edition) - v5.1.0
+### Framework (Comprehensive Edition)
 **Status:** ✅ Production-ready
 
 **What's Complete:**
@@ -418,6 +409,9 @@ This serves as:
 - **2026-02-05** - Framework v5.0.0 (project-hub to root)
 - **2026-02-06** - Framework v5.1.0 (ZIP distribution + setup script)
 - **2026-02-13** - Plugin Light v1.0.0 (marketplace-ready)
+- **2026-02-19** - Framework v5.2.0 (blocked workflow, batch move, bug fixes)
+- **2026-02-19** - Plugin Light v1.0.4 (batch move, bug fixes)
+- **2026-02-19** - Plugin Full v1.0.0-dev3 (pre-release)
 
 ---
 
