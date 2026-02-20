@@ -97,6 +97,15 @@ See: [Framework Schema](framework-schema.yaml)
 
 ---
 
+## I
+
+### IC (Individual Contributor)
+A person working independently, often without a dedicated team around them. In the SpearIT Framework context, ICs include solo developers, freelancers, and consultants embedded in larger client organizations who need professional project practices without team overhead.
+
+See: [README.md](../../../README.md)
+
+---
+
 ## K
 
 ### Kanban
@@ -107,6 +116,11 @@ See: [Workflow Guide - Development Workflow Phases](../collaboration/workflow-gu
 ---
 
 ## P
+
+### PI (Planning Increment)
+A time-boxed planning period with defined goals and success criteria. Equivalent to a sprint at the strategic level. Planning Increments are named by their primary goal (e.g., "PI MVP", "PI: Developer Intelligence") and defined in ROADMAP.md.
+
+See: [Planning Period](#planning-period), [Roadmap](#roadmap)
 
 ### POC (Proof of Concept)
 A lightweight implementation created to validate technical feasibility or explore an approach. POCs are stored in `project-hub/poc/` and are not subject to WIP limits.
@@ -239,4 +253,4 @@ See: [Workflow Guide - Work Item Templates](../collaboration/workflow-guide.md#w
 
 ---
 
-**Total Terms Defined:** 33
+**Total Terms Defined:** 35

@@ -275,4 +275,46 @@ Script failed with "The property 'Name' cannot be found on this object" when `in
 
 ---
 
+---
+
+## Continuation Session (Evening) — /swarm First Real Run & Design Refinements
+
+### Summary
+
+Ran `/swarm` for the first time on a real project (this one). Produced a project brief, project outline, and meeting notes. Post-run discussion surfaced several design issues and produced a new `planning-model.md` design document capturing the orthogonal-views model for planning documents.
+
+### Work Completed
+
+**First live `/swarm` run** — project brief, project outline, and meeting notes produced for the SpearIT Framework project. First real dogfooding of the command.
+
+**Files created:**
+- `project-hub/planning/project-brief.md` — new
+- `project-hub/planning/project-outline.md` — new; subsequently identified as too detailed/narrow (see Decisions)
+- `project-hub/meetings/2026-02-20-swarm-kickoff.md` — new
+- `framework/docs/project/planning-model.md` — new; captures planning document hierarchy, ownership boundaries, and future folder-based outline model
+
+**Files modified:**
+- `framework/docs/ref/GLOSSARY.md` — added IC (Individual Contributor) and PI (Planning Increment); term count updated 33 → 35
+- `plugins/spearit-framework/commands/swarm.md` — three improvements (see Decisions 4 & 5)
+
+### Decisions Made
+
+1. **Planning documents are orthogonal views, not a detail hierarchy** — brief/outline/roadmap/backlog answer different questions at different timescales. Not more detailed versions of each other. Captured in `planning-model.md`.
+
+2. **Project outline was too detailed as written** — the generated outline contained specific commands, features, and known limitations. Outline should only own: period names, sequence, dependencies, exit criteria, period-level risks. Details belong in backlog and design docs. Key principle: if a backlog item changes, the outline should not need to change.
+
+3. **Folder-based outline (future design)** — `periods/` folder replaces single `project-outline.md` as source of truth. `project-outline.md` becomes a generated artifact, regenerated on demand. Folder naming: `periods/01-foundation/overview.md` etc. "Phases" renamed to "periods" throughout for consistency with established planning period terminology.
+
+4. **User is always a meeting participant** — swarm meeting notes template updated to include user name first. Name resolved via `git config user.name` → prompt fallback, consistent with `Setup-Framework.ps1` pattern. Informs user where the name came from; offers override.
+
+5. **Alex uses the user's name** — at opening and at direct questions only. Other team members do not. Personalizes without being gimmicky. Tone note added to swarm command.
+
+### Post-Run Feedback Captured (for future swarm improvements)
+
+- **Cold panel is good for new projects, less good for existing ones** — future `/swarm` should offer a warm-start mode for mid-project use (reads existing brief/roadmap before conversation begins). Known MVP limitation, now explicitly documented as user-validated signal.
+- **Outline was too narrow/recent** — confirmed as a design issue, not a one-off; resolved via ownership boundary model in `planning-model.md`.
+- **Personalization (named roles) landed well** — "nice and not gimmicky" per user feedback.
+
+---
+
 **Last Updated:** 2026-02-20
