@@ -41,17 +41,17 @@ Write-Host "=== SETUP: Creating test items ===" -ForegroundColor Green
 Write-Host ""
 Write-Host "=== POC MOVE TEST RUN ===" -ForegroundColor Green
 
-Run-Test "1.  Single full ID (FEAT-201 -> todo)"               "FEAT-201 todo"
-Run-Test "2.  Single numeric ID (202 -> todo)"                 "202 todo"
-Run-Test "3.  Batch full IDs (FEAT-203 + BUG-204 -> todo)"     "'FEAT-203, BUG-204' todo"
-Run-Test "4.  Batch numeric IDs (205, 206 -> todo)"            "'205, 206' todo"
-Run-Test "5.  Batch mixed (FEAT-207 + 208 -> todo)"            "'FEAT-207, 208' todo"
-Run-Test "6.  Parent + children (FEAT-209 -> todo)"            "FEAT-209 todo"
-Run-Test "7.  Already in target (FEAT-211 -> skip)"            "FEAT-211 todo"
-Run-Test "8.  Missing ID in batch (FEAT-201 + FEAT-999)"       "'FEAT-201, FEAT-999' todo"
-Run-Test "9.  Substring collision (201 must not match 2010)"   "201 todo"
-Run-Test "10. Any extension (FEAT-210: .md + .txt)"            "FEAT-210 todo"
-Run-Test "11. Blocked transition (FEAT-212 done -> todo)"      "FEAT-212 todo"
+Run-Test "1.  Single full ID (FEAT-901 -> todo)"               "FEAT-901 todo"
+Run-Test "2.  Single numeric ID (902 -> todo)"                 "902 todo"
+Run-Test "3.  Batch full IDs (FEAT-903 + BUG-904 -> todo)"     "'FEAT-903, BUG-904' todo"
+Run-Test "4.  Batch numeric IDs (905, 906 -> todo)"            "'905, 906' todo"
+Run-Test "5.  Batch mixed (FEAT-907 + 908 -> todo)"            "'FEAT-907, 908' todo"
+Run-Test "6.  Parent + children (FEAT-909 -> todo)"            "FEAT-909 todo"
+Run-Test "7.  Already in target (FEAT-911 -> skip)"            "FEAT-911 todo"
+Run-Test "8.  Missing ID in batch (FEAT-901 + FEAT-999)"       "'FEAT-901, FEAT-999' todo"
+Run-Test "9.  Substring collision (901 must not match 9010)"   "901 todo"
+Run-Test "10. Any extension (FEAT-910: .md + .txt)"            "FEAT-910 todo"
+Run-Test "11. Blocked transition (FEAT-912 done -> todo)"      "FEAT-912 todo"
 
 Write-Host ""
 Write-Host "=== DONE ===" -ForegroundColor Green

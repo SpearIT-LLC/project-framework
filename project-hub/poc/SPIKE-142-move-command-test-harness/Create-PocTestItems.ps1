@@ -1,4 +1,5 @@
-# Create-PocTestItems.ps1 - Create 200-block dummy work items for poc-move.sh testing
+# Create-PocTestItems.ps1 - Create 900-block dummy work items for poc-move.sh testing
+# IDs 900-999 are reserved for framework test fixtures (not used by real work items)
 # Run from repo root: powershell -ExecutionPolicy Bypass -File project-hub/poc/SPIKE-142-move-command-test-harness/Create-PocTestItems.ps1
 
 $REPO = "C:\Users\gelliott\OneDrive\Documents\SpearIT\Projects\project-framework"
@@ -8,33 +9,33 @@ $items = @(
     # [destination, filename]
 
     # Standard cases — start in backlog
-    @("backlog", "FEAT-201-test-single-full-id.md"),
-    @("backlog", "FEAT-202-test-single-numeric-id.md"),
-    @("backlog", "FEAT-203-test-batch-full-id-a.md"),
-    @("backlog", "BUG-204-test-batch-full-id-b.md"),
-    @("backlog", "FEAT-205-test-batch-numeric-a.md"),
-    @("backlog", "TECH-206-test-batch-numeric-b.md"),
-    @("backlog", "FEAT-207-test-batch-mixed-full.md"),
-    @("backlog", "TECH-208-test-batch-mixed-numeric.md"),
+    @("backlog", "FEAT-901-test-single-full-id.md"),
+    @("backlog", "FEAT-902-test-single-numeric-id.md"),
+    @("backlog", "FEAT-903-test-batch-full-id-a.md"),
+    @("backlog", "BUG-904-test-batch-full-id-b.md"),
+    @("backlog", "FEAT-905-test-batch-numeric-a.md"),
+    @("backlog", "TECH-906-test-batch-numeric-b.md"),
+    @("backlog", "FEAT-907-test-batch-mixed-full.md"),
+    @("backlog", "TECH-908-test-batch-mixed-numeric.md"),
 
     # Parent + children
-    @("backlog", "FEAT-209-test-parent.md"),
-    @("backlog", "FEAT-209.1-test-child-one.md"),
-    @("backlog", "FEAT-209.2-test-child-two.md"),
-    @("backlog", "FEAT-209.3-test-child-three.md"),
+    @("backlog", "FEAT-909-test-parent.md"),
+    @("backlog", "FEAT-909.1-test-child-one.md"),
+    @("backlog", "FEAT-909.2-test-child-two.md"),
+    @("backlog", "FEAT-909.3-test-child-three.md"),
 
     # Multi-extension (both files should move together)
-    @("backlog", "FEAT-210-test-any-extension.md"),
-    @("backlog", "FEAT-210-test-any-extension.txt"),
+    @("backlog", "FEAT-910-test-any-extension.md"),
+    @("backlog", "FEAT-910-test-any-extension.txt"),
 
     # Already in target — stays in todo
-    @("todo",    "FEAT-211-test-already-in-todo.md"),
+    @("todo",    "FEAT-911-test-already-in-todo.md"),
 
     # Blocked transition — starts in done
-    @("done",    "FEAT-212-test-in-done.md"),
+    @("done",    "FEAT-912-test-in-done.md"),
 
-    # Substring collision trap — 201 must NOT match this
-    @("backlog", "FEAT-2010-test-substring-trap.md")
+    # Substring collision trap — 901 must NOT match this
+    @("backlog", "FEAT-9010-test-substring-trap.md")
 )
 
 foreach ($item in $items) {

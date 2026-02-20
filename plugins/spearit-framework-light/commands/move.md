@@ -208,18 +208,34 @@ move_item() {
   while IFS= read -r parent_file; do
     local pname
     pname=$(basename "$parent_file")
-    git mv "$parent_file" "$WORK_DIR/$target/" 2>/dev/null
-    if [ $? -eq 0 ]; then
-      if [ "$first_moved" = false ]; then
-        echo "✅ $pname → $target/"
-        ((MOVED++)) || true
-        first_moved=true
-      else
-        echo "   + $pname → $target/"
-      fi
+    local move_note=""
+    if git mv "$parent_file" "$WORK_DIR/$target/" 2>/dev/null; then
+      : # tracked file, git mv succeeded
     else
-      echo "❌ git mv failed for $pname"
-      ((FAILED++)) || true
+      # Check if untracked (git ls-files exits 1 = untracked, 0 = tracked)
+      local is_tracked
+      git ls-files --error-unmatch "$parent_file" 2>/dev/null && is_tracked=true || is_tracked=false
+      if [ "$is_tracked" = false ]; then
+        # untracked — fall back to plain mv
+        if mv "$parent_file" "$WORK_DIR/$target/" 2>/dev/null; then
+          move_note=" (untracked)"
+        else
+          echo "❌ mv failed for $pname"
+          ((FAILED++)) || true
+          continue
+        fi
+      else
+        echo "❌ git mv failed for $pname"
+        ((FAILED++)) || true
+        continue
+      fi
+    fi
+    if [ "$first_moved" = false ]; then
+      echo "✅ $pname → $target/$move_note"
+      ((MOVED++)) || true
+      first_moved=true
+    else
+      echo "   + $pname → $target/$move_note"
     fi
   done <<< "$all_parents"
 
@@ -228,7 +244,17 @@ move_item() {
     while IFS= read -r child; do
       local child_name
       child_name=$(basename "$child")
-      git mv "$child" "$WORK_DIR/$target/" 2>/dev/null && echo "   ↳ $child_name"
+      if git mv "$child" "$WORK_DIR/$target/" 2>/dev/null; then
+        echo "   ↳ $child_name"
+      else
+        local child_tracked
+        git ls-files --error-unmatch "$child" 2>/dev/null && child_tracked=true || child_tracked=false
+        if [ "$child_tracked" = false ]; then
+          mv "$child" "$WORK_DIR/$target/" 2>/dev/null && echo "   ↳ $child_name (untracked)"
+        else
+          echo "   ↳ ❌ git mv failed for $child_name"
+        fi
+      fi
     done <<< "$children"
   fi
 }

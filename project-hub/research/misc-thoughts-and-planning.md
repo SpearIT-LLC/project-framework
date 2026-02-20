@@ -203,4 +203,5 @@ The consultant, in this scenario, could be an internal or external resource. Alt
 - Meeting notes/summaries can be helpful.
 - Corporate standards might become a requirement in the future. e.g. Adding PDFs, docx, and other file types with info that might guide or restrict what we can do.
 - Perhaps we give small teams some focus down the road but focus on the solo developer/consultant.
+- Another potential future requirement is extensions for external systems like Jira, Confluence, etc.
 - 

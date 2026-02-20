@@ -36,6 +36,16 @@ If I tell you to do something you'll probably do it however you think it should 
 ## Scripts for automation tasks
 This bring me to another feature, using scripts to execute standard tasks so if either human or AI executes it we get the same result. AI saves some tokens and human doesn't have to worry they'll get a different result if they run it. 
 
+## Git is your code's memory. Session history is your AI's memory.
+
+I use a session history command almost as often as I use git commit. That surprised me. At first I thought it was just a nice-to-have — a log of what we did today. But I kept coming back to it and started to understand why.
+
+Git snapshots what changed in the files. Session history captures why it happened and how we got there. Every new Claude session starts cold. Without session history, you're either re-explaining context from scratch or hoping the AI figures it out from file state alone. Neither works well. Session history is the structured handoff — the thing a senior developer writes before going on vacation so the next person isn't lost on day one.
+
+What I didn't expect was how much the act of generating it changed how I work. Knowing I'm going to document a session makes me more deliberate during it. Decisions feel more real when you have to write down the rationale. Paths you abandoned are worth noting because the next session — or the next AI — will probably consider the same dead end.
+
+The commit captures the artifact. The session history captures the reasoning. You need both.
+
 ## I Command Thee, but only if you want to
 While building my own commands and a plugin equivilent, I stumbled on a major Claude bug that could be disastrous in the right circumstances. I have a project level command that I converted to a plugin command. They currently both exist but do the same thing. I called the plugin version but Claude decided to run the local command even though they have different namespaces. It turns out Claude decides on the fly whether to respect the namespace. The namespaces are not a guaranteed path like they are in your code. Now suppose I install some random plugin that happens to have the same or similar name. I call one command, but Claude thinks the other is close enough and runs it instead. I can only imagine the mess that could create. I filed a bug, <bug-number>, hopefully it's resolved quickly.
 

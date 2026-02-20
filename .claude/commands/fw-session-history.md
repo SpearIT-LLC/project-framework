@@ -2,6 +2,28 @@
 
 Generate or update the session history document for today, capturing work completed, decisions made, and files modified during the current session.
 
+---
+
+## Role & Mindset
+
+**For this command, adopt a Senior Technical Writer mindset:**
+
+### Core Responsibilities
+- Document the journey, not just the destination
+- Capture what we tried, what worked, what didn't
+- Record decision rationale so readers understand "why"
+- Anticipate future questions and provide context
+
+### Senior Behaviors
+- Ask "Will the reader understand how we got here?"
+- Consider "What tried-and-failed paths should we document?"
+- Ensure "Are we capturing the reasoning, not just the results?"
+- Think "What implicit questions exist that we should make explicit?"
+
+**Key principle:** Session histories are primarily read by future AI sessions. Focus on providing the context, rationale, and journey details that enable seamless continuation of work.
+
+---
+
 ## Usage
 
 ```
@@ -15,6 +37,7 @@ Generate or update the session history document for today, capturing work comple
 ## Behavior
 
 1. **Determine file path**: `project-hub/history/sessions/YYYY-MM-DD-SESSION-HISTORY.md`
+   - If `project-hub/` doesn't exist: Offer to create the directory structure or save to current directory
 2. **Check if file exists**:
    - If exists: Read and update/append to existing content
    - If new: Create from template structure below
@@ -34,7 +57,6 @@ Generate or update the session history document for today, capturing work comple
 **Date:** YYYY-MM-DD
 **Participants:** [User name], Claude Code
 **Session Focus:** [Focus description]
-**Role:** [Active role from framework.yaml]
 
 ---
 
@@ -111,8 +133,6 @@ This command should also be offered:
 ## Important: Append-Only Principle
 
 **Session history is a historical record - show the journey, not just the destination.**
-
-*See also: [Workflow Guide - Session History](../docs/collaboration/workflow-guide.md#session-history) for detailed process guidance.*
 
 When updating an existing session history file:
 

@@ -9,17 +9,17 @@
 #   powershell -ExecutionPolicy Bypass -File project-hub/poc/SPIKE-142-move-command-test-harness/Reset-PocTests.ps1
 #
 # Test scenarios:
-#   bash poc-move.sh FEAT-201 todo                   # single, full ID
-#   bash poc-move.sh 202 todo                        # single, numeric ID only
-#   bash poc-move.sh "FEAT-203, BUG-204" todo        # batch, full IDs
-#   bash poc-move.sh "205, 206" todo                 # batch, numeric IDs
-#   bash poc-move.sh "FEAT-207, 208" todo            # batch, mixed
-#   bash poc-move.sh FEAT-209 todo                   # parent → children follow
-#   bash poc-move.sh FEAT-211 todo                   # already in todo → skip
-#   bash poc-move.sh "FEAT-201, FEAT-999" todo       # one found, one not → skip missing
-#   bash poc-move.sh 201 todo                        # must NOT match FEAT-2010
-#   bash poc-move.sh FEAT-210 todo                   # moves .md AND .txt
-#   bash poc-move.sh FEAT-212 todo                   # blocked: done → todo
+#   bash poc-move.sh FEAT-901 todo                   # single, full ID
+#   bash poc-move.sh 902 todo                        # single, numeric ID only
+#   bash poc-move.sh "FEAT-903, BUG-904" todo        # batch, full IDs
+#   bash poc-move.sh "905, 906" todo                 # batch, numeric IDs
+#   bash poc-move.sh "FEAT-907, 908" todo            # batch, mixed
+#   bash poc-move.sh FEAT-909 todo                   # parent → children follow
+#   bash poc-move.sh FEAT-911 todo                   # already in todo → skip
+#   bash poc-move.sh "FEAT-901, FEAT-999" todo       # one found, one not → skip missing
+#   bash poc-move.sh 901 todo                        # must NOT match FEAT-9010
+#   bash poc-move.sh FEAT-910 todo                   # moves .md AND .txt
+#   bash poc-move.sh FEAT-912 todo                   # blocked: done → todo
 
 set -uo pipefail
 
@@ -212,29 +212,46 @@ move_item() {
   # Move all parent files (first gets ✅, siblings get +)
   local first_moved=false
   while IFS= read -r parent_file; do
-    local pname
+    local pname move_note=""
     pname=$(basename "$parent_file")
-    git mv "$parent_file" "$WORK_DIR/$target/" 2>/dev/null
-    if [ $? -eq 0 ]; then
-      if [ "$first_moved" = false ]; then
-        echo "✅ $pname → $target/"
-        ((MOVED++)) || true
-        first_moved=true
-      else
-        echo "   + $pname → $target/"
-      fi
+    if git mv "$parent_file" "$WORK_DIR/$target/" 2>/dev/null; then
+      :
     else
-      echo "❌ git mv failed for $pname"
-      ((FAILED++)) || true
+      local is_tracked
+      git ls-files --error-unmatch "$parent_file" 2>/dev/null && is_tracked=true || is_tracked=false
+      if [ "$is_tracked" = false ]; then
+        if mv "$parent_file" "$WORK_DIR/$target/" 2>/dev/null; then
+          move_note=" (untracked)"
+        else
+          echo "❌ mv failed for $pname"; ((FAILED++)) || true; continue
+        fi
+      else
+        echo "❌ git mv failed for $pname"; ((FAILED++)) || true; continue
+      fi
+    fi
+    if [ "$first_moved" = false ]; then
+      echo "✅ $pname → $target/$move_note"
+      ((MOVED++)) || true; first_moved=true
+    else
+      echo "   + $pname → $target/$move_note"
     fi
   done <<< "$all_parents"
 
   # Move children
   if [ -n "$children" ]; then
     while IFS= read -r child; do
-      local child_name
+      local child_name child_tracked
       child_name=$(basename "$child")
-      git mv "$child" "$WORK_DIR/$target/" 2>/dev/null && echo "   ↳ $child_name"
+      if git mv "$child" "$WORK_DIR/$target/" 2>/dev/null; then
+        echo "   ↳ $child_name"
+      else
+        git ls-files --error-unmatch "$child" 2>/dev/null && child_tracked=true || child_tracked=false
+        if [ "$child_tracked" = false ]; then
+          mv "$child" "$WORK_DIR/$target/" 2>/dev/null && echo "   ↳ $child_name (untracked)"
+        else
+          echo "   ↳ ❌ git mv failed for $child_name"
+        fi
+      fi
     done <<< "$children"
   fi
 }
