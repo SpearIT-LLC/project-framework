@@ -141,7 +141,7 @@ Release (do together - atomic operation):
 
 Post-Release:
 [ ] Build distribution archive: .\tools\Build-FrameworkArchive.ps1
-    - Creates SpearIT-Framework-vX.Y.Z.zip in distrib/
+    - Creates spearit_framework_vX.Y.Z.zip in distrib/framework/
     - Version automatically read from PROJECT-STATUS.md
     - Validates no unreleased items in done/ folder
 [ ] Verify tag pushed to origin: git tag -l vX.Y.Z

@@ -37,6 +37,4 @@ desktop.ini
 tmpclaude-*
 
 # Build artifacts
-distrib/*.zip
-distrib/**/*.zip
 distrib/temp/

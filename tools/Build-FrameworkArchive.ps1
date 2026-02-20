@@ -17,7 +17,7 @@
     - Warns if items exist in done/ (unreleased work)
 
 .PARAMETER OutputPath
-    Path for the output directory. Defaults to ./distrib/
+    Path for the output directory. Defaults to ./distrib/framework/
 
 .PARAMETER KeepTemp
     If specified, keeps the temp folder after creating the archive
@@ -92,7 +92,7 @@ if ($DoneItems) {
 
 # Default output path relative to repo root
 if (-not $OutputPath) {
-    $OutputPath = Join-Path $RepoRoot "distrib"
+    $OutputPath = Join-Path $RepoRoot "distrib\framework"
 }
 
 # Create output directory

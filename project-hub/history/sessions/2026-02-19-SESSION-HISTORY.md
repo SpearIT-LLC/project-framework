@@ -199,3 +199,83 @@ Resumed from the previous session where FEAT-141 (batch move support) was comple
 - *(none)*
 
 **Last Updated:** 2026-02-19 (End of Day)
+
+---
+
+## Evening Session — CHORE-147 distrib Path Fixes & Article Work
+
+### CHORE-147: Update distrib/framework/ Path References — Complete
+
+- User manually restructured `distrib/` root by creating `distrib/framework/` subfolder and moving all framework ZIPs into it (to match existing `distrib/plugin-light/` and `distrib/plugin-full/` convention)
+- Created CHORE-147 to track the forward-looking file updates needed to align with the new structure
+- Attempted `git mv` of CHORE-147 immediately after creation — failed because the Write tool creates files on disk but doesn't stage them, so `git mv` had nothing to track; fixed with `git add` then `git mv`
+- Completed all file updates and moved CHORE-147 to done
+
+**Decision mid-implementation:** `.gitignore` ZIP lines were previously commented out. Initially uncommented `distrib/**/*.zip` to cover all subdirs — then reversed: since the repo is now public on GitHub, the ZIPs should be committed and available for direct download. Final state: ZIPs are tracked; only `distrib/temp/` is ignored.
+
+**Note on distribution-build-checklist.md:** Work item scope listed it as needing a path update, but no `distrib/` output path reference exists in that file. It describes template structure validation, not build output. No change needed — scope was slightly over-estimated.
+
+### Article: Steal My Framework — v2, v3, v4
+
+Three article versions created during this session as iterative drafts:
+
+- **v2:** Replaced two stale Claude-generated executive summaries with a single updated one
+- **v3:** Filled all unfinished sections (Cold Start Problem, Pull My Finger, Role Playing, Rebellious Child workarounds); upgraded title to "Steal My Framework: How I Taught Claude to Work Like a Professional Colleague"; executive summary moved to end as "What We Built in Claude's Own Words"
+- **v4:** Short orienting paragraph at top instead of exec summary upfront (user feedback: "Leading off with the summary sucks the life out of the story"); user added author bylines ("Written By Gary Elliott / Edited By My Buddy Claude")
+
+**Key structural decision:** Story-first narrative; exec summary as payoff at the end, not a preview at the front.
+
+---
+
+## Decisions Made (Evening Session)
+
+7. **ZIPs in distrib/ should be committed to git:**
+   - Repo is now public on GitHub; ZIPs serve as the downloadable release artifacts
+   - Previous `.gitignore` entries excluding `distrib/*.zip` were commented out (historical artifact)
+   - Removed those lines entirely; `distrib/temp/` remains ignored (build scratch only)
+
+8. **CHORE-147 created and completed in same session:**
+   - New work items created with Write tool must be `git add`ed before `git mv` can move them
+   - Pattern: Write tool creates on disk but does not stage; git mv requires tracked files
+   - Fix for future: `git add <file> && git mv <file> <dest>` when moving newly-created items
+
+9. **Article structure: exec summary as payoff, not preview:**
+   - Exec summary at front removes narrative tension for a story-driven article
+   - Short orienting paragraph (1-2 sentences) is sufficient to orient readers
+   - Exec summary belongs at the end where it serves as a satisfying conclusion
+
+---
+
+## Files Modified (Evening Session)
+
+- `tools/Build-FrameworkArchive.ps1` — default `$OutputPath` updated to `distrib\framework`; synopsis comment updated to match
+- `.gitignore` — removed ZIP exclusion lines (ZIPs now committed); kept `distrib/temp/` ignore
+- `framework/docs/process/version-control-workflow.md` — updated post-release step path to `distrib/framework/`; corrected archive filename to `spearit_framework_vX.Y.Z.zip`
+
+## Files Created (Evening Session)
+
+- `project-hub/work/backlog/CHORE-147-update-distrib-framework-path-references.md` — created, then moved through todo → doing → done in same session
+- `project-hub/research/article-steal-my-framework-v2.md` — updated executive summary
+- `project-hub/research/article-steal-my-framework-v3.md` — complete draft with all sections filled
+- `project-hub/research/article-steal-my-framework-v4.md` — story-first structure with author bylines
+
+---
+
+## Current State (Evening — Final)
+
+### In done/ (awaiting release)
+- FEAT-127 + children (full framework plugin)
+- FEAT-136 (project guidance design doc)
+- BUG-140 (move command child item detection)
+- FEAT-141 (move command batch support)
+- FEAT-143 (external dependency tracking)
+- CHORE-146 (sync fw-session-history with plugin)
+- CHORE-147 (distrib/framework/ path fixes)
+
+### In blocked/
+- BUG-144 (Anthropic namespace collision bug — issue #26906; check back by 2026-02-22)
+
+### In doing/
+- *(none)*
+
+**Last Updated:** 2026-02-19 (Evening)
