@@ -23,6 +23,7 @@ Show this exact table:
 | Command | Description | Status |
 |---------|-------------|--------|
 | `/spearit-framework:help` | Show this help message | ✅ Available |
+| `/spearit-framework:swarm` | Facilitated team kick-off — produces project brief and outline | ✅ Available |
 | `/spearit-framework:new` | AI-guided work item planning with interactive breakdown and approval | ✅ Available |
 | `/spearit-framework:move` | Move work item between folders with policy enforcement | ✅ Available |
 | `/spearit-framework:session-history` | Document work sessions with structured templates | ✅ Available |
@@ -38,6 +39,7 @@ When invoked with a command name (e.g., `/spearit-framework:help move`), show de
 
 ```
 /spearit-framework:help                    # List all commands
+/spearit-framework:help swarm              # Show help for swarm command
 /spearit-framework:help move               # Show help for move command
 /spearit-framework:help new                # Show help for new command
 /spearit-framework:help session-history    # Show help for session-history command
@@ -50,16 +52,17 @@ Use a clean, readable format with horizontal rules and tables where appropriate.
 
 ## Help Content Source
 
-**IMPORTANT:** This command operates ONLY on the 5 commands included in this plugin.
+**IMPORTANT:** This command operates ONLY on the 6 commands included in this plugin.
 
 **Where to find command files:**
 - Read from: `plugins/spearit-framework/commands/` directory
-- Available files: `help.md`, `new.md`, `move.md`, `session-history.md`, `roadmap.md`
+- Available files: `help.md`, `swarm.md`, `new.md`, `move.md`, `session-history.md`, `roadmap.md`
 - Do NOT read from: `.claude/commands/` or any other location
 
 **Command list (no arguments):**
-When invoked with no arguments, show the table above listing these 5 commands:
+When invoked with no arguments, show the table above listing these 6 commands:
 - `/spearit-framework:help`
+- `/spearit-framework:swarm`
 - `/spearit-framework:new`
 - `/spearit-framework:move`
 - `/spearit-framework:session-history`

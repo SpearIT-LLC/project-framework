@@ -183,4 +183,74 @@ After finalizing the script, updated documentation to match:
 
 ---
 
+## Continuation Session (Evening) — FEAT-146 /swarm Command Design & Implementation
+
+### Context
+
+Started session to review FEAT-137 (plugin project guidance commands). Discovered that the work item named FEAT-137 covers `status/backlog/plan` commands — the `/swarm` command had no implementation work item at all. Earlier session history incorrectly referred to FEAT-137 as the "swarm" item. FEAT-136 was the design doc (complete). FEAT-137 was paused to prioritize the new FEAT-146.
+
+### FEAT-137 Paused
+
+- Moved FEAT-137 from `doing/` back to `todo/`
+- Rationale: FEAT-146 (`/swarm`) is the higher-value item — it's the headline experience of the Project Guidance theme
+
+### FEAT-146 Created
+
+- Created `project-hub/work/todo/FEAT-146-swarm-command-implementation.md`
+- Moved to `todo/` then `doing/`
+
+### Design Review — Major Revisions to project-guidance.md
+
+Extended design discussion resulted in significant changes to the 2026-02-17 design doc. Key decisions made:
+
+1. **Two-phase conversation** — Phase 1: Discovery (full team), Phase 2: Planning (PO + Architect only). Original was single-phase.
+
+2. **Project outline added as new output** — `project-outline.md` captures phases, sequence, dependencies. Original only produced a brief. Brief is stable; outline evolves.
+
+3. **Three-document stack established:**
+   - `project-brief.md` — what/why/for whom (stable, updated on pivots only)
+   - `project-outline.md` — phases, sequence, dependencies (evolves)
+   - `ROADMAP.md` — planning periods, goals, progress (living, updated each period)
+
+4. **Architect added as conditional role** — covers system structure and phase sequencing in Phase 2. Senior Dev fills role if no Architect present.
+
+5. **PO assembles team by judgment** — not a mechanical trigger list. Signals from the conversation determine which lenses are needed.
+
+6. **"Should we build this?"** added to PO clarifying questions — preventing wrong-direction work is part of the goal.
+
+7. **Removed light/medium/full structure** from termination criteria — framework plugin tiers are not a project design concern; team recommends approach, doesn't ask user to decide.
+
+8. **Archive pattern for brief and outline** — prior files archived to `planning/archive/YYYY-MM-DD` on overwrite, not just a warning. Consistent with ROADMAP archival; read-only reference shouldn't require git restore.
+
+9. **Phase template selection** — Architect selects from known patterns (Web App, CLI Tool, API Service, etc.) and customizes. Prevents same problem generating a different outline structure each time.
+
+10. **North star established** — long-term goal is a guided AI-facilitated process from raw idea to ordered execution plan, with the team actively preventing premature commitment. `/swarm` is step one.
+
+### Implementation — FEAT-146
+
+Files created/updated:
+
+- `plugins/spearit-framework/commands/swarm.md` — new command implementing two-phase conversation, full team roster, output templates, archival logic, edge cases
+- `plugins/spearit-framework/commands/help.md` — added `/swarm` as 6th command
+- `plugins/spearit-framework/CHANGELOG.md` — v1.1.0-dev1 entry
+- `plugins/spearit-framework/.claude-plugin/plugin.json` — bumped to `1.1.0-dev1`
+
+---
+
+## Current State
+
+### In todo/
+- FEAT-092 (sprint support)
+- FEAT-122 (test work item)
+- FEAT-137 (plugin project guidance commands — status/backlog/plan)
+- FEAT-146 (swarm command — implementation complete, pending test)
+
+### In doing/
+- FEAT-146 (moved to doing this session; implementation written)
+
+### In blocked/
+- BUG-144 (Anthropic namespace collision bug — issue #26906; check back by 2026-02-22)
+
+---
+
 **Last Updated:** 2026-02-20

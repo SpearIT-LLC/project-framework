@@ -7,6 +7,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.1.0-dev1] - 2026-02-20
+
+### Added
+- **FEAT-146: `/spearit-framework:swarm` command**
+  - Two-phase facilitated team kick-off conversation
+  - Phase 1 (Discovery): PO-led team discussion, roles assembled by judgment from conversation signals
+  - Phase 2 (Planning): PO + Architect/Senior Dev produce brief and outline
+  - Produces `project-hub/planning/project-brief.md` — what, why, for whom (stable)
+  - Produces `project-hub/planning/project-outline.md` — phases, sequence, dependencies (evolves)
+  - Produces `project-hub/meetings/YYYY-MM-DD-swarm-kickoff.md` — narrative meeting record
+  - Archives existing brief/outline to `project-hub/planning/archive/` before overwriting
+  - `--summary` flag bypasses team discussion for bottom-line output
+  - Degrades gracefully for trivial scope (2-role team, 3-5 exchanges)
+  - Team roster: Product Owner (Alex), Senior Dev (Dan), Architect (Sam), UX (Jordan), Security (Morgan), Data/ML (Riley)
+
+### Changed
+- Updated `help.md` — `/swarm` added as 6th command
+
+---
+
 ## [1.0.0-dev3] - 2026-02-19
 
 ### Added
