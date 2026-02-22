@@ -119,9 +119,9 @@ This is added to the command markdown files — no code changes required, pure i
 
 ### Files to Update
 
-- `plugins/spearit-framework/commands/status.md` — add config discovery preamble
+- `plugins/spearit-framework/commands/kanban-state.md` — add config discovery preamble
 - `plugins/spearit-framework/commands/backlog.md` — add config discovery preamble
-- `plugins/spearit-framework/commands/plan.md` — add config discovery preamble
+- `plugins/spearit-framework/commands/preflight.md` — add config discovery preamble
 - `plugins/spearit-framework/commands/session-history.md` — add config discovery preamble
 - `plugins/spearit-framework/commands/roadmap.md` — add config discovery preamble
 - `plugins/spearit-framework/README.md` — document claude-project.yaml schema
