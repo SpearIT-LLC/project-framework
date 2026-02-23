@@ -5,6 +5,7 @@
 **Priority:** High
 **Version Impact:** MINOR
 **Created:** 2026-02-20
+**Completed:** 2026-02-22
 **Theme:** Project Guidance
 **Planning Period:** v1.1
 
@@ -101,7 +102,7 @@ Bottom-line only — skips team discussion, produces brief and outline directly.
 - [x] Project outline written to `project-hub/planning/project-outline.md`
 - [x] Starter backlog (5-10 items) output to chat
 - [ ] `--summary` flag bypasses team discussion *(deferred — see note below)*
-- [ ] Archives existing brief/outline to `project-hub/planning/archive/` before overwriting
+- [x] Archives existing brief/outline to `project-hub/planning/archive/` before overwriting
 - [ ] Degrades gracefully for trivially small projects (2-role team, 3-5 exchanges, single-phase outline)
 
 ### Non-Functional Requirements
@@ -153,7 +154,7 @@ Full conversation design, discipline roster, output templates, edge cases, and d
 - [x] Project brief saved to correct location matching template in design doc
 - [x] Project outline saved to correct location matching template in design doc
 - [x] Starter backlog output to chat (5-10 items)
-- [ ] Existing brief/outline archived to `planning/archive/` before overwrite
+- [x] Existing brief/outline archived to `planning/archive/` before overwrite
 - [x] `/spearit-framework:help` updated to list `/swarm`
 - [ ] All tested in framework project
 - [ ] Plugin version bumped and rebuilt
