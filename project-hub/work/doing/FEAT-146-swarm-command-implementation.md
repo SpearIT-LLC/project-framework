@@ -100,7 +100,7 @@ Bottom-line only — skips team discussion, produces brief and outline directly.
 - [x] Project brief written to `project-hub/planning/project-brief.md`
 - [x] Project outline written to `project-hub/planning/project-outline.md`
 - [x] Starter backlog (5-10 items) output to chat
-- [ ] `--summary` flag bypasses team discussion
+- [ ] `--summary` flag bypasses team discussion *(deferred — see note below)*
 - [ ] Archives existing brief/outline to `project-hub/planning/archive/` before overwriting
 - [ ] Degrades gracefully for trivially small projects (2-role team, 3-5 exchanges, single-phase outline)
 
@@ -148,7 +148,7 @@ Full conversation design, discipline roster, output templates, edge cases, and d
 
 - [x] `/spearit-framework:swarm` runs a two-phase facilitated kick-off conversation
 - [x] Phase 1 ends with user direction approval before Phase 2 begins
-- [ ] `/spearit-framework:swarm --summary` produces brief and outline without team discussion
+- [ ] `/spearit-framework:swarm --summary` produces brief and outline without team discussion *(deferred)*
 - [x] Meeting notes saved to correct location with correct format
 - [x] Project brief saved to correct location matching template in design doc
 - [x] Project outline saved to correct location matching template in design doc
@@ -160,4 +160,10 @@ Full conversation design, discipline roster, output templates, edge cases, and d
 
 ---
 
-**Last Updated:** 2026-02-20
+## Deferred Items
+
+**`--summary` flag** — Untested; unclear if it would be used in practice. Potentially useful for time-sensitive scenarios (e.g., `swarm incident` where speed matters). Deferred until a real use case arises. Not blocking MVP.
+
+---
+
+**Last Updated:** 2026-02-22
