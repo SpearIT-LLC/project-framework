@@ -114,19 +114,22 @@ FEAT-038      Feature     MINOR    2026-01-11   Template validation
 BUGFIX-012    Bugfix      PATCH    2026-01-12   Fix path handling
 TECH-033      Tech Debt   PATCH    2026-01-08   Status field review
 
-⬆ Pull candidates (no unmet dependencies):
-  FEAT-037, BUGFIX-012
+⬆ Ready for todo (no unmet dependencies):
+  Bugs (1):      BUGFIX-012
+  Features (1):  FEAT-037
+  Tech Debt (1): TECH-033
 
 ⚠ Stale (>90 days, never started):
   TECH-033 (created 2025-10-01)
 
-To pull an item to todo:
+To move an item to todo:
   /spearit-framework:move <id> todo
 ```
 
-**Pull candidate logic:**
+**Ready for todo logic:**
 - `Depends On:` field is empty, "None", or all referenced IDs are in done/
 - Item has no obvious blockers in its content
+- Group by ID prefix (BUG → Bugs, FEAT → Features, TECH → Tech Debt, everything else → Other)
 
 **Stale logic:**
 - Created date > 90 days ago from today

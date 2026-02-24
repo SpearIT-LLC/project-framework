@@ -91,15 +91,6 @@ find "$WORK_DIR/blocked" -maxdepth 1 -name "*.md" 2>/dev/null | sort | while rea
   echo "$fname | $title"
 done
 
-# Version from PROJECT-STATUS.md
-echo "=== VERSION ==="
-for candidate in "framework/PROJECT-STATUS.md" "PROJECT-STATUS.md"; do
-  if [ -f "$candidate" ]; then
-    grep -m1 'Current Version:' "$candidate" 2>/dev/null || true
-    break
-  fi
-done
-
 # Summary line
 echo "=== COUNTS ==="
 echo "BACKLOG=$BACKLOG TODO=$TODO TODO_LIMIT=${TODO_LIMIT:-} DOING_RAW=$DOING_RAW DOING_HIER=$DOING_HIER DOING_LIMIT=${DOING_LIMIT:-} DONE=$DONE BLOCKED=$BLOCKED"
@@ -116,10 +107,8 @@ Use the script output to render this format. Parse `=== SECTION ===` markers to 
 Render the Workflow Summary as a table with three columns: Stage, Count, and Limit.
 
 ```
-Project Status: [Project Name]
+Kanban Board State
 =======================================================
-
-Version: v1.0.0 (2026-01-17)
 
 Workflow Summary:
 
@@ -128,7 +117,7 @@ Workflow Summary:
 ├─────────┼──────────┼──────────────┤
 │ Backlog │ 12 items │              │
 ├─────────┼──────────┼──────────────┤
-│ Todo    │  3 items │  3 / 10      │
+│ Todo    │  3 items │  3 / 10  ✅  │
 ├─────────┼──────────┼──────────────┤
 │ Doing   │  1 item  │  1 / 2  ✅   │
 ├─────────┼──────────┼──────────────┤
@@ -156,8 +145,6 @@ Awaiting Release:
 
 **Hierarchical counting:** FEAT-018 + FEAT-018.1 + FEAT-018.2 = 1 item toward WIP limit. Show `(+N sub-items)` when a parent has children in the "Currently In Progress" list.
 
-**Version:** Extract from `**Current Version:** vX.Y.Z (YYYY-MM-DD)` in PROJECT-STATUS.md. If not found, omit the version line silently.
-
 **Blocked section:** Show only if count > 0.
 
 **Awaiting Release section:** Show only if done/ count > 0.
@@ -172,7 +159,6 @@ Awaiting Release:
 
 ## Edge Cases
 
-- **PROJECT-STATUS.md missing**: Omit version line, continue
 - **Empty folders**: Show `0 items` — not an error
 - **No WIP limit file**: Leave Limit cell empty, no indicator
 - **Not a git repo / work folder missing**: Report error and stop
