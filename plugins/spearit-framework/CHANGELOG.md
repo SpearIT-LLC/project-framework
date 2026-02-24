@@ -7,6 +7,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.0.0] - 2026-02-24
+
+### Added
+- **FEAT-137: `/spearit-framework:kanban-state` command**
+  - Project health snapshot: workflow counts, WIP limits with ✅/⚠/❌ indicators
+  - Surfaces active doing items, blocked items, and done items awaiting release
+  - Script-based data gathering for fast execution
+- **FEAT-137: `/spearit-framework:backlog` command**
+  - Compact table view of all backlog items (ID, type, impact, created, summary)
+  - Dependency analysis — flags items blocked on unmet dependencies
+  - Pull candidate identification — groups ready items by type
+  - Stale item detection (>90 days in backlog)
+  - Subcommands: `full`, `detail <id>`, `prioritize`
+
+### Changed
+- Updated `help.md` — all 8 commands listed
+- Updated swarm description to "AI facilitated team kick-off" for clarity
+
+---
+
 ## [1.0.0-dev4] - 2026-02-20
 
 ### Added

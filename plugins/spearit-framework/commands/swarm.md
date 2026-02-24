@@ -1,6 +1,6 @@
-# /spearit-framework:swarm - Project Kick-off Conversation
+# /spearit-framework:swarm - AI Facilitated Project Kick-off
 
-Facilitate a structured team kick-off conversation that produces a Project Brief and Project Outline before any work begins. The team helps the user arrive at a clear, confident project direction — what to build, for whom, and in what order.
+Facilitate a structured AI team kick-off conversation that produces a Project Brief and Project Outline before any work begins. The team helps the user arrive at a clear, confident project direction — what to build, for whom, and in what order.
 
 ## Usage
 

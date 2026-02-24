@@ -23,7 +23,7 @@ Show this exact table:
 | Command | Description | Status |
 |---------|-------------|--------|
 | `/spearit-framework:help` | Show this help message | ✅ Available |
-| `/spearit-framework:swarm` | Facilitated team kick-off — produces project brief and outline | ✅ Available |
+| `/spearit-framework:swarm` | AI facilitated team kick-off — produces project brief and outline | ✅ Available |
 | `/spearit-framework:new` | AI-guided work item planning with interactive breakdown and approval | ✅ Available |
 | `/spearit-framework:move` | Move work item between folders with policy enforcement | ✅ Available |
 | `/spearit-framework:session-history` | Document work sessions with structured templates | ✅ Available |
