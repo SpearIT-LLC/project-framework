@@ -57,4 +57,94 @@ Reviewed and verified the two new plugin commands (`kanban-state` and `backlog`)
 
 ---
 
+## (Later Session) — Backlog Grooming + plugin-full v1.0.0 Release
+
+**Session Focus:** Release plugin-full v1.0.0, backlog grooming, todo queue setup
+
+---
+
+### Summary
+
+Released plugin-full v1.0.0 by archiving FEAT-137 and FEAT-146 from done/ into the release history. Consolidated the CHANGELOG (merged dev4 swarm entry into [1.0.0]). Groomed backlog by pulling FEAT-145, FEAT-147, TECH-079, DECISION-097, and FEAT-099 into todo.
+
+---
+
+### Work Completed
+
+#### plugin-full v1.0.0 Release
+
+- Confirmed both FEAT-137 and FEAT-146 are full plugin commands — no version bump needed (zip never distributed)
+- Merged `[1.0.0-dev4]` swarm content into `[1.0.0]` CHANGELOG entry; removed dev4 section
+- Created `project-hub/history/releases/plugin-full/v1.0.0/` release folder
+- `git mv` FEAT-137 and FEAT-146 from `done/` to release folder
+- Rebuilt `distrib/plugin-full/spearit-framework-v1.0.0.zip` (40.96 KB, 8 commands)
+- Committed release: `42b7c1f release: plugin-full v1.0.0 — FEAT-137 + FEAT-146`
+
+#### Backlog Grooming — Items Moved to Todo
+
+- **FEAT-147**: fw-swarm local command (pull swarm.md from plugin into fw- commands + starter template)
+- **FEAT-145**: fw-move+ script engine (close gap between plugin move and fw-move; promote move.sh)
+- **TECH-079**: Empty release guard (documentation-only; prerequisite for FEAT-099)
+- **DECISION-097**: Release sizing policy (progressive nudging at 10/15 items; prerequisite for FEAT-099)
+- **FEAT-099**: /fw-release command (automated release automation; depends on TECH-079 + DECISION-097)
+
+#### Items Left in Backlog (Reviewed, Not Moved)
+
+- **FEAT-150**: Swarm modes — left in backlog; depends on FEAT-147 (fw-swarm doesn't exist yet)
+- **FEAT-099** dependency check flagged initially — DECISION-097 and TECH-079 were still in backlog; user decision was to move all three together
+
+---
+
+### Decisions Made
+
+1. **FEAT-150 stays in backlog:**
+   - Depends on FEAT-147 (fw-swarm local command) which is not yet implemented
+   - No formal `Depends On` field in the work item — flagged as a logical dependency
+
+2. **plugin-full v1.0.0: no version bump needed:**
+   - v1.0.0.zip existed but was untracked/never published
+   - FEAT-137 (kanban-state + backlog) and FEAT-146 (swarm) fold into v1.0.0 as originally intended
+   - dev4 CHANGELOG entry merged into [1.0.0] to clean up history
+
+---
+
+### Files Modified
+
+- `plugins/spearit-framework/CHANGELOG.md` — merged dev4 into [1.0.0]; removed dev4 section
+
+### Files Created
+
+- `project-hub/history/releases/plugin-full/v1.0.0/` (folder)
+- `distrib/plugin-full/spearit-framework-v1.0.0.zip` — rebuilt clean v1.0.0
+
+### Files Moved
+
+- `project-hub/work/done/FEAT-137-plugin-project-guidance-commands.md` → `project-hub/history/releases/plugin-full/v1.0.0/`
+- `project-hub/work/done/FEAT-146-swarm-command-implementation.md` → `project-hub/history/releases/plugin-full/v1.0.0/`
+- `project-hub/work/backlog/FEAT-147-fw-swarm-local-command.md` → `project-hub/work/todo/`
+- `project-hub/work/backlog/FEAT-145-fw-move-plus-script-engine.md` → `project-hub/work/todo/`
+- `project-hub/work/backlog/TECH-079-empty-release-guard.md` → `project-hub/work/todo/`
+- `project-hub/work/backlog/DECISION-097-release-sizing-policy.md` → `project-hub/work/todo/`
+- `project-hub/work/backlog/FEAT-099-fw-release-command.md` → `project-hub/work/todo/`
+
+---
+
+### Current State
+
+#### In done/
+- Empty
+
+#### In todo/
+- FEAT-092: Sprint support (pre-existing)
+- FEAT-145: fw-move+ script engine
+- FEAT-147: fw-swarm local command
+- TECH-079: Empty release guard
+- DECISION-097: Release sizing policy
+- FEAT-099: /fw-release command (depends on TECH-079, DECISION-097)
+
+#### In doing/
+- Nothing
+
+---
+
 **Last Updated:** 2026-02-24
