@@ -208,4 +208,96 @@ Implemented FEAT-147 in full. Reviewed the work item, confirmed the source file 
 
 ---
 
+---
+
+## (Later Session) — FEAT-150: Swarm Modes
+
+**Session Focus:** Design and implement 6-mode swarm command
+
+---
+
+### Summary
+
+Designed and implemented a full rewrite of `fw-swarm.md` to support 6 context-aware modes. The design evolved through an extended conversation covering mode selection, output artifacts, storage locations, naming conventions, incident mode's iterative loop pattern, and multi-session resume. All decisions were locked before writing began.
+
+---
+
+### Work Completed
+
+#### FEAT-150: Swarm Modes — Context-Aware Swarm Types
+
+- Moved FEAT-150 from `backlog/` → `todo/` → `doing/`
+- Scoped to `fw-swarm` only (plugin `swarm.md` update deferred)
+- Designed 6 modes: `project`, `incident`, `decision`, `architecture`, `risk`, `research`
+- Designed output artifact locations and filename patterns for all modes
+- Wrote full rewrite of `.claude/commands/fw-swarm.md`
+- Copied to `templates/starter/.claude/commands/fw-swarm.md`
+- Updated FEAT-150 work item to reflect actual implementation decisions
+
+---
+
+### Decisions Made
+
+1. **Single file, not split per mode:**
+   - All 6 modes in one `fw-swarm.md`; splitting deferred unless file becomes unmanageable
+
+2. **`research` mode (formerly `vendor`):**
+   - Renamed — scope is broader than commercial vendors
+   - Covers any external tool, library, API, language, framework, platform, or service (open source or commercial)
+   - Output: Research Note in `project-hub/research/`
+
+3. **`retrospective` mode dropped:**
+   - Distinct enough to warrant its own command (`/fw-retro`) eventually; not included here
+
+4. **Incident mode is an iterative loop:**
+   - Not a post-mortem — live collaborative triage with diagnostic rounds
+   - Casey (Operations Engineer) added to team roster, leads incident sessions
+   - Resolution doc written incrementally during session, not at the end
+
+5. **All modes produce meeting minutes in `project-hub/meetings/`:**
+   - Consistent with existing project mode; no mode-specific subfolder
+
+6. **ADR numbering for decision mode:**
+   - Must scan `project-hub/research/adr/` to determine next sequential number (existing convention: `001-`, `002-`, etc.)
+   - Filename: `NNN-{slug}.md` not date-based
+
+7. **Risk files use `Status` field:**
+   - Values: Open / Mitigated / Accepted / Closed
+   - One file per risk in `project-hub/risks/`
+
+8. **Resume: Option A (explicit argument):**
+   - `/fw-swarm [mode] resume` — most recent
+   - `/fw-swarm [mode] resume [slug]` — specific session
+   - Reads existing in-progress file to rebuild context
+
+9. **fw-swarm only (not plugin):**
+   - Plugin `spearit-framework:swarm` update is a separate work item
+
+---
+
+### Files Modified
+
+- `.claude/commands/fw-swarm.md` — full rewrite, 6 modes
+- `templates/starter/.claude/commands/fw-swarm.md` — full rewrite, identical content
+- `.claude/commands/fw-help.md` — updated fw-swarm description
+- `templates/starter/.claude/commands/fw-help.md` — updated fw-swarm description
+- `project-hub/work/doing/FEAT-150-swarm-modes.md` — updated to reflect actual scope and decisions
+
+### Files Moved
+
+- `project-hub/work/backlog/FEAT-150-swarm-modes.md` → `project-hub/work/todo/`
+- `project-hub/work/todo/FEAT-150-swarm-modes.md` → `project-hub/work/doing/`
+
+---
+
+### Current State
+
+#### In doing/
+- FEAT-150: Swarm modes (implementation complete, pending done move + commit)
+
+#### In done/
+- FEAT-147: fw-swarm local command
+
+---
+
 **Last Updated:** 2026-02-24
