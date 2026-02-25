@@ -147,4 +147,65 @@ Released plugin-full v1.0.0 by archiving FEAT-137 and FEAT-146 from done/ into t
 
 ---
 
+---
+
+## (Later Session) — FEAT-147: fw-swarm Local Command
+
+**Session Focus:** Implement `/fw-swarm` as a local slash command in the framework and starter template
+
+---
+
+### Summary
+
+Implemented FEAT-147 in full. Reviewed the work item, confirmed the source file (`plugins/spearit-framework/commands/swarm.md`), moved FEAT-147 to doing, then created `fw-swarm.md` in both command locations with all plugin references updated to `/fw-` equivalents. Updated `fw-help.md` in both locations to list the new command.
+
+---
+
+### Work Completed
+
+#### FEAT-147: fw-swarm Local Command
+
+- Reviewed FEAT-147 ticket and source `swarm.md` prior to implementation
+- Moved FEAT-147 from `todo/` → `doing/` via `git mv`
+- Created `.claude/commands/fw-swarm.md` — full fidelity copy of plugin swarm.md with `/fw-` refs
+- Created `templates/starter/.claude/commands/fw-swarm.md` — identical content
+- Updated `.claude/commands/fw-help.md` — added `/fw-swarm` row
+- Updated `templates/starter/.claude/commands/fw-help.md` — added `/fw-swarm` row
+
+---
+
+### Decisions Made
+
+1. **fw-swarm not added to spearit-framework-light:**
+   - User confirmed out of scope — light plugin is intentionally minimal
+   - Only the two local command locations (framework repo + starter template) were updated
+
+2. **Content identical across both command locations:**
+   - The ticket called this out explicitly — no customization per location
+
+---
+
+### Files Created
+
+- `.claude/commands/fw-swarm.md` — local fw-swarm command
+- `templates/starter/.claude/commands/fw-swarm.md` — starter template copy
+
+### Files Modified
+
+- `.claude/commands/fw-help.md` — added `/fw-swarm` row
+- `templates/starter/.claude/commands/fw-help.md` — added `/fw-swarm` row
+
+### Files Moved
+
+- `project-hub/work/todo/FEAT-147-fw-swarm-local-command.md` → `project-hub/work/doing/`
+
+---
+
+### Current State
+
+#### In doing/
+- FEAT-147: fw-swarm local command (implementation complete, pending done move)
+
+---
+
 **Last Updated:** 2026-02-24

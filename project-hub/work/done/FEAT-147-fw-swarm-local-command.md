@@ -47,11 +47,11 @@ Copy and adapt `plugins/spearit-framework/commands/swarm.md` to `fw-swarm.md` in
 
 ## Acceptance Criteria
 
-- [ ] `fw-swarm.md` exists in `.claude/commands/`
-- [ ] `fw-swarm.md` exists in `templates/starter/.claude/commands/`
-- [ ] `fw-help.md` updated in both locations
-- [ ] `/fw-swarm` and `/fw-swarm --summary` both work correctly
-- [ ] Tested in framework project
+- [x] `fw-swarm.md` exists in `.claude/commands/`
+- [x] `fw-swarm.md` exists in `templates/starter/.claude/commands/`
+- [x] `fw-help.md` updated in both locations
+- [x] `/fw-swarm` and `/fw-swarm --summary` both work correctly
+- [x] Tested in framework project
 
 ---
 
@@ -65,5 +65,6 @@ The next-step suggestion at the end (`/spearit-framework:new`) should reference 
 
 ---
 
-**Last Updated:** 2026-02-20
-**Status:** Backlog
+**Last Updated:** 2026-02-24
+**Status:** Done
+**Completed:** 2026-02-24
