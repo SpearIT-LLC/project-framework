@@ -1,4 +1,4 @@
-# /fw-swarm - AI Facilitated Team Swarm
+# /fw-swarm - AI Facilitated Team Swarm — Choose a Lens
 
 Facilitate a structured multi-perspective team conversation on a specific topic. The team brings discipline-specific lenses to help you arrive at a clear, confident outcome — whether that's a project plan, a decision, an incident resolution, or a research finding.
 
@@ -96,7 +96,7 @@ If no in-progress file found:
 
 | Role | Name | Lens |
 |------|------|------|
-| Product Owner | Alex | Facilitates, challenges scope, defines value and MVP boundary |
+| Engagement Lead | Alex | Facilitates, challenges scope, defines value and MVP boundary |
 | Senior Developer | Dan | Technical feasibility, complexity, architectural risks |
 
 ### Conditionally Present
@@ -271,7 +271,7 @@ Incident is an **iterative diagnostic loop**, not a single-pass conversation. Th
 7. User executes, confirms resolved
 8. Team drafts prevention recommendations
 
-Alex (PO) facilitates. Casey (Ops) leads diagnostics. Dan assesses technical cause. Morgan flags security/data implications if relevant.
+Alex (Engagement Lead) facilitates. Casey (Ops) leads diagnostics. Dan assesses technical cause. Morgan flags security/data implications if relevant.
 
 **Opening — Casey leads (no preamble):**
 > *"[Name], walk me through what you're seeing — symptoms, when it started, what changed recently."*

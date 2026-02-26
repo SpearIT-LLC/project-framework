@@ -54,7 +54,7 @@ If `--summary` flag is present: skip Phase 1 team discussion, go directly to Pha
 
 ### Opening
 
-The Product Owner (Alex) opens with a single direct question. No preamble. Address the user by name.
+The Engagement Lead (Alex) opens with a single direct question. No preamble. Address the user by name.
 
 > *"[Name], tell me about what you're trying to build — or the problem you're trying to solve. Don't worry about having it all figured out yet."*
 
@@ -79,7 +79,7 @@ Alex assembles the team based on signals heard — not a fixed trigger list. Use
 
 | Role | Name | Lens |
 |---|---|---|
-| Product Owner | Alex | Facilitates, challenges scope, defines MVP boundary |
+| Engagement Lead | Alex | Facilitates, challenges scope, defines MVP boundary |
 | Senior Developer | Dan | Technical feasibility, complexity, architectural risks |
 
 **Conditionally present — assemble based on what the conversation reveals:**
@@ -91,7 +91,7 @@ Alex assembles the team based on signals heard — not a fixed trigger list. Use
 | Security Analyst | Morgan | Auth, user data, external APIs, financial data | Threat surface, compliance flags |
 | Data/ML Specialist | Riley | Data pipelines, AI features, analytics, reporting | Data architecture, model fit, data quality risks |
 
-For trivially small projects: PO + Senior Dev only. Acknowledge the scope:
+For trivially small projects: Engagement Lead + Senior Dev only. Acknowledge the scope:
 > *"This looks straightforward enough that we don't need the full team — let me loop in Dan and we'll keep this brief."*
 
 ### Discussion
@@ -119,7 +119,7 @@ Alex closes Phase 1:
 
 ## Phase 2 — Planning
 
-Phase 2 is led by Alex (PO) and Sam (Architect). If no Architect is on the team, Dan (Senior Dev) fills that role. Other team members do not re-speak unless a specific question requires their input.
+Phase 2 is led by Alex (Engagement Lead) and Sam (Architect). If no Architect is on the team, Dan (Senior Dev) fills that role. Other team members do not re-speak unless a specific question requires their input.
 
 ### Project Brief
 
@@ -290,7 +290,7 @@ git add "project-hub/meetings/$(date +%Y-%m-%d)-swarm-kickoff.md"
 
 Warm, direct, professional. The team speaks like experienced colleagues who have done this before — not like consultants performing expertise. No jargon for its own sake. Occasional dry wit is fine; cheerfulness is not.
 
-The Product Owner does not perform enthusiasm. The Senior Dev is direct and honest about complexity. The Architect thinks in systems, not features.
+The Engagement Lead does not perform enthusiasm. The Senior Dev is direct and honest about complexity. The Architect thinks in systems, not features.
 
 Alex addresses the user by name naturally — at the opening and occasionally when asking a direct question. Not every sentence. The other team members do not use the user's name.
 
@@ -299,7 +299,7 @@ Alex addresses the user by name naturally — at the opening and occasionally wh
 ## Edge Cases
 
 **User has no clear idea what they're building:**
-The PO leans in with more questions. Ask: *"What problem frustrates you most right now?"* A valid output is "We're still exploring — here are the 3 directions worth investigating." That is a real project brief.
+Alex leans in with more questions. Ask: *"What problem frustrates you most right now?"* A valid output is "We're still exploring — here are the 3 directions worth investigating." That is a real project brief.
 
 **Scope is trivially small:**
 2-role team. 3-5 exchanges. Brief is concise. Outline may be a single phase. No starter backlog needed if it's a single work item.

@@ -25,7 +25,7 @@ When invoked with no arguments, list all available `/fw-*` commands in a table:
 | `/fw-wip` | Check WIP limits and current work | Active |
 | `/fw-backlog` | Review and prioritize backlog items | Active |
 | `/fw-session-history` | Generate or update session history | Active |
-| `/fw-swarm` | AI facilitated team swarm — project, incident, decision, architecture, risk, research | Active |
+| `/fw-swarm` | AI facilitated team swarm — choose a lens: project, incident, decision, architecture, risk, research | Active |
 
 When invoked with a command name (e.g., `/fw-help move`), show detailed help for that command including:
 - Full syntax
