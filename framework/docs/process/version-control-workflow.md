@@ -109,6 +109,32 @@ Release immediately when:
 
 **Rule:** Release when ready. Batching multiple completed issues into a single release is acceptable.
 
+### Release Sizing Guidelines
+
+**Sweet spot:** 3–8 items per release. Focused, digestible CHANGELOGs. Easier troubleshooting.
+
+**Thresholds:**
+
+| Done/ Count | Signal | Action |
+|-------------|--------|--------|
+| 1–8 | Normal | Release when ready |
+| 9–10 | Approaching large | Consider releasing soon |
+| 11–14 | Large | Recommend releasing or splitting by theme |
+| 15+ | Very large | Strongly recommend releasing |
+
+**Quality over quantity:** A release of 15 well-tested, coherent items is fine. A release of 3 half-baked items is not. Thresholds are guidance, not rules.
+
+**AI nudging behavior:**
+- At 10+ items in done/: gentle suggestion after `/fw-move → done/` and in `/fw-status` output
+- At 15+ items: stronger recommendation
+- Never blocks — user always decides
+
+**Thematic releases:** Ignore thresholds when items form a coherent theme (e.g., all performance improvements). Coherence matters more than count.
+
+**Future evolution:** Guidelines may be refined with project-type patterns (see FEAT-089).
+
+---
+
 ### Release Checklist
 
 ```markdown

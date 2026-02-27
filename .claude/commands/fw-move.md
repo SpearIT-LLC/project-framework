@@ -100,6 +100,10 @@ Follow step-by-step: mark `[x]` immediately after each step, stop and wait for a
    git add .
    git commit -m "feat: Complete ITEM-NNN - [brief description]"
    ```
+4. ✅ Count items in `project-hub/work/done/` and nudge if thresholds exceeded:
+   - 10–14 items: "You now have N items in done/. Consider releasing soon."
+   - 15+ items: "You have N items in done/ — this is a large release. Recommend releasing or splitting by theme."
+   - Under 10: no nudge
 
 ### → archive/
 1. ✅ Update session history noting cancellation

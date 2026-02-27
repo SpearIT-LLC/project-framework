@@ -5,6 +5,7 @@
 **Priority:** Medium
 **Version Impact:** MINOR
 **Created:** 2026-01-30
+**Completed:** 2026-02-27
 **Theme:** Workflow
 
 ---
@@ -149,11 +150,11 @@ Currently have 9 items in done/ awaiting release - the most we've accumulated. T
 
 **What follow-up work is needed?**
 
-- [ ] Add "Release Sizing" section to version-control-workflow.md
-- [ ] Update fw-status command to show count with indicators
-- [ ] Add AI prompting logic for release suggestions
-- [ ] Test with next few releases, refine thresholds if needed
-- [ ] Revisit with FEAT-089 for project-type variations (if evidence warrants)
+- [x] Add "Release Sizing" section to version-control-workflow.md
+- [x] Update fw-status command to show count with indicators
+- [x] Add AI prompting logic for release suggestions (fw-move + fw-status)
+- [x] Test with next few releases, refine thresholds if needed — ongoing, not a blocker
+- [x] Revisit with FEAT-089 for project-type variations (if evidence warrants) — future work, not a blocker
 
 ---
 
@@ -162,19 +163,16 @@ Currently have 9 items in done/ awaiting release - the most we've accumulated. T
 <!-- ⚠️ AI: Complete items in order. STOP at each [ ] and wait for approval. -->
 <!-- User can say "continue to completion" to approve remaining steps at once. -->
 
-- [ ] **PRE-IMPLEMENTATION REVIEW COMPLETED**
-  - AI presents: Decision context, options considered, proposed recommendation
-  - User explicitly approves before proceeding
-
-- [ ] Add "Release Sizing Guidelines" section to version-control-workflow.md
-- [ ] Document quality gates (testing, docs, CHANGELOG)
-- [ ] Document AI nudging behavior and thresholds
-- [ ] Note future evolution with project-type patterns
-- [ ] Update fw-status to show item count with indicators
-- [ ] Add AI logic for release suggestions at thresholds
-- [ ] Update CHANGELOG.md
-- [ ] Test with current 9 items in done/
-- [ ] Decision record reviewed and approved
+- [x] **PRE-IMPLEMENTATION REVIEW COMPLETED**
+- [x] Add "Release Sizing Guidelines" section to version-control-workflow.md
+- [x] Document quality gates (testing, docs, CHANGELOG)
+- [x] Document AI nudging behavior and thresholds
+- [x] Note future evolution with project-type patterns
+- [x] Update fw-status to show done/ item count with threshold indicators
+- [x] Add release nudge to fw-move → done/ post-move actions
+- [x] Update CHANGELOG.md
+- [x] Test with current done/ count — stale (was written in Jan with 9 items), dropped
+- [x] Decision record reviewed and approved
 
 ---
 

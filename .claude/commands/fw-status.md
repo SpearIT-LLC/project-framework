@@ -33,6 +33,8 @@ Workflow Summary:
   Doing:     1 item  (limit: 2) ✅
   Blocked:   1 item  ⚠ Waiting on external party
   Done:      1 item  ⚠ Ready for release
+  Done:     10 items ⚠ Ready for release — consider releasing soon
+  Done:     15 items 🔴 Ready for release — strongly recommend releasing
 
 Currently In Progress:
   - FEAT-018: Claude Command Framework (+6 sub-items)
@@ -55,6 +57,14 @@ FEAT-018: Claude Command Framework
 - ✅ Under WIP limit (can start more work)
 - ⚠ At WIP limit, items in done/ awaiting release, or items in blocked/ waiting on external parties
 - ❌ Over WIP limit (needs attention)
+
+### Done/ Release Sizing Thresholds
+
+| Count | Indicator | Message |
+|-------|-----------|---------|
+| 1–9 | ⚠ | Ready for release |
+| 10–14 | ⚠ | Ready for release — consider releasing soon |
+| 15+ | 🔴 | Ready for release — strongly recommend releasing |
 
 ## Data Sources
 

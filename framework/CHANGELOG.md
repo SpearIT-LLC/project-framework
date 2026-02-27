@@ -15,7 +15,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-None
+- **DECISION-097: Release Sizing Policy**
+  - Added "Release Sizing Guidelines" section to `version-control-workflow.md`
+  - `/fw-status` now shows threshold indicators on done/ count (⚠ at 10+, 🔴 at 15+)
+  - `/fw-move → done/` now nudges when done/ count exceeds thresholds
 
 ### Changed
 
