@@ -192,7 +192,7 @@ Display:
 **Requires:**
 - DECISION-097: Release Sizing Policy (for size warnings)
 - TECH-079: Empty Release Guard (for validation)
-- Artifacts pattern (TECH-097) - for moving artifact folders
+- Artifacts pattern (TECH-151) - for moving artifact folders
 
 **Blocks:**
 - None (enhancement, doesn't block other work)
@@ -375,7 +375,7 @@ Command enforces sizing policy:
 - `framework/docs/process/version-control-workflow.md` - Manual release checklist (lines 112-149)
 - DECISION-097: Release Sizing Policy
 - TECH-079: Empty Release Guard
-- TECH-097: Artifacts Pattern (for folder movement)
+- TECH-151: Artifacts Pattern (for folder movement)
 
 ---
 

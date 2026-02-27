@@ -1,6 +1,6 @@
 # Tech Debt: Document Artifacts Pattern
 
-**ID:** TECH-097
+**ID:** TECH-151
 **Type:** Tech Debt
 **Priority:** High
 **Version Impact:** MINOR
