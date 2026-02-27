@@ -483,11 +483,26 @@ When work items are cancelled, outdated, or superseded, they move to `history/ar
 | Work no longer needed | Cancel | archive/ |
 | Requirements changed fundamentally | Cancel | archive/ |
 | Superseded by different approach | Cancel | archive/ |
+| Problem solved by another work item | Resolve | done/ |
 | Lower priority, may do later | Deprioritize | backlog/ |
 | Blocked by external party | Block | blocked/ |
 | Blocked temporarily (internal) | Pause | todo/ or backlog/ |
 
-**Rule of thumb:** If the work item as written will *never* be done, cancel it. If it *might* be done later, deprioritize it.
+**Rule of thumb:** If the work item as written will *never* be done, cancel it. If it *might* be done later, deprioritize it. If the underlying problem was solved by another item, resolve it to `done/`.
+
+#### Resolving Items (Problem Solved Elsewhere)
+
+When a work item's goal is achieved by another item — without this item executing any work — it moves to `done/` rather than `archive/`. The problem is solved; only the ticket is redundant.
+
+**When to use:** Investigation tickets, tech debt items, or bugs where a separate feature or fix addressed the root cause.
+
+Add this line to the Summary section:
+
+```markdown
+**Resolved by:** ITEM-NNN
+```
+
+Then move to `done/` with a commit: `git commit -m "chore: Close ITEM-NNN — resolved by ITEM-NNN"`
 
 #### Required Cancellation Metadata
 

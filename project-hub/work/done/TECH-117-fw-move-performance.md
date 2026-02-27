@@ -12,6 +12,8 @@
 
 ## Summary
 
+**Resolved by:** FEAT-145
+
 Investigate and optimize /fw-move command performance to reduce user friction and improve workflow experience.
 
 ---
