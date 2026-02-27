@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.0.1] - 2026-02-27
+
+### Added
+- **TECH-116: Commit prompt after work item creation**
+  - `/new` command now offers to commit the new work item immediately after creation
+  - Prompt defaults to yes; user can decline to skip and leave file staged
+  - Commit message auto-generated: `feat: Add ITEM-NNN - [title]`
+
+---
+
 ## [1.0.0] - 2026-02-24
 
 ### Added

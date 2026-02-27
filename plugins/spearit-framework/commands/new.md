@@ -269,7 +269,22 @@ git add project-hub/work/backlog/{filename}
 
 Handle errors gracefully (warn, don't fail).
 
-### Step 8: Confirm Success
+### Step 8: Offer to Commit
+
+Prompt the user — committing is recommended but not required:
+
+```
+Commit ITEM-NNN to git? (Y/n):
+```
+
+If yes (or Enter):
+```bash
+git commit -m "feat: Add ITEM-NNN - [title]"
+```
+
+If no — skip silently. The file remains staged.
+
+### Step 9: Confirm Success
 
 ```
 ✓ Created FEAT-043: Add export feature
@@ -323,6 +338,7 @@ Work item ready! Use /spearit-framework-light:move FEAT-043 todo when ready to c
 - Read: Read template files from templates/ directory
 - Write: Create work item file
 - Bash: Git add file
+- Bash: Git commit (optional, user-confirmed)
 - (NO AskUserQuestion - just converse naturally)
 
 **Conversation style:**

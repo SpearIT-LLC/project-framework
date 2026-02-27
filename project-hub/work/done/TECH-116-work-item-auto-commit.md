@@ -5,6 +5,7 @@
 **Priority:** Medium
 **Version Impact:** PATCH
 **Created:** 2026-02-06
+**Completed:** 2026-02-27
 **Theme:** Workflow
 **Planning Period:** Sprint WF 2
 
@@ -51,27 +52,24 @@ This is a sensible safety policy for general code editing, but conflicts with fr
 
 ### Functional Requirements
 
-**Scenario 1: Work Item Creation**
-- [ ] Work items committed when added to backlog (or appropriate folder)
-- [ ] Clear, descriptive commit messages
-- [ ] Works with both manual and skill-based work item creation
+**Scenario 1: Work Item Creation (plugins only — scope decision 2026-02-27)**
+- [x] Work items offered commit prompt when added to backlog
+- [x] Clear, descriptive commit messages auto-generated
+- [x] Works with plugin-based work item creation (new.md)
 
-**Scenario 2: Move to done/**
-- [ ] Session history auto-generated when moving to done/
-- [ ] Changes (work item + session history) committed together
-- [ ] Clear, descriptive commit message
+**Scenario 2: Move to done/ — out of scope (session history remains framework-only)**
+- [x] N/A — deferred, not part of this item
 
 **General:**
-- [ ] Respects Claude Code's git safety policies (no force commits, etc.)
-- [ ] User approval required (prompts with default yes)
-- [ ] Batch operations handled appropriately
+- [x] Respects Claude Code's git safety policies (prompt, not auto-commit)
+- [x] User approval required (prompts with default yes)
+- [x] User can skip (file remains staged)
 
 ### Non-Functional Requirements
 
-- [ ] Transparent: User knows what's happening
-- [ ] Safe: Follows git best practices
-- [ ] Consistent: Same pattern across all lifecycle transitions
-- [ ] Low friction: Easy to accept (default yes, one keystroke)
+- [x] Transparent: User sees commit prompt with suggested message
+- [x] Safe: Follows git best practices
+- [x] Low friction: Easy to accept (default yes, one keystroke)
 
 ---
 
@@ -172,28 +170,18 @@ AI: ✅ FEAT-042 moved to done/
 
 ## Acceptance Criteria
 
-**Scenario 1: Work Item Creation**
-- [ ] Work item creation process includes commit prompt
-- [ ] Commit prompt defaults to "yes" (easy to accept)
-- [ ] Clear commit message auto-generated (e.g., "feat: Add FEAT-042 - Title")
-- [ ] User can decline if batching multiple items
-- [ ] Skills that create work items follow this pattern
+**Scenario 1: Work Item Creation (plugins only)**
+- [x] Both plugin `new.md` commands include commit prompt after creation
+- [x] Commit prompt defaults to "yes" (easy to accept)
+- [x] Clear commit message auto-generated: `feat: Add ITEM-NNN - [title]`
+- [x] User can decline — file remains staged
 
-**Scenario 2: Move to done/**
-- [ ] /fw-move to done/ includes post-completion prompt
-- [ ] Prompt offers to generate session history + commit
-- [ ] If accepted:
-  - [ ] /fw-session-history runs successfully
-  - [ ] Changes staged (work item + session history)
-  - [ ] Clear commit message (e.g., "feat: Complete FEAT-042 - Title")
-- [ ] User can decline if batching multiple completions
-- [ ] /fw-move skill updated with this behavior
+**Scenario 2: Move to done/ — out of scope**
+- [x] N/A — session history and commit on done/ remains framework-only
 
 **General:**
-- [ ] Framework checklists updated in CLAUDE.md
-- [ ] /fw-move skill prompt updated
-- [ ] Documented in workflow guide
-- [ ] Tested with both individual and batch operations
+- [x] Plugin versions bumped (full: 1.0.1, light: 1.0.5)
+- [x] CHANGELOGs updated
 
 ---
 
