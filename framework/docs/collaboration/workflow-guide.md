@@ -19,12 +19,13 @@ For quick reference, see [CLAUDE.md](../../../CLAUDE.md) for summaries and check
 1. [Development Workflow Phases](#development-workflow-phases)
 2. [Research Phase](#research-phase)
 3. [Workflow Transitions](#workflow-transitions)
-4. [Planning Guidelines](#planning-guidelines)
-5. [Documentation Standards](#documentation-standards)
-6. [Git Workflow](#git-workflow)
-7. [Architecture Decision Records (ADRs)](#architecture-decision-records-adrs)
-8. [AI Roles and Workflow](#ai-roles-and-workflow)
-9. [Collaboration Practices](#collaboration-practices)
+4. [Work Item Artifacts](#work-item-artifacts)
+5. [Planning Guidelines](#planning-guidelines)
+6. [Documentation Standards](#documentation-standards)
+7. [Git Workflow](#git-workflow)
+8. [Architecture Decision Records (ADRs)](#architecture-decision-records-adrs)
+9. [AI Roles and Workflow](#ai-roles-and-workflow)
+10. [Collaboration Practices](#collaboration-practices)
 
 ---
 
@@ -718,6 +719,83 @@ To override this check, use: git commit --no-verify
 
 **Historical Context:**
 This system was implemented via TECH-094 after FEAT-091 was committed with incomplete metadata. The root cause: fw-move *instructed* Claude to follow checklists but didn't *enforce* compliance mechanically. The three-layer system ensures policies are followed reliably, not just documented.
+
+---
+
+## Work Item Artifacts
+
+Work items can have an associated **artifact folder** — a subfolder named after the work item ID that travels with the work item through the workflow.
+
+### Overview
+
+```
+project-hub/work/doing/
+  TECH-094-fw-move-enforcement.md     # Work item file
+  TECH-094/                            # Artifact folder
+    test-001-valid-item.md
+    test-002-missing-status.md
+    research-notes.md
+    prototype-code.ps1
+```
+
+The folder name matches the work item ID exactly. When the work item moves, the folder moves with it — hence "folder-follows-parent."
+
+### When to Use Artifact Folders
+
+Create an artifact folder when a work item has associated files that belong to it specifically:
+
+- **Test artifacts** — test cases and validation files (e.g., TECH-094 test suite)
+- **Work-in-progress drafts** — notes, outlines, experiments during development
+- **Deliverable outputs** — reports, diagrams, generated content
+- **Prototypes and experiments** — scripts, code snippets, proof-of-concept files
+- **Supporting material** — any file tied to the work item's lifecycle
+
+Artifact folders support any file type: markdown, code, images, data files, etc.
+
+**Not every work item needs an artifact folder.** Create one when it's useful, not by default.
+
+### Lifecycle Rules
+
+| Event | Action |
+|-------|--------|
+| Create | `mkdir project-hub/work/doing/WORK-ID/` — any time during work |
+| Move with parent | `git mv project-hub/work/doing/WORK-ID* project-hub/work/done/` — the glob matches both the `.md` file and the folder |
+| Delete with parent | `git rm -r project-hub/work/doing/WORK-ID/` — when deleting the work item |
+| Archive with parent | Folder moves to `releases/` along with the work item |
+
+The glob pattern `WORK-ID*` is the key — it captures `WORK-ID-description.md` and `WORK-ID/` in a single operation.
+
+### Exceptions
+
+Some files belong at a higher level rather than in a work item artifact folder:
+
+- **Cross-cutting research** — findings that apply to multiple work items go in `project-hub/research/`
+- **Stakeholder reports** — may need a dedicated `project-hub/reports/` location (revisit with FEAT-015)
+- **Large files and binaries** — strategy deferred to a future work item; for now, use judgment and consider `.gitignore` patterns
+
+### Pre-commit Hook Behavior
+
+The workflow enforcement hook (`Validate-WorkItems.ps1`) validates `.md` files that are **directly in `done/`**. It intentionally skips files inside `done/WORK-ID/` subfolders.
+
+**Rationale:** Artifact files are not work items. They can be any file type and do not need to satisfy work item metadata requirements. Only the parent `.md` file is validated.
+
+This means you can place any file type in an artifact folder without triggering validation errors.
+
+### Example: TECH-094
+
+TECH-094 (Workflow Enforcement System) demonstrates this pattern. Its test files live in `project-hub/work/done/TECH-094/`:
+
+```
+done/
+  TECH-094-fw-move-enforcement.md     # Work item (validated by hook)
+  TECH-094/                            # Artifact folder (skipped by hook)
+    test-001-valid-item.md
+    test-002-missing-status.md
+    test-003-missing-completed.md
+    test-004-invalid-transition.md
+    test-005-placeholder-text.md
+    test-006-wip-limit.md
+```
 
 ---
 

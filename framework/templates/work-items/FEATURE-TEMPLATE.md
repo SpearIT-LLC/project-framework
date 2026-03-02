@@ -248,6 +248,15 @@
 
 ---
 
+<!-- Optional: Uncomment if this work item has an associated artifact folder (WORK-ID/)
+## Artifacts
+
+- `filename.md` - [Description of artifact]
+- `script.ps1` - [Description of artifact]
+
+See workflow-guide.md#work-item-artifacts for pattern details.
+-->
+
 ## Notes
 
 [Any additional notes, decisions, or context that doesn't fit elsewhere]

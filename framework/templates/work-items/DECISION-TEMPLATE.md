@@ -103,6 +103,15 @@
 
 ---
 
+<!-- Optional: Uncomment if this work item has an associated artifact folder (WORK-ID/)
+## Artifacts
+
+- `filename.md` - [Description of artifact]
+- `diagram.png` - [Description of artifact]
+
+See workflow-guide.md#work-item-artifacts for pattern details.
+-->
+
 ## Related
 
 - [Links to related work items, documentation, or discussions]

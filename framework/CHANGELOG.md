@@ -15,6 +15,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- **TECH-151: Work Item Artifacts Pattern**
+  - Documented "folder-follows-parent" artifact pattern in `workflow-guide.md` (new "Work Item Artifacts" section)
+  - `fw-move` now checks for and moves artifact folders (`WORK-ID/`) when moving a work item
+  - Pre-commit hook behavior for artifact subfolders documented
+  - Optional `## Artifacts` section added to all 5 work item templates
+
 - **DECISION-097: Release Sizing Policy**
   - Added "Release Sizing Guidelines" section to `version-control-workflow.md`
   - `/fw-status` now shows threshold indicators on done/ count (⚠ at 10+, 🔴 at 15+)

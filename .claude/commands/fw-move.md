@@ -75,6 +75,22 @@ For all other targets — no pre-checks needed. The script handles the rest.
 bash framework/scripts/move.sh <ids> <target> [--force]
 ```
 
+After the script succeeds, check for an artifact folder and move it if present:
+
+```bash
+# For each moved item, check for artifact folder
+SOURCE_DIR="project-hub/work/<source-folder>"
+TARGET_DIR="project-hub/work/<target-folder>"
+ARTIFACT_DIR="${SOURCE_DIR}/${ITEM_ID}"
+
+if [ -d "$ARTIFACT_DIR" ]; then
+  git mv "$ARTIFACT_DIR" "$TARGET_DIR/"
+  echo "Moved artifact folder ${ITEM_ID}/ to ${TARGET_DIR}/"
+fi
+```
+
+Report to the user if an artifact folder was moved (e.g., "Also moved artifact folder TECH-094/ to done/").
+
 ---
 
 ## Post-Move (AI)
