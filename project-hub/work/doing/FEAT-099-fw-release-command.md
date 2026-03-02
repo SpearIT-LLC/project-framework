@@ -7,7 +7,7 @@
 **Created:** 2026-01-30
 **Theme:** Workflow
 
-**Depends On:** DECISION-097, TECH-079
+**Depends On:** DECISION-097
 
 ---
 
@@ -277,18 +277,18 @@ Display:
 <!-- ⚠️ AI: Complete items in order. STOP at each [ ] and wait for approval. -->
 <!-- User can say "continue to completion" to approve remaining steps at once. -->
 
-- [ ] **PRE-IMPLEMENTATION REVIEW COMPLETED**
+- [x] **PRE-IMPLEMENTATION REVIEW COMPLETED**
   - AI presents: Command behavior, validation logic, file updates, alternatives
   - User explicitly approves before proceeding
 
-- [ ] Phase 1: Create fw-release.md skill
-- [ ] Implement pre-release validation (empty guard, size warning)
-- [ ] Implement version calculation from work item metadata
-- [ ] Implement PROJECT-STATUS.md update logic
-- [ ] Implement CHANGELOG.md update logic
-- [ ] Implement git tag creation
-- [ ] Implement work item archival (files + folders)
-- [ ] Implement release summary display
+- [x] Phase 1: Create fw-release.md skill
+- [x] Implement pre-release validation (doing/ guard, empty done/ guard, cross-product warning)
+- [x] Implement version calculation from work item metadata
+- [x] Implement PROJECT-STATUS.md update logic
+- [x] Implement CHANGELOG.md update logic (with synthesis fallback when CHANGELOG Notes absent)
+- [x] Implement git tag creation
+- [x] Implement work item archival (files + folders, per-product archive path)
+- [x] Implement release summary display (advisory push note, not auto-push)
 - [ ] Test with 1 item, 8 items, 15 items (size warning)
 - [ ] Test with artifacts folders
 - [ ] Document in version-control-workflow.md
@@ -331,15 +331,17 @@ If issues found, continue using manual release process from version-control-work
 
 ```markdown
 ### Added
-- `/fw-release` command - Automated release process
-  - Validates done/ folder not empty (TECH-079)
-  - Calculates version from work item metadata
+- `/fw-release [product-id]` command - Automated release process
+  - Blocks if doing/ has in-progress work (prevents out-of-sync releases)
+  - Blocks if done/ is empty
+  - Detects cross-product items and recommends archive ownership by priority
+  - Calculates version from work item metadata (highest Version Impact wins)
+  - Synthesizes CHANGELOG entries from work items (uses CHANGELOG Notes section if present, otherwise reconstructs from Summary)
   - Warns if release size exceeds recommendations (DECISION-097)
   - Updates PROJECT-STATUS.md and CHANGELOG.md
-  - Creates git tag
-  - Archives work items to history/releases/vX.Y.Z/
-  - Moves artifact folders with parent work items
-  - Displays release summary
+  - Creates annotated git tag; advisory push note (no auto-push)
+  - Archives work items + artifact folders to per-product path (e.g., history/releases/framework/vX.Y.Z/)
+  - Product archive paths configured in framework.yaml release.products[]
 ```
 
 ---

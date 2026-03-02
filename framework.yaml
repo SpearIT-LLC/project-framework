@@ -6,6 +6,26 @@ project:
   type: framework
   deliverable: documentation
 
+# Release configuration — used by /fw-release command
+# fw-release              → uses default_product archive_path
+# fw-release plugin-full  → uses plugin-full archive_path
+# fw-release plugin-light → uses plugin-light archive_path
+release:
+  default_product: framework
+  products:
+    - id: framework
+      label: "SpearIT Project Framework"
+      priority: 1
+      archive_path: "history/releases/framework"
+    - id: plugin-full
+      label: "SpearIT Framework Full Plugin"
+      priority: 2
+      archive_path: "history/releases/plugin-full"
+    - id: plugin-light
+      label: "SpearIT Framework Light Plugin"
+      priority: 3
+      archive_path: "history/releases/plugin-light"
+
 policies:
   workflow: framework/docs/collaboration/workflow-guide.md
   onTransition: framework/docs/collaboration/workflow-guide.md#workflow-transitions

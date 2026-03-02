@@ -88,4 +88,94 @@ sections to all 5 work item templates, and updated CHANGELOG.md.
 
 ---
 
+---
+
+## Work Completed (Afternoon Session)
+
+### FEAT-099: /fw-release Command — Phase 1 Implementation
+
+- Opened FEAT-099 for review; identified stale dependency on TECH-079
+- Removed TECH-079 from `Depends On` — FEAT-099 absorbs the empty guard behavior entirely;
+  TECH-079 is redundant once the command exists
+- Moved FEAT-099 → `doing/`
+- Conducted extended pre-implementation design discussion covering 5 open questions before
+  writing the command
+- Created `.claude/commands/fw-release.md` — Phase 1 implementation (8-step process)
+- Added `release` section to `framework.yaml` with multi-product archive path configuration
+- Updated FEAT-099 implementation checklist (Phase 1 items marked complete) and CHANGELOG Notes
+
+---
+
+## Decisions Made (Afternoon Session)
+
+1. **TECH-079 dependency removed:**
+   - FEAT-099 implements the empty done/ guard as FR1 — TECH-079 (a doc-only item) becomes
+     moot when the command exists; dependency removed to unblock the move to doing/
+
+2. **CHANGELOG Notes missing → synthesize from work item (normal case):**
+   - Only 2 of 7 current done/ items have a `## CHANGELOG Notes` section — reconstruction
+     from Summary is the normal path, not the exception
+   - Command checks for the section first, falls back to synthesis; presents result to user
+     for review before writing anything to CHANGELOG.md
+
+3. **Multi-product archive paths — `products[]` in `framework.yaml`:**
+   - `fw-release [product-id]` argument sets archive path segment; no argument uses `default_product`
+   - Consistent `products[]` structure for both single and multi-product repos
+     (single-product = one entry in the list)
+   - `default_product: framework` set for this repo
+
+4. **Cross-product items — archive to highest-priority product:**
+   - Items touching multiple products archive under the highest-priority product
+     (lowest `priority` number in `framework.yaml`)
+   - Both affected products' CHANGELOGs get the entry
+   - AI recommends split at release time; user confirms before anything is written
+
+5. **doing/ non-empty → block release (bypassable with --force):**
+   - Rationale: half-implemented work not recorded = out-of-sync release
+   - Mixed done/ items (cross-product) generate a warning + recommendation, not a hard block
+   - Empty done/ is a hard block with no override
+
+6. **No auto-push:**
+   - Command ends with advisory: "Ready to push to GitHub: `git push origin main --tags`"
+   - Developer decides when/whether to push; different teams have different opinions on
+     AI-initiated pushes
+
+7. **done/ item count correction:**
+   - move.sh output `8/∞` counted the `.gitkeep` file — actual count is 7 work items
+   - Morning session history was already correct ("7 other items")
+
+---
+
+## Files Created (Afternoon Session)
+
+- `.claude/commands/fw-release.md` — Phase 1 `/fw-release` command (8 steps: config read,
+  validation, version calc, CHANGELOG build, file updates, git tag, archival, summary)
+
+## Files Modified (Afternoon Session)
+
+- `project-hub/work/todo/FEAT-099-fw-release-command.md` — removed TECH-079 from Depends On
+- `project-hub/work/doing/FEAT-099-fw-release-command.md` — Phase 1 checklist items marked
+  complete; CHANGELOG Notes updated to reflect actual implementation
+- `framework.yaml` — added `release` section with `default_product: framework` and
+  `products[]` entries for framework, plugin-full, plugin-light
+
+## Files Moved (Afternoon Session)
+
+- `project-hub/work/todo/FEAT-099-fw-release-command.md` → `project-hub/work/doing/`
+
+---
+
+## Current State (End of Day)
+
+### In done/ (awaiting release)
+- TECH-151: Document Artifacts Pattern (completed this morning)
+- DECISION-097: Release Sizing Policy
+- FEAT-145, FEAT-147, FEAT-150, TECH-116, TECH-117 (from prior sessions)
+- 7 items total
+
+### In doing/
+- FEAT-099: /fw-release Command (Phase 1 complete — testing + docs remain)
+
+---
+
 **Last Updated:** 2026-03-02
