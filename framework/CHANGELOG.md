@@ -31,6 +31,26 @@ None
 
 ---
 
+## [5.4.0] - 2026-03-03
+
+### Added
+
+- **FEAT-153: `/fw-release` Full Pipeline** — `/fw-release` now runs the full pipeline including distribution build
+  - Invokes `build_script` from `framework.yaml` product config after archiving work items
+  - Build output committed as `chore: Build distribution artifact vX.Y.Z`
+  - Build failure is non-fatal — warns and continues to summary
+  - No `build_script` configured → step silently skipped (backwards compatible)
+
+### Changed
+
+- **TECH-154: `/fw-release` Command Portability** — Replaced all hardcoded project-specific values in `/fw-release` (paths, product names, version strings) with variables derived from `framework.yaml` and the calculated version. Command now works on any project without manual edits. Adds optional `status_file`, `changelog_file`, and `build_script` per product in `framework.yaml`; absent fields fall back to conventions.
+
+### Fixed
+
+- **BUG-152: `/fw-release` Archival Script Bugs** — Fixed two bugs in the Step 7 archival loop discovered during v5.3.0 release: replaced `grep -oP` with `grep -oE` for Git Bash/Windows compatibility; added file existence check and `git mv` error handling to prevent `done/` subfolder appearing in release archive.
+
+---
+
 ## [5.3.0] - 2026-03-02
 
 ### Added
