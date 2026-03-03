@@ -7,7 +7,7 @@
 **Created:** 2026-03-02
 **Theme:** Workflow
 
-**Depends On:** BUG-152
+**Depends On:** BUG-152, TECH-154
 
 ---
 

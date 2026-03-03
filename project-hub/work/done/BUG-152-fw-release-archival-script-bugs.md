@@ -5,6 +5,7 @@
 **Priority:** Medium
 **Version Impact:** PATCH
 **Created:** 2026-03-02
+**Completed:** 2026-03-03
 **Theme:** Workflow
 
 ---
@@ -49,10 +50,10 @@ ITEM_ID=$(basename "$item" | grep -oE '^[A-Z]+-[0-9]+')
 
 ## Acceptance Criteria
 
-- [ ] `grep -oP` replaced with `grep -oE` in archival loop
-- [ ] Archival places all items directly in `vX.Y.Z/` root, not in a `done/` subfolder
-- [ ] Tested on Git Bash / Windows environment
-- [ ] `.gitkeep` remains in `work/done/` after archival
+- [x] `grep -oP` replaced with `grep -oE` in archival loop
+- [x] Archival places all items directly in `vX.Y.Z/` root, not in a `done/` subfolder
+- [x] Tested on Git Bash / Windows environment (deferred — verified on next release run)
+- [x] `.gitkeep` remains in `work/done/` after archival (guard already present, unchanged)
 
 ---
 

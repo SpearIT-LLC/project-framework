@@ -241,8 +241,9 @@ mkdir -p project-hub/history/releases/framework/v5.3.0
 # Move each work item and its artifact folder (if present)
 for item in project-hub/work/done/*.md; do
   [ "$(basename $item)" = ".gitkeep" ] && continue
-  git mv "$item" project-hub/history/releases/framework/v5.3.0/
-  ITEM_ID=$(basename "$item" | grep -oP '^[A-Z]+-\d+')
+  [ ! -f "$item" ] && continue
+  git mv "$item" project-hub/history/releases/framework/v5.3.0/ || { echo "⚠️  Could not move $item — skipping"; continue; }
+  ITEM_ID=$(basename "$item" | grep -oE '^[A-Z]+-[0-9]+')
   ARTIFACT_DIR="project-hub/work/done/${ITEM_ID}"
   if [ -d "$ARTIFACT_DIR" ]; then
     git mv "$ARTIFACT_DIR" project-hub/history/releases/framework/v5.3.0/
