@@ -1,6 +1,6 @@
 # SpearIT Project Framework - Project Status
 
-**Current Version:** v5.2.0 (2026-02-19)
+**Current Version:** v5.3.0 (2026-03-02)
 **Status:** Production-ready
 
 ---

@@ -15,16 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- **TECH-151: Work Item Artifacts Pattern**
-  - Documented "folder-follows-parent" artifact pattern in `workflow-guide.md` (new "Work Item Artifacts" section)
-  - `fw-move` now checks for and moves artifact folders (`WORK-ID/`) when moving a work item
-  - Pre-commit hook behavior for artifact subfolders documented
-  - Optional `## Artifacts` section added to all 5 work item templates
-
-- **DECISION-097: Release Sizing Policy**
-  - Added "Release Sizing Guidelines" section to `version-control-workflow.md`
-  - `/fw-status` now shows threshold indicators on done/ count (⚠ at 10+, 🔴 at 15+)
-  - `/fw-move → done/` now nudges when done/ count exceeds thresholds
+None
 
 ### Changed
 
@@ -37,6 +28,40 @@ None
 ### Fixed
 
 None
+
+---
+
+## [5.3.0] - 2026-03-02
+
+### Added
+
+- **FEAT-099: `/fw-release [product-id]`** — Automated release process
+  - Blocks if `doing/` has in-progress work (prevents out-of-sync releases)
+  - Blocks if `done/` is empty
+  - Detects cross-product items and recommends archive ownership by priority
+  - Calculates version from work item metadata (highest Version Impact wins)
+  - Synthesizes CHANGELOG entries from work items (uses CHANGELOG Notes if present, otherwise reconstructs from Summary)
+  - Warns if release size exceeds recommendations (DECISION-097)
+  - Updates `PROJECT-STATUS.md` and `CHANGELOG.md`
+  - Creates annotated git tag; advisory push note (no auto-push)
+  - Archives work items + artifact folders to per-product path
+  - Product archive paths configured in `framework.yaml release.products[]`
+- **FEAT-145: `/fw-move` Script Engine** — Upgraded to `move.sh` execution engine with batch ID support (`/fw-move "FEAT-136, FEAT-137" todo`), bare numeric IDs, child item handling, any-extension support, and untracked file fallback. Significant performance improvement through script-based execution.
+- **FEAT-147: `/fw-swarm` Local Command** — Added as a local framework command available to all framework-based projects, mirroring the full plugin experience. Added to framework and starter template command directories.
+- **FEAT-150: `/fw-swarm` Multi-Mode Support** — Extended to support six context-aware modes: `project` (kick-off), `incident` (triage), `decision` (structured review), `architecture` (design stress-test), `risk` (identify and document), `research` (evaluate external tools/libraries). Mode dispatched via natural language, explicit argument, or user prompt.
+
+### Changed
+
+- **DECISION-097: Release Sizing Policy** — Established guidelines for release size: sweet spot 3–8 items, nudge at 10, strong recommendation at 15+. AI suggests at thresholds, never blocks. `fw-status` updated to show `done/` count with threshold indicators.
+- **TECH-151: Work Item Artifacts Pattern** — Documented the folder-follows-parent artifacts pattern for work item associated files. Updated `workflow-guide.md` and `fw-move.md` to handle artifact folder movement alongside parent items.
+
+### Removed
+
+None
+
+### Fixed
+
+- **TECH-116: Work Item Lifecycle Commit Prompts** — Transitions now prompt for commit at creation and completion. Auto-generated commit messages, default yes. Reduces risk of lost work while respecting git safety policy.
 
 ---
 
