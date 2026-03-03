@@ -23,10 +23,14 @@ release:
       label: "SpearIT Framework Full Plugin"
       priority: 2
       archive_path: "history/releases/plugin-full"
+      status_file: "plugins/spearit-framework/PROJECT-STATUS.md"
+      changelog_file: "plugins/spearit-framework/CHANGELOG.md"
     - id: plugin-light
       label: "SpearIT Framework Light Plugin"
       priority: 3
       archive_path: "history/releases/plugin-light"
+      status_file: "plugins/spearit-framework-light/PROJECT-STATUS.md"
+      changelog_file: "plugins/spearit-framework-light/CHANGELOG.md"
 
 policies:
   workflow: framework/docs/collaboration/workflow-guide.md
