@@ -44,25 +44,25 @@ Manually follow 20-step checklist in version-control-workflow.md. Prone to error
 
 ### Functional Requirements
 
-- [ ] FR1: Validate done/ folder has at least one work item (TECH-079)
-- [ ] FR2: Calculate next version from work item metadata (highest Version Impact)
-- [ ] FR3: Warn if release size exceeds recommendations (DECISION-097)
-- [ ] FR4: Update PROJECT-STATUS.md with new version and date
-- [ ] FR5: Update CHANGELOG.md (move Unreleased → vX.Y.Z, add work items)
-- [ ] FR6: Create git commit with release message
-- [ ] FR7: Create annotated git tag (vX.Y.Z)
-- [ ] FR8: Move work items from done/ to history/releases/vX.Y.Z/
-- [ ] FR9: Move work item artifacts folders with parent items
-- [ ] FR10: Optionally push to remote (prompt user)
-- [ ] FR11: Display release summary and next steps
+- [x] FR1: Validate done/ folder has at least one work item (TECH-079)
+- [x] FR2: Calculate next version from work item metadata (highest Version Impact)
+- [x] FR3: Warn if release size exceeds recommendations (DECISION-097)
+- [x] FR4: Update PROJECT-STATUS.md with new version and date
+- [x] FR5: Update CHANGELOG.md (move Unreleased → vX.Y.Z, add work items)
+- [x] FR6: Create git commit with release message
+- [x] FR7: Create annotated git tag (vX.Y.Z)
+- [x] FR8: Move work items from done/ to history/releases/vX.Y.Z/
+- [x] FR9: Move work item artifacts folders with parent items
+- [x] FR10: Optionally push to remote (prompt user)
+- [x] FR11: Display release summary and next steps
 
 ### Non-Functional Requirements
 
-- [ ] Accuracy: Consistent results every time, no missed steps
-- [ ] Repeatability: Same process for every release, deterministic behavior
-- [ ] Security: No credential exposure, safe path handling
-- [ ] Compatibility: Works with existing manual process, backward compatible
-- [ ] Documentation: Clear usage guide, examples, troubleshooting
+- [x] Accuracy: Consistent results every time, no missed steps
+- [x] Repeatability: Same process for every release, deterministic behavior
+- [x] Security: No credential exposure, safe path handling
+- [x] Compatibility: Works with existing manual process, backward compatible
+- [x] Documentation: Clear usage guide, examples, troubleshooting
 
 ---
 
@@ -207,28 +207,28 @@ Display:
 
 ### Unit Tests
 
-- [ ] Test: Empty done/ folder → blocks with error
-- [ ] Test: Version calculation (MAJOR > MINOR > PATCH)
-- [ ] Test: CHANGELOG.md parsing and updating
-- [ ] Test: PROJECT-STATUS.md version update
-- [ ] Test: Work item archival (files and folders)
+- [x] Test: Empty done/ folder → blocks with error
+- [x] Test: Version calculation (MAJOR > MINOR > PATCH)
+- [x] Test: CHANGELOG.md parsing and updating
+- [x] Test: PROJECT-STATUS.md version update
+- [x] Test: Work item archival (files and folders)
 
 ### Integration Tests
 
-- [ ] Test: Full release with 1 item
-- [ ] Test: Full release with 8 items (sweet spot)
-- [ ] Test: Release with 15 items (triggers size warning)
-- [ ] Test: Release with artifacts folders (move with parent)
-- [ ] Test: Dry-run mode (preview without executing)
+- [x] Test: Full release with 1 item
+- [x] Test: Full release with 8 items (sweet spot)
+- [x] Test: Release with 15 items (triggers size warning)
+- [x] Test: Release with artifacts folders (move with parent)
+- [x] Test: Dry-run mode (preview without executing)
 
 ### Edge Cases
 
-- [ ] Edge: done/ has only artifact folders, no work items
-- [ ] Edge: Work item missing CHANGELOG notes section
-- [ ] Edge: Current version is v1.9.9 → v2.0.0 (MAJOR bump)
-- [ ] Edge: Git tag already exists (duplicate release)
-- [ ] Edge: Uncommitted changes in working directory
-- [ ] Edge: Remote push fails (network issue)
+- [x] Edge: done/ has only artifact folders, no work items
+- [x] Edge: Work item missing CHANGELOG notes section
+- [x] Edge: Current version is v1.9.9 → v2.0.0 (MAJOR bump)
+- [x] Edge: Git tag already exists (duplicate release)
+- [x] Edge: Uncommitted changes in working directory
+- [x] Edge: Remote push fails (network issue)
 
 ### Manual Testing Steps
 
@@ -259,16 +259,16 @@ Display:
 
 ### Files to Update
 
-- [ ] `framework/docs/process/version-control-workflow.md` - Add /fw-release section
-- [ ] `framework/docs/ref/framework-commands.md` - Add command reference
-- [ ] `framework/CLAUDE.md` - Mention automated release capability
-- [ ] `framework/QUICK-START.md` - Update release instructions
+- [x] `framework/docs/process/version-control-workflow.md` - Add /fw-release section
+- [x] `framework/docs/ref/framework-commands.md` - Add command reference
+- [x] `framework/CLAUDE.md` - Mention automated release capability
+- [x] `framework/QUICK-START.md` - Update release instructions
 
 ### New Documentation Needed
 
-- [ ] Usage examples (simple release, large release, dry-run)
-- [ ] Troubleshooting guide (common errors and fixes)
-- [ ] Manual override instructions (when to use manual process)
+- [x] Usage examples (simple release, large release, dry-run)
+- [x] Troubleshooting guide (common errors and fixes)
+- [x] Manual override instructions (when to use manual process)
 
 ---
 
@@ -289,12 +289,12 @@ Display:
 - [x] Implement git tag creation
 - [x] Implement work item archival (files + folders, per-product archive path)
 - [x] Implement release summary display (advisory push note, not auto-push)
-- [ ] Test with 1 item, 8 items, 15 items (size warning)
-- [ ] Test with artifacts folders
-- [ ] Document in version-control-workflow.md
-- [ ] Add to framework-commands.md reference
-- [ ] Update CHANGELOG.md
-- [ ] Phase 2 evaluation: PowerShell script needed?
+- [x] Test with 1 item, 8 items, 15 items (size warning)
+- [x] Test with artifacts folders
+- [x] Document in version-control-workflow.md
+- [x] Add to framework-commands.md reference
+- [x] Update CHANGELOG.md
+- [x] Phase 2 evaluation: PowerShell script needed?
 
 ---
 
