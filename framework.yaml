@@ -19,18 +19,21 @@ release:
       archive_path: "history/releases/framework"
       status_file: "framework/PROJECT-STATUS.md"
       changelog_file: "framework/CHANGELOG.md"
+      build_script: "tools/Build-FrameworkArchive.ps1"
     - id: plugin-full
       label: "SpearIT Framework Full Plugin"
       priority: 2
       archive_path: "history/releases/plugin-full"
       status_file: "plugins/spearit-framework/PROJECT-STATUS.md"
       changelog_file: "plugins/spearit-framework/CHANGELOG.md"
+      build_script: "tools/Build-Plugin.ps1 -Plugin spearit-framework"
     - id: plugin-light
       label: "SpearIT Framework Light Plugin"
       priority: 3
       archive_path: "history/releases/plugin-light"
       status_file: "plugins/spearit-framework-light/PROJECT-STATUS.md"
       changelog_file: "plugins/spearit-framework-light/CHANGELOG.md"
+      build_script: "tools/Build-Plugin.ps1 -Plugin spearit-framework-light"
 
 policies:
   workflow: framework/docs/collaboration/workflow-guide.md

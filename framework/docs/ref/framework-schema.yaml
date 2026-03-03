@@ -142,6 +142,12 @@ fields:
     description: "Path to the product's CHANGELOG.md file. If absent, defaults to CHANGELOG.md at repo root. Override for multi-project repos where the file lives in a subfolder."
     example: "framework/CHANGELOG.md"
 
+  release.products[].build_script:
+    type: string
+    required: false
+    description: "PowerShell script (with optional arguments) to build the distribution artifact for this product. Executed after work item archival. If absent, build step is silently skipped. Path is relative to repo root. Build failure is non-fatal — warns and continues to summary."
+    example: "tools/Build-FrameworkArchive.ps1"
+
   sources:
     type: object
     required: false

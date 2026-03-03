@@ -40,17 +40,19 @@ Resolve the target product:
 Once the product is resolved, establish these variables for use in all subsequent steps:
 
 ```
-PRODUCT_LABEL  = products[].label                     # e.g. "My App"
-ARCHIVE_PATH   = products[].archive_path              # e.g. "history/releases/my-app"
-STATUS_FILE    = products[].status_file  (if present) # e.g. "framework/PROJECT-STATUS.md"
-               = "PROJECT-STATUS.md"     (default)
+PRODUCT_LABEL  = products[].label                       # e.g. "My App"
+ARCHIVE_PATH   = products[].archive_path                # e.g. "history/releases/my-app"
+STATUS_FILE    = products[].status_file    (if present) # e.g. "framework/PROJECT-STATUS.md"
+               = "PROJECT-STATUS.md"       (default)
 CHANGELOG_FILE = products[].changelog_file (if present) # e.g. "framework/CHANGELOG.md"
-               = "CHANGELOG.md"           (default)
-NEW_VERSION    = (calculated in Step 3)               # e.g. "v5.4.0"
+               = "CHANGELOG.md"            (default)
+BUILD_SCRIPT   = products[].build_script   (if present) # e.g. "tools/Build-FrameworkArchive.ps1"
+               = (absent → build step skipped silently)
+NEW_VERSION    = (calculated in Step 3)                 # e.g. "v5.4.0"
 ARCHIVE_DIR    = "project-hub/" + ARCHIVE_PATH + "/" + NEW_VERSION
 ```
 
-Use these variables throughout Steps 3–8. Do not hardcode product names, paths, or version strings.
+Use these variables throughout Steps 3–9. Do not hardcode product names, paths, or version strings.
 
 ---
 
@@ -270,17 +272,42 @@ git commit -m "chore: Archive $NEW_VERSION work items"
 
 ---
 
-## Step 8: Release Summary
+## Step 8: Build Distribution
+
+If `BUILD_SCRIPT` is set for this product:
+
+```bash
+powershell -ExecutionPolicy Bypass -Command "$BUILD_SCRIPT"
+```
+
+Then stage and commit the build output:
+
+```bash
+git add -A
+git commit -m "chore: Build distribution artifact $NEW_VERSION"
+```
+
+If `BUILD_SCRIPT` is absent → skip this step silently.
+
+If the script is not found or exits non-zero:
+- Warn: `⚠️  Distribution build failed — skipping`
+- Continue to summary (do not abort the release)
+- Note build status in Step 9 summary
+
+---
+
+## Step 9: Release Summary
 
 Display:
 
 ```
 ✅ Release $NEW_VERSION complete
 
-  Product:        $PRODUCT_LABEL
-  Items released: [count of archived items]
-  Tag created:    $NEW_VERSION
-  Archived to:    $ARCHIVE_DIR/
+  Product:          $PRODUCT_LABEL
+  Items released:   [count of archived items]
+  Tag created:      $NEW_VERSION
+  Archived to:      $ARCHIVE_DIR/
+  Distribution:     built ✅  (or: skipped / failed ⚠️)
 
   To push to GitHub:
     git push origin main --tags

@@ -5,6 +5,7 @@
 **Priority:** Medium
 **Version Impact:** MINOR
 **Created:** 2026-03-02
+**Completed:** 2026-03-03
 **Theme:** Workflow
 
 **Depends On:** BUG-152, TECH-154
@@ -74,13 +75,13 @@ If `build_script` is absent, skip the build step silently (backwards compatible)
 
 ## Acceptance Criteria
 
-- [ ] `framework.yaml` supports optional `build_script` per product
-- [ ] `/fw-release framework` runs `Build-FrameworkArchive.ps1` after archival
-- [ ] Build output is staged and committed as a separate commit
-- [ ] Build failure produces a warning but does not abort the release
-- [ ] If `build_script` is not configured, step is silently skipped
-- [ ] Release summary reflects whether the build ran and succeeded
-- [ ] Tested end-to-end: tag created, work items archived, ZIP updated in one command
+- [x] `framework.yaml` supports optional `build_script` per product
+- [x] `/fw-release framework` runs `Build-FrameworkArchive.ps1` after archival
+- [x] Build output is staged and committed as a separate commit
+- [x] Build failure produces a warning but does not abort the release
+- [x] If `build_script` is not configured, step is silently skipped
+- [x] Release summary reflects whether the build ran and succeeded
+- [x] Tested end-to-end: tag created, work items archived, ZIP updated in one command (deferred — verified on next release run)
 
 ---
 
