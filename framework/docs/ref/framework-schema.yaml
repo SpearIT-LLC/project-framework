@@ -90,6 +90,58 @@ fields:
     description: "Default role at session start. If not specified, uses project_type_defaults from the definitions file."
     example: "senior-production-developer"
 
+  release:
+    type: object
+    required: false
+    description: "Release pipeline configuration — used by /fw-release command"
+
+  release.default_product:
+    type: string
+    required: false
+    description: "ID of the product to release when no product-id argument is given to /fw-release"
+    example: "framework"
+
+  release.products:
+    type: array
+    required: false
+    description: "List of releasable products in this repository"
+
+  release.products[].id:
+    type: string
+    required: true
+    description: "Product identifier, used as the /fw-release argument"
+    example: "framework"
+
+  release.products[].label:
+    type: string
+    required: true
+    description: "Human-readable product name, used in release summaries and CHANGELOG headers"
+    example: "SpearIT Project Framework"
+
+  release.products[].priority:
+    type: integer
+    required: true
+    description: "Rank for cross-product item resolution — lower number = higher priority. Used to determine which product's archive receives cross-product work items."
+    example: 1
+
+  release.products[].archive_path:
+    type: string
+    required: true
+    description: "Path relative to project-hub/ where released work items are archived. /fw-release appends the version: project-hub/{archive_path}/vX.Y.Z/"
+    example: "history/releases/framework"
+
+  release.products[].status_file:
+    type: string
+    required: false
+    description: "Path to the product's PROJECT-STATUS.md file. If absent, defaults to PROJECT-STATUS.md at repo root. Override for multi-project repos where the file lives in a subfolder."
+    example: "framework/PROJECT-STATUS.md"
+
+  release.products[].changelog_file:
+    type: string
+    required: false
+    description: "Path to the product's CHANGELOG.md file. If absent, defaults to CHANGELOG.md at repo root. Override for multi-project repos where the file lives in a subfolder."
+    example: "framework/CHANGELOG.md"
+
   sources:
     type: object
     required: false

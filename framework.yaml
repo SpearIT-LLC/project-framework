@@ -17,6 +17,8 @@ release:
       label: "SpearIT Project Framework"
       priority: 1
       archive_path: "history/releases/framework"
+      status_file: "framework/PROJECT-STATUS.md"
+      changelog_file: "framework/CHANGELOG.md"
     - id: plugin-full
       label: "SpearIT Framework Full Plugin"
       priority: 2

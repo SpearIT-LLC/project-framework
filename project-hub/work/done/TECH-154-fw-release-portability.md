@@ -5,6 +5,7 @@
 **Priority:** Medium
 **Version Impact:** PATCH
 **Created:** 2026-03-03
+**Completed:** 2026-03-03
 **Theme:** Workflow
 
 ---
@@ -77,12 +78,12 @@ If these fields are absent, fall back to the conventional paths (`framework/PROJ
 
 ## Acceptance Criteria
 
-- [ ] No hardcoded version strings (`v5.3.0`, etc.) remain in bash snippets
-- [ ] No hardcoded product-specific paths remain in bash snippets (`framework/`, `project-hub/`, `SpearIT Project Framework`)
-- [ ] All values derive from `framework.yaml` config or the calculated version
-- [ ] Command works correctly on a project with a different product label and archive path
-- [ ] Illustrative examples in prose use `vX.Y.Z` placeholders, not literal versions
-- [ ] `framework.yaml` optionally supports `status_file` and `changelog_file` per product; absent → conventional defaults
+- [x] No hardcoded version strings (`v5.3.0`, etc.) remain in bash snippets
+- [x] No hardcoded product-specific paths remain in bash snippets (`framework/`, `project-hub/`, `SpearIT Project Framework`)
+- [x] All values derive from `framework.yaml` config or the calculated version
+- [x] Command works correctly on a project with a different product label and archive path
+- [x] Illustrative examples in prose use `vX.Y.Z` placeholders, not literal versions
+- [x] `framework.yaml` optionally supports `status_file` and `changelog_file` per product; absent → conventional defaults
 
 ---
 

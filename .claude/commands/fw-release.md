@@ -37,6 +37,21 @@ Resolve the target product:
 - If no argument → use `default_product` to find the matching entry
 - If no `release` section at all → archive path is `history/releases/`
 
+Once the product is resolved, establish these variables for use in all subsequent steps:
+
+```
+PRODUCT_LABEL  = products[].label                     # e.g. "My App"
+ARCHIVE_PATH   = products[].archive_path              # e.g. "history/releases/my-app"
+STATUS_FILE    = products[].status_file  (if present) # e.g. "framework/PROJECT-STATUS.md"
+               = "PROJECT-STATUS.md"     (default)
+CHANGELOG_FILE = products[].changelog_file (if present) # e.g. "framework/CHANGELOG.md"
+               = "CHANGELOG.md"           (default)
+NEW_VERSION    = (calculated in Step 3)               # e.g. "v5.4.0"
+ARCHIVE_DIR    = "project-hub/" + ARCHIVE_PATH + "/" + NEW_VERSION
+```
+
+Use these variables throughout Steps 3–8. Do not hardcode product names, paths, or version strings.
+
 ---
 
 ## Step 2: Pre-Release Validation
@@ -211,9 +226,9 @@ None
 ## Step 6: Git Commit and Tag
 
 ```bash
-git add framework/PROJECT-STATUS.md framework/CHANGELOG.md
-git commit -m "chore: Release v5.3.0 - [brief description of highest-impact item]"
-git tag -a v5.3.0 -m "Release v5.3.0 - [brief description]"
+git add "$STATUS_FILE" "$CHANGELOG_FILE"
+git commit -m "chore: Release $NEW_VERSION - [brief description of highest-impact item]"
+git tag -a "$NEW_VERSION" -m "Release $NEW_VERSION - [brief description]"
 ```
 
 Report tag created. Then:
@@ -231,26 +246,26 @@ Do NOT push automatically. Leave push to the developer.
 
 Determine archive path:
 - From resolved product config: `{archive_path}/vX.Y.Z/`
-- Example: `history/releases/framework/v5.3.0/`
+- Example: `history/releases/my-app/vX.Y.Z/`
 
 Create the release folder and move items:
 
 ```bash
-mkdir -p project-hub/history/releases/framework/v5.3.0
+mkdir -p "$ARCHIVE_DIR"
 
 # Move each work item and its artifact folder (if present)
 for item in project-hub/work/done/*.md; do
   [ "$(basename $item)" = ".gitkeep" ] && continue
   [ ! -f "$item" ] && continue
-  git mv "$item" project-hub/history/releases/framework/v5.3.0/ || { echo "⚠️  Could not move $item — skipping"; continue; }
+  git mv "$item" "$ARCHIVE_DIR/" || { echo "⚠️  Could not move $item — skipping"; continue; }
   ITEM_ID=$(basename "$item" | grep -oE '^[A-Z]+-[0-9]+')
-  ARTIFACT_DIR="project-hub/work/done/${ITEM_ID}"
-  if [ -d "$ARTIFACT_DIR" ]; then
-    git mv "$ARTIFACT_DIR" project-hub/history/releases/framework/v5.3.0/
+  ARTIFACT_DIR_ITEM="project-hub/work/done/${ITEM_ID}"
+  if [ -d "$ARTIFACT_DIR_ITEM" ]; then
+    git mv "$ARTIFACT_DIR_ITEM" "$ARCHIVE_DIR/"
   fi
 done
 
-git commit -m "chore: Archive v5.3.0 work items"
+git commit -m "chore: Archive $NEW_VERSION work items"
 ```
 
 ---
@@ -260,18 +275,18 @@ git commit -m "chore: Archive v5.3.0 work items"
 Display:
 
 ```
-✅ Release v5.3.0 complete
+✅ Release $NEW_VERSION complete
 
-  Product:        SpearIT Project Framework
-  Items released: 7
-  Tag created:    v5.3.0
-  Archived to:    project-hub/history/releases/framework/v5.3.0/
+  Product:        $PRODUCT_LABEL
+  Items released: [count of archived items]
+  Tag created:    $NEW_VERSION
+  Archived to:    $ARCHIVE_DIR/
 
   To push to GitHub:
     git push origin main --tags
 
   Next steps:
-  - Verify CHANGELOG.md looks correct
+  - Verify $CHANGELOG_FILE looks correct
   - Announce release if applicable
   - Start next cycle: move backlog/todo items to doing/
 ```
