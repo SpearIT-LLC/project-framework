@@ -425,7 +425,7 @@ Reviewing code?
 
 **Related Documentation:**
 - [CLAUDE.md](../../../CLAUDE.md) - AI collaboration contract and quick reference
-- [project-hub/framework/templates/](../../framework/templates/) - Copy-paste templates
+- [framework/templates/](../../templates/) - Copy-paste templates
 - [PROJECT-STATUS.md](../../../PROJECT-STATUS.md) - Current version and status
 
 ---

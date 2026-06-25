@@ -84,7 +84,7 @@ Commands should complete in:
 - Simple moves (backlog/todo/done/archive): 5-8 seconds
 - Complex moves with AI (doing): 12-18 seconds
 
-See [research/plugins-performance-optimization.md](../../research/plugins-performance-optimization.md) for comprehensive performance analysis.
+Comprehensive performance analysis is maintained in the framework's internal research notes (`research/plugins-performance-optimization.md`, not bundled in the distribution).
 
 ## Plugin Architecture
 

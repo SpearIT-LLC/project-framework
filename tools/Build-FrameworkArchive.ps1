@@ -148,6 +148,15 @@ $DestTools = Join-Path $ArchiveFrameworkDir "tools"
 New-Item -ItemType Directory -Path $DestTools -Force | Out-Null
 Copy-Item -Path (Join-Path $SourceTools "*") -Destination $DestTools -Recurse -Force
 
+# Step 5.5: Copy framework/CLAUDE.md (canonical source — not duplicated in the starter template)
+Write-Host "  Copying framework/CLAUDE.md..." -ForegroundColor Gray
+$SourceFrameworkClaude = Join-Path $FrameworkDir "CLAUDE.md"
+if (-not (Test-Path $SourceFrameworkClaude)) {
+    Write-Error "Canonical framework/CLAUDE.md not found: $SourceFrameworkClaude"
+    exit 1
+}
+Copy-Item -Path $SourceFrameworkClaude -Destination (Join-Path $ArchiveFrameworkDir "CLAUDE.md") -Force
+
 # Step 6: Create .framework-version file
 Write-Host "  Creating .framework-version file..." -ForegroundColor Gray
 $VersionFile = Join-Path $ArchiveFrameworkDir ".framework-version"

@@ -102,4 +102,95 @@ Investigated whether the framework distribution archives are up to date, prompte
 
 ---
 
+## Afternoon Session — GitHub Sync + TECH-155 Implementation
+
+### GitHub Sync Closed (TECH-156 Part B, done ad hoc)
+
+- User pushed `main` via VSCode → branch synced (`origin/main` == local). Verified `0/0`.
+- **Tags did NOT push** — plain branch push omits tags by Git design. Confirmed 19 tags still local-only.
+- Ran `git push origin --tags` → all 19 tags now on remote (v3.0.1→v5.4.0 + 3 plugin tags). Verified 0 unpushed.
+- **Decision:** This closes the data-loss risk that drove TECH-156's High priority. Part A (fw-release in distribution) remains open in TECH-156.
+- Teaching note captured for user: plain push ≠ tag push; `git config push.followTags true` is the durable backstop; the real fix is a push step in `/fw-release`.
+
+### Workflow moves
+
+- `/fw-move 155,156 todo` → both required `--force` (unchecked `[ ]` boxes + literal word "decide" in TECH-156 tripped the readiness scanner; not real blockers). Moved.
+- `/fw-move 155 doing` → TECH-155 started; pre-implementation review presented.
+
+### TECH-155 Implementation — 13 broken distribution links
+
+**Investigation first (user: "investigate, document, then fix"):** Each of the 13 links verified against the *actual v5.4.0 bundle*, not just source. Dispositions documented in artifact `TECH-155/link-disposition.md`. Resolution mix: 10 REMOVE, 1 IN-TEXT, 2 FIX-PATH.
+
+**Corrections to the original downstream report:**
+- Two Group D links were *stale-path bugs* (target ships, link wrong) → FIX-PATH, strictly better than removal. D2 (`collaboration/README.md` wrong nesting), D4 (the `NEW-PROJECT-CHECKLIST.md` link used obsolete `templates/standard/` — file actually ships to project ROOT via Setup-Framework, matching user's hunch).
+- Group C (ADR-001 link): verified no practical reason to keep — the policy is already fully described in-place in `framework/CLAUDE.md`; the link pointed to an unbundled duplicate in the consuming project's own ADR namespace. Removed (DRY).
+
+**Major root-cause discovery during verification:** The bundle's `framework/CLAUDE.md` was NOT sourced from canonical `framework/CLAUDE.md` — it shipped a **divergent, stale duplicate** carried in `templates/starter/framework/CLAUDE.md`. So the Group B/C edits did not initially reach the bundle. The two copies had genuinely drifted (stale links + older content), with NO placeholders or starter-specific content — pure duplication debt.
+
+- **Fix (user principle: "copy non-unique files from source, never maintain a duplicate"):**
+  - `git rm templates/starter/framework/CLAUDE.md` (deleted stale duplicate).
+  - Added Step 5.5 to `Build-FrameworkArchive.ps1` to copy canonical `framework/CLAUDE.md` into the bundle.
+- This is preferred over a runtime copy in Setup-Framework (fewer moving parts; eliminates the drift source at build time).
+
+**Verification (user: "let's do the test" — real integration test):**
+- Rebuilt bundle, ran `Setup-Framework.ps1` headless into a throwaway project, link-walked the integrated project's `framework/`.
+- **All 13 TECH-155 links confirmed resolved** (zero survivors) in the integrated project.
+- A crude walker reported ~169 "broken" — characterized as: ~155 intended `framework/templates/` placeholder links (correctly excluded by the downstream audit), ~4 walker false-positives (root files that exist), and **~10 genuine stale links in non-template reference docs** that are NOT among TECH-155's 13.
+
+### Decisions Made (afternoon)
+
+1. **TECH-155 scope held to its documented 13.** Did not silently expand. Verified complete on stated scope.
+2. **New structural-staleness item → TECH-157** (to be filed): `framework/INDEX.md`'s 33 stale links (to a nonexistent `project-hub/framework/templates/` structure) + the ~10 reference-doc stale links surfaced by the integration test. Same root cause as TECH-106's incomplete `standard→starter` rename.
+3. **`scratch/` cleanup → separate activity** (user): the 5 tracked `scratch/*.md` files PROBABLY should have been in `poc/`. Treat as its own cleanup, not folded into TECH-155. Relates to never-delete policy (TECH-077).
+4. **TECH-156 build-process notes:** the `templates/standard/` PowerShell command examples in `distribution-build-checklist.md` are stale build *instructions* — belong with TECH-156's build-process scope, not link-integrity.
+
+### Files Created (afternoon)
+
+- `project-hub/work/doing/TECH-155/link-disposition.md` - Verified per-link disposition + verification result (TECH-155 artifact)
+
+### Files Modified (afternoon)
+
+- `framework/CLAUDE.md` - Group B (2) + Group C (1) link fixes
+- `framework/docs/PROJECT-STRUCTURE.md` - Group A (in-text)
+- `framework/docs/REPOSITORY-STRUCTURE.md` - Group A (in-text)
+- `framework/docs/plugin-development-guide.md` - Group D1 (remove)
+- `framework/docs/collaboration/README.md` - Group D2 (fix-path)
+- `framework/docs/project/planning-model.md` - Group D3 (remove)
+- `framework/docs/process/distribution-build-checklist.md` - Group D4 (fix-path)
+- `tools/Build-FrameworkArchive.ps1` - Step 5.5: copy canonical framework/CLAUDE.md
+- `distrib/framework/spearit_framework_v5.4.0.zip` - rebuilt bundle
+
+### Files Removed (afternoon)
+
+- `templates/starter/framework/CLAUDE.md` - stale duplicate of canonical framework/CLAUDE.md (DRY)
+
+### Files Moved (afternoon)
+
+- `project-hub/work/backlog/TECH-155-...` → `todo/` → `doing/`
+- `project-hub/work/backlog/TECH-156-...` → `todo/`
+
+---
+
+## Current State (end of session)
+
+### In doing/
+- TECH-155 (implementation complete + verified; pending acceptance-criteria check-off and `→ done` move)
+
+### In todo/
+- TECH-156 (Part B done ad hoc; Part A — fw-release in distribution — remains)
+- FEAT-092, TECH-079 (pre-existing)
+
+### Git
+- `origin/main` synced; all tags pushed.
+- This session's afternoon implementation pending commit.
+
+### Next Steps
+1. Commit TECH-155 implementation (this commit).
+2. Check off TECH-155 acceptance criteria → `/fw-move 155 done`.
+3. File TECH-157 (structural-staleness links: INDEX.md + reference-doc stale links).
+4. Separate cleanup: relocate `scratch/*.md` → `poc/` (or archive), then gitignore.
+5. TECH-156 Part A: add `fw-release.md` to starter, rebuild.
+
+---
+
 **Last Updated:** 2026-06-25

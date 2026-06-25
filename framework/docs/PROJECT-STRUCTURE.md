@@ -699,7 +699,7 @@ The framework project intentionally deviates from Standard structure:
 - `process/` - Framework workflow documentation
 - `patterns/` - Framework implementation patterns
 
-**Reference:** FEAT-026-P1-BUG-framework-structure.md (v3.0.0 migration decisions)
+**Reference:** This structure was established by the v3.0.0 framework-structure migration.
 
 ---
 
@@ -709,14 +709,13 @@ The framework project intentionally deviates from Standard structure:
 
 **Validation:** Future tooling may validate projects against this specification automatically.
 
-**Migration:** Projects migrating from v2.x to v3.0.0 should follow FEAT-026 migration plan.
+**Migration:** Projects migrating from v2.x to v3.0.0 should follow the v3.0.0 structure-migration plan.
 
 ---
 
 ## References
 
-- [FEAT-026-structure-migration.md](FEAT-026-structure-migration.md) - Migration plan to v3.0.0
-- [FEAT-026-universal-structure-decisions.md](FEAT-026-universal-structure-decisions.md) - Complete decision log
+- The v3.0.0 structure-migration plan and universal-structure decision log (framework-internal history) established this structure.
 - Framework templates folder - Copy-paste starting points for all files
 
 ---

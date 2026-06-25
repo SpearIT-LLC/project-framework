@@ -4,7 +4,7 @@
 
 *Note: Bootstrap block lives in root CLAUDE.md - that's what loads at session start.*
 
-**Quick Reference:** See [CLAUDE-QUICK-REFERENCE.md](CLAUDE-QUICK-REFERENCE.md) for critical rules and decision trees.
+**Quick Reference:** Projects are encouraged to author their own `CLAUDE-QUICK-REFERENCE.md` capturing critical rules and decision trees specific to the project.
 
 **Terminology:** See [GLOSSARY.md](docs/ref/GLOSSARY.md) for framework-specific term definitions.
 
@@ -213,7 +213,7 @@ Examples:
 
 **Full Details:**
 - Complete 11-step workflow: [workflow-guide.md](docs/collaboration/workflow-guide.md)
-- Rationale and examples: [ADR-001](project-hub/research/adr/001-ai-workflow-checkpoint-policy.md)
+- Rationale and examples: see the AI Workflow Checkpoint Policy described above (the three mandatory checkpoints and core rule).
 
 ---
 
@@ -476,7 +476,7 @@ Framework commands provide workflow shortcuts with mechanical enforcement.
 ## Related Documentation
 
 **Quick Reference:**
-- [CLAUDE-QUICK-REFERENCE.md](CLAUDE-QUICK-REFERENCE.md) - Critical rules and decision trees (<200 lines)
+- `CLAUDE-QUICK-REFERENCE.md` - Project-authored critical rules and decision trees (<200 lines), if the project maintains one
 
 **Detailed Collaboration Guides:**
 - [collaboration/README.md](docs/collaboration/README.md) - Navigation index

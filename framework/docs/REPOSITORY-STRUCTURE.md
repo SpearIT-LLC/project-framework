@@ -136,7 +136,7 @@ The framework project follows the Standard Framework structure.
 - ✅ Reduces cognitive load - No guessing which project we're working on
 - ✅ Consistency - Completes the trio (README, QUICK-START, CLAUDE)
 
-**Reference:** See DECISION-015 in [FEAT-026-universal-structure-decisions.md](FEAT-026-universal-structure-decisions.md)
+**Reference:** DECISION-015 (Add CLAUDE.md to Repository Root) from the v3.0.0 universal-structure decision log.
 
 ---
 
@@ -316,17 +316,16 @@ To verify repository root matches this specification:
 4. Populate framework/ following PROJECT-STRUCTURE.md
 5. Commit: `git commit -m "Initial repository setup"`
 
-**Migration (FEAT-026):**
+**Migration (v3.0.0 structure migration):**
 - Created in Phase 1 (create root files)
-- See [FEAT-026-structure-migration.md](FEAT-026-structure-migration.md) for migration plan
+- Follows the v3.0.0 structure-migration plan (framework-internal history)
 
 ---
 
 ## References
 
 - [PROJECT-STRUCTURE.md](PROJECT-STRUCTURE.md) - Standard Framework project structure
-- [FEAT-026-structure-migration.md](FEAT-026-structure-migration.md) - Migration plan
-- [FEAT-026-universal-structure-decisions.md](FEAT-026-universal-structure-decisions.md) - Complete decision log
+- The v3.0.0 structure-migration plan and universal-structure decision log (framework-internal history) record the rationale, including:
   - DECISION-012: Multi-Project Repository with Meta-Root
   - DECISION-013: README vs QUICK-START Separation
   - DECISION-015: Add CLAUDE.md to Repository Root

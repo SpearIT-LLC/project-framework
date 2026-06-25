@@ -3,7 +3,7 @@
 **Status:** Draft / Preliminary
 **Created:** 2026-02-20
 **Author:** Gary Elliott + Claude Code
-**Related:** [project-guidance.md](../../project-hub/planning/design/project-guidance.md)
+**Related:** project-guidance.md (framework-internal planning notes, not bundled in the distribution)
 
 ---
 

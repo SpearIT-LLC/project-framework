@@ -255,7 +255,7 @@ Before releasing a version with template changes:
 ## References
 
 - [PROJECT-STRUCTURE.md](../docs/PROJECT-STRUCTURE.md) - Canonical structure
-- [NEW-PROJECT-CHECKLIST.md](../../templates/standard/NEW-PROJECT-CHECKLIST.md) - User setup guide
+- [NEW-PROJECT-CHECKLIST.md](../../../templates/NEW-PROJECT-CHECKLIST.md) - User setup guide
 - [version-control-workflow.md](version-control-workflow.md) - Release process
 
 ---
