@@ -15,19 +15,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-None
+- **TECH-155: Link-integrity gate** — Added a Link Integrity Gate to the distribution-build checklist's Post-Build Validation: run an integrated link-walk (after `Setup-Framework.ps1`) over `framework/**` excluding `framework/templates/`, confirming zero broken internal links in framework reference docs.
 
 ### Changed
 
-None
+- **TECH-155: Build sources `framework/CLAUDE.md` from canonical source** — `Build-FrameworkArchive.ps1` now copies the single canonical `framework/CLAUDE.md` into the distribution rather than shipping a separate copy. Removes a divergent duplicate so the file can no longer drift.
 
 ### Removed
 
-None
+- **TECH-155: Stale duplicate** — Deleted `templates/starter/framework/CLAUDE.md` (an out-of-date duplicate of the canonical `framework/CLAUDE.md`); the bundle now copies the canonical file at build time.
 
 ### Fixed
 
-None
+- **TECH-155: 13 broken distribution links** — Resolved the 13 broken internal links in the distributed `framework/` folder reported by downstream SpearIT-KB: FEAT-026 work-item references converted to in-text descriptions; `CLAUDE-QUICK-REFERENCE.md` and framework ADR-001 links removed (content described in-place); unbundled-target links removed; stale-path links (`collaboration/README.md`, `distribution-build-checklist.md`) corrected. Verified via integration test (Setup-Framework + link-walk).
 
 ---
 

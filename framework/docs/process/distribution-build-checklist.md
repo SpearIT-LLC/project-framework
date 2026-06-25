@@ -212,13 +212,31 @@ git add .
 git status
 ```
 
-### 2. Checklist Validation
+### 2. Link Integrity Gate
+
+Verify the distributed `framework/` folder has no broken internal links. Run an
+*integrated* link-walk (after `Setup-Framework.ps1`), not against the raw bundle —
+template files under `framework/templates/` contain intentional placeholder links
+that only resolve once a consuming project fills them in, so they must be excluded
+or evaluated in an integrated project.
+
+- [ ] Build the bundle, then run `Setup-Framework.ps1` into a throwaway project
+- [ ] Walk every `framework/**/*.md` (excluding `framework/templates/`), resolving
+      each `[text](target)` relative to its file; report any target that does not exist
+- [ ] Confirm zero broken internal links in framework reference docs
+- [ ] Treat `http(s):`/`mailto:`/anchor-only links and `path/to/...` examples as non-links
+
+> The portable link-walk pattern is preserved in the TECH-155 artifact
+> (`project-hub/.../TECH-155/link-disposition.md`) and the SpearIT-KB session log
+> referenced there. Any consuming project (or this framework's CI) can adopt it.
+
+### 3. Checklist Validation
 
 - [ ] Follow NEW-PROJECT-CHECKLIST.md step-by-step
 - [ ] Document any missing or unclear steps
 - [ ] Verify all template paths referenced are correct
 
-### 3. Claude Code Integration Test
+### 4. Claude Code Integration Test
 
 - [ ] Open test project in VSCode with Claude Code
 - [ ] Run `/fw-help` - should work
