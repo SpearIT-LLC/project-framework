@@ -193,4 +193,88 @@ Investigated whether the framework distribution archives are up to date, prompte
 
 ---
 
+## Late Session — TECH-155 Completion + Provenance Investigation + Backlog Filing
+
+### TECH-155 closed honestly (not force-checked)
+
+- The `→ done` move is hard-blocked on unchecked acceptance criteria (NOT `--force`-able — verified; framework enforcement working as intended). Rather than bypass, finished the genuinely-remaining work:
+  - **Link Integrity Gate** added to `distribution-build-checklist.md` (Post-Build Validation §2) — portable integrated link-walk, excludes `framework/templates/`.
+  - **CHANGELOG** `[Unreleased]` updated (Added/Changed/Removed/Fixed for the link fixes, build change, duplicate removal).
+  - **AC#2 reworded** honestly: zero broken links *for the 13*; additional stale links carried to TECH-158.
+  - **SpearIT-KB notify** reworded from an open task to a recorded release-time follow-up (in Notes) — cross-project coordination that can't be done from this repo, so not a `→ done` blocker.
+- Moved TECH-155 + artifact folder → `done/`. Committed (`c613219`).
+
+### SpearIT-KB notification — clarified (user asked "did we discuss this?")
+
+- We did NOT. It came pre-written in TECH-155's checklist (authored 2026-05-21). It is a note-to-self parked in the work item, NOT an automation. Nothing notifies any consuming project; no project knows about any other. The trigger, if any, must live in SpearIT-KB's own files.
+
+### Framework provenance / update-mechanism investigation (user-prompted)
+
+User raised: projects have no awareness of each other, but all should know the framework came from THIS project. Investigated open items + history.
+
+**Findings (user's memory was correct — prior work exists):**
+- **DECISION-050** (Framework-as-Dependency, adopted v4.0.0): decided the whole model — per-project `framework/` copies, `.framework-version` stamp, planned `Update-Framework.ps1` (preserve/replace/interactive), `<!-- CUSTOM -->` tagging. Shipped build/setup pieces; **deferred the update tooling** ("MVP is manual").
+- **FEAT-051** (Update Test Harness) + **FEAT-008** (Upgrade Automation): the deferred tooling, still backlog.
+- **Provenance gap (DECISION-050 Q4):** a `framework:` block with `version`/`source`/`lastUpdated` was *designed* but **never built**. Verified: distribution stamps only bare `5.4.0`; consuming `framework.yaml` has no provenance block.
+- **Notification:** confirmed by design — the model is pull-based self-checking (`-Check`), never push; no consumer registry. So "no project knows about another" is intentional.
+
+**Decision (user):** File ONLY the provenance slice now; leave larger update tooling to existing FEAT-008/FEAT-051.
+
+### Backlog filed
+
+- **FEAT-157** (Medium): Framework provenance stamp — source URL + version + integratedDate in the distribution; scoped to exclude update/notification tooling. References DECISION-050 Q4. Committed (`16f79ae`).
+- **TECH-158** (Low): Structurally-stale links — `framework/INDEX.md`'s 33 obsolete `templates/standard/` links (not bundled, dev-facing) + small set of genuinely-stale reference-doc paths. Honestly separates the ~155 intended template placeholders and ~4 walker false-positives as NOT defects; instructs re-derivation at implementation. Committed (`860f02c`).
+
+### ID/naming note
+
+- "TECH-157" was floated verbally earlier for the stale-links item but never filed. To avoid collision, the provenance item took FEAT-157 and the stale-links item became TECH-158. No duplicate IDs exist.
+
+### Decisions Made (late session)
+
+1. **Did not `--force` TECH-155 to done** — completed real remaining work instead. The hard block is correct behavior; honoring it kept the record truthful.
+2. **Provenance scoped to smallest useful slice** (FEAT-157) — source back-link is high-leverage and a prerequisite for any future staleness check, independent of whether the larger tooling is ever built.
+3. **Stale links split from TECH-155** (TECH-158) — avoided silently expanding a completed item; preserved the triage (defect vs placeholder vs false-positive).
+
+### Files Created (late session)
+
+- `project-hub/work/backlog/FEAT-157-framework-provenance-stamp.md`
+- `project-hub/work/backlog/TECH-158-framework-structural-stale-links.md`
+
+### Files Modified (late session)
+
+- `framework/CHANGELOG.md` - TECH-155 [Unreleased] entries
+- `framework/docs/process/distribution-build-checklist.md` - Link Integrity Gate (Post-Build §2)
+- `project-hub/work/done/TECH-155-...md` - criteria checked, AC#2/notify reworded, Completed date
+
+### Files Moved (late session)
+
+- `project-hub/work/doing/TECH-155-...` + `TECH-155/` artifact → `done/`
+
+---
+
+## Final State (end of session)
+
+### In done/
+- TECH-155 (complete, verified, criteria honest)
+
+### In todo/
+- TECH-156 (Part B done; Part A — fw-release in starter — remains), FEAT-092, TECH-079
+
+### In backlog/ (new this session)
+- FEAT-157 (provenance stamp, Medium)
+- TECH-158 (structural-stale links, Low)
+
+### Git
+- `origin/main` branch synced earlier; all tags pushed earlier.
+- 5 unpushed commits at session end (TECH-155 track + completion + FEAT-157 + TECH-158 + this session history) → **pushed at session close** per `/fw-session-history commit push`.
+
+### Open follow-ups (all tracked, none floating)
+- TECH-156 Part A: add `fw-release.md` to starter, rebuild distribution.
+- FEAT-157: implement provenance stamp.
+- TECH-158: fix structural-stale links.
+- Separate cleanup (UNFILED — informal note): relocate `scratch/*.md` → `poc/`, then gitignore. User called this a separate activity; not yet a work item.
+- Release-time: notify SpearIT-KB so it can close its TECH-001.
+
+---
+
 **Last Updated:** 2026-06-25
