@@ -2,6 +2,14 @@
 .SYNOPSIS
     Builds a distributable archive of the SpearIT Framework.
 
+.NOTES
+    SINGLE BUILD METHOD (TECH-159): This script is the ONLY sanctioned producer of the
+    framework distribution archive, normally invoked via /fw-release. Do NOT hand-build a
+    distribution zip (no ad-hoc Compress-Archive). The script builds into a fresh temp dir
+    each run and copies .claude/commands/ + framework/docs/** fresh from canonical source,
+    so additions, edits, AND removals propagate automatically with no stragglers.
+    See: framework/docs/process/distribution-build-checklist.md#single-build-method-required
+
 .DESCRIPTION
     Creates a zip archive containing:
     - framework/docs/ (from live framework)
@@ -102,6 +110,27 @@ if (-not (Test-Path $OutputPath)) {
     Write-Host "Created output directory: $OutputPath" -ForegroundColor Gray
 }
 
+# Pre-flight: Drift-guard — templates/starter/ must contain NO duplicate-of-source content.
+# Command files and the framework/ ref-doc subtree are copied fresh from canonical
+# (Step 1.5 + Step 3). If they reappear in the starter, the build is shipping a stale
+# duplicate — fail loudly rather than silently overwrite/ship drift. (TECH-159 / TECH-074)
+# IMPORTANT: this runs BEFORE the destructive temp/zip cleanup below, so a failed guard
+# aborts without destroying the existing committed artifact.
+$DriftPaths = @(
+    (Join-Path $StarterDir ".claude\commands"),
+    (Join-Path $StarterDir "framework")
+)
+foreach ($drift in $DriftPaths) {
+    if (Test-Path $drift) {
+        $stragglers = Get-ChildItem -Path $drift -Recurse -File -ErrorAction SilentlyContinue
+        if ($stragglers) {
+            $list = ($stragglers.FullName -join "; ")
+            Write-Error "Drift-guard: '$drift' must not exist in templates/starter/ - these are copied fresh from canonical at build time. Remove the duplicate(s): $list"
+            exit 1
+        }
+    }
+}
+
 # Create temp directory
 $ArchiveName = "spearit_framework_v$Version"
 $TempDir = Join-Path $OutputPath "temp\$ArchiveName"
@@ -122,6 +151,26 @@ New-Item -ItemType Directory -Path $TempDir -Force | Out-Null
 # Step 1: Copy starter template (project scaffolding)
 Write-Host "  Copying starter template..." -ForegroundColor Gray
 Copy-Item -Recurse -Force "$StarterDir\*" $TempDir
+
+# Step 1.5: Copy canonical .claude/commands/*.md fresh from source (never duplicated in starter).
+# Scoped to .claude/commands/ + *.md ONLY — deliberately excludes the framework's own
+# .claude/hooks/ and settings*.json (dev tooling, not for consuming projects). Uses the same
+# Copy-Item mechanism as the rest of the build so the zip records forward-slash paths uniformly
+# (a robocopy-created subtree caused Compress-Archive to emit backslash paths — bad for
+# cross-platform unzip). The dest dir is created empty first, guaranteeing an exact canonical
+# set with no stragglers. (TECH-159)
+Write-Host "  Copying canonical .claude/commands/..." -ForegroundColor Gray
+$SourceCommands = Join-Path $RepoRoot ".claude\commands"
+if (-not (Test-Path $SourceCommands)) {
+    Write-Error "Canonical .claude/commands/ not found: $SourceCommands"
+    exit 1
+}
+$DestCommands = Join-Path $TempDir ".claude\commands"
+if (Test-Path $DestCommands) {
+    Remove-Item -Recurse -Force $DestCommands
+}
+New-Item -ItemType Directory -Path $DestCommands -Force | Out-Null
+Copy-Item -Path (Join-Path $SourceCommands "*.md") -Destination $DestCommands -Force
 
 # Step 2: Create framework directory in archive
 $ArchiveFrameworkDir = Join-Path $TempDir "framework"
@@ -165,9 +214,32 @@ $Version | Set-Content -Path $VersionFile -NoNewline
 # Step 7: Create the zip archive
 Write-Host "  Creating zip archive..." -ForegroundColor Gray
 
-# Use Compress-Archive (PowerShell 5+)
-$TempContents = Join-Path $TempDir "*"
-Compress-Archive -Path $TempContents -DestinationPath $ZipPath -Force
+# Use System.IO.Compression directly (NOT Compress-Archive). On some Windows/.NET
+# environments Compress-Archive records OS-native backslash separators in entry names,
+# which break extraction on macOS/Linux (files land flat with literal '\' in the name).
+# Building entries by hand lets us force forward slashes — the cross-platform-correct
+# zip convention — regardless of build host. (TECH-159 scope expansion)
+Add-Type -AssemblyName System.IO.Compression
+Add-Type -AssemblyName System.IO.Compression.FileSystem
+
+if (Test-Path $ZipPath) { Remove-Item -Force $ZipPath }
+
+$TempDirFull = [System.IO.Path]::GetFullPath($TempDir)
+$prefixLen = $TempDirFull.TrimEnd('\').Length + 1
+$zipStream = [System.IO.Compression.ZipFile]::Open($ZipPath, [System.IO.Compression.ZipArchiveMode]::Create)
+try {
+    $files = Get-ChildItem -Path $TempDir -Recurse -File -Force
+    foreach ($f in $files) {
+        # Entry name = path relative to temp root, with forward slashes
+        $relative = $f.FullName.Substring($prefixLen).Replace('\', '/')
+        [System.IO.Compression.ZipFileExtensions]::CreateEntryFromFile(
+            $zipStream, $f.FullName, $relative,
+            [System.IO.Compression.CompressionLevel]::Optimal) | Out-Null
+    }
+}
+finally {
+    $zipStream.Dispose()
+}
 
 # Step 8: Clean up temp directory
 if (-not $KeepTemp) {

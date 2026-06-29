@@ -94,15 +94,17 @@ Apply the TECH-155 pattern folder-by-folder:
 
 ## Acceptance Criteria
 
-- [ ] `templates/starter/.claude/commands/` contains no tracked command `.md` files
-- [ ] `templates/starter/framework/` subtree removed
-- [ ] Build script copies canonical `.claude/commands/*.md` into the bundle fresh from source
-- [ ] Build-time drift-guard fails the build if a duplicate-of-source file reappears in `templates/starter/`
-- [ ] Group 3 root placeholder docs spot-checked and confirmed STARTER-ORIGINAL (not silently-copied framework files)
-- [ ] Rebuilt bundle + headless integration test: integrated project has current `/fw-move`, `/fw-status`, `/fw-release`, `/fw-swarm`, and current ref docs
-- [ ] Link Integrity Gate passes on the rebuilt bundle
-- [ ] CHANGELOG.md updated
-- [ ] TECH-156 Part A closed/cross-referenced as subsumed
+- [x] `templates/starter/.claude/commands/` contains no tracked command `.md` files
+- [x] `templates/starter/framework/` subtree removed
+- [x] Build script copies canonical `.claude/commands/*.md` into the bundle fresh from source
+- [x] Build-time drift-guard fails the build if a duplicate-of-source file reappears in `templates/starter/`
+- [x] Group 3 root placeholder docs spot-checked and confirmed STARTER-ORIGINAL (not silently-copied framework files) — all carry `{{PLACEHOLDER}}` markers; starter `CLAUDE.md` differs from framework `CLAUDE.md` (different purpose)
+- [x] Rebuilt bundle + headless integration test: integrated project has current `/fw-move`, `/fw-status`, `/fw-release`, `/fw-swarm`, and current ref docs — all verified byte-identical to canonical; no dev-tooling (hooks/settings) leaked
+- [x] Link Integrity Gate passes on the rebuilt bundle — zero TECH-159-introduced broken links; the `fw-session-history` command link resolves in the integrated project. (Remaining reported items are pre-existing TECH-158 stale links + known root-file walker false-positives, not regressions.)
+- [x] CHANGELOG.md updated
+- [x] TECH-156 Part A closed/cross-referenced as subsumed
+
+**Completed:** 2026-06-29
 
 ---
 
@@ -111,16 +113,16 @@ Apply the TECH-155 pattern folder-by-folder:
 <!-- ⚠️ AI: Complete items in order. STOP at each [ ] and wait for approval. -->
 <!-- User can say "continue to completion" to approve remaining steps at once. -->
 
-- [ ] **PRE-IMPLEMENTATION REVIEW COMPLETED**
+- [x] **PRE-IMPLEMENTATION REVIEW COMPLETED**
   - AI presents: per-group removal list, build-step + drift-guard design, Group 3 spot-check plan, scope
   - User explicitly approves before proceeding
-- [ ] Group 2: `git rm -r templates/starter/framework/`; verify Step 3 covers ref docs
-- [ ] Group 1: `git rm templates/starter/.claude/commands/*.md`; add canonical-copy build step
-- [ ] Add build-time drift-guard
-- [ ] Spot-check Group 3 root docs are placeholders (not framework copies)
-- [ ] Rebuild distribution; headless `Setup-Framework` integration test
-- [ ] Run Link Integrity Gate; confirm zero genuine broken links
-- [ ] CHANGELOG.md updated; TECH-156 Part A reconciled
+- [x] Group 2: `git rm -r templates/starter/framework/`; verify Step 3 covers ref docs
+- [x] Group 1: `git rm templates/starter/.claude/commands/*.md`; add canonical-copy build step
+- [x] Add build-time drift-guard
+- [x] Spot-check Group 3 root docs are placeholders (not framework copies)
+- [x] Rebuild distribution; headless `Setup-Framework` integration test
+- [x] Run Link Integrity Gate; confirm zero genuine broken links
+- [x] CHANGELOG.md updated; TECH-156 Part A reconciled
 
 ---
 
@@ -129,6 +131,10 @@ Apply the TECH-155 pattern folder-by-folder:
 - Driven by user principle (2026-06-29): "I don't want any duplicate files in templates/starter. NOTHING. If we need them in the distribution archive, then let Build-FrameworkArchive add them fresh from the source so they never get stale."
 - Audit method and full per-file classification: [`project-hub/research/starter-duplication-audit.md`](../../research/starter-duplication-audit.md).
 - Priority **High**: a consuming project currently gets a stale, generation-behind `/fw-move` and no `/fw-release` — directly affects new-project usability (the trigger for this audit was wanting to use `/fw-swarm` + `/fw-release` in a new project).
+- **Scope expansion (user-approved 2026-06-29):** during the rebuild, the bundle was found to store **backslash path separators** (`.claude\commands\...`), which break extraction on macOS/Linux. Proven **pre-existing** (the original pre-TECH-159 build script reproduces it in the same environment — a `Compress-Archive`/.NET behavior, not caused by the de-dup). User chose to fix it within TECH-159 rather than file separately. Fix: replaced `Compress-Archive` with direct `System.IO.Compression` writing forward-slash entry names. Verified: rebuilt bundle has zero backslash paths; `unzip` extracts `.claude/commands/` as a real directory.
+- **Robocopy note:** initial Step 1.5 used `robocopy /MIR`; switched to `Copy-Item` into a freshly-emptied dir for uniformity with the rest of the build (same exact-set/no-straggler guarantee). The separator issue was unrelated to robocopy (see scope-expansion note).
+- **Drift-guard ordering fix:** the drift-guard was initially placed at Step 1.4 — *after* the script deletes the existing zip (cleanup block). A guard failure therefore destroyed the previously-good committed artifact. Moved the guard to a **pre-flight** position before the destructive temp/zip cleanup. Verified: with a planted duplicate the build now fails AND leaves the existing zip byte-identical (same SHA-256); a clean build still succeeds.
+- **Single build method (user, 2026-06-29):** "rogue" = any framework distribution archive not produced by `/fw-release` → `Build-FrameworkArchive.ps1`. Chose **document-the-rule** enforcement (no new hook/gate infra; none exists live today). Rule added to `distribution-build-checklist.md` (Single Build Method section), the build script header (`.NOTES`), so anyone building or editing sees it. Plugin builds split out to TECH-160.
 
 ---
 

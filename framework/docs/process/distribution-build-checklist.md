@@ -14,6 +14,21 @@ This checklist ensures the `templates/standard/` package contains everything nee
 
 ---
 
+## Single Build Method (Required)
+
+**The framework distribution archive is produced by ONE method only:**
+
+> `/fw-release` → `tools/Build-FrameworkArchive.ps1`
+
+- **NEVER hand-build a distribution zip** (no ad-hoc `Compress-Archive`, no manual zipping of `templates/starter/` or `framework/`). Any archive not produced by `Build-FrameworkArchive.ps1` is a **rogue build** and must not be committed or released.
+- `Build-FrameworkArchive.ps1` builds into a **fresh temp dir each run** and copies `.claude/commands/` and `framework/docs/**` **fresh from canonical source**. This means file **additions, edits, AND removals** in canonical automatically propagate to the next archive — there are no stragglers, provided the one method is used.
+- Running `Build-FrameworkArchive.ps1` directly (outside `/fw-release`) is acceptable for local testing because it IS the one method. The rule forbids *bypassing* the script, not invoking it.
+- Duplicate-of-source files must never live in `templates/starter/` (the build copies them fresh). A build-time **drift-guard** in `Build-FrameworkArchive.ps1` fails the build if `templates/starter/.claude/commands/` or `templates/starter/framework/` reappears with tracked files. (TECH-159)
+
+> Plugin archives (`tools/Build-Plugin.ps1`) are a separate product with their own build; they should follow the same execution model but are out of scope for this framework checklist.
+
+---
+
 ## Pre-Build Validation
 
 ### 1. Core Structure Verification

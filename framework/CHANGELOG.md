@@ -16,14 +16,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - **TECH-155: Link-integrity gate** — Added a Link Integrity Gate to the distribution-build checklist's Post-Build Validation: run an integrated link-walk (after `Setup-Framework.ps1`) over `framework/**` excluding `framework/templates/`, confirming zero broken internal links in framework reference docs.
+- **TECH-159: Build copies canonical `.claude/commands/` fresh + drift-guard** — `Build-FrameworkArchive.ps1` now copies the canonical `.claude/commands/*.md` set into the distribution at build time (scoped to `*.md`; the framework's own `.claude/hooks/` and `settings*.json` are deliberately excluded). A build-time drift-guard fails the build if `templates/starter/.claude/commands/` or `templates/starter/framework/` reappears with tracked files, preventing recurrence of duplicate-of-source drift. The guard runs **pre-flight** (before any temp/zip cleanup), so a guard failure aborts without destroying the existing artifact.
+- **TECH-159: Single Build Method documented** — Added a "Single Build Method (Required)" rule to the distribution-build checklist (and the build-script header): framework distribution archives are produced ONLY by `/fw-release` → `Build-FrameworkArchive.ps1`; hand-built zips are rogue builds and must not be committed or released.
 
 ### Changed
 
 - **TECH-155: Build sources `framework/CLAUDE.md` from canonical source** — `Build-FrameworkArchive.ps1` now copies the single canonical `framework/CLAUDE.md` into the distribution rather than shipping a separate copy. Removes a divergent duplicate so the file can no longer drift.
+- **TECH-159: Distribution zip uses forward-slash paths** — Replaced `Compress-Archive` with a direct `System.IO.Compression` build that records forward-slash entry names. On some Windows/.NET hosts `Compress-Archive` emitted OS-native backslash separators, which break extraction on macOS/Linux (files land flat with literal `\` in the name). Pre-existing latent defect, fixed in the same pass.
 
 ### Removed
 
 - **TECH-155: Stale duplicate** — Deleted `templates/starter/framework/CLAUDE.md` (an out-of-date duplicate of the canonical `framework/CLAUDE.md`); the bundle now copies the canonical file at build time.
+- **TECH-159: All duplicate-of-source content removed from `templates/starter/`** — Deleted the 10 drifted `templates/starter/.claude/commands/*.md` files and the `templates/starter/framework/` subtree (`docs/ref/GLOSSARY.md`, `docs/ref/framework-commands.md`). These were stale copies of canonical source; the build now supplies them fresh. Fixes new projects shipping a generation-behind `/fw-move`/`/fw-status`, a stale glossary, and missing `/fw-release` (subsumes TECH-156 Part A).
 
 ### Fixed
 

@@ -79,6 +79,12 @@ These are the placeholder files a NEW project starts with. They intentionally di
 3. **Groups 3 & 4:** no change — but spot-check Group 3 placeholder claim during implementation.
 4. Rebuild distribution, run the Link Integrity Gate, headless `Setup-Framework` integration test, confirm `/fw-release` + `/fw-swarm` + fresh ref docs all present in an integrated project.
 
+## Implementation outcome (2026-06-29)
+
+Implemented as **TECH-159**. Both groups removed; `Build-FrameworkArchive.ps1` now copies canonical `.claude/commands/*.md` fresh (scoped to `*.md`, excludes framework hooks/settings) with a build-time drift-guard. Groups 3 & 4 kept (spot-check confirmed `{{PLACEHOLDER}}` content).
+
+**One pre-existing defect surfaced and fixed in the same pass (user-approved scope expansion):** the bundle stored **backslash path separators**, breaking macOS/Linux extraction. Proven environmental (original script reproduces it), not caused by the de-dup. Fixed by replacing `Compress-Archive` with direct `System.IO.Compression` using forward-slash entry names. (The robocopy `/MIR` approach floated in the fix sequence below was dropped in favor of `Copy-Item` into a freshly-emptied dir — same guarantee, uniform with the rest of the build.)
+
 ## Relationship to existing work items
 
 - **TECH-156 Part A** (fw-release missing from distribution) — *subsumed* by Group 1 fix.
