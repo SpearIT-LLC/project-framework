@@ -56,9 +56,13 @@ Edit `.claude/commands/fw-session-history.md`:
 4. Keep the format template and Append-Only Principle as-is.
 
 **Files Affected:**
-- `.claude/commands/fw-session-history.md` — canonical command (ships to consumers via `Build-FrameworkArchive.ps1` Step 1.5 since TECH-159)
+- `.claude/commands/fw-session-history.md` — full-framework command (ships to consumers via `Build-FrameworkArchive.ps1` Step 1.5 since TECH-159)
+- `plugins/spearit-framework/commands/session-history.md` — advanced-plugin copy of the same command (it exists separately and is NOT identical — uses an external template)
+- `plugins/spearit-framework/templates/session-history-template.md` — the plugin's external template; the rollover guidance may need to land here too, since the plugin command delegates its format to this file
 
-> Note: there is also an `fw-session-history` **skill** surfaced to the session (separate from the command file). Check whether the skill carries its own copy of these instructions and needs the same update, or whether it delegates to the command file. Re-derive at implementation.
+> **Scope note (2026-06-30):** Investigation found the session-history command exists in 3 forms across the command tiers, and the `fw-*` and plugin command sets have broadly drifted (see DECISION-162 + the drift inventory). TECH-161 is **narrowly scoped** to the per-date rollover fix and applies it to the two session-history copies that exist (`fw` + full plugin; the light plugin has no session-history command). The broader fw-*-vs-plugin sync strategy is **out of scope here** — it's DECISION-162. If DECISION-162 later consolidates these copies to a single source, this fix lands in that source instead; coordinate ordering.
+>
+> The `/fw-session-history` "skill" referenced earlier is the harness entry that maps to `.claude/commands/fw-session-history.md` — it is the same artifact as the first file above, not a separate copy.
 
 ---
 
@@ -69,7 +73,7 @@ Edit `.claude/commands/fw-session-history.md`:
 - [ ] Command specifies the bidirectional cross-reference ("Continued from" / "Continued on")
 - [ ] Within-day append behavior + Append-Only Principle unchanged
 - [ ] Notes wording reconciled (within-day, not within-session)
-- [ ] Verified there is no second copy of these instructions that also needs updating (skill vs command)
+- [ ] Rollover fix applied to BOTH session-history copies: `.claude/commands/fw-session-history.md` and `plugins/spearit-framework/commands/session-history.md` (+ the plugin's external template if it carries the format)
 - [ ] CHANGELOG.md updated
 
 ---
@@ -82,9 +86,9 @@ Edit `.claude/commands/fw-session-history.md`:
 - [ ] **PRE-IMPLEMENTATION REVIEW COMPLETED**
   - AI presents: exact wording changes, the spans-midnight subsection, skill-vs-command check
   - User explicitly approves before proceeding
-- [ ] Update `fw-session-history.md` Behavior + add spans-midnight subsection + cross-reference spec
+- [ ] Update `.claude/commands/fw-session-history.md` Behavior + add spans-midnight subsection + cross-reference spec
 - [ ] Reconcile Notes wording (within-day)
-- [ ] Verify/handle the `fw-session-history` skill copy (if any)
+- [ ] Apply the same change to `plugins/spearit-framework/commands/session-history.md` (+ its external template if needed)
 - [ ] CHANGELOG.md updated
 
 ---
