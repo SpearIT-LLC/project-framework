@@ -124,4 +124,17 @@ Started by catching up from the 2026-06-25 session and answering three questions
 
 ---
 
-**Last Updated:** 2026-06-29
+## TECH-159 Accepted → done (continuation, 2026-06-30)
+
+- User reviewed TECH-159 and ran `/fw-move 159 done`. The `→ done` hard check (all acceptance criteria `[x]`) **passed without `--force`** — criteria were genuinely complete.
+- `git mv` to `done/` preserved history (tracked as rename). No artifact folder (single-file item). Completed date stands at 2026-06-29 (the day the work finished).
+- `done/` now holds: TECH-155 (+ its artifact folder) and TECH-159 — both **awaiting release**.
+
+### Updated state
+- **In done/ (awaiting release):** TECH-155, TECH-159
+- **In doing/:** (empty)
+- **Open decisions still pending:** TECH-156 reconciliation (Part A subsumed, Part B done); TECH-160 (plugin build) in backlog.
+
+---
+
+**Last Updated:** 2026-06-30
