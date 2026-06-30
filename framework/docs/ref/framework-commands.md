@@ -1,7 +1,7 @@
 # Framework Commands Reference
 
-**Version:** 1.0.0
-**Last Updated:** 2026-01-28
+**Version:** 1.1.0
+**Last Updated:** 2026-06-30
 
 Framework commands provide shortcuts for common workflow operations in the SpearIT Project Framework. All commands use the `/fw-` prefix.
 
@@ -14,8 +14,14 @@ Framework commands provide shortcuts for common workflow operations in the Spear
 | `/fw-help` | List available commands or get help on a specific command | Active |
 | `/fw-move` | Move work item between folders with policy enforcement | Active |
 | `/fw-status` | Show project status summary | Active |
-| `/fw-wip-check` | Check WIP limits and current work | Active |
+| `/fw-wip` | Show current work in progress (doing/) with sub-items | Active |
 | `/fw-backlog` | Review and prioritize backlog items | Active |
+| `/fw-next-id` | Get the next available work item ID | Active |
+| `/fw-session-history` | Generate or update today's session history | Active |
+| `/fw-roadmap` | AI-guided strategic roadmap creation | Active |
+| `/fw-topic-index` | Show the source-of-truth index for framework topics | Active |
+| `/fw-swarm` | AI-facilitated multi-perspective team swarm (choose a lens) | Active |
+| `/fw-release` | Automated release: validate, version, tag, archive, build | Active |
 
 ---
 
@@ -153,16 +159,16 @@ Before executing any move, read and follow the appropriate checklist at:
 
 **Syntax:**
 ```
-/fw-status [--compact]
+/fw-status [current]
 ```
 
 **Options:**
-- `--compact` (optional) - Show single-line summary instead of full report
+- `current` (optional) - Show only the items currently in `doing/`
 
 **Examples:**
 ```
 /fw-status           # Full status report
-/fw-status --compact # One-line summary
+/fw-status current   # Show items in doing/ only
 ```
 
 **Output includes:**
@@ -195,20 +201,20 @@ v4.0.0 | Backlog: 12 | Todo: 3 | Doing: 1/2 ✅ | Done: 0
 
 ---
 
-### /fw-wip-check
+### /fw-wip
 
-**Purpose:** Check Work In Progress limits and list items currently in doing/.
+**Purpose:** Show current work in progress — items in `doing/`, with sub-items expanded — and WIP limit status.
 
 **Syntax:**
 ```
-/fw-wip-check
+/fw-wip
 ```
 
 **Arguments:** None
 
 **Examples:**
 ```
-/fw-wip-check        # Check current WIP status
+/fw-wip        # Show current work in progress
 ```
 
 **Output includes:**
@@ -326,13 +332,152 @@ Interactive session that:
 
 ---
 
+### /fw-next-id
+
+**Purpose:** Return the next available work item ID from the common namespace (scans all `work/` folders and `history/releases/` to avoid collisions).
+
+**Syntax:**
+```
+/fw-next-id
+```
+
+**Arguments:** None
+
+**Examples:**
+```
+/fw-next-id        # e.g. "Next available ID: 161"
+```
+
+**Output:** The next free numeric ID. IDs are shared across all work item types (FEAT, TECH, BUG, etc.) — the prefix is chosen when you create the item.
+
+---
+
+### /fw-session-history
+
+**Purpose:** Generate or update today's session history document, capturing work completed, decisions made, and files changed during the session.
+
+**Syntax:**
+```
+/fw-session-history [focus]
+```
+
+**Arguments:**
+- `focus` (optional) - Brief description of the session focus (e.g. `"FEAT-022 implementation"`)
+
+**Examples:**
+```
+/fw-session-history                           # Auto-detected focus
+/fw-session-history "FEAT-022 implementation" # Explicit focus
+```
+
+**Behavior:**
+- Writes to `project-hub/history/sessions/YYYY-MM-DD-SESSION-HISTORY.md`
+- Append-only: continues an existing file for the day rather than overwriting (preserves the journey, not just the end state)
+- Primarily written for future AI sessions — captures rationale and context for seamless continuation
+
+---
+
+### /fw-roadmap
+
+**Purpose:** Create a strategic project roadmap through AI-guided conversational questioning — challenges vague goals and pushes for measurable, strategic clarity.
+
+**Syntax:**
+```
+/fw-roadmap [update "<planning-period>"]
+```
+
+**Arguments:**
+- `update "<planning-period>"` (optional) - Update a specific planning period instead of creating a new roadmap
+
+**Examples:**
+```
+/fw-roadmap                        # Create new roadmap (guided conversation)
+/fw-roadmap update "Sprint D&O 4"  # Update a specific planning period
+```
+
+---
+
+### /fw-topic-index
+
+**Purpose:** Display the source-of-truth index for framework topics — answers "where is X documented?" by mapping topics to their canonical files.
+
+**Syntax:**
+```
+/fw-topic-index [filter]
+```
+
+**Arguments:**
+- `filter` (optional) - Substring to narrow the topic list (e.g. `release`, `workflow`)
+
+**Examples:**
+```
+/fw-topic-index           # Show the full topic index
+/fw-topic-index release   # Show only topics matching "release"
+```
+
+**Data source:** The `sources:` block in `framework.yaml`.
+
+---
+
+### /fw-swarm
+
+**Purpose:** Facilitate a structured multi-perspective team conversation on a topic. A virtual team brings discipline-specific lenses to drive toward a clear, confident outcome — a plan, a decision, an incident resolution, or a research finding.
+
+**Syntax:**
+```
+/fw-swarm [mode]
+/fw-swarm [mode] resume [slug]
+```
+
+**Arguments:**
+- `mode` (optional) - The lens for the swarm: `project`, `incident`, `decision`, `architecture`, `risk`, or `research`. If omitted, the command helps you choose.
+- `resume [slug]` (optional) - Resume the most recent swarm of that mode, or a specific one by slug
+
+**Examples:**
+```
+/fw-swarm                       # Choose a lens, then start
+/fw-swarm decision              # Start a decision-lens swarm
+/fw-swarm incident resume       # Resume the most recent incident swarm
+```
+
+---
+
+### /fw-release
+
+**Purpose:** Automate the release process end to end — validate readiness, calculate the next version, update status/changelog files, create the git tag, archive completed work items, and build the distribution artifact.
+
+**Syntax:**
+```
+/fw-release [product-id]
+```
+
+**Arguments:**
+- `product-id` (optional) - Which product to release, per the `release.products` list in `framework.yaml` (e.g. `framework`, `plugin-full`, `plugin-light`). Defaults to `release.default_product`.
+
+**Examples:**
+```
+/fw-release                # Release the default product (framework)
+/fw-release plugin-light   # Release the light plugin
+```
+
+**Behavior:**
+1. Validates release readiness (items in `done/`, clean state)
+2. Calculates the next version from the work items being released
+3. Updates the product's `status_file` and `changelog_file`
+4. Commits, creates an annotated git tag, archives `done/` items to `history/releases/<product>/vX.Y.Z/`
+5. Runs the product's `build_script` (if configured) to produce the distribution artifact
+
+**Configuration:** Driven by the `release:` block in `framework.yaml` (per-product `archive_path`, `status_file`, `changelog_file`, `build_script`).
+
+---
+
 ## Adding New Commands
 
 New framework commands should follow these guidelines:
 
 ### Naming Convention
 - Use `/fw-<verb>` or `/fw-<noun>` pattern
-- Examples: `/fw-release`, `/fw-roadmap`, `/fw-archive`
+- Examples: `/fw-move`, `/fw-roadmap`, `/fw-session-history`
 - Keep names concise (one or two words)
 
 ### Documentation Requirements
@@ -419,5 +564,5 @@ New framework commands should follow these guidelines:
 
 ---
 
-**Last Updated:** 2026-01-28
+**Last Updated:** 2026-06-30
 **Maintained by:** Gary Elliott (gary.elliott@spearit.solutions)

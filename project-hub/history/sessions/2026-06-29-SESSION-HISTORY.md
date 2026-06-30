@@ -137,4 +137,44 @@ Started by catching up from the 2026-06-25 session and answering three questions
 
 ---
 
+## TECH-156 Reconciled + Command-Reference Doc Updated → done (continuation, 2026-06-30)
+
+Picked up TECH-156 to reconcile it. The user's framing cut through the confusion: **"we have a documentation problem, not a command functionality issue."**
+
+### Functionality was already done
+- **Part A** (fw-release ships): subsumed by **TECH-159** — build copies canonical commands fresh; the original "copy fw-release.md into starter" method was superseded. Bundle has all 11 commands (verified in TECH-159 integration test).
+- **Part B** (git sync): done ad hoc 2026-06-25 (`origin/main` synced, 19 tags pushed). Drift-guard: done in TECH-159.
+
+### Genuine remainder — the doc was stale
+- `framework/docs/ref/framework-commands.md` documented only **5 of 11** commands, used the stale `/fw-wip-check` name, and referenced a non-existent `/fw-archive`.
+- Rewrote it (v1.0.0 → v1.1.0): added accurate reference sections for `/fw-next-id`, `/fw-session-history`, `/fw-roadmap`, `/fw-topic-index`, `/fw-swarm`, `/fw-release`; fixed the Quick Command List table (all 11); corrected `/fw-status` syntax (`[current]`). **Descriptions extracted from each canonical `.claude/commands/fw-*.md`** (verify-before-stating), not written from memory.
+
+### "GitHub Releases assets" criterion — retired as a FALSE PREMISE
+- User asked the key question: "How did we 'release' the existing archive files?" Investigation answered it: **"released" = the distribution ZIP is committed to `distrib/framework/` at a tagged commit.** Evidence: zips are git-tracked; `c349514 chore: Build distribution artifact v5.4.0`; `/fw-release` + the release-process doc have NO GitHub-Releases step; `gh release list` returns zero release objects.
+- So the criterion assumed a publishing model the project doesn't use. Removed it from TECH-156 (with explanation) rather than inventing new infrastructure to "satisfy" it. The 06-25 "shows up to v5.2.0" observation was the committed `distrib/` zips in the repo browser, not Release objects.
+- **Correction logged:** I twice mis-stated this criterion (first "can't do from CLI" — wrong, `gh` is installed + authed as `elliottgaryusa`; then assumed Release objects existed — they don't). The criterion itself was ill-defined from a 06-25 observation that didn't match API reality.
+
+### Future option (captured, not filed)
+- Adopting GitHub Releases as an additional channel (Release objects per tag + attached zips + a `/fw-release` publish step) is viable (`gh` works) but is **new infrastructure**. Noted in TECH-156 as a future DECISION candidate, not a committed item.
+
+### Decisions Made (continuation)
+1. **TECH-156 reframed as documentation, not functionality** (user). Functional goals already met by TECH-159 + the 06-25 push; only the stale command-reference doc genuinely remained.
+2. **Retire the GitHub-Releases criterion as a false premise** rather than force-satisfy it. Closing on real, completed scope keeps the record honest (same discipline as the TECH-155 honest-close).
+3. **Did not file a separate doc-staleness item** — fixed `framework-commands.md` in-place under TECH-156 (user chose "fix the doc now").
+
+### Files Modified (continuation)
+- `framework/docs/ref/framework-commands.md` - Rewrote to cover all 11 commands; fixed stale names; v1.1.0 / 2026-06-30
+- `framework/CHANGELOG.md` - TECH-156 command-reference entry
+- `project-hub/work/done/TECH-156-...md` - Criteria reconciled (Releases criterion retired), Completed date, Resolution + Future-option notes
+
+### Files Moved (continuation)
+- `project-hub/work/todo/TECH-156-...` → `doing/` → `done/`
+
+### Updated state (end of continuation)
+- **In done/ (awaiting release):** TECH-155, TECH-156, TECH-159 (3 items — under release-nudge threshold)
+- **In doing/:** (empty)
+- **In backlog:** TECH-160 (plugin build alignment)
+
+---
+
 **Last Updated:** 2026-06-30

@@ -5,6 +5,7 @@
 **Priority:** High
 **Version Impact:** PATCH
 **Created:** 2026-06-25
+**Completed:** 2026-06-30
 **Theme:** Distribution & Release Hygiene
 
 ---
@@ -82,13 +83,13 @@ Verified via `git fetch` + `git ls-remote --tags origin` on 2026-06-25:
 
 ## Acceptance Criteria
 
-- [ ] `fw-release.md` present in `templates/starter/.claude/commands/`
-- [ ] Fresh framework bundle contains `fw-release.md`
-- [ ] `framework-commands.md` documents `/fw-release`
-- [ ] `origin/main` == local `main` (0 ahead)
-- [ ] All intended framework + plugin tags present on `origin`
-- [ ] GitHub Releases assets reconciled with tags (or a documented decision on which to publish)
-- [ ] (Optional) Drift-guard prevents starter/source command divergence
+- [x] ~~`fw-release.md` present in `templates/starter/.claude/commands/`~~ **SUPERSEDED by TECH-159** — the de-dup work removed ALL command files from the starter; the build copies the canonical command set (incl. `fw-release.md`) fresh. The original goal (it ships) is met by a better method; the starter no longer holds command files by design.
+- [x] Fresh framework bundle contains `fw-release.md` — verified in TECH-159 integration test (bundle has all 11 commands incl. `fw-release.md`)
+- [x] `framework-commands.md` documents `/fw-release` — done 2026-06-30; the doc was rewritten to cover all 11 commands (it previously documented only 5 and used the stale `/fw-wip-check` + non-existent `/fw-archive` names)
+- [x] `origin/main` == local `main` (0 ahead) — pushed via VSCode on 2026-06-25 (verified 0/0 that session)
+- [x] All intended framework + plugin tags present on `origin` — `git push origin --tags` on 2026-06-25 pushed all 19 tags (v3.0.1→v5.4.0 + 3 plugin tags)
+- [x] ~~GitHub Releases assets reconciled with tags~~ **REMOVED — false premise.** This criterion assumed the project publishes via the GitHub *Releases* feature. It does not: investigation (2026-06-30) confirmed "released" here means **the distribution ZIP is committed to the repo** (`distrib/framework/*.zip` at a tagged commit). `/fw-release` builds + commits + tags; it has no GitHub-Releases step, and `gh release list` shows zero release objects. The 2026-06-25 "shows up to v5.2.0" observation was the committed `distrib/` zips in the repo browser, not Release objects. Adopting GitHub Releases would be NEW infrastructure, not a gap to close (see Notes).
+- [x] (Optional) Drift-guard prevents starter/source command divergence — added in TECH-159 (pre-flight guard in `Build-FrameworkArchive.ps1`)
 
 ---
 
@@ -97,20 +98,16 @@ Verified via `git fetch` + `git ls-remote --tags origin` on 2026-06-25:
 <!-- ⚠️ AI: Complete items in order. STOP at each [ ] and wait for approval. -->
 <!-- User can say "continue to completion" to approve remaining steps at once. -->
 
-- [ ] **PRE-IMPLEMENTATION REVIEW COMPLETED**
-  - AI presents: Current vs desired state, proposed solution, scope (Parts A & B)
-  - User explicitly approves before proceeding
-  - **Note:** Part B includes git push operations — per git safety policy, AI must get explicit approval before any push.
-
-- [ ] Part A: Copy `fw-release.md` into starter template
-- [ ] Part A: Verify `framework-commands.md` lists `/fw-release`
-- [ ] Part A: Rebuild distribution bundle; confirm `fw-release.md` present
-- [ ] Part B: Review unpushed commits/tags, confirm intent
-- [ ] Part B: Push `main` and tags to `origin` (after explicit approval)
-- [ ] Part B: Reconcile GitHub Releases assets
-- [ ] (Optional) Add drift-guard to build script
-- [ ] CHANGELOG.md updated
-- [ ] Acceptance criteria verified
+- [x] **PRE-IMPLEMENTATION REVIEW COMPLETED** (2026-06-30) — reconciled the item against reality: functional goals already met (Part A via TECH-159, Part B pushed 2026-06-25). User's framing: "we have a documentation problem, not a command functionality issue." Scope reduced to the genuine remainder — bring `framework-commands.md` up to date — plus recording what other work satisfied the rest.
+- [x] ~~Part A: Copy `fw-release.md` into starter template~~ **SUPERSEDED by TECH-159** (build copies canonical fresh; starter holds no command files)
+- [x] Part A: Verify/update `framework-commands.md` — rewrote to cover all 11 commands; fixed stale `/fw-wip-check` → `/fw-wip` and removed non-existent `/fw-archive`
+- [x] Part A: Bundle contains `fw-release.md` — verified in TECH-159 integration test
+- [x] Part B: Review unpushed commits/tags, confirm intent — done 2026-06-25
+- [x] Part B: Push `main` and tags to `origin` — done 2026-06-25 (branch via VSCode, tags via `git push origin --tags`)
+- [x] ~~Part B: Reconcile GitHub Releases assets~~ **REMOVED — false premise** (project publishes via committed `distrib/` zips, not GitHub Releases; see Acceptance Criteria + Notes)
+- [x] (Optional) Add drift-guard to build script — done in TECH-159
+- [x] CHANGELOG.md updated (TECH-156 entry for the command-reference doc update)
+- [x] Acceptance criteria verified (all but the manual Releases-assets task)
 
 ---
 
@@ -119,6 +116,18 @@ Verified via `git fetch` + `git ls-remote --tags origin` on 2026-06-25:
 - Discovered during a 2026-06-25 catch-up session investigating why `/fw-swarm` appeared missing from the v5.2.0 archive. The `fw-swarm` concern was a false alarm (correct version gating); the `fw-release` gap and the GitHub sync gap are the real findings.
 - Epistemic caveat: the git layer (tags/branch) was verified via `git ls-remote`. The GitHub **Releases** page (uploaded ZIP assets) could not be inspected from the CLI; "GitHub shows up to v5.2.0" for assets is the maintainer's observation and is consistent with — but not directly verified against — the git-layer findings.
 - No v5.3.0 ZIP exists in `distrib/framework/` (build-as-part-of-release only landed in v5.4.0), so there is no v5.3.0 asset to publish.
+
+### Resolution (2026-06-30)
+
+This item's two original parts were satisfied by other work, and one criterion was retired as a false premise:
+- **Part A (fw-release in distribution):** subsumed by **TECH-159** — the build copies the canonical command set fresh; `/fw-release` ships in the bundle. The original "copy fw-release.md into starter" approach was superseded (the starter holds no command files by design).
+- **Part B (git sync):** completed ad hoc on **2026-06-25** — `origin/main` synced, all 19 tags pushed.
+- **Genuine remainder, done here (2026-06-30):** the command-reference doc `framework/docs/ref/framework-commands.md` was stale (documented 5 of 11 commands, used `/fw-wip-check`, referenced a non-existent `/fw-archive`). User reframed: "we have a documentation problem, not a command functionality issue." Rewrote it to cover all 11 commands accurately.
+- **GitHub Releases assets — removed (false premise):** the project does not use the GitHub Releases feature. "Released" = distribution ZIP committed to `distrib/framework/` at a tagged commit (verified: zips are git-tracked; `c349514 chore: Build distribution artifact v5.4.0`; no GitHub-Releases step in `/fw-release` or the release process doc; `gh release list` empty).
+
+### Future option (not a committed work item)
+
+Adopting GitHub Releases as an *additional* publishing channel (create Release objects per tag, attach the `distrib/` zips, add a publish step to `/fw-release`) is a viable enhancement — `gh` is installed and authenticated for this repo. It is **new infrastructure**, not a gap in TECH-156. File a DECISION item if/when this is wanted.
 
 ---
 
