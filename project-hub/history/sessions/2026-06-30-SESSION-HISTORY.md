@@ -96,14 +96,46 @@ This release is what actually delivers the session's original goal: a project sc
 
 ### In backlog
 - TECH-160 (plugin build execution-model alignment, Medium)
+- TECH-161 (session-history per-date rollover, Medium)
+- DECISION-162 (command-tier sync strategy, Medium)
 
 ### Release / Git
 - **Current version:** v5.5.0
-- **Git:** 8+ commits unpushed; `v5.5.0` tag unpushed. `git push origin main --tags` left to the developer (plain push won't carry the tag — `--tags` required).
+- **Git:** commits unpushed; `v5.5.0` tag unpushed. `git push origin main --tags` left to the developer (plain push won't carry the tag — `--tags` required).
 
 ### Open follow-ups (carried)
-- TECH-160 (plugin forward-slash zip + mirror semantics) — natural next pickup.
+- TECH-160 (plugin forward-slash zip + mirror semantics).
 - From prior sessions: FEAT-157 (provenance stamp), TECH-158 (structural-stale links), scratch/ → poc/ cleanup (unfiled), SpearIT-KB notify at release.
+
+---
+
+## Post-Release Investigation — Session-History Command Copies + Command-Tier Drift
+
+Triggered by the user opening `plugins/spearit-framework/commands/session-history.md` and asking whether it's identical to `.claude/commands/fw-session-history.md`.
+
+### Findings
+- **Not identical.** Beyond expected namespace renaming (`/fw-` → `/spearit-framework:`), there's a structural difference: the `fw-*` version embeds the template **inline**; the plugin version delegates to an **external** file (`plugins/spearit-framework/templates/session-history-template.md`). So it's a *third* related artifact.
+- **My "skill" reference clarified:** the `/fw-session-history` harness entry maps to `.claude/commands/fw-session-history.md` — same artifact, not a separate copy. The genuine second copy is the plugin command.
+- **Broader inventory (user confirmed the 3 tiers are intentional):**
+  - `.claude/commands/fw-*` = full framework (11), `plugins/spearit-framework` = advanced (8), `plugins/spearit-framework-light` = basic/Kanban (3). Different **counts** by design.
+  - **Behavioral drift in SHARED commands (namespace-normalized diff line counts):** `swarm` 697, `roadmap` 436, `move` 427, `backlog` 207, `session-history` 68, `help` ~62. The two plugins are **in sync with each other** (`move`/`new` = 0) but **lag `fw-*`** — the framework gained functionality the plugins never received. Confirms the user's "I THINK we added functionality" hunch with numbers.
+
+### Decisions Made
+1. **Separate the big question from the small fix** (user): file a DECISION item for the drift, keep TECH-161 narrow.
+2. **Per-command intentional-vs-lagging analysis deferred to a future session** (user): "investigate per command differences, look at the history and open work items to confirm if the drift was intentional or just lagging a sync." Captured as DECISION-162's open work, not done now.
+
+### Files Created
+- `project-hub/research/command-tier-drift-inventory.md` — presence map + diff-count evidence
+- `project-hub/work/backlog/DECISION-162-command-tier-sync-strategy.md` — open decision (4 options; choice TBD)
+
+### Files Modified
+- `project-hub/work/backlog/TECH-161-...md` — narrowed scope; Files Affected now lists both session-history copies + the plugin template; criterion reworded from "verify no second copy" to "apply to both copies"
+
+### Closing note (user)
+- **v5.5.0 is far enough along to use in another project.** A project scaffolded from `spearit_framework_v5.5.0.zip` gets all 11 commands (incl. `/fw-swarm` + `/fw-release`), de-duplicated and forward-slash-correct. (Reminder: tag/commits still local — push when ready if the other project pulls from the remote rather than the local bundle.)
+
+### Updated backlog (end of session)
+- TECH-160 (plugin build alignment), TECH-161 (session-history rollover), DECISION-162 (command-tier sync) — interrelated plugin/command-sync theme.
 
 ---
 
