@@ -15,6 +15,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+None
+
+### Changed
+
+None
+
+### Removed
+
+None
+
+### Fixed
+
+None
+
+---
+
+## [5.5.0] - 2026-06-30
+
+### Added
+
 - **TECH-155: Link-integrity gate** — Added a Link Integrity Gate to the distribution-build checklist's Post-Build Validation: run an integrated link-walk (after `Setup-Framework.ps1`) over `framework/**` excluding `framework/templates/`, confirming zero broken internal links in framework reference docs.
 - **TECH-159: Build copies canonical `.claude/commands/` fresh + drift-guard** — `Build-FrameworkArchive.ps1` now copies the canonical `.claude/commands/*.md` set into the distribution at build time (scoped to `*.md`; the framework's own `.claude/hooks/` and `settings*.json` are deliberately excluded). A build-time drift-guard fails the build if `templates/starter/.claude/commands/` or `templates/starter/framework/` reappears with tracked files, preventing recurrence of duplicate-of-source drift. The guard runs **pre-flight** (before any temp/zip cleanup), so a guard failure aborts without destroying the existing artifact.
 - **TECH-159: Single Build Method documented** — Added a "Single Build Method (Required)" rule to the distribution-build checklist (and the build-script header): framework distribution archives are produced ONLY by `/fw-release` → `Build-FrameworkArchive.ps1`; hand-built zips are rogue builds and must not be committed or released.
