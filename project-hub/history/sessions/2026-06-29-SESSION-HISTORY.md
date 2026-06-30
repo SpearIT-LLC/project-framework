@@ -177,4 +177,27 @@ Picked up TECH-156 to reconcile it. The user's framing cut through the confusion
 
 ---
 
+## Release v5.5.0 (continuation, 2026-06-30)
+
+Ran `/fw-release`. Released the 3 done items as one distribution-hygiene release.
+
+- **Version:** v5.4.0 → **v5.5.0** (MINOR, driven by TECH-159's Version Impact). User confirmed version + CHANGELOG (already populated during the work).
+- **CHANGELOG:** `[Unreleased]` → `[5.5.0] - 2026-06-30`; fresh empty `[Unreleased]` inserted.
+- **Commits:** `6dc24c1` release (version + changelog), `e4b8179` archive work items, `9253c9c` build artifact. Annotated tag **`v5.5.0`** created.
+- **Archived:** TECH-155 (+ `TECH-155/` artifact), TECH-156, TECH-159 → `history/releases/framework/v5.5.0/`. `done/` back to empty.
+- **Distribution built + verified:** `spearit_framework_v5.5.0.zip` — 11 commands incl. `fw-release`, **0 backslash paths** (forward-slash fix holding), `.framework-version` = `5.5.0`. This is the first release to ship the TECH-159 build (canonical-command copy + forward-slash zip) and the updated command-reference doc.
+- **NOT pushed** — per `/fw-release` policy and session convention, push left to the developer. At session end: **8 commits ahead of `origin/main`**, tag `v5.5.0` local-only.
+
+### Release significance
+This release is what actually delivers the session's original goal: a project scaffolded from the v5.5.0 bundle gets `/fw-swarm` **and** `/fw-release`, both current — plus the de-duplicated, cross-platform-correct (forward-slash) archive.
+
+### Updated state (post-release)
+- **In done/:** (empty)
+- **In doing/:** (empty)
+- **In backlog:** TECH-160 (plugin build alignment)
+- **Current version:** v5.5.0
+- **Git:** 8 commits unpushed; `v5.5.0` tag unpushed; `git push origin main --tags` left to developer.
+
+---
+
 **Last Updated:** 2026-06-30
