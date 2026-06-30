@@ -124,79 +124,14 @@ Started by catching up from the 2026-06-25 session and answering three questions
 
 ---
 
-## TECH-159 Accepted → done (continuation, 2026-06-30)
+## Continued on 2026-06-30
 
-- User reviewed TECH-159 and ran `/fw-move 159 done`. The `→ done` hard check (all acceptance criteria `[x]`) **passed without `--force`** — criteria were genuinely complete.
-- `git mv` to `done/` preserved history (tracked as rename). No artifact folder (single-file item). Completed date stands at 2026-06-29 (the day the work finished).
-- `done/` now holds: TECH-155 (+ its artifact folder) and TECH-159 — both **awaiting release**.
+This session continued past the date rollover. Per the per-date history convention,
+the rest of the work is recorded in [2026-06-30-SESSION-HISTORY.md](2026-06-30-SESSION-HISTORY.md):
 
-### Updated state
-- **In done/ (awaiting release):** TECH-155, TECH-159
-- **In doing/:** (empty)
-- **Open decisions still pending:** TECH-156 reconciliation (Part A subsumed, Part B done); TECH-160 (plugin build) in backlog.
-
----
-
-## TECH-156 Reconciled + Command-Reference Doc Updated → done (continuation, 2026-06-30)
-
-Picked up TECH-156 to reconcile it. The user's framing cut through the confusion: **"we have a documentation problem, not a command functionality issue."**
-
-### Functionality was already done
-- **Part A** (fw-release ships): subsumed by **TECH-159** — build copies canonical commands fresh; the original "copy fw-release.md into starter" method was superseded. Bundle has all 11 commands (verified in TECH-159 integration test).
-- **Part B** (git sync): done ad hoc 2026-06-25 (`origin/main` synced, 19 tags pushed). Drift-guard: done in TECH-159.
-
-### Genuine remainder — the doc was stale
-- `framework/docs/ref/framework-commands.md` documented only **5 of 11** commands, used the stale `/fw-wip-check` name, and referenced a non-existent `/fw-archive`.
-- Rewrote it (v1.0.0 → v1.1.0): added accurate reference sections for `/fw-next-id`, `/fw-session-history`, `/fw-roadmap`, `/fw-topic-index`, `/fw-swarm`, `/fw-release`; fixed the Quick Command List table (all 11); corrected `/fw-status` syntax (`[current]`). **Descriptions extracted from each canonical `.claude/commands/fw-*.md`** (verify-before-stating), not written from memory.
-
-### "GitHub Releases assets" criterion — retired as a FALSE PREMISE
-- User asked the key question: "How did we 'release' the existing archive files?" Investigation answered it: **"released" = the distribution ZIP is committed to `distrib/framework/` at a tagged commit.** Evidence: zips are git-tracked; `c349514 chore: Build distribution artifact v5.4.0`; `/fw-release` + the release-process doc have NO GitHub-Releases step; `gh release list` returns zero release objects.
-- So the criterion assumed a publishing model the project doesn't use. Removed it from TECH-156 (with explanation) rather than inventing new infrastructure to "satisfy" it. The 06-25 "shows up to v5.2.0" observation was the committed `distrib/` zips in the repo browser, not Release objects.
-- **Correction logged:** I twice mis-stated this criterion (first "can't do from CLI" — wrong, `gh` is installed + authed as `elliottgaryusa`; then assumed Release objects existed — they don't). The criterion itself was ill-defined from a 06-25 observation that didn't match API reality.
-
-### Future option (captured, not filed)
-- Adopting GitHub Releases as an additional channel (Release objects per tag + attached zips + a `/fw-release` publish step) is viable (`gh` works) but is **new infrastructure**. Noted in TECH-156 as a future DECISION candidate, not a committed item.
-
-### Decisions Made (continuation)
-1. **TECH-156 reframed as documentation, not functionality** (user). Functional goals already met by TECH-159 + the 06-25 push; only the stale command-reference doc genuinely remained.
-2. **Retire the GitHub-Releases criterion as a false premise** rather than force-satisfy it. Closing on real, completed scope keeps the record honest (same discipline as the TECH-155 honest-close).
-3. **Did not file a separate doc-staleness item** — fixed `framework-commands.md` in-place under TECH-156 (user chose "fix the doc now").
-
-### Files Modified (continuation)
-- `framework/docs/ref/framework-commands.md` - Rewrote to cover all 11 commands; fixed stale names; v1.1.0 / 2026-06-30
-- `framework/CHANGELOG.md` - TECH-156 command-reference entry
-- `project-hub/work/done/TECH-156-...md` - Criteria reconciled (Releases criterion retired), Completed date, Resolution + Future-option notes
-
-### Files Moved (continuation)
-- `project-hub/work/todo/TECH-156-...` → `doing/` → `done/`
-
-### Updated state (end of continuation)
-- **In done/ (awaiting release):** TECH-155, TECH-156, TECH-159 (3 items — under release-nudge threshold)
-- **In doing/:** (empty)
-- **In backlog:** TECH-160 (plugin build alignment)
-
----
-
-## Release v5.5.0 (continuation, 2026-06-30)
-
-Ran `/fw-release`. Released the 3 done items as one distribution-hygiene release.
-
-- **Version:** v5.4.0 → **v5.5.0** (MINOR, driven by TECH-159's Version Impact). User confirmed version + CHANGELOG (already populated during the work).
-- **CHANGELOG:** `[Unreleased]` → `[5.5.0] - 2026-06-30`; fresh empty `[Unreleased]` inserted.
-- **Commits:** `6dc24c1` release (version + changelog), `e4b8179` archive work items, `9253c9c` build artifact. Annotated tag **`v5.5.0`** created.
-- **Archived:** TECH-155 (+ `TECH-155/` artifact), TECH-156, TECH-159 → `history/releases/framework/v5.5.0/`. `done/` back to empty.
-- **Distribution built + verified:** `spearit_framework_v5.5.0.zip` — 11 commands incl. `fw-release`, **0 backslash paths** (forward-slash fix holding), `.framework-version` = `5.5.0`. This is the first release to ship the TECH-159 build (canonical-command copy + forward-slash zip) and the updated command-reference doc.
-- **NOT pushed** — per `/fw-release` policy and session convention, push left to the developer. At session end: **8 commits ahead of `origin/main`**, tag `v5.5.0` local-only.
-
-### Release significance
-This release is what actually delivers the session's original goal: a project scaffolded from the v5.5.0 bundle gets `/fw-swarm` **and** `/fw-release`, both current — plus the de-duplicated, cross-platform-correct (forward-slash) archive.
-
-### Updated state (post-release)
-- **In done/:** (empty)
-- **In doing/:** (empty)
-- **In backlog:** TECH-160 (plugin build alignment)
-- **Current version:** v5.5.0
-- **Git:** 8 commits unpushed; `v5.5.0` tag unpushed; `git push origin main --tags` left to developer.
+- **TECH-159 accepted → done** (acceptance criteria passed the hard check without `--force`)
+- **TECH-156 reconciled + closed** — command-reference doc (`framework-commands.md`) rewritten to cover all 11 `/fw-*` commands; GitHub-Releases criterion retired as a false premise
+- **Release v5.5.0** — TECH-155 + TECH-156 + TECH-159 shipped; distribution rebuilt (forward-slash, 11 commands); not yet pushed
 
 ---
 
