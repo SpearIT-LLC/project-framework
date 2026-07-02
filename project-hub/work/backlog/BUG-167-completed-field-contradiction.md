@@ -115,6 +115,19 @@ caused this bug).
   moves an item to `done/` (idempotent; don't overwrite an existing value on
   re-runs). Also declare the field in all work-item templates (blank/optional at
   creation; populated on completion).
+  - **Guardrail — stamp only on a genuine transition, never partial-write on
+    failure.** The stamp must happen only when an item *actually* transitions into
+    `done/` (source folder ≠ `done/`; `move.sh:396-401` already skips
+    already-in-target no-ops, so a `done → done` re-move never re-stamps). And if the
+    `git mv` into `done/` fails — e.g. a rare duplicate-ID collision where a file with
+    the same ID already exists in `done/` (see Notes) — the script must **not** write
+    the `Completed:` date to a file that didn't move. Order the write *after* a
+    confirmed-successful `git mv`, or the field could be set on an item still sitting
+    in its source folder. Duplicate-ID collisions are low-risk (Get-NextWorkItemId
+    scans work/ + releases/ + poc/ + history/spikes/, so the counter never re-issues
+    a used number; prefix + descriptive filename make accidental dupes visible) — this
+    is a correctness guardrail on the stamping logic, not a call to handle the dupe
+    case itself.
 - **Suspenders** — extend the existing pre-commit hook that validates `done/` items
   to also **reject any commit where a `done/` item lacks a `Completed:` date**. This
   catches any bypass path so the field cannot silently lapse again (the BUG-167
