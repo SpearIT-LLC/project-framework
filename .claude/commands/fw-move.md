@@ -109,7 +109,7 @@ Report to the user if an artifact folder was moved (e.g., "Also moved artifact f
 Follow step-by-step: mark `[x]` immediately after each step, stop and wait for approval before proceeding. User may say "continue to completion" to approve all remaining steps at once.
 
 ### → done/
-1. ✅ Check `Completed` date is set — if missing, offer to set it to today
+1. ✅ `Completed` date is set automatically by `move.sh` (BUG-167) — no manual step. Do NOT hand-edit the date.
 2. ✅ Update session history using `/fw-session-history`
 3. ✅ Commit:
    ```bash

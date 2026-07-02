@@ -326,4 +326,69 @@ trips ALL FOUR detectors → an ideal test fixture for TECH-166.
 
 ---
 
+## (Later) BUG-167 Implemented (Tier 1) and Completed
+
+**Continuation:** Took BUG-167 through `doing/` → implemented Option A (Tier 1) →
+`done/`. It **self-validated**: BUG-167's own `Completed:` date was written by the
+`stamp_completed` code the item itself added.
+
+### What Tier 1 delivered
+
+- **Templates (all 5):** restored `**Completed:**` after `**Created:**` in FEATURE,
+  BUG, TECHDEBT, DECISION, SPIKE (blank at creation; stamped on done).
+- **`move.sh`:** new `stamp_completed()` helper, called only after a
+  confirmed-successful move into `done/` (never on the failure path). Idempotent
+  (won't overwrite an existing date), fills a blank line or inserts after `Created:`,
+  and `git add`s the file so move + stamp are one staged unit. Verified with 4 test
+  cases (blank→stamped, insert-when-absent, already-in-target no-op, pre-existing
+  date preserved). `bash -n` clean.
+- **Docs:** `workflow-guide.md` `→ done` checklist and `.claude/commands/fw-move.md`
+  reworded — the date is set automatically; no manual/hand-edit step.
+
+### Scope narrowed mid-implementation (recorded on BUG-167)
+
+Two discoveries reduced scope to Tier 1 and spun out follow-ups:
+- **The pre-commit "suspenders" hook does NOT exist** — `.git/hooks/` has only
+  samples; CLAUDE.md's claim is aspirational. Building it from scratch → **TECH-168**.
+- **Plugin `/fw-move` copies use inline bash, not `move.sh`** — so they'd miss the
+  stamp. Reconciling them → **TECH-169**.
+
+### New false-positive found (added to TECH-166)
+
+Completing BUG-167 hit a **HARD block** (not `--force`-able): a table cell *quoting*
+the historical text ``- [ ] Completed date is set`` was counted as a live unchecked
+acceptance criterion, blocking `→ done`. This is more severe than the readiness
+warnings (which are forceable) — worked around by rewording the quoted line. Added as
+item #4 on TECH-166: the acceptance-criteria scan should only count checkboxes in the
+Acceptance Criteria section / exclude code + table-cell content.
+
+### Files Modified (this segment)
+- `framework/scripts/move.sh` (stamp_completed + guarded calls)
+- `framework/templates/work-items/{FEATURE,BUG,TECHDEBT,DECISION,SPIKE}-TEMPLATE.md`
+- `framework/docs/collaboration/workflow-guide.md`
+- `.claude/commands/fw-move.md`
+- `project-hub/work/backlog/TECH-166-...` (added false-positive #4)
+
+### Files Created (this segment)
+- `project-hub/work/backlog/TECH-168-completed-date-precommit-hook.md`
+- `project-hub/work/backlog/TECH-169-reconcile-move-command-copies.md`
+
+### Files Moved (this segment)
+- `BUG-167` → `todo/` → `doing/` → `done/` (auto-stamped `Completed: 2026-07-02`)
+
+### Current State (updated)
+- **done/:** BUG-167 + FEAT-165 (awaiting release) = 2 (under nudge threshold).
+- **todo/:** FEAT-163, FEAT-164.
+- **backlog/:** TECH-166, TECH-168, TECH-169.
+
+### Open follow-ups (updated)
+- **TECH-168** (hook backstop) + **TECH-169** (plugin reconcile) — complete the
+  BUG-167 "suspenders" and command-copy consistency.
+- **TECH-166** — now has 4 documented false-positives; BUG-167 hit 3 of them
+  (readiness) + the new hard-block #4. Strong case to implement.
+- **FEAT-163/164** — engagement-model follow-ups.
+- **Next session (original thread):** scaffold the `engagement` customer repo.
+
+---
+
 **Last Updated:** 2026-07-02

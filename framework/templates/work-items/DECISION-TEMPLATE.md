@@ -5,6 +5,7 @@
 **Priority:** [High | Medium | Low]
 **Version Impact:** [MAJOR | MINOR | PATCH | None]
 **Created:** YYYY-MM-DD
+**Completed:** <!-- Set automatically by /fw-move on → done/. Leave blank at creation. -->
 **Theme:** [Optional - e.g., "Distribution & Onboarding", "Workflow"]
 **Planning Period:** [Optional - e.g., "Sprint 3", "Q2 2026"]
 

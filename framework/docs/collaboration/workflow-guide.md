@@ -432,9 +432,9 @@ When moving a work item, complete the checklist for the target folder. Use `git 
 #### → done/
 - [ ] Transition is valid (check matrix above)
 - [ ] All completion criteria in work item are checked
-- [ ] Completed date is set (format: YYYY-MM-DD)
 - [ ] User has approved the completed work
-- [ ] Use `git mv` to move file
+- [ ] Use `git mv` to move file (the move script sets the `**Completed:**` date
+      automatically, format YYYY-MM-DD — no manual step; see BUG-167)
 
 **Post-Move Actions:**
 - [ ] Update session history (`/fw-session-history`)

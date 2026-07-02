@@ -5,6 +5,7 @@
 **Priority:** Medium
 **Version Impact:** PATCH
 **Created:** 2026-07-02
+**Completed:** 2026-07-02
 **Theme:** Workflow
 
 <!-- Decision recorded 2026-07-02: Option A (restore + mechanize). See Decision section. -->
@@ -46,7 +47,7 @@ The field was **deliberately retired, then accidentally resurrected in one layer
 | 2026-01-20 | TECH-064 (`6f43274`) | Removed `Completed` (and `Status`) from templates. Documented rationale: *"Git history captures this; location indicates completion."* The `workflow-guide.md` `→ done` checklist at this commit did **not** require a Completed date — internally consistent. |
 | 2026-01-20 | TECH-066 | Migrated 41 existing items, stripping `**Completed:**` from all. Convention fully retired end-to-end. |
 | 2026-01-29 | TECH-094 (`1b1ec2d`) | Embedded transition checklists into `/fw-move`; re-introduced "Check `Completed` date is set." |
-| 2026-02-04 | TECH-108 (`7071e8d`) | *"Remove Status field contradiction from all enforcement layers"* — while removing the retired `Status` field's contradiction, **re-added** `- [ ] Completed date is set` to the guide's `→ done` checklist, resurrecting a requirement TECH-064 had deliberately removed — without restoring the field to templates. |
+| 2026-02-04 | TECH-108 (`7071e8d`) | *"Remove Status field contradiction from all enforcement layers"* — while removing the retired `Status` field's contradiction, **re-added** a "Completed date is set" checklist line to the guide's `→ done` checklist, resurrecting a requirement TECH-064 had deliberately removed — without restoring the field to templates. |
 
 **Irony:** TECH-108's explicit purpose was to *remove* a retired-field contradiction
 (`Status`); it *created* the same contradiction for `Completed`.
@@ -137,16 +138,43 @@ caused this bug).
   **reconcile the `.claude/` vs `plugins/*/commands/move.md` divergence** (the plugin
   copies did not reference `move.sh` in a 2026-07-02 grep).
 
+## Scope Decision (2026-07-02): Tier 1 this item; Tiers 2 & 3 spun out
+
+During implementation, two facts changed the scope:
+1. **The "suspenders" pre-commit hook does NOT exist yet.** `.git/hooks/` has only
+   samples, no `core.hooksPath` is set, and no hook script is in the repo. CLAUDE.md's
+   claim that "a pre-commit hook validates work items in done/" is aspirational. So
+   this would be building a hook + install mechanism from scratch — separate work.
+2. **The plugin `move.md` copies use their own inline bash**, not `framework/scripts/
+   move.sh` (verified: `plugins/*/commands/move.md` embed a `#!/usr/bin/env bash`
+   block). Reconciling them is a distinct, distribution-touching change overlapping
+   the command-tier drift work.
+
+Decision (with Gary): ship **Tier 1** here — it fully resolves the reported
+contradiction. Spin out Tiers 2 & 3 as follow-up items:
+- **TECH-168** — pre-commit hook (from scratch) + install mechanism that rejects
+  `done/` items missing a `Completed:` date (the enforcement backstop).
+- **TECH-169** — reconcile `/fw-move` command copies: plugin inline scripts vs.
+  `framework/scripts/move.sh` (so all paths stamp / behave identically).
+
 ## Acceptance Criteria
 
 - [x] Decision recorded (restore vs. retire) with rationale. → **Option A (restore).**
-- [ ] `**Completed:**` declared in all work-item templates.
-- [ ] `move.sh` writes `**Completed:** <today>` on `→ done/` (idempotent; no reliance
-      on AI memory).
-- [ ] Pre-commit hook rejects `done/` items missing a `Completed:` date.
-- [ ] Templates, `workflow-guide.md`, and `/fw-move` (incl. plugin copies) all agree.
-- [ ] `.claude/` and `plugins/*/commands/move.md` reconciled (both drive `move.sh`).
-- [ ] Grep confirms no remaining contradiction across the layers.
+- [x] `**Completed:**` declared in all work-item templates (all 5: FEATURE, BUG,
+      TECHDEBT, DECISION, SPIKE).
+- [x] `move.sh` writes `**Completed:** <today>` on `→ done/` (idempotent — no
+      overwrite of an existing date; stamps only after a confirmed move; stages the
+      file). Verified with 4 test cases (blank→stamped, insert-when-absent,
+      already-in-target no-op, pre-existing date preserved).
+- [x] `workflow-guide.md` and `.claude/commands/fw-move.md` reworded to say the date
+      is set automatically (no manual/hand-edit step).
+- [x] Grep confirms no remaining contradiction across the layers **touched in Tier 1**.
+
+**Deferred (out of Tier 1 scope — not acceptance criteria of this item):**
+- Pre-commit hook rejecting `done/` items missing a `Completed:` date → **TECH-168**
+  (hook doesn't exist; from-scratch build).
+- `.claude/` and `plugins/*/commands/move.md` reconciled → **TECH-169** (plugin
+  copies use inline bash, not `move.sh`).
 
 ## Notes
 

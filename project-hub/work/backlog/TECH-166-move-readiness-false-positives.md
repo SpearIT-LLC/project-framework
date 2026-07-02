@@ -40,6 +40,17 @@ Three readiness heuristics produce false-positives for planning items:
    deliberate "leave blank if not needed" markers, not unfilled required fields.
    The placeholder detector should ignore hints explicitly marked `[Optional]`.
 
+4. **Quoted/illustrative `[ ]` in prose blocks `→ done` as an "unchecked criterion"
+   — and this one is NOT `--force`-able (HARD block).** Discovered 2026-07-02
+   completing BUG-167: a table cell *quoting* the historical text
+   `` `- [ ] Completed date is set` `` was counted as a live unchecked acceptance
+   criterion, hard-blocking the `→ done` move (acceptance-criteria checks ignore
+   `--force`). This is more severe than the readiness warnings above because it
+   cannot be bypassed — the only workaround was to reword the quoted content. The
+   acceptance-criteria scan should only count checkboxes in the actual "Acceptance
+   Criteria" section (or exclude fenced/inline-code and table-cell content), not any
+   `[ ]` anywhere in the file.
+
 ## Impact
 
 - Every planning/decision item hitting `todo/` needs `--force`, which trains users
