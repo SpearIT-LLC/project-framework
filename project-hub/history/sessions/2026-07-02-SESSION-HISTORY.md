@@ -228,4 +228,102 @@ is deferred.
 
 ---
 
+## (Later) `Completed`-Field Investigation → BUG-167 (Filed + Decided)
+
+**Continuation:** The earlier segment (above) left the `Completed`-field question
+"deferred, possibly accidental removal." Gary asked to trace the exact drift
+timeline before fixing. Deeper git archaeology **corrected the earlier read** — the
+removal was NOT accidental. (Preserving the earlier tentative conclusion per
+append-only; this segment supersedes it.)
+
+### The corrected timeline (git archaeology)
+
+Traced when/how the `Completed` field left the templates:
+
+| Date | Commit | Event |
+|------|--------|-------|
+| 2026-01-20 | TECH-064 (`6f43274`) | **Deliberately** removed `Completed` AND `Status` from templates. Documented rationale: "git history captures this; location indicates completion." The `workflow-guide.md` `→ done` checklist at this commit did **not** require a Completed date — internally consistent. |
+| 2026-01-20 | TECH-066 | Migrated 41 existing items, stripping `**Completed:**` from all — convention retired end-to-end. |
+| 2026-01-29 | TECH-094 (`1b1ec2d`) | Re-introduced "Completed date is set" into `/fw-move`. |
+| 2026-02-04 | TECH-108 (`7071e8d`) | While removing the retired-`Status`-field contradiction, **re-added** `- [ ] Completed date is set` to `workflow-guide.md`'s `→ done` checklist — resurrecting a requirement TECH-064 deliberately killed, without restoring the field to templates. |
+
+**The irony:** TECH-108's stated job was *removing* a retired-field contradiction
+(`Status`); it *created* the same contradiction for `Completed`.
+
+**Correction to my earlier characterizations (walked back twice):** first I called
+the `/fw-move` instruction "outdated" (wrong — it's a live convention: v5.4.0/v5.5.0
+items are 100% stamped). Then "accidental collateral damage" (wrong — TECH-064's
+commit message shows deliberate removal). The verified truth: deliberately retired,
+then accidentally resurrected in ONE layer (the guide/command) but not the templates.
+
+### BUG-167 filed and decided (Option A)
+
+Filed **BUG-167** (Completed-field contradiction) with the full timeline. Then Gary
+and I debated the right resolution. I presented four arguments *against* "record the
+date when it moves to done/"; Gary dismantled three:
+- "moved to done = just staging" → **wrong**: `move.sh` blocks incomplete items, so
+  the move IS the completion event by construction.
+- "release date could serve" → **wrong**: different fact.
+- "two sources of truth" → **wrong**: only if we declare both authoritative. Declare
+  the field definitive, git time incidental → one source of truth.
+
+The one surviving argument was a **precondition, not an objection**: a hand-written
+date is *less* reliable than git, so the strategy only works if the date is written
+**mechanically** by `move.sh`. Verified the precondition holds — Gary uses only
+`/fw-move`, which always invokes `move.sh` (`.claude/commands/fw-move.md:75`).
+
+**Decision: Option A — restore the `Completed` field and mechanize it.**
+- **Belt:** `move.sh` stamps `**Completed:** <today>` on `→ done/` (idempotent;
+  templates declare the field).
+- **Suspenders:** pre-commit hook rejects `done/` items lacking a `Completed:` date
+  (catches any bypass — the BUG-167 failure mode). A git hook can't force `/fw-move`
+  usage but CAN enforce the invariant at commit time.
+- Reconcile guide/command/plugin copies; note `.claude/` vs `plugins/*/commands/`
+  divergence.
+
+### Edge cases probed (no new work items — low risk)
+
+- **Move an item already in the destination?** `move.sh:396-401` skips it as a no-op
+  (`⚠️ already in <target>/ — skipped`), so a `done → done` re-move never re-stamps.
+  Idempotency concern is moot on the normal path.
+- **Duplicate-ID collision on `git mv` into done/?** Possible in theory, low-risk in
+  practice: `Get-NextWorkItemId` scans `work/ + releases/ + poc/ + history/spikes/`,
+  so the counter never re-issues a used number; prefix + descriptive filename make
+  dupes visible. Gary assessed this as low-risk — **not** worth its own item.
+- Added a **guardrail note** to BUG-167: stamp only on a genuine transition, write
+  the date only AFTER a confirmed `git mv` (no partial-write on failure).
+
+### Third readiness false-positive of the session
+
+Moving BUG-167 `backlog → todo` needed `--force` again — same TECH-166 pattern
+(unchecked criteria, "decide" in prose, Option A/B in the Options section,
+`[Optional]` hint). This is the **3rd occurrence** this session (after
+FEAT-163/164/165). Strong signal TECH-166 is real friction, not a nicety. BUG-167
+trips ALL FOUR detectors → an ideal test fixture for TECH-166.
+
+### Files Created (this segment)
+- `project-hub/work/backlog/BUG-167-completed-field-contradiction.md`
+
+### Files Modified (this segment)
+- `project-hub/work/done/FEAT-165-engagement-project-type.md` — added
+  `**Completed:** 2026-07-02` to comply with the (current) `→ done` procedure.
+
+### Files Moved (this segment)
+- `BUG-167` → `todo/` (staged, not yet committed)
+
+### Current State (updated)
+- **done/:** FEAT-165 (awaiting release) + 1 pre-existing = 2.
+- **todo/:** FEAT-163, FEAT-164, BUG-167 (3 — all move.sh/workflow-tooling items).
+- **backlog/:** TECH-166.
+
+### Open follow-ups
+- **BUG-167** (todo/, decided) and **TECH-166** (backlog/) both touch `move.sh` —
+  candidates to implement together in one focused pass. BUG-167 is a good TECH-166
+  fixture.
+- **FEAT-163/164** (todo/) — engagement-model follow-ups.
+- **Next session (original thread):** scaffold the `engagement` customer repo and
+  settle `Stream`-vs-`Theme` against the real repo.
+
+---
+
 **Last Updated:** 2026-07-02
