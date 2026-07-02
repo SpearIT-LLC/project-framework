@@ -72,7 +72,7 @@ Edit `framework.yaml` at the project root:
 ```yaml
 project:
   name: "Your Project Name"
-  type: application  # framework | application | library | tool
+  type: application  # framework | application | library | toolbox | engagement
   deliverable: code  # code | documentation | hybrid
 ```
 
@@ -122,7 +122,7 @@ git tag -a v0.1.0 -m "Initial setup"
 
 - [ ] **Update framework.yaml**
   - [ ] Set `project.name`
-  - [ ] Set `project.type` (application, library, tool, framework)
+  - [ ] Set `project.type` (application, library, toolbox, framework, engagement)
   - [ ] Set `project.deliverable` (code, documentation, hybrid)
 
 - [ ] **Update README.md**

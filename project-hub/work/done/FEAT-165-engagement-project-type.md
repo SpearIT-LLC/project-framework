@@ -56,12 +56,19 @@ The schema description is the primary runtime clarity surface (it is what
 
 ## Acceptance Criteria
 
-- [ ] `engagement` present in schema with a description that is unambiguous at the
-      setup picker.
-- [ ] `project_type_defaults` has an `engagement` entry with a deliberate role.
-- [ ] Setup picker verified to show the new type.
-- [ ] All docs enumerating project types updated to include `engagement`.
-- [ ] Grep for `toolbox`/type enumerations confirms no stale "four types" claims.
+- [x] `engagement` present in schema with a description that is unambiguous at the
+      setup picker. *(framework-schema.yaml:29-30)*
+- [x] `project_type_defaults` has an `engagement` entry with a deliberate role.
+      *(framework-roles.yaml:47 → `senior-architect`; session-start default only,
+      freely switched conversationally — see CLAUDE.md role section)*
+- [x] Setup picker verified to show the new type. *(Setup-Framework.ps1 parses the
+      schema generically via `Get-ProjectTypes`; the regex captures `engagement`
+      with no script change — verified by tracing the pattern, lines 104/114)*
+- [x] All docs enumerating project types updated to include `engagement`.
+      *(GLOSSARY.md:159, PROJECT-STRUCTURE.md:207, NEW-PROJECT-CHECKLIST.md:75,125)*
+- [x] Grep for `toolbox`/type enumerations confirms no stale "four types" claims.
+      *(also fixed a pre-existing bug: NEW-PROJECT-CHECKLIST.md still said `tool`,
+      stale since the 2026-01-17 `tool`→`toolbox` rename — now `toolbox`)*
 
 ## Notes
 

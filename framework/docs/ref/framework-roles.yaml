@@ -44,6 +44,7 @@ project_type_defaults:
   library: senior-api-developer
   toolbox: senior-prototype-developer
   framework: senior-architect
+  engagement: senior-architect
   documentation: senior-technical-writer
   policy: senior-policy-writer
 

@@ -26,6 +26,8 @@ fields:
         description: "Reusable code package"
       toolbox:
         description: "Collection of utility scripts for administrative or operational tasks"
+      engagement:
+        description: "One customer/client, one repo — multiple heterogeneous work streams (SOWs, deliverables, source, operations, knowledge base) under a shared spine, growing over a long engagement"
 
   project.deliverable:
     type: enum

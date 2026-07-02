@@ -204,7 +204,7 @@ User projects typically create a single-project repository and follow the struct
 
 **Minimum content:**
 - `project.name` - Project name
-- `project.type` - Project type (application, library, toolbox, framework)
+- `project.type` - Project type (application, library, toolbox, framework, engagement)
 - `project.deliverable` - Primary output type (code, documentation, hybrid)
 - `project.author.name` - Primary author/maintainer name (optional)
 - `project.author.email` - Primary author/maintainer email (optional)

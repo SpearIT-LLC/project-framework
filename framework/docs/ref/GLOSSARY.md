@@ -156,7 +156,7 @@ A living document summarizing current project state, recent changes, active work
 See: [Workflow Guide - Documentation Standards](../collaboration/workflow-guide.md#documentation-standards)
 
 ### Project Type
-What type of project you're building: `application` (end-user software), `library` (reusable code), `framework` (process/structure), or `toolbox` (utilities collection). Defined in framework.yaml.
+What type of project you're building: `application` (end-user software), `library` (reusable code), `framework` (process/structure), `toolbox` (utilities collection), or `engagement` (one customer, many work streams). Defined in framework.yaml.
 
 See: [Framework Schema](framework-schema.yaml)
 

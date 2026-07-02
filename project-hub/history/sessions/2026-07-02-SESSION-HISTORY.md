@@ -157,4 +157,75 @@ journey, because each turn was a user course-correction that improved the design
 
 ---
 
+## (Later) FEAT-165 Implemented and Completed
+
+**Continuation:** Queued FEAT-163/164/165 to `todo/` (needed `--force` — see below),
+then moved FEAT-165 through `doing/` → `done/` and implemented it.
+
+### FEAT-165 — engagement project type (DONE)
+
+Wired the `engagement` type fully into the framework:
+- `framework/docs/ref/framework-schema.yaml` — added `engagement` enum + description.
+- `framework/docs/ref/framework-roles.yaml` — `engagement: senior-architect` in
+  `project_type_defaults` (session-START default only; freely switched
+  conversationally — verified against CLAUDE.md role section).
+- `framework/docs/ref/GLOSSARY.md`, `framework/docs/PROJECT-STRUCTURE.md`,
+  `templates/NEW-PROJECT-CHECKLIST.md` — added `engagement` to type lists.
+- **Pre-existing bug fixed:** `NEW-PROJECT-CHECKLIST.md` still said `tool` (stale
+  since the 2026-01-17 `tool`→`toolbox` rename) — corrected to `toolbox`.
+- **Verified, no edit needed:** `Setup-Framework.ps1` parses types from the schema
+  generically (`Get-ProjectTypes`); the regex captures `engagement` automatically.
+
+### TECH-166 filed — move.sh readiness false-positives
+
+Moving the three planning items to `todo/` required `--force` because
+`move.sh` readiness heuristics misfire on legitimate planning content: unchecked
+acceptance criteria (belong in `doing/`), the word "decide" in prose flagged as a
+marker, and `[Optional]` field hints flagged as placeholders. Filed TECH-166 to fix.
+
+### Investigation — the `Completed` field / date intent
+
+Question raised: the `/fw-move` doc says "Check `Completed` date is set" on `→ done`,
+but the work-item templates define no `Completed` field, and folder location is the
+status. Initially read as pure command drift — but history revised that:
+
+- **Historically, completed items DID carry a `**Completed:** YYYY-MM-DD` field** —
+  e.g. `BUG-108` (v-release), `FEAT-146`, `FEAT-153`, `TECH-154`, `FEAT-005/006`,
+  and 2026-01-13/01-19 session logs explicitly note "Added completion date."
+- So the `/fw-move` instruction reflects a **real, previously-practiced convention**:
+  stamp the close date on the item when it completes. It is a *record* of when it
+  closed, not a *gate* (the script never enforced it). Gary's read — "meant to just
+  record the date it closed, worded awkwardly" — matches the evidence.
+- **The drift is in the TEMPLATES, not (only) the command:** current templates
+  dropped the `Completed` field, so the practice silently lapsed. The command doc is
+  the last place the convention survives.
+- Left unresolved this session — candidate follow-up: either restore `**Completed:**`
+  to templates (and have `/fw-move` fill it on `→ done`), or formally retire the
+  convention and remove the command instruction. Not yet filed as a work item.
+
+FEAT-165 itself was completed **without** adding a `Completed` field, consistent with
+the current templates (no field to fill) — the decision on restoring the convention
+is deferred.
+
+### Files Modified (this segment)
+- `framework/docs/ref/framework-schema.yaml`
+- `framework/docs/ref/framework-roles.yaml`
+- `framework/docs/ref/GLOSSARY.md`
+- `framework/docs/PROJECT-STRUCTURE.md`
+- `templates/NEW-PROJECT-CHECKLIST.md`
+
+### Files Created (this segment)
+- `project-hub/work/backlog/TECH-166-move-readiness-false-positives.md`
+
+### Files Moved (this segment)
+- `FEAT-163`, `FEAT-164` → `todo/`
+- `FEAT-165` → `todo/` → `doing/` → `done/`
+
+### Current State (updated)
+- **done/:** FEAT-165 (awaiting release) + 1 pre-existing item = 2 total.
+- **todo/:** FEAT-163, FEAT-164.
+- **backlog/:** TECH-166 (move false-positives).
+
+---
+
 **Last Updated:** 2026-07-02
