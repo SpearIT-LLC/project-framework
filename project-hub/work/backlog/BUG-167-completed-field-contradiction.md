@@ -7,6 +7,9 @@
 **Created:** 2026-07-02
 **Theme:** Workflow
 
+<!-- Decision recorded 2026-07-02: Option A (restore + mechanize). See Decision section. -->
+<!-- Note: touches move.sh, same as TECH-166 — coordinate/sequence to avoid conflicts, but not a hard dependency. -->
+
 ---
 
 ## Summary
@@ -78,14 +81,59 @@ plugin copies, and optionally `move.sh`):
 - Rationale: it was deliberately retired for a stated reason; the mistake was
   TECH-108 resurrecting it, not TECH-064 removing it.
 
+## Decision (2026-07-02): Option A — restore, and mechanize it
+
+Decided with Gary. **Restore the `Completed` field and make the `Completed:` field
+the definitive record of completion**, with the git commit timestamp treated as
+incidental (NOT a completion record).
+
+Rationale, and why the counter-arguments collapse in this project's context:
+
+- **Git records commit date, not the move-to-done date** — these diverge
+  non-deterministically (batched commits, rebase/squash rewrites). The commit
+  timestamp is therefore not a definitive completion record.
+- **`→ done/` IS the completion event here, by construction.** `move.sh` hard-blocks
+  moving to done/ unless acceptance criteria are satisfied, so "moved to done/" =
+  "complete per Kanban," not "decided to stop." Recording the date *at the move* is
+  the correct action.
+- **Release date ≠ completion date** — release-archive folder timestamps answer a
+  different question and are not a substitute.
+- **No dual-source-of-truth problem** — there are only two records if we *declare*
+  both authoritative. We declare the `Completed:` field authoritative; git time is
+  incidental. One source of truth.
+- **Choke point holds** — the user uses ONLY `/fw-move`, which always invokes
+  `move.sh` (verified: `.claude/commands/fw-move.md:75`). So a script-written date is
+  universal in practice.
+
+**The precondition that makes this safe: the date must be written mechanically, not
+by an AI following an instruction** (a hand-written field is exactly what lapsed and
+caused this bug).
+
+### Implementation approach
+
+- **Belt** — `move.sh` writes `**Completed:** <today>` into the item header when it
+  moves an item to `done/` (idempotent; don't overwrite an existing value on
+  re-runs). Also declare the field in all work-item templates (blank/optional at
+  creation; populated on completion).
+- **Suspenders** — extend the existing pre-commit hook that validates `done/` items
+  to also **reject any commit where a `done/` item lacks a `Completed:` date**. This
+  catches any bypass path so the field cannot silently lapse again (the BUG-167
+  failure mode). Note: a git hook cannot force `/fw-move` to be used, but it CAN
+  enforce the invariant at commit time — which is what actually matters.
+- Update `workflow-guide.md` and `/fw-move` so the requirement matches reality, and
+  **reconcile the `.claude/` vs `plugins/*/commands/move.md` divergence** (the plugin
+  copies did not reference `move.sh` in a 2026-07-02 grep).
+
 ## Acceptance Criteria
 
-- [ ] Decision recorded (restore vs. retire) with rationale.
+- [x] Decision recorded (restore vs. retire) with rationale. → **Option A (restore).**
+- [ ] `**Completed:**` declared in all work-item templates.
+- [ ] `move.sh` writes `**Completed:** <today>` on `→ done/` (idempotent; no reliance
+      on AI memory).
+- [ ] Pre-commit hook rejects `done/` items missing a `Completed:` date.
 - [ ] Templates, `workflow-guide.md`, and `/fw-move` (incl. plugin copies) all agree.
-- [ ] If restored: `move.sh` sets the date on `→ done/` (no reliance on AI memory),
-      and templates declare the field.
-- [ ] If retired: no enforcement layer references a Completed date.
-- [ ] Grep confirms no remaining contradiction across the four layers.
+- [ ] `.claude/` and `plugins/*/commands/move.md` reconciled (both drive `move.sh`).
+- [ ] Grep confirms no remaining contradiction across the layers.
 
 ## Notes
 
