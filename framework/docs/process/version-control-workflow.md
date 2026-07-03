@@ -135,6 +135,33 @@ Release immediately when:
 
 ---
 
+### Pre-Release Validation
+
+**Before starting a release, confirm there is completed work to release.**
+
+1. **Check the `done/` folder:**
+   ```powershell
+   Get-ChildItem project-hub/work/done/*.md
+   ```
+
+2. **If `done/` is empty — STOP and verify this is intentional.**
+   An empty release wastes a version number and produces a confusing CHANGELOG.
+   Common *valid* reasons for a release with no work items in `done/`:
+   - Documentation-only changes
+   - Configuration changes
+   - Dependency updates
+
+   If none of these apply, the release is likely premature — check
+   `project-hub/work/doing/` for forgotten in-progress items before proceeding.
+
+3. **If `done/` is not empty — proceed.** All items in `done/` will be included in
+   the CHANGELOG (see the Release Sizing Guidelines above for batching thresholds).
+
+> Guidance, not a hard block — the user always decides. A future enhancement could
+> enforce this check in `fw-release` or a release script (TECH-079).
+
+---
+
 ### Release Checklist
 
 ```markdown

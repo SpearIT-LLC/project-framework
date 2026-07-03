@@ -5,6 +5,7 @@
 **Priority:** Low
 **Version Impact:** PATCH
 **Created:** 2026-01-23
+**Completed:** 2026-07-03
 **Theme:** Workflow
 
 ---
@@ -72,9 +73,9 @@ Before starting a release:
 
 ## Acceptance Criteria
 
-- [ ] Pre-release check for empty done/ documented
-- [ ] Warning/confirmation guidance for empty releases
-- [ ] Valid reasons for empty release documented
+- [x] Pre-release check for empty done/ documented
+- [x] Warning/confirmation guidance for empty releases
+- [x] Valid reasons for empty release documented
 
 ---
 
