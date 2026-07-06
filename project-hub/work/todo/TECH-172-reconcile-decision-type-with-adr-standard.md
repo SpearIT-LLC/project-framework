@@ -76,7 +76,8 @@ One model, standards-compliant:
 - Add the standardized rule (ADR is the record; track with a work item if needed) to the ADR
   section of the workflow-guide.
 - Fix the stale GLOSSARY ADR path.
-- Convert this session's **DECISION-171** into **ADR-006** as the first case under the new rule.
+- Convert this session's **DECISION-171** into an ADR (the **next available ADR number** —
+  allocated at implementation time, never hard-coded here) as the first case under the new rule.
 - **Disposition the existing OPEN `DECISION-*` items** (see the three-bucket plan below).
 - Record the decision itself as an **ADR** (dogfooding — see Plan step 1).
 
@@ -90,7 +91,7 @@ history — they are **live, undecided items still in `backlog/`**. Handle by bu
 | **Archived / released** | 037, 042, 050, 097, 105 (`history/releases/…`) | **Leave untouched** — true historical record. |
 | **Cancelled** | 029 (`work/archive/`) | **Leave untouched** — already terminal. |
 | **OPEN / undecided** | **035, 036, 110, 162** (`work/backlog/`) | **Must be dispositioned** — these are in-flight work, not history. For each: re-type to what it actually is (TECH/FEAT/SPIKE if it's tracked work whose deliverable is an ADR), or leave as a work item explicitly tagged "resolve as an ADR when worked." **Do NOT force-decide their substance now** — only assign each a clear handling so none falls through the reconcile. |
-| **This session's** | **171** (`work/backlog/`) | → **ADR-006** (already the plan). |
+| **This session's** | **171** (`work/backlog/`) | → converted to an ADR (next available number). |
 
 **Explicitly OUT of scope:**
 - **Do NOT rename or rewrite archived/cancelled `DECISION-*` items** (029, 037, 042, 050, 097,
@@ -154,8 +155,27 @@ these** ("no stragglers"):
 - [ ] **No OPEN `DECISION-*` items remain in the work folders** — each of 035, 036, 110, 162 is
       re-typed, converted, or explicitly dispositioned (tagged "resolve as ADR when worked"); their
       substance is NOT force-decided
-- [ ] DECISION-171 is converted to ADR-006 (or a clear disposition recorded)
+- [ ] DECISION-171 is converted to an ADR (next available number) or a clear disposition recorded
 - [ ] CHANGELOG.md updated
+
+---
+
+## Implementation Cautions (verified 2026-07-06 — read before editing)
+
+- **Line numbers WILL drift.** The Straggler Inventory cites line numbers as of 2026-07-06, but
+  editing the workflow-guide top-down (and removing a table row early) shifts every later line.
+  **Locate each edit by content/anchor, not by line number** — or edit bottom-up. (Line 1031→1033
+  already drifted this session; treat all cited numbers as hints, not addresses.)
+- **"decision" is an overloaded word — scope edits to the TYPE only.** Edit only the work-item type
+  `DECISION-` / `DECISION-TEMPLATE`. **Do NOT touch:** the `/fw-swarm decision` mode, "decisions
+  made" in session-history templates/prose, or ADR body text that uses the word "decision". A blind
+  grep-and-replace on "decision" will corrupt these.
+- **Enforcement mechanism is TECH-173, not here.** This item retires DECISION in *content*;
+  TECH-173 builds the accepted-type allowlist that makes retirement stick and keeps legacy prefixes
+  parseable. Retiring DECISION here relies on TECH-173's recognized-for-parsing superset.
+- **Verified safe (no action needed):** `framework/scripts/move.sh` does not hard-code DECISION;
+  plugins ship no DECISION *template* file (prose only); `framework-schema.yaml` has no enforced
+  type enum.
 
 ---
 
@@ -166,8 +186,8 @@ these** ("no stragglers"):
 
 - [ ] **PRE-IMPLEMENTATION REVIEW COMPLETED** — AI presents the reconciliation approach + full
       straggler list; user approves before edits
-- [ ] Write the ADR (ADR-006) that records this standardization decision + converts DECISION-171
-      content into it
+- [ ] Write the ADR (allocate the next available ADR number at this step — do NOT assume a number)
+      that records this standardization decision + converts DECISION-171 content into it
 - [ ] Disposition the OPEN `DECISION-*` items (035, 036, 110, 162): review each, assign a
       type/handling (re-type to TECH/FEAT/SPIKE, or tag "resolve as ADR when worked") — do NOT
       force-decide their substance
@@ -184,11 +204,14 @@ these** ("no stragglers"):
 
 ## Related
 
-- **DECISION-171** (this session) — the item that surfaced the overlap; becomes **ADR-006**, the
-  first case handled under the new rule. (Its subject — the `fw-` namespace convention — is
-  independent of this cleanup and carries over intact.)
+- **DECISION-171** (this session) — the item that surfaced the overlap; becomes an ADR (next
+  available number), the first case handled under the new rule. (Its subject — the `fw-` namespace
+  convention — is independent of this cleanup and carries over intact.)
 - **BUG-170** — blocked-behind-context only; the `fw-` decision it depends on lives in
-  DECISION-171/ADR-006. This cleanup should land before or alongside so BUG-170 cites the ADR.
+  DECISION-171 (→ its ADR). This cleanup should land before or alongside so BUG-170 cites the ADR.
+- **TECH-173** (this session) — enforce accepted work-item types (canonical allowlist + legacy
+  recognized superset). The mechanism this content-cleanup depends on so retired DECISION (and
+  legacy BUGFIX) stay parseable.
 - **TECH-064** (v-history) — introduced `DECISION-TEMPLATE.md` in the standardization sweep that
   created the overlap.
 - **DECISION-042** — defined the shared work-item ID namespace (why the `DECISION-` prefix must
