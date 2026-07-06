@@ -77,12 +77,27 @@ One model, standards-compliant:
   section of the workflow-guide.
 - Fix the stale GLOSSARY ADR path.
 - Convert this session's **DECISION-171** into **ADR-006** as the first case under the new rule.
+- **Disposition the existing OPEN `DECISION-*` items** (see the three-bucket plan below).
 - Record the decision itself as an **ADR** (dogfooding — see Plan step 1).
 
+### Existing `DECISION-*` items — three buckets (verified against folders 2026-07-06)
+
+A flat "leave all `DECISION-0xx` alone" rule is **wrong**: several `DECISION-*` items are not
+history — they are **live, undecided items still in `backlog/`**. Handle by bucket:
+
+| Bucket | Items (verified location) | Disposition |
+|---|---|---|
+| **Archived / released** | 037, 042, 050, 097, 105 (`history/releases/…`) | **Leave untouched** — true historical record. |
+| **Cancelled** | 029 (`work/archive/`) | **Leave untouched** — already terminal. |
+| **OPEN / undecided** | **035, 036, 110, 162** (`work/backlog/`) | **Must be dispositioned** — these are in-flight work, not history. For each: re-type to what it actually is (TECH/FEAT/SPIKE if it's tracked work whose deliverable is an ADR), or leave as a work item explicitly tagged "resolve as an ADR when worked." **Do NOT force-decide their substance now** — only assign each a clear handling so none falls through the reconcile. |
+| **This session's** | **171** (`work/backlog/`) | → **ADR-006** (already the plan). |
+
 **Explicitly OUT of scope:**
-- **Do NOT rename or rewrite archived `DECISION-0xx` items** (029, 035, 036, 037, 042, 050, 097,
-  105, 110, 162). They are released historical records; they stay as-is. The `DECISION-` prefix
-  remains recognized by tooling for exactly this reason.
+- **Do NOT rename or rewrite archived/cancelled `DECISION-*` items** (029, 037, 042, 050, 097,
+  105). They are released/terminal records; they stay as-is. The `DECISION-` prefix remains
+  recognized by tooling for exactly this reason.
+- **Do NOT force-decide the substance** of the open items (035, 036, 110, 162) — this cleanup only
+  assigns their *type/handling*, not their outcome.
 - No change to the ADR spec/templates themselves — they are already compliant.
 
 ---
@@ -135,7 +150,10 @@ these** ("no stragglers"):
 - [ ] GLOSSARY ADR path corrected to `project-hub/research/adr/`
 - [ ] The `DECISION-` prefix remains **recognized** by tooling (archived `DECISION-0xx` items still
       parse/validate) — verified against an existing archived DECISION item
-- [ ] Archived `DECISION-0xx` records are untouched
+- [ ] Archived/cancelled `DECISION-*` records (029, 037, 042, 050, 097, 105) are untouched
+- [ ] **No OPEN `DECISION-*` items remain in the work folders** — each of 035, 036, 110, 162 is
+      re-typed, converted, or explicitly dispositioned (tagged "resolve as ADR when worked"); their
+      substance is NOT force-decided
 - [ ] DECISION-171 is converted to ADR-006 (or a clear disposition recorded)
 - [ ] CHANGELOG.md updated
 
@@ -150,6 +168,9 @@ these** ("no stragglers"):
       straggler list; user approves before edits
 - [ ] Write the ADR (ADR-006) that records this standardization decision + converts DECISION-171
       content into it
+- [ ] Disposition the OPEN `DECISION-*` items (035, 036, 110, 162): review each, assign a
+      type/handling (re-type to TECH/FEAT/SPIKE, or tag "resolve as ADR when worked") — do NOT
+      force-decide their substance
 - [ ] Edit documentation stragglers (workflow-guide type table + ADR section + ID lists, GLOSSARY
       path, architecture-guide, REPOSITORY-STRUCTURE, distribution-build-checklist)
 - [ ] Retire/stub `DECISION-TEMPLATE.md`
