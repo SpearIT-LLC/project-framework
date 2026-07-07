@@ -135,9 +135,11 @@ date, closing the BUG-167 loop downstream. BUG-170 moved to `done/`.
 ---
 
 ## Known Issues / Follow-ups
-- **WIP-count display off-by-one in `fw-move.sh`** — reported "5/∞" for done/ when 4 items are
-  present (and earlier "2/2"→"3/2" for doing/). The *file moves are correct*; only the count display
-  is wrong. Small follow-up worth filing.
+- **BUG-174 filed (backlog)** — WIP/final-move count in `fw-move.sh` includes `.gitkeep` (excludes
+  only `.limit`), inflating every count by 1: "5/∞" for a 4-item done/, "2/2"→"3/2" for doing/. Root
+  cause pinned to lines 340 + 515 (`! -name ".limit"` → should be `! -name ".*"`); the other
+  `find -type f` sites are grep-filtered and safe. File moves are correct — display only. Gary
+  diagnosed the dotfile cause directly.
 
 ---
 
