@@ -133,3 +133,103 @@ Set out to queue BUG-170 for work; a single organizational question — *"could 
 ---
 
 **Last Updated:** 2026-07-06 (afternoon)
+
+---
+
+## (Evening) — TECH-173 opened → a type-taxonomy redesign → ADR-006 (Proposed)
+
+**Continuation:** Moved TECH-173 into `doing/` to implement it. The pre-implementation review kept
+surfacing unanswered design questions, and Gary steered us to **stop moving backward and design
+forward**. TECH-173's "add a YAML enum + enforce" spec proved too shallow; the session became a
+proper work-item **type taxonomy redesign**, captured as a **Proposed ADR-006**. Little code
+written — significant framework-design progress made.
+
+### How the redesign unfolded (the journey)
+- **TECH-173 → doing/** (WIP now 1/2; note: `move.sh` reported "2/2" but only TECH-173 is in
+  `doing/` — likely a display off-by-one in the script's WIP count, worth a later look).
+- **Pre-impl review exposed unknowns:** POLICY status? where does enforcement actually *run*?
+  Investigation found:
+  - **POLICY is a phantom** — 0 items ever created; declared only in plumbing.
+  - **`.psm1` is not the live create-time gate** — it ships but isn't auto-invoked; it's parsing
+    support. The real create surface is the **AI reading command markdown**.
+  - **A FOURTH divergent list** surfaced: plugin `new.md` offers `FEAT, BUG, CHORE, TASK, DOCS,
+    REFACTOR, DECISION, TECH` — disagreeing with the workflow-guide "5" and the `.psm1` set. The
+    two channels have **already drifted** on the actual type set (plugins have CHORE/TASK/DOCS/
+    REFACTOR but not SPIKE; docs have SPIKE but not those).
+- **Usage data pulled (239 items):** FEAT 105, TECH 65, FEATURE 14, DECISION 14, BUGFIX 8, BUG 8,
+  CHORE 6, DOCS 4, DOC 3, TASK 2, REFACTOR 2, SPIKE 1, POLICY 0. **The drift is the same few
+  concepts wearing multiple spellings** (FEAT/FEATURE, BUG/BUGFIX, DOC/DOCS, TECH/TECHDEBT) — an
+  enforcement + canonicalization problem, not a taxonomy problem.
+- **Channel reality established:** the **plugin is intentionally isolated** (forbids reading
+  `.claude/`, ships via marketplace cache, not copied into the repo). So **no shared runtime file
+  between channels is possible** — which is *why* DRY kept re-fragmenting: nobody ever decided how
+  the two channels share a fact.
+- **Tier check:** commands ARE tiered (light: help/move/new; plugin: +backlog/kanban-state/
+  roadmap/session-history/swarm; full: full `fw-*`). But **work-item TYPES are identical across
+  plugin editions** → types are a **universal, non-tiered constant**; tiering is a command-layer
+  concern only.
+
+### Decisions Made (evening)
+
+10. **Design before code — TECH-173 was too shallow.** It presumed a YAML enum + enforcement; the
+    real problem is a cross-channel taxonomy + SoT-derivation design. Paused implementation; wrote
+    a **Proposed ADR** as the decision workspace.
+11. **Enforcement philosophy reaffirmed from experience (Gary):** *probabilistic* enforcement (AI
+    reads a rule, usually complies) is why we have today's mess — "Claude sometimes enforced,
+    sometimes made up its own rules." Where it matters, enforcement must be **deterministic/
+    guaranteed** (the reason for the bootstrap, move.sh, checkpoint policy). ADR-006 honors this.
+12. **Types are universal, not tiered** (D3) — evidence: both plugin editions ship the identical
+    type list. Feature tiering = which commands ship, never the type vocabulary.
+13. **SoT = one authored source, build derives per channel** (D4, Option A) — one *authored* flat
+    file; `Build-Plugin.ps1` generates the plugin copies; full framework reads it directly. Rejected
+    Option B (two sources + equality check) — keeps the hand-authored duplication that has always
+    bitten us. "Derive, don't restate" across the build boundary.
+14. **Format left UNDECIDED** (D5) — flat/bash-readable in principle; exact shape (txt/csv/json)
+    tied to the deferred engine question.
+15. **Two questions answered, both deferred as own future ADRs (D7):**
+    - **Q1 (bash vs C#):** as deterministic logic grows, a compiled CLI *might* help; own ADR. The
+      flat-file SoT is chosen to work for bash now AND a future tool unchanged — deferrable at no cost.
+    - **Q2 (does the schema need rework?):** No — `framework-schema.yaml` is a *different consumer*
+      (rich human/AI project config; YAML earns its complexity). The type list is a simple
+      machine-facing fact. "Right tool per job," stated as a deliberate one-off, not silent drift.
+16. **First ADR under the new rule** — ADR-006 is the first decision filed as an ADR-in-`research/adr/`
+    per TECH-172's "ADR is the record" standard. Dogfooding.
+
+### Still OPEN in ADR-006 (to ratify next session)
+- **D1 sub-questions:** keep SPIKE (1 use)? keep TASK + REFACTOR distinct or fold them? (recommend
+  keep all three — conventional-commits standard, semantically distinct)
+- **D5:** exact SoT file format (coupled to the deferred bash-vs-C# ADR)
+- Then flip ADR-006 Status: Proposed → Accepted, and re-scope TECH-173 as "implement ADR-006."
+
+### Files Created (evening)
+- `project-hub/research/adr/006-work-item-type-taxonomy.md` — **Proposed** ADR (the redesign
+  workspace; 7 decision points D1–D7 with options + recommendations).
+
+### Files Moved (evening)
+- `project-hub/work/todo/TECH-173-...md` → `.../doing/` (opened for implementation; now parked
+  pending ADR-006 ratification).
+
+### Current State (end of day)
+
+**In doing/:** TECH-173 (parked — awaiting ADR-006 ratification; will be re-scoped to "implement ADR-006")
+**In todo/:** TECH-172 (DECISION→ADR content cleanup), BUG-170 (move.sh distribution)
+**In backlog/:** DECISION-171 (fw- namespace → becomes an ADR under TECH-172)
+**In research/adr/:** ADR-006 (**Proposed**)
+**In done/ (awaiting release):** BUG-167, FEAT-165, TECH-079
+
+### Next Steps
+1. **Ratify ADR-006** — walk D1→D7, resolve the two open sub-questions (SPIKE; TASK/REFACTOR;
+   format), flip to Accepted.
+2. **Re-scope TECH-173** as "implement ADR-006" (its original enum-only spec is superseded).
+3. Recommended implementation order once Accepted: **TECH-173 (types SoT+enforcement) → TECH-172
+   (DECISION retirement) → BUG-170 (move.sh)**.
+4. **Still pending:** release of BUG-167 + FEAT-165 + TECH-079.
+
+**Session note:** Little implemented, much *designed*. The type-drift that "keeps showing up" was
+traced to its structural root (four consumers × two isolated channels, no shared source) and a
+coherent fix designed (one authored source, build-derived, deterministically enforced). Ready to
+ratify and build next session.
+
+---
+
+**Last Updated:** 2026-07-06 (evening)
