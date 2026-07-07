@@ -1,15 +1,15 @@
 # ADR-006: Work-Item Type Taxonomy, Single Source of Truth, and Cross-Channel Derivation
 
-**Status:** Proposed
-**Date:** 2026-07-06
+**Status:** Accepted
+**Date:** 2026-07-06 (Proposed) · 2026-07-07 (Accepted)
 **Deciders:** Gary Elliott, Claude Code
 **Impact:** Major
 **Scope:** Work-item type system across all distribution channels (full framework, plugin, plugin-light) — canonical types, legacy aliases, the source-of-truth file, and how each channel consumes it.
 **Supersedes:** None
 
-> **This ADR is a WORKSPACE (Status: Proposed).** Nothing here is decided until the Status
-> flips to Accepted. Each numbered decision below carries options + a recommendation; we ratify
-> or revise them one at a time. TECH-173 is re-pointed to "implement this ADR once Accepted."
+> **RATIFIED 2026-07-07.** This ADR began as a workspace (Status: Proposed); all seven decisions
+> D1–D7 are now decided. The two D1 sub-questions (SPIKE; TASK/REFACTOR) and the D5 format were
+> resolved this session — all as recommended. TECH-173 is now re-scoped to "implement this ADR."
 
 ---
 
@@ -80,11 +80,10 @@ conventional-commits / agile-aligned set actually in use, drop the phantom:
 - **FEAT, BUG, TECH, DOCS, CHORE, REFACTOR, TASK, SPIKE** (8 accepted)
 - Drop **POLICY** (0 uses, never instantiated). **DECISION** → retired to ADR (TECH-172).
 
-*Open sub-question:* **SPIKE** has only 1 use — keep (it's architecturally distinct: time-boxed
-research, and it's an agile standard) or drop? Recommendation: **keep** (low cost, real concept).
-*Open sub-question:* are **TASK** (2) and **REFACTOR** (2) worth keeping as distinct types, or fold
-TASK→CHORE / REFACTOR→TECH? Recommendation: **keep both** — they're conventional-commits standard
-and semantically distinct.
+**DECIDED 2026-07-07:** **SPIKE is kept** (1 use, but architecturally distinct — time-boxed
+research — and an agile standard; low cost to retain). **TASK and REFACTOR are both kept as
+distinct accepted types** — conventional-commits standard, semantically distinct from CHORE/TECH.
+Canonical set is therefore the full **8: FEAT, BUG, TECH, DOCS, CHORE, REFACTOR, TASK, SPIKE.**
 
 ### D2 — Legacy alias map (recognized-for-parsing, never created)
 
@@ -129,12 +128,20 @@ prevents re-fragmentation (nothing to hand-sync).
 hand-authored copies (the exact thing that has bitten us), merely guarded. DRY-by-derivation beats
 DRY-by-enforcement here.
 
-### D5 — SoT file format (flat / bash-readable)
+### D5 — SoT file format (flat / bash-readable) — **DECIDED: TAB-delimited**
 
-**Recommendation:** a **flat line-based file** the bash engine reads natively — e.g.
-`name<TAB>status<TAB>alias-target`:
+**DECIDED 2026-07-07:** a **flat, TAB-delimited, line-based file** the bash engine reads natively:
+`name<TAB>status[<TAB>alias-target]`. One type per line; `#` comment lines and blank lines ignored;
+`alias-target` present only on `legacy` rows. Chosen over CSV (needless ceremony for the empty alias
+column) and JSON (would introduce a `jq` dependency the engine must avoid). Satisfies the constraint
+in both directions: trivially parseable by `move.sh` today (`while IFS=$'\t' read`) and by a future
+compiled tool unchanged.
+
+Canonical file shape (columns shown space-aligned for readability; **actual separator is a TAB**):
 
 ```
+# work-item types — single source of truth (ADR-006). Format: name<TAB>status[<TAB>alias-target]
+# status: accepted (offered for creation) | legacy (recognized for parsing, never created)
 FEAT      accepted
 BUG       accepted
 TECH      accepted
@@ -150,9 +157,8 @@ TECHDEBT  legacy    TECH
 DECISION  legacy    ADR
 ```
 
-*Open:* exact shape (whitespace-delimited vs CSV vs minimal JSON). **Left UNDECIDED per Gary** —
-tied to D7 (engine strategy). Constraint: must be trivially readable by `move.sh` today **and** by a
-future compiled tool unchanged. Flat text satisfies both; JSON would need `jq` in bash now.
+The exact filename/location is an implementation detail for TECH-173 (candidate:
+`.claude/scripts/`, beside the engine per D4).
 
 ### D6 — Enforcement is deterministic at the mechanical gate
 
@@ -215,4 +221,4 @@ define or gate it.
 
 ---
 
-**Last Updated:** 2026-07-06
+**Last Updated:** 2026-07-07 (ratified — Status: Accepted)

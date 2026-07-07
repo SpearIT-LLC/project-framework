@@ -12,12 +12,19 @@
 
 ## Summary
 
-The framework's set of "valid work-item types" is **defined in multiple places that disagree**,
-and nothing *enforces* a single canonical list — so new types (or retired ones) drift in and out
-undetected. Make the type schema **self-defending**: one canonical **accepted-for-creation** list,
-enforced at item creation, plus a separate **recognized-for-parsing** superset that still accepts
-legacy prefixes so historical items never fail validation. This closes type-drift structurally
-(not just for today's cases) and is the mechanism that makes TECH-172's DECISION retirement stick.
+**Implement ADR-006** (Accepted 2026-07-07). The framework's set of "valid work-item types" was
+**defined in 4+ places that disagreed** across two isolated distribution channels, and nothing
+*enforced* a single canonical list. ADR-006 designed the fix: **one authored flat TAB-delimited
+source of truth**, the **build derives** each channel's copy, and **deterministic enforcement** runs
+in the mechanical engine (create/move path) rather than relying on the AI to "usually comply." This
+item builds that. It closes type-drift structurally and is the mechanism that makes TECH-172's
+DECISION retirement stick.
+
+> **Re-scoped 2026-07-07.** This item originally proposed a `work_item.type` YAML enum inside
+> `framework-schema.yaml`. That spec is **superseded by ADR-006**, which decided (D4/D5) a flat
+> TAB-delimited file — build-derived per channel — and (D7) that the schema stays as-is (it's a
+> different consumer). Implement the ADR, not the original enum spec. The original spec text is
+> retained below the line for provenance.
 
 ---
 
@@ -125,42 +132,71 @@ Adding or retiring a type becomes a **one-field edit** in this master.
 
 ---
 
-## Acceptance Criteria
+## Acceptance Criteria (per ADR-006)
 
-- [ ] A `work_item.type` master exists in `framework-schema.yaml` (mirrors `project.type`), each
-      type carrying `status: accepted | legacy` — the single source of truth
-- [ ] `DECISION` and `BUGFIX` are present as `status: legacy` (recognized, not accepted)
-- [ ] **Authoring-mode** consumers (create paths, `new` flow, templates, `/fw-next-id`) offer only
-      `accepted` types and **reject** a non-accepted type with an actionable message
-- [ ] **Reference-mode** consumers (`move.sh`, `.psm1`, status/history/collision scans) parse the
-      full recognized set — verified: real archived `DECISION-0xx` **and** `BUGFIX-0xx` items still
-      validate
-- [ ] The disagreeing human-facing sources (workflow-guide "5 total" table, ID-namespace prose,
-      `.psm1` comments, plugin docs) **reference the master** instead of restating it (DRY — no
-      independent copies remain)
+- [ ] **The authored SoT file exists** — a flat, TAB-delimited `name<TAB>status[<TAB>alias-target]`
+      file (ADR-006 D5) with the canonical 8 (`accepted`) and legacy aliases (`legacy`), `#` comments
+      allowed. Candidate location `.claude/scripts/` beside the engine (D4)
+- [ ] **Canonical accepted set = FEAT, BUG, TECH, DOCS, CHORE, REFACTOR, TASK, SPIKE** (D1); POLICY
+      dropped; DECISION not accepted
+- [ ] **Legacy aliases recognized-for-parsing, never offered** (D2): FEATURE→FEAT, BUGFIX→BUG,
+      DOC→DOCS, TECHDEBT→TECH, DECISION→ADR
+- [ ] **Build derives, no hand-sync** (D4): `Build-Plugin.ps1` generates each plugin edition's copy
+      from the authored source; the full framework reads it directly; plugin copies are never
+      hand-edited
+- [ ] **Deterministic enforcement at the mechanical gate** (D6): the create/move engine reads the SoT
+      and **rejects** a non-`accepted` type with an actionable message — not AI-discretion
+- [ ] **Reference-mode parsing uses the full recognized set** — verified: real archived
+      `DECISION-0xx` **and** `BUGFIX-0xx` items still validate
+- [ ] **DRY the human-facing lists** — workflow-guide "5 total" table, ID-namespace prose, `.psm1`
+      comments, plugin `new.md` **derive-from or point-to** the SoT, not their own copies (no
+      independent lists remain)
+- [ ] **Schema left as-is** (D7) — no `work_item.type` enum added to `framework-schema.yaml`
 - [ ] CHANGELOG.md updated
 
 ---
 
-## Implementation Checklist
+## Implementation Checklist (per ADR-006)
 
 <!-- ⚠️ AI: Complete items in order. STOP at each [ ] and wait for approval. -->
 <!-- User can say "continue to completion" to approve remaining steps at once. -->
 
-- [ ] **PRE-IMPLEMENTATION REVIEW COMPLETED** — AI presents: final accepted set, legacy set,
-      the `work_item.type` master shape, which consumers are authoring- vs reference-mode, and the
-      enforcement point(s); user approves
-- [ ] Add the `work_item.type` master to `framework-schema.yaml` (per-type `status`)
-- [ ] Wire authoring-mode enforcement (create paths reject non-accepted; helpful message)
-- [ ] Confirm reference-mode consumers read the full recognized set
-- [ ] Point the human-facing lists at the master (stop restating — DRY)
+- [ ] **PRE-IMPLEMENTATION REVIEW COMPLETED** — AI presents: SoT file path + exact content, the
+      create/move enforcement point, the `Build-Plugin.ps1` derivation approach, and the full list of
+      human-facing consumers to re-point; user approves
+- [ ] Author the SoT file (flat TAB-delimited; canonical 8 + legacy aliases; `#` header)
+- [ ] Wire deterministic enforcement in the create/move engine (reads SoT; rejects non-accepted;
+      helpful message) — coordinate with BUG-170's `.claude/scripts/fw-move.sh` relocation
+- [ ] Add the derivation step to `Build-Plugin.ps1` (generate plugin editions' copies from the SoT)
+- [ ] Confirm reference-mode parsing reads the full recognized set (accepted + legacy)
+- [ ] Re-point the human-facing lists at the SoT (workflow-guide table, ID-namespace prose, `.psm1`
+      comments, plugin `new.md`) — stop restating (DRY)
 - [ ] Verify legacy `DECISION-0xx` and `BUGFIX-0xx` items still parse
 - [ ] CHANGELOG.md updated
 
 ---
 
+<!-- ══════════════════════════════════════════════════════════════════════════════ -->
+<!-- SUPERSEDED SPEC (retained for provenance) — the original "add a YAML enum" plan. -->
+<!-- ADR-006 (Accepted 2026-07-07) replaced this with a flat TAB file + build-derivation. -->
+<!-- Do NOT implement the sections below; they are the pre-ADR framing. -->
+<!-- ══════════════════════════════════════════════════════════════════════════════ -->
+
+### (Superseded) Original Acceptance Criteria
+
+- [ ] ~~A `work_item.type` master exists in `framework-schema.yaml` (mirrors `project.type`)~~ →
+      ADR-006 D7 keeps the schema as-is; the SoT is a flat file instead.
+- [ ] ~~Human-facing sources reference the YAML master~~ → now reference the flat SoT.
+
+*(Full original text preserved in git history at commit `13e70c3` / `accc1a3`.)*
+
+---
+
 ## Related
 
+- **ADR-006** (Accepted 2026-07-07) — **the decision this item implements.** Defines the canonical 8,
+  the legacy alias map, the flat TAB-delimited SoT, build-derivation across channels, and
+  deterministic enforcement. This item is the build; the ADR is the record.
 - **TECH-172** — retires the `DECISION-*` type in docs/templates/plugins; **depends on this item's
   two-list model** so retired DECISION stays parseable. 172 = content; 173 = mechanism. Can be
   sequenced 173→172 or run together.
@@ -172,4 +208,4 @@ Adding or retiring a type becomes a **one-field edit** in this master.
 
 ---
 
-**Last Updated:** 2026-07-06
+**Last Updated:** 2026-07-07 (re-scoped to implement ADR-006)
