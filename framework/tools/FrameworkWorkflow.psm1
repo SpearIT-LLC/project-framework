@@ -11,7 +11,8 @@
 
 .NOTES
     Version: 1.1.0
-    Used by: Get-WorkflowStatus.ps1, Move-WorkItem.ps1, Get-BacklogItems.ps1
+    Used by: Get-WorkflowStatus.ps1, Get-BacklogItems.ps1
+    (Move-WorkItem.ps1 removed by BUG-170 — superseded by .claude/scripts/fw-move.sh)
 #>
 
 #region Work Folder Discovery

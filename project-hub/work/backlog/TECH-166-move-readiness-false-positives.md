@@ -11,7 +11,7 @@
 
 ## Summary
 
-`framework/scripts/move.sh` blocks legitimate planning items from moving
+`.claude/scripts/fw-move.sh` blocks legitimate planning items from moving
 `backlog → todo` because its readiness heuristics misfire on normal work-item
 content. On 2026-07-02, FEAT-163/164/165 all failed the readiness gate and required
 `--force`, even though nothing was actually wrong with them.
@@ -80,7 +80,7 @@ Three readiness heuristics produce false-positives for planning items:
 
 - Discovered while moving FEAT-163/164/165 to `todo/` after the 2026-07-02 decision
   swarm. All three were legitimate; `--force` was used as a workaround.
-- Script source: `framework/scripts/move.sh`.
+- Script source: `.claude/scripts/fw-move.sh`.
 
 ## Related
 

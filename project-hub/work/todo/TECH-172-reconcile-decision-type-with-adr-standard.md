@@ -173,7 +173,7 @@ these** ("no stragglers"):
 - **Enforcement mechanism is TECH-173, not here.** This item retires DECISION in *content*;
   TECH-173 builds the accepted-type allowlist that makes retirement stick and keeps legacy prefixes
   parseable. Retiring DECISION here relies on TECH-173's recognized-for-parsing superset.
-- **Verified safe (no action needed):** `framework/scripts/move.sh` does not hard-code DECISION;
+- **Verified safe (no action needed):** `.claude/scripts/fw-move.sh` does not hard-code DECISION;
   plugins ship no DECISION *template* file (prose only); `framework-schema.yaml` has no enforced
   type enum.
 

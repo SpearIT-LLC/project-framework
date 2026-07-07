@@ -19,7 +19,7 @@ Move a work item between workflow folders with policy enforcement, transition va
 
 ## What the Script Handles
 
-`framework/scripts/move.sh` enforces these as hard blocks (exit 1):
+`.claude/scripts/fw-move.sh` enforces these as hard blocks (exit 1):
 
 - **Transition matrix** — invalid from→to pairs rejected
 - **Dependency check** — `Depends On:` items must be in `done/` before `→ doing` (not bypassable)
@@ -72,7 +72,7 @@ For all other targets — no pre-checks needed. The script handles the rest.
 ## Execute Move
 
 ```bash
-bash framework/scripts/move.sh <ids> <target> [--force]
+bash .claude/scripts/fw-move.sh <ids> <target> [--force]
 ```
 
 After the script succeeds, check for an artifact folder and move it if present:
@@ -153,4 +153,4 @@ Follow step-by-step: mark `[x]` immediately after each step, stop and wait for a
 ## Policy Reference
 
 Transition policy: `framework/docs/collaboration/workflow-guide.md#workflow-transitions`
-Script source: `framework/scripts/move.sh`
+Script source: `.claude/scripts/fw-move.sh`

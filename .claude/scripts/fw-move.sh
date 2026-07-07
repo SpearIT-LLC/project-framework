@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
-# framework/scripts/move.sh — Work item move execution engine
+# .claude/scripts/fw-move.sh — Work item move execution engine
 #
 # Handles all deterministic move operations and policy hard-blocks.
 # The AI layer (fw-move command) handles interactive recovery and post-move actions.
 #
 # Usage:
-#   bash framework/scripts/move.sh <item-id-or-list> <target-folder> [--force]
+#   bash .claude/scripts/fw-move.sh <item-id-or-list> <target-folder> [--force]
 #
 # --force: Skip readiness blocks for all valid targets except → doing/.
 #          Dependency checks on → doing/ are always enforced regardless of --force.
@@ -29,10 +29,10 @@
 #     unfilled placeholders, unchecked criteria (→ todo, backlog, blocked, archive)
 #
 # Examples:
-#   bash framework/scripts/move.sh FEAT-145 doing
-#   bash framework/scripts/move.sh "FEAT-145, FEAT-146" todo
-#   bash framework/scripts/move.sh "145, 146" done
-#   bash framework/scripts/move.sh "FEAT-145, 146" todo --force
+#   bash .claude/scripts/fw-move.sh FEAT-145 doing
+#   bash .claude/scripts/fw-move.sh "FEAT-145, FEAT-146" todo
+#   bash .claude/scripts/fw-move.sh "145, 146" done
+#   bash .claude/scripts/fw-move.sh "FEAT-145, 146" todo --force
 
 set -uo pipefail
 

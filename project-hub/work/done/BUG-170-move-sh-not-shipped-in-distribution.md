@@ -5,7 +5,7 @@
 **Priority:** High
 **Version Impact:** PATCH
 **Created:** 2026-07-03
-**Completed:** <!-- Set automatically by /fw-move on → done/. Leave blank at creation. -->
+**Completed:** 2026-07-07
 **Theme:** Distribution & Onboarding
 
 <!-- Discovered 2026-07-03 while researching TECH-168 (Completed-date enforcement).
@@ -142,6 +142,14 @@ exercises. Nothing tests the archive's `/fw-move` end-to-end.
 
 ## Fix Design (decide during implementation — do NOT pre-commit an approach)
 
+> **CHOSEN (2026-07-07): Option C — relocate to `.claude/scripts/fw-move.sh`.** A third option that
+> beats the two filed below: move the engine to `.claude/scripts/fw-move.sh` (co-located with its
+> `fw-move.md` command, `fw-` named per DECISION-171) **and** widen the build to ship `.claude/scripts/`
+> (the `.claude/` copy step was `commands/*.md`-only, so it had to widen regardless). This mirrors the
+> plugin's self-contained model and positions TECH-173's type-SoT to live beside the engine (ADR-006
+> D4). Orphan `Move-WorkItem.ps1` removed (nothing live depended on it — verified). Options A/B below
+> retained for provenance.
+
 Two coherent directions; pick one and make the shipped command + shipped scripts agree:
 
 **Option A — Ship `framework/scripts/` (align package with the canonical design).**
@@ -175,9 +183,12 @@ first.)
 
 ### Regression Testing
 
-- [ ] Source-repo `/fw-move` still works (no path regressions).
-- [ ] Archive `/fw-move` works end-to-end in a freshly-built project.
-- [ ] BUG-167 `Completed` stamp fires in a built project.
+- [x] Source-repo `/fw-move` still works (no path regressions). *(2026-07-07: engine reachable at
+      `.claude/scripts/fw-move.sh`; no settings/hooks reference the old path.)*
+- [x] Archive `/fw-move` works end-to-end in a freshly-built project. *(2026-07-07: built v5.5.0
+      archive contains `.claude/scripts/fw-move.sh`; extracted + ran `fw-move.sh TEST-001 done` → moved.)*
+- [x] BUG-167 `Completed` stamp fires in a built project. *(2026-07-07: `**Completed:** 2026-07-07`
+      auto-stamped by the shipped engine downstream.)*
 
 ---
 

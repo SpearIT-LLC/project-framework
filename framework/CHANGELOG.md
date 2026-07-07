@@ -15,19 +15,31 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-None
+- **`.claude/scripts/` now ships in the distribution archive** (BUG-170). `Build-FrameworkArchive.ps1`
+  copies `.claude/scripts/*.sh` into the archive, co-located with the commands that invoke them.
+  Documented as section 7.5 in the distribution-build checklist.
 
 ### Changed
 
-None
+- **`/fw-move` execution engine relocated** `framework/scripts/move.sh` → **`.claude/scripts/fw-move.sh`**
+  (BUG-170), co-located with `fw-move.md` and named per the `fw-` shared-folder convention
+  (DECISION-171). All references updated: the shipped command, the build checklist, and live work
+  items (TECH-166, TECH-169, TECH-172).
 
 ### Removed
 
-None
+- **Orphan `framework/tools/Move-WorkItem.ps1`** (BUG-170) — the pre-FEAT-145 PowerShell mover
+  superseded by `move.sh`/`fw-move.sh`. Nothing live invoked it; its stale "Production script" header
+  had been masking the missing engine.
 
 ### Fixed
 
-None
+- **BUG-170: `/fw-move` silently degraded to AI-interpreted moves in built projects.** The archive
+  shipped `fw-move.md` referencing an engine (`framework/scripts/move.sh`) the build never copied, so
+  downstream `/fw-move` fell back to AI `git mv` — losing every deterministic guarantee, including the
+  BUG-167 `Completed`-date auto-stamp. The archive now carries the engine and the command points at
+  it; verified end-to-end against a built archive (move runs via the shipped script and stamps
+  `Completed:`).
 
 ---
 

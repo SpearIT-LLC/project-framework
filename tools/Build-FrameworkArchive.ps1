@@ -172,6 +172,26 @@ if (Test-Path $DestCommands) {
 New-Item -ItemType Directory -Path $DestCommands -Force | Out-Null
 Copy-Item -Path (Join-Path $SourceCommands "*.md") -Destination $DestCommands -Force
 
+# Step 1.6: Copy canonical .claude/scripts/*.sh fresh from source (BUG-170). The /fw-move
+# execution engine lives at .claude/scripts/fw-move.sh (relocated from framework/scripts/ per
+# BUG-170 / DECISION-171 fw- naming), co-located with the fw-move.md command that invokes it.
+# Scoped to .claude/scripts/ + *.sh ONLY — same rationale as Step 1.5: excludes dev-only .claude/
+# content (hooks, settings). Same Copy-Item mechanism for uniform forward-slash zip paths. Without
+# this step the shipped fw-move.md references an engine the archive doesn't carry, and /fw-move
+# silently degrades to AI-interpreted moves downstream (the BUG-170 defect).
+Write-Host "  Copying canonical .claude/scripts/..." -ForegroundColor Gray
+$SourceScripts = Join-Path $RepoRoot ".claude\scripts"
+if (-not (Test-Path $SourceScripts)) {
+    Write-Error "Canonical .claude/scripts/ not found: $SourceScripts"
+    exit 1
+}
+$DestScripts = Join-Path $TempDir ".claude\scripts"
+if (Test-Path $DestScripts) {
+    Remove-Item -Recurse -Force $DestScripts
+}
+New-Item -ItemType Directory -Path $DestScripts -Force | Out-Null
+Copy-Item -Path (Join-Path $SourceScripts "*.sh") -Destination $DestScripts -Force
+
 # Step 2: Create framework directory in archive
 $ArchiveFrameworkDir = Join-Path $TempDir "framework"
 New-Item -ItemType Directory -Path $ArchiveFrameworkDir -Force | Out-Null

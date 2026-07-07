@@ -116,7 +116,6 @@ This checklist ensures the `templates/standard/` package contains everything nee
 
 - [ ] `framework/tools/` folder exists in template
 - [ ] `Get-NextWorkItemId.ps1` - Gets next available work item ID
-- [ ] `Move-WorkItem.ps1` - Moves work items between folders (with git mv)
 - [ ] `Get-BacklogItems.ps1` - Lists backlog items
 - [ ] `Get-WorkflowStatus.ps1` - Shows workflow status
 - [ ] `Get-FrameworkIndex.ps1` - Gets framework topic index
@@ -135,7 +134,18 @@ This checklist ensures the `templates/standard/` package contains everything nee
 - [ ] `fw-topic-index.md` - Topic index command
 - [ ] `fw-wip.md` - Work in progress command
 
-**Note:** The fw- commands depend on the scripts in `framework/tools/`. Both must be included.
+**Note:** The fw- commands depend on the PowerShell scripts in `framework/tools/`. Both must be
+included.
+
+### 7.5 Claude Code Scripts (`.claude/scripts/`)
+
+The `/fw-move` execution engine ships here, co-located with the `fw-move.md` command that invokes it
+(relocated from `framework/scripts/` by BUG-170 per DECISION-171 `fw-` naming). **Without this the
+shipped `fw-move.md` references an engine the archive doesn't carry, and `/fw-move` silently degrades
+to AI-interpreted moves downstream (the BUG-170 defect).**
+
+- [ ] `.claude/scripts/` folder exists in the archive
+- [ ] `fw-move.sh` - Deterministic work-item move engine (hard-block policy + `Completed`-date stamp)
 
 ### 8. Optional Components
 
