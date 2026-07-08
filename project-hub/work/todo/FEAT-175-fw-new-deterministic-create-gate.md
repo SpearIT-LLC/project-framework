@@ -48,6 +48,8 @@ at move**.
   2. Assigns the next ID deterministically (shares the ID logic already proven in
      `Get-NextWorkItemId` / the plugin `new.md` scan).
   3. Hands off to the AI layer for discovery/scoping/writing (unchanged).
+  4. **Commits the new item** once it is fully drafted and settled — a new work item should be a
+     durable, tracked artifact from birth, not an uncommitted working-tree file that can be lost.
 - The plugin `new.md` flow re-points to (or invokes) this gate rather than restating the list.
 
 ---
@@ -76,6 +78,10 @@ at move**.
 - [ ] Full framework gains a working create path (closes ADR-006 D7 oversight)
 - [ ] Plugin `new.md` re-points at / invokes the gate rather than restating the type list
 - [ ] `Build-Plugin.ps1` derives the SoT into each plugin edition (now that a consumer exists)
+- [ ] **New item is committed once fully drafted** — the create flow prompts to commit (default-yes)
+      after the item is written and settled. (Starting with a prompt per 2026-07-08 discussion;
+      may tighten to silent auto-commit later if the prompt becomes annoying. Today's plugin
+      `new.md` already prompts at Step 8 — carry that behavior into the deterministic flow.)
 - [ ] CHANGELOG.md updated
 
 ---
@@ -90,6 +96,7 @@ at move**.
 - [ ] Wire next-ID assignment (reuse existing logic)
 - [ ] Full-framework create command wired
 - [ ] Plugin `new.md` re-pointed at the gate
+- [ ] Commit-on-create (prompt, default-yes) wired into the create flow
 - [ ] `Build-Plugin.ps1` SoT derivation added
 - [ ] CHANGELOG.md updated
 
