@@ -192,6 +192,20 @@ if (Test-Path $DestScripts) {
 New-Item -ItemType Directory -Path $DestScripts -Force | Out-Null
 Copy-Item -Path (Join-Path $SourceScripts "*.sh") -Destination $DestScripts -Force
 
+# Step 1.6b: Ship the work-item type single-source-of-truth (TECH-173 / ADR-006). The full
+# framework reads .claude/scripts/work-item-types.txt directly at runtime (the ACCEPTED type set —
+# what may be created). It lives in the same .claude/scripts/ dir as the engine but is NOT a *.sh,
+# so the Step 1.6 glob above skips it — copy the *.txt explicitly. Scoped to *.txt only, same
+# deliberate allow-list rationale as Step 1.6 (dev-only .claude/ content stays out). Ships the
+# accepted set only; "legacy" types are self-discovered per-project from disk, never shipped.
+# Without this, the archive ships fw-move.sh but drops the type SoT — a BUG-170-class ship-gap.
+$SourceTypesSoT = Join-Path $SourceScripts "work-item-types.txt"
+if (-not (Test-Path $SourceTypesSoT)) {
+    Write-Error "Canonical work-item type SoT not found: $SourceTypesSoT (TECH-173/ADR-006)"
+    exit 1
+}
+Copy-Item -Path $SourceTypesSoT -Destination $DestScripts -Force
+
 # Step 2: Create framework directory in archive
 $ArchiveFrameworkDir = Join-Path $TempDir "framework"
 New-Item -ItemType Directory -Path $ArchiveFrameworkDir -Force | Out-Null

@@ -43,6 +43,92 @@ Export-ModuleMember -Function Find-WorkFolder
 
 #endregion
 
+#region Work Item Type Source of Truth (TECH-173 / ADR-006)
+
+# Fixed spelling-variant alias map (ADR-006 D2). These are NORMALIZATIONS of one logical type
+# spelled two ways — not project history. They rewrite a legacy spelling to its canonical prefix
+# for ID matching/display (e.g. BUGFIX-045 and BUG-045 are the same logical item). This map is a
+# small, closed set of known renames; it is intentionally NOT read from disk or the SoT. DECISION
+# is absent on purpose: it retired TO the ADR series (a separate document namespace), it is not a
+# spelling of an accepted work-item prefix, so rewriting DECISION-042 -> ADR-042 would invent a
+# non-existent ID. DECISION is still recognized-as-legacy by discovery; it is simply never rewritten.
+$script:WorkItemTypeAliases = @{
+    FEATURE  = "FEAT"
+    BUGFIX   = "BUG"
+    DOC      = "DOCS"
+    TECHDEBT = "TECH"
+}
+
+function Get-WorkItemTypeData {
+    <#
+    .SYNOPSIS
+        Returns the ACCEPTED work-item type set (offered for creation) and the fixed spelling-alias
+        map. (ADR-006, revised 2026-07-08.)
+
+    .DESCRIPTION
+        The accepted set is the single source of truth for what may be CREATED. It is authored once
+        in .claude/scripts/work-item-types.txt (one type per line; blank lines and #-comments
+        ignored; case-insensitive), and is universal — every project ships exactly this set with no
+        historical baggage.
+
+        There is deliberately NO authored "legacy"/"recognized" list. Any prefix found on an
+        existing item that is not accepted is, by definition, legacy: recognized for parsing/scanning
+        (see Get-NextWorkItemId, which matches prefixes generically off disk), never offered for
+        creation. Legacy is thus per-project and self-discovered — nothing to ship or hand-maintain.
+
+        Falls back to the hardcoded canonical set if the file is absent (defense-in-depth; the file
+        ships beside this module via Build-FrameworkArchive.ps1).
+
+    .OUTPUTS
+        PSCustomObject with .Accepted (string[], uppercased) and .Aliases (hashtable).
+    #>
+    [CmdletBinding()]
+    param(
+        [Parameter()]
+        [string]$SoTPath
+    )
+
+    # Locate the SoT if not provided (same relative-candidate approach as Find-ThoughtsFolder)
+    if (-not $SoTPath) {
+        $candidates = @(
+            ".claude/scripts/work-item-types.txt",
+            "../.claude/scripts/work-item-types.txt"
+        )
+        foreach ($candidate in $candidates) {
+            if (Test-Path -Path $candidate -PathType Leaf) {
+                $SoTPath = $candidate
+                break
+            }
+        }
+    }
+
+    if ($SoTPath -and (Test-Path -Path $SoTPath -PathType Leaf)) {
+        $accepted = [System.Collections.Generic.List[string]]::new()
+        foreach ($line in (Get-Content -Path $SoTPath)) {
+            $trimmed = $line.Trim()
+            if ($trimmed -eq "" -or $trimmed.StartsWith("#")) { continue }
+            $accepted.Add($trimmed.ToUpper())
+        }
+        if ($accepted.Count -gt 0) {
+            return [PSCustomObject]@{
+                Accepted = $accepted.ToArray()
+                Aliases  = $script:WorkItemTypeAliases
+            }
+        }
+    }
+
+    # Fallback: file missing/empty. Canonical accepted set (ADR-006, revised 2026-07-08).
+    Write-Verbose "work-item-types.txt not found; using hardcoded accepted set (ADR-006)."
+    return [PSCustomObject]@{
+        Accepted = @("FEAT","BUG","TECH","TASK","SPIKE")
+        Aliases  = $script:WorkItemTypeAliases
+    }
+}
+
+Export-ModuleMember -Function Get-WorkItemTypeData
+
+#endregion
+
 #region ID Normalization
 
 function ConvertTo-NormalizedWorkItemId {
@@ -79,12 +165,12 @@ function ConvertTo-NormalizedWorkItemId {
             $num = $matches[2]
             $subItem = $matches[3]
 
-            # Normalize long-form type names to standard prefixes
-            $type = switch ($type) {
-                "FEATURE" { "FEAT" }
-                "TECHDEBT" { "TECH" }
-                "BUGFIX" { "BUG" }
-                default { $type }
+            # Normalize known legacy spelling variants to their canonical prefix (ADR-006 D2).
+            # $type is already uppercased above. Only same-namespace renames apply (FEATURE->FEAT,
+            # BUGFIX->BUG, DOC->DOCS, TECHDEBT->TECH); DECISION is recognized-as-legacy but NOT
+            # rewritten (ADR is a separate series — see $script:WorkItemTypeAliases).
+            if ($script:WorkItemTypeAliases.ContainsKey($type)) {
+                $type = $script:WorkItemTypeAliases[$type]
             }
 
             if ($IncludeSubItem -and $subItem) {
@@ -136,10 +222,12 @@ function Get-NextWorkItemId {
         Scans all directories containing work items (work/, releases/, poc/, history/spikes/)
         to find the maximum ID currently in use, then returns max + 1.
 
-        All work item types share a common ID namespace:
-        FEAT, BUG, TECH, DECISION, SPIKE, POLICY
+        All work item types share a common ID namespace. Prefixes are matched GENERICALLY off disk
+        (any [A-Za-z]+-NNN filename), so every existing item counts toward the max regardless of its
+        type — accepted or legacy. There is no authored recognized-list to keep in sync: "recognized"
+        is simply "present on disk" (ADR-006, revised 2026-07-08).
 
-        Per TECH-046 and workflow-guide.md#finding-next-available-id
+        Per TECH-046, TECH-173/ADR-006, and workflow-guide.md#finding-next-available-id
 
     .PARAMETER ProjectHubPath
         Path to the project-hub folder. If not provided, searches common locations.
@@ -194,10 +282,10 @@ function Get-NextWorkItemId {
         "history/spikes"
     )
 
-    # Valid work item type prefixes
-    $validPrefixes = @("DECISION", "FEAT", "TECH", "SPIKE", "POLICY", "BUG", "BUGFIX")
-    $prefixPattern = ($validPrefixes -join "|")
-
+    # Prefixes are matched GENERICALLY (any [A-Za-z]+-NNN filename), not against an authored list.
+    # This is the disk-discovery model (ADR-006, revised 2026-07-08): every real item counts toward
+    # the max regardless of prefix — accepted or legacy — so no historical item is ever missed and
+    # there is no list to keep in sync. Case-insensitive: uppercase is canonical, lowercase accepted.
     $maxId = 0
 
     foreach ($folder in $scanFolders) {
@@ -212,8 +300,8 @@ function Get-NextWorkItemId {
         $files = Get-ChildItem -Path $folderPath -Filter "*.md" -Recurse -File -ErrorAction SilentlyContinue
 
         foreach ($file in $files) {
-            # Match pattern: TYPE-NNN where NNN is one or more digits
-            if ($file.BaseName -match "^($prefixPattern)-(\d+)") {
+            # Match any TYPE-NNN prefix generically (case-insensitive). NNN is one or more digits.
+            if ($file.BaseName -match "^([A-Za-z]+)-(\d+)") {
                 $idNum = [int]$matches[2]
                 if ($idNum -gt $maxId) {
                     $maxId = $idNum

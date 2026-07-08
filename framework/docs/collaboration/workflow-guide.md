@@ -115,9 +115,10 @@ For comprehensive projects, create `project-hub/external-references/project-defi
 - Break down into features/work items
   - Use FEATURE-TEMPLATE.md for features
   - Use BUG-TEMPLATE.md for bugs
-  - Use TECHDEBT-TEMPLATE.md for tech debt
-  - Use DECISION-TEMPLATE.md for decisions
+  - Use TECHDEBT-TEMPLATE.md for tech debt, docs, chores, and refactors (all filed as TECH)
+  - Use TASK-TEMPLATE.md for discrete operational/setup work
   - Use SPIKE-TEMPLATE.md for investigations
+  - For architectural decisions, write an ADR (ADR-MAJOR/MINOR-TEMPLATE.md), not a work item
 - Identify dependencies and risks
   - What depends on what?
   - What could go wrong?
@@ -963,17 +964,21 @@ If the spike informed a production implementation, you may delete code artifacts
 Work item numbers are **sequential and globally unique** across all work item types within a project.
 
 **Format:** `[TYPE]-[NNN]` where:
-- `TYPE` = FEAT, BUG, TECH, DECISION, SPIKE
+- `TYPE` = a work-item prefix. The **accepted** set (offered for creation) is **FEAT, BUG, TECH,
+  TASK, SPIKE** (ADR-006 — see `.claude/scripts/work-item-types.txt`). Any other prefix found on an
+  existing item (e.g. legacy `DECISION`, `BUGFIX`, `CHORE`) is **recognized-as-legacy** by
+  discovery — matched when scanning, never offered for creation. Matching is case-insensitive.
 - `NNN` = Zero-padded 3-digit number (001-999), then continues naturally (1000+)
 
-**Examples:** `FEAT-021`, `BUG-005`, `TECH-033`, `DECISION-042`, `FEAT-1000`
+**Examples:** `FEAT-021`, `BUG-005`, `TECH-033`, `SPIKE-003`, `FEAT-1000` (legacy: `DECISION-042`)
 
 #### Finding the Next Number
 
 **See [Finding Next Available ID](#finding-next-available-id) for the complete algorithm.**
 
 Key points:
-- All work item types share a **common ID namespace** (FEAT, BUG, TECH, DECISION, SPIKE, POLICY)
+- All work item types share a **common ID namespace**. Prefixes are matched generically off disk
+  (any `TYPE-NNN`), so accepted and legacy items alike count toward the ID scan (ADR-006)
 - Scan **all four directories**: `work/`, `releases/`, `poc/`, `history/spikes/`
 - Extract max ID from filenames, then increment by 1
 
@@ -1024,13 +1029,18 @@ When creating a new work item or spike, find the next available ID by scanning a
 
 **Common ID Namespace:**
 
-All work item types share a **single ID counter**:
+All work item types share a **single ID counter**. The accepted types (ADR-006):
 - Features (FEAT-NNN)
 - Bugs (BUG-NNN)
 - Tech Debt (TECH-NNN)
-- Decisions (DECISION-NNN)
+- Tasks (TASK-NNN)
 - Spikes (SPIKE-NNN)
-- Policy (POLICY-NNN)
+
+Existing items may also carry legacy prefixes (e.g. FEATURE, BUGFIX, DOC, DOCS, TECHDEBT, CHORE,
+REFACTOR, DECISION — whatever a given project accumulated). These share the same counter and are
+**recognized-as-legacy** by discovery: any on-disk prefix not in the accepted set is legacy — matched
+when scanning, never offered for creation. Nothing to author or ship; the accepted set lives in
+`.claude/scripts/work-item-types.txt`.
 
 This means if the last created item was FEAT-067, the next spike would be SPIKE-068 (not SPIKE-001).
 
@@ -1053,9 +1063,10 @@ Scan **all four directories** containing work items:
 
 **Algorithm:**
 
-1. Glob all work item files:
+1. Glob all work item files, matching the prefix **generically** (any `TYPE-NNN`, case-insensitive)
+   so no item is missed regardless of prefix — accepted or legacy. No enumerated list to keep in sync:
    ```
-   {work,releases,poc,history/spikes}/**/{DECISION,FEAT,TECH,SPIKE,POLICY,BUG}-*.md
+   {work,releases,poc,history/spikes}/**/[A-Za-z]*-[0-9]*.md
    ```
 
 2. Extract numeric IDs from filenames (e.g., `FEAT-042-description.md` → `042`)
@@ -1117,15 +1128,31 @@ All work item templates use consistent metadata fields:
 
 **Note:** Status is determined by folder location (backlog/todo/doing/done), not a metadata field.
 
-#### Work Item Types (5 total)
+#### Work Item Types (canonical set — 5)
+
+The accepted work-item types are defined by the single source of truth
+`.claude/scripts/work-item-types.txt` (ADR-006). This table mirrors it — the two must agree.
 
 | Type | Template | ID Prefix | Purpose |
 |------|----------|-----------|---------|
 | Feature | FEATURE-TEMPLATE.md | FEAT- | New capability or enhancement |
 | Bug | BUG-TEMPLATE.md | BUG- | Defect fix |
-| Tech Debt | TECHDEBT-TEMPLATE.md | TECH- | Internal improvement |
-| Decision | DECISION-TEMPLATE.md | DECISION- | ADR / design choice |
+| Tech Debt | TECHDEBT-TEMPLATE.md | TECH- | Internal improvement, tech debt, docs, chores, refactors — work on the system itself |
+| Task | TASK-TEMPLATE.md | TASK- | Discrete unit of work (maps to a Jira/GitHub Task) |
 | Spike | SPIKE-TEMPLATE.md | SPIKE- | Time-boxed research |
+
+> **Why 5 (ADR-006, amended 2026-07-08):** the set was reduced from an earlier 8 — DOCS, CHORE, and
+> REFACTOR fold into **TECH** (all "work on the system"), guided by usage data (FEAT/TECH dominate;
+> the rest were rarely used) and tracker interop (Jira/GitHub default to Feature/Bug/Task). Adding a
+> type later is a one-line edit to the SoT.
+>
+> **Template naming:** `FEATURE-TEMPLATE.md` and `TECHDEBT-TEMPLATE.md` retain legacy filenames
+> (prefixes are `FEAT-`/`TECH-`); TECH-176 renames them to the canonical prefix.
+>
+> **Legacy prefixes** (e.g. `DECISION`, `BUGFIX`, `CHORE`, `DOCS` on existing items) are
+> **recognized-as-legacy** by disk discovery — parsed/scanned, never offered for creation. Nothing
+> to author. **DECISION** specifically: record architectural decisions as ADRs
+> (`ADR-MAJOR/MINOR-TEMPLATE.md` → `project-hub/research/adr/`), not as a work item.
 
 #### FEATURE-TEMPLATE.md
 Use for new capabilities or enhancements.
@@ -1173,18 +1200,22 @@ Use for internal improvements and refactoring.
 
 **When to use:** Code cleanup, performance improvements, documentation updates, internal tooling.
 
-#### DECISION-TEMPLATE.md
-Use for architecture decisions that need documentation.
+#### TASK-TEMPLATE.md
+Use for a discrete, bounded unit of work that isn't a feature or a bug.
 
-**Sections:**
-- Summary
-- Context (why decision is needed)
-- Options Considered
-- Decision
-- Consequences
-- Related items
+**When to use:** Concrete operational/setup work. Maps to a Jira/GitHub Task for linked projects.
+For work that improves the system itself (docs, cleanup, refactors, tech debt), use TECH.
 
-**When to use:** Technical choices between alternatives, establishing patterns or standards.
+#### Note: TECH absorbs docs, chores, and refactors (ADR-006, amended 2026-07-08)
+There is no separate DOCS, CHORE, or REFACTOR type. Documentation-only work, routine maintenance,
+and behavior-preserving restructuring are all filed as **TECH** ("work on the system itself").
+Existing `DOCS-*`/`CHORE-*`/`REFACTOR-*` items remain recognized-as-legacy.
+
+#### Retired: DECISION-TEMPLATE.md
+Architectural decisions are recorded as **ADRs** (`ADR-MAJOR-TEMPLATE.md` /
+`ADR-MINOR-TEMPLATE.md` in `templates/decisions/`, stored under `project-hub/research/adr/`),
+not as a `DECISION` work item. Existing `DECISION-*` items remain recognized for parsing; the
+type is never offered for creation. (ADR-006)
 
 #### SPIKE-TEMPLATE.md
 Use for research/investigation.

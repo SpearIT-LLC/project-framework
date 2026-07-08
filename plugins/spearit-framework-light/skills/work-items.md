@@ -12,6 +12,10 @@ A **work item** is a markdown file that describes something to build, fix, or de
 
 ## Work Item Types
 
+The accepted types (offered when creating a new item) are the canonical **5** defined by ADR-006.
+In the full framework these live in the single source of truth `.claude/scripts/work-item-types.txt`;
+this list mirrors it.
+
 ### FEAT (Feature)
 New functionality or capability
 
@@ -22,20 +26,26 @@ Defect or error correction
 
 **Example:** `BUG-018-login-redirect-loop.md`
 
-### TECH (Technical Debt)
-Code quality, refactoring, or infrastructure
+### TECH (Technical / work on the system)
+Internal improvement, tech debt, documentation, chores, and refactors — anything that improves the
+system itself rather than delivering a user-facing feature or fixing a defect.
 
 **Example:** `TECH-007-migrate-to-async-api.md`
+
+### TASK (Task)
+A discrete, bounded unit of operational/setup work. Maps to a Jira/GitHub Task for linked projects.
+
+**Example:** `TASK-021-migrate-ci-runner.md`
 
 ### SPIKE (Research/Exploration)
 Time-boxed investigation or proof of concept
 
 **Example:** `SPIKE-003-evaluate-caching-strategies.md`
 
-### DECISION (Architecture Decision)
-Significant architectural or design choice requiring documentation
-
-**Example:** `DECISION-001-database-selection.md`
+> **Legacy prefixes** on existing items (e.g. `DECISION`, `BUGFIX`, `DOCS`, `CHORE`, `REFACTOR`) are
+> recognized for parsing but never offered for creation. **DECISION** is retired — record
+> architectural decisions as ADRs (`project-hub/research/adr/NNN-name.md`), not as a work item.
+> There was formerly a longer type list (DOCS/CHORE/REFACTOR); those now fold into **TECH**.
 
 ## Work Item Structure (Typical)
 

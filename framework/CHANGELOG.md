@@ -15,12 +15,33 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- **Work-item type single source of truth** (TECH-173 / ADR-006). A flat, newline-delimited
+  `.claude/scripts/work-item-types.txt` is the one authored master of the **accepted** (creatable)
+  types: **FEAT, BUG, TECH, TASK, SPIKE** (canonical 5). TECH covers internal improvement, docs,
+  chores, and refactors ("work on the system"). The file ships with the framework
+  (`Build-FrameworkArchive.ps1`) and is read directly by `FrameworkWorkflow.psm1` — no restated
+  lists. Matching is case-insensitive (uppercase canonical).
+- **Disk-derived "legacy" types** (TECH-173 / ADR-006). There is no authored legacy list. Any prefix
+  on an existing item that is not accepted is, by definition, legacy — recognized for parsing/scanning,
+  never offered for creation. Legacy is thus per-project and self-discovered; a new project carries
+  zero historical baggage. `DECISION`, `BUGFIX`, `CHORE`, `DOCS`, etc. in this repo are recognized
+  this way.
 - **`.claude/scripts/` now ships in the distribution archive** (BUG-170). `Build-FrameworkArchive.ps1`
   copies `.claude/scripts/*.sh` into the archive, co-located with the commands that invoke them.
   Documented as section 7.5 in the distribution-build checklist.
 
 ### Changed
 
+- **Valid-type lists now derive from the SoT, not their own copies** (TECH-173). Reconciled the
+  previously-disagreeing lists across channels to the canonical 5 and pointed them at
+  `work-item-types.txt`: `FrameworkWorkflow.psm1` (max-ID scan now matches prefixes generically off
+  disk — fixing a latent bug where the former hardcoded list omitted several prefixes and would miss
+  their max-IDs; a small fixed spelling-alias map FEATURE→FEAT/BUGFIX→BUG/DOC→DOCS/TECHDEBT→TECH
+  remains for ID normalization), the workflow-guide type table + ID-namespace prose + collision-scan
+  glob, and the plugin `new.md` / `skills/work-items.md` / light `README` (both editions). `DECISION`
+  is reframed everywhere as retired-to-ADR.
+- **`Build-FrameworkArchive.ps1` also ships `*.txt`** from `.claude/scripts/` (TECH-173, Step 1.6b),
+  so the type SoT travels with the engine (the prior `*.sh`-only glob would have dropped it).
 - **`/fw-move` execution engine relocated** `framework/scripts/move.sh` → **`.claude/scripts/fw-move.sh`**
   (BUG-170), co-located with `fw-move.md` and named per the `fw-` shared-folder convention
   (DECISION-171). All references updated: the shipped command, the build checklist, and live work
@@ -28,6 +49,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Removed
 
+- **Retired `DECISION-TEMPLATE.md`** (TECH-173). Architectural decisions are recorded as ADRs
+  (`ADR-MAJOR/MINOR-TEMPLATE.md` in `templates/decisions/`), not as a `DECISION` work item. Existing
+  `DECISION-*` items remain recognized for parsing.
 - **Orphan `framework/tools/Move-WorkItem.ps1`** (BUG-170) — the pre-FEAT-145 PowerShell mover
   superseded by `move.sh`/`fw-move.sh`. Nothing live invoked it; its stale "Production script" header
   had been masking the missing engine.

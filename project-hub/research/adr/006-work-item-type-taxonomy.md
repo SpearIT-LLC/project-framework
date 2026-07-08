@@ -11,6 +11,24 @@
 > D1–D7 are now decided. The two D1 sub-questions (SPIKE; TASK/REFACTOR) and the D5 format were
 > resolved this session — all as recommended. TECH-173 is now re-scoped to "implement this ADR."
 
+> **AMENDED 2026-07-08 (during TECH-173 implementation).** A taxonomy sanity-check against usage data
+> and industry trackers revised two decisions. See the amendment notes inline at **D1** and **D2**;
+> summary:
+> - **D1 — canonical set reduced 8 → 5: FEAT, BUG, TECH, TASK, SPIKE.** Dropped DOCS, CHORE, REFACTOR
+>   (fold into TECH) and reinstated **TASK** over the earlier 8-set. Rationale: usage data (FEAT 105,
+>   TECH 65 dominate; DOCS/CHORE/REFACTOR/TASK/SPIKE all ≤6) plus interop — Jira & GitHub both default
+>   to Feature/Bug/**Task** (neither ships CHORE/REFACTOR/SPIKE as a default type). TECH kept (2nd-most-
+>   used; the product-vs-internal distinction). SPIKE kept (distinct research lifecycle + poc/ handling).
+> - **D2/D4/D5 — "legacy" is no longer an authored list.** Any prefix present on disk that is not in
+>   the accepted set is, *by definition*, legacy: recognized for parsing, never offered for creation.
+>   Legacy is per-project and self-discovered — nothing to ship. The SoT therefore ships the **accepted
+>   set only** (universal, zero historical baggage), as a flat newline-delimited **`.txt`** (the
+>   TAB/alias-column of D5 is obsolete once only accepted names are listed). A small fixed
+>   spelling-alias map (FEATURE→FEAT, BUGFIX→BUG, DOC→DOCS, TECHDEBT→TECH) lives in the tooling as a
+>   closed normalization set, not project history.
+> - **Enforcement** (create-not-move): the deterministic gate belongs at **creation** (`/fw-new`,
+>   FEAT-175), not the move path; `fw-move.sh` stays type-agnostic. (Clarifies D6.)
+
 ---
 
 ## Context and Problem Statement
@@ -85,6 +103,20 @@ research — and an agile standard; low cost to retain). **TASK and REFACTOR are
 distinct accepted types** — conventional-commits standard, semantically distinct from CHORE/TECH.
 Canonical set is therefore the full **8: FEAT, BUG, TECH, DOCS, CHORE, REFACTOR, TASK, SPIKE.**
 
+> **AMENDED 2026-07-08 — canonical set reduced to 5: FEAT, BUG, TECH, TASK, SPIKE.** The 8-set did
+> not survive a sanity-check. **Usage data:** FEAT (105) and TECH (65) dominate; every other type is
+> ≤6 uses (CHORE 6, DOCS 4, TASK 2, REFACTOR 2, SPIKE 1) — four lightly-used buckets with overlapping
+> boundaries (CHORE/REFACTOR/DOCS all describe "work on the system"). **Simplicity:** the framework's
+> thesis is a simple file-based Kanban; an 8-way taxonomy was its least-simple part, and a type here
+> only picks a prefix/template (it drives no automation), so fine discrimination has little payoff.
+> **Interop:** Jira and GitHub both default to Feature/Bug/**Task**; neither ships CHORE/REFACTOR/DOCS/
+> SPIKE as a default *type* (labels instead). So **DOCS, CHORE, REFACTOR are dropped** (fold into TECH)
+> and **TASK is reinstated** (universal tracker default; maps cleanly for e.g. Jira-linked projects).
+> **TECH is kept** despite not being a CC/Jira default — it is the 2nd-most-used type and carries the
+> product-vs-internal distinction (a TECH item still maps to a Jira Task + `tech-debt` label). **SPIKE
+> is kept** — its research lifecycle (decision-as-done, `poc/` → `history/spikes/` handling) is
+> unmergeable. Dropped types remain valid on existing items via the disk-derived-legacy rule (see D2).
+
 ### D2 — Legacy alias map (recognized-for-parsing, never created)
 
 **Recommendation:**
@@ -100,6 +132,27 @@ Canonical set is therefore the full **8: FEAT, BUG, TECH, DOCS, CHORE, REFACTOR,
 
 Legacy prefixes **parse/validate** (historical items never break) but are **never offered for
 creation**. This is the accepted-vs-recognized distinction, now backed by usage data.
+
+> **AMENDED 2026-07-08 — legacy is disk-derived, not an authored list.** The table above is
+> illustrative, not a shipped artifact. "Legacy" = *this project's* accumulated history, which a
+> brand-new project does not share — shipping a legacy list would impose our baggage as their default.
+> Instead: **any prefix found on an existing item that is not in the accepted set is, by definition,
+> legacy** — recognized for parsing/scanning, never offered for creation. The recognized set is thus
+> "accepted ∪ whatever is present on disk," self-discovered per project, nothing to author or ship.
+> The dropped D1 types (DOCS, CHORE, REFACTOR) need no special handling: their existing items are
+> recognized-as-legacy automatically. The tooling keeps only a small **fixed spelling-alias** map
+> (FEATURE→FEAT, BUGFIX→BUG, DOC→DOCS, TECHDEBT→TECH) — closed spelling variants, not history.
+> **DECISION** is recognized-as-legacy but never rewritten (ADR is a separate document series). Prefix
+> matching is case-insensitive (uppercase canonical, lowercase accepted).
+>
+> **Scope of "on disk" = the work-item folders, not the whole repo.** Discovery matches a generic
+> `TYPE-NNN` prefix, but only within the work-item scan locations (`work/`, `releases/`, `poc/`,
+> `history/spikes/`). This boundary (pre-existing in `Get-NextWorkItemId`) is what keeps non-work-item
+> artifacts out: e.g. `/fw-roadmap` output (`ROADMAP-YYYY-MM-DD` in `history/archive/`) and test
+> fixtures (`TEST-0xx` inside a work item's artifact folder under `history/releases/`) are NOT in the
+> scanned folders, so they are correctly never treated as work items or legacy types. Verified by
+> dogfooding this repo 2026-07-08: the scoped scan yields legacy = BUGFIX, CHORE, DECISION, DOCS,
+> FEATURE — all genuine historical prefixes, no false positives.
 
 ### D3 — Types are UNIVERSAL, not tiered
 
@@ -136,6 +189,13 @@ DRY-by-enforcement here.
 column) and JSON (would introduce a `jq` dependency the engine must avoid). Satisfies the constraint
 in both directions: trivially parseable by `move.sh` today (`while IFS=$'\t' read`) and by a future
 compiled tool unchanged.
+
+> **AMENDED 2026-07-08 — simplified to a newline-delimited `.txt` (accepted names only).** Once the
+> D2 amendment made "legacy" disk-derived, the file lists *only accepted type names* — so the
+> `status` and `alias-target` columns vanish and there is nothing tab-separated left. The shipped
+> file is therefore `.claude/scripts/work-item-types.txt`: one accepted type per line, `#` comments
+> and blanks ignored, case-insensitive. Still zero-dependency and bash-trivial (`while read`). The
+> D5 reasoning (flat, no `jq`, future-tool-friendly) stands; only the shape shrank.
 
 Canonical file shape (columns shown space-aligned for readability; **actual separator is a TAB**):
 
@@ -221,4 +281,5 @@ define or gate it.
 
 ---
 
-**Last Updated:** 2026-07-07 (ratified — Status: Accepted)
+**Last Updated:** 2026-07-08 (amended during TECH-173 impl — set reduced 8→5; legacy now disk-derived;
+SoT is `.txt`. Status remains Accepted.)

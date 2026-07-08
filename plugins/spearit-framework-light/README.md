@@ -111,7 +111,7 @@ Claude will understand your workflow and help enforce best practices automatical
 4. **Claude creates** a structured work item ready for implementation
 
 **Interactive Prompts:**
-- **Type:** FEAT, BUG, CHORE, TASK, DOCS, REFACTOR, DECISION, TECH
+- **Type:** FEAT, BUG, TECH, TASK, SPIKE (canonical set, ADR-006)
 - **Title:** Short description (auto-converted to kebab-case filename)
 - **Priority:** High, Medium, Low
 - **Summary:** Describe your idea at any level of detail
@@ -205,9 +205,14 @@ Show available commands or detailed help for a specific command.
 |------|---------|---------|
 | **FEAT** | New feature or functionality | `FEAT-042-user-authentication.md` |
 | **BUG** | Bug fix or defect | `BUG-018-login-redirect-loop.md` |
-| **TECH** | Technical debt or refactoring | `TECH-007-migrate-to-async-api.md` |
+| **TECH** | Work on the system — tech debt, internal improvement, docs, chores, refactors | `TECH-007-migrate-to-async-api.md` |
+| **TASK** | Discrete operational/setup work (maps to a Jira/GitHub Task) | `TASK-021-migrate-ci-runner.md` |
 | **SPIKE** | Research or investigation | `SPIKE-003-evaluate-caching.md` |
-| **DECISION** | Architecture decision record | `DECISION-001-database-selection.md` |
+
+> Canonical **5** per ADR-006 (reduced from an earlier 8: DOCS/CHORE/REFACTOR fold into TECH).
+> Legacy prefixes on existing items (e.g. `DECISION`, `BUGFIX`, `CHORE`) are recognized for parsing
+> but never offered for creation. `DECISION` is retired — record decisions as ADRs
+> (`project-hub/research/adr/`).
 
 ---
 

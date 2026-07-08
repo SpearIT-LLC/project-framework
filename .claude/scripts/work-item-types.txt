@@ -1,0 +1,16 @@
+# Work-item types — accepted set (single source of truth, ADR-006).
+# One accepted type per line. Blank lines and #-comments are ignored.
+# Uppercase is canonical; lowercase is accepted too (feat == FEAT).
+#
+# This file lists ONLY the types offered for CREATION. It is universal — every
+# project created from the framework ships exactly this set, with no historical baggage.
+#
+# "Legacy" types are NOT listed here. Any prefix found on an existing item that is not in
+# this list is, by definition, legacy: recognized for parsing/scanning, never offered for
+# creation. Legacy is therefore per-project and self-discovered from disk — nothing to ship
+# or hand-maintain. (ADR-006 D1/D2, revised 2026-07-08.)
+FEAT
+BUG
+TECH
+TASK
+SPIKE

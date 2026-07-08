@@ -60,7 +60,13 @@ Extract TYPE and description from user's command:
 → Description: "Add export feature"
 ```
 
-**Valid types:** FEAT, BUG, CHORE, TASK, DOCS, REFACTOR, DECISION, TECH
+**Valid types (accepted for creation):** FEAT, BUG, TECH, TASK, SPIKE
+<!-- Canonical set per ADR-006 (single source of truth: .claude/scripts/work-item-types.txt in the
+     full framework). TECH covers internal improvements, docs, chores, and refactors ("work on the
+     system"). Any other prefix on an existing item (e.g. legacy FEATURE, BUGFIX, DOCS, CHORE,
+     DECISION) is recognized for parsing but never offered for creation. DECISION is retired —
+     record architectural decisions as ADRs (project-hub/research/adr/), not as a work item. -->
+
 
 **If user provides ID, IGNORE IT:**
 ```
