@@ -143,4 +143,13 @@ date, closing the BUG-167 loop downstream. BUG-170 moved to `done/`.
 
 ---
 
-**Last Updated:** 2026-07-07
+## Session Close
+
+Called it a night after committing all work. Working tree clean; three commits this session
+(`6588cdc` ADR-006 + TECH-173 re-scope · `247f1c6` BUG-170 complete · `52bfc34` BUG-174 filed).
+**Resume here:** implement TECH-173 (parked in `doing/`, unblocked now that ADR-006 is Accepted) —
+start with its pre-implementation review gate.
+
+---
+
+**Last Updated:** 2026-07-07 (session close)
