@@ -192,4 +192,35 @@ model and caught (then dismissed, correctly) a scan-boundary scare. Committing a
 
 ---
 
-**Last Updated:** 2026-07-08
+## Addendum — TECH-173 moved to done/ (later)
+
+After committing the implementation, ran `/fw-move 173 done`. The done-gate hard-blocked on 5
+unchecked `- [ ]` lines — but all 5 were **struck-through items deliberately moved out**
+(to FEAT-175/TECH-176) or **superseded** (the old YAML-enum spec), not real pending work. The gate
+can't read `~~strikethrough~~`; it only distinguishes `[ ]` from `[x]`.
+
+**Decision (new work filed):** rather than a one-off cleanup, adopt the established Obsidian
+checkbox-state convention. Filed **TECH-177** (Low) to implement `[ ]`/`[x]`/`[/]`/`[-]` with
+gate-awareness: the **done-gate** should block on `[ ]` **and** `[/]` (in-progress), while `[x]` and
+`[-]` (cancelled) pass; readiness-gate stays `[ ]`-only (no value blocking a *queue* move on an
+in-progress subtask); `[?]`/`[!]` documented as recognized-but-deferred blocking markers. Researched
+the ecosystem — the four core states are the right scope; `[>]`/`[*]`/etc. duplicate signals we
+already have (DECIDE marker, `blocked/` folder) or are decorative.
+
+**For TECH-173 now:** per Gary, marked the 5 struck items `[x]` to unblock (the honest `[-]` state
+arrives with TECH-177), added a note in TECH-173 explaining why, then moved to done/. Completed date
+auto-stamped 2026-07-08. done/ now holds 5 items (under the release-nudge threshold).
+
+### Files (addendum)
+- **Created:** `project-hub/work/backlog/TECH-177-checkbox-state-convention.md`
+- **Moved:** `TECH-173-...md` doing/ → done/ (Completed stamped)
+- **Modified:** TECH-173 file (5 struck items `[ ]`→`[x]`, added checkbox-convention note)
+
+### Current State (updated)
+- **done/ (5):** BUG-167, BUG-170, FEAT-165, TECH-079, **TECH-173**
+- **doing/:** empty
+- **backlog/ (new this session):** FEAT-175, TECH-176, **TECH-177**
+
+---
+
+**Last Updated:** 2026-07-08 (TECH-173 moved to done/)

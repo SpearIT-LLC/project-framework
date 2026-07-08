@@ -5,7 +5,7 @@
 **Priority:** Medium
 **Version Impact:** MINOR
 **Created:** 2026-07-06
-**Completed:** <!-- Set automatically by /fw-move on → done/. Leave blank at creation. -->
+**Completed:** 2026-07-08
 **Theme:** Framework Consistency
 
 ---
@@ -46,6 +46,13 @@ DECISION retirement stick.
 > accepted-only, newline-delimited **`work-item-types.txt`** (not the earlier TAB `.tsv`). The AC/
 > checklist text below that still says "8" or ".tsv" reflects the mid-implementation state; the
 > **shipped result is the 5-type / disk-derived / `.txt` model.** See ADR-006's 2026-07-08 amendment.
+
+> **Note on the struck-through `[x]` items below.** Several criteria/checklist lines are struck
+> (`~~...~~`) and marked `[x]` because they were **moved to follow-ups** (FEAT-175, TECH-176) or
+> **superseded** — their disposition is resolved, not pending. They are checked `[x]` (rather than a
+> true "cancelled" state) only because the done-gate currently reads `[ ]` vs `[x]` and has no
+> cancelled marker. **TECH-177** adds the Obsidian-style `[-]` (cancelled) state so future items can
+> express this honestly; when it lands, these could be re-marked `[-]`.
 
 ---
 
@@ -168,7 +175,7 @@ Adding or retiring a type becomes a **one-field edit** in this master.
       ships the SoT (Step 1.6b) and the full framework reads it directly. **Plugin derivation
       (`Build-Plugin.ps1`) deferred to FEAT-175** — the plugin had no *consumer* of the TSV until the
       `/fw-new` gate exists, so shipping it into plugins now would be inert plumbing ahead of its use.
-- [ ] ~~**Deterministic enforcement at the mechanical gate** (D6)~~ — **MOVED to FEAT-175.**
+- [x] ~~**Deterministic enforcement at the mechanical gate** (D6)~~ — **MOVED to FEAT-175.**
       Enforcement belongs at **creation** (`/fw-new`), not move; `fw-move.sh` correctly gets no type
       logic. See the 2026-07-08 re-scope note above.
 - [x] **Reference-mode parsing uses the full recognized set** — **verified live:** `fw-move.sh`
@@ -186,7 +193,7 @@ Adding or retiring a type becomes a **one-field edit** in this master.
       kept. *(DOCS/CHORE/REFACTOR templates were created then removed when the set was cut to 5 —
       those types fold into TECH.)*
 - [x] Deleted the retired `DECISION-TEMPLATE.md` (decisions → ADR templates in `templates/decisions/`)
-- [ ] ~~Rename `FEATURE`/`TECHDEBT` templates to canonical prefixes~~ — **MOVED to TECH-176**
+- [x] ~~Rename `FEATURE`/`TECHDEBT` templates to canonical prefixes~~ — **MOVED to TECH-176**
       (40+ live references; kept separate to avoid tangling a mechanical rename with taxonomy work).
 
 ---
@@ -199,7 +206,7 @@ Adding or retiring a type becomes a **one-field edit** in this master.
 - [x] **PRE-IMPLEMENTATION REVIEW COMPLETED** — reviewed 2026-07-08; scope corrected to
       create-not-move (see re-scope note); user approved step-by-step.
 - [x] Author the SoT file (flat TAB-delimited; canonical 8 + legacy aliases; `#` header)
-- [ ] ~~Wire deterministic enforcement in the create/move engine~~ — **MOVED to FEAT-175**
+- [x] ~~Wire deterministic enforcement in the create/move engine~~ — **MOVED to FEAT-175**
       (enforcement is at creation, not move; `fw-move.sh` gets no type logic).
 - [x] Ship the SoT via `Build-FrameworkArchive.ps1` (Step 1.6b) — verified in the built zip.
       *(Plugin `Build-Plugin.ps1` derivation deferred to FEAT-175 — no plugin consumer yet.)*
@@ -223,9 +230,9 @@ Adding or retiring a type becomes a **one-field edit** in this master.
 
 ### (Superseded) Original Acceptance Criteria
 
-- [ ] ~~A `work_item.type` master exists in `framework-schema.yaml` (mirrors `project.type`)~~ →
+- [x] ~~A `work_item.type` master exists in `framework-schema.yaml` (mirrors `project.type`)~~ →
       ADR-006 D7 keeps the schema as-is; the SoT is a flat file instead.
-- [ ] ~~Human-facing sources reference the YAML master~~ → now reference the flat SoT.
+- [x] ~~Human-facing sources reference the YAML master~~ → now reference the flat SoT.
 
 *(Full original text preserved in git history at commit `13e70c3` / `accc1a3`.)*
 
