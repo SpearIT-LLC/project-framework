@@ -224,3 +224,59 @@ auto-stamped 2026-07-08. done/ now holds 5 items (under the release-nudge thresh
 ---
 
 **Last Updated:** 2026-07-08 (TECH-173 moved to done/)
+
+---
+
+## Addendum 2 — Queued next work + commit-on-create decision (session close)
+
+Set up the next slice of work and settled a small policy question, then called it a day.
+
+**Queued FEAT-175 + TECH-177 → todo/.** Both tripped the readiness-gate (unchecked acceptance
+criteria — normal for un-started items — plus false-positive `DECIDE`/`todo` **prose** matches in
+TECH-177, e.g. "the DECIDE marker", "→ todo/backlog"). Verified the marker hits were descriptive,
+not real unresolved markers, and moved both with `--force`. Per the `→ todo` path the move needs no
+commit, but the staged renames were committed explicitly (see below) at Gary's request.
+
+**Decision — new work items should be committed at creation.** Gary: "New work items should be
+auto committed... that should be added to fw-new criteria." Agreed, with two refinements:
+- This is a **creation** concern (`fw-new`), **not** a move concern. `fw-move` deliberately
+  auto-commits only `→ done`/`→ archive`; todo/doing/backlog moves stay lightweight/batchable. The
+  gap was that FEAT-175/TECH-177 were *created* earlier folded into other commits — so the fix
+  belongs in FEAT-175 (the create command).
+- **Prompt, not silent (for now).** Start with a commit prompt (default-yes) once the item is fully
+  drafted and settled — matching today's plugin `new.md` Step 8 — and tighten to silent auto-commit
+  later only if the prompt becomes annoying. Added to FEAT-175 as desired-state item 4, an AC, and a
+  checklist step.
+
+### Files (addendum 2)
+- **Moved:** `FEAT-175-...md`, `TECH-177-...md` backlog/ → todo/
+- **Modified:** `FEAT-175-...md` (added commit-on-create requirement)
+
+---
+
+## Session Close (final)
+
+Full day across three commits, all on `main`:
+- `d36e5e8` — TECH-173 implementation (5-type taxonomy, disk-derived legacy, `.txt` SoT)
+- `4871b70` — TECH-173 → done/; filed TECH-177 (checkbox convention)
+- `9920f77` — queued FEAT-175 + TECH-177 to todo/; added commit-on-create to FEAT-175
+
+The session's throughline: **make the implicit explicit and enforce it structurally.** TECH-173
+started as "enforce a type list" and, through iteration, became a much cleaner system — 5 types
+grounded in usage + interop, legacy discovered from disk (zero baggage for new projects), enforcement
+correctly located at creation. Two dogfooding moments (the scan-boundary scare, the strikethrough
+done-gate block) each surfaced a real refinement and one new work item (TECH-177).
+
+**Resume here next session:**
+- **doing/ is empty.** todo/ has FEAT-175, TECH-177, TECH-172, FEAT-092/163/164.
+- **FEAT-175** (`/fw-new` deterministic create gate) is the natural next build — it's the real home
+  of ADR-006 D6 enforcement, carries the deferred plugin `Build-Plugin.ps1` SoT derivation, and now
+  the commit-on-create requirement. Its checklist opens with a pre-implementation review gate.
+- **TECH-177** (checkbox convention) is a small, self-contained alternative — would let future items
+  express cancelled criteria honestly (`[-]`) instead of the `[x]`-workaround used on TECH-173.
+- **done/ holds 5** (BUG-167, BUG-170, FEAT-165, TECH-079, TECH-173) — under the release-nudge
+  threshold, but a `/fw-release` is available whenever you want to ship them.
+
+---
+
+**Last Updated:** 2026-07-08 (session close)
