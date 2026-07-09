@@ -59,7 +59,14 @@ blast radius**, and mixing it into the taxonomy/DRY work would obscure both.
 **Out of scope:**
 - Rewriting historical references in `history/`, `releases/`, CHANGELOG, or backlog work-item bodies
   (immutable / era-specific context).
-- Plugin template trees (their own reconciliation — coordinate with the plugin work in FEAT-175).
+- Plugin template trees (their own reconciliation — now owned by **FEAT-179**, which adds the missing
+  `TECH`/`TASK`/`SPIKE` templates and retires `CHORE`. Re-pointed from FEAT-175 on 2026-07-09 when
+  that item was narrowed to the full framework.)
+
+**Sequencing note (added 2026-07-09):** **FEAT-175** builds `fw-new.sh`, which resolves a template per
+type. If it hard-codes `FEAT-TEMPLATE.md`/`TECH-TEMPLATE.md` it breaks until this rename lands; if it
+hard-codes the legacy names it breaks *after*. Either land this rename first, or have FEAT-175 resolve
+template filenames without assuming the spelling. Flagged in FEAT-175's Related section.
 
 ---
 
