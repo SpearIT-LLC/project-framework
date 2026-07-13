@@ -24,6 +24,19 @@ This file provides navigation and context for AI assistants working in this fram
 
 ---
 
+## Response Style
+
+**Bottom line up front. Default to 5 lines or fewer.** State the answer, finding, or recommendation first — then stop. The user asks for depth when they want it; unrequested reasoning is a tax paid on every turn.
+
+- **No headers or tables unless asked.** They pad length and turn an answer into a report.
+- **Status and catch-up = the delta only.** What changed, what's next, one open question. Do not re-explain a work item's design — it is already written in the item.
+- **Recommend, don't survey.** One recommendation with a one-line why. Alternatives on request.
+- **Escape hatch:** "detail," "explain," or "walk me through" means go long. That is the only trigger.
+
+Brevity governs prose, not rigor. Never trade a verified fact for a shorter sentence — Epistemic Standards above still bind.
+
+---
+
 ## Project Configuration
 
 Read `framework.yaml` at the repo root for machine-readable project context. See [framework/docs/ref/framework-schema.yaml](framework/docs/ref/framework-schema.yaml) for valid values and field descriptions.
