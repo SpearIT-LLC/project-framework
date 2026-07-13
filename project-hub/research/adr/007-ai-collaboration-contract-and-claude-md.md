@@ -151,7 +151,16 @@ coverage targets, no folder tree, no command syntax. Those have owners; `CLAUDE.
 | **"Resume work" rule** — *"ALWAYS read `work/doing/` … NEVER suggest next actions without verifying current work state"* | → the contract (`CLAUDE.md`). Genuinely unique; genuinely load-bearing. |
 | **The three checkpoints** (Step 4 / 7.5 / 8.5) | → `workflow-guide.md` (which already owns Step 7.5 and is where the workflow lives). Contract carries the one-line Core Rule + a pointer. **Fix the step numbers** — they currently reference a nonexistent 11-step workflow. |
 | **Claude Code Permissions** | → `docs/collaboration/security-policy.md` (or a `docs/ref/` page). **Rewrite it — it is currently false.** |
+| **`:7` — "Projects are encouraged to author their own `CLAUDE-QUICK-REFERENCE.md`"** | → **deleted, and contradicted.** This is the line that *actively recommends the duplication this ADR exists to end.* It is not content to relocate; it is a policy to reverse. See Open Question 3. |
 | **Everything else (~490 lines)** | → **deleted.** Already owned by `docs/collaboration/` and `docs/ref/`. |
+
+> **⚠️ Do not treat this table as a licence to delete.** The audit behind it was a single pass across
+> ~2,000 lines of comparison. It is reliable about the *shape* of the finding (overwhelmingly duplicate)
+> but the claim *"everything else is safely deleteable"* is a summary judgment. **Before deleting any
+> section, re-verify that its content actually exists in the file that supposedly owns it** — section by
+> section, against the real file, at deletion time. The audit tells you where to look; it does not
+> authorize the `rm`. A single unique rule that exists only here, deleted, is not noticed until the
+> behavior it prevented happens.
 
 **Rationale:** a `CLAUDE.md` Claude never loads is a misleading filename on a duplicate document. Adding
 a link from the root file to it would be patching around a file that should not exist.
@@ -370,9 +379,22 @@ dogfooding violation in miniature — the same one this ADR exists to fix.
 2. **Where does the contract fragment live?** `framework/docs/ref/ai-contract.md` is a placeholder name.
    It must **not** be named `CLAUDE.md` (that is the mistake D2 is undoing), and it must be excluded
    from the `framework/docs/` bulk copy (Step 3) or it will ship twice.
-3. **`CLAUDE-QUICK-REFERENCE.md`** — retire it (it is the fourth copy), or keep it as a project-authored
-   optional artifact? Note `framework/CLAUDE.md:7` actively *encourages* projects to write one — i.e.
-   the framework currently recommends creating a duplicate. Verify whether it ships to derived projects.
+3. **`CLAUDE-QUICK-REFERENCE.md` — retire it, and reverse the policy that created it?**
+   The file is 334 lines and is the *fourth* copy (it carries the checkpoints, the ADR decision tree,
+   the reading-protocol tree, the fail-fast and SQL examples, the coverage targets, and a **verbatim**
+   Top-5 Emergency Reference).
+
+   **The sharper problem is not the file — it is the recommendation.** `framework/CLAUDE.md:7` reads:
+   *"Projects are encouraged to author their own `CLAUDE-QUICK-REFERENCE.md` capturing critical rules
+   and decision trees specific to the project."* **The framework actively tells every project to create
+   a summary layer** — the exact thing D3 forbids. Deleting one file while the guidance that spawns it
+   still ships would leave the framework recommending its own worst pattern.
+
+   So: retire the file **and** delete the recommendation, replacing it with D3's rule
+   (*rules go in the contract; details go in the guide that owns them; there is no layer in between*).
+
+   Still to verify: does `CLAUDE-QUICK-REFERENCE.md` ship to derived projects? *(It sits in `framework/`,
+   not `framework/docs/`, so the Step 3 bulk copy would not catch it — but confirm, do not assume.)*
 4. **Where do the three checkpoints live** — `workflow-guide.md` alone, or ADR-001? ADR-001 documents
    only *one* checkpoint; the three-checkpoint set exists only in the two files being retired. Whoever
    owns it must also **fix the step numbering**, which points into a workflow that does not exist.
