@@ -319,5 +319,237 @@ would have entrenched the actual problem. Worth remembering next time a fix feel
 clever.
 
 ---
+---
+
+# Afternoon Session — Review of ADR-007
+
+**Continuation.** The morning drafted ADR-007. The afternoon tried to *move BUG-181 to `todo/`*, which
+exposed a workflow gap, which led to reviewing the ADR itself rather than ratifying it. **ADR-007 remains
+Proposed. Decision deferred to 2026-07-14.**
+
+---
+
+## The `/fw-move 181 todo` detour — and what it taught us
+
+**The move was rejected by Gary mid-command**, with: *"I see a hole in our workflow. We don't treat ADRs
+as work items so they don't make it into the flow, yet BUG-181 is relying on it."*
+
+**The gap is real.** ADRs live in `project-hub/research/adr/` — outside `work/`. They have no folder
+state, no WIP accounting, and `fw-move.sh` cannot see them. So `Depends On: ADR-007` is a dependency the
+enforcement engine **cannot check**. BUG-181's block is documented in prose and nothing enforces it.
+
+### Two wrong answers, then the right one
+
+**Wrong answer 1 (Claude): "file it as a framework bug."** Gary pushed back — *"You're suggesting filing
+the ADR workflow issue as a framework bug?"* **It is not a bug.** Nothing is broken; ADRs were never
+*designed* to be work items. It is a design gap, which is a TECH at most — and possibly an ADR question,
+since "do ADRs participate in the flow?" is a decision between alternatives.
+
+**Wrong answer 2 (Claude): "create TASK-182 to shepherd the ADR's ratification,"** so BUG-181 could
+`Depends On:` something the engine can see.
+
+**Gary: "Step back. How would industry standard practices handle this?"** — and that dissolved it.
+
+### What industry standard actually does (and it is the answer)
+
+- **Nygard / MADR / ThoughtWorks:** an ADR has a `Status` field — Proposed → Accepted → Superseded.
+  **That is the entire lifecycle.** It lives in the document, in `docs/adr/`, and it is **not on the
+  board.** There is no "ratify the ADR" work item anywhere in the literature.
+- **How ratification happens:** a **pull request.** The ADR is proposed in a PR, reviewed, and merged.
+  **The review process *is* the workflow** — nobody opens a tracking ticket for it.
+- **How work depends on an ADR:** *it doesn't, formally.* A story may *reference* an ADR for context,
+  but "blocked until this ADR is Accepted" is not a modeled dependency type. In practice you simply do
+  not start the work, because the decision is not made. **That is judgment, not enforcement.**
+
+**So the standard's answer to the gap is: the gap is real, and nobody enforces it.** Decision records and
+delivery tickets are different artifact classes with different lifecycles, deliberately kept apart.
+
+**Therefore TASK-182 was inventing machinery the industry does not have** — and it was dropped.
+
+### The lean resolution (adopted)
+
+**`backlog/` already IS the blocked state.** BUG-181 stays there — it is not approved to start, and
+`Status: Proposed` on ADR-007 is the signal. When ADR-007 is ratified (a decision Gary makes by reading
+it), flip it to Accepted and *then* move BUG-181 to `todo/`. **No dependency field, no shepherd item, no
+new type, no new machinery.**
+
+### What TECH-172 already says (verified — and it already covers this)
+
+TECH-172 (in `todo/`) lines 21 and 64–66 **already state the rule**:
+
+> *If the **act of deciding** needs board-tracking (evaluation is real work), use an ordinary work item
+> (SPIKE for time-boxed investigation, or TASK/TECH) **whose deliverable is an ADR** — the work item
+> flows and closes; the ADR is the lasting record.*
+
+So there was **no new item to file.** The gap is TECH-172's and it is already queued.
+
+**A refinement TECH-172 does not yet capture** (worth adding when it is worked): its rule is right for
+*"we need to investigate, then decide"* (real work, needs a timebox). It is **not** right for *"the ADR
+is drafted; someone needs to say yes"* — **that is a review, and reviews do not get tickets.** Also
+unstated: `Depends On:` cannot reference an ADR, because `fw-move.sh` resolves dependencies against
+`done/` and an ADR has no folder.
+
+---
+
+## ADR-007 Review (Claude reviewing its own morning draft, cold)
+
+Gary: *"OK then let's review ADR-007."* Four problems found; all four addressed. **The ADR was not
+accepted** — Gary deferred the decision to tomorrow.
+
+### 1. D2a's premise was wrong (the blocker) — now re-argued
+
+**Claude's objection:** D2a claimed *"this repo is ONE project, not three,"* citing `framework.yaml`'s
+single `project.name`. But `framework.yaml` **also** has a `release.products:` block listing three
+products (framework, plugin-full, plugin-light), each with its own `PROJECT-STATUS.md`, `CHANGELOG.md`,
+and build script. The ADR argued from a half-read config.
+
+**Gary's correction (design intent, and it defeats the objection):** the three products are
+**distribution channels, not sub-projects.** A consuming project picks **one** — full framework *or*
+plugin-full *or* plugin-light. Combining them is theoretically possible but was never the model. So
+`release.products:` does **not** contradict "one project" — it enumerates three ways of *shipping* one
+project.
+
+**But D2a's conclusion survives, on better evidence.** *"Which Project Are You Working On?"* does not
+route by **channel** at all — it routes by **source subdirectory** (`framework/`, `templates/`,
+`tools/`). Those are parts of one codebase: the product, its packaging, its build. **Nobody "works on
+`tools/`" as a project.** The framing **mistook directory structure for project structure** — and then
+handed one of those directories its own collaboration contract. *The claim was right; the evidence was
+wrong.* D2a rewritten accordingly.
+
+### 2. Open Question 3 — `CLAUDE-QUICK-REFERENCE.md`: keep the goal, kill the copy
+
+**Gary's context:** the file exists to **improve the first-time user experience.** That is a real and
+good goal, and the morning's draft had treated the file as pure duplication.
+
+**But the artifact is failing at its own goal** (verified 2026-07-13):
+- It is **334 lines** while declaring itself *"<200 lines"* at `:196`. It cannot keep its own promise
+  about its own size.
+- **It does not ship.** `Build-FrameworkArchive.ps1` copies `framework/docs/`, `framework/templates/`,
+  `framework/tools/`, and `framework/CLAUDE.md` **by name**. `framework/CLAUDE-QUICK-REFERENCE.md` is in
+  none of them. **It is repo-only.** The onboarding aid **never reaches the newcomers who most need it** —
+  it only ever helps someone already inside the framework's source repo.
+- It is the fourth copy of the contract.
+- And `framework/CLAUDE.md:7` **tells every project to write one** — a summary layer D3 forbids, of a
+  file the framework does not even ship them.
+
+**Proposal (still open):** retire the artifact, delete the recommendation, **give the goal to a guide** —
+`docs/collaboration/README.md` is already the navigation index. *Rules live in the contract; details live
+in the guide that owns them; the way in is a guide, not a fifth summary of the contract.*
+
+### 3. Open Question 6 — plugins: "out of scope" was the wrong answer
+
+**Verified:** the plugins ship **no contract surface at all** — no `CLAUDE.md`, only `commands/`,
+`skills/`, `README.md`, `CHANGELOG.md`, `PROJECT-STATUS.md`. **A plugin user's AI receives no
+collaboration contract.**
+
+**Gary's framing — the yin/yang:** the plugin is deliberately *self-contained and lightweight*, and that
+trade has a cost — it **lacks the structure and deeper nuance of the full framework.** And because a
+project picks **one** channel, a plugin user does not get the contract "from the framework side." *There
+is no framework side.*
+
+**So the question is not "how do we ship the contract to the plugins too"** (that would make them the
+thing they exist not to be). It is:
+
+> **Is "no collaboration contract" an acceptable point on the lightness/structure curve — or is the
+> contract the one thing that must not be traded away?**
+
+ADR-001's checkpoints, the resume-work rule, and Response Style are **behavioral guarantees**. A plugin
+user gets `/fw-move`'s *mechanical* enforcement but none of the *behavioral* contract — arguably the more
+valuable half. A **minimal** contract (the ~8 unique rules, not the guides) might cost very little weight.
+
+**Rewritten as an open product question, not a scope exclusion.** Possibly its own ADR — it is a question
+about what the plugin *is*, not about `CLAUDE.md`.
+
+### 4. D4 was promising a benefit whose mechanism is undesigned — now scoped
+
+The morning's D4 headlined **in-place contract upgrades** while Open Question 1 (*how does re-derivation
+detect a user-edited region?*) sat **unanswered** — and the ADR itself called OQ1 "the highest-risk
+unknown." Deciding D4 on the strength of a benefit that depends on an undesigned mechanism is backwards.
+
+**Now scoped honestly:**
+- **D4 decides build-time composition** (author once, concatenate into each channel). That stands on its
+  own and is worth doing even if in-place upgrade never ships.
+- **The markers ship. The upgrade tooling does not.** In-place upgrade is *enabled* by D4, not *decided*
+  by it, and is blocked on OQ1.
+- *"Claiming the benefit before designing the mechanism is how the last five copies of this contract got
+  made."*
+
+---
+
+## Decisions Made (Afternoon)
+
+1. **BUG-181 stays in `backlog/`.** `backlog/` **is** the blocked state. Do not move it to `todo/` until
+   ADR-007 is Accepted. *Rationale: industry standard does not track ADR ratification as a work item; a
+   drafted ADR awaiting a yes is a **review**, and reviews do not get tickets.*
+2. **No TASK-182, no new type, no ADR-dependency machinery.** Rejected as inventing a mechanism the
+   industry does not have. TECH-172 already carries the rule for the case that *does* need tracking
+   (investigate-then-decide → SPIKE/TASK whose deliverable is an ADR).
+3. **ADR-007 stays `Proposed`.** Decision deferred to **2026-07-14** at Gary's call.
+
+---
+
+## Files Modified (Afternoon)
+
+- `project-hub/research/adr/007-ai-collaboration-contract-and-claude-md.md`:
+  - **D2a** re-argued — channels-vs-subdirectories; the old "one project, not three" evidence was wrong
+  - **D4** scoped — markers ship, upgrade tooling does not; in-place upgrade is *enabled*, not *decided*
+  - **Consequences** — upgrade reworded from delivered benefit to enabled possibility
+  - **OQ3** — reframed as *keep the goal, kill the copy*; added the verified "it does not ship" finding
+  - **OQ6** — reframed from "out of scope" to a real product question about the plugin's lightness trade
+- `project-hub/history/sessions/2026-07-13-SESSION-HISTORY.md` — this append
+
+## Files Created (Afternoon)
+
+- None.
+
+## Files Moved (Afternoon)
+
+- **None** — `/fw-move 181 todo` was **rejected before execution**. This is deliberate; see Decisions.
+
+---
+
+## Current State (End of Day)
+
+### In doing/
+- Empty.
+
+### In todo/
+- **FEAT-175** — still unblocked, still untouched. Two sessions running.
+- TECH-177, TECH-172, FEAT-092, FEAT-163, FEAT-164
+
+### In backlog/
+- **BUG-181** — **correctly parked.** Blocked on ADR-007's ratification; `backlog/` is the blocked state.
+
+### ADRs
+- **ADR-007 — Proposed.** Reviewed, four fixes applied, **decision deferred to 2026-07-14.**
+
+### In done/ (awaiting release)
+- BUG-167, BUG-170, FEAT-165, TECH-079, TECH-173 — 5 items, under the release-nudge threshold.
+
+---
+
+## Resume Here Next Session (supersedes the morning's block above)
+
+**First thing: decide ADR-007.** It is reviewed and the four review findings are addressed. Read it and
+either mark it **Accepted** or work an open question. It blocks BUG-181 and nothing else.
+
+**Open questions, in priority order:**
+1. **OQ1 — how does re-derivation detect a user-edited contract region?** *Only blocks the upgrade
+   tooling, not D4 itself* (D4 was re-scoped this afternoon — the markers ship, the tooling does not). So
+   **ADR-007 can be Accepted without answering OQ1.** Do not build upgrade tooling until it is answered.
+2. **OQ3 — retire `CLAUDE-QUICK-REFERENCE.md`, keep the onboarding goal?** Recommendation drafted; needs
+   a yes.
+3. **OQ6 — is a contract-less plugin acceptable?** May warrant its own ADR.
+4. **OQ2** (where the contract fragment lives — must not be named `CLAUDE.md`, must not ship twice) and
+   **OQ4** (where the three checkpoints go). Both are implementation detail; neither blocks acceptance.
+
+**Then: FEAT-175.** Untouched for two sessions. Checklist step 2 is *"Build `fw-new.sh`: deterministic
+type gate."* Its one open risk is still the **TECH-176 template-rename sequencing** — decide it before
+implementing.
+
+**Standing caution (unchanged):** ADR-007 proposes deleting ~835 lines. **Re-run the audit per section
+before each deletion.** The audit says where to look; it does not authorize the `rm`.
+
+---
 
 **Last Updated:** 2026-07-13

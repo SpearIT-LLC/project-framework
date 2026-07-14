@@ -169,22 +169,31 @@ a link from the root file to it would be patching around a file that should not 
 *fourth* copy and duplicates most of the fifth. Retiring it is very likely correct and should be decided
 here rather than left to rot.
 
-#### D2a — The root cause: this repo is ONE project, not three
+#### D2a — The root cause: subdirectories were mistaken for sub-projects
 
 `framework/CLAUDE.md` did not appear by accident. It was licensed by a framing in the **repo's own root
 `CLAUDE.md`**: the section *"Which Project Are You Working On?"* (`CLAUDE.md:62`), which asks the AI to
 decide whether it is working on *the framework*, *template packages*, or *build tooling* — and then
-routes it to `framework/CLAUDE.md` for the first.
+routes it to `framework/CLAUDE.md` for the first. **Three "projects" → licence for three contracts.**
 
-**If there are three projects, each may have its own `CLAUDE.md`. There are not.** The repo *is* the
-project — `framework.yaml` says so (`project.name: "SpearIT Project Framework"`, one entry). `framework/`,
-`templates/`, and `tools/` are **subdirectories of one project**, not peer projects. The sub-project
-framing is what created a second contract, and the second contract is what rotted.
+**First, what the three products are NOT.** `framework.yaml` does list three products under `release:`
+— framework, plugin-full, plugin-light, each with its own `PROJECT-STATUS.md`, `CHANGELOG.md`, and
+build script. But these are **distribution channels, not sub-projects**: a consuming project picks
+**one** (design intent, confirmed 2026-07-13 — full framework *or* plugin-full *or* plugin-light;
+combining them is theoretically possible but was never the model). Three ways of shipping **one**
+project.
+
+**And `framework/` / `templates/` / `tools/` are not even those three.** The root `CLAUDE.md`'s question
+does not route by *channel* — it routes by **source subdirectory**. Those are the parts of one codebase:
+`framework/` is the product, `templates/` packages it, `tools/` builds it. **Nobody "works on" `tools/`
+as a project.** The framing miscategorizes directory structure as project structure — and then hands one
+of those directories its own collaboration contract.
 
 **Therefore:** the repo's root `CLAUDE.md` drops *"Which Project Are You Working On?"* and its
-sub-project routing. What survives is ~15 lines of *"`framework/` is the product, `templates/` packages
-it, `tools/` builds it"* — and that is a **README concern, not a contract concern.** Verify it is not
-already in `README.md` before restating it (per D3: there are no summary layers).
+sub-project routing. What survives is ~15 lines of orientation — *"`framework/` is the product,
+`templates/` packages it, `tools/` builds it"* — and that is a **README concern, not a contract
+concern.** Verify it is not already in `README.md` before restating it (per D3: there are no summary
+layers).
 
 This is what makes the repo's root `CLAUDE.md` genuine dogfooding: **the same contract block a derived
 project gets, wrapped in a 15-line shell instead of a 20-line one.**
@@ -272,15 +281,26 @@ it is the wrong artifact to lock.
 So the guard scopes to the contract block. Editing `CLAUDE.md` is **not** a mistake; editing **inside
 the contract block** is — in every channel, this repo included.
 
-#### The payoff nobody asked for: upgradeable contracts
+#### The payoff it *enables* — upgradeable contracts (enabled, not promised)
 
-Because the region is delimited and the shell is untouched, **a framework upgrade can re-derive the
-contract block in place** without clobbering the user's notes.
+Because the region is delimited and the shell is untouched, a framework upgrade **could** re-derive the
+contract block in place without clobbering the user's notes. **Nothing in the framework can do this
+today** — an upgrade cannot touch a derived project's `CLAUDE.md` at all, which is why derived projects
+would rot even if we shipped the contract correctly once.
 
-**Nothing in the framework can do this today.** An upgrade currently cannot touch a derived project's
-`CLAUDE.md` at all — which is precisely why derived projects would rot even if we shipped the contract
-correctly once. Region-derivation is what makes the contract a *living* dependency rather than a
-one-time stamp.
+**⚠️ Scope discipline — D4 does not decide this.** D4 decides **build-time composition** (author once,
+concatenate into each channel). That stands on its own: it kills the duplicate contract, and it is worth
+doing even if in-place upgrade never ships.
+
+**In-place upgrade is a separate decision that D4 makes *possible*, not one it makes.** It depends
+entirely on Open Question 1 — *how does re-derivation detect that a user edited the framework region?* —
+which is **unanswered**. An upgrade that silently overwrites a user's edit is unacceptable; an upgrade
+that refuses is useless; the two-region partition suggests a third way (relocate the edits into USER
+INSTRUCTIONS and report it), but the **detection** mechanism is still undesigned.
+
+**So: the markers ship with D4. The upgrade tooling does not.** Do not build the upgrade path until OQ1
+is settled. Claiming the benefit before designing the mechanism is how the last five copies of this
+contract got made.
 
 #### Two-stage substitution (constraint)
 
@@ -334,10 +354,10 @@ dogfooding violation in miniature — the same one this ADR exists to fix.
 
 **Positive**
 - The contract reaches derived projects for the first time.
-- **Contracts become upgradeable.** The guarded region lets a framework upgrade re-derive the contract
-  in place without touching the user's notes. Nothing in the framework can do this today — which means
-  today's derived projects would rot even if we shipped the contract correctly once. This is the
-  sleeper benefit of D4.
+- **Contracts become upgrade*able*** — the delimited region is what a future upgrade would need in order
+  to re-derive the contract without touching the user's notes. **This ADR ships the markers, not the
+  upgrade tooling** (blocked on Open Question 1). Nothing in the framework can re-derive `CLAUDE.md`
+  today, which is why derived projects would rot even if we shipped the contract correctly once.
 - ~800 lines of duplicated documentation retired (501 + 334, less ~8 relocated).
 - Seven verified drift defects are fixed by deletion rather than by maintenance.
 - Auto-loaded context per session drops substantially, in every project, forever.
@@ -379,30 +399,65 @@ dogfooding violation in miniature — the same one this ADR exists to fix.
 2. **Where does the contract fragment live?** `framework/docs/ref/ai-contract.md` is a placeholder name.
    It must **not** be named `CLAUDE.md` (that is the mistake D2 is undoing), and it must be excluded
    from the `framework/docs/` bulk copy (Step 3) or it will ship twice.
-3. **`CLAUDE-QUICK-REFERENCE.md` — retire it, and reverse the policy that created it?**
-   The file is 334 lines and is the *fourth* copy (it carries the checkpoints, the ADR decision tree,
-   the reading-protocol tree, the fail-fast and SQL examples, the coverage targets, and a **verbatim**
-   Top-5 Emergency Reference).
+3. **`CLAUDE-QUICK-REFERENCE.md` — keep the goal, kill the copy?**
 
-   **The sharper problem is not the file — it is the recommendation.** `framework/CLAUDE.md:7` reads:
-   *"Projects are encouraged to author their own `CLAUDE-QUICK-REFERENCE.md` capturing critical rules
-   and decision trees specific to the project."* **The framework actively tells every project to create
-   a summary layer** — the exact thing D3 forbids. Deleting one file while the guidance that spawns it
-   still ships would leave the framework recommending its own worst pattern.
+   **Its intent is good and should survive: first-time user experience** (stated design intent,
+   confirmed 2026-07-13). A newcomer facing a 500-line contract and seven collaboration guides needs a
+   way in. That is a real job.
 
-   So: retire the file **and** delete the recommendation, replacing it with D3's rule
-   (*rules go in the contract; details go in the guide that owns them; there is no layer in between*).
+   **The artifact is failing at that job.** Verified 2026-07-13:
+   - It is **334 lines** — while declaring itself *"<200 lines"* at `:196`. It cannot keep its own
+     promise about its own size.
+   - It **does not ship.** `Build-FrameworkArchive.ps1` copies `framework/docs/`, `framework/templates/`,
+     `framework/tools/`, and `framework/CLAUDE.md` **by name**. `framework/CLAUDE-QUICK-REFERENCE.md` is
+     in none of those. **It is a repo-only file.** So the onboarding aid never reaches the newcomers who
+     most need it — it only ever helps someone already inside the framework's source repo.
+   - It is the **fourth copy** (checkpoints, ADR decision tree, reading-protocol tree, fail-fast and SQL
+     examples, coverage targets, and a **verbatim** Top-5 Emergency Reference).
 
-   Still to verify: does `CLAUDE-QUICK-REFERENCE.md` ship to derived projects? *(It sits in `framework/`,
-   not `framework/docs/`, so the Step 3 bulk copy would not catch it — but confirm, do not assume.)*
+   **And the recommendation is worse than the file.** `framework/CLAUDE.md:7` reads: *"Projects are
+   encouraged to author their own `CLAUDE-QUICK-REFERENCE.md` capturing critical rules and decision trees
+   specific to the project."* **The framework tells every project to build a summary layer — a layer D3
+   forbids, of a file the framework does not even ship them.**
+
+   **Proposed:** retire the artifact, delete the recommendation, and **give the goal to a guide.**
+   Onboarding is navigation, and `docs/collaboration/README.md` is already the navigation index. Under
+   D1/D3 the answer is: *rules live in the contract; details live in the guide that owns them; the way in
+   is a guide, not a fifth summary of the contract.*
+
+   **Decide here** — leaving it is how it rotted.
 4. **Where do the three checkpoints live** — `workflow-guide.md` alone, or ADR-001? ADR-001 documents
    only *one* checkpoint; the three-checkpoint set exists only in the two files being retired. Whoever
    owns it must also **fix the step numbering**, which points into a workflow that does not exist.
 5. **Does `/fw-init` get filed as a FEAT?** D4 rejected it as the derivation mechanism, but the
    AI-judgment gap it targets is real: composing **the shell** (project type, optional sections,
    Project-Specific Notes) at project birth. It would never touch the contract.
-6. **Does the plugin have a contract surface at all?** The plugins ship commands, not a `CLAUDE.md`.
-   Confirm they are out of scope here — if they are, say so; if not, they are a fourth channel.
+6. **Is a contract-less channel an acceptable product, or a gap?**
+
+   **Verified 2026-07-13: the plugins have no contract surface.** Neither `plugins/spearit-framework/`
+   nor `plugins/spearit-framework-light/` ships a `CLAUDE.md` — only `commands/`, `skills/`, `README.md`,
+   `CHANGELOG.md`, `PROJECT-STATUS.md`. **A plugin user's AI receives no collaboration contract at all.**
+
+   **This is by design, and the design has a cost.** The plugin's value proposition is *self-contained
+   and lightweight* — no framework directory, no guides, no overhead. The yin/yang (stated design intent,
+   2026-07-13): it trades **structure and nuance** for **weight**. And a project *picks one channel* —
+   full framework **or** plugin-full **or** plugin-light — so a plugin user does not get the contract
+   "from the framework side." There is no framework side.
+
+   So the question is not *"how do we ship the contract to the plugins too?"* (that would make them the
+   thing they exist not to be). It is:
+
+   > **Is "no collaboration contract" an acceptable point on the lightness/structure curve — or is the
+   > contract the one thing that must not be traded away?**
+
+   Consider: ADR-001's checkpoints, the resume-work rule, and Response Style are *behavioral guarantees*.
+   A plugin user gets `/fw-move`'s mechanical enforcement but none of the behavioral contract — arguably
+   the more valuable half. A **minimal contract** (the ~8 unique rules, not the guides) might cost the
+   plugin very little weight.
+
+   **Not settled here.** But *"out of scope"* is the wrong answer, and stating it as one would bury a
+   real product question. **Flag it; decide it deliberately** — possibly in its own ADR, since it is a
+   question about what the plugin *is*, not about `CLAUDE.md`.
 
 ---
 
