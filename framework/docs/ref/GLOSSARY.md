@@ -10,7 +10,7 @@ This glossary defines framework-specific terminology and concepts. For detailed 
 ## A
 
 ### ADR (Architecture Decision Record)
-A structured document recording significant architectural decisions, their context, and rationale. ADRs are stored in `project-hub/decisions/` and follow a numbered sequence.
+A structured document recording significant architectural decisions, their context, and rationale. ADRs are stored in `project-hub/research/adr/` and follow a numbered sequence.
 
 See: [Workflow Guide - ADRs](../collaboration/workflow-guide.md#architecture-decision-records-adrs)
 
@@ -203,6 +203,11 @@ See: [Documentation DRY Principles](../collaboration/documentation-dry-principle
 
 ## T
 
+### Task
+A work item type representing a discrete unit of work (maps to a Jira/GitHub Task). Uses the TASK-TEMPLATE.md format and is tracked with a TASK-NNN identifier.
+
+See: [Workflow Guide - Work Item Templates](../collaboration/workflow-guide.md#work-item-templates)
+
 ### Tech Debt
 A work item type representing technical improvements, refactoring, or cleanup needed to maintain code quality. Uses the TECHDEBT-TEMPLATE.md format and is tracked with a TECH-NNN identifier.
 
@@ -247,7 +252,7 @@ A constraint on the number of concurrent work items allowed in a workflow stage.
 See: [Workflow Guide - Development Workflow Phases](../collaboration/workflow-guide.md#development-workflow-phases)
 
 ### Work Item
-A trackable unit of work (Feature, Bug, Tech Debt, Spike, or Decision). Represented as markdown files following standardized templates with unique identifiers. Synonymous with "ticket" (Jira), "card" (Kanban), or "work package" (traditional PM).
+A trackable unit of work (Feature, Bug, Tech Debt, Task, or Spike — the accepted set per ADR-006). Represented as markdown files following standardized templates with unique identifiers. Synonymous with "ticket" (Jira), "card" (Kanban), or "work package" (traditional PM).
 
 See: [Workflow Guide - Work Item Templates](../collaboration/workflow-guide.md#work-item-templates)
 

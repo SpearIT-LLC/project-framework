@@ -47,23 +47,21 @@ cd .\spearit_framework_vX.Y.Z
 
 ### Work Item Types
 
-When creating work items (typically done by AI), use these prefixes:
+Work items are markdown files named `{TYPE}-{NNN}-{slug}.md`.
 
-| Type | Prefix | Description | Example |
-|------|--------|-------------|---------|
-| Feature | `FEAT-` | New functionality | `FEAT-042-user-authentication.md` |
-| Bug Fix | `BUG-` | Defect corrections | `BUG-015-login-timeout.md` |
-| Technical Debt | `TECH-` | Code improvements | `TECH-008-refactor-api-layer.md` |
-| Spike | `SPIKE-` | Research/investigation | `SPIKE-003-database-options.md` |
-| Decision | `DECISION-` | Architectural decisions | `DECISION-012-auth-strategy.md` |
+The **accepted types** are the single source of truth in
+[.claude/scripts/work-item-types.txt](.claude/scripts/work-item-types.txt) (ADR-006) — creation is
+enforced against it, so it cannot drift. **When to use each type** is explained in
+[workflow-guide.md](framework/docs/collaboration/workflow-guide.md#work-item-templates). Templates
+live in `framework/templates/work-items/`.
 
 **Workflow:**
 - Create in `project-hub/work/backlog/`
 - Move to `todo/` when committing to work
-- Move to `doing/` when starting (WIP limit: 1-2)
+- Move to `doing/` when starting (WIP limit: 1)
 - Move to `done/` when complete
 
-**With AI:** Just ask "Create a feature for user authentication" - AI will handle the template
+**With AI:** Just ask "Create a feature for user authentication" — the AI picks the type and template.
 
 ### Create Release
 ```bash
@@ -92,19 +90,8 @@ cp framework/templates/documentation/session-history-template.md \
 
 When working with AI assistants, framework commands (`/fw-*`) provide shortcuts for common workflow operations.
 
-| Command | Description |
-|---------|-------------|
-| `/fw-help` | List available commands or get help on a specific command |
-| `/fw-move` | Move work item between folders with policy enforcement |
-| `/fw-status` | Show project status summary |
-| `/fw-wip` | Check WIP limits and current work in progress |
-| `/fw-backlog` | Review and prioritize backlog items |
-| `/fw-next-id` | Get next available work item ID |
-| `/fw-session-history` | Generate or update session history |
-| `/fw-roadmap` | AI-guided roadmap creation through strategic questioning |
-| `/fw-topic-index` | Framework topic index and documentation navigation |
-
-> **Note:** Keep this list updated as new commands are added. See `.claude/commands/` for all available commands.
+**To see what is available, run `/fw-help`.** It reads the installed commands, so it is never out of
+date — unlike a list in a document.
 
 ### Quick Examples
 
@@ -117,7 +104,7 @@ When working with AI assistants, framework commands (`/fw-*`) provide shortcuts 
 /fw-help move               # Get help on /fw-move
 ```
 
-**Full Reference:** [framework/CLAUDE.md](framework/CLAUDE.md#framework-commands-fw-)
+**Full Reference:** [framework/docs/ref/framework-commands.md](framework/docs/ref/framework-commands.md)
 
 ---
 
@@ -126,7 +113,7 @@ When working with AI assistants, framework commands (`/fw-*`) provide shortcuts 
 - **Single Source of Truth:** Version and status ONLY in PROJECT-STATUS.md
 - **Update "Last Updated":** When content materially changes (not typos)
 - **Semantic Versioning:** MAJOR.MINOR.PATCH (breaking.feature.bugfix)
-- **WIP Limits:** Max 1-2 items in `work/doing/` at once (check `.limit` file)
+- **WIP Limits:** Max 1 item in `work/doing/` at once (check `.limit` file)
 - **Research First:** Complete research phase before coding new projects
 - **Document Decisions:** Use ADRs for technical choices with alternatives
 - **Work Item Flow:** backlog → todo → doing → done → history/releases/{product}/{version}/
@@ -139,7 +126,7 @@ When working with AI assistants, framework commands (`/fw-*`) provide shortcuts 
 → **Solution:** Start simple with just README and PROJECT-STATUS. Add structure progressively as your project grows.
 
 **Problem:** "Lost in the kanban workflow"
-→ **Solution:** Think: backlog (someday) → todo (planned) → doing (now, max 2) → done (shipped)
+→ **Solution:** Think: backlog (someday) → todo (planned) → doing (now, max 1) → done (shipped)
 
 **Problem:** "When do I create an ADR?"
 → **Solution:** When you choose between 2+ approaches OR make a decision future-you needs context for
@@ -160,16 +147,16 @@ When working with AI assistants, framework commands (`/fw-*`) provide shortcuts 
 
 ---
 
-## 8. Templates Quick Reference
+## 8. Templates
 
-| Template | Use When | Location |
-|----------|----------|----------|
-| FEAT-NNN | Planning new feature | `framework/templates/work-items/` |
-| BUG-NNN | Fixing a bug | `framework/templates/work-items/` |
-| TECH-NNN | Technical improvement | `framework/templates/work-items/` |
-| SPIKE-NNN | Research/investigation | `framework/templates/work-items/` |
-| ADR-NNNN | Architectural decision | `framework/templates/decisions/` |
-| Session history | End of coding day | `framework/templates/documentation/` |
+| Kind | Location |
+|------|----------|
+| Work items | `framework/templates/work-items/` |
+| ADRs | `framework/templates/decisions/` |
+| Session history | `framework/templates/documentation/` |
+| Research phase | `framework/templates/research/` |
+
+**Accepted work item types:** see §3 above.
 
 **Research Phase Templates** (in `framework/templates/research/`):
 - Problem statement - What problem are we solving?

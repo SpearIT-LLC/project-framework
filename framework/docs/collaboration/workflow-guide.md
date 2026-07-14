@@ -1113,7 +1113,7 @@ All work item templates use consistent metadata fields:
 
 ```markdown
 **ID:** TYPE-NNN
-**Type:** Feature | Bug | Tech Debt | Decision | Spike
+**Type:** Feature | Bug | Tech Debt | Task | Spike
 **Priority:** High | Medium | Low
 **Version Impact:** MAJOR | MINOR | PATCH | None
 **Created:** YYYY-MM-DD

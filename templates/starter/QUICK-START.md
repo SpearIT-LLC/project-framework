@@ -81,28 +81,25 @@ project-hub/work/backlog/ → todo/ → doing/ → done/ → history/releases/vX
 
 ---
 
-## Templates Reference
+## Templates
 
-| Template | Use When | Location |
-|----------|----------|----------|
-| FEATURE | New feature | `framework/templates/work-items/` |
-| BUG | Bug fix | `framework/templates/work-items/` |
-| TECHDEBT | Technical improvement | `framework/templates/work-items/` |
-| SPIKE | Research/investigation | `framework/templates/work-items/` |
-| ADR | Architectural decision | `framework/templates/decisions/` |
-| Session history | End of day | `framework/templates/documentation/` |
+Work item templates live in `framework/templates/work-items/`; ADR templates in
+`framework/templates/decisions/`; session history in `framework/templates/documentation/`.
+
+**Accepted work item types** are the single source of truth in
+[.claude/scripts/work-item-types.txt](.claude/scripts/work-item-types.txt) — creation is enforced
+against it, so it cannot drift. **When to use each** is explained in
+[workflow-guide.md](framework/docs/collaboration/workflow-guide.md#work-item-templates). Or just ask
+the AI to create the item and it will pick the type and template.
 
 ---
 
 ## Framework Commands (AI Assistants)
 
-| Command | Description |
-|---------|-------------|
-| `/fw-help` | List available commands |
-| `/fw-move` | Move work item between folders |
-| `/fw-status` | Show project status |
-| `/fw-wip` | Check WIP limits |
-| `/fw-backlog` | Review backlog items |
+Framework commands (`/fw-*`) are shortcuts for common workflow operations. Run `/fw-help` to list
+what is available in this project — it reads the installed commands, so it is never out of date.
+
+**Full reference:** [framework/docs/ref/framework-commands.md](framework/docs/ref/framework-commands.md)
 
 ---
 

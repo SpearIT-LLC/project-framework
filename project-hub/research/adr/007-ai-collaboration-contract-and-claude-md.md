@@ -149,9 +149,10 @@ coverage targets, no folder tree, no command syntax. Those have owners; `CLAUDE.
 | Content | Destination |
 |---|---|
 | **"Resume work" rule** — *"ALWAYS read `work/doing/` … NEVER suggest next actions without verifying current work state"* | → the contract (`CLAUDE.md`). Genuinely unique; genuinely load-bearing. |
-| **The three checkpoints** (Step 4 / 7.5 / 8.5) | → `workflow-guide.md` (which already owns Step 7.5 and is where the workflow lives). Contract carries the one-line Core Rule + a pointer. **Fix the step numbers** — they currently reference a nonexistent 11-step workflow. |
+| ~~**The three checkpoints** (Step 4 / 7.5 / 8.5)~~ | **Row void — see D7.** There is no set of three. One rule goes to the contract; the other two are already enforced by `/fw-move` and go nowhere. **Do not relocate them to `workflow-guide.md`** — doing so would ship Rule 1 to a file the AI never loads, i.e. re-commit BUG-181. |
 | **Claude Code Permissions** | → `docs/collaboration/security-policy.md` (or a `docs/ref/` page). **Rewrite it — it is currently false.** |
-| **`:7` — "Projects are encouraged to author their own `CLAUDE-QUICK-REFERENCE.md`"** | → **deleted, and contradicted.** This is the line that *actively recommends the duplication this ADR exists to end.* It is not content to relocate; it is a policy to reverse. See Open Question 3. |
+| **`:7` — "Projects are encouraged to author their own `CLAUDE-QUICK-REFERENCE.md`"** | → **deleted, and contradicted.** This is the line that *actively recommends the duplication this ADR exists to end.* It is not content to relocate; it is a policy to reverse. See D6. |
+| **"Pre-commit hook validates work items in `done/`"** | → **deleted. It is false** (verified 2026-07-14): `.git/hooks/` contains only samples. `Validate-WorkItems.ps1` exists but nothing invokes it. The `settings.json` hook is a `PreToolUse` hook, unrelated. **Eighth drift defect.** |
 | **Everything else (~490 lines)** | → **deleted.** Already owned by `docs/collaboration/` and `docs/ref/`. |
 
 > **⚠️ Do not treat this table as a licence to delete.** The audit behind it was a single pass across
@@ -212,8 +213,8 @@ layers.**
 ### D4 — How each channel's root `CLAUDE.md` is produced: **derive the region, not the file**
 
 **Decided (2026-07-13 discussion).** Every root `CLAUDE.md` is **contract + shell**, and the file is
-**explicitly partitioned into two marked regions** — one owned by the framework, one owned by the user.
-Every line in the file has an owner.
+**explicitly partitioned into two marked regions** — one owned by the framework, one owned by the
+project. Every line in the file has an owner.
 
 ```markdown
 # Claude Context: {{PROJECT_NAME}}
@@ -221,7 +222,7 @@ Every line in the file has an owner.
 <!-- ─────────────────────────────────────────────────────────────────────
      BEGIN FRAMEWORK CONTRACT — v{{FRAMEWORK_VERSION}}
      Derived from the framework. DO NOT EDIT — this region is replaced on
-     framework upgrade. Put your own instructions in the USER INSTRUCTIONS
+     framework upgrade. Put your own instructions in the PROJECT INSTRUCTIONS
      region below; the framework never touches it.
      ───────────────────────────────────────────────────────────────────── -->
 
@@ -231,7 +232,7 @@ Every line in the file has an owner.
 
 
 <!-- ─────────────────────────────────────────────────────────────────────
-     BEGIN USER INSTRUCTIONS
+     BEGIN PROJECT INSTRUCTIONS
      This region is YOURS. The framework will never modify or overwrite it.
      Add your project's conventions, standards, preferences, and any
      standing instructions for the AI.
@@ -239,25 +240,56 @@ Every line in the file has an owner.
 
 <!-- Your project's conventions and standing instructions go here. -->
 
-<!-- END USER INSTRUCTIONS -->
+<!-- END PROJECT INSTRUCTIONS -->
 ```
+
+#### Why `PROJECT INSTRUCTIONS`, not `USER INSTRUCTIONS` (2026-07-14)
+
+**`USER INSTRUCTIONS` is ambiguous, and the wrong reading is the likelier one.** It parses two ways:
+
+1. *"Instructions **for** the user"* — as in "user guide," "user documentation."
+2. *"The user's instructions **to** Claude."*
+
+In a file titled *Claude Context*, "user" reads most naturally as the **audience** of the instructions,
+not their **author** — so a newcomer lands on (1), which is exactly backwards. The label must name the
+**owner**, since ownership is the whole point of the partition.
+
+`PROJECT INSTRUCTIONS` fixes it:
+- It **cannot** be read as "instructions for the project" — the entire file is already about this
+  project, so the only sensible reading is *the project's own instructions to the AI.*
+- It **parallels the other region correctly**: `FRAMEWORK CONTRACT` vs. `PROJECT INSTRUCTIONS` —
+  framework-owned vs. project-owned. Both labels name *whose* they are.
+- It is **already the term in use**: `templates/starter/CLAUDE.md` ends with `## Project-Specific
+  Notes` — *"[Add coding standards, architecture decisions, and conventions specific to this
+  project]"*. Same region, different name.
+- It **survives the team case.** "User instructions" invites *which user?*; "project instructions"
+  does not.
+
+Rejected: `YOUR INSTRUCTIONS` (second-person in a file read by both a human and an AI — "your" is
+ambiguous about whom it addresses, which relocates the problem rather than solving it);
+`INSTRUCTIONS FOR CLAUDE` (unambiguous, but odd inside a file that is *entirely* instructions for
+Claude, and it does not parallel `FRAMEWORK CONTRACT`).
+
+**The label must stand alone.** The body text already disambiguates (*"standing instructions for the
+AI"*), but the label is what appears in the file outline, in a diff, and in a `grep`. It has to be
+right without its explanation.
 
 **Mark BOTH regions, not just the contract.** With only the framework region marked, everything outside
 it is "not-contract" *by default* — an edit above the block, or a section the framework later wants to
 own, lands in undefined territory and the upgrade tool has to guess. Two explicit regions make the file
-a **partition**: `[framework][user]`, no ambiguity, nothing to infer.
+a **partition**: `[framework][project]`, no ambiguity, nothing to infer.
 
-It also inverts the message in the way we want. `DO NOT EDIT` alone reads as a fence; `BEGIN USER
+It also inverts the message in the way we want. `DO NOT EDIT` alone reads as a fence; `BEGIN PROJECT
 INSTRUCTIONS` reads as an **invitation** — *this is yours, put your things here.* A user with nowhere
 obvious to write will edit the contract block. Give them somewhere obvious.
 
-**The user region ships non-empty.** It carries a placeholder comment from birth, not two bare
+**The project region ships non-empty.** It carries a placeholder comment from birth, not two bare
 delimiters — an empty marked region reads like scaffolding to be deleted.
 
 **And it buys a humane upgrade failure mode.** If re-derivation finds the framework region was edited,
 it need not choose between silently overwriting (unacceptable) and refusing (useless): it can **relocate
-the user's edits into the USER INSTRUCTIONS region and tell them it did.** That is only possible because
-there is somewhere to move them *to*. (See Open Question 1.)
+the user's edits into the PROJECT INSTRUCTIONS region and tell them it did.** That is only possible
+because there is somewhere to move them *to*. (See Open Question 1.)
 
 **The decomposition (this is the whole decision):**
 
@@ -348,6 +380,194 @@ It is **not** a personal preference to be kept in the user's `~/.claude/` or in 
 only. Keeping it there while claiming "the framework ships its contract to every project" is the
 dogfooding violation in miniature — the same one this ADR exists to fix.
 
+### D6 — Retire `CLAUDE-QUICK-REFERENCE.md`. Onboarding is a command, not a document.
+
+**Decided 2026-07-14.** The file is deleted, the recommendation at `framework/CLAUDE.md:7` is deleted
+with it, and **no replacement document is authored.**
+
+**The goal was real; the artifact was the wrong shape for it.** The stated intent — a low-friction way
+in for someone new, human or AI — is worth keeping. But a *document* has to guess the reader's level,
+so it either overwhelms or under-serves. `CLAUDE-QUICK-REFERENCE.md` guessed wrong in both directions:
+334 lines while declaring itself *"<200"* (`:196`), and it **does not ship** — the build copies
+`framework/docs/`, `templates/`, `tools/`, and `framework/CLAUDE.md` **by name**, and this file is in
+none of them. **The onboarding aid never reached a single newcomer.** It only ever helped someone
+already inside the framework's source repo. It was also the fourth copy of the contract.
+
+**And the recommendation was worse than the file.** `framework/CLAUDE.md:7` told every project to author
+its own `CLAUDE-QUICK-REFERENCE.md` — **a summary layer D3 forbids, of a file the framework does not
+ship them.** That line is not content to relocate; it is a policy to reverse.
+
+**The goal transfers to `/fw-tour` — FEAT-115, already filed** (2026-02-06, `backlog/`). And note where
+FEAT-115 *came from*: it was filed **because ad-hoc AI tours failed.** FEAT-011 validation feedback
+(hello-father project): *"Tour of the framework was a bit too verbose but it was thorough."* So *"just
+ask the AI"* was tried, and FEAT-115 is the bug report. What a tour command adds is not content — it is
+**scope control** (quick / detailed / by-topic), which is exactly what a document cannot offer and a
+prompt can.
+
+**Why this is the right shape, and the general principle it exposes:** a tour command **reads live
+state** — `framework.yaml`, the installed `.claude/commands/`, the user's actual `work/doing/`. It
+therefore **cannot go stale.** That is precisely the property the retired file lacked, and it
+generalizes:
+
+> **Every framework artifact that has rotted is a document. Nothing that executes has rotted.**
+
+Docs restate; commands derive. This is D3's rule (no summary layers) arriving at the same place from a
+different direction, and it is the thread behind Open Question 7.
+
+**`/fw-tour` does not block this ADR.** FEAT-115 stays in `backlog/` and is normal work. The contract
+carries a one-line bootstrap pointer to it — legitimate under D1 criterion (2) — which is inert until
+the command exists.
+
+**`QUICK-START.md` survives, as the AI-less fallback only.** A human browsing the repo cold cannot run a
+slash command, and `README.md` already points them at `QUICK-START.md` — the conventional chain, and it
+already ships. Its job is **to hand off, not to be complete**: get the reader to the point where they can
+ask the AI. It is **explicitly not a source of authority** — nothing may be true *because QUICK-START says
+so* (D3 still binds). That constraint is what keeps it from becoming the fifth copy.
+
+#### Evidence: the same rot, caught live while deciding this (2026-07-14)
+
+Both `QUICK-START.md` files were audited during this decision. Every defect found was a **reference table
+living in a tutorial** — restating content that has a real owner. This is D3's failure mode, observed:
+
+| File | Defect | Owner it should have pointed at |
+|---|---|---|
+| `templates/starter/QUICK-START.md` | Commands table listed **5 of 11** | `/fw-help` (reads installed commands) |
+| `templates/starter/QUICK-START.md` | Templates table omitted **TASK** | `.claude/scripts/work-item-types.txt` |
+| `/QUICK-START.md` (root) | Commands table listed **9 of 11** | *(same)* |
+| `/QUICK-START.md` (root) | Types table advertised retired **`DECISION`**, omitted **TASK** | *(same)* |
+| `/QUICK-START.md` (root) | WIP limit given as **"1-2"** and **"max 2"** — actual is **1** | `doing/.limit` |
+| `/QUICK-START.md` (root) | "Full Reference" → **`framework/CLAUDE.md`** | the file **D2 deletes** |
+
+The root file's commands table carried the epitaph: *"**Note:** Keep this list updated as new commands
+are added."* **It asked to be hand-synced. It was not.** That is the entire argument for D3 in one line.
+
+**Fixed by deletion, not by update** (2026-07-14) — the tables are gone and replaced by pointers, so the
+drift cannot recur. Two further stale copies were found downstream and corrected at the same time:
+`workflow-guide.md:1116` (metadata example still said `Decision`, omitted `Task` — contradicting the
+correct 5-type table 40 lines below it) and `GLOSSARY.md` (no `Task` entry; "Work Item" defined with the
+retired set; ADRs located at a `project-hub/decisions/` that has never existed). **TECH-173 shipped
+ADR-006's enforcement but did not complete its own "DRY every human-facing list" criterion** — these were
+the residue.
+
+### D7 — There are not three checkpoints. There is one rule, enforced at three surfaces.
+
+**Decided 2026-07-14 (resolves OQ4).** The "three mandatory checkpoints (Step 4 / 7.5 / 8.5)" are a
+**fiction invented by the summary layer.** They appear only in `framework/CLAUDE.md` and
+`CLAUDE-QUICK-REFERENCE.md` — the two files this ADR retires. They were never written back to ADR-001
+(which decided **one** checkpoint), never added to `workflow-guide.md` as a set, and their step numbers
+point into **a workflow that has never existed in any file** (`workflow-guide.md` has 5 phases; ADR-001
+has 8 steps; there is no 7.5 and no 9).
+
+**The one rule:**
+
+> **No code without an approved, ripe plan.**
+
+It is enforced at three surfaces, and *only the first is prose*:
+
+| | **Rule 1 — a plan exists, and it is where it belongs** | **Rule 2 — the plan is ripe** | **Rule 3 — the work is complete** |
+|---|---|---|---|
+| **Surface** | **The contract** (`CLAUDE.md`) | `/fw-move → doing` | `/fw-move → done` |
+| **Mechanism** | Prose. **Unenforceable by construction.** | `check_readiness()` (greps TODO/TBD/DECIDE/Option A-B-C/placeholders, blocks unless `--force`) + dependency check (**never** `--force`-able) + `fw-move.md:96-103` forces the AI to review and **STOP** | `check_acceptance_criteria()` — every `- [ ]` must be `- [x]`. **Not `--force`-able.** |
+| **Reliability** | Probabilistic. Occasionally fails. | Deterministic + forced review at a chokepoint. **Works.** | Deterministic. **Works.** |
+| **Human approval is…** | …the thing the rule asks for | …implicit in typing `/fw-move <id> doing` | …**the act of typing `/fw-move <id> done`.** No further review step needed — or wanted. |
+| **Contract carries** | **This rule, verbatim** | **Nothing** | **Nothing** |
+
+**Rule 1 is the only true AI guard**, and the reason is structural: *`fw-move` cannot enforce a rule
+against an AI that never calls `fw-move`.* An AI that implements an item straight out of `backlog/`
+never triggers a transition, so no gate can intercept it. That failure is unreachable from the state
+machine — which is exactly what makes the rule **contract material** rather than guide material.
+**Relocating it to `workflow-guide.md` (as D2's original table proposed) would ship it to a file the AI
+never auto-loads. That is BUG-181, re-committed.**
+
+#### The rule's text changes
+
+Today (root `CLAUDE.md:9`, `templates/starter/CLAUDE.md:8` — identical):
+
+> *"**Before writing code:** State what you plan to do and wait for approval"*
+
+**Replaced by:**
+
+> **Implement only work in `doing/`.** Planning and refinement may happen in `backlog/`, `todo/`, or
+> `doing/`. Implementation may not — move the item to `doing/` first (`/fw-move <id> doing`), which is
+> what validates the plan is complete and current.
+
+**Why the change (Gary, 2026-07-14).** The old wording buys *a plan*; it does not buy *a ripe plan*, and
+it does not say **where** the plan must be. In practice Rule 1 has been **holding** — when the AI works
+out of `backlog/`, there *is* a work item with an approach in it. The residual failure is subtler and
+more dangerous: **the item was a seed, not a mature plan**, and by working out-of-band the AI **bypassed
+the ripeness test entirely.** The old text is satisfiable by announcing a plan and coding immediately —
+which is the observed failure. The new text makes the *folder* the gate, and the folder is a fact.
+
+**And it routes Rule 1 into Rule 2 by construction:**
+
+> Rule 1 says implementation requires `doing/`. Reaching `doing/` requires `/fw-move`. `/fw-move`
+> enforces ripeness and forces the review. **Therefore: no implementation without a ripe, reviewed
+> plan — and only the first link is prose.**
+
+**The contract's whole job reduces to one thing: get the AI into the machine.** Everything downstream is
+mechanized. This is why the contract can be ≤150 lines (D1) — *most rules do not belong in it.*
+
+**Note the separation is on the verb, not the location.** Planning, refining, and researching a work item
+in `backlog/` or `todo/` is **legal and normal** (this ADR was written that way). Only *implementing* is
+gated.
+
+#### What `/fw-move → doing` actually guarantees (stated honestly)
+
+Not "the plan is mature." Precisely:
+
+> A **deterministic** rejection of items with *declared* incompleteness (unresolved markers, unmet
+> dependencies), plus a **behavioral** review that must surface *undeclared* incompleteness.
+
+**Neither half is sufficient alone.** `grep` cannot see a confident-but-thin plan; the review cannot be
+trusted to fire unless the transition forces it. **The mechanism's value is that it makes the review
+unavoidable at the exact moment the plan is committed to.** The AI cannot arrive in `doing/` without
+passing through it. Do not let a future reader believe the gate proves maturity — it proves the *absence
+of declared* immaturity, and forces a human-plus-AI look at the rest.
+
+#### Rule 3 gets no review step — deliberately
+
+`fw-move.md`'s `→ done/` block is pure post-processing (stamp `Completed`, session history, commit,
+volume nudge). **It has no "present the work for approval" step, and none should be added.** The
+acceptance-criteria gate is a *better* completion test than a review prompt: checking off every `- [x]`
+is an explicit, itemized assertion, and the script refuses the move until it is made. And **completion
+already requires a human keystroke** — `/fw-move <id> done` does not happen unless the user types it.
+There is no "AI accidentally completes an item" failure mode. **The approval is the command.**
+
+**Not affected by TECH-177** (Obsidian checkbox states). That item makes the done-gate *smarter* —
+`[/]` in-progress blocks, `[-]` cancelled passes — but it does not add a review step or move the gate.
+It is the model working as intended: **the response to a gap in a mechanized rule is a better mechanism,
+not a new paragraph.** (More evidence for OQ7.)
+
+#### Consequences for the retiring files
+
+- **ADR-001 is not rewritten.** It is the decision record for Rule 1 and stands as-is. Its
+  "Implementation Details" section (an 8-step list to paste into `CLAUDE.md`) is historical, not
+  binding.
+- **`workflow-guide.md` keeps the pre-implementation review procedure** (`:2214-2290`) — it already
+  owns it in full.
+- **Fix the phantom pointers.** `workflow-guide.md:2246` and `:2290` cite *"CLAUDE.md Step 7.5"*;
+  `:212` and `:1760` cite *"CLAUDE.md Step 9"*. **None of these exist.** Repoint to `fw-move.md` or
+  inline the content.
+- **The names "Step 4 / 7.5 / 8.5" are deleted.** Use: *the contract rule*, *the pre-implementation
+  review*, *the done-gate*.
+
+#### The unsolved problem, stated plainly
+
+**Rule 1 is unenforced, and this ADR does not fix that.** Nothing in the framework can stop an AI from
+editing `src/` while `doing/` is empty. The bootstrap block, `fw-move.md`, and `workflow-guide.md` are
+all the *same* mechanism — telling the model, and hoping. **Layering a fourth restatement is the
+strategy that has "mostly worked but occasionally not,"** and it is precisely the summary layer D3
+forbids.
+
+This is the framework's **founding constraint** — the eagerness problem it was built to solve (HPC
+project, "ONE issue at a time," 2025-11-26, three weeks before the framework repo existed) — and its
+longest-standing unsolved one: **a deterministic process driven by a probabilistic agent.**
+
+The check *"is `doing/` empty while I am about to edit code?"* is **mechanically decidable.** It cannot
+live in a document — a document can only ask; something that *executes* would have to refuse.
+**TECH-114 (`wip-enforcement-hook`, backlog)** is the only class of fix that could make Rule 1
+deterministic. **ADR-007 does not depend on it and must not claim enforcement it does not have.**
+
 ---
 
 ## Consequences
@@ -380,6 +600,10 @@ dogfooding violation in miniature — the same one this ADR exists to fix.
 - `docs/collaboration/README.md`, `architecture-guide.md`, and `workflow-guide.md` all reference
   `CLAUDE.md`'s structure (including its nonexistent Step 9). Those references must be fixed, not
   orphaned.
+- **`framework.yaml:76` routes into the file D2 deletes** (verified 2026-07-14):
+  `ai-checkpoint-policy: framework/CLAUDE.md#ai-workflow-checkpoint-policy-critical---adr-001`. The
+  framework's own SoT index points at `framework/CLAUDE.md`. It must be repointed to whichever file
+  OQ4 gives the checkpoints to — **D2 cannot be implemented without also fixing `framework.yaml`.**
 - **Dropping "Which Project Are You Working On?" (D2a) changes how this repo is navigated.** Confirm the
   `framework/` `templates/` `tools/` orientation exists in `README.md` before deleting it from the
   contract.
@@ -391,7 +615,7 @@ dogfooding violation in miniature — the same one this ADR exists to fix.
 1. **How does re-derivation detect a user-edited contract block?** D4's upgrade path is the ADR's best
    payoff and its sharpest edge. Hash the region and compare against the shipped fragment? Silent
    overwrite is not acceptable. The two-region partition gives us the good answer — **relocate the
-   user's edits into USER INSTRUCTIONS and report it** — but the *detection* mechanism still needs
+   user's edits into PROJECT INSTRUCTIONS and report it** — but the *detection* mechanism still needs
    choosing. *Highest-risk unknown; settle before implementation, not during.*
    - Sub-question: does the framework region carry a version stamp (`v1.4.0`) so an upgrade knows
      whether it is replacing an older contract or a tampered one? A stamp also makes the delimiter
@@ -399,36 +623,10 @@ dogfooding violation in miniature — the same one this ADR exists to fix.
 2. **Where does the contract fragment live?** `framework/docs/ref/ai-contract.md` is a placeholder name.
    It must **not** be named `CLAUDE.md` (that is the mistake D2 is undoing), and it must be excluded
    from the `framework/docs/` bulk copy (Step 3) or it will ship twice.
-3. **`CLAUDE-QUICK-REFERENCE.md` — keep the goal, kill the copy?**
-
-   **Its intent is good and should survive: first-time user experience** (stated design intent,
-   confirmed 2026-07-13). A newcomer facing a 500-line contract and seven collaboration guides needs a
-   way in. That is a real job.
-
-   **The artifact is failing at that job.** Verified 2026-07-13:
-   - It is **334 lines** — while declaring itself *"<200 lines"* at `:196`. It cannot keep its own
-     promise about its own size.
-   - It **does not ship.** `Build-FrameworkArchive.ps1` copies `framework/docs/`, `framework/templates/`,
-     `framework/tools/`, and `framework/CLAUDE.md` **by name**. `framework/CLAUDE-QUICK-REFERENCE.md` is
-     in none of those. **It is a repo-only file.** So the onboarding aid never reaches the newcomers who
-     most need it — it only ever helps someone already inside the framework's source repo.
-   - It is the **fourth copy** (checkpoints, ADR decision tree, reading-protocol tree, fail-fast and SQL
-     examples, coverage targets, and a **verbatim** Top-5 Emergency Reference).
-
-   **And the recommendation is worse than the file.** `framework/CLAUDE.md:7` reads: *"Projects are
-   encouraged to author their own `CLAUDE-QUICK-REFERENCE.md` capturing critical rules and decision trees
-   specific to the project."* **The framework tells every project to build a summary layer — a layer D3
-   forbids, of a file the framework does not even ship them.**
-
-   **Proposed:** retire the artifact, delete the recommendation, and **give the goal to a guide.**
-   Onboarding is navigation, and `docs/collaboration/README.md` is already the navigation index. Under
-   D1/D3 the answer is: *rules live in the contract; details live in the guide that owns them; the way in
-   is a guide, not a fifth summary of the contract.*
-
-   **Decide here** — leaving it is how it rotted.
-4. **Where do the three checkpoints live** — `workflow-guide.md` alone, or ADR-001? ADR-001 documents
-   only *one* checkpoint; the three-checkpoint set exists only in the two files being retired. Whoever
-   owns it must also **fix the step numbering**, which points into a workflow that does not exist.
+3. ~~**`CLAUDE-QUICK-REFERENCE.md` — keep the goal, kill the copy?**~~ **RESOLVED 2026-07-14 → see D6.**
+4. ~~**Where do the three checkpoints live** — `workflow-guide.md` alone, or ADR-001?~~ **RESOLVED
+   2026-07-14 → see D7.** The premise was false: **there is no set of three.** One rule (contract), two
+   mechanized enforcements (`/fw-move`). ADR-001 stands unrewritten.
 5. **Does `/fw-init` get filed as a FEAT?** D4 rejected it as the derivation mechanism, but the
    AI-judgment gap it targets is real: composing **the shell** (project type, optional sections,
    Project-Specific Notes) at project birth. It would never touch the contract.
@@ -459,13 +657,61 @@ dogfooding violation in miniature — the same one this ADR exists to fix.
    real product question. **Flag it; decide it deliberately** — possibly in its own ADR, since it is a
    question about what the plugin *is*, not about `CLAUDE.md`.
 
+   **Update 2026-07-14 (see OQ7):** D6 supplies evidence on one side. `/fw-tour` — the onboarding
+   surface — is a **command**, and commands are exactly what the plugins already ship. A plugin user
+   could get the full onboarding experience *without* the framework's ~4,000 lines of guides. If the
+   behavioral contract can likewise be delivered as commands, the lightness/structure trade OQ6 poses
+   may be **a false choice.**
+
+7. **Is the framework, long-term, just a collection of commands?** *(raised 2026-07-14; not answered
+   here)*
+
+   Every framework artifact that has rotted is a **document**: `framework/CLAUDE.md` (7 verified
+   defects), `CLAUDE-QUICK-REFERENCE.md` (334 lines claiming <200, never shipped), both
+   `QUICK-START.md` files, `workflow-guide.md`'s metadata example, `GLOSSARY.md`'s type list.
+   **Nothing that executes has rotted** — `/fw-move`, `/fw-status`, `/fw-wip` read live state, so
+   there is no copy to drift from.
+
+   That is not a coincidence, and D3 ("no summary layers") is the same observation arriving from
+   another direction: **documents restate; commands derive.** D6 is one step along this line — an
+   onboarding *document* retired in favor of an onboarding *command*. **D7 is a second**: of the one
+   rule's three enforcement surfaces, the two that *execute* work, and the one that is *prose* is the
+   one that occasionally fails.
+
+   **The sharper formulation (2026-07-14):** it is not merely that commands execute. **Commands own
+   chokepoints, and documents do not.** `/fw-move` works because the AI cannot reach `doing/` without
+   passing through it — a moment where a single well-targeted instruction lands with full context. The
+   contract works, when it works, because session-start is the *only other* chokepoint in the system.
+   **A rule is reliable in proportion to whether the AI must stop somewhere to obey it.**
+
+   **Corollary, and this is the design lever:** every rule moved from the contract to a command
+   converts a probabilistic guarantee into a deterministic one. **The contract is where rules go when
+   they cannot be mechanized — it is a residue, not a home.** The smaller it gets, the more of the
+   process is actually enforced.
+
+   The question this raises is bigger than `CLAUDE.md` and should not be answered inside this ADR:
+   **if the durable surface is executable, what is the guide layer for?** Note that answering it would
+   also collapse **OQ6** — a commands-only framework and the plugins become the same product, and the
+   lightness/structure trade-off disappears.
+
+   **Flag only.** ADR-007 is a step in this direction, not a commitment to it. Worth its own ADR when
+   the thread is pulled.
+
 ---
 
 ## Related
 
 - **ADR-006** — established one-authored-source + per-channel derivation for the work-item type SoT.
   This ADR applies the same principle to the collaboration contract. **The precedent is the argument.**
-- **ADR-001** — the checkpoint policy. Currently reaches no derived project.
+- **ADR-001** — the checkpoint policy. **Decided ONE checkpoint, not three** (D7). Its Rule-1 text does
+  reach derived projects (`starter/CLAUDE.md:8`) — it is the *only* part of the contract that does.
+  **Not rewritten by this ADR**; it is the decision record for Rule 1.
+- **TECH-114** — `wip-enforcement-hook` (backlog). **The only class of fix that could make Rule 1
+  deterministic** — a hook observes the edit whether or not the AI cooperates. D7 depends on it for
+  nothing; it is named so the unsolved problem has an address.
+- **TECH-177** — Obsidian checkbox states. Refines the done-gate's semantics (`[/]` blocks, `[-]`
+  passes). **Does not reopen D7** — the response to a gap in a mechanized rule is a better mechanism,
+  not a new paragraph.
 - **BUG-181** — the presenting bug (starter `CLAUDE.md` does not deliver the contract). Becomes an
   *instance* of this ADR; re-scope it once D4 is settled.
 - **DECISION-162 / TECH-169** — command-tier sync strategy and `/fw-move` copy reconciliation. Same
@@ -473,9 +719,18 @@ dogfooding violation in miniature — the same one this ADR exists to fix.
 - **SPIKE-178 / FEAT-179** — plugin engine derivation. Same pattern.
 - **FEAT-175** — `/fw-new` create gate. Its "strict script, lenient AI" split is the same
   deterministic-vs-probabilistic reasoning that argues against D4 Option C.
+- **FEAT-115** — `/fw-tour`. **D6 hands it the onboarding goal.** Filed 2026-02-06 *because ad-hoc AI
+  tours were too verbose* (FEAT-011 validation) — which is why "just ask the AI" is not the answer on
+  its own. Stays in `backlog/`; **does not block this ADR.**
+- **FEAT-180** — mandatory `## Documentation` section on work items. The structural fix for the drift
+  class D6 documents: no new machinery, since `fw-move.sh` already hard-blocks `→ done/` on an
+  unchecked `[ ]`. Its premise was confirmed again by the six defects in the D6 evidence table.
+- **TECH-173 / ADR-006** — shipped the type SoT and its enforcement, but **did not complete its own
+  "DRY every human-facing list" criterion.** The residue (`workflow-guide.md:1116`, `GLOSSARY.md`) was
+  found and fixed 2026-07-14 while deciding D6.
 - **`documentation-dry-principles.md`** — the framework's own DRY doctrine, which `framework/CLAUDE.md`
   violates about as thoroughly as a single file can.
 
 ---
 
-**Last Updated:** 2026-07-13
+**Last Updated:** 2026-07-14
