@@ -228,16 +228,14 @@ carry the stronger form.
       block, 15-line shell). Drop *"Which Project Are You Working On?"* per D2a; confirm the
       `framework/`/`templates/`/`tools/` orientation lives in `README.md` first.
 
-### Separable — candidate sibling items (decide at split time)
+### Separable work — split into sibling items (2026-07-15)
 
-- [ ] **D2/D6 retirements** — delete `framework/CLAUDE.md` and `CLAUDE-QUICK-REFERENCE.md`,
-      **re-verifying each section against its supposed owner at deletion time** (ADR ⚠️ caution: line
-      counts are not a licence to `rm`). Salvage the ~8 unique lines first. *Higher-risk, different
-      profile from the delivery fix — good split candidate.*
-- [ ] **`framework.yaml` + phantom pointers** — repoint `framework.yaml:76` `ai-checkpoint-policy` →
-      ADR-001; fix the repo `framework.yaml:79` `PROJECT-STRUCTURE-STANDARD.md` dead link; fix
-      `workflow-guide.md` phantom *"CLAUDE.md Step 7.5/9"* pointers (`:212`, `:1760`, `:2246`, `:2290`).
-      *Small, mechanical, separable.*
+The retirements and pointer fixes were spun out so this item's done-gate is not blocked on them:
+
+- **TECH-182** — D2/D6 retirements (delete `framework/CLAUDE.md` + `CLAUDE-QUICK-REFERENCE.md`, with the
+  re-verify caution). **Depends on this item** — the contract must have a home before the old files go.
+- **TECH-183** — `framework.yaml:76`/`:79` repoint + `workflow-guide.md` phantom Step 7.5/9 pointer fixes.
+  Independent; can run any time.
 
 ---
 
