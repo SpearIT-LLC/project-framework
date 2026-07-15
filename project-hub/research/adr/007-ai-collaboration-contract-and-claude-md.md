@@ -1,7 +1,8 @@
 # ADR-007: The AI Collaboration Contract — What CLAUDE.md Is, and How It Reaches Each Channel
 
-**Status:** Proposed
+**Status:** Accepted
 **Date:** 2026-07-13
+**Accepted:** 2026-07-15
 **Deciders:** Gary Elliott, Claude Code
 **Impact:** Major
 **Scope:** Every `CLAUDE.md` in the framework and its distribution channels — what the file is for, what
@@ -854,4 +855,4 @@ deterministic. **ADR-007 does not depend on it and must not claim enforcement it
 
 ---
 
-**Last Updated:** 2026-07-15 (OQ2 resolved)
+**Last Updated:** 2026-07-15 (Accepted)
