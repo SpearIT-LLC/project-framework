@@ -227,4 +227,13 @@ items** (an ADR decides; it does not implement). Suggested queue:
 
 ---
 
+## Transition to Implementation (Later)
+
+ADR-007 accepted; began queuing the implementation work items one by one (see Next Steps above for the
+queue). Work items filed/started this phase are recorded below as they happen.
+
+*(implementation work items — to be appended as filed/moved)*
+
+---
+
 **Last Updated:** 2026-07-15
