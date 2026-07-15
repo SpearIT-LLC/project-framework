@@ -106,12 +106,63 @@ framework's design is to derive them from a machine-readable index.
 
 ---
 
+## Work Completed (Later — OQ2)
+
+### ADR-007: OQ2 resolved → `.claude/framework-contract.md`
+
+**The question:** where the authored-once contract fragment lives, and what it is named. Two hard
+constraints: not named `CLAUDE.md`; not swept into the archive as a loose doc.
+
+**Verified the build first** (`Build-FrameworkArchive.ps1`, read in full) so the decision rested on
+ground truth, not the ADR's summary:
+- Step 3 (`:213-218`) recursively copies **all** of `framework/docs/*` → a fragment there *would* ship.
+- Steps 1.5/1.6/1.6b (`:155-207`) copy `.claude/commands/*.md`, `.claude/scripts/*.sh`, and
+  `work-item-types.txt` **fresh from canonical** — the author-once/copy-fresh pattern D4's composer
+  should join.
+- The plugin build (`Build-Plugin.ps1:318`) copies **only** `plugins/{plugin}/*` — pulls nothing from
+  the repo root `.claude/` or `framework/`. **So the fragment's location is irrelevant to plugin
+  delivery** — that is OQ6's call, cleanly separated from OQ2.
+- Drift-guard (`:113-132`) hard-fails the build if `.claude/commands` or `framework/` reappear in
+  `templates/starter/` — the framework already treats "same content authored in two editable places" as
+  a build error.
+
+**The discussion worked through four sub-questions Gary raised, each sharpening the answer:**
+
+1. *"Is `framework.yaml` going to point to this doc?"* → **No.** `sources:` indexes *runtime* SoTs the
+   AI consults while working; the fragment is *build input*, consumed once at composition. The AI never
+   reads the fragment at runtime — it reads the assembled `CLAUDE.md`. Pointing `sources:` at it would
+   revive the "is the contract in the fragment or in `CLAUDE.md`?" confusion.
+2. *"Isn't `CLAUDE.md` the AI contract by Claude's design?"* → Yes — and that is the delivery/authoring
+   split. `CLAUDE.md` is the *channel* (auto-loaded); the fragment is the *authored source* of the
+   universal part. Not competitors; the fragment is the shared substring of two `CLAUDE.md` files
+   extracted to one place.
+3. *"Is it duplication or a definitively cleaner construct?"* → **Derivation, not duplication —
+   provided the composed region is generated and drift-guarded, never hand-edited.** The test is not
+   "does the text appear twice at rest" but "can the two copies drift." Regenerated-every-build copies
+   cannot (like a compiler's object files). The build already makes this exact bet three times; the
+   drift-guard is the proof. The fragment model *removes* an editable copy (today `framework/CLAUDE.md`
+   **and** `starter/CLAUDE.md` are both hand-authored and both ship), it does not add one.
+4. **Naming** (Gary's instinct: folder and name should agree; both words — "claude" and "framework" —
+   present). Resolved to `.claude/framework-contract.md`: the **folder** supplies *claude*, the **name**
+   supplies *framework-contract* (matching the D4 marker `BEGIN FRAMEWORK CONTRACT` word-for-word), both
+   words present with no stutter, and **D4's marker text needs no edit.**
+
+**Ripple fixes made in the same pass:**
+- D4 decomposition table (`:298`) — placeholder `framework/docs/ref/ai-contract.md` → the resolved
+  `.claude/framework-contract.md`.
+- `framework.yaml:76` Negative Consequence — now that OQ4 (→D7) *and* OQ2 are resolved, the repoint
+  target is known: point `ai-checkpoint-policy` at **ADR-001** (the rule's authority), not at any
+  `CLAUDE.md` copy (only its delivery).
+
+---
+
 ## Files Modified
 
-- `project-hub/research/adr/007-ai-collaboration-contract-and-claude-md.md` — OQ5 written in (D4 `/init`
-  Negative Consequence + observed live-test result; OQ1 broadened + region-owner mechanism; OQ5 rewritten
-  to resolved); OQ7 bonus finding appended; 3× `USER INSTRUCTIONS` → `PROJECT INSTRUCTIONS`; Last Updated
-  → 2026-07-15
+- `project-hub/research/adr/007-ai-collaboration-contract-and-claude-md.md` — **OQ5 written in** (D4
+  `/init` Negative Consequence + observed live-test result; OQ1 broadened + region-owner mechanism; OQ5
+  rewritten to resolved); OQ7 bonus finding appended; 3× `USER INSTRUCTIONS` → `PROJECT INSTRUCTIONS`.
+  **OQ2 resolved** (→ `.claude/framework-contract.md`; D4 table `:298` repointed; `framework.yaml:76`
+  Negative Consequence sharpened to target ADR-001). Last Updated → 2026-07-15
 
 ## Files Created
 
@@ -134,12 +185,15 @@ framework's design is to derive them from a machine-readable index.
 - **OQ1** — detection of a modified contract region. **Now broader** (tool-rewrite, not just human-edit)
   and **now carries a candidate repair mechanism** (region-owner `/fw-init`). Detection half still
   unsolved. Does not block acceptance.
-- **OQ2** — where the contract fragment lives / what it is named. **NEXT UP this session.** Must not be
-  named `CLAUDE.md`; must be excluded from the `framework/docs/` bulk copy (Step 3) or it ships twice.
+- ~~**OQ2**~~ — **RESOLVED this session** → `.claude/framework-contract.md`. Both constraints met; joins
+  the existing `.claude/` build-input pattern; `framework.yaml` deliberately does NOT index it.
 - ~~**OQ5**~~ — **RESOLVED this session.** Folded into OQ1; not a FEAT.
-- **OQ6** — contract-less plugin channel. D6 supplies evidence it may be a false choice.
+- **OQ6** — contract-less plugin channel. D6 supplies evidence it may be a false choice. Does not block.
 - **OQ7** — is the framework just a collection of commands? *(flagged, unanswered; gained a third data
   point this session)*
+
+**All substantive OQs are now resolved or explicitly non-blocking. The only thing between ADR-007 and
+ratification is a final review pass.**
 
 ### In doing/
 *(empty)*
@@ -151,11 +205,15 @@ FEAT-092, FEAT-163, FEAT-164, FEAT-175, TECH-172, TECH-177
 
 ## Next Session / Next Step
 
-**Immediate:** **OQ2** — name and locate the contract fragment (candidate placeholder was
-`framework/docs/ref/ai-contract.md`; the two constraints are the name and the bulk-copy exclusion).
+**Immediate:** **ratify ADR-007** (Proposed → Accepted). OQ2 — the last substantive gap — is now closed.
+OQ1/OQ6/OQ7 remain open and none block acceptance (OQ1 ships markers not upgrade tooling; OQ6/OQ7 are
+each "own ADR" questions). Recommended: a final read-through of the Decisions + Consequences for internal
+consistency after today's edits, then flip the Status line and stamp the Deciders/date.
 
-**Then:** ratify ADR-007 (Proposed → Accepted). OQ1/OQ6/OQ7 may remain open — none block acceptance;
-OQ2 is the last substantive gap.
+**After ratification:** BUG-181 becomes an instance of this ADR (re-scope once D4 is the mechanism);
+D2/D4 implementation is normal work to queue — the composer step (read `.claude/framework-contract.md`,
+concatenate into the guarded region, extend the drift-guard) plus the deletions D2/D6 authorize
+(re-verifying each section against its owner at deletion time, per the ADR's own caution).
 
 ---
 

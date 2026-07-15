@@ -295,7 +295,7 @@ because there is somewhere to move them *to*. (See Open Question 1.)
 
 | Layer | Universal? | Authored where | How it reaches a channel |
 |---|---|---|---|
-| **Contract** | Yes — identical in every channel | **Once**, in a fragment (e.g. `framework/docs/ref/ai-contract.md` — *not* named `CLAUDE.md`) | **Derived** into the guarded region |
+| **Contract** | Yes — identical in every channel | **Once**, in `.claude/framework-contract.md` (OQ2, resolved — *not* named `CLAUDE.md`; sits with the other build-input assets) | **Derived** into the guarded region |
 | **Shell** | No — per-channel, **shares nothing** | Each channel authors its own | Hand-authored, stays hand-authored |
 
 The shells genuinely have **nothing in common** — this repo's is repo layout; a derived project's is
@@ -626,8 +626,12 @@ deterministic. **ADR-007 does not depend on it and must not claim enforcement it
   orphaned.
 - **`framework.yaml:76` routes into the file D2 deletes** (verified 2026-07-14):
   `ai-checkpoint-policy: framework/CLAUDE.md#ai-workflow-checkpoint-policy-critical---adr-001`. The
-  framework's own SoT index points at `framework/CLAUDE.md`. It must be repointed to whichever file
-  OQ4 gives the checkpoints to — **D2 cannot be implemented without also fixing `framework.yaml`.**
+  framework's own SoT index points at `framework/CLAUDE.md`. **Now that OQ4 (→ D7) is resolved, the
+  target is known:** Rule 1 lives in the *contract*, and the contract is authored in
+  `.claude/framework-contract.md` (OQ2) and delivered in each channel's `CLAUDE.md`. Repoint
+  `ai-checkpoint-policy` at ADR-001 (the decision record for the rule) rather than at any `CLAUDE.md`
+  copy — the policy's *authority* is ADR-001; `CLAUDE.md` is only its *delivery*. **D2 cannot be
+  implemented without also fixing `framework.yaml`.**
 - **Dropping "Which Project Are You Working On?" (D2a) changes how this repo is navigated.** Confirm the
   `framework/` `templates/` `tools/` orientation exists in `README.md` before deleting it from the
   contract.
@@ -659,9 +663,47 @@ deterministic. **ADR-007 does not depend on it and must not claim enforcement it
      whether it is replacing an older contract or a tampered one? A stamp also makes the delimiter
      self-describing to a human reading the file cold — **and gives a repair command a cheap contamination
      check** (stamp present and region-hash matches that version → clean; else → repair).
-2. **Where does the contract fragment live?** `framework/docs/ref/ai-contract.md` is a placeholder name.
-   It must **not** be named `CLAUDE.md` (that is the mistake D2 is undoing), and it must be excluded
-   from the `framework/docs/` bulk copy (Step 3) or it will ship twice.
+2. ~~**Where does the contract fragment live?**~~ **RESOLVED 2026-07-15 → `.claude/framework-contract.md`.**
+
+   **Decided: the fragment is `.claude/framework-contract.md`.** The two constraints are met, and the
+   location joins the build pattern that already works.
+   - **Not named `CLAUDE.md`** — the D2 mistake is undone.
+   - **Not under `framework/docs/`** — so Step 3's recursive `docs/*` sweep (verified `:213-218`) cannot
+     pick it up. No new exclusion logic is needed; the placeholder `framework/docs/ref/ai-contract.md`
+     would have required *adding* a Step-3 exclusion, which this location avoids entirely.
+   - **It sits with its build-siblings.** `.claude/` already holds the three assets the build copies
+     fresh-from-canonical — `commands/*.md` (Step 1.5), `scripts/*.sh` (Step 1.6),
+     `scripts/work-item-types.txt` (Step 1.6b). The contract fragment is the same *kind* of thing: an
+     authored-once source the composer reads. Its natural home is beside them, not in the product docs.
+   - **Name ↔ marker.** The folder supplies *"claude"* (it is `.claude/`); the file name supplies
+     *"framework-contract"*, which matches the D4 region marker `BEGIN FRAMEWORK CONTRACT` word-for-word.
+     Both words are present — one in the path, one in the name — with no stutter, and **D4's marker text
+     needs no change.**
+
+   **`framework.yaml` does NOT point at it** (decided in the same discussion). `sources:` indexes
+   *runtime* SoTs the AI consults *while working*. The fragment is **build input**, consumed once at
+   composition time; the AI never reads `framework-contract.md` at runtime — it reads the *assembled*
+   `CLAUDE.md`. Indexing the fragment in `sources:` would resurrect the "is the contract in the fragment
+   or in `CLAUDE.md`?" confusion. Answer: **authored in the fragment, delivered in `CLAUDE.md`, and the
+   AI only ever sees the delivery** — exactly as `framework.yaml` does not point at
+   `templates/starter/CLAUDE.md` today.
+
+   **Is this duplication? No — derivation, provided the composed region is generated and guarded.** The
+   contract text does exist in the fragment *and* in every built `CLAUDE.md` after a build — but they
+   **cannot drift**, because the fragment is the only *authored* copy and the `CLAUDE.md` copies are
+   *regenerated* on every build (like a compiler's object code, which nobody calls duplication). This is
+   the same bet the build already makes three times (`work-item-types.txt`, `commands/`, `scripts/`), and
+   the **drift-guard at `:113-132` is the proof it's not duplication** — it *hard-fails the build* if a
+   copy of these appears in `templates/starter/`. The fragment model extends that same regime to
+   `CLAUDE.md`'s contract region. **It does not add an editable copy; it removes one** — today
+   `framework/CLAUDE.md` (501 lines) and `starter/CLAUDE.md` (82) are *both* hand-authored and *both*
+   ship; the fragment collapses them to one authored source.
+   - **Implementation note for D2/D4.** The composer step must **(a)** read `.claude/framework-contract.md`,
+     **(b)** concatenate it into the guarded region of each channel's root `CLAUDE.md` (literal
+     concatenation — D4 "keep the composer stupid"), and **(c)** be covered by a drift-guard extension so
+     a hand-edited contract region in `templates/starter/CLAUDE.md` (or this repo's root) fails the build
+     rather than shipping drift. Without (c), the construct *degrades to* duplication. The build already
+     has the guard machinery (`:113-132`); this adds the `CLAUDE.md` contract region to what it watches.
 3. ~~**`CLAUDE-QUICK-REFERENCE.md` — keep the goal, kill the copy?**~~ **RESOLVED 2026-07-14 → see D6.**
 4. ~~**Where do the three checkpoints live** — `workflow-guide.md` alone, or ADR-001?~~ **RESOLVED
    2026-07-14 → see D7.** The premise was false: **there is no set of three.** One rule (contract), two
@@ -812,4 +854,4 @@ deterministic. **ADR-007 does not depend on it and must not claim enforcement it
 
 ---
 
-**Last Updated:** 2026-07-15
+**Last Updated:** 2026-07-15 (OQ2 resolved)
