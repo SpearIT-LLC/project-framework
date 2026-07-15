@@ -327,7 +327,7 @@ doing even if in-place upgrade never ships.
 **In-place upgrade is a separate decision that D4 makes *possible*, not one it makes.** It depends
 entirely on Open Question 1 — *how does re-derivation detect that a user edited the framework region?* —
 which is **unanswered**. An upgrade that silently overwrites a user's edit is unacceptable; an upgrade
-that refuses is useless; the two-region partition suggests a third way (relocate the edits into USER
+that refuses is useless; the two-region partition suggests a third way (relocate the edits into PROJECT
 INSTRUCTIONS and report it), but the **detection** mechanism is still undesigned.
 
 **So: the markers ship with D4. The upgrade tooling does not.** Do not build the upgrade path until OQ1
@@ -589,10 +589,34 @@ deterministic. **ADR-007 does not depend on it and must not claim enforcement it
   guides. **The audit must be re-run at implementation time, per section, before each deletion** — do
   not trust this ADR's line counts as a licence to `rm`.
 - **The region markers are themselves a new user-facing contract.** If a user edits inside the framework
-  region, their change is at risk on upgrade. The delimiters must say so unmissably, the USER
+  region, their change is at risk on upgrade. The delimiters must say so unmissably, the PROJECT
   INSTRUCTIONS region must be an obvious enough alternative that nobody *wants* to edit the other one,
   and re-derivation must detect a modified region rather than blindly overwrite it. *An upgrade that
   eats a user's work once will never be trusted again.*
+- **`/init` collision — a tool, not a human, may rewrite the framework region** (verified 2026-07-14).
+  Claude Code ships a built-in `/init` whose job is *analyze the codebase and write `CLAUDE.md`.* A
+  derived project's `CLAUDE.md` carries the framework region, and the user may run `/init` on it at any
+  time — the two commands operate on the same file. **Documented behavior** (`code.claude.com/docs/en/memory`,
+  HIGH confidence): *"if a `CLAUDE.md` already exists, `/init` suggests improvements rather than
+  overwriting it."* So `/init` **updates in place; it does not regenerate** — the threat is **contamination
+  of the framework region, not destruction of the file.** But *"suggests improvements"* ≠ *"preserves our
+  delimited regions"*: `/init` has no knowledge of the markers, and an update pass could rewrite content
+  *inside* the framework region. The `DO NOT EDIT` banner is the intended guard, but it is advisory to a
+  *human*; its effect on a *model* rewriting the file is **unproven**. **Not bulletproof:** a confirmed
+  overwrite bug exists (anthropics/claude-code#21795 — `/init` in `~/.claude` destroys the file without
+  warning). That is the *user-level* case, so it misses the project-level framework region — but it proves
+  the mechanism can fail hard. This risk **exists independently of whether `/fw-init` is ever built** (see
+  OQ1, OQ5): the collision is between the framework region and a *built-in* command.
+  **Observed live on this repo (2026-07-15):** `/init` was run against this repo's existing `CLAUDE.md`.
+  It did **not** overwrite or edit the file — byte-identical before and after (md5 `fe69a147…`), confirming
+  the *suggests-rather-than-overwrites* behavior empirically. **But the improvements it proposed would, if
+  accepted, contaminate the region anyway:** it wanted to replace the heading + Bootstrap block with its
+  own standard `# CLAUDE.md` prefix, and to inline a build/test command section — content the framework
+  deliberately keeps *out* of `CLAUDE.md` and *in* `framework.yaml` (`release:*.build_script`,
+  `sources.testing`). So the threat is not that `/init` writes uninvited; it is that **accepting `/init`'s
+  suggestions is the edit**, and `/init` has no concept of the framework markers when it composes them.
+  The `DO NOT EDIT` banner is the only thing standing between "suggests improvements" and a rewritten
+  contract — and whether a model composing suggestions will honor a banner it can see is still unproven.
 - **A partitioned file is harder to reason about than a file that is wholly one thing.** The cost is
   real; it is paid to keep the file user-editable, which is non-negotiable for a derived project. The
   two-region partition is the cheapest form of it — every line has exactly one owner, and both owners
@@ -612,14 +636,29 @@ deterministic. **ADR-007 does not depend on it and must not claim enforcement it
 
 ## Open Questions
 
-1. **How does re-derivation detect a user-edited contract block?** D4's upgrade path is the ADR's best
+1. **How does re-derivation detect a modified contract region?** D4's upgrade path is the ADR's best
    payoff and its sharpest edge. Hash the region and compare against the shipped fragment? Silent
    overwrite is not acceptable. The two-region partition gives us the good answer — **relocate the
    user's edits into PROJECT INSTRUCTIONS and report it** — but the *detection* mechanism still needs
    choosing. *Highest-risk unknown; settle before implementation, not during.*
+   - **Broader than first drafted (2026-07-14):** detection must cover a *tool* rewriting the file, not
+     only a human editing text. The `/init` collision (see D4 Negative Consequences) is the concrete
+     case — a built-in command performs an update pass with no knowledge of the markers. The requirement
+     is therefore *"region contaminated, drifted, or gone,"* not merely *"region differs from a known
+     prior version because a person typed in it."* A hash-compare handles both, but the recovery UX
+     differs: a human edit relocates cleanly to PROJECT INSTRUCTIONS; a tool's contamination may have no
+     clean seam and may need a full re-derive of the region.
+   - **Candidate mechanism — `/fw-init` as the idempotent region-owner / repair command** (folds in OQ5).
+     A command that **owns exactly one region and touches nothing else** is the natural repair for
+     contamination: run `/init`, region drifts, run `/fw-init`, region is re-asserted clean. It is useful
+     in *every* channel (archive-derived, plugin-only, brownfield, post-`/init` repair), is **not blocked
+     on OQ7**, and is arguably part of OQ1's *answer* rather than a consumer of it. It does **not** replace
+     the *detection* question — a repair command still needs to know the region was modified before it
+     re-asserts — but it is a strong candidate for the *repair* half. See OQ5.
    - Sub-question: does the framework region carry a version stamp (`v1.4.0`) so an upgrade knows
      whether it is replacing an older contract or a tampered one? A stamp also makes the delimiter
-     self-describing to a human reading the file cold.
+     self-describing to a human reading the file cold — **and gives a repair command a cheap contamination
+     check** (stamp present and region-hash matches that version → clean; else → repair).
 2. **Where does the contract fragment live?** `framework/docs/ref/ai-contract.md` is a placeholder name.
    It must **not** be named `CLAUDE.md` (that is the mistake D2 is undoing), and it must be excluded
    from the `framework/docs/` bulk copy (Step 3) or it will ship twice.
@@ -627,9 +666,49 @@ deterministic. **ADR-007 does not depend on it and must not claim enforcement it
 4. ~~**Where do the three checkpoints live** — `workflow-guide.md` alone, or ADR-001?~~ **RESOLVED
    2026-07-14 → see D7.** The premise was false: **there is no set of three.** One rule (contract), two
    mechanized enforcements (`/fw-move`). ADR-001 stands unrewritten.
-5. **Does `/fw-init` get filed as a FEAT?** D4 rejected it as the derivation mechanism, but the
-   AI-judgment gap it targets is real: composing **the shell** (project type, optional sections,
-   Project-Specific Notes) at project birth. It would never touch the contract.
+5. **`/fw-init` — not a separate FEAT. Folds into OQ1 as the idempotent region-owner.** *(discussed at
+   length 2026-07-14; resolved to a direction, not yet a FEAT)*
+
+   The draft asked simply *"does `/fw-init` get filed as a FEAT?"* The discussion blew the question open:
+   `/fw-init` denotes **at least four different commands**, and the name collides with the built-in `/init`.
+
+   **The four readings, and why three collapse:**
+
+   | Reading | Job | Status |
+   |---|---|---|
+   | **Shell composer** (D4 Option C) | fill per-project bits of `CLAUDE.md` at birth | **Redundant** — `Setup-Framework.ps1` already substitutes identity placeholders deterministically |
+   | **Scaffolder** (plugin-only) | create `project-hub/`, `framework.yaml`, `.limit` | **Only meaningful if OQ7 → commands-only.** Today the distribution archive scaffolds; the command would be redundant-or-foundational depending on OQ7 — the signature of a decision not to make now |
+   | **Brownfield adopter** | add the framework to a project that already has a `CLAUDE.md` and conventions | **Blocked on OQ1** — this is the hard case D4 did not solve |
+   | **Idempotent region-owner / repair** | (re-)assert the framework region, non-destructively, in place | **The strongest reading** — see below |
+
+   **The naming insight (Gary):** a user who knows `/init` — *analyze the codebase and write `CLAUDE.md`*
+   — will expect `/fw-init` to **edit `CLAUDE.md`.** For the region-owner reading that expectation is
+   *helpful*: it matches. For the scaffolder reading it is *misleading*: scaffolding directories is not
+   what `/init` does.
+
+   **Why the region-owner reading wins.** If `/init` **updates rather than replaces** (verified — see D4
+   Negative Consequences), a `/fw-init` that owns exactly one region and touches nothing else is its
+   natural companion: the repair for `/init` contamination, and equally the tool for archive-derived,
+   plugin-only, and brownfield channels. It is **not blocked on OQ7**, and it is plausibly **part of
+   OQ1's answer** (the *repair* half) rather than a consumer of it.
+
+   **So `/fw-init` is not filed as a standalone FEAT here.** Its live reading folds into **OQ1** as a
+   candidate mechanism for non-destructive region re-derivation. The other three readings are parked: the
+   shell composer is redundant, the scaffolder waits on OQ7, the brownfield adopter waits on OQ1. If any
+   is ever wanted, it is a *different* command with a *different* name — three jobs, three names, not one
+   overloaded `/fw-init`. **Whether the region-owner ships as its own FEAT or as part of OQ1's upgrade
+   tooling is deferred until OQ1's detection mechanism is chosen** — the repair command needs detection to
+   exist first.
+
+   **Bonus finding from running the live `/init` test (2026-07-15) — more OQ7 evidence.** `/init`'s
+   suggested "improvements" included a **build/test command section for `CLAUDE.md`.** But those pointers
+   *already exist and already derive from live config*: `framework.yaml` names every `build_script`
+   per-channel (`release:*.build_script`) and a `sources.testing` SoT — and the Bootstrap block already
+   routes the AI to `framework.yaml`. **There was no gap; `/init` wanted to restate in a document what the
+   framework already indexes in config.** That is the document-vs-executable thread (OQ7) from a third
+   direction: the reflex of a general tool is to *write pointers into prose*; the framework's design is to
+   *derive them from a machine-readable index.* Recorded here, not filed — it is confirmation of D3/OQ7,
+   not new work.
 6. **Is a contract-less channel an acceptable product, or a gap?**
 
    **Verified 2026-07-13: the plugins have no contract surface.** Neither `plugins/spearit-framework/`
@@ -733,4 +812,4 @@ deterministic. **ADR-007 does not depend on it and must not claim enforcement it
 
 ---
 
-**Last Updated:** 2026-07-14
+**Last Updated:** 2026-07-15
