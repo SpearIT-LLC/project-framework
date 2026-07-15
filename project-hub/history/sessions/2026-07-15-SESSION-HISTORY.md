@@ -177,9 +177,12 @@ ground truth, not the ADR's summary:
 
 ## Current State
 
-### ADR-007 — **Status: Proposed** (not yet Accepted)
+### ADR-007 — **Status: ACCEPTED (2026-07-15)**
 
-**Decided:** D1, D2, D2a, D3, D4, D5, D6, D7
+**Decided:** D1, D2, D2a, D3, D4, D5, D6, D7. Ratified this session after the OQ2 resolution + a full
+read-through that fixed four internal-consistency defects (defect count 7→8, line total ~800→~827,
+mis-dated `/init` bullet, stale "pending D4" hedges). Header flipped Proposed→Accepted; no ADR
+index/registry exists to sync.
 
 **Open Questions remaining:**
 - **OQ1** — detection of a modified contract region. **Now broader** (tool-rewrite, not just human-edit)
@@ -205,15 +208,22 @@ FEAT-092, FEAT-163, FEAT-164, FEAT-175, TECH-172, TECH-177
 
 ## Next Session / Next Step
 
-**Immediate:** **ratify ADR-007** (Proposed → Accepted). OQ2 — the last substantive gap — is now closed.
-OQ1/OQ6/OQ7 remain open and none block acceptance (OQ1 ships markers not upgrade tooling; OQ6/OQ7 are
-each "own ADR" questions). Recommended: a final read-through of the Decisions + Consequences for internal
-consistency after today's edits, then flip the Status line and stamp the Deciders/date.
+**ADR-007 is ratified — the deciding phase is complete. What remains is implementation, which needs work
+items** (an ADR decides; it does not implement). Suggested queue:
 
-**After ratification:** BUG-181 becomes an instance of this ADR (re-scope once D4 is the mechanism);
-D2/D4 implementation is normal work to queue — the composer step (read `.claude/framework-contract.md`,
-concatenate into the guarded region, extend the drift-guard) plus the deletions D2/D6 authorize
-(re-verifying each section against its owner at deletion time, per the ADR's own caution).
+1. **Re-scope BUG-181** against D4's composition mechanism — it is now an *instance* of the ADR (starter
+   `CLAUDE.md` does not deliver the contract). Likely the anchor item.
+2. **Author `.claude/framework-contract.md`** (OQ2) — extract the universal contract from this repo's root
+   `CLAUDE.md` + the ~8 unique rules D2 salvages; ZERO placeholders (D4 two-stage constraint).
+3. **Add the composer step** to `Build-FrameworkArchive.ps1` — literal concat of contract + shell into
+   each channel's guarded region (D4 "keep the composer stupid") + drift-guard extension so a hand-edited
+   contract region fails the build (OQ2 implementation note (c)).
+4. **The D2/D6 deletions** — retire `framework/CLAUDE.md` and `CLAUDE-QUICK-REFERENCE.md`,
+   **re-verifying each section against its supposed owner at deletion time** (the ADR's own ⚠️ caution;
+   the line counts are not a licence to `rm`). Repoint `framework.yaml:76` → ADR-001. Fix the phantom
+   `workflow-guide.md` Step 7.5/9 pointers.
+5. **Deferred / non-blocking:** OQ1 (detection mechanism — settle before building in-place upgrade),
+   OQ6 (contract-less plugin channel — own ADR), OQ7 (framework-as-commands — own ADR).
 
 ---
 
