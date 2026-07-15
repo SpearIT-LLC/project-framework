@@ -106,13 +106,13 @@ That is the whole bug: **a missing pointer, not a missing file.**
 
 ---
 
-## Fix Design → **owned by ADR-007**
+## Fix Design → **owned by ADR-007 (Accepted 2026-07-15)**
 
-> **SUPERSEDED 2026-07-13, same session.** This item originally proposed *"starter delegates by
-> reference — add a pointer to `framework/CLAUDE.md`."* Investigating that fix exposed a far larger
-> problem and the design moved to an ADR. **The fix design now lives in
-> [ADR-007](../../research/adr/007-ai-collaboration-contract-and-claude-md.md)** (Proposed). This item
-> remains the *bug record*; do not implement from the superseded design below.
+> **RE-SCOPED 2026-07-15. ADR-007 is Accepted — this item is now its implementation anchor, no longer
+> blocked.** The original pointer-fix (*"add a link to `framework/CLAUDE.md`"*) is dead; the accepted
+> design lives in [ADR-007](../../research/adr/007-ai-collaboration-contract-and-claude-md.md). This item
+> carries the *core delivery fix*; separable chunks (D2/D6 retirements, `framework.yaml` repoint) may be
+> split into sibling items — see the Implementation Checklist.
 
 **What the investigation found, and why the pointer fix died:**
 
@@ -138,11 +138,15 @@ misdescribes the project's actual security posture, and a folder tree wrong in ~
 - **D3** — route through `framework.yaml`'s existing `sources:` index. **No summary layers.**
 - **D4** — **derive the region, not the file.** Every root `CLAUDE.md` is explicitly partitioned into
   `<!-- BEGIN FRAMEWORK CONTRACT -->` (derived, replaced on upgrade) and
-  `<!-- BEGIN USER INSTRUCTIONS -->` (the user's, never touched). The contract is authored **once** and
-  composed into each channel at build time.
+  `<!-- BEGIN PROJECT INSTRUCTIONS -->` (the project's, never touched). The contract is authored **once**
+  and composed into each channel at build time.
+- **OQ2 (resolved)** — the authored-once contract fragment is **`.claude/framework-contract.md`** (not
+  named `CLAUDE.md`; sits with the other build-input assets; `framework.yaml` deliberately does not index
+  it — it is build input, delivered in the assembled `CLAUDE.md`).
 
 **What this bug's fix becomes:** an *instance* of ADR-007 — the starter's `CLAUDE.md` gains the derived
-framework-contract region. **Re-scope this item once ADR-007 is ratified.**
+framework-contract region, delivered by a build-time composer that concatenates
+`.claude/framework-contract.md` into the guarded region.
 
 ---
 
@@ -176,7 +180,7 @@ carry the stronger form.
 2. Confirm the derived root `CLAUDE.md` contains a populated framework-contract region.
 3. Confirm an AI reading **only** the derived root `CLAUDE.md` receives: roles wiring, the ADR-001
    checkpoints, the `/fw-*` commands, and the full Epistemic Standards.
-4. Confirm the USER INSTRUCTIONS region survives a simulated framework upgrade untouched.
+4. Confirm the PROJECT INSTRUCTIONS region survives a simulated framework upgrade untouched.
 
 ### Regression Testing
 
@@ -199,11 +203,41 @@ carry the stronger form.
 
 - [x] **Root cause investigated** — 2026-07-13. Found the delivery gap, and found that the artifact to
       be delivered is itself ~95% duplicate and materially stale.
-- [ ] **BLOCKED — ADR-007 must be ratified first.** It owns the fix design (D1–D5). Do not implement
-      from this item's superseded design.
-- [ ] Re-scope this item as an ADR-007 implementation instance once the ADR is Accepted
-- [ ] **PRE-IMPLEMENTATION REVIEW COMPLETED**
-- [ ] *(remaining steps depend on ADR-007's ratified D4 — do not enumerate them yet)*
+- [x] **ADR-007 ratified** — Accepted 2026-07-15. Fix design (D1–D7, OQ2) is settled.
+- [x] **Re-scoped as the ADR-007 implementation anchor** — 2026-07-15.
+- [ ] **PRE-IMPLEMENTATION REVIEW COMPLETED** — required before this item enters `doing/` (the review is
+      what confirms the plan is ripe; do not implement from `backlog/`).
+
+### Core delivery fix (this item)
+
+- [ ] **Author `.claude/framework-contract.md`** (OQ2) — the universal contract, authored once. Extract
+      from this repo's root `CLAUDE.md` + the ~8 unique rules D2 salvages (resume-work rule, D7 Rule-1
+      text, Response Style per D5, bootstrap, `framework.yaml` routing per D3). **ZERO placeholders** (D4
+      two-stage constraint — `Setup-Framework.ps1` fills identity in the shell, not the contract). ≤150
+      lines (D1).
+- [ ] **Add the two region markers** to both shells — this repo's root `CLAUDE.md` and
+      `templates/starter/CLAUDE.md`: `BEGIN/END FRAMEWORK CONTRACT` (guarded) and
+      `BEGIN/END PROJECT INSTRUCTIONS` (project-owned, ships non-empty with a placeholder comment per D4).
+- [ ] **Add the composer step** to `Build-FrameworkArchive.ps1` — literal concatenation of
+      `.claude/framework-contract.md` into the guarded region of each channel's root `CLAUDE.md` (D4
+      "keep the composer stupid" — no templating).
+- [ ] **Extend the drift-guard** (`:113-132`) — a hand-edited contract region in
+      `templates/starter/CLAUDE.md` (or this repo's root) must fail the build (OQ2 impl note (c); without
+      it the construct degrades to duplication).
+- [ ] **Dogfood** — this repo's own root `CLAUDE.md` composed from the same fragment (D4: same contract
+      block, 15-line shell). Drop *"Which Project Are You Working On?"* per D2a; confirm the
+      `framework/`/`templates/`/`tools/` orientation lives in `README.md` first.
+
+### Separable — candidate sibling items (decide at split time)
+
+- [ ] **D2/D6 retirements** — delete `framework/CLAUDE.md` and `CLAUDE-QUICK-REFERENCE.md`,
+      **re-verifying each section against its supposed owner at deletion time** (ADR ⚠️ caution: line
+      counts are not a licence to `rm`). Salvage the ~8 unique lines first. *Higher-risk, different
+      profile from the delivery fix — good split candidate.*
+- [ ] **`framework.yaml` + phantom pointers** — repoint `framework.yaml:76` `ai-checkpoint-policy` →
+      ADR-001; fix the repo `framework.yaml:79` `PROJECT-STRUCTURE-STANDARD.md` dead link; fix
+      `workflow-guide.md` phantom *"CLAUDE.md Step 7.5/9"* pointers (`:212`, `:1760`, `:2246`, `:2290`).
+      *Small, mechanical, separable.*
 
 ---
 
@@ -221,8 +255,8 @@ carry the stronger form.
 
 ## Related
 
-- **ADR-007** (Proposed 2026-07-13) — **owns the fix design.** This item is the bug record; the ADR is
-  the answer. **This item is blocked on its ratification.**
+- **ADR-007** (**Accepted 2026-07-15**) — **owns the fix design.** This item is the bug record and the
+  implementation anchor. No longer blocked.
 - **ADR-006** — established one-authored-source + per-channel derivation for the work-item type SoT.
   ADR-007 applies the same principle to the collaboration contract.
 - **ADR-001** — the checkpoint policy that derived projects currently do not receive. Its three
@@ -253,4 +287,4 @@ this item lands, decide deliberately where it goes — do not add a third copy.
 
 ---
 
-**Last Updated:** 2026-07-13
+**Last Updated:** 2026-07-15
