@@ -199,10 +199,14 @@ index/registry exists to sync.
 ratification is a final review pass.**
 
 ### In doing/
-*(empty)*
+**BUG-184** — readiness check fix (started this session; not implemented — deferred to next session)
 
 ### In todo/
-FEAT-092, FEAT-163, FEAT-164, FEAT-175, TECH-172, TECH-177
+FEAT-092, FEAT-163, FEAT-164, FEAT-175, TECH-172, TECH-177, **BUG-181**
+
+### New in backlog/ (ADR-007 implementation)
+**TECH-182** (retire the two contract docs; depends on BUG-181), **TECH-183** (framework.yaml repoint +
+phantom pointers)
 
 ---
 
@@ -232,7 +236,56 @@ items** (an ADR decides; it does not implement). Suggested queue:
 ADR-007 accepted; began queuing the implementation work items one by one (see Next Steps above for the
 queue). Work items filed/started this phase are recorded below as they happen.
 
-*(implementation work items — to be appended as filed/moved)*
+**Work items filed/moved this phase:**
+
+1. **BUG-181 re-scoped** as the ADR-007 implementation anchor (unblocked; superseded pointer-fix replaced
+   with the accepted D1–D7/OQ2 design; real checklist enumerated). Committed `8db29a7`.
+2. **TECH-182 filed** — retire `framework/CLAUDE.md` + `CLAUDE-QUICK-REFERENCE.md` (D2/D6), carries the
+   re-verify caution; **Depends On BUG-181**.
+3. **TECH-183 filed** — repoint `framework.yaml:76`→ADR-001, fix `:79` dead link, fix `workflow-guide.md`
+   phantom Step 7.5/9 pointers; independent, mechanical. Both committed `874daf9`.
+4. **BUG-181 moved → todo** (`--force` past BUG-184's false positives; committed `4bce1c5`).
+
+### BUG-184 discovered — the readiness check blocks legitimate `→ todo` moves
+
+Moving BUG-181 toward `doing/` exposed a defect in `.claude/scripts/fw-move.sh`. `check_readiness()`
+blocked a freshly, thoroughly re-scoped item from even reaching `todo/`, with **three false positives**:
+the 11 unchecked implementation-checklist `[ ]` (which are *supposed* to be unchecked), the word "decide"
+in prose (matched as a `DECIDE` marker), and Markdown link syntax `[label]` (matched by the placeholder
+regex `\[.{3,40}\]`).
+
+**Diagnosis (two root causes):** (a) **miscalibrated greps** — the unchecked-`[ ]` check is the done-gate's
+job (already lives correctly in `check_acceptance_criteria`), and the marker/placeholder patterns match
+legitimate content; (b) **wrong transition gate** — readiness runs on `→ todo` (blocking *commitment*) and
+is absent on `→ doing` (where ADR-007 D7 places the ripeness gate). Filed as **BUG-184** (committed
+`d0ae145`). Self-demonstrating: BUG-184's own bug report trips every flag it documents
+(`markers: DECIDE Decide TBD TODO decide todo`).
+
+**Root cause confirmed via git:** `check_readiness` entered in `3b9da8d` — **FEAT-145, the
+AI→deterministic-`.sh` migration of `/fw-move`.** Gary's hypothesis (*"something we introduced when we
+migrated that command to the deterministic script"*) is correct — the blunt greps got teeth when the move
+stopped being AI-interpreted.
+
+**Disposition:** BUG-181 and BUG-184 both `--force`d past the check. BUG-184 moved → `todo` → `doing`
+(it directly affects Gary's daily workflow, so it jumps the ADR-007 implementation queue). **Left in
+`doing/`, not implemented this session** — deferred to next session per Gary.
+
+### The "onion" observation (Gary) — flagged for a full retrospective
+
+Gary: *"We keep moving backwards and deeper… perhaps signs of either we build a complex system with too
+many moving parts or we're not prioritizing on the big picture very well. Maybe both."*
+
+**The pattern, named:** today began as "finish a discussion" and produced a ratified ADR + 3 implementation
+items + a 4th bug about the tool used to file them. Every action surfaced the next defect. **The tell:**
+*not one* of today's items is a feature a client project would use — BUG-181/TECH-182/TECH-183 are documents
+*about* the framework; BUG-184 is tooling enforcing the framework's rules *on* the framework. This is the
+same drift **OQ7** already named (*"every artifact that rotted is a document"*). The self-referential layers
+are cheaper to work on than the client-facing surface, and they generate unbounded legitimate work.
+
+**Candidate lightweight guardrail (Claude's suggestion, not yet adopted):** before starting any item, ask
+*"if I finish this, what does a client project get?"* Internal-hygiene items are allowed but may not preempt
+mission work. Costs one sentence per item; no tooling. **Deferred to the planned retrospective** — Gary:
+*"We'll do a full retrospective and soul searching soon."*
 
 ---
 
