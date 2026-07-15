@@ -372,9 +372,9 @@ FEAT (see Open Questions).
 
 ### D5 — Response Style belongs in the contract
 
-**Decided (pending D4's mechanism).** The bottom-line-up-front response guidance added 2026-07-13 is a
+**Decided.** The bottom-line-up-front response guidance added 2026-07-13 is a
 **universal binding rule on AI behavior** — exactly D1's criterion (1). It therefore lives in the
-contract and reaches every channel by whatever D4 settles.
+contract and reaches every channel by D4's composition mechanism.
 
 It is **not** a personal preference to be kept in the user's `~/.claude/` or in this repo's root file
 only. Keeping it there while claiming "the framework ships its contract to every project" is the
@@ -578,8 +578,8 @@ deterministic. **ADR-007 does not depend on it and must not claim enforcement it
   to re-derive the contract without touching the user's notes. **This ADR ships the markers, not the
   upgrade tooling** (blocked on Open Question 1). Nothing in the framework can re-derive `CLAUDE.md`
   today, which is why derived projects would rot even if we shipped the contract correctly once.
-- ~800 lines of duplicated documentation retired (501 + 334, less ~8 relocated).
-- Seven verified drift defects are fixed by deletion rather than by maintenance.
+- ~827 lines of duplicated documentation retired (501 + 334, less ~8 relocated).
+- Eight verified drift defects are fixed by deletion rather than by maintenance.
 - Auto-loaded context per session drops substantially, in every project, forever.
 - **CLAUDE.md joins the derivation model the rest of the framework already uses.** TECH-169,
   DECISION-162, and FEAT-179 become instances of a stated rule instead of separate negotiations.
@@ -593,7 +593,7 @@ deterministic. **ADR-007 does not depend on it and must not claim enforcement it
   INSTRUCTIONS region must be an obvious enough alternative that nobody *wants* to edit the other one,
   and re-derivation must detect a modified region rather than blindly overwrite it. *An upgrade that
   eats a user's work once will never be trusted again.*
-- **`/init` collision — a tool, not a human, may rewrite the framework region** (verified 2026-07-14).
+- **`/init` collision — a tool, not a human, may rewrite the framework region** (added 2026-07-15).
   Claude Code ships a built-in `/init` whose job is *analyze the codebase and write `CLAUDE.md`.* A
   derived project's `CLAUDE.md` carries the framework region, and the user may run `/init` on it at any
   time — the two commands operate on the same file. **Documented behavior** (`code.claude.com/docs/en/memory`,
@@ -787,7 +787,7 @@ deterministic. **ADR-007 does not depend on it and must not claim enforcement it
 7. **Is the framework, long-term, just a collection of commands?** *(raised 2026-07-14; not answered
    here)*
 
-   Every framework artifact that has rotted is a **document**: `framework/CLAUDE.md` (7 verified
+   Every framework artifact that has rotted is a **document**: `framework/CLAUDE.md` (8 verified
    defects), `CLAUDE-QUICK-REFERENCE.md` (334 lines claiming <200, never shipped), both
    `QUICK-START.md` files, `workflow-guide.md`'s metadata example, `GLOSSARY.md`'s type list.
    **Nothing that executes has rotted** — `/fw-move`, `/fw-status`, `/fw-wip` read live state, so
@@ -834,7 +834,7 @@ deterministic. **ADR-007 does not depend on it and must not claim enforcement it
   passes). **Does not reopen D7** — the response to a gap in a mechanized rule is a better mechanism,
   not a new paragraph.
 - **BUG-181** — the presenting bug (starter `CLAUDE.md` does not deliver the contract). Becomes an
-  *instance* of this ADR; re-scope it once D4 is settled.
+  *instance* of this ADR; re-scope it against D4's composition mechanism at implementation time.
 - **DECISION-162 / TECH-169** — command-tier sync strategy and `/fw-move` copy reconciliation. Same
   unstated rule, different artifact. Feed this ADR's answer into them.
 - **SPIKE-178 / FEAT-179** — plugin engine derivation. Same pattern.
