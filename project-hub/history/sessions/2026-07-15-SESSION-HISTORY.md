@@ -287,6 +287,22 @@ are cheaper to work on than the client-facing surface, and they generate unbound
 mission work. Costs one sentence per item; no tooling. **Deferred to the planned retrospective** — Gary:
 *"We'll do a full retrospective and soul searching soon."*
 
+### Retrospective agenda (Gary — topics to cover when we do the soul-searching)
+
+1. **The onion / prioritization drift** (above) — are we over-building a self-referential system, and/or
+   mis-prioritizing away from the client-facing mission? The client-mission guardrail is one candidate
+   answer.
+2. **Study "Superpowers"** — an open-source Claude Code plugin. *What can we learn from it?* How does it
+   structure commands/skills, what does it choose NOT to build, how does it stay maintainable? Contrast
+   its shape against ours (esp. OQ7's "is the framework just a collection of commands?" thread).
+3. **Survey other similar approaches out there** — what does the broader ecosystem of AI-collaboration /
+   agentic-workflow frameworks and plugins do? Where does ours converge or diverge, and are our
+   divergences deliberate value or accidental complexity?
+4. **The clean-slate question** — *if we started the framework from scratch, knowing what we know now, what
+   would we do differently?* (A forcing function for the above: it surfaces which of our ~180 work items
+   were essential vs. incidental to a design choice we'd no longer make. OQ7's "commands own chokepoints,
+   documents rot" is a likely load-bearing answer.)
+
 ---
 
 **Last Updated:** 2026-07-15
