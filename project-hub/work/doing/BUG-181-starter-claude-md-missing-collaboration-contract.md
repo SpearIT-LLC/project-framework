@@ -205,28 +205,50 @@ carry the stronger form.
       be delivered is itself ~95% duplicate and materially stale.
 - [x] **ADR-007 ratified** — Accepted 2026-07-15. Fix design (D1–D7, OQ2) is settled.
 - [x] **Re-scoped as the ADR-007 implementation anchor** — 2026-07-15.
-- [ ] **PRE-IMPLEMENTATION REVIEW COMPLETED** — required before this item enters `doing/` (the review is
-      what confirms the plan is ripe; do not implement from `backlog/`).
+- [x] **Decision 3 settled** — 2026-07-17. Contract delivery is **compose starter / verify root**: the
+      SoT is composed into `templates/starter/CLAUDE.md` (hard-fail guard) but only *verified* against the
+      repo root `CLAUDE.md` (advisory check), because starter has no history to protect and root does. See
+      2026-07-17 session history for the full journey.
+- [x] **PRE-IMPLEMENTATION REVIEW COMPLETED** — 2026-07-18. Plan (this checklist) reconciled to Decision
+      3 before implementation. Design is ripe: D1–D7 + OQ2 settled in ADR-007; D3 compose-vs-verify split
+      settled 2026-07-17; the checklist below now reflects it.
 
 ### Core delivery fix (this item)
 
-- [ ] **Author `.claude/framework-contract.md`** (OQ2) — the universal contract, authored once. Extract
-      from this repo's root `CLAUDE.md` + the ~8 unique rules D2 salvages (resume-work rule, D7 Rule-1
-      text, Response Style per D5, bootstrap, `framework.yaml` routing per D3). **ZERO placeholders** (D4
-      two-stage constraint — `Setup-Framework.ps1` fills identity in the shell, not the contract). ≤150
-      lines (D1).
+- [ ] **Author `.claude/framework-contract.md`** (OQ2) — the universal contract, authored once, as the
+      **single source of truth** (inert build-input; `framework.yaml` deliberately does not index it).
+      Extract from this repo's root `CLAUDE.md` + the ~8 unique rules D2 salvages (resume-work rule, D7
+      Rule-1 text, Response Style per D5, bootstrap, `framework.yaml` routing per D3). **ZERO placeholders**
+      (D4 two-stage constraint — `Setup-Framework.ps1` fills identity in the shell, not the contract).
+      ≤150 lines (D1).
 - [ ] **Add the two region markers** to both shells — this repo's root `CLAUDE.md` and
-      `templates/starter/CLAUDE.md`: `BEGIN/END FRAMEWORK CONTRACT` (guarded) and
-      `BEGIN/END PROJECT INSTRUCTIONS` (project-owned, ships non-empty with a placeholder comment per D4).
-- [ ] **Add the composer step** to `Build-FrameworkArchive.ps1` — literal concatenation of
-      `.claude/framework-contract.md` into the guarded region of each channel's root `CLAUDE.md` (D4
-      "keep the composer stupid" — no templating).
-- [ ] **Extend the drift-guard** (`:113-132`) — a hand-edited contract region in
-      `templates/starter/CLAUDE.md` (or this repo's root) must fail the build (OQ2 impl note (c); without
-      it the construct degrades to duplication).
-- [ ] **Dogfood** — this repo's own root `CLAUDE.md` composed from the same fragment (D4: same contract
-      block, 15-line shell). Drop *"Which Project Are You Working On?"* per D2a; confirm the
-      `framework/`/`templates/`/`tools/` orientation lives in `README.md` first.
+      `templates/starter/CLAUDE.md`: `BEGIN/END FRAMEWORK CONTRACT` (the contract region) and
+      `BEGIN/END PROJECT INSTRUCTIONS` (project-owned, never inspected; ships non-empty with a placeholder
+      comment per D4).
+- [ ] **Add the composer step for STARTER** to `Build-FrameworkArchive.ps1` — literal concatenation of
+      `.claude/framework-contract.md` into the guarded region of `templates/starter/CLAUDE.md` (D4 "keep
+      the composer stupid" — no templating). Starter is **composed** (D3): its region is byte-replaced
+      fresh from the SoT at build.
+- [ ] **Add the STARTER drift-guard** (extend `:113-132`) — a hand-edited contract region in
+      `templates/starter/CLAUDE.md` must **hard-fail the build** (copy-fresh guarantee; OQ2 impl note (c)).
+      This is starter's compose enforcement; without it the construct degrades to duplication.
+- [ ] **Author `tools/Check-ContractDrift.ps1`** (Decision 3) — new artifact, home `tools/` beside
+      `Build-FrameworkArchive.ps1`. Compares the repo root `CLAUDE.md` contract region against
+      `.claude/framework-contract.md`, **inside the markers only** (outside is presumed intentional user
+      edits, never inspected). **Advisory** (flags + a human reconciles), *not* build-blocking — root drift
+      is a rare deliberate-edit risk, not churn (empirically ~monthly, always a titled commit).
+- [ ] **Ship the check + contract snapshot into the archive** (Decision 3) — the build copies
+      `.claude/framework-contract.md` and `Check-ContractDrift.ps1` into the derived project. Roles flip
+      there: the shipped contract is a **snapshot** ("valid at build time"), and the check becomes a
+      **safety-net tripwire** ("did something clobber your region?"), not a governance mechanism. The
+      derived project owns the snapshot. *(Framework-version stamp on the snapshot is a FEAT-157
+      nice-to-have, not a blocker — same seam Decision 2 deferred.)*
+- [ ] **Dogfood — VERIFY root, don't compose it** (D3) — this repo's own root `CLAUDE.md` is authored to
+      match the SoT and checked by `Check-ContractDrift.ps1` (advisory), **not** build-composed. This is
+      the compose-vs-verify asymmetry: root has history to protect. One-time manual edit: delete the summary
+      sections (Key Documents / Framework Documentation / Project Structure / Workflow Quick Reference — the
+      contract region owns that by reference, D3) and drop *"Which Project Are You Working On?"* (D2a);
+      confirm the `framework/`/`templates/`/`tools/` orientation lives in `README.md` first.
 
 ### Separable work — split into sibling items (2026-07-15)
 
@@ -285,4 +307,4 @@ this item lands, decide deliberately where it goes — do not add a third copy.
 
 ---
 
-**Last Updated:** 2026-07-15
+**Last Updated:** 2026-07-18
