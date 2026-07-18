@@ -142,6 +142,136 @@ nothing moved). Reviewing which boxes were *truthfully* checkable is what expose
 2. **BUG-181 can now move `todo → doing`** through the fixed gate when its review is done.
 3. **Retrospective** when Gary's thoughts doc is ready.
 
+> **Note:** items 1–2 above were *done this same session* — see the BUG-181 section below. This block is
+> preserved as the state at the time BUG-184 was committed (append-only record).
+
+---
+
+# Session Continued — BUG-181 (ADR-007 implementation begins)
+
+**Session Focus (afternoon):** BUG-181 — move to `doing/`, reconcile the plan to Decision 3, and begin
+implementing ADR-007 (contract SoT + shell partition).
+
+## Summary
+
+Moved BUG-181 `todo → doing`, completed its pre-implementation review, and shipped the first two
+implementation steps of ADR-007: authored `.claude/framework-contract.md` (the single source of truth)
+and partitioned both root `CLAUDE.md` shells into the two-region `[FRAMEWORK CONTRACT][PROJECT
+INSTRUCTIONS]` model. The repo's own `CLAUDE.md` now governs this session under the new contract — a live
+dogfood. Remaining work is the PowerShell build machinery (composer, drift-guard, check script, archive
+snapshot).
+
+## Work Completed
+
+### BUG-181: deliver the framework collaboration contract (ADR-007 anchor)
+
+- **Moved `todo → doing`** (dependency check passed — no `Depends On`). *Observed:* the move printed
+  `doing/: 2/2` — a **cosmetic counting bug** in `fw-move.sh` (final count at `:515` excludes `.limit`
+  but not `.gitkeep`, so an empty `doing/` with BUG-181 reads as 2). Real WIP is 1/2. Noted, not fixed —
+  candidate for its own small BUG.
+- **Pre-implementation review completed.** The review caught that the checklist predated Decision 3 —
+  so **updating the plan preceded implementation** (Gary: "Always update the plan before
+  implementation"). Reconciled the checklist to the compose-starter / verify-root split, added the
+  check-script and archive-snapshot steps, marked PRE-IMPLEMENTATION REVIEW COMPLETED. Committed
+  separately (`799fe64`) before any code.
+- **Step 1 — authored `.claude/framework-contract.md`** (~72 lines, zero `{{ }}` placeholders). Contains
+  only D1 contract material: Bootstrap (framework.yaml routing per D3), full Epistemic Standards (incl.
+  "never present inference as fact" — the line starter currently *drops*, which is part of this bug),
+  Response Style (D5), the Implementation Rule (D7's exact "implement only work in `doing/`" text), and
+  Onboarding. No guide restatement.
+- **Step 2 — partitioned both shells:**
+  - `templates/starter/CLAUDE.md` (82 → 39 lines): FRAMEWORK CONTRACT region left as a build-composed
+    placeholder; identity (`{{PROJECT_DESCRIPTION}}`) + project-notes moved into PROJECT INSTRUCTIONS;
+    duplicated epistemic/response/bootstrap sections and all summary tables removed.
+  - `CLAUDE.md` (repo root): contract region **authored to match the SoT** (root is *verified*, not
+    composed — D3); "Which Project Are You Working On?" + summary layers deleted (D2a); minimal PROJECT
+    INSTRUCTIONS pointing at README for orientation.
+- **FEAT-115** — carries the deferred `/fw-tour` contract-pointer upgrade (see Decision below).
+
+## Decisions Made
+
+### D-a — /fw-tour: capability now, command later (contract may not name a nonexistent command)
+
+Initial draft of the contract included a `## Onboarding` line pointing at `/fw-tour`. Removed it: a
+contract cannot reference a command that does not exist — that is precisely the dangling-reference class
+ADR-007 exists to kill. **Gary's refinement:** say *"ask the AI for a tour… may be verbose and
+unstructured for now"* instead — this references a **capability** (always true), not a **command** (not
+yet real), so it is honest and gives a newcomer somewhere to start. The upgrade to the structured
+`/fw-tour` command is filed as a FEAT-115 requirement, with the ADR-007 D6 rationale linked both ways.
+The contract self-describes as provisional ("for now").
+
+### D-b — Check-ContractDrift comparison is trim-both-sides
+
+Verifying the root region byte-matched the SoT surfaced a single diff: a trailing blank line where the
+region meets the `END FRAMEWORK CONTRACT` marker. The *content* is identical. **Gary's call:** trim both
+sides before comparing — covers marker-boundary newlines and editor trailing spaces, neither of which is
+contract content, without weakening the check. Recorded on the check-script checklist item; the starter
+drift-guard uses the same rule for consistency.
+
+### D-c — Update the plan before implementation (process)
+
+The pre-implementation review is where a stale plan gets caught and fixed — *before* code, as its own
+committed step. Applied here: the Decision-3 reconciliation shipped in `799fe64` ahead of any
+implementation commit.
+
+## Verification
+
+- Contract: `wc -l` ≤150 ✅ (72); `grep '{{'` = 0 ✅.
+- Root region vs SoT: `diff` of the BOOTSTRAP-onward bodies — **identical except one trailing blank
+  line** (→ D-b trim rule). Contract text byte-matches.
+- Live dogfood: this session is now running under the rewritten root `CLAUDE.md` and behaving to
+  contract (BLUF responses, `git mv`, verify-before-assert).
+
+## Files Created (afternoon)
+
+- `.claude/framework-contract.md` — the contract single source of truth (ADR-007 OQ2)
+
+## Files Modified (afternoon)
+
+- `CLAUDE.md` (repo root) — partitioned; contract region authored to SoT; D2a + summary layers removed
+- `templates/starter/CLAUDE.md` — partitioned; contract region is a build-composed placeholder
+- `project-hub/work/backlog/FEAT-115-fw-tour-command.md` — deferred contract-pointer requirement + links
+- `project-hub/work/doing/BUG-181-…md` — checklist reconciled to Decision 3; review marked complete
+
+## Files Moved (afternoon)
+
+- `project-hub/work/todo/BUG-181-…md` → `project-hub/work/doing/BUG-181-…md`
+
+## Commits (afternoon)
+
+- `799fe64` — BUG-181 → doing; checklist reconciled to Decision 3 (plan-before-code)
+- `0ea4895` — contract SoT authored + both shells partitioned (ADR-007 steps 1–2)
+
+---
+
+## Current State (end of session)
+
+### In done/ (awaiting release)
+- **BUG-184** — complete (7 items in done/; under the 10-item nudge threshold).
+
+### In doing/
+- **BUG-181** — ADR-007 steps 1–2 shipped (contract SoT + shell partition). **Remaining:** build composer
+  for starter, starter drift-guard extension, `tools/Check-ContractDrift.ps1` (advisory, trim-both-sides),
+  archive ships-check-and-snapshot. These are the PowerShell build steps.
+
+### Not committed (Gary's working tree)
+- `project-hub/retrospectives/2026-07-16-garys-thoughts.md` — Gary's own "Structure Ideas / Streams"
+  brainstorm additions; deliberately left unstaged (not part of BUG-181).
+
+## Next Session — continue from here
+
+1. **BUG-181 build steps** (all in `Build-FrameworkArchive.ps1` / `tools/`):
+   - Composer: literal concat of `.claude/framework-contract.md` into starter's FRAMEWORK CONTRACT region
+     (D4 "keep the composer stupid").
+   - Extend the drift-guard (`:113-132`) so a hand-edited starter contract region **hard-fails** the build.
+   - Author `tools/Check-ContractDrift.ps1` — advisory root check, **trim-both-sides** (D-b).
+   - Archive ships the check + contract snapshot (roles flip to snapshot/tripwire in the derived project).
+2. **Then TECH-182** (delete `framework/CLAUDE.md` + `CLAUDE-QUICK-REFERENCE.md`) — depends on BUG-181;
+   the contract now has a home, but **re-verify each section exists in its owning guide before deleting**
+   (ADR-007's explicit caution — the audit is not a licence to `rm`).
+3. **Consider filing** the `fw-move.sh` `.gitkeep` counting bug as its own small BUG.
+4. **Retrospective** when Gary's thoughts doc is ready (the Streams brainstorm may seed it).
+
 ---
 
 **Last Updated:** 2026-07-18
