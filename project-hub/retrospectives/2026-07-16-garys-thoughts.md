@@ -35,6 +35,7 @@ Identify the core features of the Framework and the principles that drive it.
 - No code without a plan or No implementation without a plan 
 - DRY documentation/Single source of Truth 
 - The Framework aides contractors 
+- Documentation ships with code, not after. or Documentation and Code are one deliverable.
 
 ## Problems
 - Documentation duplication (inspite of our DRY guideline)
