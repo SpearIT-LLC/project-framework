@@ -237,6 +237,11 @@ carry the stronger form.
       `.claude/framework-contract.md`, **inside the markers only** (outside is presumed intentional user
       edits, never inspected). **Advisory** (flags + a human reconciles), *not* build-blocking — root drift
       is a rare deliberate-edit risk, not churn (empirically ~monthly, always a titled commit).
+      **Comparison is trim-both-sides** (decided 2026-07-18): trim leading/trailing whitespace off both the
+      extracted region body and the SoT before byte-comparing. The marker boundaries introduce an adjacent
+      blank line (verified 2026-07-18 authoring the root region) and editors add trailing spaces; neither
+      is contract content, so trimming avoids false-positive drift without weakening the check. The
+      composer's starter drift-guard should use the same trim rule for consistency.
 - [ ] **Ship the check + contract snapshot into the archive** (Decision 3) — the build copies
       `.claude/framework-contract.md` and `Check-ContractDrift.ps1` into the derived project. Roles flip
       there: the shipped contract is a **snapshot** ("valid at build time"), and the check becomes a

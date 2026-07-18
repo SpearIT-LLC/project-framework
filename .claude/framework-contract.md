@@ -1,14 +1,12 @@
-# Claude Context: SpearIT Project Framework
-
-<!-- ─────────────────────────────────────────────────────────────────────
-     BEGIN FRAMEWORK CONTRACT
-     This region is the framework's collaboration contract. It is AUTHORED to
-     match .claude/framework-contract.md (the single source of truth) and
-     VERIFIED against it by tools/Check-ContractDrift.ps1 (advisory). Unlike a
-     derived project's CLAUDE.md, this repo's contract region is not build-
-     composed — it is dogfooded by hand. Keep it byte-identical to the SoT;
-     edit .claude/framework-contract.md first, then reconcile here.
-     ───────────────────────────────────────────────────────────────────── -->
+<!-- ─────────────────────────────────────────────────────────────────────────
+     SpearIT Framework Collaboration Contract — authored once (ADR-007).
+     This file is the single source of truth for the FRAMEWORK CONTRACT region
+     of every channel's CLAUDE.md. It is build input: the build composes it into
+     each root CLAUDE.md's guarded region. The AI never reads this file at
+     runtime — it reads the assembled CLAUDE.md. This region carries NO
+     identity placeholders; that substitution happens in the shell, not the
+     contract (ADR-007 D4, two-stage substitution).
+     ───────────────────────────────────────────────────────────────────────── -->
 
 > **BOOTSTRAP — execute on every session start**
 >
@@ -70,25 +68,3 @@ get the AI into that machine.
 **New here? Ask the AI for a tour of the framework.** It may be verbose and unstructured for now, but it
 gives you somewhere to start. The sources of truth are indexed in `framework.yaml`; `README.md` and
 `QUICK-START.md` are the AI-less fallback.
-
-<!-- END FRAMEWORK CONTRACT -->
-
-
-<!-- ─────────────────────────────────────────────────────────────────────
-     BEGIN PROJECT INSTRUCTIONS
-     This region is this repo's own. The framework never overwrites it.
-     ───────────────────────────────────────────────────────────────────── -->
-
-## This Repository
-
-This is the **framework source repo** — one project, not several. Its parts: `framework/` is the product,
-`templates/` packages it for distribution, `tools/` builds the archives, `plugins/` are the plugin
-editions. See [README.md](README.md) for the full repository structure and
-[framework.yaml](framework.yaml) for machine-readable configuration (schema:
-[framework/docs/ref/framework-schema.yaml](framework/docs/ref/framework-schema.yaml)).
-
-Work happens against these parts directly — "framework improvements" go in `framework/`, "template
-updates" in `templates/`, "build tooling" in `tools/`. Nobody works on `tools/` (or any subdirectory) as
-a separate project.
-
-<!-- END PROJECT INSTRUCTIONS -->

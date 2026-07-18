@@ -57,6 +57,12 @@ New users need orientation to the framework, but the current tour (when requeste
   - [ ] Key commands (/fw-status, /fw-move, /fw-next-id, etc.)
   - [ ] Roles system
   - [ ] Where to find documentation
+- [ ] **Upgrade the framework contract's Onboarding text to point at `/fw-tour`.** The contract
+      (`.claude/framework-contract.md`, authored 2026-07-18) currently says *"ask the AI for a tour… may
+      be verbose and unstructured for now"* — a deliberate placeholder that references a **capability**,
+      not a command, so it is not a dangling reference (BUG-181 / ADR-007 no-dangling rule). When
+      `/fw-tour` ships, replace that verbiage with the structured command. Re-run
+      `Check-ContractDrift.ps1` on the repo root after (advisory); the starter recomposes on next build.
 
 ### Non-Functional Requirements
 
@@ -154,6 +160,9 @@ framework/docs/tours/
 **Related:**
 - FEAT-011: Discovered the verbosity issue during validation
 - FEAT-107: Onboarding experience improvements
+- **ADR-007 D6 / BUG-181:** D6 hands `/fw-tour` the onboarding goal and designates the framework contract
+  as its entry point. The contract pointer is deferred to this item (see the requirement above) — the
+  contract may not reference a command that does not yet exist.
 
 ---
 
@@ -203,4 +212,4 @@ framework/docs/tours/
 
 ---
 
-**Last Updated:** 2026-02-06
+**Last Updated:** 2026-07-18

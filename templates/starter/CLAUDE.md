@@ -1,82 +1,36 @@
 # Claude Context: {{PROJECT_NAME}}
 
-> **BOOTSTRAP BLOCK - Execute on every session start**
->
-> 1. **Ask:** "What kind of work are we doing today?" (unless user already stated intent)
-> 2. **Read:** `framework.yaml` → check project configuration
-> 3. **On work item actions** (move, create, status change): Use `git mv` for file operations in `project-hub/work/`
-> 4. **Before writing code:** State what you plan to do and wait for approval
+<!-- ─────────────────────────────────────────────────────────────────────
+     BEGIN FRAMEWORK CONTRACT
+     Derived from the SpearIT Project Framework. DO NOT EDIT this region —
+     it is composed from the framework's contract at build time and is
+     replaced on framework upgrade. Put your own instructions in the
+     PROJECT INSTRUCTIONS region below; the framework never touches it.
+     ───────────────────────────────────────────────────────────────────── -->
 
-**Last Updated:** {{DATE}}
+<!-- The framework contract is composed into this region at build time from
+     .claude/framework-contract.md. In the framework source repo this comment
+     is a placeholder; in a built/derived project it is replaced by the
+     contract text. -->
 
----
+<!-- END FRAMEWORK CONTRACT -->
 
-## Epistemic Standards
 
-**Facts must be verified before stating.** Read the file, run the command, check the source. If you cannot verify, say so explicitly.
-
-**Interpretation and opinions are welcome** but must be clearly labeled ("I believe...", "This suggests...", "My interpretation is...").
-
----
-
-## Project Configuration
-
-Read `framework.yaml` at the project root for machine-readable project context.
-
----
+<!-- ─────────────────────────────────────────────────────────────────────
+     BEGIN PROJECT INSTRUCTIONS
+     This region is YOURS. The framework will never modify or overwrite it.
+     Add your project's conventions, standards, preferences, and any
+     standing instructions for the AI.
+     ───────────────────────────────────────────────────────────────────── -->
 
 ## What This Project Does
 
 {{PROJECT_DESCRIPTION}}
 
----
-
-## Key Documents (Sources of Truth)
-
-| Document | Purpose |
-|----------|---------|
-| [PROJECT-STATUS.md](PROJECT-STATUS.md) | Version and status (SsoT) |
-| [CHANGELOG.md](CHANGELOG.md) | Version history |
-| [framework.yaml](framework.yaml) | Project configuration |
-
----
-
-## Framework Documentation
-
-| Topic | Document |
-|-------|----------|
-| Work item workflow | [framework/docs/collaboration/workflow-guide.md](framework/docs/collaboration/workflow-guide.md) |
-| Git and releases | [framework/docs/process/version-control-workflow.md](framework/docs/process/version-control-workflow.md) |
-| Templates | [framework/templates/](framework/templates/) |
-
----
-
-## Project Structure
-
-**Full structure:** See [framework/docs/PROJECT-STRUCTURE.md](framework/docs/PROJECT-STRUCTURE.md)
-
-**Key locations:**
-- `project-hub/work/` - Work items (backlog → todo → doing → done)
-- `project-hub/history/` - Session logs and archived releases
-- `framework.yaml` - Project configuration (SSOT for metadata)
-- `src/`, `tests/`, `docs/` - Code and documentation
-
----
-
-## Workflow Quick Reference
-
-**Work item flow:** `project-hub/work/backlog/` → `todo/` → `doing/` → `done/`
-
-**WIP Limits:** `doing/` = 1, `todo/` = 10
-
-**Templates:** Copy from `framework/templates/work-items/`
-
----
-
 ## Project-Specific Notes
 
-[Add coding standards, architecture decisions, and conventions specific to this project]
+<!-- Add coding standards, architecture decisions, and conventions specific
+     to this project. This is also where project-local instructions to the AI
+     go — anything you want the AI to always do in this project. -->
 
----
-
-**Last Updated:** {{DATE}}
+<!-- END PROJECT INSTRUCTIONS -->
