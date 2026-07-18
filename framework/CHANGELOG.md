@@ -55,9 +55,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Orphan `framework/tools/Move-WorkItem.ps1`** (BUG-170) — the pre-FEAT-145 PowerShell mover
   superseded by `move.sh`/`fw-move.sh`. Nothing live invoked it; its stale "Production script" header
   had been masking the missing engine.
+- **`check_readiness()` deterministic readiness gate on `→ todo`** (BUG-184). The greps it ran —
+  `TODO/TBD/DECIDE` markers, `Option A/B/C`, bracketed-placeholder detection, and an unchecked-`[ ]`
+  count — matched no real work-item convention and only ever produced false positives on *well-planned*
+  items (an unchecked checklist, cross-reference links, and the word "decide" in prose all tripped it).
+  Per ADR-007 D7, plan ripeness is a judgment `grep` cannot make. Ripeness now lives solely in the
+  behavioral pre-implementation review at `→ doing`; the unchecked-`[ ]` gate remains where it belongs,
+  at `→ done` (`check_acceptance_criteria`). `--force` is retained as a no-op for compatibility.
 
 ### Fixed
 
+- **BUG-184: readiness check blocked legitimate `→ todo` moves.** A thoroughly-planned item could not
+  reach `todo/` without `--force`, because `check_readiness` treated normal features of a good plan as
+  signs of an unripe one — training users to reflexively bypass the gate. The check was miscalibrated
+  (blunt greps that could not tell a template stub from real content) *and* gated at the wrong
+  transition (`→ todo` is commitment, not ripeness — ADR-007 D7). Removing it fixes both; verified that
+  a link-and-checklist-heavy item now moves `backlog → todo` clean, while `→ done` still hard-blocks on
+  unchecked acceptance criteria.
 - **BUG-170: `/fw-move` silently degraded to AI-interpreted moves in built projects.** The archive
   shipped `fw-move.md` referencing an engine (`framework/scripts/move.sh`) the build never copied, so
   downstream `/fw-move` fell back to AI `git mv` — losing every deterministic guarantee, including the

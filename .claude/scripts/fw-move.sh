@@ -7,9 +7,9 @@
 # Usage:
 #   bash .claude/scripts/fw-move.sh <item-id-or-list> <target-folder> [--force]
 #
-# --force: Skip readiness blocks for all valid targets except → doing/.
-#          Dependency checks on → doing/ are always enforced regardless of --force.
-#          Issues are shown as warnings but the move proceeds.
+# --force: Reserved for future soft-block bypass. Dependency checks on → doing/
+#          and acceptance-criteria checks on → done/ are always enforced
+#          regardless of --force (both are hard blocks).
 #
 # Handles:
 #   - Single or batch IDs (comma/space separated)
@@ -24,9 +24,9 @@
 #   - Dependency not in done/ (→ doing only)
 #   - Unchecked acceptance criteria (→ done only)
 #
-# Soft blocks (exit 1 without --force, warning with --force):
-#   - Readiness issues: unresolved markers (TODO/TBD/DECIDE), open options,
-#     unfilled placeholders, unchecked criteria (→ todo, backlog, blocked, archive)
+# Ripeness (BUG-184): there is NO deterministic readiness gate on → todo/backlog.
+#   Per ADR-007 D7, plan ripeness is a judgment grep cannot make. It is enforced
+#   behaviorally by the AI pre-implementation review at the → doing command layer.
 #
 # Examples:
 #   bash .claude/scripts/fw-move.sh FEAT-145 doing
@@ -237,58 +237,17 @@ check_acceptance_criteria() {
 }
 
 # ---------------------------------------------------------------------------
-# POLICY: Readiness check (for all targets except → doing)
-# Warns if item has open issues: unresolved markers, placeholder text,
-# unchecked criteria. Blocks unless --force is set.
-# Returns number of issues found (caller decides whether to block).
+# Ripeness note (BUG-184):
+# There is deliberately NO deterministic readiness check on → todo/backlog/etc.
+# Per ADR-007 D7, ripeness is a judgment grep cannot make ("grep cannot see a
+# confident-but-thin plan"). The two real gates are:
+#   • → done  — deterministic: check_acceptance_criteria (unchecked [ ] below)
+#   • → doing — behavioral: the AI pre-implementation review at the command layer
+# The former check_readiness() greps (TODO/TBD/DECIDE markers, Option A/B/C,
+# bracketed placeholders) matched no real work-item convention and only ever
+# produced false positives on well-planned items — removed in BUG-184.
+# TECH-177 will later enrich the → done checkbox gate with Obsidian task markers.
 # ---------------------------------------------------------------------------
-check_readiness() {
-  local item_file="$1"
-  local item_name
-  item_name=$(basename "$item_file")
-
-  local issues=0
-
-  # Unchecked acceptance criteria
-  local unchecked
-  unchecked=$(grep -ce '- \[ \]' "$item_file" 2>/dev/null; true)
-  unchecked=$(echo "$unchecked" | tr -d '[:space:]')
-  unchecked=${unchecked:-0}
-  if [ "$unchecked" -gt 0 ]; then
-    echo "   ⚠️  $unchecked unchecked criteria ([ ])"
-    ((issues++)) || true
-  fi
-
-  # Unresolved inline markers
-  local markers
-  markers=$(grep -oiE "\b(TODO|TBD|DECIDE)\b" "$item_file" 2>/dev/null | sort -u | tr '\n' ' ' | sed 's/ $//' || true)
-  if [ -n "$markers" ]; then
-    echo "   ⚠️  Unresolved markers: $markers"
-    ((issues++)) || true
-  fi
-
-  # Open options (Option A/B/C style)
-  local options
-  options=$(grep -cE "^\*\*Option [A-Z]" "$item_file" 2>/dev/null; true)
-  options=$(echo "$options" | tr -d '[:space:]')
-  options=${options:-0}
-  if [ "$options" -gt 0 ]; then
-    echo "   ⚠️  $options undecided option(s) (Option A/B/C...)"
-    ((issues++)) || true
-  fi
-
-  # Placeholder text
-  local placeholders=0
-  { grep -qE "\[.{3,40}\]" "$item_file" 2>/dev/null && ((placeholders++)); } || true
-  { grep -qE "\bNNN\b" "$item_file" 2>/dev/null && ((placeholders++)); } || true
-  { grep -qE "\bYYYY-MM-DD\b" "$item_file" 2>/dev/null && ((placeholders++)); } || true
-  if [ "$placeholders" -gt 0 ]; then
-    echo "   ⚠️  Unfilled placeholder text detected"
-    ((issues++)) || true
-  fi
-
-  return $issues
-}
 
 # ---------------------------------------------------------------------------
 # Stamp Completed date (for → done) — BUG-167
@@ -382,22 +341,9 @@ for ID in "${ITEM_IDS[@]}"; do
     check_acceptance_criteria "$source" || ((POLICY_ERRORS++)) || true
   fi
 
-  # Readiness check (→ todo, backlog, blocked, archive) — soft block, bypassed by --force
-  # Skipped for → doing (dependency check covers it) and → done (criteria check covers it)
-  if [ "$TARGET" = "todo" ] || [ "$TARGET" = "backlog" ] || [ "$TARGET" = "blocked" ] || [ "$TARGET" = "archive" ]; then
-    set +e
-    check_readiness "$source"
-    readiness_issues=$?
-    set -e
-    if [ "$readiness_issues" -gt 0 ]; then
-      if [ "$FORCE" = true ]; then
-        echo "⚠️  $(basename "$source") has $readiness_issues readiness issue(s) — proceeding (--force)"
-      else
-        echo "❌ $(basename "$source") has $readiness_issues readiness issue(s) — use --force to queue anyway"
-        ((POLICY_ERRORS++)) || true
-      fi
-    fi
-  fi
+  # Ripeness (BUG-184): no deterministic readiness gate on → todo/backlog/etc.
+  # → done is gated deterministically (check_acceptance_criteria, above);
+  # → doing ripeness is the AI pre-implementation review at the command layer.
 done
 
 if [ "$POLICY_ERRORS" -gt 0 ]; then

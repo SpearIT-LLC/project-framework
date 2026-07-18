@@ -13,7 +13,7 @@ Move a work item between workflow folders with policy enforcement, transition va
 
 - `item-id` (required): One or more work item IDs — full (`FEAT-145`), bare numeric (`145`), or mixed (`"FEAT-145, 146"`). Comma or space separated. Quote multi-item lists.
 - `target-folder` (required): One of: `backlog`, `todo`, `doing`, `done`, `blocked`, `archive`, `releases`
-- `--force` (optional): Bypass readiness blocks (unresolved markers, unchecked criteria, placeholders). Has no effect on `→ doing/` — dependency checks are always enforced.
+- `--force` (optional): Reserved for future soft-block bypass. Has no effect on the hard blocks: `→ doing/` dependency checks and `→ done/` acceptance-criteria checks are always enforced. (There is no longer a deterministic readiness block on `→ todo/` — see Ripeness below.)
 
 ---
 
@@ -24,14 +24,14 @@ Move a work item between workflow folders with policy enforcement, transition va
 - **Transition matrix** — invalid from→to pairs rejected
 - **Dependency check** — `Depends On:` items must be in `done/` before `→ doing` (not bypassable)
 - **Acceptance criteria** — unchecked `[ ]` items block `→ done` (not bypassable)
-- **Readiness check** — detects TODO/TBD/DECIDE markers, Option A/B/C, unfilled placeholders — blocks unless `--force`
 - **WIP limit** — warning only (does not block)
 
+**Ripeness (BUG-184):** there is **no** deterministic readiness gate on `→ todo/`. Committing to work is not a ripeness assertion. Per ADR-007 D7, plan ripeness is a judgment `grep` cannot make; it is enforced behaviorally by the **pre-implementation review at `→ doing`** (see Post-Move → doing/). The two deterministic gates are the dependency check (`→ doing`) and the acceptance-criteria check (`→ done`).
+
 If the script exits 1, report the error and offer interactive recovery:
-- Unchecked criteria → "Mark them complete?"
-- Dependency not in done/ → "Move FEAT-NNN to done first?"
+- Unchecked acceptance criteria (`→ done`) → "Mark them complete?"
+- Dependency not in done/ (`→ doing`) → "Move FEAT-NNN to done first?"
 - Invalid transition → explain valid paths
-- Readiness issues → "Use --force to queue anyway?"
 
 ---
 
@@ -139,8 +139,7 @@ Follow step-by-step: mark `[x]` immediately after each step, stop and wait for a
 /fw-move FEAT-042 todo                    # Single item — full ID
 /fw-move 042 todo                         # Single item — bare numeric
 /fw-move FEAT-042 doing                   # Start work (with pre-implementation review)
-/fw-move FEAT-042 done                    # Complete work
-/fw-move FEAT-042 todo --force            # Queue despite readiness issues
+/fw-move FEAT-042 done                    # Complete work (blocks on unchecked [ ])
 /fw-move "FEAT-042, FEAT-043" todo        # Batch — full IDs
 /fw-move "042, 043" todo                  # Batch — bare numerics
 /fw-move "FEAT-042, 043" todo             # Batch — mixed

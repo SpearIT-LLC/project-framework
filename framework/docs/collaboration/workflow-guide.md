@@ -418,6 +418,8 @@ When moving a work item, complete the checklist for the target folder. Use `git 
 - [ ] If `todo/.limit` exists, check WIP limit not exceeded (parent + children = 1 item)
 - [ ] Use `git mv` to move file
 
+> **Ripeness is not gated here (ADR-007 D7 / BUG-184).** Moving to `todo/` is *committing to work*, not asserting the plan is ripe. There is deliberately no deterministic readiness check on `→ todo/` — an unchecked checklist, cross-reference links, and the word "decide" in prose are all normal in a well-planned item. Plan ripeness is judged by the human+AI **pre-implementation review at `→ doing`** (below), which `grep` cannot substitute for.
+
 #### → doing/
 - [ ] Transition is valid (check matrix above)
 - [ ] If `doing/.limit` exists, check WIP limit not exceeded (parent + children = 1 item)

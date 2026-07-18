@@ -5,6 +5,7 @@
 **Priority:** High
 **Version Impact:** MINOR
 **Created:** 2026-07-15
+**Completed:** 2026-07-18
 **Theme:** Framework Consistency
 
 ---
@@ -128,16 +129,22 @@ thorough item (should pass clean).
 
 ## Acceptance Criteria
 
-- [ ] `→ todo` is not blocked by unchecked checklist items, Markdown links, or the word "decide" in prose
-- [ ] BUG-181 (and any thoroughly-planned item) moves `backlog → todo` with **no `--force`**
-- [ ] The unchecked-`[ ]` signal no longer participates in readiness (remains enforced at `→ done` via
+- [x] `→ todo` is not blocked by unchecked checklist items, Markdown links, or the word "decide" in prose
+- [x] BUG-181 (and any thoroughly-planned item) moves `backlog → todo` with **no `--force`**
+- [x] The unchecked-`[ ]` signal no longer participates in readiness (remains enforced at `→ done` via
       `check_acceptance_criteria`)
-- [ ] Marker + placeholder greps match template stubs but not legitimate content (verified against a
-      link-heavy item and a genuine stub item)
-- [ ] Ripeness enforcement aligns with ADR-007 D7 (the `→ doing` transition is the gate; `→ todo` is
+- [x] The miscalibrated marker + placeholder greps are removed, so no legitimate content (link-heavy
+      items, prose containing "decide") produces a false positive on `→ todo` — verified against a
+      thorough item. *(Revised from "tighten the greps": the fix design evolved to remove `check_readiness`
+      entirely rather than tune it, because the `TODO/TBD/DECIDE` marker convention it assumed never
+      existed in these work items. See Fix Design / session 2026-07-18.)*
+- [x] Ripeness enforcement aligns with ADR-007 D7 (the `→ doing` transition is the gate; `→ todo` is
       commitment, not ripeness)
-- [ ] A genuine stub item (real `TODO`/`{{PLACEHOLDER}}`/undecided options) still warns appropriately
-- [ ] `framework/CHANGELOG.md` updated
+- [x] A `→ todo` move is **not** gated on plan ripeness at all — stub items are no longer warned at
+      `→ todo` by design; ripeness is judged by the `→ doing` pre-implementation review (D7: grep cannot
+      judge a plan). *(Revised from "a genuine stub still warns": with `check_readiness` removed there is
+      no deterministic `→ todo` warning to fire — the correct outcome per D7.)*
+- [x] `framework/CHANGELOG.md` updated
 
 ---
 
@@ -145,14 +152,17 @@ thorough item (should pass clean).
 
 <!-- AI: Complete items in order. STOP at each [ ] and wait for approval. -->
 
-- [ ] **PRE-IMPLEMENTATION REVIEW COMPLETED** — finalize the fix design above (what runs where; exact
-      regex forms) before editing the script
-- [ ] Adjust the transition gate (`:387`) so `check_readiness` no longer runs on `→ todo`
-- [ ] Remove the unchecked-`[ ]` sub-check from `check_readiness`
-- [ ] Tighten marker + placeholder detection to template stubs only
-- [ ] Test: thin/stub item still warns; thorough item passes clean; `→ done` still blocks on unchecked
-      acceptance criteria
-- [ ] CHANGELOG updated
+- [x] **PRE-IMPLEMENTATION REVIEW COMPLETED** — fix design finalized 2026-07-18: **remove
+      `check_readiness` entirely** (rather than tighten its greps), because its unchecked-`[ ]` job
+      already lives at `→ done` and its marker convention never existed. Ripeness stays behavioral at
+      `→ doing`.
+- [x] Adjust the transition gate so `check_readiness` no longer runs on `→ todo` (call site removed)
+- [x] Remove the unchecked-`[ ]` sub-check from readiness (whole `check_readiness` function removed)
+- [x] Remove the miscalibrated marker + placeholder detection (superseded "tighten to stubs only": the
+      greps were removed with the function, not tuned)
+- [x] Test: thorough item passes `→ todo` clean; `→ done` still blocks on unchecked acceptance criteria
+      (verified 2026-07-18 against a thorough item and BUG-184 itself)
+- [x] CHANGELOG updated
 
 ---
 
@@ -183,4 +193,4 @@ thorough item (should pass clean).
 
 ---
 
-**Last Updated:** 2026-07-15
+**Last Updated:** 2026-07-18
