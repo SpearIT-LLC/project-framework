@@ -53,3 +53,15 @@ What is the simpliest way to achieve our goals?
 Are we ready for a completely fresh version of the framework?
 
 What other questions or topics am I missing?
+
+## Struture Ideas
+
+### Streams
+Should all streams have a common root or all be anchored to repo root?
+
+streams (or whatever we call it)
+  stream1
+  stream2
+  stream3
+
+
