@@ -140,7 +140,34 @@ not length. Long-but-singular stays; short-but-duplicated is the poison.
 - Whether `project-hub/` flattens (kanban/ + history/) — *independent* of streams; decide
   separately.
 - "Superpowers" and other AI-collaboration frameworks — study for outside ideas (Gary's
-  agenda item; not yet done).
+  agenda item; **done** — see [outside-ideas-survey.md](../research/outside-ideas-survey.md)).
+- **Immutable-ADR + supersede discipline** (from the outside-ideas survey) — accepted ADRs are never
+  edited; a changed decision is a *new* ADR that supersedes the old (status → "Superseded by ADR-NNN");
+  "the truth is the full chain, not the latest one." A direct antidote to the re-litigate-settled-decisions
+  churn that is part of the onion. Deserves its own small decision — **logged, not yet decided.**
+- **PARA vocabulary for streams** (survey): the reason "stream" felt wrong is it collapses two lifecycles
+  — **Project (has an end)** vs **Area (ongoing)**. Engagement = Project; Operations/KB = Area. Input for
+  the future streams swarm.
+- **Derived indexes over hand-maintained pointers** (survey): the `sources:` index and any MOC should be
+  *computed from the files* where possible, not hand-kept — the strongest form of the Single-Source Rule.
+  Feeds TECH-187.
+
+---
+
+## Research corroboration (outside-ideas survey, same day)
+
+The parallel outside-ideas survey **strengthens** this retrospective's decision and **revises one
+mechanism**:
+
+- **Strengthens** — Anthropic's own guidance backs three pillars verbatim: deterministic enforcement over
+  instructions (*"an instruction is the wrong tool… a guardrail needs to be deterministic"*); duplication
+  as a *measurable* performance tax (*"every redundant… piece of stale data actively degrades an agent"*)
+  — which upgrades "DRY-by-mechanism" from opinion to evidence; and Session History + WIP-limited Kanban as
+  the proven memoryless-session pattern (protect these; don't touch them in consolidation).
+- **Revises** — the discoverability model (ADR-008) is confirmed *and* sharpened: literal transclusion is
+  display-time only (a tool reading raw files sees the pointer, not the content), so the correct
+  implementation is index-and-load with **derived indexes** where possible, plus a deterministic
+  re-sync/verify step (the GTD lesson) — which is exactly TECH-187's `sources:`-existence check.
 
 ---
 *AI-facilitated retrospective via /fw-swarm on 2026-07-22. Companion: ADR-008.*

@@ -65,6 +65,21 @@ get the AI into that machine.
 
 ---
 
+## The Single-Source Rule (ADR-008)
+
+**One authored source per concept. Everything else is derived or a pointer — never a hand-kept copy.**
+Duplication is not untidiness; it is a measurable tax that degrades the AI (stale copies mislead it) and
+drifts silently until it surfaces as a bug. A rule written in prose does not prevent this — DRY held only
+where it was *mechanical*.
+
+So: content lives in exactly one home; other channels are composed from it at build, or point at it via
+`framework.yaml`'s `sources:` index (pointers, never restatement). Invariants that must hold live behind a
+command/script chokepoint, not a paragraph — an instruction the AI merely *reads* is not a guardrail.
+Verify against the built artifact, not the source repo: a guarantee that works here but doesn't ship
+hasn't shipped.
+
+---
+
 ## Onboarding
 
 **New here? Ask the AI for a tour of the framework.** It may be verbose and unstructured for now, but it
