@@ -1,250 +1,96 @@
-# Documentation DRY Principles
+# Documentation DRY — Applying the Single-Source Rule
 
-**Purpose:** Guidelines for avoiding duplication and maintaining single sources of truth in documentation
-**Last Updated:** 2026-01-26
-
----
-
-## Table of Contents
-
-1. [Core Principles](#core-principles)
-2. [What Is a Source of Truth](#what-is-a-source-of-truth)
-3. [Acceptable vs Problematic Duplication](#acceptable-vs-problematic-duplication)
-4. [Update Process](#update-process)
-5. [Cross-Cutting Concerns](#cross-cutting-concerns)
-6. [Implementation Guidance](#implementation-guidance)
+**Purpose:** The *mechanical how-to* for keeping documentation single-sourced. The **authority** is the
+**Single-Source Rule** in the framework collaboration contract (`CLAUDE.md` → *The Single-Source Rule*,
+ADR-008); this document does not restate it — it shows how to apply it.
+**Last Updated:** 2026-07-22
 
 ---
 
-## Core Principles
+## The rule this document serves
 
-### 1. Single Source of Truth
+> **One authored source per concept. Everything else is derived or a pointer — never a hand-kept copy.**
+> Invariants that must hold live behind a command/script chokepoint, not a paragraph.
 
-Every policy, process, concept, or specification should have **ONE authoritative document**.
-
-**Why:** When information exists in multiple places, updates get applied inconsistently, leading to contradictions that confuse both humans and AI.
-
-### 2. Reference, Don't Duplicate
-
-Other documents should **link to** the source of truth, not copy the information.
-
-**Why:** Links are maintenance-free. Copied content becomes stale.
-
-### 3. Acceptable Summaries
-
-Brief summaries are OK **if they link to the authoritative source**.
-
-**Why:** Context helps readers understand why they should follow a link. The summary should be short enough that it won't become stale quickly.
-
-### 4. Clear Attribution
-
-When referencing information, always link to its source.
-
-**Why:** Readers need to know where to find complete, current information.
-
-### 5. Reference with Purpose
-
-Only add links when the reader would benefit from following them. Tangential or "see also" links add clutter without value.
-
-**Why:** Reflexive linking creates noise that obscures genuinely useful references.
-
-**Test before adding a reference:**
-- Would the reader need this information to understand or act on what they're reading?
-- Would they be confused or blocked without it?
-
-If no to both, skip the link.
+That is the binding rule (see the contract). Everything below is *how* to comply. Note what changed in
+2026-07 (ADR-008, after BUG-181): the framework no longer blesses "acceptable summary" or "quick-reference
+extract" duplication. Those were the exact copies that rotted — the contract was found in five hand-synced
+copies, each a "summary" that drifted. **A summary that restates its source is a copy.** DRY held only
+where it was *mechanical*, not where it was a discipline the author was trusted to maintain.
 
 ---
 
-## What Is a Source of Truth
+## Where the source of truth for a topic lives
 
-A **source of truth** is the single authoritative location for a piece of information.
+**Do not maintain a table here.** The authoritative topic → source map is `framework.yaml`'s `sources:`
+block — that index is the one home for "where does X live?", and it is machine-readable and verifiable.
+To find a topic's source, read `sources:`; to add one, add an entry there. A hand-kept table in this
+document would be exactly the duplication the rule forbids.
 
-### Identifying Source of Truth
-
-| Information Type | Source of Truth Location |
-|-----------------|-------------------------|
-| Workflow process | `docs/collaboration/workflow-guide.md` |
-| Release process | `docs/process/version-control-workflow.md` |
-| Issue response process | `docs/process/version-control-workflow.md` |
-| Code standards | `docs/collaboration/code-quality-standards.md` |
-| Security policy | `docs/collaboration/security-policy.md` |
-| Testing approach | `docs/collaboration/testing-strategy.md` |
-| Architecture decisions | `project-hub/adr/` (specific ADR file) |
-| Work item details | `project-hub/work/` (specific work item file) |
-| Project configuration | `framework.yaml` |
-| AI collaboration rules | `CLAUDE.md` |
-| Session history format | `docs/collaboration/workflow-guide.md` (Session History section) |
-
-### Characteristics of a Good Source of Truth
-
-- **Complete:** Contains all relevant details
-- **Maintained:** Has a "Last Updated" date and is actively kept current
-- **Discoverable:** Located where readers expect to find it
-- **Authoritative:** Clearly marked as the definitive source
+A `sources:` target may be a doc, a section anchor, **or a command doc** — wherever the concept is
+actually authored. Every target must resolve to a real file (verified; see the docs-audit workstream,
+TECH-187).
 
 ---
 
-## Acceptable vs Problematic Duplication
+## How to comply
 
-### Acceptable: Brief Summary with Link
+### Reference, don't duplicate
+Other documents **link to** the source; they do not copy it. Links are maintenance-free; copies rot.
+Prefer a bare pointer over a summary. If context genuinely helps the reader decide whether to follow the
+link, one sentence is the ceiling — never a paragraph that reproduces the source's content.
 
-```markdown
-## Security
+### Reference with purpose
+Only link where the reader would be blocked or confused without it. Reflexive "see also" links are noise.
+**Test:** would the reader need this to understand or act on what they're reading? If no, skip it.
 
-Follow input validation rules when handling user data.
-See [Security Policy](docs/collaboration/security-policy.md) for complete guidelines.
-```
+### Derive, don't hand-maintain (the strongest form)
+Where an index, roster, or rollup *can be computed from the files*, compute it — do not hand-keep a copy.
+A hand-written "active projects" list is stale the moment a project closes; a derived one never is. The
+framework's deterministic commands (`/fw-status`, `/fw-wip`, `/fw-topic-index`) are the mechanism: they
+read the files and produce the view, so there is no second copy to drift. This is single-source **by
+construction** — the preferred implementation whenever it is available.
 
-**Why this works:**
-- Short summary provides context
-- Link points to complete, maintained source
-- Reader knows where to find details
-
-### Acceptable: Quick Reference Extract
-
-CLAUDE.md may contain a condensed quick-reference section that extracts key points from detailed guides, **as long as it links to the full source**.
-
-```markdown
-## Quick Reference: Git Commits
-
-- Use conventional commit format
-- Include ticket ID when applicable
-
-**Full details:** [Workflow Guide - Git Section](docs/collaboration/workflow-guide.md#git-workflow)
-```
-
-### Problematic: Full Duplication
-
-```markdown
-## Security Policy
-
-### Input Validation
-All user input must be validated...
-[200 lines of duplicated content]
-```
-
-**Why this fails:**
-- When source updates, this copy becomes stale
-- Readers may not know which version is authoritative
-- Maintenance burden doubles
-
-### Problematic: Partial Duplication Without Link
-
-```markdown
-## Security
-
-All user input must be validated using allowlist patterns.
-Reject unexpected input rather than trying to sanitize it.
-Always use parameterized queries for database access.
-```
-
-**Why this fails:**
-- No link to complete source
-- Readers may think this is the complete guidance
-- Updates to source won't reach this copy
+### Chokepoint, not paragraph
+If something *must* hold, it belongs behind a command/script that enforces it — not in prose the AI is
+trusted to obey. An instruction the AI merely reads is not a guardrail (contract; ADR-008).
 
 ---
 
-## Update Process
+## When topics genuinely overlap
 
-When information needs to change:
+Two documents may legitimately cover adjacent ground from different angles.
 
-### Step 1: Identify the Source of Truth
+1. Each covers only its specific angle; neither tries to be comprehensive about the other's domain.
+2. Each links to the other for the related perspective.
+3. Neither copies the other's content.
 
-Find the authoritative document for the information being changed.
-
-### Step 2: Update the Source
-
-Make changes to the source of truth document only.
-
-### Step 3: Verify References
-
-Check documents that reference this information:
-- Do summaries still accurately reflect the source?
-- Are links still valid?
-
-### Step 4: Update Summaries Only If Needed
-
-If a summary is now misleading, update it minimally. Don't expand summaries into duplicated content.
-
-### Step 5: Update "Last Updated" Date
-
-In the source document, update the date to reflect the change.
+*Example:* `code-quality-standards.md` owns error-handling patterns; `security-policy.md` owns
+security-specific error handling; each links to the other.
 
 ---
 
-## Cross-Cutting Concerns
+## Update process
 
-Some topics span multiple documents. Handle these carefully.
-
-### Strategy: Pick One Home
-
-Choose ONE document as the source of truth. Other documents reference it.
-
-**Example:** Session history format
-- **Source of truth:** `docs/collaboration/workflow-guide.md` (Session History section)
-- **References from:** CLAUDE.md, architecture-guide.md
-
-### Strategy: Link to Related Topics
-
-When a document naturally touches another topic, link rather than explain.
-
-**Example:** In testing-strategy.md
-```markdown
-## Security Testing
-
-For security-specific testing patterns, see [Security Policy - Testing Section](security-policy.md#security-testing).
-```
-
-### When Topics Genuinely Overlap
-
-Sometimes two documents legitimately cover similar ground from different angles.
-
-**Solution:**
-1. Each document covers its specific angle
-2. Both link to each other
-3. Neither tries to be comprehensive about the other's domain
-
-**Example:**
-- `code-quality-standards.md` covers error handling patterns
-- `security-policy.md` covers security-specific error handling
-- Each links to the other for the related perspective
+1. **Find the source of truth** — via `framework.yaml`'s `sources:` block.
+2. **Change the source only.** Never edit a copy or a summary into currency; if a summary exists and is
+   now misleading, prefer replacing it with a bare pointer over expanding it.
+3. **Verify references resolve** — links still valid, `sources:` targets still exist. Reference-based
+   single-sourcing rots silently without a verify step; where possible this is a command/check, not a
+   manual ritual.
 
 ---
 
-## Implementation Guidance
+## Related
 
-### For New Documentation
-
-1. **Check if source of truth exists** before writing
-2. **If it exists:** Link to it, add brief summary if needed
-3. **If it doesn't exist:** Create it in the appropriate location
-4. **Add to INDEX.md** (when implemented) to register the source
-
-### For Existing Documentation
-
-1. **Audit for duplication** (see TECH-036)
-2. **Identify authoritative version** for each duplicated topic
-3. **Replace duplicates with links** to the source of truth
-4. **Keep summaries short** and always linked
-
-### For CLAUDE.md
-
-CLAUDE.md serves as a quick reference and routing document:
-- **Include:** Critical rules, quick reference, links to detailed docs
-- **Exclude:** Comprehensive explanations (link to collaboration docs instead)
-- **Keep it concise:** Aim for fast AI parsing, not exhaustive coverage
+- **The Single-Source Rule** — the binding authority (`CLAUDE.md`, contract region; `.claude/framework-contract.md` is its SoT). This document is subordinate to it.
+- **ADR-008** — consolidate-not-rewrite; establishes DRY-by-mechanism and the chokepoint principle.
+- **ADR-007** — one-authored-source + per-channel derivation for the collaboration contract (the pattern this applies).
+- **TECH-185 / TECH-187** — the duplication sweep and docs-restatement audit that apply this rule across the framework.
+- `framework.yaml` `sources:` — the authoritative topic → source-of-truth index.
 
 ---
 
-## Related Documentation
-
-- [Workflow Guide](workflow-guide.md) - Process documentation (source of truth for workflow)
-- [Architecture Guide](architecture-guide.md) - Framework design decisions
-- FEAT-031 - INDEX.md registry (future: tracks all sources of truth)
-- TECH-036 - Documentation refactoring (future: applies these principles)
-
----
-
-**Last Updated:** 2026-01-14
+*Superseded model note: before 2026-07 this document permitted "acceptable" summary/quick-reference
+duplication and kept its own SoT table. Both are removed — the summary allowance is what BUG-181 showed
+rots, and the table is now owned by `framework.yaml`'s `sources:` index. History in git.*
