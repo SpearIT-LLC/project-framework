@@ -140,5 +140,90 @@ Ran a `/fw-swarm` retrospective (Alex/Lead, Dan/Sr Dev, Sam/Architect) on Gary's
 - **Streams** (multi-stream/multi-SOW) — real need, sequenced after coupling. ADR-005 + the outside-ideas survey are its inputs.
 
 ---
+---
+
+# Session 3 (Evening) — Research Review + Dogfooding the Single-Source Rule
+
+**Session Focus:** Read the outside-ideas survey and advise (strengthen vs. revise the retrospective); then embed the consolidation principle *internally* so the framework is governed by it, not just ships it.
+
+---
+
+## Summary
+
+Reviewed `outside-ideas-survey.md` against the retrospective decision: it **strengthens** three pillars (with Anthropic's own words) and **revises one mechanism** (discoverability). Then embedded the **Single-Source Rule** into the framework contract — authored in the SoT, reconciled byte-identical into CLAUDE.md — and, on Gary's insistence that "to fully dogfood the change it must be internal to the project," found and fixed an internal violation: `documentation-dry-principles.md` was the *old DRY-by-discipline* guidance that blessed the exact summary-duplication BUG-181 proved rots. Reconciled it to be subordinate to the new rule. Two commits.
+
+---
+
+## Work Completed
+
+### Research review — outside-ideas-survey.md
+
+- **Strengthens the decision** — Anthropic guidance backs three pillars verbatim: deterministic enforcement over instructions (*"an instruction is the wrong tool… a guardrail needs to be deterministic"*); duplication as a *measurable* performance tax (upgrades "DRY-by-mechanism" from opinion to evidence); Session History + WIP-Kanban as the proven memoryless-session pattern (protect in consolidation).
+- **Revises one mechanism** — discoverability: literal transclusion is display-time only (a tool reading raw files sees the pointer, not content), so the model is index-and-load with **derived indexes** + a verify step. Confirms TECH-187 rather than overturning it.
+- **New adopt-worthy find** — immutable-ADR + supersede discipline (antidote to re-litigation churn); PARA Project-vs-Area vocabulary for streams. Both logged as retrospective open items.
+
+### The Single-Source Rule — embedded in the contract
+
+- Authored in `.claude/framework-contract.md` (SoT) **first**, then reconciled the byte-identical text into this repo's `CLAUDE.md` FRAMEWORK CONTRACT region — dogfooding the edit-SoT-first workflow the region's own header prescribes. Verified the two regions match.
+- Placed beside the Implementation Rule as its companion: the Implementation Rule is the one *un-mechanizable* guard; the Single-Source Rule governs everything that *can* be mechanized.
+- Scope: **universal contract term** (ships to every derived project), per Gary.
+
+### Internal dogfood — reconciled documentation-dry-principles.md
+
+- **The violation:** the framework's own `sources:` index routed `dry-principles` to a 250-line doc that explicitly permitted "acceptable summary" / "quick-reference extract" duplication — the precise copy-that-rots pattern that produced the 5-copy contract disaster (BUG-181) — plus a stale hand-kept SoT table. The rule was contradicted one index-hop from itself.
+- **The fix:** rewrote the doc as the *subordinate mechanical how-to* under the contract's Single-Source Rule (reference-don't-duplicate, **derive-don't-hand-maintain**, chokepoint-not-paragraph, verify-references). Removed the summary-duplication allowance and the SoT table (now owned by `framework.yaml` `sources:`). Net −154 lines.
+
+---
+
+## Decisions Made
+
+1. **Single-Source Rule is a universal contract term** (not repo-only project guidance) — it's a binding collaboration rule every derived project's AI should operate under; companion to the Implementation Rule.
+2. **Reconcile documentation-dry-principles.md now** (vs. defer to TECH-187) — because it actively *contradicted* the just-committed rule; leaving it would mean the framework ships a rule it violates internally. Chose reconcile-to-mechanics over delete (keeps the still-useful how-to the terse contract rule doesn't carry).
+3. **Immutable-ADR discipline: log, don't decide** — real process change, deserves its own small decision.
+4. **Did NOT ad-hoc fix the two stale `sources:` pointers** (`ai-checkpoint-policy`, `project-structure`) — TECH-183 already owns them; fixing here would implement outside `doing/` (dogfooding the Implementation Rule).
+
+---
+
+## Files Modified
+
+- `.claude/framework-contract.md` — added the Single-Source Rule (SoT)
+- `CLAUDE.md` — reconciled the identical rule into the contract region
+- `framework/docs/collaboration/documentation-dry-principles.md` — rewrote as subordinate mechanical how-to (−154 lines)
+- `project-hub/retrospectives/2026-07-22-the-onion-retrospective.md` — added research-corroboration section + open items (immutable-ADR, PARA, derived-indexes)
+
+## Commits
+
+- `e2ec231` — add Single-Source Rule to framework contract (ADR-008)
+- `765b41e` — reconcile dry-principles to the Single-Source Rule (internal dogfood)
+
+---
+
+## Journey / What To Know For Next Time
+
+- **"Dogfood = internal, not just shipped."** Gary's key correction: a rule that only ships outward isn't dogfooded — the framework must be governed by it. Testing that immediately surfaced the `dry-principles` contradiction. Apply this lens to the rest of the consolidation pass: for each new rule, ask "does *this repo* obey it?"
+- **The SoT-first discipline is real and enforced by the region header** — never edit CLAUDE.md's contract region directly; edit `.claude/framework-contract.md`, then reconcile. The mechanical drift-check that would *verify* this (`tools/Check-ContractDrift.ps1`) does NOT exist yet — it's part of BUG-181. Until then, reconciliation is hand-verified.
+- **`sources:` cannot point at the contract SoT** — ADR-007 OQ2: the SoT is build-input, delivered *inside* the assembled CLAUDE.md; the AI reads the loaded contract, not the SoT file. So the rule is reachable via always-loaded context, not via a `sources:` entry.
+- **Derived indexes are the strongest form of the rule** (survey finding) — compute indexes/rollups from files rather than hand-keeping them. Feeds TECH-187 and the deterministic commands (`/fw-status`, `/fw-topic-index`).
+
+---
+
+## Current State (end of Session 3 — calling it a night)
+
+### In doing/
+- **BUG-181** — still the keystone. The contract now *states* the Single-Source Rule but the mechanical verifier (`Check-ContractDrift.ps1`) that would prove CLAUDE.md ↔ SoT is part of BUG-181, still unbuilt. Finish this before starting TECH-185/186.
+
+### In backlog/ (consolidation pass, ADR-008)
+- TECH-185, TECH-186, TECH-187, TECH-188 — drafted; not yet moved to todo/doing.
+
+### Proposed, awaiting acceptance
+- **ADR-008** — consolidate-not-rewrite.
+
+### Open items logged (not yet decided)
+- Immutable-ADR + supersede discipline; PARA Project/Area vocabulary for the streams swarm; derived-indexes as the preferred single-source mechanism.
+
+### Left dirty (Gary's, unrelated to this work)
+- `.claude/settings.local.json`, `project-hub/retrospectives/2026-07-16-garys-thoughts.md`
+
+---
 
 **Last Updated:** 2026-07-22
