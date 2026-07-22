@@ -64,5 +64,81 @@ Ran a two-pass deep-research survey answering the retrospective's open "Outside 
 - `outside-ideas-survey.md` — ready for review alongside the retrospective. Open follow-ups it raises: (a) split "streams" into Project-like vs Area-like per PARA; (b) implement single-source-by-reference via index-and-load + derived indexes, not embed syntax; (c) adopt immutable-ADR + supersede discipline.
 
 ---
+---
+
+# Session 2 (Afternoon) — The Onion Retrospective
+
+**Session Focus:** Retrospective swarm on the framework's structural/coupling problems (garys-thoughts.md) → rewrite-vs-consolidate decision. This is the "separate retrospective session" the morning entry above flagged.
+
+---
+
+## Summary
+
+Ran a `/fw-swarm` retrospective (Alex/Lead, Dan/Sr Dev, Sam/Architect) on Gary's "it's an onion" complaint — three weeks of cascading bugs delaying client work. Grounded it in evidence: read BUG-167/170/181/184 and fanned out over all 15 session logs (06-25 → 07-18). The team diagnosed the onion as **exactly two roots** and found the cure was **already proven** in ADR-006/007 + BUG-170. Decision: **consolidate, don't rewrite** (ADR-008), coupling before streams. Produced ADR-008 + a retrospective doc + meeting minutes, and drafted four consolidation work items (TECH-185–188). All committed with this history.
+
+---
+
+## Work Completed
+
+### The onion retrospective — diagnosis
+
+- **Two roots, not ten.** Every cascade traces to (1) hand-synced duplication with no propagation rule (contract in 5 copies; types in 4 lists; ~12 items) and/or (2) enforcement-as-prose that degrades *silently* (BUG-170: `move.sh` didn't ship → `/fw-move` reverted to AI-interpreted moves with no signal). They multiply, so two roots feel like ten.
+- **The cure is already proven, not theoretical.** ADR-006, ADR-007, and BUG-170's fix independently converged on: *author once → derive at build → enforce at a chokepoint → verify the built artifact.* Applied in 3 places, prose-duplicated everywhere else. Rewrite would discard this discovery; patch-by-bug regenerates the onion. → one **bounded consolidation pass**.
+- **Verbosity is a symptom, not a disease.** `framework/docs/` measured at **12,109 lines / 20 files**. Test is "one home + nothing restates it," never length.
+- **DRY-by-declaration already failed** (Gary's decisive point): DRY was a stated principle from day one and duplication happened anyway — a principle in a doc is another doc that rots. Only DRY-*by-mechanism* holds.
+- **Discoverability model** (Gary): embed contract at the chokepoint; `framework.yaml` is the *verified index* over all homes (docs AND commands) — pointers only, never content. Extends `sources:` to target command docs + script-verify every target exists (the BUG-181 `:79` dangling-pointer class).
+- **Per-feature I/O contract idea** (Gary): declare each feature's inputs/sources/sinks/invariants like an API signature → folded into TECH-186 as the *anti-silent-degradation* technique (2 guardrails: point-never-restate; declare-only-what-a-script-can-assert), piloted on `/fw-move`.
+
+---
+
+## Decisions Made
+
+1. **Consolidate, don't rewrite** (ADR-008, Option C) — bounded pass applies the proven pattern to ALL duplicated artifacts at once. Rationale: rewrite discards the discovery; patch-by-bug caused the cascade.
+2. **Coupling first, streams after** — streams (Honda/Boston Dynamics; real, reverses Jan-2 DECISION-001) rides on the clean base; gets its own ADR (ADR-005 is the start). Streams-on-uncleaned-base = new onion axis.
+3. **Ratify the derive-once + chokepoint pattern as a principle** — enforced mechanically, and (corollary) NOT written as a fresh standalone doc, which would repeat the error.
+4. **Docs audit hunts restatements, not length.**
+5. **Framework serves Gary-the-contractor first** — the tiebreaker against mission drift.
+6. **Artifacts: both ADR + retrospective.**
+
+*(ADR-008 is **Proposed**, not yet Accepted. Its own logic: once accepted, finish BUG-181 before TECH-185/186 can point at a real mechanism.)*
+
+---
+
+## Files Created
+
+- `project-hub/research/adr/008-consolidate-not-rewrite.md` — the rewrite-vs-consolidate decision (Proposed)
+- `project-hub/retrospectives/2026-07-22-the-onion-retrospective.md` — narrative retrospective
+- `project-hub/meetings/2026-07-22-swarm-decision-consolidate-not-rewrite.md` — swarm meeting minutes
+- `project-hub/work/backlog/TECH-185-duplication-sweep.md` — WS2 (depends on BUG-181)
+- `project-hub/work/backlog/TECH-186-chokepoint-audit.md` — WS3 + `/fw-move` I/O-contract pilot (depends on BUG-181)
+- `project-hub/work/backlog/TECH-187-docs-restatement-audit.md` — WS4 index-driven (depends on TECH-185)
+- `project-hub/work/backlog/TECH-188-built-artifact-verification.md` — WS5 (independent)
+
+---
+
+## Journey / What To Know For Next Time
+
+- **Read the record before diagnosing.** The team's whole value came from reading the 4 bugs + fanning out over 15 session logs, not theorizing. The 07-14 OQ7 note ("documents rot; chokepoints hold") and Gary's 07-15 "onion" quote were the load-bearing evidence.
+- **The morning's `outside-ideas-survey.md` corroborates this decision** — PARA (Project-vs-Area) informs the streams split; transclusion/derived-indexes informs the discoverability model; immutable-ADR discipline guards against re-litigating the onion. Fold it in when streams gets its swarm.
+- **`retrospectives/2026-07-16-garys-thoughts.md` is the source brainstorm** — has the streams naming candidates and the `/fw-add-stream` idea, still open.
+- **Dependency spine for the pass:** BUG-181 (keystone) → TECH-185/186 → TECH-187; TECH-188 independent. Don't start 185/186 implementation until BUG-181 gives the contract a mechanical home.
+
+---
+
+## Current State (end of day)
+
+### In doing/
+- **BUG-181** — the ADR-007 contract-delivery anchor; steps 1–2 done, build machinery remains. The keystone for the whole consolidation pass. (Unchanged this session.)
+
+### In backlog/ (new — consolidation pass, ADR-008)
+- TECH-185, TECH-186, TECH-187, TECH-188 — drafted, not yet moved to todo/doing (Implementation Rule: planning artifacts until moved).
+
+### Proposed, awaiting acceptance
+- **ADR-008** — consolidate-not-rewrite. Accept to start the pass (BUG-181 first).
+
+### Deferred to its own swarm
+- **Streams** (multi-stream/multi-SOW) — real need, sequenced after coupling. ADR-005 + the outside-ideas survey are its inputs.
+
+---
 
 **Last Updated:** 2026-07-22
