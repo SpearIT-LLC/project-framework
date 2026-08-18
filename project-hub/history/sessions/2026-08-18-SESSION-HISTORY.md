@@ -146,4 +146,54 @@ Stop hooks are a platform-native home for done-gates/drift guard.
 
 ---
 
+## ADR-009 Review and Approval (Later — Continuation)
+
+**Continuation:** Resumed after the morning session history was committed; Gary called
+the review to approve.
+
+### Consistency pass (pre-approval fixes)
+
+A full read of the much-edited draft found three defects, fixed before review:
+- **D4's heading still said "non-git workspace"** — contradicting its own body, which
+  had settled git-required earlier in the day. Now "document-only workspace (no source
+  tree required)."
+- `workspaces/` was missing from D2's root-spine list.
+- The graduation step glossed where `research/` and the ADRs land (the mind-graph's
+  "items needing a home" sticky) — now named explicitly, with the constraint that ADRs
+  must remain live session-start context (Decision Driver 2).
+
+### Retrospectives question (Gary)
+
+*Keep retros focused on one workspace? What about evaluating the entire customer
+account?* Answered with the model's own rule and added to D2: **one timeline at the
+spine (`history/retrospectives/`), scope declared in the document** via a `Workspace:`
+field — one workspace, several, or account-wide. An account-level evaluation is a retro
+whose scope is "all," possible precisely because the timeline is never split into
+per-workspace folders. This also closes the 07-16 doc's open question ("retrospectives:
+project wide or stream focused?") — both, by declaration.
+
+### Approval
+
+Two soft spots were surfaced explicitly and accepted with the approval:
+1. **The ADR-008 reinterpretation** — "coupling first" satisfied by inheriting no
+   coupling (fresh build) rather than consolidating this repo first. Approving ratifies
+   that reading.
+2. **OQ4 remains directional** — BD hygiene detail deferred to its migration work item.
+
+**ADR-009 → Accepted** (`77a5ab6`), committed with the mind-graph PNG. Per the
+immutable-ADR supersede discipline (onion retrospective), **ADR-005's status flipped to
+"Superseded by ADR-009"** — the one edit permitted on a prior ADR.
+
+### State at session end
+
+- Committed: session history (`e20566a`), ADR-009 + ADR-005 stamp + mind-graph PNG
+  (`77a5ab6`).
+- Untouched working-tree changes (pre-existing, not this session's scope):
+  `.claude/settings.local.json`, `project-hub/retrospectives/2026-07-16-garys-thoughts.md`,
+  `research/claude-code-workflows-consulting-guide.md`.
+- Next: rewrite FEAT-163/164 in `workspace` vocabulary; create framework-next kickoff
+  work item(s); stand up `workspaces/framework-next/` starting from the BD-shaped floor.
+
+---
+
 **Last Updated:** 2026-08-18
