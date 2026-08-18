@@ -88,7 +88,7 @@ map. That is the BUG-170 silent-degradation class applied to instructions.
 
 ### Option B: Fresh repo
 
-Start `framework-next` clean; carry forward only proven mechanisms.
+Start a fresh framework repo clean; carry forward only proven mechanisms.
 
 **Pros:** psychologically clean; zero legacy; no conflicting instructions.
 
@@ -100,14 +100,14 @@ location.** Also splits the Kanban board and ID namespace across two repos.
 
 ### Option C: Build fresh in a workspace, in this repo (chosen)
 
-Author the new framework at `workspaces/framework-next/` — a clean-slate build with no
+Author the new framework at `workspaces/framework/` — a clean-slate build with no
 inherited structure — while this repo's existing layout is left **untouched**. History,
 ADRs, and the Kanban board stay connected and live. This repo becomes the first honest
 dogfood of the multi-workspace model.
 
 **Pros:** clean-slate authoring *and* connected history. Zero migration churn — nothing
 moves. The transition boundary becomes **positional**: within
-`workspaces/framework-next/`, that directory is the sole authority. The framework's own
+`workspaces/framework/`, that directory is the sole authority. The framework's own
 repo is the first real multi-workspace case.
 
 **Cons:** two framework versions coexist during the build, so command namespacing must
@@ -118,7 +118,7 @@ the workspace becomes permanent scaffolding.
 
 ## Decision
 
-**Chosen: Option C — build the new framework fresh, in `workspaces/framework-next/`,
+**Chosen: Option C — build the new framework fresh, in `workspaces/framework/`,
 inside this repo.**
 
 Five sub-decisions travel with it.
@@ -172,13 +172,22 @@ location.
   `code-quality-standards.md` (829), `troubleshooting-guide.md` (733),
   `architecture-guide.md` (574) — end as repo-wide **skills** under
   `.claude/skills/`, which brings them inside "only `.claude/` ships" with no
-  exception. During conversion they stage in `workspaces/framework-next/standards/`
+  exception. During conversion they stage in `workspaces/framework/standards/`
   under a one-home-at-all-times move rule.
 
 The dogfooding gain is mechanical, not symbolic: `templates/starter/Setup-Framework.ps1`
 can rot today because it is never executed. `/fw-init` cannot rot if this repo's own
 structure comes from it. That converts an untested code path into a
 continuously-exercised one — directly the BUG-170 class.
+
+**The framework IS the plugin** (settled 2026-08-18). With structure generated and
+standards as skills, there is nothing left for an archive to carry: distribution is a
+marketplace install, upgrade is a plugin update, and the framework's version is the
+plugin's version. At graduation the archive channel retires entirely — no zip, no
+build-archive script successor, no `templates/starter/` (`/fw-init` is the starter).
+Two consequences accepted deliberately: **Claude Code becomes a hard dependency**
+(the AI-less fallback retires with the archive), and the workspace is understood as
+the plugin's source tree plus build-time staging.
 
 ### D4. The workspace floor is a document-only workspace (no source tree required)
 
@@ -204,7 +213,7 @@ live, holding real work) and `kanban/` (new) — one shared ID namespace, and tw
 implementations disagreeing about the path.
 
 **`project-hub/work/` remains the single authoritative board for all work, including
-work on framework-next.** The generated `kanban/` is a **test fixture** during
+work on the framework workspace.** The generated `kanban/` is a **test fixture** during
 development: created by `/fw-init` to prove the command works, populated only with
 throwaway items, never real ones. This is consistent with D3 — `kanban/` is generated
 output, and generating a disposable one is precisely its purpose.
@@ -251,7 +260,7 @@ remain valid work but are rewritten against `workspace` vocabulary.
 - ✅ **Zero migration churn.** Nothing in this repo moves. The old structure is left
   intact and working while the new one is authored beside it.
 - ✅ **The conflicting-instructions problem becomes a boundary, not a rule.** Within
-  `workspaces/framework-next/`, that directory and its `CLAUDE.md` are the sole
+  `workspaces/framework/`, that directory and its `CLAUDE.md` are the sole
   authority. Positional, and therefore script-checkable — the same reason `.claude/`
   works as a boundary today.
 - ✅ **History stays live.** ADR-005/006/007/008, the retrospectives, and the session
@@ -269,10 +278,10 @@ remain valid work but are rewritten against `workspace` vocabulary.
   under the workspace and install it from the local marketplace
   (`tools/Publish-ToLocalMarketplace.ps1`) under a distinct name until it fully
   replaces the old one.
-- ⚠️ **Requires an explicit graduation step**, or `framework-next/` becomes permanent
+- ⚠️ **Requires an explicit graduation step**, or the workspace becomes permanent
   scaffolding.
 - ⚠️ **~4,000 lines of standards must be converted to skills** — staged through the
-  interim `workspaces/framework-next/standards/` folder under the
+  interim `workspaces/framework/standards/` folder under the
   one-home-at-all-times rule (Open Questions #1).
 
 ### Accepted Risks
@@ -291,7 +300,7 @@ remain valid work but are rewritten against `workspace` vocabulary.
 
 ## Graduation Criteria
 
-`workspaces/framework-next/` stops being a workspace and becomes the product when:
+`workspaces/framework/` stops being a workspace and becomes the product when:
 
 - [ ] `/fw-init` stands up a complete repo spine from nothing.
 - [ ] `/fw-new-workspace` stands up both a source-bearing workspace (Honda shape) and a
@@ -309,7 +318,7 @@ At graduation, one commit does all of the following:
   the mind-graph's "items needing a home" note — is decided as part of this step; the
   ADRs must remain live session-start context per Decision Driver 2.)
 - Deletes `framework/`, `plugins/`, `tools/`, and `templates/`.
-- Promotes `workspaces/framework-next/` to the product.
+- Promotes `workspaces/framework/` to the product.
 
 A deletion and a rename, not a migration.
 
@@ -343,7 +352,7 @@ graduation criterion.
    interim that buys time to build them — under a **one-home-at-all-times** rule so
    DRY / Single-Source is never violated during the transition:
    - **Interim:** the surviving docs are **moved** (`git mv`, never copied) into
-     `workspaces/framework-next/standards/` as raw material for the TECH-187
+     `workspaces/framework/standards/` as raw material for the TECH-187
      restatement audit. Deliberately inside the workspace, not at repo base — the
      folder is build scaffolding, not a shipped or repo-wide surface.
    - **End state:** each standard is converted into a repo-wide **skill** under
@@ -468,8 +477,14 @@ standard in Dec 2025; plugins are now the standard distribution unit).
   (4, scaffolding-only), kanban numbering rejected, BD hygiene direction set.
   Anthropic best-practices alignment verified; OQ1 revised toward standards-as-skills.
 - 2026-08-18: OQ1 settled — skills as end state, interim staging in
-  `workspaces/framework-next/standards/` under one-home-at-all-times. No open
+  `workspaces/framework/standards/` under one-home-at-all-times. No open
   question now blocks any decision; the ADR is ready for Accepted.
 - 2026-08-18: Review pass (D4 heading fixed, `workspaces/` added to D2 spine,
   research/ADR landing noted in graduation, retrospectives scope-by-declaration added
   to D2). **Accepted by Gary.**
+- 2026-08-18: Workspace renamed `framework-next` → `framework` and the dev plugin
+  named `spearit-framework-dev` (relative names rot — Gary; path references in this
+  document updated throughout, including prior change-log entries). "The framework IS
+  the plugin" identity added to D3: archive channel retires at graduation; Claude
+  Code becomes a hard dependency. BUG-181 re-scoped under this ADR (the composer
+  becomes `/fw-init`; old-pipeline mechanisms will not be built).

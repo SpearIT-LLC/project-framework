@@ -184,16 +184,16 @@ carry the stronger form.
 
 ### Regression Testing
 
-- [ ] `Setup-Framework.ps1` still renders `{{PROJECT_NAME}}` / `{{DATE}}` placeholders correctly
-- [ ] No broken relative links in the derived project
-- [ ] `templates/NEW-PROJECT-CHECKLIST.md` still accurate
+- ~~`Setup-Framework.ps1` still renders placeholders~~ *(superseded — old pipeline, ADR-009)*
+- [ ] No broken relative links in the derived project *(against the `/fw-init`-generated project)*
+- ~~`templates/NEW-PROJECT-CHECKLIST.md` still accurate~~ *(superseded — old pipeline, ADR-009)*
 
 ---
 
 ## Documentation Updates
 
-- [ ] `templates/NEW-PROJECT-CHECKLIST.md` — if the CLAUDE.md story changes
-- [ ] `framework/CHANGELOG.md`
+- ~~`templates/NEW-PROJECT-CHECKLIST.md` — if the CLAUDE.md story changes~~ *(superseded — old pipeline, ADR-009)*
+- [ ] Plugin CHANGELOG *(was `framework/CHANGELOG.md`; the framework IS the plugin — ADR-009)*
 
 ---
 
@@ -213,26 +213,42 @@ carry the stronger form.
       3 before implementation. Design is ripe: D1–D7 + OQ2 settled in ADR-007; D3 compose-vs-verify split
       settled 2026-07-17; the checklist below now reflects it.
 
+> **RE-SCOPED 2026-08-18 (ADR-009).** Verified this date against the files: the
+> **authored half is DONE** — `.claude/framework-contract.md` exists (2026-07-22),
+> both shells carry the region markers, and the repo root `CLAUDE.md` is the
+> ≤150-line contract form. The **mechanism half was never built** (no composer step,
+> no starter drift-guard, no `Check-ContractDrift.ps1`, nothing shipped) — and it
+> targets the OLD build pipeline, which ADR-009 schedules for deletion at
+> graduation. Those items will not be built; in the new model the composer is a
+> command: **`/fw-init` reads the contract SoT and generates the derived
+> `CLAUDE.md`** (framework workspace, FEAT-190+). This item closes when `/fw-init`
+> demonstrably delivers the contract to a derived project — the bug's actual
+> acceptance test. Returned to todo/ pending that build.
+
 ### Core delivery fix (this item)
 
-- [ ] **Author `.claude/framework-contract.md`** (OQ2) — the universal contract, authored once, as the
+- [x] **Author `.claude/framework-contract.md`** (OQ2) — **VERIFIED DONE 2026-08-18**
+      (file dated 2026-07-22) — the universal contract, authored once, as the
       **single source of truth** (inert build-input; `framework.yaml` deliberately does not index it).
       Extract from this repo's root `CLAUDE.md` + the ~8 unique rules D2 salvages (resume-work rule, D7
       Rule-1 text, Response Style per D5, bootstrap, `framework.yaml` routing per D3). **ZERO placeholders**
       (D4 two-stage constraint — `Setup-Framework.ps1` fills identity in the shell, not the contract).
       ≤150 lines (D1).
-- [ ] **Add the two region markers** to both shells — this repo's root `CLAUDE.md` and
+- [x] **Add the two region markers** to both shells (**VERIFIED DONE 2026-08-18**) — this repo's root `CLAUDE.md` and
       `templates/starter/CLAUDE.md`: `BEGIN/END FRAMEWORK CONTRACT` (the contract region) and
       `BEGIN/END PROJECT INSTRUCTIONS` (project-owned, never inspected; ships non-empty with a placeholder
       comment per D4).
-- [ ] **Add the composer step for STARTER** to `Build-FrameworkArchive.ps1` — literal concatenation of
+- ~~**Add the composer step for STARTER** to `Build-FrameworkArchive.ps1`~~
+      *(SUPERSEDED 2026-08-18 — ADR-009; the composer becomes `/fw-init`)* — literal concatenation of
       `.claude/framework-contract.md` into the guarded region of `templates/starter/CLAUDE.md` (D4 "keep
       the composer stupid" — no templating). Starter is **composed** (D3): its region is byte-replaced
       fresh from the SoT at build.
-- [ ] **Add the STARTER drift-guard** (extend `:113-132`) — a hand-edited contract region in
+- ~~**Add the STARTER drift-guard** (extend `:113-132`)~~
+      *(SUPERSEDED 2026-08-18 — ADR-009; old pipeline)* — a hand-edited contract region in
       `templates/starter/CLAUDE.md` must **hard-fail the build** (copy-fresh guarantee; OQ2 impl note (c)).
       This is starter's compose enforcement; without it the construct degrades to duplication.
-- [ ] **Author `tools/Check-ContractDrift.ps1`** (Decision 3) — new artifact, home `tools/` beside
+- ~~**Author `tools/Check-ContractDrift.ps1`** (Decision 3)~~
+      *(SUPERSEDED 2026-08-18 — ADR-009; old pipeline)* — new artifact, home `tools/` beside
       `Build-FrameworkArchive.ps1`. Compares the repo root `CLAUDE.md` contract region against
       `.claude/framework-contract.md`, **inside the markers only** (outside is presumed intentional user
       edits, never inspected). **Advisory** (flags + a human reconciles), *not* build-blocking — root drift
@@ -242,18 +258,25 @@ carry the stronger form.
       blank line (verified 2026-07-18 authoring the root region) and editors add trailing spaces; neither
       is contract content, so trimming avoids false-positive drift without weakening the check. The
       composer's starter drift-guard should use the same trim rule for consistency.
-- [ ] **Ship the check + contract snapshot into the archive** (Decision 3) — the build copies
+- ~~**Ship the check + contract snapshot into the archive** (Decision 3)~~
+      *(SUPERSEDED 2026-08-18 — ADR-009; the archive channel itself retires)* — the build copies
       `.claude/framework-contract.md` and `Check-ContractDrift.ps1` into the derived project. Roles flip
       there: the shipped contract is a **snapshot** ("valid at build time"), and the check becomes a
       **safety-net tripwire** ("did something clobber your region?"), not a governance mechanism. The
       derived project owns the snapshot. *(Framework-version stamp on the snapshot is a FEAT-157
       nice-to-have, not a blocker — same seam Decision 2 deferred.)*
-- [ ] **Dogfood — VERIFY root, don't compose it** (D3) — this repo's own root `CLAUDE.md` is authored to
+- ~~**Dogfood — VERIFY root, don't compose it** (D3)~~
+      *(PART DONE / PART SUPERSEDED 2026-08-18 — root `CLAUDE.md` is authored to
+      contract form (done); the advisory check script will not be built — ADR-009)* — this repo's own root `CLAUDE.md` is authored to
       match the SoT and checked by `Check-ContractDrift.ps1` (advisory), **not** build-composed. This is
       the compose-vs-verify asymmetry: root has history to protect. One-time manual edit: delete the summary
       sections (Key Documents / Framework Documentation / Project Structure / Workflow Quick Reference — the
       contract region owns that by reference, D3) and drop *"Which Project Are You Working On?"* (D2a);
       confirm the `framework/`/`templates/`/`tools/` orientation lives in `README.md` first.
+
+- [ ] **NEW DONE-GATE (2026-08-18, ADR-009):** the framework workspace's `/fw-init`
+      demonstrably delivers the contract region into a derived project's root
+      `CLAUDE.md` (run Verification Steps 1–4 against the generated project).
 
 ### Separable work — split into sibling items (2026-07-15)
 
@@ -312,4 +335,4 @@ this item lands, decide deliberately where it goes — do not add a third copy.
 
 ---
 
-**Last Updated:** 2026-07-18
+**Last Updated:** 2026-08-18
