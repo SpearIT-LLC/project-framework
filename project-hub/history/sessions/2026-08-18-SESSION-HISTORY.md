@@ -196,4 +196,74 @@ immutable-ADR supersede discipline (onion retrospective), **ADR-005's status fli
 
 ---
 
+## Execution: Board Prep, Naming, and the Kickoff Build (Evening — Continuation)
+
+**Continuation:** "Let's do it" — moved from decisions to execution.
+
+### Workflow-loop question (Gary)
+
+Would Claude Code dynamic workflows help here (per
+`research/claude-code-workflows-consulting-guide.md`)? Answer: **not for FEAT-190**
+(sequential, small — orchestration overhead), **yes for the TECH-187 standards
+conversion** — per-doc classify → draft skill → verify-against-source is exactly the
+guide's #1-ranked documentation shape, and doubles as the guide's planned first dry
+run. Boundary stated: agents for judgment passes; deterministic sweeps stay scripts
+(TECH-189 class).
+
+### Board prep (planning, then the gate)
+
+- FEAT-163/164 rewritten in `workspace` vocabulary and renamed (`git mv`):
+  163 → workspace-reporting-and-history (field decision recorded as settled);
+  164 → workspace-scaffolding (inverted per D3: *implement* `/fw-new-workspace`,
+  don't document a layout). FEAT-190 kickoff created (next ID verified = 190).
+- `/fw-move 190 todo` → `doing` — the doing/ WIP warning said 3/2, actual is 2/2
+  (**BUG-174 dotfile-count bug observed live**: `.gitkeep` counted).
+- **BUG-181 verified against the files** (Gary: "I think it's done"): **half done.**
+  Authored half real — `.claude/framework-contract.md` (2026-07-22), region markers
+  in both shells, root CLAUDE.md in ≤150-line contract form. Mechanism half never
+  built — no composer, no starter drift-guard, no `Check-ContractDrift.ps1`. The
+  item's own Root-2 lesson repeating: prose landed, mechanism didn't.
+
+### Decisions (recorded in ADR-009 change log, commit `d78b8fb`)
+
+1. **Naming:** workspace is `workspaces/framework/` (not `framework-next` —
+   "relative names rot," Gary); dev plugin is **`spearit-framework-dev`** (channel
+   label per the existing `-dev` version convention; publishes as
+   `spearit-framework` at graduation). `jobs/` had earlier been considered and
+   dropped (fits BD, not Honda).
+2. **The framework IS the plugin** (Gary's sharpening question, added to D3): the
+   archive channel retires at graduation — no zip, no starter template (`/fw-init`
+   is the starter); Claude Code becomes a hard dependency (accepted deliberately).
+3. **BUG-181 re-scoped, not finished:** the missing mechanisms target the old
+   pipeline scheduled for deletion; the composer becomes `/fw-init`. Verified-done
+   boxes checked, superseded items struck with reasons, new done-gate added
+   (`/fw-init` delivers the contract to a derived project). Moved back to todo/.
+
+### FEAT-190 implemented (commit `2d8c7d8`)
+
+- `workspaces/framework/` skeleton: boundary CLAUDE.md (28 lines), README,
+  `standards/` staging (empty), plugin manifest `spearit-framework-dev` 0.1.0-dev1,
+  empty `commands/`/`skills/`/`scripts/`.
+- **Scope adaptation (recorded in the item):** old `Publish-ToLocalMarketplace.ps1`
+  scans only `plugins/` and wipes its marketplace per run — modifying it would
+  violate the no-old-layout-changes AC. The workspace got its own
+  `tools/Publish-DevMarketplace.ps1` → separate **`fw-dev-marketplace`**. Publisher
+  ran clean: junction resolves, manifest valid.
+- Root CLAUDE.md: one pointer line, PROJECT INSTRUCTIONS region only.
+- 4 of 5 ACs verified and checked. **Open AC:** install proof — Gary runs (in his
+  Claude terminal, his usual surface):
+  `/plugin marketplace add <Projects>/fw-dev-marketplace`, then
+  `/plugin install spearit-framework-dev@fw-dev-marketplace`, then restart.
+
+### State at day end
+
+- In doing/: **FEAT-190** (one AC open — install proof).
+- In todo/: BUG-181 (re-scoped), FEAT-163, FEAT-164 (workspace vocabulary).
+- Commits this session: `e20566a`, `77a5ab6`, `35f8a82`, `d78b8fb`, `2d8c7d8`.
+- **Next session:** verify `spearit-framework-dev` installed after restart → close
+  FEAT-190 → begin FEAT-164 (`/fw-new-workspace`) inside the workspace, BD floor
+  first.
+
+---
+
 **Last Updated:** 2026-08-18
