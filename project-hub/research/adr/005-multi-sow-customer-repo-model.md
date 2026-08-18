@@ -1,6 +1,6 @@
 # ADR-005: Multi-SOW Single-Customer Repo Model (`engagement` Type)
 
-**Status:** Proposed
+**Status:** Superseded by [ADR-009](009-workspace-model-and-fresh-build-in-place.md) (2026-08-18)
 **Date:** 2026-07-02
 **Deciders:** Gary Elliott, Claude Code
 **Impact:** Moderate
