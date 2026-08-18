@@ -323,4 +323,33 @@ project memory.
 
 ---
 
+## Plugin Enablement Scope Fix (Late Night — Continuation)
+
+**Continuation:** After the FEAT-190 commit, Gary spotted that
+`.claude/settings.local.json` listed only two plugins under `enabledPlugins` —
+shouldn't there be three?
+
+**Diagnosis:** Correct instinct. The dev plugin had been installed at *user* scope
+(the default when `--scope local` is omitted), so its enablement landed in
+`~/.claude/settings.json` instead of the project file. That user file also still
+carried consolidation debris: a dead `spearit-framework-dev@fw-dev-marketplace`
+enablement and an `extraKnownMarketplaces` block pointing at the deleted
+`fw-dev-marketplace` folder.
+
+**Fix (three places), aligning with the `--scope local` convention in
+`plugins/TESTING.md`:**
+- `.claude/settings.local.json` — `spearit-framework-dev@dev-marketplace` added;
+  all three plugins now project-enabled.
+- `~/.claude/settings.json` — both `spearit-framework-dev` enablements and the
+  stale `fw-dev-marketplace` marketplace entry removed; only `code-simplifier`
+  remains at user level.
+- `installed_plugins.json` — the dev plugin's install record converted from user
+  scope to local scope with this project's path, matching its siblings' shape.
+
+**Lesson for future installs:** always pass `--scope local` for project plugins —
+the user-scope default scatters enablement into `~/.claude/settings.json`, where
+the project file can't show it.
+
+---
+
 **Last Updated:** 2026-08-18
