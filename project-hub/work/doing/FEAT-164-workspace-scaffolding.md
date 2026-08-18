@@ -63,19 +63,38 @@ new workspace.
 ## Acceptance Criteria
 
 - [ ] `/fw-new-workspace <name> <type>` generates the common floor plus the type's
-      scaffold for all four types.
-- [ ] A document-only workspace (BD shape) stands up with no source tree and nothing
-      irrelevant in it.
-- [ ] Generated README carries name, type, purpose.
-- [ ] No standalone document describes the scaffold; the command doc + the command
-      are the one home (script-checkable per TECH-189 pattern).
-- [ ] Deterministic parts live in a script; AI assists only where judgment adds value
-      (README content), per the script-based execution pattern.
+      scaffold for all four types. *(Script verified 2026-08-18 for all four types
+      in a scratch root; command-level proof pending a live run from the built
+      plugin.)*
+- [ ] A document-only workspace (`sow` type, e.g. `BD-SOW-001`) stands up with no
+      source tree and nothing irrelevant in it. *(Script-level: BD-SOW-001 scratch
+      run produced floor + requirements/reports only. Built-plugin proof pending.)*
+- [ ] Generated README carries name, type, purpose. *(Name/type seeded by script;
+      purpose is the AI step at creation — pending live run.)*
+- [x] No standalone document describes the scaffold; the command doc + the command
+      are the one home (script-checkable per TECH-189 pattern). *(2026-08-18: the
+      folder tree exists only in `scripts/fw-new-workspace.sh`; the command doc
+      deliberately does not restate it.)*
+- [x] Deterministic parts live in a script; AI assists only where judgment adds value
+      (README content), per the script-based execution pattern. *(2026-08-18)*
 
 ## Notes
 
 - Type names are lowercase singulars: `application`, `knowledgebase`, `sow`,
   `operations`.
+- **The repo is the customer; workspaces are its parts** (clarified 2026-08-18,
+  Gary). BD or Honda is the *repo*, never a workspace. A customer repo composes:
+  ```
+  workspaces/
+    <application-name>/   # named for the application
+    knowledgebase/        # singleton, named for its type (or a short name like kb)
+    operations/           # singleton, named for its type
+    <sow-id>/             # one per SOW, e.g. BD-SOW-001
+  ```
+  So the "BD floor test" means: a repo of sow workspaces + kb with no source tree
+  anywhere — not one document-only mega-workspace. Naming convention: application
+  and sow workspaces carry user names (app name, SOW id); kb/operations default
+  their name to the type.
 - Scaffold contents above are the starting sketch — refine against BD first
   (sketch → use → formalize), since BD cannot be stood up by hand-editing.
 
