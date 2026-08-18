@@ -352,4 +352,50 @@ the project file can't show it.
 
 ---
 
+## FEAT-164: `/fw-new-workspace` Implemented (Late Night — Continuation)
+
+**Continuation:** `/fw-move 164 doing` — the first real command built inside the
+framework workspace. (WIP warning again showed 2/2 for 1 actual item — BUG-174's
+dotfile count, second live sighting today.)
+
+### Pre-implementation review → a model correction (Gary)
+
+The review surfaced the plan (bash script as the single home for structure, AI
+only for README purpose, scratch-root verification) — and drew a correction that
+reshaped the item: **"BD is not the right foundation for the workspace. The repo
+is the customer; workspaces are its parts."** A customer repo composes:
+`<application-name>/`, `knowledgebase/` (singleton), `operations/` (singleton),
+`<sow-id>/` (e.g. `BD-SOW-001`). The "BD floor test" therefore means a repo of
+sow + kb workspaces with no source tree anywhere — not one document-only
+mega-workspace. Recorded in the item's Notes; the floor AC reworded to the `sow`
+type. Naming falls out: applications/sows carry user names; kb/operations
+default their name to the type (command allows one-arg form for those two).
+
+### Implementation (commit `e97ce97`, plugin 0.2.0)
+
+- `workspaces/framework/scripts/fw-new-workspace.sh` — THE one home for the
+  structure (header says so): common floor `meetings reference deliverables
+  contacts agreements` for every type; `application` adds poc/src/tests/dist;
+  `knowledgebase` domain/cookbook/faq; `sow` requirements/reports; `operations`
+  intake/requests + intake/incidents. `--root` flag enables scratch-root testing
+  without touching the repo. Guards: unknown type, name required for
+  application/sow, existing workspace, path-like names.
+- `workspaces/framework/commands/fw-new-workspace.md` — runs the script, then
+  the one judgment step (ask purpose, fill README's `_PURPOSE_PENDING_`);
+  deliberately does NOT restate the folder tree (AC 4, TECH-189 pattern).
+- Scratch verification passed: all four types, BD-SOW-001 document-only, all
+  four error cases. Republished; manifest at 0.2.0.
+- Stale cross-ref noted in review, no action: the item said `/fw-init` was
+  "scoped under FEAT-190," but 190 closed kickoff-only; BUG-181's re-scope owns
+  `/fw-init` as the composer.
+
+### State: FEAT-164 in doing/, 2 of 5 ACs checked
+
+Remaining three ACs await **built-plugin proof** (the workspace's own
+verify-against-the-built-artifact rule): Gary updates dev-marketplace, restarts
+(first live test of the settings.local.json auto-reinstall of all three
+plugins), then runs `/fw-new-workspace` from the installed plugin.
+
+---
+
 **Last Updated:** 2026-08-18
