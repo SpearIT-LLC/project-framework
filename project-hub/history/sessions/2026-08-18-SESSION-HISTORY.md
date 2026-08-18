@@ -266,4 +266,61 @@ run. Boundary stated: agents for judgment passes; deterministic sweeps stay scri
 
 ---
 
+## Install Proof, Marketplace Consolidation, and FEAT-190 Done (Night — Continuation)
+
+**Continuation:** Gary ran the install steps; verification and two same-day course
+corrections followed before the close.
+
+### Install proof (the open AC)
+
+Verified, not assumed: `spearit-framework-dev` v0.1.0-dev1 present in
+`installed_plugins.json` (user scope) and cached with the full skeleton. AC checked —
+then two redirects from Gary reshaped *how* it ships before the item closed:
+
+### Redirect 1 (Gary): one marketplace, not two
+
+"We should have created our local marketplace next to the other plugins" — i.e. in the
+existing `claude-local-marketplace/` (= `dev-marketplace`), not a separate sibling
+`fw-dev-marketplace`. The separate marketplace had been created solely to honor the
+no-old-layout-changes AC (the old publisher wipes its marketplace each run); Gary
+overrode that trade explicitly. Resolution — **one marketplace, one writer**:
+- `tools/Publish-ToLocalMarketplace.ps1` now also scans `workspaces/framework`
+  (the one old-structure change, at Gary's direction; FEAT-190 scope note updated).
+- Workspace `Publish-DevMarketplace.ps1` deleted; `fw-dev-marketplace/` folder, its
+  cache, and its `installed_plugins.json`/`known_marketplaces.json` entries removed.
+- Rejected alternative: both scripts writing one manifest (two writers = drift; the
+  old script's wipe-and-rebuild would silently drop the workspace entry).
+- Docs synced: `plugins/TESTING.md`, workspace README. `plugins/README.md` checked,
+  still accurate, left alone.
+
+### Redirect 2 (Gary): version convention — the one-time shot
+
+With nothing yet installed from the consolidated marketplace, the last cheap moment to
+drop `-dev<n>`. Decision: **plain semver for the new plugin** — the `0.x` series IS the
+dev series; the `-dev` in the plugin *name* carries the channel, so the version needs no
+suffix. `0.1.0-dev1` → **`0.1.0`**, republished. Old plugins keep `-dev<n>` (already
+released under it; not backported). Recorded in workspace README, FEAT-190 notes, and
+project memory.
+
+### Close
+
+- Republished; manifest verified: `spearit-framework`
+  1.0.1, `spearit-framework-light` 1.0.5, `spearit-framework-dev` 0.1.0, junctions
+  resolving. Gary reloaded his Claude terminal; install re-verified at 0.1.0.
+- Old plugins not reinstalled after the wipe — fine: the root `.claude/commands/`
+  copies still provide `/fw-*` locally (Gary confirmed).
+- **FEAT-190 → done/** (all 5 ACs verified; `/fw-move 190 done`, script clean, done/
+  at 8 items — under release threshold). doing/ is now empty.
+
+### State at close
+
+- In done/: FEAT-190 joins 7 others (8 total).
+- In todo/: BUG-181 (re-scoped), FEAT-163, FEAT-164.
+- Still untouched, pre-existing: `.claude/settings.local.json`, 07-16 retrospective
+  edits, `research/claude-code-workflows-consulting-guide.md` (untracked).
+- **Next session:** begin FEAT-164 (`/fw-new-workspace`) inside the workspace, BD
+  floor first.
+
+---
+
 **Last Updated:** 2026-08-18

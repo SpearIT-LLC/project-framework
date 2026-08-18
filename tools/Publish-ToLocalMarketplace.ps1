@@ -9,6 +9,9 @@
     republishes all plugins as directory junctions. Run this before each test cycle
     to ensure a clean, up-to-date state.
 
+    Publishes every plugin under plugins/ plus the framework workspace plugin
+    (workspaces/framework — the spearit-framework-dev source tree, ADR-009).
+
     SCOPE: Testing infrastructure ONLY - not release automation.
     For building distributable packages, use Build-Plugin.ps1.
 
@@ -137,10 +140,16 @@ try {
     New-Item -Path $marketplacePluginDir -ItemType Directory -Force | Out-Null
     Write-Status "--- Publishing ---" -Type Info
 
-    # Step 3: Discover plugins
+    # Step 3: Discover plugins — plugins/* plus the framework workspace plugin
+    # (ADR-009: workspaces/framework IS the spearit-framework-dev source tree)
     $pluginFolders = @(Get-ChildItem -Path $pluginsDir -Directory | Where-Object {
         Test-Path (Join-Path $_.FullName ".claude-plugin\plugin.json")
     })
+
+    $workspacePluginDir = Join-Path $projectRoot "workspaces\framework"
+    if (Test-Path (Join-Path $workspacePluginDir ".claude-plugin\plugin.json")) {
+        $pluginFolders += Get-Item $workspacePluginDir
+    }
 
     if ($pluginFolders.Count -eq 0) {
         throw "No plugins found with .claude-plugin/plugin.json in $pluginsDir"

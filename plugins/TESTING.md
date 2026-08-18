@@ -51,6 +51,7 @@ If starting from scratch (new machine or fresh install):
 # 3. Install plugins
 /plugin install spearit-framework-light@dev-marketplace --scope local
 /plugin install spearit-framework@dev-marketplace --scope local
+/plugin install spearit-framework-dev@dev-marketplace --scope local
 
 # 4. Restart Claude Code
 ```
@@ -79,13 +80,13 @@ When testing is complete and you're ready to publish:
 
 ### Publish-ToLocalMarketplace.ps1
 
-Resets the dev environment and republishes all plugins. Always a full clean slate — wipes the marketplace directory, Claude cache, and `installed_plugins.json` entries for `dev-marketplace`, then recreates junctions for all plugins found in `plugins/`.
+Resets the dev environment and republishes all plugins. Always a full clean slate — wipes the marketplace directory, Claude cache, and `installed_plugins.json` entries for `dev-marketplace`, then recreates junctions for all plugins found in `plugins/`, plus the framework workspace plugin (`workspaces/framework`, published as `spearit-framework-dev` — ADR-009).
 
 ```powershell
 .\tools\Publish-ToLocalMarketplace.ps1
 ```
 
-Auto-discovers plugins by scanning `plugins/` for subfolders containing `.claude-plugin/plugin.json`. No hardcoded plugin names.
+Auto-discovers plugins by scanning `plugins/` for subfolders containing `.claude-plugin/plugin.json` (plus `workspaces/framework` if its plugin.json exists). No hardcoded plugin names.
 
 ### Build-Plugin.ps1
 

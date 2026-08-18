@@ -5,6 +5,7 @@
 **Priority:** High
 **Version Impact:** MAJOR
 **Created:** 2026-08-18
+**Completed:** 2026-08-18
 **Theme:** Workflow
 **Workspace:** framework
 **Planning Period:** [Optional]
@@ -38,7 +39,8 @@ the workspace and its boundary exist.
   - `standards/` — empty staging folder for the TECH-187-audited docs
     (one-home-at-all-times move rule, ADR-009 OQ1; drains as skills are built).
   - Plugin skeleton: `.claude-plugin/plugin.json` named **`spearit-framework-dev`**
-    (dev-channel name per the existing `-dev` version convention; publishes as
+    (`-dev` is the channel marker in the *name*; versions are plain semver, `0.x`
+    dev series, no `-dev<n>` suffixes — convention set 2026-08-18; publishes as
     `spearit-framework` at graduation), plus empty `commands/`, `skills/`,
     `scripts/` folders.
 - Register the skeleton with the local dev marketplace
@@ -59,17 +61,20 @@ the workspace and its boundary exist.
       the plugin skeleton. *(2026-08-18)*
 - [x] The workspace CLAUDE.md states the authority boundary in ≤30 lines. *(28
       lines, verified by `wc -l`)*
-- [ ] The `spearit-framework-dev` skeleton installs from the local marketplace
-      (verified, not assumed). *(Publish path verified 2026-08-18: junction
-      resolves, `marketplace.json` valid. Remaining: Gary runs
-      `/plugin marketplace add <parent>/fw-dev-marketplace`, installs
-      `spearit-framework-dev@fw-dev-marketplace`, restarts Claude Code.)*
+- [x] The `spearit-framework-dev` skeleton installs from the local marketplace
+      (verified, not assumed). *(2026-08-18: v0.1.0-dev1 install verified in
+      `installed_plugins.json` and cache with the full skeleton, initially via a
+      separate `fw-dev-marketplace`. Same day Gary redirected: consolidated into
+      the shared `dev-marketplace` (`claude-local-marketplace/`) — reinstall as
+      `spearit-framework-dev@dev-marketplace`. Version convention also reset same
+      day: plain semver, republished as 0.1.0.)*
 - [x] Root CLAUDE.md has the single pointer line (PROJECT INSTRUCTIONS region);
-      nothing else in the old structure changed by this work. *(Scope note: the old
-      `Publish-ToLocalMarketplace.ps1` scans only `plugins/` and wipes its
-      marketplace each run, so the workspace got its own
-      `tools/Publish-DevMarketplace.ps1` targeting a separate `fw-dev-marketplace`
-      — keeps the old tool untouched, honoring this AC.)*
+      nothing else in the old structure changed by this work. *(Scope note: a
+      separate `fw-dev-marketplace` was first created to keep the old publish tool
+      untouched; Gary overrode this same day — one marketplace beats two. The one
+      old-structure change, at his direction: `Publish-ToLocalMarketplace.ps1` now
+      also scans `workspaces/framework`; the separate marketplace and the
+      workspace's `Publish-DevMarketplace.ps1` were removed.)*
 - [x] This item's `Workspace:` field and its siblings' (FEAT-163/164) demonstrate
       the field on the live board. *(2026-08-18)*
 
