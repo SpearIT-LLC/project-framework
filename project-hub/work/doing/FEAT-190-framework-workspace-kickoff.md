@@ -55,15 +55,23 @@ the workspace and its boundary exist.
 
 ## Acceptance Criteria
 
-- [ ] `workspaces/framework/` exists with CLAUDE.md, README.md, `standards/`, and
-      the plugin skeleton.
-- [ ] The workspace CLAUDE.md states the authority boundary in ≤30 lines.
+- [x] `workspaces/framework/` exists with CLAUDE.md, README.md, `standards/`, and
+      the plugin skeleton. *(2026-08-18)*
+- [x] The workspace CLAUDE.md states the authority boundary in ≤30 lines. *(28
+      lines, verified by `wc -l`)*
 - [ ] The `spearit-framework-dev` skeleton installs from the local marketplace
-      (verified, not assumed).
-- [ ] Root CLAUDE.md has the single pointer line; nothing else in the old structure
-      changed (`git status` shows no old-layout modifications beyond that line).
-- [ ] This item's `Workspace:` field and its siblings' (FEAT-163/164) demonstrate
-      the field on the live board.
+      (verified, not assumed). *(Publish path verified 2026-08-18: junction
+      resolves, `marketplace.json` valid. Remaining: Gary runs
+      `/plugin marketplace add <parent>/fw-dev-marketplace`, installs
+      `spearit-framework-dev@fw-dev-marketplace`, restarts Claude Code.)*
+- [x] Root CLAUDE.md has the single pointer line (PROJECT INSTRUCTIONS region);
+      nothing else in the old structure changed by this work. *(Scope note: the old
+      `Publish-ToLocalMarketplace.ps1` scans only `plugins/` and wipes its
+      marketplace each run, so the workspace got its own
+      `tools/Publish-DevMarketplace.ps1` targeting a separate `fw-dev-marketplace`
+      — keeps the old tool untouched, honoring this AC.)*
+- [x] This item's `Workspace:` field and its siblings' (FEAT-163/164) demonstrate
+      the field on the live board. *(2026-08-18)*
 
 ## Notes
 

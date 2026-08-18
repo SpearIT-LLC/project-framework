@@ -106,4 +106,6 @@ Work happens against these parts directly — "framework improvements" go in `fr
 updates" in `templates/`, "build tooling" in `tools/`. Nobody works on `tools/` (or any subdirectory) as
 a separate project.
 
+**Exception (ADR-009):** inside `workspaces/framework/` — the new framework's build workspace — that workspace's own `CLAUDE.md` is the sole authority.
+
 <!-- END PROJECT INSTRUCTIONS -->

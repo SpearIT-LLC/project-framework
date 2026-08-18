@@ -1,0 +1,9 @@
+{
+  "name": "spearit-framework-dev",
+  "version": "0.1.0-dev1",
+  "description": "SpearIT Framework (dev channel) - workspace model; commands build the structure",
+  "author": {
+    "name": "Gary Elliott / SpearIT Solutions"
+  },
+  "license": "MIT"
+}
