@@ -50,14 +50,38 @@ reporting — 2026-07-23 retrospective notes).
 
 - [ ] Format decision: HTML→PDF vs. PPT (or both, from one source)? What does
       "presentation-grade" require?
-- [ ] Input format for the skeleton: YAML vs. md front-matter vs. direct from folder
-      state?
 - [ ] Cadence: on demand, or tied to planning periods (FEAT-093)?
-- [ ] Scope of the command: one `/fw-report <workspace> [period]` for all types, or
-      per-type variants?
 
 ## Decided (Gary, 2026-08-19)
 
+- **Input format: one YAML file per workspace per period.** Facts gathered once,
+  presented multiple ways. AI authors it (gathering + interpretation); a schema-check
+  script gates assembly — the invariant lives in a chokepoint, not prose.
+- **Envelope shared across all types; only activity-row shape and metric names are
+  per-type** (same pattern as the scaffold's per-type `DIRS`). One assembly engine, one
+  `/fw-report` command. Envelope: `workspace`, `period`, `headline`, `outlook`,
+  `metrics`, `timeline`, `achievements`, `impediments`, `activity`, `clarifications`.
+  - `headline`/`outlook` are the only exec-exclusive authored fields (pure judgment);
+    the exec view is otherwise **composed** from shared fields — nothing restated
+    (single-source inside the file).
+  - `achievements`/`impediments` carry `refs:` to activity rows; `impediments` carry
+    `needs:` — the explicit ask, often the exec's only action item.
+  - `timeline` (Gary: "execs always want to know when") — rows of
+    `milestone / baseline / forecast / status / driver`. The exec reads the
+    baseline-vs-forecast **delta**; `driver` links to the record moving the date.
+    `baseline` is the commitment of record — re-baselining is an explicit reported
+    event, never a quiet edit. Most load-bearing for application and sow; optional for
+    operations.
+  - `activity` rows are column-shaped for direct table rendering. Per type:
+    ops = INC/REQ records; sow = deliverables/milestones vs. plan;
+    application = work items and releases.
+  - `clarifications` is the human-input channel: AI parks questions it can't resolve;
+    assembly refuses to run while any are unanswered — human judgment solicited exactly
+    where needed, never silently skipped.
+- **One layered report, not two.** Executive summary leads (headline → metrics →
+  highlights → impediments/asks → timeline → outlook); linked detail sits behind it in
+  the same document (HTML collapsibles / PDF appendix). An exec-only variant for email
+  is a free byproduct of the same input.
 - **`fw-report` has sole responsibility for the `reports/` folder and its content.**
   The folder is created on first use, never at scaffold time — folders exist when
   content exists, the flow's structure is authored in one home (the command, ADR-009
