@@ -7,7 +7,10 @@
       "Glob",
       "Grep",
       "Task",
-      "Bash"
+      "Bash",
+      "WebFetch(domain:www.anthropic.com)",
+      "WebSearch",
+      "Bash(git mv *)"
     ],
     "deny": [
       "Read(.env)",
@@ -39,6 +42,7 @@
   },
   "enabledPlugins": {
     "spearit-framework@dev-marketplace": true,
-    "spearit-framework-light@dev-marketplace": true
+    "spearit-framework-light@dev-marketplace": true,
+    "spearit-framework-dev@dev-marketplace": true
   }
 }
