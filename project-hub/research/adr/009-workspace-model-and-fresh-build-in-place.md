@@ -196,6 +196,13 @@ tree. The **common floor** across Honda and BD is small: meetings, research/refe
 deliverables, contacts, and an SOW/legal home. `src/`, `tests/`, `poc/` are a workspace
 **type** layered on top, not part of the floor.
 
+**Amended 2026-08-18:** the `knowledgebase` type **opts out of the common floor**. A kb
+has no meetings, deliverables, contacts, or agreements of its own — its content is
+knowledge organized by domain, and its entry point is one `INDEX.md` **per
+knowledgebase** (not per domain; a domain earns its own index only if it grows to need
+one). The floor remains the default for every other type. The structure itself lives
+only in `fw-new-workspace.sh` (D3) — this note records the decision, not the tree.
+
 **Git is required at the repo root** (decided 2026-08-18). `.claude/scripts/fw-move.sh`
 opens with `git rev-parse --show-toplevel` and exits if it fails; git operations are
 built into the Kanban commands by design, and `git mv` is what preserves item history
@@ -488,3 +495,6 @@ standard in Dec 2025; plugins are now the standard distribution unit).
   the plugin" identity added to D3: archive channel retires at graduation; Claude
   Code becomes a hard dependency. BUG-181 re-scoped under this ADR (the composer
   becomes `/fw-init`; old-pipeline mechanisms will not be built).
+- 2026-08-18: D4 amended — `knowledgebase` opts out of the common floor; kb content is
+  domain-organized with one `INDEX.md` per knowledgebase (decided with Gary while
+  testing `/fw-new-workspace`).

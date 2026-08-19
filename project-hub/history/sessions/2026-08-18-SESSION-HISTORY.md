@@ -398,4 +398,74 @@ plugins), then runs `/fw-new-workspace` from the installed plugin.
 
 ---
 
+## Built-Plugin Testing of `/fw-new-workspace` and the kb Redesign (Continuation)
+
+**Continuation:** Gary drove `/fw-new-workspace` from the *installed* plugin — the
+built-artifact proof FEAT-164's open ACs call for — and the testing immediately turned
+into design feedback on the knowledgebase type.
+
+### Test drives (installed plugin, all three types)
+
+- `app1` (application), `sow-001` (sow — type inferred from the name, only the name was
+  given), `kb` (knowledgebase — `kb` expanded to the full type name). Purpose lines
+  filled via the command's judgment step; all three marked as test placeholders.
+- Confirmed along the way: the dev-marketplace **junction serves source edits live** for
+  script *behavior* (both the source path and the marketplace path produced identical
+  output mid-edit), but the command *doc* text is served from the plugin cache — doc
+  changes need version bump → republish → marketplace update → restart.
+
+### FEAT-191 filed (Gary, on first use of the purpose question)
+
+*"Your question might need more depth. More like a mini swarm but without all the
+ceremony."* → `FEAT-191-workspace-purpose-guided-intake`: replace the single purpose
+question with a short type-aware intake (who's it for, what does done look like,
+constraints, first deliverable), one-liner fast path preserved.
+
+### kb scaffold redesigned — ADR-009 D4 amended (Gary's call, in three refinements)
+
+1. **"Too many folders in kb."** The floor (meetings/contacts/agreements/deliverables/
+   reference) doesn't fit a kb — it has none of those of its own. **D4 amended:
+   knowledgebase opts out of the common floor.** One `INDEX.md` **per kb**, not per
+   domain (a domain earns an index only if it grows to need one). `research/` folder
+   considered, rejected as YAGNI — raw material lives in a domain's `reference/`.
+2. **First cut:** `INDEX.md` + `domain/sample/{cookbook,faq,reference}`.
+3. **Second cut (Gary): the real shape is `kb/licensing/…`** — a *named* domain,
+   flattened (no `domain/` wrapper adds no meaning), and no `sample` placeholder
+   residue. Script now takes `<name> <type> [domain]`; **knowledgebase requires the
+   domain** (like application requires a name); domain on any other type errors; the
+   command doc has the AI ask "What is the first domain this knowledgebase will hold?"
+   The one-arg shorthand now applies only to `operations`.
+   All paths scratch-tested (missing domain, domain-on-sow, happy path); `workspaces/kb`
+   regenerated as `kb/licensing/{cookbook,faq,reference}`.
+
+### FEAT-192 filed (surfaced by the very next test)
+
+`/fw-new-workspace kb kb hpc` → "workspace already exists" (correct per D3 — nothing
+created by hand). The intent was a **second domain in an existing kb**, which no command
+covers. → `FEAT-192-fw-new-domain-command`: a separate `/fw-new-domain` (creating vs.
+growing are different verbs; INDEX append ≠ fresh scaffold), per-domain folder set kept
+to one authored home shared with the create path. Direction recorded in the item;
+build starts next session.
+
+### Mechanics noted for future sessions
+
+- `rm -rf` is permission-blocked for the AI in this project — stale generated trees get
+  moved to the session scratchpad instead (Gary deleted one by hand once).
+- `Publish-ToLocalMarketplace.ps1` has **no `-Build` parameter** (memory's quick-ref was
+  stale) and requires **pwsh 7** — `pwsh -File tools/Publish-ToLocalMarketplace.ps1`.
+
+### State at close
+
+- Plugin bumped **0.2.0 → 0.3.0** and republished (the command-doc change rides the
+  version). **Gary, next session start:** `/plugin marketplace update dev-marketplace`,
+  restart, then the new kb flow and updated command text are live.
+- In doing/: FEAT-164 (built-plugin ACs exercised this session but boxes not yet
+  checked against the item). In backlog/: FEAT-191, FEAT-192 (new).
+- Test workspaces `app1/`, `sow-001/`, `kb/` left **untracked** — placeholders, not
+  deliverables; commit or delete is Gary's call.
+- **Next session:** FEAT-192 (`/fw-new-domain`), FEAT-164 AC close-out, FEAT-191 when
+  ready.
+
+---
+
 **Last Updated:** 2026-08-18
