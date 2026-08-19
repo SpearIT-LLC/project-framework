@@ -55,8 +55,15 @@ reporting — 2026-07-23 retrospective notes).
 - [ ] Cadence: on demand, or tied to planning periods (FEAT-093)?
 - [ ] Scope of the command: one `/fw-report <workspace> [period]` for all types, or
       per-type variants?
-- [ ] Where do generated reports live — the workspace's `reports/` (sow has one;
-      operations has `reference/`)?
+
+## Decided (Gary, 2026-08-19)
+
+- **`fw-report` has sole responsibility for the `reports/` folder and its content.**
+  The folder is created on first use, never at scaffold time — folders exist when
+  content exists, the flow's structure is authored in one home (the command, ADR-009
+  D3 pattern), and it works retroactively on workspaces that predate reporting.
+- Consequence: the `sow` scaffold drops `reports/` from `fw-new-workspace.sh` when this
+  lands, so a report never has two possible homes.
 
 ---
 
@@ -64,6 +71,8 @@ reporting — 2026-07-23 retrospective notes).
 
 - [ ] One command produces both an executive summary and a detailed activity report for
       a chosen workspace and period
+- [ ] `fw-report` creates `reports/` on first use; no scaffold pre-creates it (sow's
+      `reports/` removed from `fw-new-workspace.sh`)
 - [ ] Output is customer-presentable in the decided format (not raw markdown)
 - [ ] Assembly is deterministic — same inputs, same structure; AI contributes gathering
       and interpretation, not layout
