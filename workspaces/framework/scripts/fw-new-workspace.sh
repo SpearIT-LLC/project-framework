@@ -6,33 +6,26 @@
 # composed here. No document may restate the trees; to change a scaffold, change
 # the templates. A consuming project's .claude/templates/workspaces/ overrides
 # the plugin's templates as a whole, when present.
+#
+# --root <dir> (before the type) overrides the repo root — TESTING ONLY, kept
+# out of the usage text on purpose; workspaces always land in <root>/workspaces/.
 set -euo pipefail
 
 usage() {
   {
-    echo "Usage: fw-new-workspace.sh [--root <dir>] <name> <type> [domain]"
-    echo "       fw-new-workspace.sh [--root <dir>] operations"
+    echo "Usage: fw-new-workspace.sh <type> <name>"
+    echo "       fw-new-workspace.sh operations"
+    echo "       fw-new-workspace.sh kb <domain>"
     echo ""
-    echo "Types: product  project  knowledgebase  operations"
-    echo "product  — created, delivered, maintained; named for the product."
-    echo "project  — finite, freezes at close; contracted work (an SOW) is a"
-    echo "           project named for the SOW, e.g. bd-sow-001."
-    echo "knowledgebase requires a domain — its first domain, e.g. 'licensing'."
-    echo "The one-argument form is allowed only for operations, whose name defaults"
-    echo "to the type. --root overrides the repo root (the directory containing"
-    echo "workspaces/); default is the enclosing git repo."
+    echo "Types (case-insensitive): product  project  kb  operations"
+    echo "product    — created, delivered, maintained; named for the product."
+    echo "project    — finite, freezes at close; contracted work (an SOW) is a"
+    echo "             project named for the SOW, e.g. bd-sow-001."
+    echo "kb         — the knowledgebase; always created at workspaces/kb with its"
+    echo "             first domain, e.g. 'licensing'. No custom name."
+    echo "operations — always created at workspaces/operations. No custom name."
   } >&2
   exit 1
-}
-
-# Retired type names get a pointer, not a bare 'unknown' (TASK-197).
-check_type() {
-  case "$1" in
-    product|project|knowledgebase|operations) ;;
-    application) echo "Error: type 'application' was renamed 'product' (TASK-197)" >&2; usage ;;
-    sow) echo "Error: 'sow' is not a type — an SOW is a project named for the SOW, e.g. bd-sow-001 (TASK-197)" >&2; usage ;;
-    *) echo "Error: unknown type '$1'" >&2; usage ;;
-  esac
 }
 
 ROOT=""
@@ -41,42 +34,44 @@ if [ "${1:-}" = "--root" ]; then
   shift 2
 fi
 
-DOMAIN=""
-case $# in
-  1)
-    TYPE="$1"
-    NAME="$1"
-    check_type "$TYPE"
-    case "$TYPE" in
-      operations) ;;
-      knowledgebase) echo "Error: knowledgebase requires a name and a domain" >&2; usage ;;
-      *) echo "Error: type '$TYPE' requires an explicit name" >&2; usage ;;
-    esac
-    ;;
-  2)
-    NAME="$1"
-    TYPE="$2"
-    check_type "$TYPE"
-    ;;
-  3)
-    NAME="$1"
-    TYPE="$2"
-    DOMAIN="$3"
-    check_type "$TYPE"
-    ;;
-  *)
-    usage
-    ;;
+[ $# -ge 1 ] || usage
+
+# Type is case-insensitive; 'kb' is the canonical short form of knowledgebase
+# and the fixed folder name (Gary, 2026-08-20). Retired names get pointers.
+TYPE="$(printf '%s' "$1" | tr '[:upper:]' '[:lower:]')"
+case "$TYPE" in
+  kb|knowledgebase) TYPE="knowledgebase" ;;
+  product|project|operations) ;;
+  application) echo "Error: type 'application' was renamed 'product' (TASK-197)" >&2; usage ;;
+  sow) echo "Error: 'sow' is not a type — an SOW is a project named for the SOW, e.g. bd-sow-001 (TASK-197)" >&2; usage ;;
+  *) echo "Error: unknown type '$1'" >&2; usage ;;
 esac
 
-if [ "$TYPE" = "knowledgebase" ] && [ -z "$DOMAIN" ]; then
-  echo "Error: knowledgebase requires a domain — its first domain, e.g. 'licensing'" >&2
-  usage
-fi
-if [ "$TYPE" != "knowledgebase" ] && [ -n "$DOMAIN" ]; then
-  echo "Error: a domain argument applies only to knowledgebase" >&2
-  usage
-fi
+# kb and operations are one-per-repo with fixed folder names; only product and
+# project take a custom name.
+NAME=""
+DOMAIN=""
+case "$TYPE" in
+  operations)
+    NAME="operations"
+    [ $# -le 1 ] || { echo "Error: operations takes no name — the workspace is always workspaces/operations" >&2; usage; }
+    ;;
+  knowledgebase)
+    NAME="kb"
+    case $# in
+      1) echo "Error: kb requires a domain — its first domain, e.g. 'licensing'" >&2; usage ;;
+      2) DOMAIN="$2" ;;
+      *) echo "Error: kb takes just a domain — the workspace is always workspaces/kb" >&2; usage ;;
+    esac
+    ;;
+  product|project)
+    case $# in
+      1) echo "Error: type '$TYPE' requires a name — ask the user for one" >&2; usage ;;
+      2) NAME="$2" ;;
+      *) echo "Error: too many arguments for type '$TYPE'" >&2; usage ;;
+    esac
+    ;;
+esac
 
 case "$NAME" in
   */*|*\\*|.|..) echo "Error: name must be a plain folder name, got '$NAME'" >&2; exit 1 ;;
@@ -89,10 +84,23 @@ if [ -z "$ROOT" ]; then
   ROOT="$(git rev-parse --show-toplevel)"
 fi
 
+# Collision guard — case-insensitive, so App2 vs app2 is refused even on a
+# case-sensitive filesystem (Windows checkouts would collide silently).
 WS="$ROOT/workspaces/$NAME"
 if [ -e "$WS" ]; then
   echo "Error: workspace already exists: $WS" >&2
   exit 1
+fi
+if [ -d "$ROOT/workspaces" ]; then
+  NAME_LC="$(printf '%s' "$NAME" | tr '[:upper:]' '[:lower:]')"
+  for existing in "$ROOT/workspaces"/*/; do
+    [ -d "$existing" ] || continue
+    base="$(basename "$existing")"
+    if [ "$(printf '%s' "$base" | tr '[:upper:]' '[:lower:]')" = "$NAME_LC" ]; then
+      echo "Error: workspace name collides with existing '$base' (names are case-insensitive): $NAME" >&2
+      exit 1
+    fi
+  done
 fi
 
 # Template resolution: project override first, then the plugin's own templates

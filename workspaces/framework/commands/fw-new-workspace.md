@@ -1,6 +1,6 @@
 ---
 description: Create a new workspace with the scaffold for its type
-argument-hint: "<name> <type> [domain]  |  operations"
+argument-hint: "<type> <name>  |  operations  |  kb <domain>"
 ---
 
 # /fw-new-workspace - Create a Workspace
@@ -18,21 +18,29 @@ document. A project may override the templates wholesale via its own
 1. **Run the script** — it is the sole authority for structure:
 
    ```bash
-   bash "${CLAUDE_PLUGIN_ROOT}/scripts/fw-new-workspace.sh" <name> <type> [domain]
+   bash "${CLAUDE_PLUGIN_ROOT}/scripts/fw-new-workspace.sh" <type> <name>
+   bash "${CLAUDE_PLUGIN_ROOT}/scripts/fw-new-workspace.sh" operations
+   bash "${CLAUDE_PLUGIN_ROOT}/scripts/fw-new-workspace.sh" kb <domain>
    ```
 
-   Types: `product`, `project`, `knowledgebase`, `operations`. For `operations`
-   the name may be omitted and defaults to the type. Naming convention: a
-   product is named for the product; a project for the initiative — and
-   **contracted work (an SOW) is a project named for the SOW id** (e.g.
-   `bd-sow-001`); there is no `sow` type. Software or tooling a project
-   delivers gets its own `product` workspace from day one — the project
-   workspace references it.
+   **Argument order is type first.** Types (case-insensitive): `product`,
+   `project`, `kb`, `operations`. Only `product` and `project` take a custom
+   name — **if the user gave one of those types but no name, ask:** "What
+   should this workspace be called?" `kb` and `operations` are one-per-repo
+   with fixed folder names (`workspaces/kb`, `workspaces/operations`); the
+   script accepts any casing or the long form `knowledgebase` but always
+   creates `kb/`.
 
-   A `knowledgebase` requires a **domain** — the subject area its first content
-   belongs to (e.g. `licensing`). If the user didn't provide one, ask: "What is
-   the first domain this knowledgebase will hold?" — then pass their answer as
-   the third argument. If the script errors, report its message verbatim and
+   Naming convention: a product is named for the product; a project for the
+   initiative — and **contracted work (an SOW) is a project named for the SOW
+   id** (e.g. `bd-sow-001`); there is no `sow` type. Software or tooling a
+   project delivers gets its own `product` workspace from day one — the
+   project workspace references it.
+
+   `kb` requires a **domain** — the subject area its first content belongs to
+   (e.g. `licensing`). If the user didn't provide one, ask: "What is the first
+   domain this knowledgebase will hold?" — then pass their answer as the
+   second argument. If the script errors, report its message verbatim and
    stop — do not create anything by hand.
 
 2. **Fill in the purpose** (the judgment step). Ask the user: "What is this

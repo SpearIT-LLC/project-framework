@@ -237,4 +237,55 @@ the journey record.
 
 ---
 
+## Live Smoke Test + Script Interface Refinement (Evening Session)
+
+**Continuation:** after TASK-197's completion commit, Gary updated the marketplace
+and invoked `/spearit-framework-dev:fw-new-workspace` live — the published plugin
+served the new four-type command, closing the last verification loop end-to-end
+(install → invoke → generate). Created `workspaces/app2` as a test project.
+
+### Interface feedback → implemented under FEAT-164 (in doing/, owns the script)
+
+Gary typed `project app2` — type first — and the original `<name> <type>` order had
+to be silently swapped. His feedback, all landed and tested:
+
+1. **Type-first argument order** — `<type> <name>`; the invocation now works as
+   people naturally type it.
+2. **Prompt on missing name** — the script stays non-interactive (chokepoints don't
+   prompt) and errors with "requires a name — ask the user for one"; the command
+   doc instructs the AI layer to ask, same pattern as the kb-domain prompt.
+3. **`--root` hidden** — kept as an undocumented testing flag (every scratch-root
+   verification depends on it) but removed from usage text; general users never
+   see it. Workspaces always land in `<root>/workspaces/` regardless.
+4. **Fixed names for the singletons** — `operations` and `kb` are one-per-repo
+   with fixed folder names; passing a custom name is rejected with a message
+   saying so. Signatures: `<type> <name>` (product/project), `operations`,
+   `kb <domain>`.
+5. **kb aliases** — `KnowledgeBase | knowledgebase | kb | KB` (any casing) all
+   accepted, always creating `workspaces/kb/`. Types are case-insensitive across
+   the board (retired-name pointers included); the *name* keeps the user's case.
+6. **Case-insensitive collision guard** (answering "do we have a duplicate name
+   check?" — yes, refuse-if-exists existed; now also catches `App2` vs `app2` on
+   case-sensitive filesystems).
+
+Side effect worth keeping: the fixed `kb/` name makes FEAT-194's pointer story
+fully predictable — `workspaces/kb/company/` is the same path in every repo.
+
+### Files (this section)
+
+- Modified: `workspaces/framework/scripts/fw-new-workspace.sh` (interface rework),
+  `workspaces/framework/commands/fw-new-workspace.md` (signatures, prompts)
+- Created (uncommitted fixture): `workspaces/app2` (project, via the published
+  plugin — README purpose still `_PURPOSE_PENDING_`; fill or delete next session)
+
+### Current State (end of evening)
+
+- **done/ (9):** TASK-197 complete and committed
+- **doing/:** FEAT-164 — script + templates landed; remaining: review its
+  acceptance criteria against what TASK-197 already delivered
+- **Loose ends:** app2 README purpose pending; FEAT-193 next (ops overlay edit +
+  regenerate operations workspace); TECH-172 DECISION cleanup queued
+
+---
+
 **Last Updated:** 2026-08-20
