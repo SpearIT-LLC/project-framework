@@ -6,9 +6,12 @@ argument-hint: "<name> <type> [domain]  |  operations"
 # /fw-new-workspace - Create a Workspace
 
 Stand up a workspace under `workspaces/` as a command, not an improvisation
-(ADR-009 D3). The folder structure has exactly one home:
-`scripts/fw-new-workspace.sh`. Never create workspace folders by hand, and never
-restate the folder tree in this or any other document.
+(ADR-009 D3, amended by TASK-197). Structure and seeded content have exactly one
+authored home: `templates/workspaces/` (floor + per-type overlays), composed by
+`scripts/fw-new-workspace.sh` — the sole creation path. Never create workspace
+folders by hand, and never restate the folder trees in this or any other
+document. A project may override the templates wholesale via its own
+`.claude/templates/workspaces/`.
 
 ## Steps
 
@@ -18,10 +21,13 @@ restate the folder tree in this or any other document.
    bash "${CLAUDE_PLUGIN_ROOT}/scripts/fw-new-workspace.sh" <name> <type> [domain]
    ```
 
-   Types: `application`, `knowledgebase`, `sow`, `operations`. For `operations`
-   the name may be omitted and defaults to the type. Naming convention:
-   applications are named for the application; sow workspaces for the SOW id
-   (e.g. `BD-SOW-001`).
+   Types: `product`, `project`, `knowledgebase`, `operations`. For `operations`
+   the name may be omitted and defaults to the type. Naming convention: a
+   product is named for the product; a project for the initiative — and
+   **contracted work (an SOW) is a project named for the SOW id** (e.g.
+   `bd-sow-001`); there is no `sow` type. Software or tooling a project
+   delivers gets its own `product` workspace from day one — the project
+   workspace references it.
 
    A `knowledgebase` requires a **domain** — the subject area its first content
    belongs to (e.g. `licensing`). If the user didn't provide one, ask: "What is

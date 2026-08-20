@@ -159,4 +159,82 @@ awareness), FEAT-200 (schedule reminders / derived calendar).
 
 ---
 
+## TASK-197 Implementation (Later Session)
+
+**Continuation:** moved TASK-197 → doing (pre-implementation review) → implemented →
+done, same day. WIP note: the move script reported 3/2 in doing/, actual was 2/2 —
+BUG-174 (dotfile miscount) observed live.
+
+### The sow type dropped at pre-implementation review
+
+Gary challenged at review: *"Is there a reason to even have `sow` now that we've
+defined it as a project? If I have an SOW, then I just give it the name of the SOW."*
+Analysis agreed — after the morning's refinement the type carried nothing a project
+doesn't (scaffold identical; write-once `deliverables/` generalized; contract =
+content in `agreements/`; per-SOW identity = the workspace name). Dropping it also
+un-tempts type-branched reporting (ADR-009 OQ5: type never branches runtime; report
+baselines are content-driven). Third instance of the day's lesson: two names for one
+concept (DECISION/ADR, specs/requirements, sow/project). **Final enum: product,
+project, operations, knowledgebase.** The morning's five-type framing stands above as
+the journey record.
+
+### Implemented (all TASK-197 acceptance criteria checked)
+
+- **ADR-009 amended in place** (D4-amendment precedent): OQ5 → four-type enum with
+  rationale; D3 → the one authored home for structure + seeded content is the plugin's
+  `templates/workspaces/` tree, script as sole chokepoint; change-log entry added.
+- **Template trees authored** (`workspaces/framework/templates/workspaces/`): shared
+  `floor/` + product/project/operations/knowledgebase overlays; seeded READMEs carry
+  the semantics once — `deliverables/` acceptance-boundary rule (floor), requirements
+  living-vs-frozen distinction (product), SOW-naming + product-splits-out guidance
+  (project). kb overlay uses `_domain_/` placeholder renamed at creation.
+- **`fw-new-workspace.sh` rewritten**: composes floor + overlay, `__NAME__`/`__DOMAIN__`
+  substitution, project-level `.claude/templates/workspaces/` override, guards kept;
+  `application`/`sow` rejected with pointer messages. Operations left with `intake/`
+  deliberately — FEAT-193 is decided but in backlog; Implementation Rule held.
+- **Command doc updated** (four types, SOW naming, template one-home).
+- **Test workspaces regenerated from scratch** (Gary deleted the old set): `app1`
+  product, `sow-001` project, `kb` + licensing, `operations`. Rejections and
+  refuse-if-exists verified; override path verified via scratchpad fixture.
+- **Built-artifact verification**: republished via `Publish-ToLocalMarketplace.ps1`;
+  ran the script from the published marketplace junction against a scratch root —
+  templates resolve beside the script in the artifact. Live-session smoke test after
+  marketplace update + restart remains a user step.
+
+### Also decided/answered (recorded in the owning items)
+
+- **kb `company` domain** (Gary: "should kb/<company-name> be a default?") — direction
+  in FEAT-194: literal name `company` (pointer stability; the repo is the customer),
+  created on demand via `/fw-new-domain`, not scaffolded.
+- **`intake/`** — already decided dead by FEAT-193: ops workspace root becomes the
+  flow home (`open/onhold/closed`), Gary's kanban-root analogy exactly. Lands when
+  193 moves to doing (now a small overlay edit).
+- **Glob-scale concern** (`/fw-wip`, `/fw-next-id`) — dissolved: WIP reads only active
+  folders; next-id is a filename-only script scan (subsecond at thousands);
+  FEAT-195's year buckets keep active dirs small.
+- **Released cards** — spine, per ADR-009 D2 (timeline never splits into workspace
+  folders; `Workspace:` field carries scope). Gary's recollection of
+  "in the workspace" was the `deliverables/` decision: shipped *files* → workspace,
+  work-item *record* → spine. New wrinkle noted in FEAT-163: multi-product repos need
+  workspace-qualified release buckets (`history/releases/dpmextract-v2.1/`).
+
+### Files (this section)
+
+- Modified: ADR-009 (amendments + changelog), `fw-new-workspace.sh`,
+  `fw-new-workspace.md`, TASK-197 (sow-drop, acceptance criteria), FEAT-194 (seeding
+  direction), FEAT-163 (release-bucket note)
+- Created: `templates/workspaces/` tree (6 seeded .md + .gitkeep structure)
+- Moved: TASK-197 todo → doing → done (Completed stamped by script)
+- Regenerated (uncommitted test fixtures): `workspaces/{app1,kb,operations,sow-001}`
+
+### Current State (end of day)
+
+- **done/ (9):** TASK-197 newly complete
+- **doing/:** FEAT-164 (the template architecture landed much of its scope — review
+  its remaining criteria next session)
+- **Next:** FEAT-193 → doing (ops overlay edit + regenerate operations workspace);
+  live-session plugin smoke test; TECH-172 DECISION-type cleanup still queued
+
+---
+
 **Last Updated:** 2026-08-20

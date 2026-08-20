@@ -1,4 +1,4 @@
-# Task: Workspace Type Taxonomy — product, project, sow, operations, knowledgebase
+# Task: Workspace Type Taxonomy — product, project, operations, knowledgebase
 
 **ID:** TASK-197
 **Type:** Task
@@ -6,24 +6,25 @@
 **Version Impact:** MINOR
 **Created:** 2026-08-19
 **Workspace:** framework
-**Completed:** <!-- Set automatically by /fw-move on → done/. Leave blank at creation. -->
+**Completed:** 2026-08-20
 
 ---
 
 ## Summary
 
-Amend ADR-009's workspace type enum from four types to five, reshaped by a walkthrough
-of a year of real engagements (2026-08-19 session):
+Amend ADR-009's workspace type enum, reshaped by a walkthrough of a year of real
+engagements (2026-08-19 session) and refined 2026-08-20:
 
 - **`product`** (renames `application`) — something we create, deliver, and maintain
-- **`project`** (new) — a finite initiative we coordinate to completion
-- **`sow`** — the commercial wrapper: contract + acceptance + frozen deliverables,
-  **referencing** work rather than containing it
+- **`project`** (new) — a finite initiative we coordinate to completion; **subsumes
+  sow** (2026-08-20 — see resolved section): an SOW is a project named for the SOW,
+  whose contract is content, not a type
 - **`operations`** — request/incident flow (FEAT-193/195 design)
 - **`knowledgebase`** — domain-first knowledge (ADR-009 D4 amended)
 
-Four flow-shaped types plus one commercial wrapper. Direction settled with Gary;
-this item carries the ADR-009 amendment and the scaffold/schema changes.
+Four types. Direction settled with Gary; this item carries the ADR-009 amendment and
+the scaffold/schema changes. (As filed 2026-08-19 this was a five-type enum with `sow`
+as a distinct commercial wrapper; the refinement below dissolved it into `project`.)
 
 > Re-typed from DECISION-197 → TASK-197 (2026-08-20) per TECH-172's rule: the lasting
 > record is an ADR (here, the ADR-009 amendment); the work of deciding/implementing is
@@ -76,9 +77,9 @@ this item carries the ADR-009 amendment and the scaffold/schema changes.
 
 | Scenario | Lands as |
 |---|---|
-| BD-SOW-001 (app + ~5 scripts) | sow wrapper + product workspace |
-| BD-SOW-002 (CATSettings) | sow holding own work (dead-end allowance) |
-| BD-SOW-003 (update of 001) | new sow, same product workspace |
+| BD-SOW-001 (app + ~5 scripts) | project `bd-sow-001` (contract + project-side work) + product workspace |
+| BD-SOW-002 (CATSettings) | project `bd-sow-002` + product workspace (allowance retired) |
+| BD-SOW-003 (update of 001) | new project `bd-sow-003`, same product workspace |
 | Honda HPC 2016→2019 upgrade | project |
 | Honda DPMExtract pipeline | product (one workspace, many exes) |
 | Honda data extract/process requests | operations |
@@ -174,18 +175,63 @@ SpearIT itself is just another engagement where the customer is us — no specia
   roadmap in the repo-is-the-customer model; milestones are dated roadmap lines the
   calendar (FEAT-200) derives from. No `plan/` folder in any overlay — tactical plan
   is the board, strategic plan is the workspace roadmap.
+- **`sow` dropped as a type (2026-08-20, Gary at pre-implementation review: "If I
+  have an SOW, then I just give it the name of the SOW").** After the refinement,
+  the type carried nothing a project doesn't: scaffold identical, write-once
+  `deliverables/` generalized to all types, contract + acceptance are content in
+  `agreements/`, per-SOW identity is the workspace *name* (instance-per-SOW survives
+  as a naming convention). FEAT-196's contract-vs-plan baseline becomes
+  content-driven (whatever dated plan artifacts the workspace holds), which also
+  fixes a quiet ADR-009 OQ5 violation — type must never branch runtime behavior.
+  Third instance of today's lesson: two names for one concept (DECISION/ADR,
+  specs/requirements, sow/project). The one real loss — "I have a new SOW" as
+  intake intent — moves to FEAT-191's guided intake and the project template
+  README ("contracted work is a project named for the SOW; contract in
+  `agreements/`, key dates transcribed into `requirements/`"). **The enum is four:
+  product, project, operations, knowledgebase.**
 
 ---
 
 ## Implementation Impact
 
-- ADR-009 amendment (type enum, sow-references-work principle, close-test).
-- `fw-new-workspace.sh`: rename `application` → `product`, add `project` scaffold,
-  adjust `sow` per the above. Coordinates with FEAT-193 (operations trim) — likely the
-  same script change window.
+- ADR-009 amendment (type enum → product/project/operations/knowledgebase; close-test;
+  product-work-splits-out principle; D3 refined to template-tree one-home).
+- `fw-new-workspace.sh`: template-tree compose (floor + overlays from
+  `templates/workspaces/`, project `.claude/templates/workspaces/` override); rename
+  `application` → `product`, add `project`, drop `sow`; operations list untouched
+  (FEAT-193's change, still in backlog).
+- Template trees authored: floor + product/project/operations/knowledgebase overlays,
+  seeded READMEs (deliverables/ acceptance-boundary definition; per-type README with
+  the requirements lifecycle distinction and, on project, the SOW-naming guidance).
 - Command doc / help text for `/fw-new-workspace`.
-- Write-once guard for sow `deliverables/` belongs to the release/delivery flow
+- Write-once guard for `deliverables/` belongs to the release/delivery flow
   (`/fw-release`, FEAT-196 adjacency), not this item.
+
+---
+
+## Acceptance Criteria
+
+- [x] ADR-009 amended via change-log + in-place amendment notes: four-type enum,
+      sow-dropped rationale, template-tree refinement of D3, deliverables/requirements
+      definitions
+- [x] `fw-new-workspace.sh` composes from template trees: `product` = floor +
+      `requirements/ poc/ src/ tests/ dist/`; `project` = floor + `requirements/`;
+      `knowledgebase` unchanged in shape; `operations` unchanged pending FEAT-193
+      (verified 2026-08-20: all four types generated correctly)
+- [x] `application` and `sow` are rejected as types (with a pointer to `product` /
+      "name the project for the SOW") — verified, guard refuses existing workspaces
+- [x] Structure + seeded content authored once under `templates/workspaces/`; no
+      document restates the trees; project-level `.claude/templates/workspaces/`
+      override honored (verified via --root fixture in scratchpad)
+- [x] `/fw-new-workspace` command doc reflects the four types and SOW naming guidance
+- [x] Test workspaces regenerated via the script only (fresh after manual deletion):
+      `app1` product, `sow-001` project, `kb` knowledgebase/licensing, `operations`
+- [x] Built-plugin verification (TECH-188 standing check): published via
+      `Publish-ToLocalMarketplace.ps1` 2026-08-20; `fw-new-workspace.sh` executed from
+      the published marketplace copy (not the source tree) against a scratch root —
+      templates resolved beside the script, project workspace generated correctly.
+      (Live-session smoke test after `/plugin marketplace update` + restart remains a
+      user step.)
 
 ---
 

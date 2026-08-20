@@ -1,7 +1,11 @@
 #!/usr/bin/env bash
 # fw-new-workspace.sh — deterministic scaffold generator for /fw-new-workspace.
-# THE one home for workspace structure (ADR-009 D3 / FEAT-164): no document may
-# restate the folder tree below. To change the structure, change it here only.
+# THE one chokepoint for workspace creation (ADR-009 D3, amended 2026-08-20 /
+# TASK-197). Structure and seeded content are authored once in
+# ../templates/workspaces/ — a shared floor/ plus thin per-type overlays — and
+# composed here. No document may restate the trees; to change a scaffold, change
+# the templates. A consuming project's .claude/templates/workspaces/ overrides
+# the plugin's templates as a whole, when present.
 set -euo pipefail
 
 usage() {
@@ -9,13 +13,26 @@ usage() {
     echo "Usage: fw-new-workspace.sh [--root <dir>] <name> <type> [domain]"
     echo "       fw-new-workspace.sh [--root <dir>] operations"
     echo ""
-    echo "Types: application  knowledgebase  sow  operations"
+    echo "Types: product  project  knowledgebase  operations"
+    echo "product  — created, delivered, maintained; named for the product."
+    echo "project  — finite, freezes at close; contracted work (an SOW) is a"
+    echo "           project named for the SOW, e.g. bd-sow-001."
     echo "knowledgebase requires a domain — its first domain, e.g. 'licensing'."
     echo "The one-argument form is allowed only for operations, whose name defaults"
     echo "to the type. --root overrides the repo root (the directory containing"
     echo "workspaces/); default is the enclosing git repo."
   } >&2
   exit 1
+}
+
+# Retired type names get a pointer, not a bare 'unknown' (TASK-197).
+check_type() {
+  case "$1" in
+    product|project|knowledgebase|operations) ;;
+    application) echo "Error: type 'application' was renamed 'product' (TASK-197)" >&2; usage ;;
+    sow) echo "Error: 'sow' is not a type — an SOW is a project named for the SOW, e.g. bd-sow-001 (TASK-197)" >&2; usage ;;
+    *) echo "Error: unknown type '$1'" >&2; usage ;;
+  esac
 }
 
 ROOT=""
@@ -29,30 +46,27 @@ case $# in
   1)
     TYPE="$1"
     NAME="$1"
+    check_type "$TYPE"
     case "$TYPE" in
       operations) ;;
       knowledgebase) echo "Error: knowledgebase requires a name and a domain" >&2; usage ;;
-      application|sow) echo "Error: type '$TYPE' requires an explicit name" >&2; usage ;;
-      *) echo "Error: unknown type '$TYPE'" >&2; usage ;;
+      *) echo "Error: type '$TYPE' requires an explicit name" >&2; usage ;;
     esac
     ;;
   2)
     NAME="$1"
     TYPE="$2"
+    check_type "$TYPE"
     ;;
   3)
     NAME="$1"
     TYPE="$2"
     DOMAIN="$3"
+    check_type "$TYPE"
     ;;
   *)
     usage
     ;;
-esac
-
-case "$TYPE" in
-  application|knowledgebase|sow|operations) ;;
-  *) echo "Error: unknown type '$TYPE'" >&2; usage ;;
 esac
 
 if [ "$TYPE" = "knowledgebase" ] && [ -z "$DOMAIN" ]; then
@@ -81,41 +95,35 @@ if [ -e "$WS" ]; then
   exit 1
 fi
 
-# Common floor — document-only, no source tree required (ADR-009 D4).
-# knowledgebase opts out of the floor (D4 amendment 2026-08-18): a kb holds
-# knowledge by domain — domains sit directly under the kb root.
-FLOOR="meetings reference deliverables contacts agreements"
-
-# Type scaffolds — differ ONLY in initial folders, never runtime behavior (ADR-009 OQ5)
-case "$TYPE" in
-  application)   DIRS="$FLOOR poc src tests dist" ;;
-  knowledgebase) DIRS="$DOMAIN/cookbook $DOMAIN/faq $DOMAIN/reference" ;;
-  sow)           DIRS="$FLOOR requirements reports" ;;
-  operations)    DIRS="$FLOOR intake/requests intake/incidents" ;;
-esac
-
-for d in $DIRS; do
-  mkdir -p "$WS/$d"
-  touch "$WS/$d/.gitkeep"
-done
-
-# One INDEX per knowledgebase (not per domain) — the single entry point
-if [ "$TYPE" = "knowledgebase" ]; then
-  cat > "$WS/INDEX.md" <<EOF
-# $NAME — Index
-
-One index per knowledgebase: list every domain here with a one-line description.
-
-- [$DOMAIN]($DOMAIN/) — _one-line description pending_
-EOF
+# Template resolution: project override first, then the plugin's own templates
+# (this script's sibling ../templates — same layout in source tree and plugin).
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+TPL="$ROOT/.claude/templates/workspaces"
+[ -d "$TPL" ] || TPL="$SCRIPT_DIR/../templates/workspaces"
+if [ ! -d "$TPL" ]; then
+  echo "Error: workspace templates not found (looked for .claude/templates/workspaces and $SCRIPT_DIR/../templates/workspaces)" >&2
+  exit 1
 fi
 
-cat > "$WS/README.md" <<EOF
-# $NAME
+mkdir -p "$WS"
 
-**Type:** $TYPE
-**Purpose:** _PURPOSE_PENDING_
-EOF
+# Compose: floor + type overlay. knowledgebase opts out of the floor (ADR-009 D4
+# amendment 2026-08-18) and names its first domain from the template's _domain_.
+case "$TYPE" in
+  product|project|operations)
+    cp -R "$TPL/floor/." "$WS/"
+    cp -R "$TPL/$TYPE/." "$WS/"
+    ;;
+  knowledgebase)
+    cp -R "$TPL/knowledgebase/." "$WS/"
+    mv "$WS/_domain_" "$WS/$DOMAIN"
+    ;;
+esac
+
+# Fill placeholders in seeded markdown (__NAME__, __DOMAIN__).
+find "$WS" -type f -name '*.md' -print0 | while IFS= read -r -d '' f; do
+  sed -i "s/__NAME__/$NAME/g; s/__DOMAIN__/$DOMAIN/g" "$f"
+done
 
 echo "Created workspace: $WS ($TYPE)"
 ( cd "$WS" && find . -type d | sort )

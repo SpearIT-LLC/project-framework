@@ -42,6 +42,12 @@ INDEX.md, `/fw-new-domain`) already exists — no new top-level concept.
 
 - [ ] Seeding: does fw-init / the kb scaffold create the `company` domain by default, or
       is it created on demand via `/fw-new-domain` (FEAT-192)?
+      *Direction (Gary + AI, 2026-08-20, confirm at this item's review):* on demand via
+      `/fw-new-domain`, not scaffolded (same lean as FEAT-198's on-demand `ROADMAP.md` —
+      a pre-created empty domain is noise). The domain name is the **literal `company`**,
+      never `<company-name>`: pointers need one predictable path across repos, and since
+      the repo is the customer (ADR-009), each repo's `company` domain unambiguously
+      means that customer.
 - [ ] Does `contacts/` leave the shared scaffold floor for `application` and `sow` too,
       replaced by pointers to the kb domain? (FEAT-193 removes it only for operations.)
 - [ ] Contact record format — one list file vs. per-contact files; how the activity

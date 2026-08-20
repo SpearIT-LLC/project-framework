@@ -189,6 +189,18 @@ Two consequences accepted deliberately: **Claude Code becomes a hard dependency*
 (the AI-less fallback retires with the archive), and the workspace is understood as
 the plugin's source tree plus build-time staging.
 
+**Amended 2026-08-20 (TASK-197):** the one authored home for workspace structure
+*and its seeded content* is a **template tree** — `templates/workspaces/` in the
+plugin: a shared `floor/` plus thin per-type overlays (never a full tree per type,
+which would restate the floor N times). `fw-new-workspace.sh` remains the sole
+chokepoint (validation, refuse-if-exists, floor+overlay compose) but copies rather
+than hard-codes; a consuming project's `.claude/templates/workspaces/` acts as
+optional override. Folder semantics (e.g. the `deliverables/` definition below) are
+seeded READMEs authored once in the template. This supersedes earlier phrasing that
+the tree lives "only in `fw-new-workspace.sh`" (including the D4 amendment note):
+the invariant is unchanged — one authored home, command-only creation — the home
+moved from script literals to template files the script composes.
+
 ### D4. The workspace floor is a document-only workspace (no source tree required)
 
 BD sets the floor. `/fw-new-workspace` must stand up a workspace that has no source
@@ -403,6 +415,34 @@ graduation criterion.
    and the PARA lesson from the outside-ideas survey shapes the scaffolds — sow and
    application are Projects (they end; scaffold `deliverables/`), knowledgebase and
    operations are Areas (ongoing; scaffold intake/reference instead).
+
+   **Amended 2026-08-20 (TASK-197, challenged as invited):** the enum is
+   **product, project, operations, knowledgebase** — reshaped by a twelve-scenario
+   walk of a year of real engagements plus a refinement session:
+   - **`application` → `product`** — defined by being created, delivered, and
+     maintained (executables, script libraries, packages, pipelines all qualify;
+     dissolves the "toolbox" pressure).
+   - **`project` added** — a finite initiative; the **close-test** discriminates:
+     a product persists (it has a version 2), a project ends, freezes, and never
+     reopens (a follow-on is a new project).
+   - **`sow` dropped** — after refinement it carried nothing a project doesn't:
+     scaffold-identical, contract + acceptance are content in `agreements/`,
+     per-SOW identity is the workspace *name* (an SOW is a project named for the
+     SOW, e.g. `bd-sow-001`; instance-per-SOW survives as naming convention).
+     Keeping it would also have tempted type-branched reporting, which this OQ
+     forbids — report baselines are content-driven (the dated plan artifacts the
+     workspace holds: contract key-dates transcribed into `requirements/`, or
+     roadmap milestones).
+   - **Product work always splits out:** software/tooling is presumed to outlive
+     acceptance and gets a `product` workspace from day one; a contracted project
+     workspace contains only project-side work (artifacts that die at acceptance)
+     and references the product workspaces it delivers.
+   - **`deliverables/` (floor) has one definition across types:** a file belongs
+     there iff it was handed over and accepted (PMBOK deliverable vs. work
+     product); write-once at acceptance, machine-written by the delivery flow.
+     **`requirements/`** is the one name across types (never `specs/`); lifecycle
+     differs by type — living/versioned for a product, frozen-at-close for a
+     project — stated once in the seeded template READMEs.
 6. ~~**Numbered kanban folders?**~~ **Settled 2026-08-18: rejected.**
    `01_backlog`-style prefixes bake ordering into paths every script and doc must
    know, and break on inserting `blocked`. Sequence belongs in the transition matrix
@@ -498,3 +538,13 @@ standard in Dec 2025; plugins are now the standard distribution unit).
 - 2026-08-18: D4 amended — `knowledgebase` opts out of the common floor; kb content is
   domain-organized with one `INDEX.md` per knowledgebase (decided with Gary while
   testing `/fw-new-workspace`).
+- 2026-08-20: OQ5 amended (TASK-197) — type enum is **product, project, operations,
+  knowledgebase**: `application` renamed `product`, `project` added (close-test),
+  `sow` dropped (an SOW is a project named for the SOW; contract is content; product
+  work always splits out to a product workspace). `deliverables/` gains the
+  acceptance-boundary definition; `requirements/` is the one name across types. D3
+  amended — the authored home for structure + seeded content moves from script
+  literals to the plugin's `templates/workspaces/` tree (floor + type overlays),
+  composed by the script, which remains the sole chokepoint; project-level
+  `.claude/templates/workspaces/` override. Decided with Gary in TASK-197's
+  refinement and pre-implementation review.

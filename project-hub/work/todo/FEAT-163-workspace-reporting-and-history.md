@@ -67,6 +67,14 @@ reliably labeled and unlabeled items are surfaced.
 
 ## Notes
 
+- **Release buckets need workspace-qualified keys** (surfaced 2026-08-20, TASK-197
+  follow-on): released cards stay on the spine timeline per ADR-009 D2 (never split
+  into per-workspace folders; `Workspace:` field carries scope), but in a
+  multi-product customer repo "release" is per-product — spine buckets must key on
+  workspace + version (e.g. `history/releases/dpmextract-v2.1/`), since bare `v2.1/`
+  collides across products. Design detail for the new release flow; the
+  shipped-files half lives in the workspace's write-once `deliverables/` (TASK-197).
+
 - Original gating question ("reuse `Theme:` vs. new field") settled 2026-08-18:
   distinct `Workspace:` field. `Theme:` keeps its *stable category* meaning; multiple
   workspaces can serve one theme.
