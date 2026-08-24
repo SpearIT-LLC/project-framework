@@ -15,6 +15,43 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+None
+
+### Changed
+
+None
+
+### Removed
+
+None
+
+### Fixed
+
+None
+
+---
+
+## [v5.6.0] - 2026-08-24
+
+> **Maintenance release of the archive-distributed framework — partial by design.** This line
+> is being superseded by the SpearIT Framework rebuilt as a plugin under ADR-009 (the
+> `framework-dev` product in this repo, released 0.4.0 the same day). v5.6.0 closes out the
+> fixes and small features completed in July 2026 that post-date v5.5.0; no further feature
+> work is planned on the archive line, and the archive channel retires at the new build's
+> graduation. `FEAT-165`'s `engagement` project type ships here but is superseded in effect
+> by ADR-009's workspace model (every project has `workspaces/`; the type is redundant).
+
+Work items: BUG-167, BUG-170, BUG-184, FEAT-165, TECH-079, TECH-173 — archived at
+`project-hub/history/releases/framework/v5.6.0/`.
+
+### Added
+
+- **`engagement` project type** (FEAT-165 / ADR-005). Fifth `project.type` for the single-customer,
+  multiple-stream model, wired through every place the framework branches on or enumerates project
+  type. *Superseded in effect by ADR-009 — see the release note above.*
+- **Empty-release guard** (TECH-079). `/fw-release` now blocks when `done/` holds no completed work
+  items, preventing accidental empty releases.
+
 - **Work-item type single source of truth** (TECH-173 / ADR-006). A flat, newline-delimited
   `.claude/scripts/work-item-types.txt` is the one authored master of the **accepted** (creatable)
   types: **FEAT, BUG, TECH, TASK, SPIKE** (canonical 5). TECH covers internal improvement, docs,
@@ -64,6 +101,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   at `→ done` (`check_acceptance_criteria`). `--force` is retained as a no-op for compatibility.
 
 ### Fixed
+
+- **BUG-167: `Completed` date contradiction.** The move procedure/command and the work-item templates
+  disagreed about who sets `Completed:`; it is now stamped automatically by the move engine on
+  `→ done` and templates say so — no manual date entry.
 
 - **BUG-184: readiness check blocked legitimate `→ todo` moves.** A thoroughly-planned item could not
   reach `todo/` without `--force`, because `check_readiness` treated normal features of a good plan as

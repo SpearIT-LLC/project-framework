@@ -1,7 +1,7 @@
 # SpearIT Project Framework - Project Status
 
-**Current Version:** v5.5.0 (2026-06-30)
-**Status:** Production-ready
+**Current Version:** v5.6.0 (2026-08-24)
+**Status:** Maintenance — superseded by the ADR-009 plugin build (`framework-dev`); archive channel retires at graduation
 
 ---
 
