@@ -34,6 +34,15 @@ release:
       status_file: "plugins/spearit-framework-light/PROJECT-STATUS.md"
       changelog_file: "plugins/spearit-framework-light/CHANGELOG.md"
       build_script: "tools/Build-Plugin.ps1 -Plugin spearit-framework-light"
+    - id: framework-dev
+      label: "SpearIT Framework (dev plugin, ADR-009 build)"
+      priority: 4
+      archive_path: "history/releases/framework-dev"
+      changelog_file: "workspaces/framework/CHANGELOG.md"
+      # Version lives in workspaces/framework/.claude-plugin/plugin.json (the
+      # framework IS the plugin — ADR-009 D3); no status file. No build script:
+      # the dev channel publishes by junction (tools/Publish-ToLocalMarketplace.ps1).
+      # Tags: framework-dev-vX.Y.Z (plain semver 0.x during the build).
 
 policies:
   workflow: framework/docs/collaboration/workflow-guide.md

@@ -6,6 +6,27 @@ plain semver 0.x during the framework workspace build.
 ## [Unreleased]
 
 ### Added
+
+None
+
+### Changed
+
+None
+
+### Fixed
+
+None
+
+---
+
+## [0.4.0] - 2026-08-24
+
+Work items: FEAT-164, FEAT-190, FEAT-192, FEAT-194, FEAT-201, FEAT-202,
+TASK-197 — archived at `project-hub/history/releases/framework-dev/v0.4.0/`.
+
+### Added
+- Framework workspace kickoff — `workspaces/framework/` established as the dev
+  plugin's source tree, built fresh in place (ADR-009 Option C). (FEAT-190)
 - `fw-troubleshoot` skill (the plugin's first skill) + `templates/records/ts-case.md`
   — systematic troubleshooting: search solved cases first, hypothesis–evidence
   loop with capture-as-you-go, close gate distilling a cookbook recipe (the
