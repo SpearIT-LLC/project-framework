@@ -417,8 +417,8 @@ carries into the new build), TECH-177 (checkbox states in fw-move.sh gates).
 
 ### Board at close
 
-- **todo/ (7):** BUG-181, FEAT-163, FEAT-175, FEAT-193, FEAT-195, TECH-177 (+
-  one pre-existing) — all new-build or engine
+- **todo/ (6):** BUG-181, FEAT-163, FEAT-175, FEAT-193, FEAT-195, TECH-177 —
+  all new-build or engine (the script's "7/10" counts a dotfile — BUG-174)
 - **doing/: empty. done/: empty.** Both products released today.
 - **Next session:** `/fw-move 193 doing` (small: ops overlay + regenerate
   fixture), then 195's review (three open questions).
