@@ -47,7 +47,7 @@ for rec in "$REG"/*.md; do
   sed -n 's/^\*\*Assigned:\*\*[[:space:]]*//p' "$rec" | while IFS= read -r line; do
     [ -n "$line" ] || continue
     ws="${line%%[[:space:]]*}"
-    case "$ws" in __workspace-name__|"") continue ;; esac   # unfilled template line
+    case "$ws" in __*|"") continue ;; esac   # unfilled template placeholder line
     ctx="${line#"$ws"}"
     ctx="${ctx#"${ctx%%[![:space:]]*}"}"   # ltrim
     ctx="${ctx#—}"; ctx="${ctx#-}"

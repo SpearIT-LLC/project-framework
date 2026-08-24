@@ -11,8 +11,9 @@
 **Role:** __ROLE_OR_TITLE__
 **Email:** __EMAIL__
 **Phone:** __PHONE__
-**Activity:** __operations | sales | sow-id | ...__
+**Activity:** __engagement-level tags NOT tied to one workspace: sales, billing, escalation, ...__
 **Assigned:** __workspace-name__ — __role in that work__
+**Assigned:** __repeat one Assigned line per workspace; delete unused lines. Workspace ties live ONLY here, never in Activity__
 
 ## Notes
 
