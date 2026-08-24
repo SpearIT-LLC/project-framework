@@ -6,6 +6,12 @@ plain semver 0.x during the framework workspace build.
 ## [Unreleased]
 
 ### Added
+- `/fw-contacts` + `templates/records/contact.md` — contacts get one authored
+  home: per-contact records in the kb `company` domain, with repeatable
+  `Assigned: <workspace> — <role>` declarations; every workspace `CONTACTS.md`
+  is a generated view (created, refreshed, and removed by `fw-contacts.sh`).
+  The `contacts/` folder leaves the workspace floor — scaffolded contact
+  folders were the scattered-copies pattern ADR-008 forbids. (FEAT-194)
 - `/fw-new-kb-domain <domain>` — grow the knowledgebase by a domain; creates
   `workspaces/kb` on first use; appends the domain's `INDEX.md` line;
   case-insensitive duplicate guard. `fw-new-workspace`'s kb path delegates here

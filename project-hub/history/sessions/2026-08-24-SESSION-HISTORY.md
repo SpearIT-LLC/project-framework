@@ -108,4 +108,51 @@ re-verified under the current enum and annotated rather than rewritten.
 
 ---
 
+## FEAT-194 Implemented and Closed — kb Branch Complete (Continued)
+
+**Design conversation (the contact model evolved in three steps):**
+
+1. Review proposed: floor drops `contacts/`; one list file with activity
+   designations.
+2. Gary's requirement broke the list file: each product/project needs its own
+   *narrow* slice (customer people + external vendors), so links need stable
+   targets → **per-contact records** (`kb/company/contacts/<slug>.md`), with
+   workspace lists as links + role-in-this-work context.
+3. Gary pushed one step further: make the workspace list a **generated view** —
+   the contact record carries repeatable `Assigned: <workspace> — <role>`
+   declarations; `fw-contacts.sh` builds/refreshes every `CONTACTS.md`.
+   Accepted as the board's own grammar (`Workspace:` field → derived slices)
+   applied to people: a generated view cannot drift.
+
+**Path-layering clarification (worth keeping for onboarding):** the template
+home confused even us for a beat. Three layers: authored source
+`workspaces/framework/templates/…` (THIS repo only — the framework workspace is
+the one non-generated workspace; it IS the plugin source, ADR-009);
+runtime `${CLAUDE_PLUGIN_ROOT}/templates/…` (any consuming repo, from the
+installed plugin — no `workspaces/framework/` exists there); optional per-repo
+override `.claude/templates/…` (mirrors the plugin's templates subtree shape).
+Affiliation (customer/vendor/spearit) is a *field*, so vendor contacts share
+the registry despite the domain's name.
+
+**Landed:** floor template loses `contacts/` (floor = meetings, reference,
+deliverables, agreements); `templates/records/contact.md` (new records/ area —
+FEAT-195's INC/REQ templates will join it); `scripts/fw-contacts.sh`
+(generate + stale-removal + missing-workspace warning, machine-written header);
+`commands/fw-contacts.md`; CHANGELOG entry. Fixtures regenerated without
+`contacts/`; company domain created in the kb fixture via
+`fw-new-kb-domain company` with a fake sample contact; full cycle verified from
+the published marketplace copy (generate → reassign → stale view removed).
+All three FEAT-194 open questions and all criteria resolved/checked; card
+annotated and moved to done/.
+
+### Current State (kb branch closed)
+
+- **done/ (13):** FEAT-164, 192, 194, 201 today — release strongly recommended
+- **doing/:** empty
+- **kb branch: complete.** Remaining workspaces/ cards: FEAT-193 (ops trim),
+  FEAT-191 (guided intake), FEAT-195/196/198/199/200 (records, reporting,
+  roadmaps, deadlines, calendar)
+
+---
+
 **Last Updated:** 2026-08-24
