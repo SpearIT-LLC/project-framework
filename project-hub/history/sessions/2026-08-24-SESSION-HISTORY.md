@@ -155,4 +155,42 @@ annotated and moved to done/.
 
 ---
 
+## Contact Template Hardening (Continued — Gary's Field Review)
+
+Gary read the shipped template and fixture line by line; three real gaps
+surfaced and were fixed (first two committed as `77c811e`, rest in this
+commit):
+
+1. **Multiple assignments were invisible.** The repeat-one-Assigned-line-per-
+   workspace rule lived only in the HTML comment, and the Jane Doe fixture
+   showed a single line (its second had been deleted during the stale-removal
+   test). Fixed: a second visible `Assigned:` placeholder carries the
+   instruction; fixture restored to two assignments; parser hardened to skip
+   any `__placeholder` Assigned line (verified against a raw template copy).
+2. **Activity/Assigned double-home.** The fixture had `sow-001` in both fields
+   — two homes for one fact. Then the first fix ("tags not tied to a
+   workspace") left Activity "very open to interpretation" (Gary). Final form
+   is a **contract, not examples**: each Activity value must complete
+   *"contact this person for ___"* at engagement level — a workspace-shaped
+   answer belongs in Assigned, an identity-shaped one in Role; delete the
+   field if nothing fits. (Deletion of the whole field was considered — nothing
+   mechanized consumes it — kept because "who do I call about billing" is a
+   real routing query and grep is the consumer.)
+3. **Required vs optional + keying.** Required: the `#` name heading (display,
+   used by generated views), Affiliation (the registry mixes customer/vendor/
+   SpearIT), Role, one of Email/Phone. Optional fields are *deleted* when
+   empty, never left as placeholders. **The file slug is the record's key**
+   (links and fw-contacts bind to it); the heading is display only. Name
+   collisions are loud (filesystem refuses the slug) — convention: distinguish
+   new slug by org then title (`jane-doe-acme.md`), disambiguate the display
+   (`# Jane Doe (Acme)`), and check Affiliation/Role before assuming an
+   existing record is your person.
+
+### Current State
+
+- **done/ (13)** — release strongly recommended, next order of business
+- **doing/:** empty; FEAT-193 (ops trim) queued after the release decision
+
+---
+
 **Last Updated:** 2026-08-24
