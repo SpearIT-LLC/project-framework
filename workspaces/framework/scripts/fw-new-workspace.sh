@@ -84,6 +84,15 @@ if [ -z "$ROOT" ]; then
   ROOT="$(git rev-parse --show-toplevel)"
 fi
 
+# kb delegates wholesale to fw-new-kb-domain.sh — the one home for kb-domain
+# logic (FEAT-192): it creates the kb shell on first use and adds the domain,
+# so the create and grow paths cannot drift. (It also owns the kb collision
+# handling: an existing kb is legal there — the domain guard applies instead.)
+if [ "$TYPE" = "knowledgebase" ]; then
+  SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+  exec bash "$SCRIPT_DIR/fw-new-kb-domain.sh" ${ROOT:+--root "$ROOT"} "$DOMAIN"
+fi
+
 # Collision guard — case-insensitive, so App2 vs app2 is refused even on a
 # case-sensitive filesystem (Windows checkouts would collide silently).
 WS="$ROOT/workspaces/$NAME"
@@ -115,18 +124,11 @@ fi
 
 mkdir -p "$WS"
 
-# Compose: floor + type overlay. knowledgebase opts out of the floor (ADR-009 D4
-# amendment 2026-08-18) and names its first domain from the template's _domain_.
-case "$TYPE" in
-  product|project|operations)
-    cp -R "$TPL/floor/." "$WS/"
-    cp -R "$TPL/$TYPE/." "$WS/"
-    ;;
-  knowledgebase)
-    cp -R "$TPL/knowledgebase/." "$WS/"
-    mv "$WS/_domain_" "$WS/$DOMAIN"
-    ;;
-esac
+# Compose: floor + type overlay. (knowledgebase never reaches here — it
+# delegated to fw-new-kb-domain.sh above; kb opts out of the floor per the
+# ADR-009 D4 amendment 2026-08-18.)
+cp -R "$TPL/floor/." "$WS/"
+cp -R "$TPL/$TYPE/." "$WS/"
 
 # Fill placeholders in seeded markdown (__NAME__, __DOMAIN__).
 find "$WS" -type f -name '*.md' -print0 | while IFS= read -r -d '' f; do

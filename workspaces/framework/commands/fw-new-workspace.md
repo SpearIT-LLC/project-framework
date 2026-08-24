@@ -40,8 +40,11 @@ document. A project may override the templates wholesale via its own
    `kb` requires a **domain** — the subject area its first content belongs to
    (e.g. `licensing`). If the user didn't provide one, ask: "What is the first
    domain this knowledgebase will hold?" — then pass their answer as the
-   second argument. If the script errors, report its message verbatim and
-   stop — do not create anything by hand.
+   second argument. The kb path delegates to `fw-new-kb-domain.sh` (see
+   `/fw-new-kb-domain`, the primary door for kb growth): the kb is created on
+   first use, and later `kb <domain>` calls add domains rather than erroring.
+   If the script errors, report its message verbatim and stop — do not create
+   anything by hand.
 
 2. **Fill in the purpose** (the judgment step). Ask the user: "What is this
    workspace for, in a sentence or two?" Replace `_PURPOSE_PENDING_` in the

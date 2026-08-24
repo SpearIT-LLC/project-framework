@@ -6,7 +6,7 @@
 **Version Impact:** MINOR
 **Created:** 2026-08-22
 **Workspace:** framework
-**Completed:** <!-- Set automatically by /fw-move on → done/. Leave blank at creation. -->
+**Completed:** 2026-08-24
 
 ---
 
@@ -56,11 +56,16 @@ back at the template. Reconcile when this lands.
 
 ## Acceptance Criteria
 
-- [ ] `templates/workspaces/knowledgebase/_domain_/research/` exists in the
-      plugin template tree
-- [ ] Seeded README states the reference-vs-research provenance rule and the
-      kb-research vs project-hub-research boundary
-- [ ] `/fw-new-domain` (FEAT-192) generates the four-folder shape
+- [x] `templates/workspaces/knowledgebase/_domain_/research/` exists in the
+      plugin template tree *(2026-08-24)*
+- [x] Seeded README states the reference-vs-research provenance rule and the
+      kb-research vs project-hub-research boundary *(2026-08-24:
+      `_domain_/README.md` authored — provenance rule, conflict-is-a-finding
+      note, boundary, licensing note; copied per domain with `__DOMAIN__`
+      substitution)*
+- [x] `/fw-new-kb-domain` (FEAT-192; renamed at implementation) generates the
+      four-folder shape *(2026-08-24: verified in scratch root and from the
+      published plugin copy; kb fixture regenerated with the new shape)*
 
 ## Related
 

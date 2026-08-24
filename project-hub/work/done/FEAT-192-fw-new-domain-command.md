@@ -6,7 +6,7 @@
 **Version Impact:** MINOR
 **Created:** 2026-08-18
 **Workspace:** framework
-**Completed:** <!-- Set automatically by /fw-move on → done/. Leave blank at creation. -->
+**Completed:** 2026-08-24
 
 ---
 
@@ -57,18 +57,34 @@ same script, refactored so create and add-domain call one scaffold function).
 
 ## Acceptance Criteria
 
-- [ ] `/fw-new-domain <kb> <domain>` scaffolds the domain in an existing kb
-- [ ] The per-domain folder set has one authored home shared with the create path
-- [ ] `INDEX.md` gains the domain's line; no per-domain index is created
-- [ ] Errors cleanly: missing kb, non-kb workspace, duplicate domain, bad name
-- [ ] Verified against the built plugin, not the source tree
+> **Interface revised at implementation (2026-08-24, Gary):** the command is
+> **`/fw-new-kb-domain <domain>`** — renamed so the kb target lives in the name
+> (a bare "domain" silently implies kb; new users wouldn't get that), and the
+> `<kb>` argument dropped because kb became a fixed singleton at
+> `workspaces/kb` (2026-08-20). It also **creates the kb on first use** instead
+> of erroring — `/fw-new-workspace kb <domain>` delegates here, so either door
+> lands on one code path and an existing kb + new domain now grows instead of
+> failing (the exact 2026-08-18 test that surfaced this card).
+
+- [x] `/fw-new-kb-domain <domain>` scaffolds the domain (creating the kb shell on
+      first use) — verified 2026-08-24: first-call create, second-call grow
+- [x] The per-domain folder set has one authored home shared with the create path
+      — the template `_domain_/` shape; create delegates to this script
+- [x] `INDEX.md` gains the domain's line; no per-domain index is created —
+      verified across two domains plus the delegated door
+- [x] Errors cleanly: duplicate domain (case-insensitive), bad name; missing kb is
+      now first-use creation by design; tampered kb (no INDEX.md) errors
+- [x] Verified against the built plugin, not the source tree — kb fixture
+      regenerated 2026-08-24 from the published marketplace copy
 
 ---
 
 ## Documentation
 
-- [ ] Command doc for `/fw-new-domain` (the flow's one home)
-- [ ] CHANGELOG entry in the framework workspace
+- [x] Command doc for `/fw-new-kb-domain` (the flow's one home) — includes the
+      INDEX-description judgment step, mirroring the workspace purpose step
+- [x] CHANGELOG entry in the framework workspace — `CHANGELOG.md` created (did
+      not exist; started at [Unreleased] with this window's changes)
 
 ---
 
