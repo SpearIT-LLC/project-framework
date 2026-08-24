@@ -237,4 +237,24 @@ All four OQs resolved on the card; moved to done/.
 
 ---
 
+## Skill Invocation + Restart Plan (Session Close)
+
+Gary asked what invokes fw-troubleshoot. Answer recorded for the record: the
+frontmatter `description:` is the routing surface — descriptions are the only
+part of a skill loaded into every session (progressive disclosure); a matching
+conversation loads the body. Ours is written as trigger conditions ("use when
+the user reports a technical problem to investigate… or asks 'have we seen
+this before'"), so natural language fires it; `/fw-troubleshoot` works
+explicitly. Model-invocation is probabilistic — description quality determines
+reliability, and sharpening the description is the tuning loop.
+
+**Next session opens with the routing test:** after restart (registers
+fw-troubleshoot, /fw-new-kb-domain, /fw-contacts), describe a realistic
+symptom ("FlexLM is doing X, help me figure out why") WITHOUT naming the
+skill, and see whether the description routes to it. Then: the 0.4.0-dev
+milestone sweep decision (done/ at 14), and FEAT-193 (ops trim) as the next
+build card.
+
+---
+
 **Last Updated:** 2026-08-24
