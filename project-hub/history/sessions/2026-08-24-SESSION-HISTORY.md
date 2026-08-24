@@ -355,5 +355,40 @@ not a configured product):**
   build card; TASK-205 dogfooding when a real case arrives
 
 ---
+## Cleanup Release: Old Framework v5.6.0 (Session Close, continued)
+
+**Gary:** "Let's clean it up" — release the six held old-framework items rather
+than leave them in done/ until graduation. Two questions answered:
+
+- **5.6.0 or 5.5.1?** Computed, not guessed: highest `Version Impact` across
+  the six is MINOR (BUG-184, FEAT-165, TECH-173), so **v5.6.0** per the release
+  rule (highest impact wins; PATCH-only would have been 5.5.1).
+- **Disclaimer for the partial release:** a blockquote heads the `[v5.6.0]`
+  CHANGELOG entry — maintenance release, partial by design; the archive line is
+  superseded by the ADR-009 plugin build (framework-dev 0.4.0, same day); no
+  further feature work on this line; archive channel retires at graduation;
+  FEAT-165's `engagement` type ships but is superseded in effect by the
+  workspace model. `PROJECT-STATUS.md` status line changed from
+  "Production-ready" to "Maintenance — superseded…".
+
+**Mechanics:** the July `[Unreleased]` block already covered TECH-173, BUG-170,
+BUG-184 in depth; FEAT-165, TECH-079, and a standalone BUG-167 line were
+synthesized from the items' summaries. Rolled to `[v5.6.0] - 2026-08-24` with a
+fresh `[Unreleased]` above. Commit + annotated tag `v5.6.0`; six items `git mv`'d
+to `project-hub/history/releases/framework/v5.6.0/`; done/ is now empty.
+**Distribution built** (`distrib/framework/spearit_framework_v5.6.0.zip`) —
+meaningful rather than ceremonial, because BUG-170 *was* a distribution bug
+(the move engine never shipped); this is the first archive that carries it.
+
+### Current State (end of day, final)
+
+- **done/: empty. doing/: empty.** Both products released: framework-dev
+  v0.4.0 (first ADR-009 build release) and framework v5.6.0 (maintenance).
+- Unpushed: 2 tags + the release commits — push is Gary's (`git push origin
+  main --tags`).
+- **Next:** FEAT-193 (ops trim) as the next build card; TASK-205 dogfooding on
+  the first real case; old-framework line now maintenance-only.
+
+---
 
 **Last Updated:** 2026-08-24
