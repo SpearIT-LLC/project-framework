@@ -5,6 +5,7 @@
 **Priority:** Low
 **Version Impact:** MINOR
 **Created:** 2026-07-08
+**Workspace:** framework
 **Theme:** Workflow Precision
 
 ---

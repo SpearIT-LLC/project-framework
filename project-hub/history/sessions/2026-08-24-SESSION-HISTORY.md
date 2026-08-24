@@ -390,5 +390,39 @@ meaningful rather than ceremonial, because BUG-170 *was* a distribution bug
   the first real case; old-framework line now maintenance-only.
 
 ---
+## Post-Release Board Triage (Session Close, final)
+
+**Next cycle queued — operations pair:** FEAT-193 (ops scaffold trim) and
+FEAT-195 (ops record convention) moved backlog → todo together: 193 lays the
+flow folders, 195 defines what moves through them (and carries FEAT-202's
+hand-offs — INC artifact bundles, close-gate mechanism). Adjacent cards held in
+backlog until those land, in dependency order: FEAT-199 (Due: needs 195's record
+shape) → FEAT-196 (the reporting leg of ops; consumes the flow folders) →
+FEAT-200 (schedule definition lives in ops; builds on 199). Other "operations"
+grep hits (TECH-049/096, BUGFIX-045) are the generic word, not workspace ops.
+
+**Troubleshooting theme, for the record:** three follow-on cards exist, not one —
+FEAT-203 (playbooks), FEAT-204 (collectors), TASK-205 (dogfood + retro, High).
+
+**todo/ triage (Gary: "move the old-framework cards back to backlog"):** of five
+unlabeled items only two were old-framework — FEAT-092 (sprint support, Jan
+2026) and TECH-172 (DECISION-type reconcile) → backlog. TECH-172 got a re-scope
+note: the old line is maintenance-only, so its doc/template/plugin straggler
+edits are dead work; what survives is the board half (disposition open
+DECISION-* items 035/036/110/162/171, record the ADR). The other three are
+engine or new-build work that merely lacked the field, now labeled
+`Workspace: framework`: BUG-181 (re-scoped to /fw-init under ADR-009), FEAT-175
+(/fw-new create gate — the DECISION-197 lesson's mechanism; the kanban engine
+carries into the new build), TECH-177 (checkbox states in fw-move.sh gates).
+
+### Board at close
+
+- **todo/ (7):** BUG-181, FEAT-163, FEAT-175, FEAT-193, FEAT-195, TECH-177 (+
+  one pre-existing) — all new-build or engine
+- **doing/: empty. done/: empty.** Both products released today.
+- **Next session:** `/fw-move 193 doing` (small: ops overlay + regenerate
+  fixture), then 195's review (three open questions).
+
+---
 
 **Last Updated:** 2026-08-24

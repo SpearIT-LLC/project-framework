@@ -12,6 +12,12 @@
 
 ## Summary
 
+> **Re-scoped 2026-08-24 (moved todo → backlog):** the old framework is maintenance-only
+> (v5.6.0); its doc, template, and plugin straggler edits below are dead work. What survives
+> is the *board* half — disposition the open `DECISION-*` items (035, 036, 110, 162, 171)
+> and record the ADR — and the new build already retires the type (`work-item-types.txt`,
+> ADR-006). Re-scope to that before picking up.
+
 The framework has **two overlapping concepts for the same thing**: industry-standard **ADRs**
 (`project-hub/research/adr/`, `ADR-NNN`, compliant) *and* a bespoke **`DECISION-*` work-item
 type** (`DECISION-NNN`, flows the kanban board). Industry standard has **one** concept — an ADR
