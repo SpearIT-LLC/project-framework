@@ -311,4 +311,49 @@ isn't testable yet.
 
 ---
 
+## Release: framework-dev v0.4.0 (Session Close)
+
+**Decision (Gary):** release now, plain semver — "we dropped the -dev
+nomenclature": version `0.4.0`, not `0.4.0-dev`. Earlier framing stands: a
+*board* release, not a product release — the product story remains graduation
+(ADR-009); this checkpoints the record while the work is fresh.
+
+**Found on inspection — done/ held two products' work:**
+- 7 new-build items (`Workspace: framework`): FEAT-164, 190, 192, 194, 201,
+  202, TASK-197 → released as **framework-dev v0.4.0**.
+- 6 old-framework items with no workspace field, completed July after v5.5.0
+  (2026-06-30): BUG-167, BUG-170, BUG-184, FEAT-165, TECH-079, TECH-173 →
+  **left in done/**, deliberately. They belong to the old product's next
+  release (a v5.6.0), not the dev plugin; misattributing them into 0.4.0's
+  archive would corrupt history, whereas leaving them is reversible. Open
+  decision for Gary: sweep them as old-framework v5.6.0 (with or without the
+  retiring archive build), or hold them until graduation.
+
+**Mechanics (followed `/fw-release`'s steps by hand, since the dev plugin was
+not a configured product):**
+- `framework.yaml` gains a `framework-dev` product entry (priority 4,
+  `archive_path: history/releases/framework-dev`, changelog in the workspace;
+  no status file — version lives in `plugin.json`; no build script — the dev
+  channel publishes by junction). Pointer-only config, no restatement.
+- `plugin.json` 0.3.0 → **0.4.0**; workspace CHANGELOG `[Unreleased]` rolled
+  to `[0.4.0] - 2026-08-24` (FEAT-190 kickoff line added — it predated the
+  CHANGELOG's creation), fresh `[Unreleased]` block above.
+- Commit `d8c4029` + annotated tag **`framework-dev-v0.4.0`** (product-prefixed,
+  matching the existing `plugin-light-v1.0.4` convention — a bare `v0.4.0`
+  would sit ambiguously beside the old framework's `v5.x` tags).
+- Seven items `git mv`'d to `project-hub/history/releases/framework-dev/v0.4.0/`
+  (commit `5d0afc8`); no artifact folders existed.
+- Marketplace republished so the cache reflects 0.4.0 (version drives plugin
+  updates). Not pushed — push left to Gary per the release command.
+
+### Current State (end of day)
+
+- **done/ (6):** old-framework items awaiting their own release decision
+- **doing/:** empty
+- **Released:** framework-dev v0.4.0 — first release of the ADR-009 build
+- **Next:** old-framework v5.6.0 decision; FEAT-193 (ops trim) as the next
+  build card; TASK-205 dogfooding when a real case arrives
+
+---
+
 **Last Updated:** 2026-08-24
