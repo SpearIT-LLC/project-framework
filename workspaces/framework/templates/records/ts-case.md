@@ -13,6 +13,7 @@
 **Status:** __investigating | resolved | refuted__
 **Environment:** __product(s) + exact versions this is proven on — conclusions are valid ONLY for these__
 **Opened:** __YYYY-MM-DD__  **Resolved:** __YYYY-MM-DD or blank__
+**Resolved at rung:** __2 own-kb | 3 external-docs | 6 observation | 7 experiment | blank while open — the method's self-check: rung-7 clusters in a domain mean its playbook or reference/ is missing something__
 **Ops record:** __INC-nnn, or none__
 **Customer ref:** __external ticket id(s), or none__
 **Contacts:** __[Name](../../../company/contacts/slug.md) links, or none__
@@ -23,9 +24,9 @@ __What is observed, verbatim where possible — error text, frequency, trigger._
 
 ## Hypotheses and Evidence
 
-| # | Hypothesis | Test | Evidence | Verdict |
-|---|-----------|------|----------|---------|
-| 1 | __ | __ | __evidence/<file> or inline__ | __confirmed / refuted / open__ |
+| # | Hypothesis | What would falsify it | Test | Evidence | Verdict |
+|---|-----------|----------------------|------|----------|---------|
+| 1 | __ | __the observation that would rule this OUT — if you can't name one, it isn't a testable hypothesis__ | __ | __evidence/h1-<what>.<ext> or inline__ | __confirmed / refuted / open__ |
 
 ## Conclusion
 

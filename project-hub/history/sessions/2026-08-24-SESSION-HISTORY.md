@@ -257,4 +257,58 @@ build card.
 
 ---
 
+## After Restart: Routing Test Passed, Method Sharpened (Later Session)
+
+**Routing test — two runs:**
+1. `/fw-troubleshoot "FlexLM is not starting…"` — explicit invocation worked;
+   the search-first step immediately forced disclosure that the only kb hit
+   was today's fixture sample, not real knowledge (the step doing its job).
+2. Plain sentence, no command — *"I'm having a problem the widget license
+   server. It won't start."* — **the description routed to the skill
+   unprompted.** Natural-language invocation confirmed. Observation: the skill
+   *body* loaded was the pre-edit version (bodies appear session-cached; the
+   description routes fresh) — body edits take effect at next restart.
+   `/plugin marketplace update` is not available in this environment; the
+   restart alone registered the new skills.
+
+**Gary's two methodology corrections (both landed in SKILL.md):**
+- **Remote mode is the norm.** Most cases are on machines the AI can't reach:
+  the AI writes exact commands and names the evidence file it expects; the
+  user drops stdout/screenshots/config into `evidence/`; the AI reads them
+  (screenshots included) and never infers a verdict from unseen output.
+  Evidence naming `h<N>-<what>.<ext>` keyed to the hypothesis row.
+- **Delay trial-and-error as long as possible.** The loop became a **ladder**:
+  1 capture (+ mode) → 2 own kb (cookbook/research/*reference*) → 3 external
+  documented causes (vendor docs/KB, exact-error search, release notes for the
+  stamped versions; finds saved to `reference/` under its licensing rule;
+  output = ranked *documented* causes) → 4 anchor → 5 open case seeded from
+  rung 3 → 6 **observe before experimenting** (read every existing log/
+  status/config, change nothing — most "won't start" cases end here) → 7
+  discriminating tests, read-only before invasive, one change at a time,
+  revert if unconfirmed → 8 hygiene → 9 close gate. Anti-skip rule: proposing
+  a change with rungs 2–6 absent from the case file means go back.
+
+**"What else sharpens this?" — four recommendations, all actioned:**
+1. **Domain playbooks** ("first five minutes" cookbook entries the skill reads
+   at rung 6) → **FEAT-203** (with environment baselines folded in).
+2. **Collector scripts as products** (one-run, pre-scrubbed evidence bundles;
+   baseline mode on a healthy system) → **FEAT-204**.
+3. **`Resolved at rung:` field** on the case template + close-gate step — the
+   method's self-check (rung-7 clustering in a domain = its playbook/reference
+   is missing something). Landed now.
+4. **Dogfood three real cases, then retro** — the actual sharpening plan →
+   **TASK-205** (High).
+Also landed: a **"What would falsify it"** column in the hypothesis table and
+the matching rule at rung 7 — a hypothesis you can't name a falsifier for
+isn't testable yet.
+
+### Current State
+
+- **done/ (14)**, **doing/ empty**; backlog +3 (FEAT-203/204, TASK-205)
+- Uncommitted: SKILL.md ladder rewrite, ts-case.md fields, three new cards,
+  this history section
+- Pending: 0.4.0-dev sweep decision; FEAT-193 next build card
+
+---
+
 **Last Updated:** 2026-08-24
