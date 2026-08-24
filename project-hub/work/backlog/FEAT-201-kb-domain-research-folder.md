@@ -34,9 +34,11 @@ our research fills the gap."
 
 - Knowledgebase overlay `_domain_/` gains `research/` (with `.gitkeep`):
   `cookbook/ faq/ reference/ research/`.
-- Definition lines live once in the seeded kb README (or domain README):
-  *reference = theirs, research = ours*; neither automatically outranks the
-  other on conflict — they are different kinds of claims.
+- Definition lines live once in a seeded **domain README**
+  (`_domain_/README.md` — does not exist yet; this card creates it, and it
+  becomes the natural home FEAT-192/194 also want): *reference = theirs,
+  research = ours*; neither automatically outranks the other on conflict —
+  they are different kinds of claims.
 - **Boundary vs `project-hub/research/`:** same word, two concepts. kb
   `research/` holds the distilled, durable output (reads like a position
   paper); `project-hub/research/` holds the investigation process record
@@ -58,11 +60,13 @@ back at the template. Reconcile when this lands.
       plugin template tree
 - [ ] Seeded README states the reference-vs-research provenance rule and the
       kb-research vs project-hub-research boundary
-- [ ] `/fw-new-domain` (FEAT-194 territory) generates the four-folder shape
+- [ ] `/fw-new-domain` (FEAT-192) generates the four-folder shape
 
 ## Related
 
 - TASK-197 — workspace type taxonomy (kb scaffold origin)
-- FEAT-194 — kb `company` domain / `/fw-new-domain`
+- FEAT-192 — `/fw-new-domain`; must generate the four-folder shape from the
+  same template home
+- FEAT-194 — kb `company` domain (first consumer of `/fw-new-domain`)
 - HPC repo `workspaces/kb/README.md` — first field use, carries the
   definitions this card upstreams

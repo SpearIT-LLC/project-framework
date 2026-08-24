@@ -5,6 +5,7 @@
 **Priority:** Medium
 **Version Impact:** MINOR
 **Created:** 2026-07-02
+**Completed:** 2026-08-24
 **Theme:** Project Guidance
 **Workspace:** framework
 **Planning Period:** [Optional]
@@ -62,15 +63,25 @@ new workspace.
 
 ## Acceptance Criteria
 
-- [ ] `/fw-new-workspace <name> <type>` generates the common floor plus the type's
+- [x] `/fw-new-workspace <name> <type>` generates the common floor plus the type's
       scaffold for all four types. *(Script verified 2026-08-18 for all four types
       in a scratch root; command-level proof pending a live run from the built
-      plugin.)*
-- [ ] A document-only workspace (`sow` type, e.g. `BD-SOW-001`) stands up with no
+      plugin.)* *(2026-08-24: satisfied under the TASK-197 enum — product, project,
+      kb, operations; interface is now `<type> <name>`. All four generated from the
+      published plugin; live command run created `workspaces/app2` 2026-08-20.)*
+- [x] A document-only workspace (`sow` type, e.g. `BD-SOW-001`) stands up with no
       source tree and nothing irrelevant in it. *(Script-level: BD-SOW-001 scratch
       run produced floor + requirements/reports only. Built-plugin proof pending.)*
-- [ ] Generated README carries name, type, purpose. *(Name/type seeded by script;
-      purpose is the AI step at creation — pending live run.)*
+      *(2026-08-24: the sow type dissolved into `project` (TASK-197) — the
+      document-only floor test now reads "a project workspace has no source tree":
+      verified via `sow-001` and `app2` fixtures and a `bd-sow-001` scratch run from
+      the published plugin copy — floor + requirements/ only; reports/ left per
+      FEAT-196.)*
+- [x] Generated README carries name, type, purpose. *(Name/type seeded by script;
+      purpose is the AI step at creation — pending live run.)* *(2026-08-24:
+      name/type seeded from the template's `__NAME__` substitution; the AI purpose
+      prompt ran at app2's live creation, and all five test fixtures now carry an
+      explicit test-fixture purpose line.)*
 - [x] No standalone document describes the scaffold; the command doc + the command
       are the one home (script-checkable per TECH-189 pattern). *(2026-08-18: the
       folder tree exists only in `scripts/fw-new-workspace.sh`; the command doc
@@ -79,6 +90,15 @@ new workspace.
       (README content), per the script-based execution pattern. *(2026-08-18)*
 
 ## Notes
+
+> **2026-08-24 closing note:** the Scope sketch below predates TASK-197 and reads
+> in the old vocabulary — kept as the journey record, superseded in these ways:
+> type enum is **product, project, kb, operations** (application renamed; sow
+> dissolved into project; kb/operations are fixed-name singletons); structure +
+> seeded content moved from script literals to the plugin's
+> `templates/workspaces/` tree (floor + overlays, ADR-009 D3 as amended), with
+> the script as sole compose chokepoint; interface is `<type> <name>` with kb
+> aliases. Growth path (`/fw-new-domain`) is FEAT-192; ops trim is FEAT-193.
 
 - Type names are lowercase singulars: `application`, `knowledgebase`, `sow`,
   `operations`.
