@@ -64,6 +64,17 @@ planning-period archival (FEAT-093). Sweep is a command/script, never a hand mov
 
 ---
 
+## Notes from FEAT-202 (2026-08-24)
+
+- **Artifact-bundle convention is this item's to define:** an ops record may
+  carry a sibling folder (`INC-nnn/`) for working material, mirroring the
+  kanban's artifact-folder pattern; troubleshooting working evidence lives
+  there while the investigation runs (FEAT-202's case pattern).
+- **The troubleshooting distillation gate becomes mechanism here:** the ops
+  close flow should prompt the FEAT-202 close-gate (durable knowledge → kb
+  research case / cookbook recipe, or explicit "nothing durable") when closing
+  an INC. Until then it is convention in the fw-troubleshoot skill.
+
 ## Open Questions (resolve before → doing)
 
 - [ ] Sequence scope: one sequence per prefix (`INC-001` and `REQ-001` coexist) or one

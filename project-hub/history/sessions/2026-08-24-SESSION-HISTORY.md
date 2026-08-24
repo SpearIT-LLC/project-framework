@@ -193,4 +193,48 @@ commit):
 
 ---
 
+## FEAT-202: Troubleshooting Case Pattern — the Actual Last kb Card (Continued)
+
+**Origin:** pre-release discussion. Gary brought the Toyota-project format
+(`kb/<domain>/TS-nnn-<slug>/` with `evidence/`, `scripts/`, journey README) and
+asked what to add or change; then named the two primary goals — a systematic
+AI-assisted methodology with capture, and easy retrieval of already-solved
+problems ("final doc = a KB article?").
+
+**Design (discussed, then filed as FEAT-202 and implemented same-day):**
+
+- **The split:** investigation is flow (ops `INC-` anchor + working-material
+  bundle — FEAT-195 to define the bundle); the case is knowledge at
+  `kb/<domain>/research/<symptom-slug>/` — no `TS-` tree, no new domain
+  folder: a troubleshooting case is the purest instance of FEAT-201's
+  research/ definition. Toyota's shape survives inside the case folder.
+- **The final doc is a kb article in two grades:** cookbook recipe = the
+  findable solution card (symptom-first title, links its case as proof);
+  research case = the evidence behind it; no repeatable fix → the case alone
+  is the article.
+- **Four additions:** distillation gate at close (the piece TS formats
+  usually lack); environment/version stamp (makes stale-by-refutation
+  checkable); symptom-first titling + FEAT-195 cross-ref + contact links;
+  hygiene (evidence scrubbed before kb entry, raw logs git-ignored with
+  pointers; script promotion test — run-again scripts are product material).
+
+**Landed:** `skills/fw-troubleshoot/SKILL.md` — **the plugin's first skill**
+(search-solved-first, hypothesis–evidence loop with capture-during, close
+gate, never-invent-evidence rule); `templates/records/ts-case.md` (case-folder
+README skeleton, required: symptom/Status/Environment); domain README
+research/ bullet now points at both; CHANGELOG entry; FEAT-195 annotated
+(artifact bundle + gate mechanism are its to build). Verified: both files
+serve from the published marketplace copy; sample case created in the fixture
+kb from the published template. Skill registration awaits next restart.
+All four OQs resolved on the card; moved to done/.
+
+### Current State — kb activity fully closed
+
+- **done/ (14):** FEAT-164, 192, 194, 201, 202 today
+- **doing/:** empty
+- **Pending decision:** the 0.4.0-dev milestone sweep (board release, not a
+  product release — the product story stays graduation per ADR-009)
+
+---
+
 **Last Updated:** 2026-08-24

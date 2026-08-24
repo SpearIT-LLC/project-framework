@@ -6,6 +6,11 @@ plain semver 0.x during the framework workspace build.
 ## [Unreleased]
 
 ### Added
+- `fw-troubleshoot` skill (the plugin's first skill) + `templates/records/ts-case.md`
+  — systematic troubleshooting: search solved cases first, hypothesis–evidence
+  loop with capture-as-you-go, close gate distilling a cookbook recipe (the
+  findable solution card) backed by a `research/` case folder (evidence-scrub
+  and script-promotion rules included). (FEAT-202)
 - `/fw-contacts` + `templates/records/contact.md` — contacts get one authored
   home: per-contact records in the kb `company` domain, with repeatable
   `Assigned: <workspace> — <role>` declarations; every workspace `CONTACTS.md`

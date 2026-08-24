@@ -11,6 +11,9 @@ from — which a reader cannot recover from content alone:
 - `research/` — material we **curated and concluded**: synthesis from one or
   many sources, carrying our own conclusions. We stand behind it, not the
   vendor. Goes stale by *refutation* — a claim is disproven, we revise.
+  Troubleshooting cases (symptom → evidence → conclusion) live here as case
+  folders — see the plugin's `templates/records/ts-case.md` and the
+  fw-troubleshoot skill.
 
 On conflict, neither `reference/` nor `research/` automatically outranks the
 other — they are different kinds of claims (the vendor may be silent or wrong;
