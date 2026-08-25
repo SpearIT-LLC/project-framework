@@ -6,8 +6,11 @@ plain semver 0.x during the framework workspace build.
 ## [Unreleased]
 
 ### Added
-
-None
+- Operations scaffold trimmed to flow folders `open/ onhold/ closed/` + `meetings/ agreements/
+  reference/` — `intake/` tree replaced (location = status, `INC-`/`REQ-` prefix = type);
+  operations opts out of the shared floor like kb. No `problems/`, `changes/`, or `cancelled/`
+  folders by decision (troubleshooting case + kanban item; customer CM tool; `Resolution:`
+  closure code). (FEAT-193)
 
 ### Changed
 

@@ -548,3 +548,11 @@ standard in Dec 2025; plugins are now the standard distribution unit).
   composed by the script, which remains the sole chokepoint; project-level
   `.claude/templates/workspaces/` override. Decided with Gary in TASK-197's
   refinement and pre-implementation review.
+- 2026-08-25: operations scaffold trimmed (FEAT-193) — flow folders `open/ onhold/ closed/`
+  replace the `intake/` tree (location is the status; `INC-`/`REQ-` prefix is the type,
+  FEAT-195); operations opts out of the common floor like kb (no `deliverables/` — the closed
+  record is the output; contacts in the kb `company` domain). OQ5's original "scaffold
+  intake/reference" wording is superseded. Decided with Gary at FEAT-193's review: no
+  `problems/` (root-cause work is a troubleshooting case + kanban item), no `changes/` (customer
+  changes live in their change-management tool; our own changes are cards), no `cancelled/`
+  (outcome is a `Resolution:` closure code, not a location).

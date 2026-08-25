@@ -64,7 +64,13 @@ planning-period archival (FEAT-093). Sweep is a command/script, never a hand mov
 
 ---
 
-## Notes from FEAT-202 (2026-08-24)
+## Notes from FEAT-202 (2026-08-24) and FEAT-193 (2026-08-25)
+
+- **Closure code (decided with FEAT-193, 2026-08-25):** no `cancelled/` folder — location is the
+  flow state, outcome is a field. Closed records carry `**Resolution:**` with an ITIL-style
+  closure code (resolved | cancelled | duplicate | no-fault-found | rejected) plus free-text
+  reason; the `→ closed` move treatment prompts for it the way `→ done` stamps `Completed`.
+  FEAT-196 reporting greps this field for fulfilled-vs-cancelled.
 
 - **Artifact-bundle convention is this item's to define:** an ops record may
   carry a sibling folder (`INC-nnn/`) for working material, mirroring the

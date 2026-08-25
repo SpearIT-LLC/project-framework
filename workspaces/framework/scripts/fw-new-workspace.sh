@@ -127,7 +127,10 @@ mkdir -p "$WS"
 # Compose: floor + type overlay. (knowledgebase never reaches here — it
 # delegated to fw-new-kb-domain.sh above; kb opts out of the floor per the
 # ADR-009 D4 amendment 2026-08-18.)
-cp -R "$TPL/floor/." "$WS/"
+# operations opts out of the floor too (FEAT-193): its overlay is the whole tree —
+# flow folders (open/onhold/closed) replace intake/; no deliverables/ (the closed
+# record IS the output); contacts live in the kb company domain (FEAT-194).
+[ "$TYPE" = "operations" ] || cp -R "$TPL/floor/." "$WS/"
 cp -R "$TPL/$TYPE/." "$WS/"
 
 # Fill placeholders in seeded markdown (__NAME__, __DOMAIN__).
