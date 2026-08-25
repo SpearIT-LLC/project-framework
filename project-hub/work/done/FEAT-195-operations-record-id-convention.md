@@ -6,7 +6,7 @@
 **Version Impact:** MINOR
 **Created:** 2026-08-19
 **Workspace:** framework
-**Completed:** <!-- Set automatically by /fw-move on → done/. Leave blank at creation. -->
+**Completed:** 2026-08-25
 
 ---
 
@@ -81,27 +81,54 @@ planning-period archival (FEAT-093). Sweep is a command/script, never a hand mov
   research case / cookbook recipe, or explicit "nothing durable") when closing
   an INC. Until then it is convention in the fw-troubleshoot skill.
 
+## Scope reality (pre-implementation review, 2026-08-25)
+
+The "existing" next-id and `fw-move` are the *old* root engine serving the live board
+(ADR-009 D5). The new build had no engine — this card is its first slice, built as **one
+namespace-aware engine with only the operations policy populated** (Gary: "the same script
+with different inputs or an internal toggle for kanban/ vs operations/"). The kanban policy
+slot fills at board crossover by carrying the root `fw-move.sh` logic in — a table entry, not
+a second engine. Two engines coexist until graduation, which ADR-009 accepts. Rule encoded:
+**status is the first path segment under a namespace root; deeper folders (year buckets,
+release buckets, artifact bundles, children) are grouping, never status** — Gary noted the
+year folder matches the kanban's sub-folder concept; the recursive scan makes them one
+mechanism. Surfacing ops records in a status/WIP view is out of scope (no new-build status
+command yet — FEAT-163/196).
+
 ## Open Questions (resolve before → doing)
 
-- [ ] Sequence scope: one sequence per prefix (`INC-001` and `REQ-001` coexist) or one
+- [x] Sequence scope: one sequence per prefix (`INC-001` and `REQ-001` coexist) or one
       shared sequence per workspace? (Kanban precedent: shared namespace.)
-- [ ] Record template: does an incident/request record template ship with the scaffold,
+      *Resolved 2026-08-25 (Gary): one shared sequence per operations workspace — kanban
+      precedent; an id is unambiguous without its prefix (`fw-move.sh 12` works); one counter.*
+- [x] Record template: does an incident/request record template ship with the scaffold,
       and where is its one home? Direction under discussion: authored in the plugin so
       updates propagate; a project's `.claude/templates/` acts as optional override.
-- [ ] Archival trigger: when does the `closed/` year-bucket sweep run (on close, on
+      *Resolved 2026-08-25: ships in the plugin as `templates/records/ops-record.md` (one
+      template, prefix chosen at creation); `.claude/templates/records/` overrides.*
+- [x] Archival trigger: when does the `closed/` year-bucket sweep run (on close, on
       demand, or with the FEAT-093 planning-period archival)?
+      *Resolved 2026-08-25: on demand — `fw-move.sh sweep`; rule = records closed in a prior
+      calendar year move to `closed/YYYY/` (bundle too). Layout rule defined now because
+      next-id and move must recurse into buckets; FEAT-199 can surface "sweep due" later.*
 
 ---
 
 ## Acceptance Criteria
 
-- [ ] ID convention documented in exactly one home; operations records named
+- [x] ID convention documented in exactly one home; operations records named
       `INC-###-slug.md` / `REQ-###-slug.md`
-- [ ] Records carry a customer cross-reference field (0..n external tickets)
-- [ ] Next-ID logic has one authored home shared across namespaces — no second script
-- [ ] Move logic likewise: `fw-move` handles ops transitions with `git mv`, per-namespace
+      *(2026-08-25: the record template + create script header are the home; verified names)*
+ *(2026-08-25: `Customer ref:` 0..n in ops-record.md)*
+ *(2026-08-25: `fw-next-id.sh <namespace>` — ops now, kanban at crossover; recursive, shared sequence; empty-namespace case fixed during test)*
+- [x] Move logic likewise: `fw-move` handles ops transitions with `git mv`, per-namespace
       transition policy (no kanban gates on ops moves), and a Closed stamp on → closed
-- [ ] Verified against the built plugin, not the source tree
+      *(2026-08-25: `fw-move.sh` — ops policy, `--resolution` required + stamped, bundle moves, sweep;
+      kanban prefixes refused with a pointer to the root /fw-move until crossover; no kanban gates)*
+- [x] Verified against the built plugin, not the source tree *(2026-08-25: full cycle in a
+      scratch git root — create INC/REQ, onhold↔open, closed with code, terminal guard, sweep,
+      next-id counting buckets — then create + close from the published marketplace copy in the
+      operations fixture)*
 
 ---
 

@@ -6,6 +6,13 @@ plain semver 0.x during the framework workspace build.
 ## [Unreleased]
 
 ### Added
+- Operations records + the ADR-009 build's move engine: `fw-new-ops-record.sh` (create gate:
+  `INC-`/`REQ-` records from one shared sequence via `fw-next-id.sh`, the one home for
+  next-id logic across namespaces); `fw-move.sh` (namespace-aware: ops policy `open ↔ onhold
+  → closed`, closed terminal, `--resolution` closure code stamped with `Closed:`, artifact
+  bundles move with records, `sweep` year-buckets prior-year closed records; kanban policy
+  slot fills at board crossover); `templates/records/ops-record.md`. Status is the first
+  path segment under a namespace root — deeper folders are grouping, never status. (FEAT-195)
 - Operations scaffold trimmed to flow folders `open/ onhold/ closed/` + `meetings/ agreements/
   reference/` — `intake/` tree replaced (location = status, `INC-`/`REQ-` prefix = type);
   operations opts out of the shared floor like kb. No `problems/`, `changes/`, or `cancelled/`

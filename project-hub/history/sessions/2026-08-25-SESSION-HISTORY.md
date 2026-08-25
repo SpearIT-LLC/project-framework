@@ -65,5 +65,67 @@ review (changes, problems, cancelled) — the last one a genuine gap, resolved a
   gate, and the `Resolution:` closure code.
 
 ---
+## FEAT-195: Operations Records + the New Build's Move Engine (Continued)
+
+**Scope reality surfaced at review:** the card said "adapt the existing next-id and
+fw-move" — but those are the *old* root engine serving the live board (ADR-009 D5);
+the new build had no engine at all (graduation criterion #3). So FEAT-195 became the
+first slice of the new build's engine. Gary's direction: *"the same script with
+different inputs or an internal toggle to look in kanban/ or operations/"* → **one
+namespace-aware engine per function**, only the operations policy populated now; the
+kanban slot fills at board crossover by carrying the root `fw-move.sh` logic in.
+
+**Decisions (Gary):** shared sequence per ops workspace (kanban precedent — a bare id
+is unambiguous); template ships in the plugin with `.claude/templates/` override;
+sweep = on-demand year buckets (`closed/YYYY/`), after asking what sweep is for —
+answer: keep flat `closed/` to "this year"; nothing deleted, no status change. Gary's
+observation that the year folder matches the kanban's sub-folder concept became the
+engine's stated rule: **status is the first path segment under a namespace root;
+anything deeper (buckets, bundles, children) is grouping, never status** — the
+recursive scan makes ops and kanban one mechanism.
+
+**Landed (plugin):** `templates/records/ops-record.md`; `fw-next-id.sh <namespace>`
+(THE home for next-id logic — max over records *and* bundles, recursive);
+`fw-new-ops-record.sh <inc|req> <slug>` (the create gate — FEAT-175's lesson applied
+to ops from day one); `fw-move.sh` (ops policy `open ↔ onhold → closed`, closed
+terminal, `--resolution` required and validated, `Closed:`/`Resolution:` stamped,
+`INC-nnn/` bundle travels, `sweep`; kanban prefixes refused with a pointer to the root
+`/fw-move` until crossover). Command docs for create and move (the `→ closed` step
+carries the FEAT-202 distillation prompt), CHANGELOG entry. Out of scope: surfacing
+ops records in a status view (no new-build status command yet — FEAT-163/196).
+
+**Bugs caught by testing (recorded so the next engine slice avoids them):**
+1. `fw-next-id.sh` died *silently* on an empty namespace — `set -e` + `pipefail` on a
+   `grep` with no match inside `$(...)`; the create script then died silently too, and
+   `| head -1` in the test harness masked both. Fix: `|| true` on the scan pipeline.
+   Lesson: never pipe a script under test through `head` while debugging.
+2. Record locator used `${REC#$OPS_ROOT/}` — breaks when the root contains
+   backslashes (`$LOCALAPPDATA` in the scratch harness). Fix: `find -printf '%P'`
+   gives root-relative paths; status = first segment, no string surgery.
+3. Editing scripts with awk/sed one-liners mangled `\n` and backslash paths
+   repeatedly — one attempt deleted the locator line outright and that state was
+   briefly committed (amended before push). Settled on: write the replacement line to
+   a file in a backslash-free working directory and splice with awk `getline`.
+   `python3` heredocs hang in this shell — avoid.
+4. The engine's `git add` on `→ closed` staged an *untracked fixture* record — correct
+   for real records, unstaged for the fixture. Fixtures stay untracked.
+
+**Verified:** full cycle in a scratch git root (create INC + REQ → shared ids 001/002;
+onhold ↔ open; closed refused without/with bad code; closed with `resolved` stamps
+both fields; closed-is-terminal; kanban prefix refused; sweep bucketed a 2025 record
+with its bundle; next-id counted the bucketed record → 003), then create + close from
+the **published marketplace copy** in the operations fixture. All three OQs resolved
+and every criterion checked; moved to done/.
+
+### Current State
+
+- **done/ (2):** FEAT-193, FEAT-195 — the operations pair
+- **doing/:** empty
+- **todo/ (4):** BUG-181, FEAT-163, FEAT-175, TECH-177
+- **Next:** FEAT-199 (Due: field — now has 195's record shape to build on) → FEAT-196
+  (reporting leg of ops) → FEAT-200; or FEAT-163 (status/WIP slicing, which would also
+  surface ops records). New commands register at next restart.
+
+---
 
 **Last Updated:** 2026-08-25
