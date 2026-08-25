@@ -127,5 +127,42 @@ and every criterion checked; moved to done/.
   surface ops records). New commands register at next restart.
 
 ---
+## UAT Map (Session Close)
+
+Gary: "Let's map out a UAT test for each of the new commands and scripts." Written as a
+re-runnable document, `workspaces/framework/tests/UAT-COMMANDS.md` — 29 tests plus an
+environment precondition — and TASK-206 (High) filed to track the run.
+
+**Design choices worth remembering:**
+- UAT runs in a **throwaway repo with no `workspaces/framework/`**, plugin installed from
+  the dev marketplace — the one condition the script harness could never provide. It
+  proves self-containment (UAT-27) and lets UAT-28 assert every directory was made by a
+  command.
+- It tests the **AI judgment steps**, not just the scripts — purpose prompt, INDEX
+  one-liner, "what should this workspace be called?", the close gate (closure code +
+  durable knowledge), search-first before any hypothesis, remote-mode evidence drops.
+  Those are the parts a harness can't reach and the parts most likely to drift.
+- State accumulates in order (ops tests use UAT-03's workspace; the sweep test proves a
+  bucketed record still counts toward the next id). Negative cases are first-class.
+- UAT-29 documents the session-cached-skill-body constraint as known behavior, not a
+  defect.
+- Coverage: `/fw-new-workspace` 6, `/fw-new-kb-domain` 3, `/fw-contacts` 4, ops records +
+  `/fw-move` + sweep 9, `fw-troubleshoot` 4, cross-cutting 3.
+
+Placement note: `tests/` in the framework workspace ships in the dev plugin by junction
+(as `standards/` does); the graduation build decides what actually packages.
+
+Tooling note for the record: a long quoted heredoc through the Bash tool failed to parse
+("unexpected EOF while looking for matching `'`") — the Write tool was the fallback.
+
+### Board at close
+
+- **done/ (2):** FEAT-193, FEAT-195 (operations pair)
+- **doing/:** empty
+- **todo/ (4):** BUG-181, FEAT-163, FEAT-175, TECH-177
+- **backlog +1:** TASK-206 (run the UAT) — recommended next, before more engine slices
+  land on untested ground; then FEAT-199 or FEAT-163.
+
+---
 
 **Last Updated:** 2026-08-25
