@@ -86,7 +86,7 @@ tomorrow. Tally: UAT-00–12 and 14 PASS; UAT-13 FAIL; UAT-15 in progress; UAT-1
   then `req add-user-jdoe`), then UAT-16–29. Cards get filed when the run completes.
 
 ### In done/ (awaiting release)
-- (none — released with FEAT-195/193 commits earlier this week; see `done/`)
+- FEAT-193 (operations scaffold trim), FEAT-195 (operations records + move engine)
 
 ### Observed, not yet filed
 - `fw-move.sh` reports "doing/: 2/2 items" with one card present — counts `.limit` (known
