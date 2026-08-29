@@ -54,4 +54,4 @@ All 30 tests executed (UAT-00–29). No resume point outstanding.
 
 **Tally:** UAT-00–12, 14, 15, 15b, 16–29 PASS (30 rows); UAT-13 FAIL (1).
 
-**Remaining housekeeping:** decide whether to commit the framework-uat throwaway repo state; file the FEAT/UX/BUG cards listed above.
+**Housekeeping (2026-08-29):** `framework-uat` kept for further testing. Cards filed: BUG-207 (UAT-13), BUG-208 (UAT-06 ad-hoc), FEAT-209 (kb depth), FEAT-210 (UX pass + owning-FEAT notes).

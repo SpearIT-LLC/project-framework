@@ -6,7 +6,7 @@
 **Version Impact:** PATCH
 **Created:** 2026-08-25
 **Workspace:** framework
-**Completed:** <!-- Set automatically by /fw-move on → done/. Leave blank at creation. -->
+**Completed:** 2026-08-29
 
 ---
 
@@ -39,11 +39,22 @@ cross-cutting (3).
 
 ## Acceptance Criteria
 
-- [ ] All UAT tests executed in a fresh repo (no `workspaces/framework/`), results
-      recorded in the document's table
-- [ ] Every failure has a BUG card; every surprising result has a note on its FEAT
-- [ ] UAT-27 (self-containment) and UAT-28 (no hand-made structure) pass
-- [ ] The document itself is corrected wherever a test was ambiguous or wrong
+- [x] All UAT tests executed in a fresh repo (no `workspaces/framework/`), results
+      recorded in the document's table *(2026-08-26..29; 30 rows incl. UAT-15b; 29 PASS,
+      UAT-13 FAIL)*
+- [x] Every failure has a BUG card; every surprising result has a note on its FEAT
+      *(2026-08-29: BUG-207 (UAT-13), BUG-208 (UAT-06 ad-hoc), FEAT-209 (kb depth,
+      decided), FEAT-210 (UX pass; carries the owning-FEAT notes — v0.4.0 archives left
+      untouched))*
+- [x] UAT-27 (self-containment) and UAT-28 (no hand-made structure) pass *(UAT-28 with one
+      known gap: hand-made `kb/company/contacts/` → BUG-207/FEAT-210)*
+- [x] The document itself is corrected wherever a test was ambiguous or wrong *(UAT-15b
+      added; Results summary row filled)*
+
+## Outcome
+
+Run complete 2026-08-29. `framework-uat` throwaway repo kept for further testing (Gary,
+2026-08-29). Cards: BUG-207, BUG-208, FEAT-209, FEAT-210.
 
 ## Related
 
