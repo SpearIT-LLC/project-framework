@@ -24,8 +24,12 @@ plain semver 0.x during the framework workspace build.
 None
 
 ### Fixed
-
-None
+- Contact records: creation is now a script gate (`fw-new-contact.sh <slug>` copies the
+  template minus its header and seeds `kb/company/contacts/` + README on first use — no more
+  hand-made registry folder); blank optionals stay as prompts instead of being deleted;
+  `Assigned:` accepts `Unassigned`; `Affiliation` is `<org> (customer | vendor | subcontractor
+  | spearit)`; `/fw-contacts <name> [change]` adds or updates a record and regenerates views;
+  `fw-contacts.sh` errors name the actual gap in command syntax. (BUG-207, from UAT-10/13)
 
 ---
 

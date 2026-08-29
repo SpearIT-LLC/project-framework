@@ -48,10 +48,23 @@ for contacts (ADR-008), so a lossy shape is a data problem, not cosmetic.
 
 ## Acceptance Criteria
 
-- [ ] Template no longer instructs deleting blank optionals; placeholders never survive
-- [ ] `/fw-contacts <name>` adds or updates a record and regenerates views
-- [ ] No-registry error names the actual gap in command syntax
+- [x] Template no longer instructs deleting blank optionals; placeholders never survive
+      *(2026-08-29; also: `Assigned: Unassigned`, `Affiliation: <org> (relationship)`)*
+- [x] `/fw-contacts <name>` adds or updates a record and regenerates views *(2026-08-29;
+      option 3 taken — `fw-new-contact.sh <slug>` is the create gate, seeds `contacts/`)*
+- [x] No-registry error names the actual gap in command syntax *(2026-08-29; script-level
+      checks in scratchpad: no domain / no records / bad slug / create+header strip / dup /
+      Unassigned → no view / assigned → view)*
 - [ ] UAT-10 and UAT-13 re-run PASS against the built plugin
+
+## Decisions (2026-08-29, Gary)
+
+- No assignment → literal `**Assigned:** Unassigned` (script ignores it).
+- `company` stays the fixed domain name: one repo per customer (Honda, Boston Dynamics,
+  Toyota, SpearIT), and `company` holds that engagement's facts. People from any org share
+  the registry; `Affiliation: <org> (customer | vendor | subcontractor | spearit)` names
+  the org always, so records stay portable and give the future INDEX its grouping key.
+- `/fw-contacts` argument grammar: `<name> [what to change]`; never script args.
 
 ## Related
 

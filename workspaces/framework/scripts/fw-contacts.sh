@@ -22,12 +22,12 @@ if [ -z "$ROOT" ]; then
 fi
 
 REG="$ROOT/workspaces/kb/company/contacts"
-if [ ! -d "$REG" ]; then
-  {
-    echo "Error: no contact registry at workspaces/kb/company/contacts"
-    echo "Create the company domain first (fw-new-kb-domain.sh company), then add"
-    echo "contact records there from the plugin's templates/records/contact.md."
-  } >&2
+if [ ! -d "$ROOT/workspaces/kb/company" ]; then
+  echo "Error: no company domain in the knowledgebase — create it first: /fw-new-kb-domain company" >&2
+  exit 1
+fi
+if [ ! -d "$REG" ] || ! ls "$REG"/*.md 2>/dev/null | grep -qv '/README\.md$'; then
+  echo "Error: no contact records yet in workspaces/kb/company/contacts — add the first one: /fw-contacts <person name>" >&2
   exit 1
 fi
 
@@ -48,6 +48,7 @@ for rec in "$REG"/*.md; do
     [ -n "$line" ] || continue
     ws="${line%%[[:space:]]*}"
     case "$ws" in __*|"") continue ;; esac   # unfilled template placeholder line
+    case "$(printf '%s' "$ws" | tr '[:upper:]' '[:lower:]')" in unassigned) continue ;; esac   # explicit no-assignment
     ctx="${line#"$ws"}"
     ctx="${ctx#"${ctx%%[![:space:]]*}"}"   # ltrim
     ctx="${ctx#—}"; ctx="${ctx#-}"

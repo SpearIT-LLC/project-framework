@@ -97,8 +97,10 @@ files a BUG card; a surprising-but-correct result files a note on the owning FEA
 ## C. `/fw-contacts`
 
 **UAT-10 — no registry.** `> /fw-contacts` before any contacts exist.
-- Expected: clean error naming the fix (create the `company` domain, add records from the
-  template); nothing generated.
+- Expected: clean error naming the fix in command syntax — `/fw-new-kb-domain company` if
+  the domain is missing, otherwise `/fw-contacts <person name>` to add the first record;
+  nothing generated. `> /fw-contacts Fred Flintstone` is read as "add Fred", not as
+  script arguments.
 
 **UAT-11 — generate views.** Ask the AI to add two contacts (fake people). It should copy
 `templates/records/contact.md` into `workspaces/kb/company/contacts/<slug>.md` and fill
@@ -114,10 +116,15 @@ contact; `> /fw-contacts`
 - Expected: `widget/CONTACTS.md` removed ("Removed stale"); `bd-sow-001` regenerated.
 - Pass: only generated files (header check) are ever removed.
 
-**UAT-13 — template contract review (human).** Read the filled contact records.
-- Pass: required fields present (name heading, Affiliation, Role, one of Email/Phone);
-  optional empty fields *deleted*, not placeholders; each `Activity:` value completes
-  "contact this person for ___"; no workspace name appears in Activity.
+**UAT-13 — template contract review (human).** Read the filled contact records (they must
+have been created by `fw-new-contact.sh` via `/fw-contacts <name>`, not hand-copied —
+`contacts/` and its README appear on the first add).
+- Pass: required fields present (name heading, `Affiliation: <org> (relationship)`, Role,
+  one of Email/Phone, Assigned lines or `Unassigned`); no `__placeholder__` survives;
+  unknown optionals are *blank*, not deleted; each `Activity:` value completes "contact
+  this person for ___"; no workspace name appears in Activity. Then
+  `> /fw-contacts <existing name> phone is 555-0100` → AI confirms the reading, fills the
+  blank Phone in place, reruns the script; no second record created.
 
 ---
 
