@@ -133,6 +133,17 @@ contact; `> /fw-contacts`
   fields; `Closed:`/`Resolution:` left blank.
 - Pass: ids 001 and 002; `Kind:` and `Opened:` filled by the script.
 
+**UAT-15b — attachments.** The reporter (us — this is our own intake record, not the
+client's ServiceNow/Jira) hands over a text file and a screenshot for INC-001:
+`> here are the crash log and a screenshot for INC-001` with `crash.txt` and `crash.png`.
+- Expected: the AI files both into the record's bundle folder `open/INC-001/` (created on
+  first use, named for the bare id), adds one dated, attributed Actions line per file with
+  a relative link (`[crash.png](INC-001/crash.png)`), and **reads** both — quoting the
+  text and describing what the image shows — recording only what they contain. Other
+  binary types (pptx, docx, xlsx) file the same way; reading them is a separate concern.
+- Pass: files in `INC-001/`, links resolve from the record, no content invented; the
+  bundle then travels in UAT-16/17/19/21 moves.
+
 **UAT-16 — flow moves.** `> /fw-move INC-001 onhold` then `> /fw-move 1 open`
 - Pass: both succeed; a bare numeric id works; the file is in the named folder each time.
 
@@ -215,4 +226,4 @@ not a defect.)
 
 | Run date | Plugin version | Tester | Passed | Failed | Notes / cards filed |
 |---|---|---|---|---|---|
-| | | | | | |
+| 2026-08-26..29 | spearit-framework-dev 0.4.0 | Gary Elliott | 30 | 1 (UAT-13) | See UAT-RESULTS-2026-08-26.md. Cards: FEAT kb depth (b) sub-topics; UX rung names/announce rung (UAT-24); BUG widget sample config + clear error (UAT-25); anchor-at-rung-2 ambiguity (UAT-23/26). UAT-29 confirms session-cached skill bodies (restart required). |
