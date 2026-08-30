@@ -6,7 +6,7 @@
 **Version Impact:** PATCH
 **Created:** 2026-08-29
 **Workspace:** framework
-**Completed:** <!-- Set automatically by /fw-move on → done/. Leave blank at creation. -->
+**Completed:** 2026-08-30
 
 ---
 
@@ -55,7 +55,8 @@ for contacts (ADR-008), so a lossy shape is a data problem, not cosmetic.
 - [x] No-registry error names the actual gap in command syntax *(2026-08-29; script-level
       checks in scratchpad: no domain / no records / bad slug / create+header strip / dup /
       Unassigned → no view / assigned → view)*
-- [ ] UAT-10 and UAT-13 re-run PASS against the built plugin
+- [x] UAT-10 and UAT-13 re-run PASS against the built plugin *(2026-08-30; UAT-10..13 all
+      PASS on 0.4.1 in framework-uat — see UAT-RESULTS-2026-08-26.md re-run section)*
 
 ## Decisions (2026-08-29, Gary)
 
