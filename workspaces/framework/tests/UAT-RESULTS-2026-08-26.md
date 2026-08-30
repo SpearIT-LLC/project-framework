@@ -55,3 +55,16 @@ All 30 tests executed (UAT-00–29). No resume point outstanding.
 **Tally:** UAT-00–12, 14, 15, 15b, 16–29 PASS (30 rows); UAT-13 FAIL (1).
 
 **Housekeeping (2026-08-29):** `framework-uat` kept for further testing. Cards filed: BUG-207 (UAT-13), BUG-208 (UAT-06 ad-hoc), FEAT-209 (kb depth), FEAT-210 (UX pass + owning-FEAT notes).
+
+## Re-run 2026-08-30 — UAT-10..13 against 0.4.1 (BUG-207 verification)
+
+**Plugin:** spearit-framework-dev 0.4.1 (dev-marketplace from project-framework; cache scripts identical to source). Start state: prior records moved to `kb/company/contacts-back/` so no registry existed; stale `widget`/`bd-sow-001` CONTACTS.md views from the 0.4.0 run left in place.
+
+| Test | Result | Notes |
+|---|---|---|
+| UAT-10 | PASS | No registry: exit 1, "Error: no contact records yet in workspaces/kb/company/contacts — add the first one: /fw-contacts <person name>". Ad-hoc `--root` on a tree with no `company` domain: both `fw-contacts.sh` and `fw-new-contact.sh` → "Error: no company domain in the knowledgebase — create it first: /fw-new-kb-domain company", exit 1. Nothing generated. Both 0.4.0 notes resolved: messages distinguish no-domain vs no-contacts and speak in command syntax; command file now states "Arguments are never script arguments" (script itself still refuses args with a usage line, exit 1 — correct). |
+| UAT-11 | PASS | Intake conversation first (drafts offered, user "ok"). `fw-new-contact.sh fred-flintstone` → "Created: workspaces/kb/company/contacts/ (registry)" + record + "Next: fill the required fields…"; registry README created with the ADR-008 pointer text; template copied with comment header stripped. `barney-rubble` likewise. Records filled: Fred = Bedrock Quarry (customer), Ops Manager, email, Phone blank, Activity escalation, Assigned widget + bd-sow-001; Barney = SpearIT (spearit), phone only, Email/Activity blank, Assigned bd-sow-001 + ghost-ws. `fw-contacts.sh` → Generated bd-sow-001 + widget (machine header, one `[Name](../kb/company/contacts/slug.md) — role` line each), "Done: 2 workspace view(s) generated.", "Warning: assignments reference missing workspace(s): ghost-ws". grep for email/phone/`@`/555 in views: 0 hits. Closes the UAT-08 "hand-made contacts/" gap. |
+| UAT-12 | PASS | Deleted Fred's `widget` Assigned line; rerun → "Generated: workspaces/bd-sow-001/CONTACTS.md", "Removed stale: workspaces/widget/CONTACTS.md", ghost-ws warning persists. Only the header-stamped view removed. |
+| UAT-13 | PASS | Records script-created via the create gate. Required fields present (heading, `Affiliation: <org> (relationship)`, Role, Email or Phone, Assigned lines); no `__` placeholder survives (grep 0); blank optionals retained as `**Phone:**` / `**Email:**` / `**Activity:**` lines; Activity `escalation` completes the sentence, no workspace names in Activity. Update: `/fw-contacts Fred Flintstone phone is 555-0100` → reading confirmed, blank Phone filled in place (line 6), `fw-contacts.sh` rerun; `fw-new-contact.sh fred-flintstone` guard → "Error: record already exists … update it instead of creating a second one", exit 1 — no second record. BUG-207 verified fixed. |
+
+**Tally (re-run):** 4/4 PASS. Full-run tally now 30 PASS / 0 FAIL once UAT-13 is superseded.

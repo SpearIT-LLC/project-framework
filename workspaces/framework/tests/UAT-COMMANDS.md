@@ -234,3 +234,4 @@ not a defect.)
 | Run date | Plugin version | Tester | Passed | Failed | Notes / cards filed |
 |---|---|---|---|---|---|
 | 2026-08-26..29 | spearit-framework-dev 0.4.0 | Gary Elliott | 30 | 1 (UAT-13) | See UAT-RESULTS-2026-08-26.md. Cards: FEAT kb depth (b) sub-topics; UX rung names/announce rung (UAT-24); BUG widget sample config + clear error (UAT-25); anchor-at-rung-2 ambiguity (UAT-23/26). UAT-29 confirms session-cached skill bodies (restart required). |
+| 2026-08-30 | spearit-framework-dev 0.4.1 | Gary Elliott | 4 (UAT-10..13 re-run) | 0 | BUG-207 verified fixed: create gate `fw-new-contact.sh` seeds registry + README, blank optionals persist, update path in `/fw-contacts <name>`; error messages now in command syntax. See UAT-RESULTS-2026-08-26.md re-run section. |
