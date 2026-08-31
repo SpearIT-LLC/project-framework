@@ -1,26 +1,26 @@
 {
-  "name": "dev-marketplace",
-  "plugins": [
-    {
-      "source": "./spearit-framework",
-      "name": "spearit-framework",
-      "description": "Project collaboration and guidance",
-      "version": "1.0.1"
-    },
-    {
-      "source": "./spearit-framework-light",
-      "name": "spearit-framework-light",
-      "description": "Essential Kanban workflow",
-      "version": "1.0.5"
-    },
-    {
-      "source": "./framework",
-      "name": "spearit-framework-dev",
-      "description": "SpearIT Framework (dev channel) - workspace model; commands build the structure",
-      "version": "0.4.2"
-    }
-  ],
   "owner": {
     "name": "Development"
-  }
+  },
+  "plugins": [
+    {
+      "description": "Project collaboration and guidance",
+      "source": "./spearit-framework",
+      "version": "1.0.1",
+      "name": "spearit-framework"
+    },
+    {
+      "description": "Essential Kanban workflow",
+      "source": "./spearit-framework-light",
+      "version": "1.0.5",
+      "name": "spearit-framework-light"
+    },
+    {
+      "description": "SpearIT Framework (dev channel) - workspace model; commands build the structure",
+      "source": "./framework",
+      "version": "0.4.3",
+      "name": "spearit-framework-dev"
+    }
+  ],
+  "name": "dev-marketplace"
 }

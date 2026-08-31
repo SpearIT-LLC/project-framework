@@ -53,7 +53,15 @@ if [ -e "$FILE" ]; then
   exit 1
 fi
 
+# Display name seeded from the slug (title-cased): the slug is the key, the #
+# heading is display only, so this is a convenience the user corrects where the
+# slug cannot carry casing or punctuation (o-brien -> O'Brien). Every other
+# field is left blank — blank means "not known yet" (BUG-212); a name-only
+# record is a valid resting state.
+NAME="$(printf '%s' "$SLUG" | tr '-' ' ' | awk '{for(i=1;i<=NF;i++) $i=toupper(substr($i,1,1)) substr($i,2)} 1')"
+
 # Strip the leading HTML comment header (template guidance, not record content).
-awk 'BEGIN{skip=0} NR==1 && /^<!--/ {skip=1} { if (!skip) print; if (skip && /-->[[:space:]]*$/) skip=0 }' "$TPL" > "$FILE"
-echo "Created: workspaces/kb/company/contacts/$SLUG.md"
-echo "Next: fill the required fields (name, Affiliation, Role, Email or Phone, Assigned or Unassigned); leave unknown optionals blank; then run fw-contacts.sh."
+awk 'BEGIN{skip=0} NR==1 && /^<!--/ {skip=1} { if (!skip) print; if (skip && /-->[[:space:]]*$/) skip=0 }' "$TPL" \
+  | sed "s/__FULL_NAME__/$NAME/" > "$FILE"
+echo "Created: workspaces/kb/company/contacts/$SLUG.md (# $NAME)"
+echo "Next: fix the display name if the slug lost casing or punctuation, then fill what you know — unknown fields stay blank, and Assigned stays 'Unassigned' until they're on a workspace."

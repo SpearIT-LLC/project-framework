@@ -24,6 +24,11 @@ plain semver 0.x during the framework workspace build.
 None
 
 ### Fixed
+- Contact create gate no longer seeds placeholder tokens: a new record carries the display
+  name (title-cased from the slug, corrected by hand where the slug is lossy) and empty
+  `**Field:**` lines with `Assigned: Unassigned` — so a name-only record is a valid resting
+  state instead of a forbidden one, and an interrupted add leaves nothing false on disk.
+  Field guidance lives in the stripped comment header and the command. (BUG-212)
 - `fw-new-workspace.sh` validates the template set (floor + type overlay) before creating
   anything — a project override missing an overlay now refuses cleanly naming the gap and
   the wholesale rule, instead of dying mid-copy and leaving a half-built workspace; override

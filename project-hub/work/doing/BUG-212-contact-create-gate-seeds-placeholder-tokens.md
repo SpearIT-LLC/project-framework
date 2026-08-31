@@ -67,11 +67,26 @@ Creating on the name alone is correct; only the seeded content is wrong.
 
 ## Acceptance Criteria
 
-- [ ] A freshly created record contains no `__` tokens
-- [ ] A name-only record (all other fields blank, `Assigned: Unassigned`) is
+- [x] A freshly created record contains no `__` tokens *(2026-08-31: template seeds empty
+      `**Field:**` lines; `fw-new-contact.sh` fills `# __FULL_NAME__` from the slug)*
+- [x] A name-only record (all other fields blank, `Assigned: Unassigned`) is
       valid, parses, and round-trips through `fw-contacts.sh` without warnings
-- [ ] Field guidance is available to the user without living in the record values
-- [ ] Verified against the built plugin, not the source tree
+      *(2026-08-31 scratchpad: "Done: 0 workspace view(s) generated.", exit 0, no warning;
+      a later-filled `Assigned` line generates the view as before)*
+- [x] Field guidance is available to the user without living in the record values
+      *(2026-08-31: stripped comment header + `/fw-contacts` step 2)*
+- [ ] Verified against the built plugin, not the source tree *(0.4.3 published; re-run
+      UAT-13's name-only case in framework-uat)*
+
+## Decision (2026-08-31, Gary)
+
+The `#` heading is the **display name**; the slug is the **key**. Not duplication — the slug
+is lossy by design (lowercase, dashed, org-qualified on collision). The gate seeds the
+heading title-cased from the slug as a convenience and tells the user to fix what the slug
+could not carry (`o-brien` → `O'Brien`, `jane-doe-acme` → `Jane Doe (Acme)`).
+
+`Role:` is left untouched here — FEAT-211 renames it to `Title:` and reworks the
+per-engagement function in the same pass.
 
 ## Related
 

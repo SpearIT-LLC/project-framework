@@ -47,12 +47,15 @@ The scripts take a slug or nothing.
      bash "${CLAUDE_PLUGIN_ROOT}/scripts/fw-new-contact.sh" <slug>
      ```
 
-     Ask, in one prompt, for the required facts: organisation and
-     relationship (customer / vendor / subcontractor / spearit), role, email
-     or phone, and which workspaces they're assigned to with their role in
-     each — or `Unassigned`. Fill the record: placeholder tokens never
-     survive; an optional the user doesn't know stays **blank**; delete only
-     unused `Assigned` lines.
+     The record arrives valid and name-only: display name filled from the
+     slug, every other field blank, `Assigned: Unassigned`. **Fix the display
+     name first** if the slug lost casing or punctuation (`o-brien` →
+     `O'Brien`), then ask in one prompt for what the user knows: organisation
+     and relationship (customer / vendor / subcontractor / spearit), role,
+     email or phone, and which workspaces they're assigned to with their role
+     in each. Whatever they don't know stays **blank** — blank means "not
+     known yet", and the record is a legitimate resting state at any point.
+     Never write a placeholder token; delete only unused `Assigned` lines.
 
    - **Found → update.** Show the record's current fields in a few lines and
      ask what changes (if the user already said — "assign to widget as PM",

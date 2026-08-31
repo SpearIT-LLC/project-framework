@@ -125,6 +125,9 @@ contact; `> /fw-contacts`
 **UAT-13 — template contract review (human).** Read the filled contact records (they must
 have been created by `fw-new-contact.sh` via `/fw-contacts <name>`, not hand-copied —
 `contacts/` and its README appear on the first add).
+- Also check a **name-only** record (create one and stop): heading filled from the slug,
+  every other field blank, `Assigned: Unassigned` — a valid resting state, no `__` tokens,
+  and `/fw-contacts` runs clean over it (no view, no warning).
 - Pass: required fields present (name heading, `Affiliation: <org> (relationship)`, Role,
   one of Email/Phone, Assigned lines or `Unassigned`); no `__placeholder__` survives;
   unknown optionals are *blank*, not deleted; each `Activity:` value completes "contact
