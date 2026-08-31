@@ -6,7 +6,7 @@
 **Version Impact:** PATCH
 **Created:** 2026-08-29
 **Workspace:** framework
-**Completed:** <!-- Set automatically by /fw-move on → done/. Leave blank at creation. -->
+**Completed:** 2026-08-31
 
 ---
 

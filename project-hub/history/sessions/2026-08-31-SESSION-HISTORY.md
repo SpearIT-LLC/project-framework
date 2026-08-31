@@ -92,7 +92,7 @@ install record; recovery steps given, nothing lost.
 
 ---
 
-## Current State
+## Current State (as of the first commit, `ce76296`)
 
 ### In doing/
 - BUG-208 — all acceptance criteria ticked; ready for `/fw-move BUG-208 done` (not moved this
@@ -108,6 +108,21 @@ install record; recovery steps given, nothing lost.
 1. Re-add the dev marketplace and reinstall (steps above); restart.
 2. `/fw-move BUG-208 done`.
 3. FEAT-209 or FEAT-210 next; both re-test in `framework-uat` (kept for this purpose).
+
+---
+
+## (Later) BUG-208 → done
+
+**Continuation:** after the restart, `/fw-move BUG-208 done` — acceptance-criteria gate passed
+(all four ticked), `Completed: 2026-08-31` stamped by the script. No artifact folder.
+
+### Current State (end of session)
+
+- **doing/:** empty
+- **done/ (awaiting release):** FEAT-193, FEAT-195, TASK-206, BUG-207, BUG-208 — 5 items
+- **todo/:** FEAT-209, FEAT-210 (+ BUG-181, FEAT-163, FEAT-175, TECH-177 from before)
+- **Next:** FEAT-209 (kb sub-topic depth) or FEAT-210 (command UX pass); a framework-dev
+  release could bundle the five done items once one of those lands.
 
 ---
 
