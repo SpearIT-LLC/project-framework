@@ -48,8 +48,11 @@ structure half-made" posture.
       override: .claude/templates/workspaces/")*
 - [x] Wholesale-replacement rule stated in the command *(2026-08-31:
       commands/fw-new-workspace.md)*
-- [ ] UAT-06 (incl. the ad-hoc case, now scripted in the runbook) PASS against the
-      built plugin *(0.4.2 published; run UAT-06 in framework-uat)*
+- [x] UAT-06 (incl. the ad-hoc case, now scripted in the runbook) PASS against the
+      built plugin *(2026-08-31: re-run in framework-uat against 0.4.2 — announce
+      line printed, `product missing-type` refused with the wholesale message, exit 1,
+      nothing on disk; plugin templates untouched. See UAT-RESULTS-2026-08-26.md
+      "Re-run 2026-08-31")*
 
 ## Notes
 

@@ -68,3 +68,13 @@ All 30 tests executed (UAT-00–29). No resume point outstanding.
 | UAT-13 | PASS | Records script-created via the create gate. Required fields present (heading, `Affiliation: <org> (relationship)`, Role, Email or Phone, Assigned lines); no `__` placeholder survives (grep 0); blank optionals retained as `**Phone:**` / `**Email:**` / `**Activity:**` lines; Activity `escalation` completes the sentence, no workspace names in Activity. Update: `/fw-contacts Fred Flintstone phone is 555-0100` → reading confirmed, blank Phone filled in place (line 6), `fw-contacts.sh` rerun; `fw-new-contact.sh fred-flintstone` guard → "Error: record already exists … update it instead of creating a second one", exit 1 — no second record. BUG-207 verified fixed. |
 
 **Tally (re-run):** 4/4 PASS. Full-run tally now 30 PASS / 0 FAIL once UAT-13 is superseded.
+
+## Re-run 2026-08-31 — UAT-06 against 0.4.2 (BUG-208 verification)
+
+**Plugin:** spearit-framework-dev 0.4.2 (dev-marketplace directory source `project-framework/workspaces/framework`; script run from the source plugin root — `installed_plugins.json` points at `plugins/cache/dev-marketplace/spearit-framework-dev/0.4.2`, which does not exist on disk after today's reinstall). Start state: the `workspaces/ovr-test/` left by the 0.4.0 run was deleted first so the runbook's name was free; no `.claude/templates/` existed.
+
+| Test | Result | Notes |
+|---|---|---|
+| UAT-06 | PASS | Override created (`floor/custom-floor/.gitkeep`, `project/README.md` = `# __NAME__ (override)`). `project ovr-test` → "Using project template override: .claude/templates/workspaces/" / "Created workspace: …/workspaces/ovr-test (project)" / tree `./custom-floor`, exit 0; on disk `README.md` + `custom-floor/.gitkeep` only, README reads `# ovr-test (override)` — override used wholesale, announced. `product missing-type` → "Error: template override at .claude/templates/workspaces is missing the 'product' folder(s) — an override replaces the plugin templates wholesale, so copy the plugin's full templates/workspaces/ tree first, then edit. Nothing created.", exit 1; no `workspaces/missing-type/` (the 0.4.0 half-built `custom-floor/` is gone). Plugin `templates/workspaces/` checksum identical before/after; project-framework clean. Command file now states the wholesale rule and the announce/refuse behaviour. Override deleted after. Ad-hoc (`--root` in scratchpad, override with `project/` only): `product x` → "…missing the 'floor and product' folder(s)…", `project y` → "…missing the 'floor' folder(s)…", both exit 1, no `workspaces/` created. All three 0.4.0 findings (announce, wholesale rule stated, BUG-208 half-build) resolved. |
+
+**Tally (re-run):** 1/1 PASS. BUG-208 verified fixed.
