@@ -24,6 +24,11 @@ plain semver 0.x during the framework workspace build.
 None
 
 ### Fixed
+- `fw-new-workspace.sh` validates the template set (floor + type overlay) before creating
+  anything — a project override missing an overlay now refuses cleanly naming the gap and
+  the wholesale rule, instead of dying mid-copy and leaving a half-built workspace; override
+  runs announce "Using project template override: …"; the command states that an override
+  replaces the plugin templates entirely. (BUG-208, from UAT-06 ad-hoc)
 - Contact records: creation is now a script gate (`fw-new-contact.sh <slug>` copies the
   template minus its header and seeds `kb/company/contacts/` + README on first use — no more
   hand-made registry folder); blank optionals stay as prompts instead of being deleted;

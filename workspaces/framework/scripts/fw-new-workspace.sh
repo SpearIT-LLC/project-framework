@@ -115,12 +115,33 @@ fi
 # Template resolution: project override first, then the plugin's own templates
 # (this script's sibling ../templates — same layout in source tree and plugin).
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+OVERRIDE=""
 TPL="$ROOT/.claude/templates/workspaces"
-[ -d "$TPL" ] || TPL="$SCRIPT_DIR/../templates/workspaces"
+if [ -d "$TPL" ]; then
+  OVERRIDE=1
+else
+  TPL="$SCRIPT_DIR/../templates/workspaces"
+fi
 if [ ! -d "$TPL" ]; then
   echo "Error: workspace templates not found (looked for .claude/templates/workspaces and $SCRIPT_DIR/../templates/workspaces)" >&2
   exit 1
 fi
+
+# Validate the template set BEFORE creating anything (BUG-208): a missing
+# overlay must refuse cleanly, never die mid-copy leaving a half-built tree.
+# operations opts out of the floor, so only its own overlay is required.
+MISSING=""
+[ "$TYPE" = "operations" ] || [ -d "$TPL/floor" ] || MISSING="floor"
+[ -d "$TPL/$TYPE" ] || MISSING="${MISSING:+$MISSING and }$TYPE"
+if [ -n "$MISSING" ]; then
+  if [ -n "$OVERRIDE" ]; then
+    echo "Error: template override at .claude/templates/workspaces is missing the '$MISSING' folder(s) — an override replaces the plugin templates wholesale, so copy the plugin's full templates/workspaces/ tree first, then edit. Nothing created." >&2
+  else
+    echo "Error: plugin templates at $TPL are missing the '$MISSING' folder(s) — broken install? Nothing created." >&2
+  fi
+  exit 1
+fi
+[ -z "$OVERRIDE" ] || echo "Using project template override: .claude/templates/workspaces/"
 
 mkdir -p "$WS"
 

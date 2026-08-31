@@ -39,10 +39,17 @@ structure half-made" posture.
 
 ## Acceptance Criteria
 
-- [ ] Missing overlay → clear message, exit 1, no directory created
-- [ ] Override runs announce themselves
-- [ ] Wholesale-replacement rule stated in the command
-- [ ] UAT-06 (incl. the ad-hoc case, to be added to the runbook) PASS against the built plugin
+- [x] Missing overlay → clear message, exit 1, no directory created *(2026-08-31;
+      validation runs before mkdir; message names the missing folder(s) and the
+      wholesale rule; broken plugin install gets its own message. Scratchpad checks:
+      normal path, missing type, missing floor+type, operations overlay missing —
+      nothing on disk in every refusal)*
+- [x] Override runs announce themselves *(2026-08-31: "Using project template
+      override: .claude/templates/workspaces/")*
+- [x] Wholesale-replacement rule stated in the command *(2026-08-31:
+      commands/fw-new-workspace.md)*
+- [ ] UAT-06 (incl. the ad-hoc case, now scripted in the runbook) PASS against the
+      built plugin *(0.4.2 published; run UAT-06 in framework-uat)*
 
 ## Notes
 

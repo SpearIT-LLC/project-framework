@@ -10,8 +10,13 @@ Stand up a workspace under `workspaces/` as a command, not an improvisation
 authored home: `templates/workspaces/` (floor + per-type overlays), composed by
 `scripts/fw-new-workspace.sh` — the sole creation path. Never create workspace
 folders by hand, and never restate the folder trees in this or any other
-document. A project may override the templates wholesale via its own
-`.claude/templates/workspaces/`.
+document. A project may override the templates via its own
+`.claude/templates/workspaces/` — the override replaces the plugin templates
+**entirely** (no merging): to add or change one folder, copy the plugin's full
+`templates/workspaces/` tree there first, then edit. The script prints
+"Using project template override: …" when an override is in effect, and
+refuses cleanly (nothing created) if the override lacks the floor or the
+requested type's overlay.
 
 ## Steps
 

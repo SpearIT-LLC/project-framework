@@ -68,8 +68,14 @@ files a BUG card; a surprising-but-correct result files a note on the owning FEA
 `.claude/templates/workspaces/floor/custom-floor/.gitkeep` and
 `.claude/templates/workspaces/project/README.md` containing `# __NAME__ (override)`.
 `> /fw-new-workspace project ovr-test`
-- Expected: tree contains `custom-floor/`; README reads `# ovr-test (override)`.
-- Pass: override used wholesale; plugin templates untouched. Delete the override after.
+- Expected: script announces "Using project template override: …"; tree contains
+  `custom-floor/`; README reads `# ovr-test (override)`.
+- Then, with the override still lacking a `product/` overlay:
+  `> /fw-new-workspace product missing-type`
+- Expected: clean refusal naming the missing overlay and the wholesale rule (copy the
+  full tree first); exit 1; **nothing on disk** — no `workspaces/missing-type/`.
+- Pass: override used wholesale and announced; missing overlay refused with no
+  half-built tree; plugin templates untouched. Delete the override after.
 
 ---
 
