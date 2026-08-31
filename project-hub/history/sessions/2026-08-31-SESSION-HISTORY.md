@@ -126,4 +126,41 @@ install record; recovery steps given, nothing lost.
 
 ---
 
+## (Later) Ad-hoc contacts run on 0.4.2 — two cards filed
+
+**Continuation:** after the marketplace was re-registered, the plugin worked in
+`framework-uat` and Gary ran an ad-hoc `/fw-contacts <name>` add (not a numbered test),
+recorded in the results file's "Ad-hoc 2026-08-31" section.
+
+- **Result:** the BUG-207 add path works end to end from the *installed* plugin, and
+  `Assigned: Unassigned` is handled cleanly — no error, no spurious view, no attempt to
+  create an `Unassigned` workspace folder. It also demonstrated the UAT-12 master-view
+  gap concretely: an unassigned person appears in no generated view at all.
+- **BUG-212 filed** — the create gate seeds placeholder tokens (`__ORG__`, `__EMAIL__`)
+  while the template forbids placeholders surviving, so there is no legal resting state
+  between "created" and "fully filled". Since the normal case is partial (often you only
+  have a name), the gate should emit empty `**Field:**` lines instead; guidance moves to
+  the command or a stripped comment header. Notably, the card records a *withdrawn*
+  reading: this is not the ops-record "intake before create" ordering problem, because a
+  contact slug encodes the name — the one fact always known first.
+- **FEAT-211 filed** — contact assignment rework: `Role:` conflates org title with
+  per-engagement function (rename the header to `Title:`); `—` is a poor delimiter
+  (`;` chosen, comma rejected — it occurs inside names); batch assign for the O(N)
+  problem at ~50 contacts. Wildcards/shorthand rejected on auditability grounds (a
+  derived set is not a fact); defaulting function from title proposed and withdrawn.
+- **Cross-references added by me:** FEAT-210's contacts section had claimed the grammar
+  spec and `fw-contacts --check`, which FEAT-211 now owns — FEAT-210 keeps the INDEX
+  master view and structured exports, both of which consume whatever grammar FEAT-211
+  settles. Recommended order recorded on the cards: BUG-212 (small, independent) →
+  FEAT-211 (grammar + `--check`) → FEAT-210's remaining contacts items.
+
+### Current State (end of session, revised)
+
+- **doing/:** empty
+- **done/ (awaiting release):** FEAT-193, FEAT-195, TASK-206, BUG-207, BUG-208 — 5 items
+- **todo/:** FEAT-209, FEAT-210 (+ BUG-181, FEAT-163, FEAT-175, TECH-177)
+- **backlog/ (new today):** BUG-212, FEAT-211
+
+---
+
 **Last Updated:** 2026-08-31

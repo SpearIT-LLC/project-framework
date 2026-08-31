@@ -65,6 +65,10 @@ row. Split out any item that grows past a session's work.
   `**Field:** value` grammar as a spec; add `fw-contacts --check`; emit `contacts.csv`/
   `.json` and per-workspace `CONTACTS.csv` from the same collected data. YAML front
   matter is the fallback if the grammar proves too loose; CSV as *source* rejected.
+  **Split out 2026-08-31:** the grammar spec and `--check` moved to **FEAT-211**, which
+  reworks the same lines (`Title:` vs per-engagement function, `;` delimiter, batch
+  assign). Do FEAT-211 first; what remains here is the INDEX master view and the
+  structured exports, both of which read whatever grammar FEAT-211 settles on.
 
 ### Troubleshoot skill — `fw-troubleshoot` (UAT-23, 24, 26)
 - Rungs get names alongside numbers (numbers stay for the `Resolved at rung` stamp):
