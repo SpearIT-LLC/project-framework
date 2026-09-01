@@ -171,3 +171,40 @@ directory of arbitrary person-slugs.
   "source tree" are the same bytes. This run verifies the plugin machinery, not an
   independently built artifact (TECH-188).
 - Pre-existing `ghost-ws` warning from `barney-rubble.md` is unrelated and untouched.
+
+## UAT-30..32 back-recorded 2026-09-01 — the three refresh paths
+
+Written up after the fact from work done during the BUG-212 verification session, so
+the provenance of each observation is stated. UAT-30..32 were added to UAT-COMMANDS.md
+in the same pass — the tests are numbered *from* this run rather than the run being
+executed from the tests.
+
+**UAT-30 — `PostToolUse` on a Claude edit: PASS (observed).** A single Edit tool call
+changing Wilma's assignment from `Tester` to `QA Tester` refreshed
+`workspaces/widget/CONTACTS.md` with no generator run by the operator — view mtime moved
+on the edit alone and the new role appeared. Also observed via direct payload
+invocation: an unrelated `file_path` and `contacts/README.md` both no-op at exit 0, and
+a payload with no `file_path` no-ops. The plugin was installed at 0.4.4 and `/plugin`
+listed **Hooks: PostToolUse** among its components.
+
+**UAT-31 — outside-Claude edit not caught mid-session: PASS (observed, twice).** A
+record edited in notepad left the view stale — confirmed on the operator's own edit
+(record read `Test Engineer`, view still `Sr. Tester`) and reproduced with `sed`. This
+is the documented harness limit: writes made outside Claude Code are invisible to
+`PostToolUse`. `fw-contacts.sh --check` flagged it with the exact diff and exit 1, and
+`tools/pre-commit` (installed in `framework-uat`) blocks such a commit.
+
+**UAT-32 — `/fw-contacts refresh`: PASS (observed).** Confirmed by the operator after
+0.4.6 shipped. The keyword and the bare argument-less form run the same generator.
+
+**`SessionStart` refresh (0.4.5): PASS (observed).** The operator confirmed views
+refreshed at session start. Previously verified by direct invocation only — outside-Claude
+edit picked up; no-registry repo silent at exit 0; non-git directory silent at exit 0.
+
+**Why there is no real-time watcher.** Considered and declined: a contacts list changes
+mostly at project start and rarely mid-project, so a filesystem watcher is
+disproportionate. `FileChanged` was separately rejected on mechanism — its matcher takes
+literal filenames from a narrow character set (letters, digits, `_`, `|`) and cannot
+express a directory of arbitrary person-slugs. The three paths above are the contract:
+Claude edits refresh themselves, `refresh` is the mid-session catch-up, session start and
+pre-commit are the backstops.

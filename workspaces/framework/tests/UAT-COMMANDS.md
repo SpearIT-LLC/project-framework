@@ -135,6 +135,31 @@ have been created by `fw-new-contact.sh` via `/fw-contacts <name>`, not hand-cop
   `> /fw-contacts <existing name> phone is 555-0100` → AI confirms the reading, fills the
   blank Phone in place, reruns the script; no second record created.
 
+**UAT-30 — auto-refresh on a Claude edit (`PostToolUse`).** With a contact assigned to a
+workspace, ask the AI to change that person's assignment role (e.g. "make Wilma's widget
+role QA Tester"). Do **not** run `/fw-contacts` afterwards.
+- Expected: the AI edits the record, and `CONTACTS.md` shows the new role with no
+  refresh step — the `PostToolUse` hook ran the generator.
+- Pass: the view's mtime moves on the edit alone; the hook's generated/warning lines are
+  reported. Editing an unrelated file, or `contacts/README.md`, refreshes nothing.
+- Note: a newly installed or changed hook needs `/reload-plugins` or a restart first —
+  a running session does not pick it up (same constraint as UAT-29).
+
+**UAT-31 — outside-Claude edit is *not* caught mid-session.** Edit a contact record in
+another editor (notepad), changing an assignment role. Do not touch Claude.
+- Expected: `CONTACTS.md` does **not** change. The harness cannot observe writes made
+  outside Claude Code, so no `PostToolUse` hook can fire — this is the documented limit,
+  not a defect.
+- Pass: the stale view is then resolved by any of: `/fw-contacts refresh` (UAT-32), the
+  next session start (`SessionStart` hook), or `git commit`, which `tools/pre-commit`
+  blocks with a diff and exit 1 until the views are regenerated and staged.
+
+**UAT-32 — `/fw-contacts refresh`.** After UAT-31's stale state, `> /fw-contacts refresh`
+- Expected: views regenerated; same output as the bare argument-less form, which still
+  works.
+- Pass: `refresh` is read as the keyword, not as a person named Refresh; a contact
+  actually named Refresh is still reachable by slug (`/fw-contacts refresh-smith`).
+
 ---
 
 ## D. Operations records — `/fw-new-ops-record`, `/fw-move`, sweep
@@ -247,3 +272,4 @@ not a defect.)
 | 2026-08-31 | spearit-framework-dev 0.4.2 | Gary Elliott | 1 (UAT-06 re-run) | 0 | BUG-208 verified fixed: override runs announce themselves, missing overlay refused before mkdir (nothing on disk), wholesale rule stated in the command. See UAT-RESULTS-2026-08-26.md re-run section. |
 | 2026-08-31 | spearit-framework-dev 0.4.3 → 0.4.4 | Gary Elliott | ad-hoc (not numbered) | 0 | `/fw-contacts` add + update path exercised; BUG-212 verified fixed (create gate emits blank fields, no `__TOKEN__`). Built the auto-refresh guardrail shipping in 0.4.4: `PostToolUse` hook for edits inside Claude Code, `fw-contacts.sh --check` + `tools/pre-commit` + `tools/install-git-hooks.sh` for edits outside it (both verified end-to-end; stale commit blocked). Findings: FEAT-211(a) reproduced live from the ordinary update path; UX — a no-change refresh is indistinguishable from a failed one, suggest "N view(s) unchanged". Open: CI not wired; hook needs a numbered re-test after restart. See UAT-RESULTS-2026-08-26.md. |
 | 2026-09-01 | spearit-framework-dev 0.4.4 → 0.4.5 | Gary Elliott | 1 (UAT-13 re-run) | 0 | BUG-212 verified fixed on the installed plugin: name-only record valid (display name from slug, blank fields, `Assigned: Unassigned`, no `__` tokens). Cleared two stale `installed_plugins.json` entries pointing at a non-existent cache dir (directory sources resolve in place; not a defect). Finding folded into BUG-212: outside-Claude edits leave CONTACTS.md stale — `PostToolUse` verified firing for Claude's own edits, but cannot see other editors; fixed in 0.4.5 with a `SessionStart` refresh (`--all`). `FileChanged` rejected (literal-filename matcher). Correction: `fw-contacts.sh` was briefly mis-diagnosed as case-buggy — it is not; latent case risk noted for FEAT-211. Open: live SessionStart firing needs a restart to observe. See UAT-RESULTS-2026-08-26.md. |
+| 2026-09-01 | spearit-framework-dev 0.4.5 → 0.4.6 | Gary Elliott | 3 (UAT-30..32, back-recorded) | 0 | Refresh paths recorded as numbered tests after the fact: UAT-30 `PostToolUse` refreshes on a Claude edit (observed); UAT-31 an outside-Claude edit is not caught mid-session and must not be — harness limit, with `--check`/pre-commit as the backstop (observed twice); UAT-32 `/fw-contacts refresh` (observed, 0.4.6). `SessionStart` refresh confirmed live by the operator. Real-time watcher declined by decision (contacts change rarely mid-project); `FileChanged` rejected on mechanism. See UAT-RESULTS-2026-08-26.md. |
