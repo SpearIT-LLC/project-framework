@@ -6,6 +6,15 @@ plain semver 0.x during the framework workspace build.
 ## [Unreleased]
 
 ### Added
+- CONTACTS.md views stay in step with the contact registry automatically, from both
+  ends — the manual "rerun the script" step was a guardrail only if remembered, which
+  the CLAUDE.md invariant rule forbids. Inside Claude Code: `hooks/hooks.json` +
+  `hooks/refresh-contacts.sh` (PostToolUse on Edit/Write; no-op unless the edited path
+  is a record under `workspaces/kb/company/contacts/`; never blocks the edit).
+  Outside Claude Code (notepad, another editor, a merge): `fw-contacts.sh --check`
+  verifies the committed views against the records and exits 1 with a diff, wired into
+  `tools/pre-commit` and installed per-clone by `tools/install-git-hooks.sh`. `--check`
+  generates into a throwaway mirror and diffs, so the view format has one implementation.
 - Operations records + the ADR-009 build's move engine: `fw-new-ops-record.sh` (create gate:
   `INC-`/`REQ-` records from one shared sequence via `fw-next-id.sh`, the one home for
   next-id logic across namespaces); `fw-move.sh` (namespace-aware: ops policy `open ↔ onhold

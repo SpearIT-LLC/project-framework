@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+# pre-commit — refuse a commit whose CONTACTS.md views are stale.
+#
+# Covers contact records edited outside Claude Code (notepad, another editor,
+# a merge): the PostToolUse hook cannot see those, so the commit boundary is
+# where they get caught. Install with tools/install-git-hooks.sh.
+set -uo pipefail
+
+ROOT="$(git rev-parse --show-toplevel)" || exit 0
+SCRIPT="$ROOT/.git/fw-contacts-path"
+if [ -f "$SCRIPT" ]; then
+  FW="$(cat "$SCRIPT")"
+else
+  FW="${CLAUDE_PLUGIN_ROOT:-}/scripts/fw-contacts.sh"
+fi
+[ -f "$FW" ] || exit 0   # plugin not reachable: don't block the commit
+
+# Only run when contact records or generated views are part of this commit.
+staged="$(git diff --cached --name-only --diff-filter=ACMRD)"
+printf '%s\n' "$staged" | grep -qE '(workspaces/kb/company/contacts/.*\.md|workspaces/[^/]+/CONTACTS\.md)$' || exit 0
+
+if ! bash "$FW" --check; then
+  echo "" >&2
+  echo "pre-commit: blocked — regenerate the views, stage them, and commit again." >&2
+  exit 1
+fi

@@ -63,7 +63,10 @@ The scripts take a slug or nothing.
      add/remove `Assigned` lines, fill a blank field, correct a value.
      Replace an `Unassigned` line when the first assignment arrives.
 
-   Then run the script from step 1 so the views reflect the change.
+   The `PostToolUse` hook (`hooks/refresh-contacts.sh`) regenerates the views
+   as soon as the record is written, so no follow-up step is needed. Run the
+   step 1 script by hand only if the hook's output did not appear.
 
-3. **Report**: what was created or changed, then the script's
-   generated / removed / warning lines.
+3. **Report**: what was created or changed, then the
+   generated / removed / warning lines (from the hook, or from the script if
+   you ran it yourself).
