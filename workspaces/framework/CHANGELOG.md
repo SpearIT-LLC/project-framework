@@ -6,6 +6,13 @@ plain semver 0.x during the framework workspace build.
 ## [Unreleased]
 
 ### Added
+- CONTACTS.md views also refresh at **session start** (`SessionStart` hook on
+  `startup|resume|clear`, `refresh-contacts.sh --all`). A record edited outside Claude
+  Code — notepad, another editor, a merge — is invisible to `PostToolUse`, so the views
+  stayed stale until the next in-Claude edit or commit. The session boundary is the
+  earliest point those edits can be caught; pre-commit remains the later backstop.
+  Silent no-op in repos with no contact registry, and never blocks a session opening.
+  (BUG-212)
 - CONTACTS.md views stay in step with the contact registry automatically, from both
   ends — the manual "rerun the script" step was a guardrail only if remembered, which
   the CLAUDE.md invariant rule forbids. Inside Claude Code: `hooks/hooks.json` +

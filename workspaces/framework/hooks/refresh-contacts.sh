@@ -9,7 +9,28 @@
 #
 # Reads the PostToolUse payload on stdin; a no-op unless the edited file was a
 # record under workspaces/kb/company/contacts/. Never blocks the edit.
+#
+# --all (SessionStart): no file_path in the payload — refresh unconditionally so
+# a session never opens on views left stale by an edit made outside Claude Code
+# (notepad, another editor, a merge), which no PostToolUse hook can observe. The
+# session boundary is the earliest point those edits can be caught; the
+# pre-commit hook (tools/pre-commit) is the later backstop.
 set -uo pipefail
+
+if [ "${1:-}" = "--all" ]; then
+  cat >/dev/null 2>&1 || true   # drain stdin; SessionStart carries no file_path
+  script="${CLAUDE_PLUGIN_ROOT:-}/scripts/fw-contacts.sh"
+  [ -f "$script" ] || exit 0
+  # No registry in this repo (the common case for non-framework projects): silent.
+  root="$(git rev-parse --show-toplevel 2>/dev/null)" || exit 0
+  [ -d "$root/workspaces/kb/company/contacts" ] || exit 0
+  if ! out="$(bash "$script" 2>&1)"; then
+    printf 'fw-contacts: session-start refresh failed\n%s\n' "$out" >&2
+    exit 0   # never block a session opening
+  fi
+  printf '%s\n' "$out"
+  exit 0
+fi
 
 payload="$(cat)"
 

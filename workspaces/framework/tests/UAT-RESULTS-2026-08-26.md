@@ -118,3 +118,56 @@ Tester direction: a contact edit should refresh the views with no second step th
 - **The pre-commit hook is per-clone.** Anyone who has not run `tools/install-git-hooks.sh` commits unguarded. CI is the backstop for that, which argues for wiring it.
 - **A running session does not pick up the new hook** until Claude Code restarts (same constraint as UAT-29 for skill bodies). Verified only by direct payload invocation this session, not by a live in-session edit — worth a numbered re-test after restart.
 - **Betty's `Assigned` line currently reads `widget — technical writer`**, set as the staleness-test fixture rather than by tester decision; left in place pending the FEAT-211 discussion above.
+
+## UAT-13 re-run 2026-09-01 — name-only record on installed 0.4.4; session-start refresh (0.4.5)
+
+Run from the installed plugin in `framework-uat` (`/plugin` → spearit-framework-dev
+0.4.4, Enabled; components list shows Commands, Skills, and **Hooks: PostToolUse**).
+
+**UAT-13 name-only case — PASS (BUG-212 verified).** `/fw-contacts Wilma Flintstone`
+→ `# Wilma Flintstone` (display name title-cased from the slug), every other field
+blank, `Assigned: Unassigned`, no `__` tokens; registry-wide grep for `__` clean
+across all five records. `fw-contacts.sh` ran clean over it: no view generated for
+her while unassigned, no warning.
+
+**Install-state note.** `installed_plugins.json` had accumulated two entries for
+`spearit-framework-dev@dev-marketplace`, both 0.4.3, both pointing at a
+`cache/dev-marketplace/...` directory that does not exist. Cleared by hand; the
+plugin then loaded correctly at 0.4.4 with no cache directory at all. A `directory`
+source resolves in place rather than through the cache, so the missing directory was
+never a fault — the stale records were bookkeeping only. No defect filed.
+
+**Correction to the 2026-08-31 section below.** During this run `fw-contacts.sh` was
+briefly mis-diagnosed as having a case-sensitivity/overwrite defect after an
+`Assigned: Widget` (capital W) record produced a view missing that contact. It does
+not. `Widget` and `widget` are the same directory on case-insensitive Windows, and
+the two `WSLIST` passes overwrote one another; with the record corrected to `widget`
+the script generated the view correctly. A `bash -x` trace confirms the parse and
+write paths are sound. What the episode does show is a real latent risk: on a
+case-sensitive filesystem the same record yields a genuinely separate `Workspace/`
+directory, and two assignment spellings resolving to one directory silently clobber
+each other. Not fixed here; noted for FEAT-211's grammar work.
+
+**Finding → folded into BUG-212: outside-Claude edits leave views stale.** A record
+edited by hand did not refresh its view. The `PostToolUse` hook is correct and does
+fire — verified by a single Edit tool call, which refreshed the view with no script
+run — but the harness cannot observe writes made in another editor, so no
+`PostToolUse` hook can cover that path. `tools/pre-commit` (installed in
+`framework-uat`) caught it at the commit boundary, but the view stayed stale on disk
+until then.
+
+**Fix (0.4.5): `SessionStart` refresh.** `hooks.json` gains a `SessionStart` entry
+(`startup|resume|clear`) invoking `refresh-contacts.sh --all`. Verified by direct
+invocation: outside-Claude edit → refreshed at session start; no-registry repo →
+silent, exit 0; non-git directory → silent, exit 0; `PostToolUse` path and its
+unrelated-file no-op unchanged. `FileChanged` was considered and rejected — its
+matcher takes literal filenames from a narrow character set and cannot express a
+directory of arbitrary person-slugs.
+
+**Residual gaps.**
+- A live `SessionStart` firing needs a restart to observe; only direct invocation is
+  covered so far. Worth a numbered UAT.
+- The plugin loads from a symlinked directory source, so "installed plugin" and
+  "source tree" are the same bytes. This run verifies the plugin machinery, not an
+  independently built artifact (TECH-188).
+- Pre-existing `ghost-ws` warning from `barney-rubble.md` is unrelated and untouched.
