@@ -180,3 +180,185 @@ missing directory was never a fault. No defect filed.
 ---
 
 **Last Updated:** 2026-09-01
+
+---
+
+# Afternoon Session — Workspace Model: Do `kb/` and `operations/` Belong in `workspaces/`?
+
+**Session Focus:** Architecture discussion, no implementation. Five cards filed.
+
+---
+
+## Summary
+
+Gary questioned whether `kb/` and `operations/` belong under `workspaces/` at all — "the
+fact we had to treat them differently was the first tell," referring to their opting out
+of the shared floor and taking no user-chosen name. Discussion concluded **both should
+move to the repo root**, for *different* reasons, and produced five cards. Nothing was
+implemented; this was a design session.
+
+---
+
+## The Journey (including the reversal)
+
+**First read (Claude): don't move them.** Initial position was that the special-casing
+reduces to **cardinality** — both are one-per-repo singletons, so they need no name
+argument, and their internal shape differs enough that a floor built for client
+engagements does not fit. Moving them would not remove either property, and would cost a
+second top-level location every path-resolving script must know about.
+
+**Then we checked what a "workspace" actually means** — Gary's suggestion, and the right
+call. `TASK-197-workspace-type-taxonomy.md` (released, v0.4.0) defines four types
+discriminated by lifecycle, and **nowhere defines a workspace as client-facing or
+engagement-shaped**. So the counter-argument's premise was unfounded.
+
+TASK-197 also supplied what looked like a blocker — **Decision 5**: "one real-world
+activity may split across types — that is the taxonomy working," with Toyota app support
+decomposing into operations + product + kb as peers. And a stronger principle from the
+`sow` removal: **"type must never branch runtime behavior"** (ADR-009 OQ5), whose
+implication is to *remove* type-shaped divergence rather than relocate the type.
+
+**On that reading Claude reversed to "don't move them," now with documentary backing.**
+
+**Gary's reframe broke the deadlock:**
+
+> "operations is a lot like kanban. It contains cards/tickets for a variety of
+> projects/products. The only difference is in the origin of the card (FEAT, TASK, BUG,
+> TECH vs INC, REQ)."
+
+This turned out to be already true in the code: `fw-move.sh` is written as **one engine
+with a policy table per namespace**, and `kanban` is a declared namespace with a reserved
+slot — commented "so the crossover is a table entry, not a second engine." And ADR-009
+**D5** lands the board at `kanban/` **at the repo root** at graduation. So the end state
+already has a root-level card queue; operations is a second one with identical structure,
+and the only one living inside `workspaces/`.
+
+**Decision 5 survives the move** rather than blocking it: its requirement is that each
+part has one home and they *link rather than nest*. Moving both to root keeps them peers
+— the peer set becomes "spine things work refers to" rather than "workspaces."
+
+---
+
+## Decisions Made
+
+1. **Operations moves to root, as a peer queue beside the board** (TASK-213).
+   - The anomaly is not that operations sits in `workspaces/` — it is that operations is
+     a **queue pretending to be a workspace** while its twin sits at root. The floor
+     opt-out (FEAT-193) was the symptom: a queue has no `deliverables/` or `agreements/`.
+   - Requires an ADR-009 **D2** amendment ("all work is in a workspace"). Argument: a
+     queue is an **index of** work, not work — which is why the board was never a
+     workspace either.
+
+2. **Separate id sequences per namespace** — INC/REQ independent of FEAT/BUG/TASK/TECH.
+   Already how the engine works; D5's warning that a shared ID namespace invites
+   collisions is the reason.
+
+3. **Ops records gain `Workspace:`, blank-or-real** (TASK-214).
+   - This is what makes root placement *better* rather than merely tidier: today an ops
+     record is scoped by living inside `workspaces/operations/`; at root that implicit
+     scoping disappears.
+   - **Freeform workspace names considered and rejected** (Gary): arbitrary text drifts —
+     `honda`, `Honda`, `honda-hpc`, `Honda HPC` become four values and every derived view
+     splits silently. Same class as the `Assigned: Widget` casing collision found this
+     morning.
+   - **Blank is a legal resting state**, not a gap: a ticket may arrive before anyone
+     knows where it belongs, belong nowhere, and legitimately close unattached. Forcing a
+     value would recreate the trap BUG-212 just fixed.
+   - An unresolvable value **warns, does not fail** — matching `fw-contacts.sh`'s live
+     `ghost-ws` behaviour.
+   - Gary: "we can note somewhere else where the issue relates to." Prose in
+     `## What happened` already carries the subject; a general freeform field would be a
+     second home for the same fact (ADR-008). A `Related:` field for **record-to-record
+     links only** is filed as a proposal, **not decided**.
+
+4. **kb moves to root — different argument from operations** (TASK-216).
+   - Operations converged with kanban on **shape**; kb diverges on **scope**. Gary: "the
+     kb can apply to any project, product, or topics outside of those… A kb can expand
+     very quickly in many directions."
+   - Three legs: **scope** (referenced by everything, owned by nothing — one-to-many, not
+     peer); **lifecycle** (fails TASK-197's close-test in *both* directions: a product
+     persists, a project ends, a kb accretes — which is why FEAT-209 caps depth by
+     decree); **locality** (FEAT-210 line 79 already anticipates an external shared
+     SpearIT-KB, and **a workspace cannot be somewhere else**).
+
+5. **The framework may reference multiple kbs** (TASK-216): the internal kb, SpearIT-KB,
+   and others parallel to it (corporate, web-based), potentially of different shapes.
+   SpearIT-KB should be referenceable **from GitHub** so it works off this machine.
+   Direction: one authored home + N consulted sources listed in `framework.yaml` —
+   mirroring the `reference/`-is-theirs / `research/`-is-ours line one level down.
+
+6. **Local caching of an external kb: not adopted** (Gary) — "over time, the challenge
+   becomes what is the current info?" Resolved by TASK-217's metadata: a cache carrying
+   retrieval date, source, and upstream version *is* a `reference/` doc with correct
+   provenance.
+
+7. **kb staleness is the biggest long-term risk** (Gary), filed **High** (TASK-217).
+   - Claude's refinement, accepted: the problem is not that we cannot tell what is old —
+     it is that **we do not record what a claim depends on**.
+   - **A generic "last reviewed" date is rejected** as the primary mechanism: age is a
+     weak proxy in both directions (a 2019 FlexLM recipe may be current; a six-month-old
+     Kubernetes note may be dangerous), and an unactionable date trains people to ignore
+     the signal.
+   - The domain README **already** has the right decomposition — `reference/` stale by
+     *release*, `research/` stale by *refutation* — but it is prose, and the plugin's own
+     rule says an instruction the AI merely reads is not a guardrail.
+   - **Sequencing: staleness before federation.** Searching across N sources whose
+     freshness is unknown makes the problem worse.
+
+---
+
+## Files Created
+
+- `project-hub/work/todo/TASK-213-operations-as-root-queue-namespace.md`
+- `project-hub/work/todo/TASK-214-workspace-field-on-ops-records.md`
+- `project-hub/work/todo/BUG-215-new-move-engine-drops-batch-moves.md`
+- `project-hub/work/todo/TASK-216-kb-at-root-and-multi-source-referencing.md`
+- `project-hub/work/todo/TASK-217-kb-staleness-provenance-metadata.md`
+
+## Commits (afternoon)
+
+- `07473fe` docs: file TASK-213/214, BUG-215 — operations as a root queue namespace
+- `e0ba483` docs: file TASK-216/217 — kb at root, multi-source referencing, staleness
+
+---
+
+## Incidental Finding
+
+**BUG-215 — the new move engine dropped batch moves.** Gary: "before we used to be able
+to move multiple cards in one pass using `fw-move 001,002,003 todo`. Now we have to add
+the prefix." Investigation split that report in two: **bare numerics still work** (the
+new engine maps an empty prefix to operations), but the **batch was lost** — the new
+engine hard-requires exactly two arguments where the old one splits on commas and loops.
+Recorded because the two are easy to conflate. Must close before the D5 crossover, or the
+board loses batch moves at graduation.
+
+---
+
+## Current State (end of day)
+
+### In done/ (awaiting release) — 6 items
+- BUG-207, BUG-208, BUG-212, FEAT-193, FEAT-195, TASK-206
+
+### In doing/
+- *(empty)*
+
+### New in todo/ — this thread
+- TASK-213, TASK-214, BUG-215, TASK-216, TASK-217
+
+### Open threads for next session
+- **Nothing implemented from this discussion.** All five cards are design + decisions;
+  each carries open questions to resolve before `→ doing`.
+- **TASK-213 and TASK-216 should land as ONE migration.** Both change root layout and
+  both break the same relative paths (`../kb/company/contacts/` is embedded in every
+  generated `CONTACTS.md` and in the ops record template).
+- **The workspace type enum drops from four to two** if both land. TASK-197's scenario
+  table should be re-checked to confirm `product` and `project` still partition it
+  cleanly — that taxonomy took two sessions of scenario walking to settle.
+- **Sequencing question, unresolved:** does the root move land before or after the D5
+  board crossover? Doing them together is cheaper; doing operations first changes the
+  root layout twice.
+- **TASK-214 `Related:` field** — proposed, awaiting Gary's call.
+
+---
+
+**Last Updated:** 2026-09-01 (afternoon)
