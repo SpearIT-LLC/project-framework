@@ -1,6 +1,6 @@
 ---
 description: Add or update a contact record, and regenerate per-workspace CONTACTS.md views from the contact registry
-argument-hint: "[<person name> [what to change]]"
+argument-hint: "<person name> [what to change]  |  refresh"
 ---
 
 # /fw-contacts - Contacts: Add, Update, Refresh Views
@@ -17,12 +17,13 @@ counterparty is; people from any organisation live in the one registry
 (`Affiliation: <org> (customer | vendor | subcontractor | spearit)`).
 
 **Arguments are never script arguments.** Words after the command name are a
-person's name, optionally followed by what to change about them (step 2).
-The scripts take a slug or nothing.
+person's name, optionally followed by what to change about them (step 2) —
+except the single word `refresh` (step 1). The scripts take a slug or nothing.
 
 ## Steps
 
-1. **No arguments — refresh the views.** Deterministic, no judgment involved:
+1. **`refresh`, or no arguments — regenerate the views.** Deterministic, no
+   judgment involved:
 
    ```bash
    bash "${CLAUDE_PLUGIN_ROOT}/scripts/fw-contacts.sh"
@@ -34,6 +35,14 @@ The scripts take a slug or nothing.
    report its message verbatim — the fix it names is the path (no `company`
    domain → `/fw-new-kb-domain company`; no contacts yet → step 2). Never
    hand-create a `CONTACTS.md` or the `contacts/` folder.
+
+   Reach for this after editing a record **outside** Claude Code (another
+   editor, a merge) — the `PostToolUse` hook cannot see those writes. Edits
+   made through Claude refresh themselves, and a session start refreshes
+   everything, so `refresh` is the mid-session catch-up for outside edits.
+
+   `refresh` is a reserved word in this slot: to act on a person actually
+   named Refresh, use their slug — `/fw-contacts refresh-smith`.
 
 2. **With a name — add or update that person.** Resolve the name to a slug
    (`jane-doe`; if the registry already has a different Jane Doe, qualify

@@ -36,8 +36,12 @@ plain semver 0.x during the framework workspace build.
   closure code). (FEAT-193)
 
 ### Changed
-
-None
+- `/fw-contacts refresh` regenerates the views — a self-documenting name for what was
+  previously the bare, argument-less form (which still works). A command whose
+  behaviour depends on remembering that no arguments means "refresh" is not
+  self-documenting; `refresh` says it at the call site, and matches `/fw-move`'s
+  existing bare-`sweep` keyword. Reserved word in that slot: a person actually named
+  Refresh is addressed by slug (`/fw-contacts refresh-smith`).
 
 ### Fixed
 - Contact create gate no longer seeds placeholder tokens: a new record carries the display
