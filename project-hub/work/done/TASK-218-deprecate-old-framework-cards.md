@@ -6,7 +6,7 @@
 **Version Impact:** None (board hygiene; no framework behaviour changes)
 **Created:** 2026-09-02
 **Workspace:** framework
-**Completed:** <!-- Set automatically by /fw-move on → done/. Leave blank at creation. -->
+**Completed:** 2026-09-02
 **Theme:** Framework Consistency
 
 ---
@@ -447,7 +447,7 @@ original grouping got wrong and are the most likely reason a card deserves to co
 - [x] Section A + B + D: 26 cards stamped and `git mv`d — git tracked all 26 as renames
 - [x] Verified: next-ID 219→219, Section C untouched, counts reconcile
 - [x] Updated ROADMAP-DELIVERABLES.md D8
-- [ ] `/fw-move 218 done`
+- [x] `/fw-move 218 done`
 
 ---
 

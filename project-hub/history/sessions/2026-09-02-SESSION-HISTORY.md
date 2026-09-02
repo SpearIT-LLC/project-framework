@@ -193,4 +193,243 @@ superseded-by-construction.
 
 ---
 
-**Last Updated:** 2026-09-02
+**Last Updated:** 2026-09-02 (morning)
+
+---
+
+# Afternoon Session — TASK-218: Deprecating the Old-Framework Backlog
+
+**Continuation.** The morning ended with the D8 bulk move *unscheduled*, pending the
+per-card review recorded as Decisions #5. Gary opened the afternoon with "Start with
+moving the deprecated cards" — and the review that followed changed the answer four
+times before a single file moved.
+
+---
+
+## Summary (afternoon)
+
+TASK-218 was created, worked, and completed. It archived **26** cards to
+`project-hub/work/archive/deprecated/` — not the ~75 the morning roadmap proposed. Four
+successive review passes cut the move set by two-thirds, each triggered by a question
+from Gary, and each cut justified by something verified in `workspaces/framework/`
+rather than inferred from the cards' titles.
+
+**The morning's D8 recommendation — "bulk-move rather than dispositioning 75 cards
+individually" — was retracted.** It was wrong, and the record now says so explicitly.
+
+---
+
+## Work Completed
+
+### TASK-218: Deprecate the old-framework backlog → **done**
+
+Created in `todo/` at Gary's suggestion — *"perhaps this activity should be a card of
+it's own so it has a record and reason in case we need to backtrack and pull a
+deprecated card back."* That framing is what made the card's **disposition table** the
+deliverable and the `git mv` the mechanical afterthought.
+
+- Moved `todo → doing`; pre-implementation review presented and approved.
+- 26 cards stamped with a `**Deprecated:** 2026-09-02 — <code> — <reason>` line and
+  `git mv`'d in one commit (git recorded all 26 as renames, not delete/add pairs).
+- `archive/deprecated/README.md` written — reason codes, reversal procedure, and a
+  deliberate section on **what is NOT there and why**, so someone hunting a held card
+  learns immediately it is still on the board.
+- TECH-172's closing finding written into the card **before** it moved: its surviving
+  half (disposition the open `DECISION-*` items) was completed by TASK-218, with each
+  item's outcome recorded.
+- Roadmap D8 rewritten to point at TASK-218.
+- Moved `doing → done`; `Completed: 2026-09-02` stamped automatically.
+
+---
+
+## The Four Passes (why the number kept falling)
+
+| Pass | Moving | Trigger | What the read found |
+|---|---|---|---|
+| Morning roadmap | ~75 | — | Grouped by type + title; recommended a bulk move |
+| Full read of every card | 66 | *"Start with moving the deprecated cards"* | F1–F4 below |
+| Keep command/plugin/script cards | 42 | *"Keep any plugin or command card, even if it's an update to the underlying script"* | C4 — 24 cards |
+| Keep hook cards | 42 | *"Do we have any open cards for hooks?"* | C5 — TECH-096 |
+| Final gotcha scan | **26** | *"Are there any cards in the deprecated list that might apply to the new framework?"* | C6 — 16 cards |
+
+### F1 — the new engine has no kanban gates
+`workspaces/framework/scripts/fw-move.sh:14` states *"No kanban gates apply."* The engine
+is operations-only; kanban is an empty policy slot until the D5 crossover. So TECH-166,
+TECH-168, TECH-055, TECH-114 are the crossover's **design input**, not dead work.
+
+### F2 — SPIKE-178 is answered, by production code
+Its question (can a plugin invoke a script in its own cached directory?) is answered
+**yes** by the new build's use of `${CLAUDE_PLUGIN_ROOT}/scripts/*.sh` in five commands
+and `hooks.json`.
+
+### F3 — DECISION-162 is an undecided decision, not a stale task
+Four live options, `Chosen Option: TBD`. ADR-009 selects Option C by construction.
+
+### F4 — product ideas are unbuilt, not deprecated
+FEAT-047/052/089/090/092/093/104 describe capabilities absent from **both** frameworks.
+
+---
+
+## Decisions Made (afternoon)
+
+### 6. The archive gets a card, and the card gets the reasoning
+
+Gary's call. A folder of 50 files with no rationale is indistinguishable from an accident
+six months on. Consequence: the disposition table, the reason codes, the ID-safety proof,
+and the reversal procedure all live in TASK-218 and in the folder README — not in a
+commit message that nobody re-reads.
+
+### 7. `PLUGIN-TIER` retired as a reason code — it hid real distinctions
+
+Gary: *"PLUGIN-TIER sounds pretty generic since we have 4 sets of plugins now."* Correct,
+and the check that followed found genuine mis-filings. Verified per card which artifact
+each actually targets:
+
+- **BUG-174** and **TECH-161** are not plugin work at all — they target `.claude/scripts/`
+  and the old `/fw-session-history`. Re-coded `OLD-ENGINE`.
+- **TECH-160** targets `Build-Plugin.ps1` — build tooling, not plugin content. `OLD-SETUP`.
+
+Split into `OLD-PLUGIN` / `TIER-SYNC` / `OLD-ENGINE`, with the legend naming all four
+command-bearing sets (`.claude/`, the two marketplace editions, `workspaces/framework`)
+so the ambiguity cannot recur.
+
+### 8. Keep every command, plugin, script and hook card while the migration is mid-flight
+
+Gary asked the question that changed the outcome most: *"Since we're in the middle of
+moving the commands to the new framework, do we risk losing some detail or nuance needed
+in the new framework if we move the plugin cards?"*
+
+**Yes, and it was measurable.** The new build ships **5** commands; the old set has
+**11**. Ten have not crossed over — `/fw-status`, `/fw-wip`, `/fw-backlog`, `/fw-next-id`,
+`/fw-help`, `/fw-release`, `/fw-roadmap`, `/fw-swarm`, `/fw-topic-index`,
+`/fw-session-history`.
+
+The sharpest example: **TECH-102 is not a performance card.** It is a design record for
+commands that do not exist yet — four architectural options *with the rejection rationale*
+(Claude-reads-directly rejected at 2–4x tokens), plus a per-command requirements table.
+Six of its eight commands are unbuilt. **TECH-161** likewise carries a complete
+midnight-rollover spec for `/fw-session-history`.
+
+### 9. Hooks are held (C5)
+
+TECH-096 (21 mentions — native git hooks vs Claude hooks, with trade-offs) was in the
+archive set; now held. TECH-114 and TECH-168 were already held under C1. FEAT-107 checked
+and **excluded** — it lists hooks as a prerequisite in a requirements doc; it is not hook
+work.
+
+### 10. Board conventions the new build has not defined (C6) — the final scan
+
+The subtlest class, and the one a title-based heuristic gets wrong every time. Each card
+reads *"Document X policy"* with a Files Affected line naming `framework/docs/` — so it
+looks dead. But the **policy is the deliverable and the file is incidental**. Verified in
+`workspaces/framework/`:
+
+- `templates/records/` holds **only** `contact.md`, `ops-record.md`, `ts-case.md`. There
+  is **no work-item template of any kind** — every board-item convention is undefined.
+- `fw-move.sh:6` already references **"child items"** as grouping the engine handles, but
+  nothing anywhere defines what a child item *is*. TECH-082 is that definition.
+- **No never-delete policy exists** in the new build's `CLAUDE.md`, `README.md` or
+  scripts — TASK-218 was itself honouring an unwritten rule (TECH-077).
+- Templates scaffold `meetings/` folders but ship **no meeting-record template**
+  (FEAT-149); `tools/` holds only git-hook installers — **no release tooling** (TECH-078).
+
+16 cards held: TECH-027/033/041/044/049/070/070.1/071/073/077/078/082, FEAT-021/030/149,
+DECISION-171.
+
+### 11. BUG-181 and FEAT-175 — re-scoped, not archived
+
+Gary's call, resolving the contradiction the morning session flagged. Both keep their
+original IDs; the re-scope is card surgery so the reasoning that earned them stays
+attached. FEAT-175 becomes the D5 crossover's board create gate — the one create gate the
+new build lacks. BUG-181's question ("does the contract reach a generated workspace?")
+survives its dead template.
+
+---
+
+## The Method That Emerged
+
+**The summary-level heuristic — type + title + the paths a card names — systematically
+over-archived.** Three whole classes failed it identically: commands not yet ported (C4),
+hooks (C5), and undefined board conventions (C6). Two better tests came out of the work:
+
+1. **The subject test.** A raw grep for `/fw-move` matched 31 cards, most of which only
+   *cite* it. The question is whether the command/script/plugin is the card's **subject** —
+   its title and its Files Affected block — not whether it appears in the text.
+2. **The dead-file test.** The 26 survivors share one property: each names a **specific
+   dead file** as its deliverable. The file is the deliverable and it is not coming back.
+   That is a far sharper line than "targets the old framework."
+
+---
+
+## Verification (recorded because the card required it)
+
+| Check | Result |
+|---|---|
+| Next-ID before / after | **219 / 219** — archived cards still count; no reissue risk |
+| Board reconciliation | 109 = 83 remaining + 26 archived |
+| Git rename detection | all 26 tracked as `R` (renames), no delete/add pairs |
+| Held cards spot-check | 16 checked across C1–C6 — all on the board, none wrongly archived |
+| Stamps | all 26 carry a `**Deprecated:**` line |
+
+Three counting errors in the draft card were caught and fixed during verification
+(Section A said 52 while listing 56; Section C said 14 while listing 18; FEAT-107 was
+named in both C5 and the move set). Noted because a disposition table that does not
+reconcile is worse than none.
+
+---
+
+## Files Created (afternoon)
+
+- `project-hub/work/done/TASK-218-deprecate-old-framework-cards.md` — the card; ~450
+  lines, of which the disposition table is the deliverable
+- `project-hub/work/archive/deprecated/README.md` — reason codes, reversal procedure,
+  and what is deliberately *not* archived
+
+## Files Modified (afternoon)
+
+- `project-hub/planning/ROADMAP-DELIVERABLES.md` — D8 rewritten; the bulk-move
+  recommendation retracted and replaced with a pointer to TASK-218
+- 26 archived cards — each gained a `**Deprecated:**` stamp
+- `TECH-172` — closing finding recorded before archiving
+
+## Files Moved (afternoon)
+
+- 26 cards: `backlog/` -> `archive/deprecated/`
+- `TASK-218`: `todo/` -> `doing/` -> `done/`
+
+---
+
+## Current State (end of afternoon)
+
+**Board: 71 backlog · 11 todo · 0 doing · 7 done · 1 blocked · 26 deprecated**
+
+### In done/ (awaiting release)
+- BUG-207, BUG-208, BUG-212, FEAT-193, FEAT-195, TASK-206, **TASK-218**
+- 7 items — under the 10-item release threshold; no release nudge
+
+### In doing/
+- *(empty)*
+
+### Open threads for next session
+
+- **D1 is still the recommended start** (TASK-213/214/216 + BUG-215). Unchanged by the
+  afternoon's work, which was board hygiene, not roadmap progress.
+- **Still unresolved from 2026-09-01:** does the root move land before or after the D5
+  board crossover? Two sessions have now deferred this; it is the first question D1 must
+  answer.
+- **BUG-181 and FEAT-175 need their re-scope actually written.** Decided, not done. They
+  sit in `todo/` describing old-framework paths until someone rewrites them — the same
+  quiet contradiction the morning flagged, now with a decided direction.
+- **Four held cards need their findings recorded** (SPIKE-178, DECISION-162, TECH-096,
+  DECISION-110). They were in record-then-archive before the keep rules pulled them back;
+  the findings are noted in TASK-218 but not yet written into the cards themselves.
+- **C6 is a to-do list in disguise.** Sixteen board conventions the new build has not
+  defined — parent/child items, numbering, never-delete, release archival, meeting
+  records. Most become real work at the D5 crossover. Worth a roadmap deliverable of its
+  own rather than leaving them scattered in `backlog/`.
+- **The deprecated folder is not final.** Reversal is expected and cheap; the README says
+  so. If a card comes back, re-scope it against `workspaces/framework/` first.
+
+---
+
+**Last Updated:** 2026-09-02 (afternoon)
