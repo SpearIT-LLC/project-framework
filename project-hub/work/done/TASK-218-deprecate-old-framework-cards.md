@@ -275,8 +275,8 @@ Section A** (archive). Named here so a later reader does not re-litigate it.
 
 
 **C6 — Board conventions the new build has not defined yet — HOLD (final scan,
-2026-09-02).** Gary: *"Are there any cards in the deprecated list that might apply to
-the new framework?"* Yes — 13. The trap in this group is that each one *reads* like an
+2026-09-02). Now owned by TASK-219.** Gary: *"Are there any cards in the deprecated list that might apply to
+the new framework?"* Yes — 16. The trap in this group is that each one *reads* like an
 old-framework docs task ("Document X policy"), so the type-and-title heuristic filed
 them as dead. What they actually contain is the **definition of a board convention the
 new build will need the moment the kanban namespace goes live (ADR-009 D5)** — and the

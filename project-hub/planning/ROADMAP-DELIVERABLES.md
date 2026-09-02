@@ -1,8 +1,10 @@
 # SpearIT Framework — Deliverable Roadmap
 
 **Created:** 2026-09-02
-**Basis:** all 108 open cards (`backlog/` 96, `todo/` 11, `blocked/` 1) grouped by
-deliverable, ranked by what gets the ADR-009 build from **0.4.6 → 1.0**.
+**Basis:** all open cards grouped by deliverable, ranked by what gets the ADR-009 build
+from **0.4.6 → 1.0**.
+**Updated 2026-09-02:** D8 executed (26 cards archived, TASK-218); D1b added for the
+board conventions that survived that review (TASK-219). Board now 84 open + 26 archived.
 **Companion to:** [`ROADMAP.md`](ROADMAP.md) — that one is theme-based and predates
 ADR-009 (last updated 2026-02-17). This one is deliverable-based and current.
 
@@ -50,6 +52,37 @@ doc that names a path is downstream. BUG-215 is a live regression on the single 
 command. TECH-177 rides along because it edits the same `fw-move.sh` gate functions.
 
 **Ready?** TASK-213/214/216 were filed 2026-09-01 and are freshly specified. Start here.
+
+---
+
+### D1b — Board Conventions for the New Build
+**Rank 2 · 16 cards + TASK-219 · owned by TASK-219**
+
+Sixteen board conventions that exist as analysis on old cards and as **nothing** in the
+ADR-009 build. Ranked here — immediately behind the spine — because it **blocks FEAT-175**
+and pairs with the D5 board crossover.
+
+| Card | Folder | Pri | What |
+|---|---|---|---|
+| TASK-219 | todo | **High** | Owns the set: decide each convention, give it a mechanism, close the source card |
+| FEAT-021, TECH-082, TECH-041, TECH-027, TECH-033 | backlog | — | **Group 1 — the blocker.** Numbering, parent/child, supporting files, cross-references, status-vs-folder. These five interlock and must be settled as a set before any work-item template is authored |
+| TECH-044, TECH-077, TECH-078, FEAT-030 | backlog | — | Board lifecycle: creation policy, never-delete, release archival, a hold state |
+| TECH-070, TECH-070.1, TECH-071, TECH-049 | backlog | — | Process: issue response, session handoff, human-AI concurrent work |
+| TECH-073, FEAT-149 | backlog | — | Templates the new build lacks: external reference, meeting record |
+| DECISION-171 | backlog | — | The `fw-` namespace rule the new build already follows but never wrote down |
+
+**Why rank 2:** the new build ships **no work-item template of any kind**
+(`templates/records/` holds only `contact.md`, `ops-record.md`, `ts-case.md`). FEAT-175's
+create gate must resolve a template per type, so the templates are its prerequisite — and
+the templates encode these conventions. Author them first and they encode guesses.
+
+**The sharpest single finding:** `fw-move.sh:6` already treats **"child items"** as
+grouping that moves with its parent — a concept nothing in the repo defines. The engine is
+ahead of the conventions.
+
+**Not a docs task.** Each convention needs a *mechanism* — a template field, a script
+check, a hook — or an explicit statement that it cannot be mechanized. A convention in
+prose only is ADR-008 Root 2, the failure this framework exists to avoid.
 
 ---
 
@@ -208,20 +241,24 @@ the collision risk applies to it too.
 ## Sequence
 
 ```
-NOW      D1 spine ──► D2 kb trust ──► D3 command UX ──► 1.0
-              │
-              └────► D4 reporting (needs TASK-214)
+NOW      D1 spine ──► D1b conventions ──► D2 kb trust ──► D3 command UX ──► 1.0
+              │              │
+              │              └──► unblocks FEAT-175 (board create gate)
+              └──► D4 reporting (needs TASK-214)
 
-STANDING D5 troubleshooting — jumps the queue when a real case arrives
+WITH D5   D1b + FEAT-175 pair with the ADR-009 D5 board crossover
+CROSSOVER (C1 gate-design cards land here too: TECH-166/168/055/114/177)
+
 BEFORE   D7 guards — rewrite TECH-189 + TECH-186 against the new build
 1.0
-LATER    D6 time/calendar
-ONCE     D8 deprecation sweep — one bulk move, three re-earned cards
+LATER    D6 time/calendar · D5 troubleshooting (dev-stage, not demand-driven)
+DONE     D8 — 26 cards archived 2026-09-02 (TASK-218)
 ```
 
-**The one-line answer:** finish the spine (D1), make the kb trustworthy (D2), polish the
-commands (D3) — that is 1.0. Rebuild the two ADR-008 guards (D7) before you call it
-1.0, or the onion grows back.
+**The one-line answer:** finish the spine (D1), define the conventions the board runs on
+(D1b), make the kb trustworthy (D2), polish the commands (D3) — that is 1.0. Rebuild the
+two ADR-008 guards (D7) before you call it 1.0, or the onion grows back.
+
 
 ---
 
