@@ -1,6 +1,7 @@
 # DECISION-036: Template Access Strategy for User Projects
 
 **ID:** DECISION-036
+**Deprecated:** 2026-09-02 — `OLD-DOCS` — Template access strategy — already resolved in-card by DECISION-050 (TASK-218)
 **Type:** Decision
 **Priority:** Low
 **Version Impact:** None

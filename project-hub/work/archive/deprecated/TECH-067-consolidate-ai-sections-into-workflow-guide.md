@@ -1,6 +1,7 @@
 # Tech Debt: Consolidate AI sections from CLAUDE.md into workflow-guide.md
 
 **ID:** TECH-067
+**Deprecated:** 2026-09-02 — `OLD-DOCS` — Consolidate AI sections into `workflow-guide.md` (TASK-218)
 **Type:** Tech Debt
 **Priority:** Medium
 **Version Impact:** MINOR

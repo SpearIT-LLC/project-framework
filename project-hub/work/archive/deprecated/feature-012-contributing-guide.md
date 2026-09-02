@@ -1,6 +1,7 @@
 # Feature: CONTRIBUTING.md Guide
 
 **ID:** FEAT-012
+**Deprecated:** 2026-09-02 — `OLD-DOCS` — CONTRIBUTING.md for old distribution (TASK-218)
 **Type:** Feature
 **Priority:** Low
 **Version Impact:** PATCH

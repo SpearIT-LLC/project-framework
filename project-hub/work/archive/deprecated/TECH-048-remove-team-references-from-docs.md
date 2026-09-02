@@ -1,6 +1,7 @@
 # TECH-048: Remove Small Team References from Documentation
 
 **ID:** TECH-048
+**Deprecated:** 2026-09-02 — `OLD-LIFECYCLE` — Remove small-team references from old docs (TASK-218)
 **Type:** Tech Debt
 **Priority:** Medium
 **Version Impact:** PATCH

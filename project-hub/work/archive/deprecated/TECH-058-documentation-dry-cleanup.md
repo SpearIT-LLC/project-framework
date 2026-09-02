@@ -1,6 +1,7 @@
 # TECH-058: Documentation DRY Cleanup
 
 **ID:** TECH-058
+**Deprecated:** 2026-09-02 — `OLD-DOCS` — DRY cleanup across old collaboration docs (TASK-218)
 **Type:** Tech Debt
 **Priority:** Medium
 **Version Impact:** PATCH

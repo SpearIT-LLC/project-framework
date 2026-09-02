@@ -1,6 +1,7 @@
 # Feature: FAQ Document
 
 **ID:** FEAT-014
+**Deprecated:** 2026-09-02 — `OLD-DOCS` — FAQ for old distribution (TASK-218)
 **Type:** Feature
 **Priority:** Low
 **Version Impact:** PATCH

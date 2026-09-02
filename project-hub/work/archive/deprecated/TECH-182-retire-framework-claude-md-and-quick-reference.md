@@ -1,6 +1,7 @@
 # Tech Debt: Retire `framework/CLAUDE.md` and `CLAUDE-QUICK-REFERENCE.md` (ADR-007 D2/D6)
 
 **ID:** TECH-182
+**Deprecated:** 2026-09-02 — `OLD-DOCS` — Retire `framework/CLAUDE.md` + quick-reference — files are maintenance-only (TASK-218)
 **Type:** Tech Debt
 **Priority:** High
 **Version Impact:** MINOR

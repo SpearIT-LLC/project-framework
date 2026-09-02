@@ -1,6 +1,7 @@
 # Feature: Create project-guide.md
 
 **ID:** FEAT-102
+**Deprecated:** 2026-09-02 — `OLD-DOCS` — Create `framework/docs/collaboration/project-guide.md` (TASK-218)
 **Type:** Feature
 **Priority:** Medium
 **Version Impact:** MINOR

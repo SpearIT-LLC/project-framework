@@ -1,6 +1,7 @@
 # Tech Debt: Structurally-Stale Internal Links in framework/INDEX.md and Reference Docs
 
 **ID:** TECH-158
+**Deprecated:** 2026-09-02 — `OLD-DOCS` — Stale links in `framework/INDEX.md` (33 links to an obsolete layout) (TASK-218)
 **Type:** Tech Debt
 **Priority:** Low
 **Version Impact:** PATCH

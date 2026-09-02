@@ -1,6 +1,7 @@
 # Feature: Migration Guide from Other Frameworks
 
 **ID:** FEAT-013
+**Deprecated:** 2026-09-02 — `OLD-DOCS` — Migration guide from other frameworks (TASK-218)
 **Type:** Feature
 **Priority:** Low
 **Version Impact:** MINOR

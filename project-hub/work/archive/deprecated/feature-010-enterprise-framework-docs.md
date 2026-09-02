@@ -1,6 +1,7 @@
 # Feature: Enterprise Framework Documentation
 
 **ID:** FEAT-010
+**Deprecated:** 2026-09-02 — `OLD-DOCS` — Enterprise framework documentation (TASK-218)
 **Type:** Feature
 **Priority:** Low
 **Version Impact:** MINOR

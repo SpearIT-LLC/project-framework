@@ -162,51 +162,34 @@ path. Do this *before* 1.0 — these are the guards that stop the onion regrowin
 
 ---
 
-### D8 — Deprecated: Old Framework, Templates, Plugins, Tools
-**Rank 8 · ~75 cards · no work planned**
+### D8 — Deprecated: Old Framework Docs, Setup, and Distribution
+**Rank 8 · 26 cards · archived 2026-09-02 · no work planned**
 
-Every card below is written against `framework/`, `templates/`, `plugins/`,
-`tools/`, or `project-hub/` structure that the ADR-009 build replaces. Per TECH-172's
-re-scope note these are **dead work** unless individually re-earned.
+**Archived by TASK-218**, which holds the full disposition table, the reason codes, and
+the reversal procedure. Read that card before pulling anything back;
+`project-hub/work/archive/deprecated/README.md` is the short version.
 
-**Dissolved by construction** — the new build has one copy, so the sync problem is gone:
-DECISION-162 (command-tier sync), TECH-169 (reconcile `/fw-move` copies), FEAT-179
-(plugin create-gate parity), TECH-160 (align plugin build model), SPIKE-178 (can a
-plugin invoke its own script), FEAT-124 (plugin about), FEAT-125 (configurable paths),
-FEAT-138 (plugin dev guidance), FEAT-148 (plugin preflight), CHORE-133 (plugin
-submission follow-up), BUG-174 (dotfile count in old `fw-move.sh`).
+Every archived card names a **specific dead file** as its deliverable —
+`framework/docs/collaboration/workflow-guide.md`, `framework/INDEX.md`,
+`framework/CLAUDE.md`, `Setup-Framework.ps1`, or a doc describing only the old
+distribution. The file is the deliverable and it is not coming back.
 
-**Old-framework docs and structure** — target files are maintenance-only:
-TECH-182, TECH-183, TECH-158, TECH-187, TECH-100, TECH-102, TECH-067, TECH-058,
-TECH-101, BUG-181 (starter CLAUDE.md — the new build's `CLAUDE.md` is authored fresh),
-FEAT-102, FEAT-103, feature-004, feature-009, feature-010, feature-012, feature-013,
-feature-014.
+**What is NOT archived.** This roadmap's first draft proposed bulk-moving ~75 cards.
+Reading them in full cut that to 26 across four passes, and the ~49 that stayed are the
+more important half:
 
-**Old setup/distribution tooling** — the commands build the structure now:
-BUGFIX-045, FEAT-051, FEAT-107, FEAT-111, FEAT-112, FEAT-115 (`/fw-tour`), FEAT-157
-(provenance stamp), feature-007, feature-008, DOCS-134, FEAT-028, feature-019.
+| Held | Why | Where |
+|---|---|---|
+| Commands, plugins, scripts | The migration is mid-flight — the new build ships **5** commands against the old set's **11**. These cards are the requirements input for the ten not yet ported. | C4 in TASK-218 |
+| Hooks | Actively in use (`hooks/hooks.json`, `tools/pre-commit`) and the mechanism half of the Single-Source Rule. | C5 |
+| Board conventions | Parent/child items, numbering, cross-references, never-delete, release archival — the new build has defined **none** of these, and `templates/records/` has no work-item template at all. | C6 |
+| Kanban gate design | The new engine says *"No kanban gates apply"* — these are the D5 crossover's design input. | C1 |
+| Product ideas | Sprints, velocity, team IDs — unbuilt in **both** frameworks. | C2 |
 
-**Old workflow policy cards** — many already implemented in the new engine, others
-about a `project-hub/` lifecycle that no longer exists:
-FEAT-021, FEAT-024, FEAT-030 (hold folder — new build has `onhold/`), FEAT-047,
-FEAT-092, FEAT-093, FEAT-104, TECH-027 *(already marked Cancelled)*, TECH-033,
-TECH-041, TECH-044, TECH-048, TECH-049, TECH-055, TECH-070, TECH-070.1, TECH-071,
-TECH-072, TECH-073, TECH-077, TECH-078, TECH-080, TECH-082, TECH-096, TECH-098,
-TECH-114, TECH-161, TECH-166, TECH-168, TECH-172, TECH-176.
-
-**Decisions with no live subject:** DECISION-035, DECISION-036 *(already resolved by
-DECISION-050)*, DECISION-110, DECISION-171 *(already Accepted)*.
-
-**Guidance content, possibly re-earnable later as skills:** FEAT-052, FEAT-089,
-FEAT-090, FEAT-139 (`claude-project.yaml` — superseded by the plugin model),
-FEAT-149 (virtual staff transparency), FEAT-180 (mandatory `## Documentation`
-section — *worth re-earning*, it is a create-gate/done-gate rule the new build could
-adopt cheaply), FEAT-034, TECH-083.
-
-**Recommendation:** bulk-move D8 to an `archive/deprecated/` bucket in one pass rather
-than dispositioning 75 cards individually. Flag the three I'd re-earn as fresh cards:
-**FEAT-180** (documentation as a gate), **FEAT-115** (`/fw-tour` for the new build),
-**FEAT-157** (provenance — still useful when the plugin graduates).
+**The lesson worth keeping:** the summary-level heuristic (type + title + the paths a
+card names) systematically over-archived. A card titled *"Document X policy"* pointing at
+`framework/docs/` looks dead, but the *policy* is the deliverable and the file is
+incidental. Three whole classes failed that heuristic identically.
 
 ---
 

@@ -1,6 +1,7 @@
 # Tech Debt: Docs Restatement Audit — Index-Driven, Hunt Restatements Not Length (ADR-008 WS4)
 
 **ID:** TECH-187
+**Deprecated:** 2026-09-02 — `OLD-DOCS` — Restatement audit of `framework/docs/` (12,109 lines) (TASK-218)
 **Type:** Tech Debt
 **Priority:** Medium
 **Version Impact:** MINOR

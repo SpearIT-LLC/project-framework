@@ -1,6 +1,7 @@
 # Feature: Create developer-guide.md
 
 **ID:** FEAT-103
+**Deprecated:** 2026-09-02 — `OLD-DOCS` — Create `framework/docs/collaboration/developer-guide.md` (TASK-218)
 **Type:** Feature
 **Priority:** Medium
 **Version Impact:** MINOR

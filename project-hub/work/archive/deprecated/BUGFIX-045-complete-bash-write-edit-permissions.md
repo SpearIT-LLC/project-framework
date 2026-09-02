@@ -1,6 +1,7 @@
 # Bug Fix: Complete Bash/Write/Edit Permission Configuration
 
 **ID:** BUG-045
+**Deprecated:** 2026-09-02 — `OLD-SETUP` — Bash/Write/Edit permissions for old setup flow (TASK-218)
 **Type:** Bug
 **Priority:** Medium
 **Version Impact:** PATCH

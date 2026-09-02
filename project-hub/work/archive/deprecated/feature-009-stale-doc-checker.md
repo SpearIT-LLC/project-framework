@@ -1,6 +1,7 @@
 # Feature: Stale Documentation Checker
 
 **ID:** FEAT-009
+**Deprecated:** 2026-09-02 — `OLD-DOCS` — Stale-doc checker over old docs tree (TASK-218)
 **Type:** Feature
 **Priority:** Low
 **Version Impact:** MINOR

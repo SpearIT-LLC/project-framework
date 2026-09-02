@@ -1,6 +1,7 @@
 # DOCS-134: Separate Release Processes by Product
 
 **ID:** DOCS-134
+**Deprecated:** 2026-09-02 — `OLD-SETUP` — Split release processes per product (old 3-product model) (TASK-218)
 **Type:** Documentation
 **Priority:** Medium
 **Created:** 2026-02-13

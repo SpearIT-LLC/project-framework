@@ -1,6 +1,7 @@
 # Feature: Visual Diagrams for Framework Documentation
 
 **ID:** FEAT-004
+**Deprecated:** 2026-09-02 — `OLD-DOCS` — Visual diagrams for old framework docs (TASK-218)
 **Type:** Feature
 **Priority:** Low
 **Version Impact:** PATCH

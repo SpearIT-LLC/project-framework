@@ -1,6 +1,7 @@
 # Feature: System Requirements Documentation
 
 **ID:** FEAT-107
+**Deprecated:** 2026-09-02 — `OLD-SETUP` — System requirements doc for old distribution (TASK-218)
 **Type:** Feature
 **Priority:** High
 **Version Impact:** PATCH

@@ -1,6 +1,7 @@
 # Feature: Renumber Workflow Steps to Sequential Integers
 
 **ID:** FEAT-024
+**Deprecated:** 2026-09-02 — `OLD-LIFECYCLE` — Renumber checkpoint-policy steps 7.5/8.5 — that policy is retired (TASK-218)
 **Type:** Feature
 **Priority:** Low
 **Version Impact:** PATCH

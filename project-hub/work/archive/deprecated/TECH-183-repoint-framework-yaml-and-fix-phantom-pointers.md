@@ -1,6 +1,7 @@
 # Tech Debt: Repoint `framework.yaml` SoT and Fix Phantom `CLAUDE.md` Step Pointers (ADR-007)
 
 **ID:** TECH-183
+**Deprecated:** 2026-09-02 — `OLD-DOCS` — Repoint `framework.yaml` phantom pointers — old-tree references (TASK-218)
 **Type:** Tech Debt
 **Priority:** Medium
 **Version Impact:** PATCH

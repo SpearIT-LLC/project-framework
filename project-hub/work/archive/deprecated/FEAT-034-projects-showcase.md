@@ -1,6 +1,7 @@
 # FEAT-034: Projects Showcase Documentation
 
 **ID:** FEAT-034
+**Deprecated:** 2026-09-02 — `OLD-SETUP` — Projects showcase for old distribution (TASK-218)
 **Type:** Feature
 **Priority:** Low
 **Version Impact:** MINOR

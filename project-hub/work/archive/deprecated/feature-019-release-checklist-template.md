@@ -1,6 +1,7 @@
 # Feature: Release Checklist Template
 
 **ID:** FEAT-019
+**Deprecated:** 2026-09-02 — `OLD-SETUP` — Release checklist template for old process (TASK-218)
 **Type:** Feature
 **Priority:** Low
 **Version Impact:** MINOR

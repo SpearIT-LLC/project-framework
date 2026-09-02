@@ -1,6 +1,7 @@
 # Tech Debt: Split workflow-guide.md into focused documents
 
 **ID:** TECH-100
+**Deprecated:** 2026-09-02 — `OLD-DOCS` — Split `workflow-guide.md` into three (TASK-218)
 **Type:** Tech Debt
 **Priority:** Medium
 **Version Impact:** MINOR

@@ -1,6 +1,7 @@
 # DECISION-035: Root Status Reference Strategy
 
 **ID:** DECISION-035
+**Deprecated:** 2026-09-02 — `OLD-DOCS` — Root status reference — no live subject (old PROJECT-STATUS.md) (TASK-218)
 **Type:** Decision
 **Priority:** Low
 **Version Impact:** None

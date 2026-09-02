@@ -1,6 +1,7 @@
 # Tech Debt: Reconcile the `DECISION-*` Work-Item Type onto the Industry-Standard ADR Model
 
 **ID:** TECH-172
+**Deprecated:** 2026-09-02 — `OLD-LIFECYCLE` — DECISION-* type reconciliation — board half completed by TASK-218; remainder is old-tree edits (TASK-218)
 **Type:** Tech Debt
 **Priority:** Medium
 **Version Impact:** MINOR
@@ -230,3 +231,31 @@ these** ("no stragglers"):
 ---
 
 **Last Updated:** 2026-07-06
+
+---
+
+## Closing Finding (TASK-218, 2026-09-02)
+
+**Status: partially done — the surviving half is complete; the rest is dead work.**
+
+This card's own 2026-08-24 re-scope note said the old framework is maintenance-only and
+its doc/template/plugin edits are dead work, leaving one live half: *disposition the open
+`DECISION-*` items (035, 036, 110, 162, 171) and record the ADR.*
+
+**That disposition is now done**, by TASK-218:
+
+| Item | Disposition |
+|---|---|
+| DECISION-035 | Archived — root status reference has no live subject |
+| DECISION-036 | Archived — already resolved in-card by DECISION-050 |
+| DECISION-110 | **Held on the board** — it edits `Build-FrameworkArchive.ps1`, so it falls under the keep-every-script-card rule |
+| DECISION-162 | **Held on the board** — command-tier sync; ADR-009 answers it by construction (one authored copy), but the analysis stays while the migration is mid-flight |
+| DECISION-171 | **Held on the board** — the `fw-` namespace rule is *actively followed* by the new build (every command and script is `fw-*`); it is live rationale, not a dead decision |
+
+**On the type itself:** the new build retires `DECISION-*` as a work-item type — ADR-006
+already made types a universal constant, and ADR records live in
+`project-hub/research/adr/`, not on the board. No further action.
+
+**Why this card is archived rather than kept:** what remains in it is edits to
+`framework/docs/`, the old templates, and the plugin editions — all dead files. The
+board half it existed for is complete.
