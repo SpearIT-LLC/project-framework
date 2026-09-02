@@ -133,23 +133,36 @@ is what makes this safe; there is no archive-specific special case in either eng
 
 ### A. Archive — old-framework mechanics, no live subject (56 cards)
 
-Reason codes: **PLUGIN-TIER** = exists only because 3 tiers were hand-synced; ADR-009's
-one-copy model dissolves it. **OLD-DOCS** = targets `framework/docs/` or
-`framework/CLAUDE.md`. **OLD-SETUP** = targets `Setup-Framework.ps1` / archive
-distribution, which commands now replace. **OLD-LIFECYCLE** = about a `project-hub/`
-lifecycle the new layout drops.
+**Reason codes.** Named for the *artifact* each card targets, since this repo now has
+four command-bearing sets — `.claude/` (the live board's own commands),
+`plugins/spearit-framework` (full, v1.0.1), `plugins/spearit-framework-light`
+(v1.0.5), and `workspaces/framework` (the dev build, 0.4.6, which IS the new
+framework). A generic "plugin" code would not say which.
+
+| Code | Means | Target artifact |
+|---|---|---|
+| `OLD-PLUGIN` | Work on the two retired marketplace editions | `plugins/spearit-framework{,-light}` |
+| `TIER-SYNC` | Exists **only** because the sets were hand-synced; ADR-009's one-copy model dissolves the problem itself | spans `.claude/` + both plugins + `tools/Build-Plugin.ps1` |
+| `OLD-ENGINE` | The old board's own command/script set | `.claude/commands/`, `.claude/scripts/` |
+| `OLD-DOCS` | Old documentation tree | `framework/docs/`, `framework/CLAUDE.md` |
+| `OLD-SETUP` | Old setup + archive distribution, which commands now replace | `Setup-Framework.ps1`, `tools/Build-*.ps1` |
+| `OLD-LIFECYCLE` | A `project-hub/` work-item lifecycle the new layout drops | `project-hub/`, old templates |
+
+`TIER-SYNC` is the code worth reading twice on a reversal: those cards are not
+merely stale, they are **answered by construction** — the new framework is a single
+authored copy, which is the outcome they were asking for.
 
 | Card | Code | One-line reason |
 |---|---|---|
-| TECH-169 | PLUGIN-TIER | Reconcile 3 `/fw-move` copies — one copy now exists |
-| FEAT-179 | PLUGIN-TIER | Plugin create-gate parity — no second edition to reach parity with |
-| TECH-160 | PLUGIN-TIER | Align `Build-Plugin.ps1` zip model — no plugin build script in new model |
-| FEAT-124 | PLUGIN-TIER | `/spearit-framework-light:about` — that edition is retired |
-| FEAT-125 | PLUGIN-TIER | Configurable paths for plugin commands — commands build the structure now |
-| FEAT-138 | PLUGIN-TIER | Full-plugin dev-guidance commands — re-earnable later as skills, not as plugin-tier work |
-| FEAT-148 | PLUGIN-TIER | `/spearit-framework:preflight` — same; ties to the retired edition |
-| CHORE-133 | PLUGIN-TIER | Marketplace submission follow-up for the light plugin (submitted 2026-02-13) |
-| BUG-174 | PLUGIN-TIER | `.gitkeep` inflates WIP count in the **old** `fw-move.sh`; new engine has no such count |
+| TECH-169 | TIER-SYNC | Reconcile 3 `/fw-move` copies — one copy now exists |
+| FEAT-179 | TIER-SYNC | Plugin create-gate parity — no second edition to reach parity with |
+| TECH-160 | OLD-SETUP | Align `Build-Plugin.ps1` zip model — no plugin build script in new model |
+| FEAT-124 | OLD-PLUGIN | `/spearit-framework-light:about` — that edition is retired |
+| FEAT-125 | OLD-PLUGIN | Configurable paths for plugin commands — commands build the structure now |
+| FEAT-138 | OLD-PLUGIN | Full-plugin dev-guidance commands — re-earnable later as skills, not as retired-edition commands |
+| FEAT-148 | OLD-PLUGIN | `/spearit-framework:preflight` — same; ties to the retired edition |
+| CHORE-133 | OLD-PLUGIN | Marketplace submission follow-up for the light plugin (submitted 2026-02-13) |
+| BUG-174 | OLD-ENGINE | `.gitkeep` inflates WIP count in the **old** `fw-move.sh`; new engine has no such count |
 | TECH-182 | OLD-DOCS | Retire `framework/CLAUDE.md` + quick-reference — files are maintenance-only |
 | TECH-183 | OLD-DOCS | Repoint `framework.yaml` phantom pointers — old-tree references |
 | TECH-158 | OLD-DOCS | Stale links in `framework/INDEX.md` (33 links to an obsolete layout) |
@@ -158,7 +171,7 @@ lifecycle the new layout drops.
 | TECH-067 | OLD-DOCS | Consolidate AI sections into `workflow-guide.md` |
 | TECH-058 | OLD-DOCS | DRY cleanup across old collaboration docs |
 | TECH-101 | OLD-DOCS | Project-definition SsoT pattern in old `framework.yaml`/README |
-| TECH-102 | OLD-DOCS | `/fw-*` slash-command performance — old command set |
+| TECH-102 | OLD-ENGINE | `/fw-*` slash-command performance — old command set |
 | FEAT-102 | OLD-DOCS | Create `framework/docs/collaboration/project-guide.md` |
 | FEAT-103 | OLD-DOCS | Create `framework/docs/collaboration/developer-guide.md` |
 | feature-004 | OLD-DOCS | Visual diagrams for old framework docs |
@@ -193,7 +206,7 @@ lifecycle the new layout drops.
 | TECH-073 | OLD-LIFECYCLE | External-reference template in old tree |
 | TECH-078 | OLD-LIFECYCLE | Release archival to `project-hub/history/releases/` |
 | TECH-080 | OLD-LIFECYCLE | Add release step to old session-history command |
-| TECH-161 | OLD-LIFECYCLE | Midnight rollover in the **old** `/fw-session-history` |
+| TECH-161 | OLD-ENGINE | Midnight rollover in the **old** `/fw-session-history` |
 | TECH-176 | OLD-LIFECYCLE | Rename `FEATURE-TEMPLATE.md`/`TECHDEBT-TEMPLATE.md` in old tree |
 | FEAT-034 | OLD-SETUP | Projects showcase for old distribution |
 | FEAT-149 | OLD-LIFECYCLE | Virtual-staff transparency in meeting records (no meeting-record feature in new build) |
@@ -244,19 +257,26 @@ that isn't framework-shaped?) is live for the new build. Re-scope rather than ar
 | DECISION-110 | README-FIRST.txt for old distribution |
 | DECISION-171 | **Already Accepted** — `fw-` namespace; the new build follows it |
 
-### E. Open question — needs your call (2 cards, both in `todo/`)
+### E. Re-scope for the new build — decided 2026-09-02 (Gary)
 
-Flagged in the 2026-09-02 session history. Both sit in `todo/` while the roadmap classes
-them deprecated — a contradiction that will mislead a future session either way:
+Both sat in `todo/` while the roadmap classed them deprecated. **Neither is archived.**
+Both are re-scoped against `workspaces/framework/` and stay on the board.
 
-- **BUG-181** (Priority: High) — starter `CLAUDE.md` misses the collaboration contract.
-  The *old* starter template is dead, but the new build authors its own `CLAUDE.md`, so
-  the underlying question (does the contract reach a generated workspace?) may transfer.
-  **Recommend:** re-scope to the new build, or archive with that question recorded.
-- **FEAT-175** (Priority: Medium) — old `/fw-new` deterministic create gate. The new build
-  has create gates (`fw-new-workspace.sh`, `fw-new-ops-record.sh`, `fw-new-contact.sh`)
-  but **no `fw-new` for board items** — which the D5 crossover will need.
-  **Recommend:** keep, re-scoped as the crossover's create gate.
+| Card | Pri | Decision |
+|---|---|---|
+| **BUG-181** | High | **Re-scope for new build.** The *old* starter template is dead, but the question survives it: does the collaboration contract actually reach a generated workspace? The new build authors its own `CLAUDE.md` and generates workspace scaffolds — so the same failure mode (a project created by the framework ships without the contract) is reachable and untested. |
+| **FEAT-175** | Med | **Re-scope.** The new build has create gates for workspaces, ops records, and contacts — but **no `fw-new` for board items**. The kanban namespace is an empty policy slot (ADR-009 D5), and its create gate is exactly this card's subject. It becomes the crossover's create gate. |
+
+**Re-scope means, for each:** rewrite Summary/Problem/Scope against
+`workspaces/framework/` paths, drop the old-tree acceptance criteria, and keep the
+original ID and the reasoning that earned it. This is card surgery, not a new card —
+the history stays attached.
+
+**Sequencing.** FEAT-175's re-scope should wait for, or land with, the D5 board
+crossover — writing a board create gate before the board namespace is active would be
+speculative. BUG-181's can be done as soon as someone generates a workspace and checks
+what its `CLAUDE.md` contains. Neither is in scope for TASK-218, which only archives;
+the re-scoping is separate work on cards that never leave the board.
 
 ---
 
@@ -271,7 +291,7 @@ Board = `backlog/` + `todo/` = **109** cards (including this one).
 | D — resolved decisions, archive | 4 |
 | **Moving (A+B+D)** | **66** |
 | C — keep on board | 18 |
-| E — awaiting Gary's call | 2 |
+| E — re-scoped, stay on board | 2 |
 | Live roadmap D1–D7 cards | 22 |
 | TASK-218 (this card) | 1 |
 | **Staying (C+E+live+self)** | **43** |
@@ -313,7 +333,7 @@ original grouping got wrong and are the most likely reason a card deserves to co
 - [ ] All Section B cards have their finding written into the card **before** the move
 - [ ] All Section D cards moved with their resolution noted
 - [ ] Section C cards verified still on the board (none moved by accident)
-- [ ] Section E resolved by Gary; both cards dispositioned accordingly
+- [x] Section E resolved by Gary (2026-09-02): BUG-181 and FEAT-175 both **re-scoped, not archived** — they stay on the board
 - [ ] `ROADMAP-DELIVERABLES.md` D8 updated — the "bulk-move" recommendation replaced by a
       pointer to this card's disposition table
 - [ ] Next-ID unchanged by the move: `Get-NextWorkItemId.ps1` returns the same value
@@ -326,8 +346,10 @@ original grouping got wrong and are the most likely reason a card deserves to co
 
 <!-- ⚠️ AI: Complete items in order. STOP at each [ ] and wait for approval. -->
 
-- [ ] **PRE-IMPLEMENTATION REVIEW COMPLETED** — Gary approves the disposition table,
-      resolves Section E, and confirms the reason codes
+- [x] **PRE-IMPLEMENTATION REVIEW COMPLETED** (2026-09-02) — Section E resolved (both
+      re-scoped); reason codes revised: `PLUGIN-TIER` was too generic with four
+      command-bearing sets in the repo, split into `OLD-PLUGIN` / `TIER-SYNC` /
+      `OLD-ENGINE`
 - [ ] Record `Get-NextWorkItemId.ps1` output **before** any move
 - [ ] Create `archive/deprecated/` + README.md
 - [ ] Section B: write findings into the 6 cards
