@@ -131,7 +131,7 @@ is what makes this safe; there is no archive-specific special case in either eng
 
 ## Disposition
 
-### A. Archive — old-framework mechanics, no live subject (36 cards)
+### A. Archive — old-framework mechanics, no live subject (23 cards)
 
 **Reason codes.** Named for the *artifact* each card targets, since this repo now has
 four command-bearing sets — `.claude/` (the live board's own commands),
@@ -174,24 +174,11 @@ authored copy, which is the outcome they were asking for.
 | FEAT-107 | OLD-SETUP | System requirements doc for old distribution |
 | DOCS-134 | OLD-SETUP | Split release processes per product (old 3-product model) |
 | feature-019 | OLD-SETUP | Release checklist template for old process |
-| FEAT-021 | OLD-LIFECYCLE | Hierarchical numbering — new build uses one flat shared sequence |
 | FEAT-024 | OLD-LIFECYCLE | Renumber checkpoint-policy steps 7.5/8.5 — that policy is retired |
-| FEAT-030 | OLD-LIFECYCLE | Add `work/hold/` — new build ships `onhold/` |
-| TECH-027 | OLD-LIFECYCLE | Cross-reference convention (**already marked Cancelled**) |
-| TECH-033 | OLD-LIFECYCLE | `Status:` field redundancy — new records drop the field; location is status |
-| TECH-041 | OLD-LIFECYCLE | Supporting-files naming — new build ships artifact bundles `<ID>/` |
-| TECH-044 | OLD-LIFECYCLE | "Create in backlog/" policy for old `workflow-guide.md` |
 | TECH-048 | OLD-LIFECYCLE | Remove small-team references from old docs |
-| TECH-049 | OLD-LIFECYCLE | Human-AI handoff policy for old docs |
-| TECH-070 | OLD-LIFECYCLE | Issue-response process in old `workflow-guide.md` |
-| TECH-070.1 | OLD-LIFECYCLE | Validation sub-task of TECH-070 |
-| TECH-071 | OLD-LIFECYCLE | Session-handoff checklist for old docs |
-| TECH-073 | OLD-LIFECYCLE | External-reference template in old tree |
-| TECH-078 | OLD-LIFECYCLE | Release archival to `project-hub/history/releases/` |
 | FEAT-034 | OLD-SETUP | Projects showcase for old distribution |
-| FEAT-149 | OLD-LIFECYCLE | Virtual-staff transparency in meeting records (no meeting-record feature in new build) |
 
-### B. Record the finding, then archive (3 cards)
+### B. Record the finding, then archive (1 card)
 
 These carry a conclusion worth keeping. **Write the finding into the card, then move it** —
 archiving unread loses the answer.
@@ -199,10 +186,8 @@ archiving unread loses the answer.
 | Card | Finding to record before archiving |
 |---|---|
 | TECH-172 | **PARTIALLY DONE.** Its own re-scope note says the surviving half is dispositioning DECISION-035/036/110/162/171 — which *this card completes*. Record that, then archive. |
-| TECH-077 | Never-delete policy. **Being honoured by this very card** (archive, never delete). Record that the principle is live, then archive the doc-edit task. |
-| TECH-082 | Sub-task/parent pattern. New build ships artifact bundles (`<ID>/` moves with its record); the parent/child *item* pattern remains unbuilt — note it as an open idea, then archive the old-docs task. |
 
-### C. Keep on the board (42 cards) — C1 gates, C2 product ideas, C3 re-earn candidates, C4 command/plugin/script, C5 hooks
+### C. Keep on the board (58 cards) — C1 gates, C2 product ideas, C3 re-earn, C4 command/plugin/script, C5 hooks, C6 board conventions
 
 **C1 — Kanban gate design, needed at the D5 crossover (F1).** The new engine has no kanban
 gates; these are its design input, not dead work:
@@ -268,8 +253,9 @@ Single-Source Rule; the new build already ships `hooks/hooks.json` +
 | TECH-114 | WIP-enforcement hook (already C1) |
 | TECH-168 | `Completed`-date pre-commit hook (already C1) |
 
-*Checked and excluded:* FEAT-107 mentions hooks only as a listed prerequisite in a
-system-requirements doc — not hook work. It stays in Section A.
+*Checked and excluded — NOT a C5 member:* `FEAT-107` mentions hooks only as a listed
+prerequisite inside a system-requirements doc; it is not hook work. It **stays in
+Section A** (archive). Named here so a later reader does not re-litigate it.
 
 > **Findings still to be recorded on four held cards.** SPIKE-178, DECISION-162,
 > TECH-096 and DECISION-110 were in Sections B/D (record-then-archive) before the
@@ -288,17 +274,59 @@ system-requirements doc — not hook work. It stays in Section A.
 >   it holds under the script rule.
 
 
+**C6 — Board conventions the new build has not defined yet — HOLD (final scan,
+2026-09-02).** Gary: *"Are there any cards in the deprecated list that might apply to
+the new framework?"* Yes — 13. The trap in this group is that each one *reads* like an
+old-framework docs task ("Document X policy"), so the type-and-title heuristic filed
+them as dead. What they actually contain is the **definition of a board convention the
+new build will need the moment the kanban namespace goes live (ADR-009 D5)** — and the
+new build has defined none of them.
+
+**Verified against `workspaces/framework/` this scan:**
+- `templates/records/` holds **only** `contact.md`, `ops-record.md`, `ts-case.md` —
+  there is **no work-item template of any kind**. Every convention a board item needs
+  (fields, naming, numbering, cross-references) is currently undefined.
+- `fw-move.sh:6` already names **"child items"** as a thing the engine treats as
+  grouping — but nothing anywhere defines what a child item *is*. TECH-082 is that
+  definition.
+- Grep for a never-delete/archival policy in the new build's `CLAUDE.md`, `README.md`
+  and scripts: **no match.** TASK-218 is *itself* honouring a policy the new build has
+  not written down.
+
+| Card | What the new build needs it for |
+|---|---|
+| TECH-082 | Defines parent/child work items — a concept `fw-move.sh:6` **already references** but nothing defines |
+| TECH-041 | Supporting-files naming for files sharing a parent ID — the new build's artifact-bundle (`<ID>/`) convention is the same problem, only partly specified |
+| TECH-027 | Cross-reference convention for items that move between folders — unchanged problem in the new layout |
+| FEAT-021 | Work-item numbering + naming standards, incl. hierarchical sub-ids and ID exhaustion. `fw-next-id.sh` implements a sequence but no card defines the *naming* rules around it |
+| TECH-033 | Status-field-vs-folder redundancy. The new build **chose** location-is-status; this card is the analysis behind that choice and the record of what `Status:` is for (if anything) |
+| TECH-077 | Never-delete / archive-only policy — **unwritten in the new build**, though TASK-218 is following it right now |
+| FEAT-030 | A hold/paused state for board items. Operations has `onhold/`; the **kanban** namespace has no equivalent defined |
+| TECH-070 | Issue-response process (triage → assess → decide → resolve) — process design, not old-framework mechanics |
+| TECH-070.1 | Its validation sub-task; travels with TECH-070 |
+| TECH-071 | Session handoff checklist — the new build has session history but no start/end checklist |
+| TECH-073 | External-reference template — the new build has no equivalent template |
+| TECH-049 | Human-AI concurrent-work handoff, esp. around git operations — unchanged by ADR-009 |
+| TECH-044 | Work-item **creation** policy (create in backlog, promote when committed). The new build's create gates cover workspaces/ops/contacts; the board's creation policy is undefined |
+| TECH-078 | Release archival — done items → `history/releases/vX.Y.Z/`. The new build has **no release tooling at all** (`tools/` holds only git-hook installers) and its own CHANGELOG already archives to that path |
+| FEAT-149 | Meeting-record transparency standard for AI participants. The new build **scaffolds `meetings/` folders** in both the floor and operations templates but ships **no meeting-record template** — this is the content standard for one |
+| DECISION-171 | The `fw-` namespace rule for artifacts in user-shared folders — **the new build follows this convention** (every command and script is `fw-*`), so it is the live rationale, not a dead decision |
+
+**Why these differ from Section A's survivors.** The cards still in A propose edits to
+*specific old files* (`framework/docs/…`, `framework/INDEX.md`, `Setup-Framework.ps1`) —
+the file is the deliverable, and the file is dead. C6's cards define *conventions*; the
+old paths in them are incidental, and the convention is what carries over.
+
 **Also keep:** FEAT-139 (`claude-project.yaml`) — superseded in *mechanism* by the plugin
 model, but its underlying question (how does a command find project conventions in a repo
 that isn't framework-shaped?) is live for the new build. Re-scope rather than archive.
 
-### D. Already-resolved decisions — archive with their resolution noted (3 cards)
+### D. Already-resolved decisions — archive with their resolution noted (2 cards)
 
 | Card | Note |
 |---|---|
 | DECISION-035 | Root status reference — no live subject (old `PROJECT-STATUS.md`) |
 | DECISION-036 | **Already Resolved** in-card by DECISION-050 (embedded framework model) |
-| DECISION-171 | **Already Accepted** — `fw-` namespace; the new build follows it |
 
 ### E. Re-scope for the new build — decided 2026-09-02 (Gary)
 
@@ -323,36 +351,49 @@ the re-scoping is separate work on cards that never leave the board.
 
 ---
 
-## Reconciliation (recomputed 2026-09-02, after the command/plugin/script/hook rule)
+## Reconciliation (recomputed 2026-09-02, after the final gotcha scan)
 
 Board = `backlog/` + `todo/` + `doing/` = **109** cards (including this one).
 
 | | Count |
 |---|---|
-| A — archive | 36 |
-| B — record finding, then archive | 3 |
-| D — resolved decisions, archive | 3 |
-| **Moving (A+B+D)** | **42** |
-| C — keep on board (C1–C5 + FEAT-139) | 42 |
+| A — archive | 23 |
+| B — record finding, then archive | 1 |
+| D — resolved decisions, archive | 2 |
+| **Moving (A+B+D)** | **26** |
+| C — keep on board (C1–C6 + FEAT-139) | 58 |
 | E — re-scoped, stay on board | 2 |
 | Live roadmap D1–D7 cards | 22 |
 | TASK-218 (this card) | 1 |
-| **Staying** | **67** |
+| **Staying** | **83** |
 | **Total** | **109** ✅ |
 
-Verified mechanically: all 42 move-set ids resolve to a file on the board; no id
-appears in two sections; 109 − 42 = 67.
+Verified mechanically each pass: every move-set id resolves to a file; no id appears in
+two sections; 109 − 26 = 83.
 
-**How this changed.** The first pass moved 66. Gary's two rules cut that to 42:
-- *"Keep any plugin or command card, even if it's an update to the underlying script"*
-  → 24 cards held (C4). Established by testing whether a command/plugin/script is the
-  card's **subject** (title + Files Affected), not merely mentioned in passing — a raw
-  grep for `/fw-move` matched 31 cards, most of which only cite it.
-- *"Do we have any open cards for hooks? Keep those"* → TECH-096 held (C5); TECH-114
-  and TECH-168 were already held under C1.
+**How the move set shrank, and why each cut was right**
 
-**Post-move expectation:** `backlog/`+`todo/` = 66 (+1 in `doing/`),
-`archive/deprecated/` = 42, `Get-NextWorkItemId.ps1` returns **219** before and after.
+| Pass | Moving | What changed |
+|---|---|---|
+| Roadmap D8 (summary-level) | ~75 | Grouped by type + title; recommended a bulk move |
+| After reading all cards in full | 66 | F1–F4: kanban gates unbuilt, SPIKE-178 answered, DECISION-162 undecided, product ideas ≠ deprecated |
+| After *"keep any plugin/command/script card"* | 42 | C4 (24 cards) — the migration is a third done; 10 of 11 commands unbuilt |
+| After *"keep hook cards"* | 42 | C5 — TECH-096 held (TECH-114/168 already held) |
+| After *"anything that might apply to the new framework?"* | **26** | C6 (16 cards) — board conventions the new build has not defined |
+
+**The pattern across every pass:** the summary-level heuristic (type + title + the paths a
+card names) systematically over-archived. A card titled *"Document X policy"* whose Files
+Affected line names `framework/docs/…` looks dead, but the *policy* is the deliverable and
+the file is incidental. The three surviving classes — commands not yet ported (C4), hooks
+(C5), and undefined board conventions (C6) — all failed that heuristic identically.
+
+**What the 26 survivors have in common:** each names a **specific dead file** as its
+deliverable — `framework/docs/collaboration/workflow-guide.md`, `framework/INDEX.md`,
+`framework/CLAUDE.md`, `Setup-Framework.ps1`, or a doc that only ever described the old
+distribution. The file *is* the deliverable, and the file is not coming back.
+
+**Post-move expectation:** `backlog/`+`todo/` = 82 (+1 in `doing/`),
+`archive/deprecated/` = 26, `Get-NextWorkItemId.ps1` returns **219** before and after.
 
 ---
 
