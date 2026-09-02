@@ -131,7 +131,7 @@ is what makes this safe; there is no archive-specific special case in either eng
 
 ## Disposition
 
-### A. Archive — old-framework mechanics, no live subject (56 cards)
+### A. Archive — old-framework mechanics, no live subject (36 cards)
 
 **Reason codes.** Named for the *artifact* each card targets, since this repo now has
 four command-bearing sets — `.claude/` (the live board's own commands),
@@ -154,15 +154,6 @@ authored copy, which is the outcome they were asking for.
 
 | Card | Code | One-line reason |
 |---|---|---|
-| TECH-169 | TIER-SYNC | Reconcile 3 `/fw-move` copies — one copy now exists |
-| FEAT-179 | TIER-SYNC | Plugin create-gate parity — no second edition to reach parity with |
-| TECH-160 | OLD-SETUP | Align `Build-Plugin.ps1` zip model — no plugin build script in new model |
-| FEAT-124 | OLD-PLUGIN | `/spearit-framework-light:about` — that edition is retired |
-| FEAT-125 | OLD-PLUGIN | Configurable paths for plugin commands — commands build the structure now |
-| FEAT-138 | OLD-PLUGIN | Full-plugin dev-guidance commands — re-earnable later as skills, not as retired-edition commands |
-| FEAT-148 | OLD-PLUGIN | `/spearit-framework:preflight` — same; ties to the retired edition |
-| CHORE-133 | OLD-PLUGIN | Marketplace submission follow-up for the light plugin (submitted 2026-02-13) |
-| BUG-174 | OLD-ENGINE | `.gitkeep` inflates WIP count in the **old** `fw-move.sh`; new engine has no such count |
 | TECH-182 | OLD-DOCS | Retire `framework/CLAUDE.md` + quick-reference — files are maintenance-only |
 | TECH-183 | OLD-DOCS | Repoint `framework.yaml` phantom pointers — old-tree references |
 | TECH-158 | OLD-DOCS | Stale links in `framework/INDEX.md` (33 links to an obsolete layout) |
@@ -171,7 +162,6 @@ authored copy, which is the outcome they were asking for.
 | TECH-067 | OLD-DOCS | Consolidate AI sections into `workflow-guide.md` |
 | TECH-058 | OLD-DOCS | DRY cleanup across old collaboration docs |
 | TECH-101 | OLD-DOCS | Project-definition SsoT pattern in old `framework.yaml`/README |
-| TECH-102 | OLD-ENGINE | `/fw-*` slash-command performance — old command set |
 | FEAT-102 | OLD-DOCS | Create `framework/docs/collaboration/project-guide.md` |
 | FEAT-103 | OLD-DOCS | Create `framework/docs/collaboration/developer-guide.md` |
 | feature-004 | OLD-DOCS | Visual diagrams for old framework docs |
@@ -181,14 +171,8 @@ authored copy, which is the outcome they were asking for.
 | feature-013 | OLD-DOCS | Migration guide from other frameworks |
 | feature-014 | OLD-DOCS | FAQ for old distribution |
 | BUGFIX-045 | OLD-SETUP | Bash/Write/Edit permissions for old setup flow |
-| FEAT-051 | OLD-SETUP | Update test harness over old release archives |
 | FEAT-107 | OLD-SETUP | System requirements doc for old distribution |
-| FEAT-111 | OLD-SETUP | Data-driven `Setup-Framework.ps1` questions |
-| FEAT-112 | OLD-SETUP | `Setup-Framework.ps1` edge cases |
-| feature-007 | OLD-SETUP | Validation script for old structure |
-| feature-008 | OLD-SETUP | Minimal→Light→Standard upgrade automation (tiers retired) |
 | DOCS-134 | OLD-SETUP | Split release processes per product (old 3-product model) |
-| FEAT-028 | OLD-SETUP | `framework/tools/release.sh` automation |
 | feature-019 | OLD-SETUP | Release checklist template for old process |
 | FEAT-021 | OLD-LIFECYCLE | Hierarchical numbering — new build uses one flat shared sequence |
 | FEAT-024 | OLD-LIFECYCLE | Renumber checkpoint-policy steps 7.5/8.5 — that policy is retired |
@@ -202,30 +186,23 @@ authored copy, which is the outcome they were asking for.
 | TECH-070 | OLD-LIFECYCLE | Issue-response process in old `workflow-guide.md` |
 | TECH-070.1 | OLD-LIFECYCLE | Validation sub-task of TECH-070 |
 | TECH-071 | OLD-LIFECYCLE | Session-handoff checklist for old docs |
-| TECH-072 | OLD-LIFECYCLE | Session-history template in `framework/templates/` |
 | TECH-073 | OLD-LIFECYCLE | External-reference template in old tree |
 | TECH-078 | OLD-LIFECYCLE | Release archival to `project-hub/history/releases/` |
-| TECH-080 | OLD-LIFECYCLE | Add release step to old session-history command |
-| TECH-161 | OLD-ENGINE | Midnight rollover in the **old** `/fw-session-history` |
-| TECH-176 | OLD-LIFECYCLE | Rename `FEATURE-TEMPLATE.md`/`TECHDEBT-TEMPLATE.md` in old tree |
 | FEAT-034 | OLD-SETUP | Projects showcase for old distribution |
 | FEAT-149 | OLD-LIFECYCLE | Virtual-staff transparency in meeting records (no meeting-record feature in new build) |
 
-### B. Record the finding, then archive (6 cards)
+### B. Record the finding, then archive (3 cards)
 
 These carry a conclusion worth keeping. **Write the finding into the card, then move it** —
 archiving unread loses the answer.
 
 | Card | Finding to record before archiving |
 |---|---|
-| SPIKE-178 | **ANSWERED: yes.** A plugin can invoke a script in its own cached directory. Demonstrated in production by the ADR-009 build's use of `${CLAUDE_PLUGIN_ROOT}/scripts/*.sh` across 5 commands + `hooks.json`. Close as answered, not abandoned. |
-| DECISION-162 | **SUPERSEDED-BY-DESIGN.** Four options were open (`Chosen Option: TBD`). ADR-009 selects Option C by construction — one authored copy, since the framework *is* the plugin. Record that as the decision with rationale. |
 | TECH-172 | **PARTIALLY DONE.** Its own re-scope note says the surviving half is dispositioning DECISION-035/036/110/162/171 — which *this card completes*. Record that, then archive. |
-| TECH-096 | Enforcing policy for manual (non-Claude) operations. The new build answers this with git hooks (`tools/pre-commit`, `install-git-hooks.sh`) — record the answer, then archive. |
 | TECH-077 | Never-delete policy. **Being honoured by this very card** (archive, never delete). Record that the principle is live, then archive the doc-edit task. |
 | TECH-082 | Sub-task/parent pattern. New build ships artifact bundles (`<ID>/` moves with its record); the parent/child *item* pattern remains unbuilt — note it as an open idea, then archive the old-docs task. |
 
-### C. Keep on the board — roadmap mis-filed these (18 cards)
+### C. Keep on the board (42 cards) — C1 gates, C2 product ideas, C3 re-earn candidates, C4 command/plugin/script, C5 hooks
 
 **C1 — Kanban gate design, needed at the D5 crossover (F1).** The new engine has no kanban
 gates; these are its design input, not dead work:
@@ -244,17 +221,83 @@ card is written, so nothing is lost in the gap:
 FEAT-180 (documentation as a done-gate rule — cheapest to adopt), FEAT-115 (`/fw-tour`),
 FEAT-157 (provenance stamp, useful at graduation).
 
+**C4 — Command, plugin, script, and hook cards — HOLD until the artifact crosses over
+(Gary, 2026-09-02).** The migration is roughly a third done: the new build ships **5**
+commands (`fw-move`, `fw-contacts`, `fw-new-workspace`, `fw-new-ops-record`,
+`fw-new-kb-domain`) against the old set's **11**. Ten have not crossed over —
+`/fw-status`, `/fw-wip`, `/fw-backlog`, `/fw-next-id`, `/fw-help`, `/fw-release`,
+`/fw-roadmap`, `/fw-swarm`, `/fw-topic-index`, `/fw-session-history`.
+
+**The rule: if a card is about a command, a plugin, a script, or a hook — including an
+update to an underlying script — it holds.** Paths in these cards are stale; the design
+thinking is not, and it is the requirements input for rebuilding that artifact.
+
+| Card | Artifact it informs |
+|---|---|
+| TECH-102 | **The strongest case.** Not really a perf card — it is a *design record for commands that do not exist yet*: four architectural options **with the rejection rationale** (Claude-reads-directly rejected at 2–4× tokens; lighter runtime; JSON cache; MCP server), plus a per-command requirements table naming what each must do (`/fw-status` counts files, `/fw-next-id` scans 50+, `/fw-topic-index` parses YAML). Six of its eight commands are unbuilt. |
+| TECH-161 | Complete midnight-rollover spec for `/fw-session-history` — bidirectional "Continued from"/"Continued on" cross-references. The card itself anticipates this: *"If DECISION-162 later consolidates these copies to a single source, this fix lands in that source instead."* |
+| TECH-072 | The session-history **template format** the new command will need |
+| TECH-080 | Release step in session history — same command |
+| TECH-169 | `/fw-move` reconciliation; carries the verified finding that cache isolation forces inline embedding |
+| DECISION-162 | Command-tier sync — four options with analysis; the drift inventory is its evidence |
+| SPIKE-178 | `${CLAUDE_PLUGIN_ROOT}` invocation — **answered yes**, and the new build depends on that answer |
+| FEAT-179 | Create-gate derivation pattern (SoT + templates + engine into a channel at build) |
+| BUG-174 | Dotfile-inflated WIP count — the new engine has no WIP count *yet*; it will |
+| FEAT-124 | `/about` command — plugin identity/version surface |
+| FEAT-125 | Configurable paths — "how does a command find conventions in a non-framework repo?" is live for a distributed plugin |
+| FEAT-138 | `/review`, `/refactor`, `/poc` guidance commands |
+| FEAT-148 | `/preflight` — the standalone pre-implementation review |
+| TECH-160 | `Build-Plugin.ps1` execution model (forward-slash zip entries) |
+| FEAT-028 | Release automation script |
+| feature-007 | Framework validation script |
+| feature-008 | Upgrade automation script |
+| FEAT-111 | Data-driven setup questions — setup script design |
+| FEAT-112 | Setup script edge cases (no git, alternative VCS) |
+| FEAT-051 | Update test harness — regression testing the update mechanism |
+| DECISION-110 | README-FIRST — updates `Build-FrameworkArchive.ps1` |
+| CHORE-133 | Marketplace submission process — the distribution channel the new plugin will use |
+| TECH-176 | Template rename — touches the build's template copy step |
+
+**C5 — Hook cards — HOLD (Gary, 2026-09-02).** Hooks are the mechanism half of the
+Single-Source Rule; the new build already ships `hooks/hooks.json` +
+`refresh-contacts.sh` and `tools/pre-commit`, so this design is actively in use.
+
+| Card | Subject |
+|---|---|
+| TECH-096 | Enforcing policy for **manual** (non-Claude) operations — native git hooks vs Claude hooks, with the trade-off analysis. The new build's `tools/install-git-hooks.sh` is one answer to it; the card holds the options |
+| TECH-114 | WIP-enforcement hook (already C1) |
+| TECH-168 | `Completed`-date pre-commit hook (already C1) |
+
+*Checked and excluded:* FEAT-107 mentions hooks only as a listed prerequisite in a
+system-requirements doc — not hook work. It stays in Section A.
+
+> **Findings still to be recorded on four held cards.** SPIKE-178, DECISION-162,
+> TECH-096 and DECISION-110 were in Sections B/D (record-then-archive) before the
+> command/plugin/script/hook rule pulled them back onto the board. They **stay**, but
+> their findings should still be written into the cards so the answer is not
+> re-derived later:
+> - **SPIKE-178** — ANSWERED YES. `${CLAUDE_PLUGIN_ROOT}/scripts/*.sh` is used in all
+>   five new-build commands and `hooks/hooks.json`. Record and close the *question*;
+>   keep the card as the invocation-pattern record.
+> - **DECISION-162** — ADR-009 selects Option C by construction (one authored copy).
+>   Record that as the decision with rationale; the card stays as the tier-sync
+>   analysis for whenever a second channel reappears.
+> - **TECH-096** — partially answered by the new build's `tools/pre-commit` +
+>   `install-git-hooks.sh`; the card holds the remaining options.
+> - **DECISION-110** — no live subject, but it edits `Build-FrameworkArchive.ps1`, so
+>   it holds under the script rule.
+
+
 **Also keep:** FEAT-139 (`claude-project.yaml`) — superseded in *mechanism* by the plugin
 model, but its underlying question (how does a command find project conventions in a repo
 that isn't framework-shaped?) is live for the new build. Re-scope rather than archive.
 
-### D. Already-resolved decisions — archive with their resolution noted (4 cards)
+### D. Already-resolved decisions — archive with their resolution noted (3 cards)
 
 | Card | Note |
 |---|---|
 | DECISION-035 | Root status reference — no live subject (old `PROJECT-STATUS.md`) |
 | DECISION-036 | **Already Resolved** in-card by DECISION-050 (embedded framework model) |
-| DECISION-110 | README-FIRST.txt for old distribution |
 | DECISION-171 | **Already Accepted** — `fw-` namespace; the new build follows it |
 
 ### E. Re-scope for the new build — decided 2026-09-02 (Gary)
@@ -280,29 +323,36 @@ the re-scoping is separate work on cards that never leave the board.
 
 ---
 
-## Reconciliation (verified 2026-09-02)
+## Reconciliation (recomputed 2026-09-02, after the command/plugin/script/hook rule)
 
-Board = `backlog/` + `todo/` = **109** cards (including this one).
+Board = `backlog/` + `todo/` + `doing/` = **109** cards (including this one).
 
 | | Count |
 |---|---|
-| A — archive | 56 |
-| B — record finding, then archive | 6 |
-| D — resolved decisions, archive | 4 |
-| **Moving (A+B+D)** | **66** |
-| C — keep on board | 18 |
+| A — archive | 36 |
+| B — record finding, then archive | 3 |
+| D — resolved decisions, archive | 3 |
+| **Moving (A+B+D)** | **42** |
+| C — keep on board (C1–C5 + FEAT-139) | 42 |
 | E — re-scoped, stay on board | 2 |
 | Live roadmap D1–D7 cards | 22 |
 | TASK-218 (this card) | 1 |
-| **Staying (C+E+live+self)** | **43** |
+| **Staying** | **67** |
 | **Total** | **109** ✅ |
 
-Verified mechanically: all 66 move-set ids resolve to a file on the board; no id
-appears in two sections; 109 − 66 = 43 and the 43 are exactly C + E + the live
-roadmap set + this card.
+Verified mechanically: all 42 move-set ids resolve to a file on the board; no id
+appears in two sections; 109 − 42 = 67.
 
-**Post-move expectation:** `backlog/` + `todo/` = 43, `archive/deprecated/` = 66,
-`Get-NextWorkItemId.ps1` returns **219** both before and after.
+**How this changed.** The first pass moved 66. Gary's two rules cut that to 42:
+- *"Keep any plugin or command card, even if it's an update to the underlying script"*
+  → 24 cards held (C4). Established by testing whether a command/plugin/script is the
+  card's **subject** (title + Files Affected), not merely mentioned in passing — a raw
+  grep for `/fw-move` matched 31 cards, most of which only cite it.
+- *"Do we have any open cards for hooks? Keep those"* → TECH-096 held (C5); TECH-114
+  and TECH-168 were already held under C1.
+
+**Post-move expectation:** `backlog/`+`todo/` = 66 (+1 in `doing/`),
+`archive/deprecated/` = 42, `Get-NextWorkItemId.ps1` returns **219** before and after.
 
 ---
 
@@ -332,7 +382,7 @@ original grouping got wrong and are the most likely reason a card deserves to co
       `**Deprecated:** 2026-09-02 — <reason>` stamp
 - [ ] All Section B cards have their finding written into the card **before** the move
 - [ ] All Section D cards moved with their resolution noted
-- [ ] Section C cards verified still on the board (none moved by accident)
+- [ ] Section C cards (all 42, C1–C5) verified still on the board (none moved by accident)
 - [x] Section E resolved by Gary (2026-09-02): BUG-181 and FEAT-175 both **re-scoped, not archived** — they stay on the board
 - [ ] `ROADMAP-DELIVERABLES.md` D8 updated — the "bulk-move" recommendation replaced by a
       pointer to this card's disposition table
@@ -346,10 +396,11 @@ original grouping got wrong and are the most likely reason a card deserves to co
 
 <!-- ⚠️ AI: Complete items in order. STOP at each [ ] and wait for approval. -->
 
-- [x] **PRE-IMPLEMENTATION REVIEW COMPLETED** (2026-09-02) — Section E resolved (both
-      re-scoped); reason codes revised: `PLUGIN-TIER` was too generic with four
-      command-bearing sets in the repo, split into `OLD-PLUGIN` / `TIER-SYNC` /
-      `OLD-ENGINE`
+- [x] **PRE-IMPLEMENTATION REVIEW COMPLETED** (2026-09-02). Three rulings from Gary:
+      (1) Section E — BUG-181 + FEAT-175 re-scoped, not archived. (2) `PLUGIN-TIER`
+      too generic with four command-bearing sets; split into `OLD-PLUGIN` /
+      `TIER-SYNC` / `OLD-ENGINE`. (3) **Keep every command, plugin, script, and hook
+      card** while the migration is mid-flight — move set 66 → 42
 - [ ] Record `Get-NextWorkItemId.ps1` output **before** any move
 - [ ] Create `archive/deprecated/` + README.md
 - [ ] Section B: write findings into the 6 cards
