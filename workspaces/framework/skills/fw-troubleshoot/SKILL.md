@@ -35,10 +35,10 @@ is archaeology by evening).
    causes** for this symptom on this environment — hypotheses grounded in
    evidence others already gathered, not guesses.
 
-4. **Anchor the activity.** If an operations workspace with the flow folders
-   exists, open an `INC-` record as the flow anchor (cross-reference any
-   customer ticket — their id is never our key). Until the ops flow lands in
-   this repo, note the anchor as pending and continue with the case alone.
+4. **Anchor the activity.** Open an `INC-` record as the flow anchor via
+   `/fw-new-ops-record` (cross-reference any customer ticket — their id is
+   never our key). The root `operations/` queue is created automatically on
+   first use (TASK-213).
 
 5. **Open the case.** Create
    `workspaces/kb/<domain>/research/<symptom-slug>/README.md` from the

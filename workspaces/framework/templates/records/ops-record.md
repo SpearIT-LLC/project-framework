@@ -1,7 +1,7 @@
 <!-- Operations record template (plugin: templates/records/ops-record.md).
-     Created ONLY by fw-new-ops-record.sh, into workspaces/operations/open/ as
+     Created ONLY by fw-new-ops-record.sh, into the root operations/open/ as
      INC-nnn-<slug>.md (incident) or REQ-nnn-<slug>.md (request). One shared
-     sequence per operations workspace; the PREFIX carries the kind, the FOLDER
+     sequence per operations queue; the PREFIX carries the kind, the FOLDER
      carries the status (open -> onhold -> closed). Never create or move by hand.
 
      Customer ticket ids (Jira, ServiceNow, ...) go in Customer ref - a
@@ -17,7 +17,7 @@
 **Opened:** __OPENED__
 **Due:** __YYYY-MM-DD, or delete__
 **Customer ref:** __external ticket id(s), or delete__
-**Contacts:** __[Name](../../kb/company/contacts/slug.md) links, or delete__
+**Contacts:** __[Name](../../workspaces/kb/company/contacts/slug.md) links, or delete__
 **Closed:**
 **Resolution:**
 

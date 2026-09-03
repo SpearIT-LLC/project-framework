@@ -139,8 +139,17 @@ deliverable, a phase, an application, a knowledge base, or an operations area.
 
 ### D2. Everything is a workspace; the root owns only the spine
 
-The repo root holds `.claude/`, `kanban/`, `history/`, `workspaces/`, `framework.yaml`,
-`CLAUDE.md` — and nothing else that constitutes work. Honda's root-level `dist/ installers/
+> **Amended 2026-09-03 (TASK-213):** queue namespaces are spine, not work. A queue of
+> cards is an **index of** work, not work itself — which is why the board was never a
+> workspace either. `operations/` therefore moves out of `workspaces/` to the repo
+> root, a peer queue beside the (future) `kanban/`: same engine (`fw-move.sh`), same
+> status-is-the-first-path-segment rule, separate ID sequence per namespace.
+> `operations` leaves the workspace type enum (→ product, project, knowledgebase); its
+> scaffold is created on first `/fw-new-ops-record` from `templates/queues/operations/`.
+> D2's intent — no loose work at the root — is preserved.
+
+The repo root holds `.claude/`, `kanban/`, `history/`, `workspaces/`, `operations/`
+(when present), `framework.yaml`, `CLAUDE.md` — and nothing else that constitutes work. Honda's root-level `dist/ installers/
 manifests/ scripts/ wrappers/` (the original prototype tool) become either their own
 repo or a workspace like any other. There is no privileged root-level project.
 
@@ -556,3 +565,10 @@ standard in Dec 2025; plugins are now the standard distribution unit).
   `problems/` (root-cause work is a troubleshooting case + kanban item), no `changes/` (customer
   changes live in their change-management tool; our own changes are cards), no `cancelled/`
   (outcome is a `Resolution:` closure code, not a location).
+- 2026-09-03: D2 amended (TASK-213) — operations becomes a **root queue namespace**
+  beside the future `kanban/`, out of `workspaces/`: a queue of cards is an index of
+  work, not work, so queues are spine. `operations` leaves the workspace type enum
+  (→ product, project, knowledgebase); scaffold created on first `/fw-new-ops-record`
+  from `templates/queues/operations/`. Separate ID sequences per namespace stand
+  (D5's collision warning is the reason). Decided with Gary at TASK-213's
+  pre-implementation review; TASK-197's scenario partition verified undisturbed.

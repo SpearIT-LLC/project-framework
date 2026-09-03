@@ -14,16 +14,14 @@ set -euo pipefail
 usage() {
   {
     echo "Usage: fw-new-workspace.sh <type> <name>"
-    echo "       fw-new-workspace.sh operations"
     echo "       fw-new-workspace.sh kb <domain>"
     echo ""
-    echo "Types (case-insensitive): product  project  kb  operations"
+    echo "Types (case-insensitive): product  project  kb"
     echo "product    — created, delivered, maintained; named for the product."
     echo "project    — finite, freezes at close; contracted work (an SOW) is a"
     echo "             project named for the SOW, e.g. bd-sow-001."
     echo "kb         — the knowledgebase; always created at workspaces/kb with its"
     echo "             first domain, e.g. 'licensing'. No custom name."
-    echo "operations — always created at workspaces/operations. No custom name."
   } >&2
   exit 1
 }
@@ -41,21 +39,18 @@ fi
 TYPE="$(printf '%s' "$1" | tr '[:upper:]' '[:lower:]')"
 case "$TYPE" in
   kb|knowledgebase) TYPE="knowledgebase" ;;
-  product|project|operations) ;;
+  product|project) ;;
+  operations) echo "Error: operations is not a workspace — it is the root queue at operations/, created on first /fw-new-ops-record (TASK-213)" >&2; usage ;;
   application) echo "Error: type 'application' was renamed 'product' (TASK-197)" >&2; usage ;;
   sow) echo "Error: 'sow' is not a type — an SOW is a project named for the SOW, e.g. bd-sow-001 (TASK-197)" >&2; usage ;;
   *) echo "Error: unknown type '$1'" >&2; usage ;;
 esac
 
-# kb and operations are one-per-repo with fixed folder names; only product and
-# project take a custom name.
+# kb is one-per-repo with a fixed folder name; product and project take a
+# custom name.
 NAME=""
 DOMAIN=""
 case "$TYPE" in
-  operations)
-    NAME="operations"
-    [ $# -le 1 ] || { echo "Error: operations takes no name — the workspace is always workspaces/operations" >&2; usage; }
-    ;;
   knowledgebase)
     NAME="kb"
     case $# in
@@ -129,9 +124,8 @@ fi
 
 # Validate the template set BEFORE creating anything (BUG-208): a missing
 # overlay must refuse cleanly, never die mid-copy leaving a half-built tree.
-# operations opts out of the floor, so only its own overlay is required.
 MISSING=""
-[ "$TYPE" = "operations" ] || [ -d "$TPL/floor" ] || MISSING="floor"
+[ -d "$TPL/floor" ] || MISSING="floor"
 [ -d "$TPL/$TYPE" ] || MISSING="${MISSING:+$MISSING and }$TYPE"
 if [ -n "$MISSING" ]; then
   if [ -n "$OVERRIDE" ]; then
@@ -147,11 +141,10 @@ mkdir -p "$WS"
 
 # Compose: floor + type overlay. (knowledgebase never reaches here — it
 # delegated to fw-new-kb-domain.sh above; kb opts out of the floor per the
-# ADR-009 D4 amendment 2026-08-18.)
-# operations opts out of the floor too (FEAT-193): its overlay is the whole tree —
-# flow folders (open/onhold/closed) replace intake/; no deliverables/ (the closed
-# record IS the output); contacts live in the kb company domain (FEAT-194).
-[ "$TYPE" = "operations" ] || cp -R "$TPL/floor/." "$WS/"
+# ADR-009 D4 amendment 2026-08-18. The operations queue is not a workspace —
+# TASK-213 — its scaffold lives in templates/queues/ and is laid down by
+# fw-new-ops-record.sh on first use.)
+cp -R "$TPL/floor/." "$WS/"
 cp -R "$TPL/$TYPE/." "$WS/"
 
 # Fill placeholders in seeded markdown (__NAME__, __DOMAIN__).

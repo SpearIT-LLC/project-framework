@@ -43,11 +43,10 @@ files a BUG card; a surprising-but-correct result files a note on the owning FEA
   project named for the SOW" guidance and the product-splits-out rule; AI asks purpose.
 - Pass: tree = `agreements deliverables meetings reference requirements`; no `src`.
 
-**UAT-03 — operations (no name).** `> /fw-new-workspace operations`
-- Expected: `workspaces/operations/` = `open onhold closed meetings agreements reference`
-  + README. Then `> /fw-new-workspace operations east` → refused: "operations takes no
-  name".
-- Pass: exact six folders; no `intake/`, `deliverables/`, `contacts/`; the named form errors.
+**UAT-03 — operations is not a workspace (TASK-213).** `> /fw-new-workspace operations`
+- Expected: refused with the pointer "operations is not a workspace — it is the root
+  queue at `operations/`, created on first `/fw-new-ops-record`". Nothing created.
+- Pass: the pointer names `/fw-new-ops-record`; `workspaces/operations/` does not exist.
 
 **UAT-04 — kb through the workspace door.** `> /fw-new-workspace KB licensing`
 - Expected: `workspaces/kb/` (fixed name despite `KB` casing) with `README.md`, `INDEX.md`
@@ -164,15 +163,19 @@ another editor (notepad), changing an assignment role. Do not touch Claude.
 
 ## D. Operations records — `/fw-new-ops-record`, `/fw-move`, sweep
 
-**UAT-14 — no ops workspace.** In a repo without `workspaces/operations`:
-`> /fw-new-ops-record inc test` → error pointing at `/fw-new-workspace operations`.
+**UAT-14 — first use creates the queue (TASK-213).** In a repo without a root
+`operations/`: `> /fw-new-ops-record inc test`
+- Expected: the script creates `operations/` = `open onhold closed meetings agreements
+  reference` + README from `templates/queues/operations/`, prints "Created operations
+  queue at operations/ (first use)", then creates the record.
+- Pass: exact six folders at the repo root (not under `workspaces/`); record in `open/`.
 
-**UAT-15 — create, shared sequence.** With the operations workspace from UAT-03:
+**UAT-15 — create, shared sequence.** With the operations queue from UAT-14:
 `> /fw-new-ops-record inc vpn-drops-nightly` then `> /fw-new-ops-record req add-user-jdoe`
-- Expected: `open/INC-001-vpn-drops-nightly.md` and `open/REQ-002-add-user-jdoe.md`
-  (one sequence, two prefixes); **AI asks** for title/body and deletes unused optional
-  fields; `Closed:`/`Resolution:` left blank.
-- Pass: ids 001 and 002; `Kind:` and `Opened:` filled by the script.
+- Expected: `open/INC-…` and `open/REQ-…` continue one sequence, two prefixes; **AI
+  asks** for title/body and deletes unused optional fields; `Closed:`/`Resolution:`
+  left blank.
+- Pass: consecutive ids; `Kind:` and `Opened:` filled by the script.
 
 **UAT-15b — attachments.** The reporter (us — this is our own intake record, not the
 client's ServiceNow/Jira) hands over a text file and a screenshot for INC-001:

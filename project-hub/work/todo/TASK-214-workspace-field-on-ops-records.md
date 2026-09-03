@@ -69,6 +69,25 @@ narrative, `Related:` keeps the pointers, neither restates the other.
 Open: is this needed now, or does `Customer ref:` plus prose cover enough until a real
 case demands it? Filing the option rather than the implementation.
 
+## Evidence (2026-09-03, UAT)
+
+First real intake that needed the field: `REQ-006-new-widget-install` in framework-uat.
+Gary's intake: "It's for the Rustic Robotics project. Barney is a SpearIT employee."
+With no field for the project, the AI first wrote `Customer: Rustic Robotics` into the
+body (wrong — Rustic Robotics is the project, not a customer ticket source), then
+improvised a `**Project:**` header the template does not have. Gary's question at the
+time: "Do we associate a project/product with each INC/REQ? Make it optional?" — the
+answer is this card; Gary agreed an optional field is right. The record was reconciled
+to the decisions above: `Workspace:` blank (no `rustic-robotics` workspace exists in that
+repo), the project named in prose.
+
+Two notes for the open questions:
+
+- `Contacts:` alone cannot carry the association — Barney is the install *target*, not
+  the customer, and his contact record says SpearIT. The field is needed, not merely nice.
+- The intake step should ask "Which workspace is this for?" and accept blank; the
+  command doc should say so.
+
 ## Scope
 
 - `templates/records/ops-record.md`: add `**Workspace:**`, with the blank-means-unknown

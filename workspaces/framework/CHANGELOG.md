@@ -36,6 +36,16 @@ plain semver 0.x during the framework workspace build.
   closure code). (FEAT-193)
 
 ### Changed
+- **Operations is a root queue namespace, no longer a workspace** (TASK-213, ADR-009 D2
+  amended): records live at `operations/` beside the future `kanban/` — a queue of cards
+  is an index of work, not work, so queues are spine. `fw-move.sh`, `fw-next-id.sh`,
+  `fw-new-ops-record.sh`, and `fw-contacts.sh` resolve `operations/` at the repo root;
+  `operations` leaves the workspace type enum (→ `product`, `project`, `kb`) with a
+  pointer error; the queue scaffold moved `templates/workspaces/operations/` →
+  `templates/queues/operations/` and is created automatically on first
+  `/fw-new-ops-record` (`.claude/templates/queues/` overrides). Separate ID sequences
+  per namespace unchanged. Contact links from ops records now point to
+  `../../workspaces/kb/company/contacts/`.
 - `/fw-contacts refresh` regenerates the views — a self-documenting name for what was
   previously the bare, argument-less form (which still works). A command whose
   behaviour depends on remembering that no arguments means "refresh" is not

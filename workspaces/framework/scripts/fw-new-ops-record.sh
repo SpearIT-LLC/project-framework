@@ -1,8 +1,10 @@
 #!/usr/bin/env bash
 # fw-new-ops-record.sh — the create gate for operations records (FEAT-195).
 # Mints the next id from the shared operations sequence (fw-next-id.sh), copies
-# the plugin's templates/records/ops-record.md, and lands the record in
-# workspaces/operations/open/. The only sanctioned way to create a record.
+# the plugin's templates/records/ops-record.md, and lands the record in the root
+# operations/open/ queue (ADR-009 D2 as amended by TASK-213). The only
+# sanctioned way to create a record. First use creates the queue scaffold from
+# templates/queues/operations/ (a project's .claude/templates/queues/ overrides).
 #
 # Usage: fw-new-ops-record.sh [--root <dir>] <inc|req> <slug>
 #   inc → INC-nnn-<slug>.md (incident)   req → REQ-nnn-<slug>.md (request)
@@ -24,13 +26,19 @@ case "$SLUG" in
 esac
 
 [ -n "$ROOT" ] || ROOT="$(git rev-parse --show-toplevel)"
-OPS="$ROOT/workspaces/operations"
-if [ ! -d "$OPS/open" ]; then
-  echo "Error: no operations workspace with flow folders at workspaces/operations — create it first: fw-new-workspace.sh operations" >&2
-  exit 1
-fi
-
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+# The queue lives at the repo root (TASK-213). First use creates it — scaffold
+# from the template tree, project override first (same channel as records).
+OPS="$ROOT/operations"
+if [ ! -d "$OPS/open" ]; then
+  QTPL="$ROOT/.claude/templates/queues/operations"
+  [ -d "$QTPL" ] || QTPL="$SCRIPT_DIR/../templates/queues/operations"
+  [ -d "$QTPL" ] || { echo "Error: operations queue template not found (looked for .claude/templates/queues/operations and $SCRIPT_DIR/../templates/queues/operations)" >&2; exit 1; }
+  mkdir -p "$OPS"
+  cp -R "$QTPL/." "$OPS/"
+  echo "Created operations queue at operations/ (first use)"
+fi
 TPL="$ROOT/.claude/templates/records/ops-record.md"
 [ -f "$TPL" ] || TPL="$SCRIPT_DIR/../templates/records/ops-record.md"
 [ -f "$TPL" ] || { echo "Error: ops-record template not found" >&2; exit 1; }
@@ -42,5 +50,5 @@ FILE="$OPS/open/$FULL-$SLUG.md"
 
 TODAY="$(date +%Y-%m-%d)"
 sed "s/__ID__/$FULL/g; s/__KIND__/$KIND/g; s/__OPENED__/$TODAY/g" "$TPL" > "$FILE"
-echo "Created: workspaces/operations/open/$FULL-$SLUG.md"
+echo "Created: operations/open/$FULL-$SLUG.md"
 echo "Next: fill __TITLE__ and the body; delete optional fields you don't need."

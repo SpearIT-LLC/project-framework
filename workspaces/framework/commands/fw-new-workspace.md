@@ -1,6 +1,6 @@
 ---
 description: Create a new workspace with the scaffold for its type
-argument-hint: "<type> <name>  |  operations  |  kb <domain>"
+argument-hint: "<type> <name>  |  kb <domain>"
 ---
 
 # /fw-new-workspace - Create a Workspace
@@ -24,17 +24,17 @@ requested type's overlay.
 
    ```bash
    bash "${CLAUDE_PLUGIN_ROOT}/scripts/fw-new-workspace.sh" <type> <name>
-   bash "${CLAUDE_PLUGIN_ROOT}/scripts/fw-new-workspace.sh" operations
    bash "${CLAUDE_PLUGIN_ROOT}/scripts/fw-new-workspace.sh" kb <domain>
    ```
 
    **Argument order is type first.** Types (case-insensitive): `product`,
-   `project`, `kb`, `operations`. Only `product` and `project` take a custom
-   name — **if the user gave one of those types but no name, ask:** "What
-   should this workspace be called?" `kb` and `operations` are one-per-repo
-   with fixed folder names (`workspaces/kb`, `workspaces/operations`); the
-   script accepts any casing or the long form `knowledgebase` but always
-   creates `kb/`.
+   `project`, `kb`. Only `product` and `project` take a custom name — **if the
+   user gave one of those types but no name, ask:** "What should this
+   workspace be called?" `kb` is one-per-repo with a fixed folder name
+   (`workspaces/kb`); the script accepts any casing or the long form
+   `knowledgebase` but always creates `kb/`. Operations is **not** a workspace
+   type — it is the root queue at `operations/`, created on first
+   `/fw-new-ops-record` (TASK-213).
 
    Naming convention: a product is named for the product; a project for the
    initiative — and **contracted work (an SOW) is a project named for the SOW

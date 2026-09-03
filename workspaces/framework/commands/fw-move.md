@@ -8,9 +8,10 @@ argument-hint: "<id> <open|onhold|closed> [--resolution <code>]  |  sweep"
 The namespace-aware move engine of the new build. One engine, one policy table
 per namespace; **status is the first path segment under the namespace root**,
 anything deeper (year buckets, artifact bundles `INC-nnn/`) is grouping, never
-status. Today only the **operations** namespace is active here — the kanban
-policy slot fills at board crossover (ADR-009 D5); until then the live board
-keeps using the root `/fw-move`.
+status. Namespaces are root queues beside the board (ADR-009 D2 as amended by
+TASK-213): operations lives at `operations/`. Today only the **operations**
+namespace is active here — the kanban policy slot fills at board crossover
+(ADR-009 D5); until then the live board keeps using the root `/fw-move`.
 
 ## Operations policy (what the script enforces)
 

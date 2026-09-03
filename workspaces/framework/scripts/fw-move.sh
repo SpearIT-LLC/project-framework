@@ -7,8 +7,8 @@
 # Records are files <PREFIX>-<n>-<slug>.md; a sibling folder <PREFIX>-<n>/ is the
 # record's artifact bundle and always moves with it.
 #
-# Namespaces:
-#   operations — prefixes INC, REQ; folders open, onhold, closed
+# Namespaces (root queues beside the board — ADR-009 D2 as amended by TASK-213):
+#   operations — root operations/; prefixes INC, REQ; folders open, onhold, closed
 #                transitions: open->onhold, onhold->open, open->closed, onhold->closed
 #                closed is terminal; -> closed REQUIRES --resolution <code> and stamps
 #                **Closed:** <today> and **Resolution:** <code>. No kanban gates apply.
@@ -28,7 +28,7 @@ ROOT=""
 if [ "${1:-}" = "--root" ]; then ROOT="${2:?--root requires a directory}"; shift 2; fi
 [ -n "$ROOT" ] || ROOT="$(git rev-parse --show-toplevel 2>/dev/null)" || { echo "Error: not inside a git repository" >&2; exit 1; }
 
-OPS_ROOT="$ROOT/workspaces/operations"
+OPS_ROOT="$ROOT/operations"
 OPS_FOLDERS="open onhold closed"
 OPS_TRANSITIONS="open:onhold onhold:open open:closed onhold:closed"
 CODES="resolved cancelled duplicate no-fault-found rejected"
@@ -42,7 +42,7 @@ gmv() { git -C "$ROOT" mv "$1" "$2" 2>/dev/null || mv "$1" "$2"; }
 # sweep: operations closed/*.md whose Closed: year < current year -> closed/YYYY/
 # ---------------------------------------------------------------------------
 if [ "${1:-}" = "sweep" ]; then
-  [ -d "$OPS_ROOT/closed" ] || die "no operations closed/ folder at workspaces/operations"
+  [ -d "$OPS_ROOT/closed" ] || die "no operations closed/ folder at operations/"
   THIS_YEAR="$(date +%Y)"; MOVED=0
   for f in "$OPS_ROOT"/closed/*.md; do
     [ -f "$f" ] || continue
@@ -82,7 +82,7 @@ case "$PREFIX" in
   *) die "prefix '$PREFIX' belongs to the kanban namespace, which is not active in this repo until the board crosses over (ADR-009 D5) — use the root /fw-move" ;;
 esac
 
-[ -d "$OPS_ROOT" ] || die "no operations workspace at workspaces/operations"
+[ -d "$OPS_ROOT" ] || die "no operations queue at operations/ — create the first record with /fw-new-ops-record"
 echo "$OPS_FOLDERS" | grep -qw "$TARGET" || die "invalid target '$TARGET' — operations folders: $OPS_FOLDERS"
 
 # Locate the record: status folder is the first segment; scan recursively (buckets)

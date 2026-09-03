@@ -18,7 +18,7 @@ if [ "${1:-}" = "--root" ]; then ROOT="${2:?--root requires a directory}"; shift
 [ -n "$ROOT" ] || ROOT="$(git rev-parse --show-toplevel)"
 
 case "$1" in
-  operations) NS="$ROOT/workspaces/operations" ;;
+  operations) NS="$ROOT/operations" ;;
   kanban)
     NS="$ROOT/kanban"
     if [ ! -d "$NS" ]; then
