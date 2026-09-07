@@ -5,7 +5,22 @@ plain semver 0.x during the framework workspace build.
 
 ## [Unreleased]
 
+### Fixed
+- `fw-move` accepts a **list of ids** again, restoring what the old engine had:
+  `fw-move "1, 2, 3" onhold`, comma- or space-separated, quoted or not. Items are
+  validated and moved one at a time and the run continues past a failure, so a batch
+  may partially apply — the `moved / skipped / failed` summary reports it, and a record
+  already in the target is skipped rather than failed. Exit is non-zero if any item
+  failed. `sweep` is unchanged. (BUG-215)
+
 ### Added
+- A batch `fw-move ... closed` **prompts for each record's resolution code in turn**.
+  The code classifies one record, and the close gate is already per record (it also
+  asks for a one-line reason and, for incidents, the durable-knowledge question), so
+  one shared code paired with N individually-written outcomes would be incoherent.
+  `--resolution` is therefore refused with a list and unchanged for a single id; with
+  no terminal to prompt, those items fail cleanly rather than hanging on a read that
+  cannot return. (BUG-215)
 - CONTACTS.md views also refresh at **session start** (`SessionStart` hook on
   `startup|resume|clear`, `refresh-contacts.sh --all`). A record edited outside Claude
   Code — notepad, another editor, a merge — is invisible to `PostToolUse`, so the views

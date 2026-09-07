@@ -17,9 +17,11 @@ namespace is active here — the kanban policy slot fills at board crossover
 
 - Folders `open/ → onhold/ → closed/`; `open ↔ onhold` both ways; `closed` is
   terminal (reopening = a new record).
-- `→ closed` **requires** `--resolution <code>`: `resolved | cancelled |
-  duplicate | no-fault-found | rejected` — the outcome is a field, not a folder.
-  The engine stamps `**Closed:**` and `**Resolution:**`.
+- `→ closed` **requires** a resolution code: `resolved | cancelled | duplicate |
+  no-fault-found | rejected` — the outcome is a field, not a folder. The engine
+  stamps `**Closed:**` and `**Resolution:**`. Supply it with `--resolution` for a
+  single record; a batch is prompted per record, because the code classifies one
+  record and the close gate is already per record (BUG-215).
 - The record's artifact bundle (`INC-nnn/` sibling folder) moves with it.
 - No kanban gates (ripeness, dependencies, acceptance criteria) apply to ops.
 
@@ -35,7 +37,18 @@ namespace is active here — the kanban policy slot fills at board crossover
 
    ```bash
    bash "${CLAUDE_PLUGIN_ROOT}/scripts/fw-move.sh" <id> <target> [--resolution <code>]
+   bash "${CLAUDE_PLUGIN_ROOT}/scripts/fw-move.sh" "<id, id, ...>" <target>
    ```
+
+   **Batch (BUG-215).** The id argument accepts a list, comma- or space-separated;
+   quote it. Items are validated and moved one at a time and the run continues past
+   a failure, so a batch may partially apply — the summary line
+   (`moved / skipped / failed`) is what reports it. A record already in the target is
+   *skipped*, not failed. Exit is non-zero if any item failed.
+
+   **`--resolution` is per record, so it is refused with a list.** A batch
+   `-> closed` prompts for each record's code in turn; with no terminal to prompt,
+   those items fail rather than silently sharing one code.
 
    Ids: `INC-012`, `REQ-3`, or bare `12`. If the script rejects the move
    (invalid transition, closed-is-terminal, missing/unknown code), report its

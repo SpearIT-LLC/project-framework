@@ -61,21 +61,69 @@ at implementation:
   the new one is single-shot. A batch needs the same summary.
 - **Partial failure.** If item 2 of 3 fails its transition check, do items 1 and 3 still
   move? The old engine continues and reports; that is the precedent, and it matches
-  `git mv` semantics per item.
-- **`--resolution` applies to the whole batch.** Closing three records with one code is
-  the common case (`duplicate`, `cancelled`). Confirm that is acceptable rather than
-  requiring per-item codes.
+  `git mv` semantics per item. **Decided 2026-09-07: validate per item inside the loop,
+  continue on failure, report at the end.** A batch may therefore partially apply — which
+  is the old engine's behaviour and what the per-item summary exists to make visible.
+- **~~`--resolution` applies to the whole batch.~~ Decided 2026-09-07: per record.**
+  Gary: *"I think each card gets its own resolution."* The reasoning is that
+  `Resolution:` is a per-record classification and the close gate is **already
+  per-record** — it asks for the code *and a one-line reason*, plus the
+  durable-knowledge question for incidents, and that answer lands in each record's own
+  **Outcome** section. One shared code paired with N individually-written outcomes is
+  incoherent.
+
+  **Mechanism: prompt per card.** A batch `→ closed` asks for each record's code in
+  turn. Rejected: per-id inline syntax (`"1:duplicate, 2:resolved"`) — invents a grammar
+  to make a judgment step look mechanical; and refusing batch `→ closed` outright —
+  unnecessary once prompting works.
+
+  **`--resolution` on a batch:** with more than one id, the flag cannot express the
+  decision. Reject it rather than silently applying one code to all.
+  Single-id invocations keep the flag exactly as today (scriptable, no prompt).
 - **`sweep` is unaffected** — it already operates on a set.
 
 ## Acceptance Criteria
 
-- [ ] `fw-move.sh "1, 2, 3" closed --resolution resolved` moves all three
-- [ ] Comma-separated, space-separated, and mixed forms all parse; quoted and unquoted
-- [ ] Full ids, bare numerics, and mixed lists all work
-- [ ] Per-item summary reported (moved / skipped / failed), matching the old engine
-- [ ] A failing item does not prevent the others from moving
-- [ ] Command doc shows the batch form
-- [ ] Verified against the built plugin, not the source tree (TECH-188)
+- [x] `fw-move.sh "1, 2, 3" onhold` moves all three *(T1)*
+- [x] `fw-move.sh "1, 2, 3" closed` prompts for each record's resolution in turn
+      *(T11b — two records, two different codes stamped)*
+- [x] `--resolution` with a multi-id list is rejected with a clear message *(T3)*
+- [x] `fw-move.sh 1 closed --resolution duplicate` still works unprompted (single id) *(T5)*
+- [x] Comma-separated, space-separated, and mixed forms all parse; quoted and unquoted
+      *(T1 quoted commas, T4 unquoted spaces)*
+- [x] Full ids, bare numerics, and mixed lists all work *(T9 confirms prefix routing;
+      bare numerics throughout)*
+- [x] Per-item summary reported (moved / skipped / failed), matching the old engine *(T1, T4, T7)*
+- [x] A failing item does not prevent the others from moving *(T4 — 1 ok, 99 missing, 3 ok)*
+- [x] Command doc shows the batch form
+- [/] Verified against the built plugin, not the source tree (TECH-188) — **in progress.**
+      Tested at source via `--root` against a scratch git fixture (12 cases, below).
+      The built-plugin cycle needs a publish step not available in the remote session
+      of 2026-09-07. **This is the one criterion still open.**
+
+---
+
+## Test Evidence (2026-09-07, source tree via `--root`)
+
+Scratch git fixture: four INC records in `open/`, one carrying an artifact bundle.
+
+| # | Case | Result |
+|---|---|---|
+| T1 | Batch `"1, 2, 3" onhold`, quoted commas | 3 moved; bundle `INC-002/` moved with its record |
+| T2 | Single id still works | moved, no summary line (single move prints its own) |
+| T3 | `--resolution` on a batch | refused, exit 1 |
+| T4 | Partial failure `1 99 3` unquoted | 1 and 3 moved, 99 reported, exit 1 |
+| T5 | Single `closed --resolution resolved` | stamped `Closed:` + `Resolution:` |
+| T6 | Batch `→ closed` with no tty | both items failed cleanly — **no hang**, exit 1 |
+| T7 | Already in target | skipped (not failed), exit 0 |
+| T8 | `closed` is terminal | refused |
+| T9 | Kanban prefix `BUG-215` | refused with the crossover pointer |
+| T10 | Unknown resolution code | refused |
+| T11b | Interactive prompt, two records | `duplicate` and `cancelled` stamped per record |
+| T12 | `sweep` regression | prior-year record bucketed to `closed/2025/` |
+
+**T6 is the one worth keeping in mind:** a non-interactive batch close fails rather than
+hanging on a `read` that can never return. That is the headless case FEAT-221 cares about.
 
 ## Related
 
