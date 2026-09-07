@@ -54,10 +54,15 @@ turns on the kanban namespace, and these are the rules that namespace runs by.
 
 ---
 
-## The Sixteen
+## The Eighteen
 
 Grouped by what they block. **Source card** holds the analysis; this card holds the
 decision and the mechanism.
+
+> **Eighteen, not sixteen** — two were added to Group 2 on 2026-09-07 (the FEAT-221
+> rows): the `accept/` state, and `blocked/` metadata for internally-blocked cards.
+> Both are board lifecycle policy, so they belong here rather than in the command card
+> that first needs them.
 
 ### Group 1 — Blocks the work-item template (and therefore FEAT-175)
 
@@ -77,6 +82,8 @@ decision and the mechanism.
 | TECH-077 | Never-delete / archive-only. **Write it down and back it with a check**; TASK-218 honoured an unwritten rule |
 | TECH-078 | Release archival — `done/` items to `history/releases/vX.Y.Z/`. No release tooling exists yet |
 | FEAT-030 | A hold/paused state for board items. Operations has `onhold/`; kanban has no equivalent defined |
+| FEAT-221 | **`accept/` — a state for work that is finished but not yet accepted.** Decide it alongside FEAT-030: the two are adjacent but not the same ("waiting on judgment of finished work" vs "paused mid-work"), and they have different exits. Blocks FEAT-221 |
+| FEAT-221 | **`blocked/` metadata for internally-blocked cards.** Today's fields assume an external party (`Blocked By`, `External Reference`, `Expected Resolution`). A card parked by an unattended batch is blocked on an *unanswered question*, not a third party. Widen the fields or add a batch-parked variant. Blocks FEAT-221.2 |
 
 ### Group 3 — Process and collaboration
 
@@ -126,7 +133,7 @@ test this card is held to.
 
 ## Acceptance Criteria
 
-- [ ] Every one of the sixteen has a recorded outcome: **defined** (with its mechanism),
+- [ ] Every one of the eighteen has a recorded outcome: **defined** (with its mechanism),
       **decided-by-construction** (with the rationale written down), or **dropped** (with
       the reason)
 - [ ] Group 1's five are settled **before** any work-item template is authored
@@ -135,6 +142,11 @@ test this card is held to.
 - [ ] The never-delete rule (TECH-077) is written down and backed by a check, not habit
 - [ ] The `fw-` namespace rule (DECISION-171) is recorded where a future contributor will
       find it
+- [ ] `accept/` is decided against FEAT-030 (one state or two), and if adopted: the
+      folder, its transitions, and the acceptance-criteria gate placement
+      (FEAT-221.1) are settled
+- [ ] `blocked/` metadata covers an internally-blocked card (unanswered question), not
+      only an external party
 - [ ] Every source card is closed, moved to `done/`, or archived with a closing note —
       none is left open describing a convention that is now defined
 - [ ] Plugin CHANGELOG updated
@@ -179,7 +191,10 @@ test this card is held to.
 - **ADR-008** — Root 2 (*invariants written as prose degrade silently*) is why every
   convention here needs a mechanism, not just a decision.
 - **ADR-006** — the work-item type taxonomy; the conventions here sit around it, not on it.
+- **FEAT-221** — unattended batch implementation. **Blocked by this card's Group 2**
+  (`accept/`). Its children FEAT-221.1/.2/.3 carry the gate change, the command, and the
+  ADR-001 amendment respectively.
 
 ---
 
-**Last Updated:** 2026-09-02
+**Last Updated:** 2026-09-07

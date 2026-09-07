@@ -519,6 +519,8 @@ standard in Dec 2025; plugins are now the standard distribution unit).
 - [The Onion Retrospective](../../retrospectives/2026-07-22-the-onion-retrospective.md)
 - [Gary's Thoughts — 2026-07-16](../../retrospectives/2026-07-16-garys-thoughts.md) (§Streams, §Structure Thoughts)
 - `project-hub/retrospectives/FrameworkPlanning-FolderStructure-Proposed.png` — the 2026-08-18 mind-graph
+  (published source: https://lucid.app/lucidchart/414bbb9d-9e4d-4e72-ac69-13d70e1cfef2/view —
+  indexed in [diagram-index.md](../../docs/diagram-index.md))
 - Field evidence inspected 2026-08-18: `SpearIT/Projects/HPC/HPCJobQueuePrototype`,
   `SpearIT/Clients Current/Boston Dynamics`
 - FEAT-163 (workspace-aware reporting), FEAT-164 (workspace content structure),

@@ -91,6 +91,9 @@ sources:
   # Templates & Setup
   new-project-setup: templates/NEW-PROJECT-CHECKLIST.md
 
+  # Diagrams
+  diagram-index: project-hub/docs/diagram-index.md
+
   # Patterns
   pattern-cmd-wrappers: framework/docs/patterns/cmd-wrappers.md
   pattern-powershell-modules: framework/docs/patterns/powershell-modules.md
