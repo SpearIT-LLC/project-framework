@@ -145,34 +145,30 @@ prevent, because a half-done card that lands in `accept/` looks finished.
 On trip: **ask if a person can resolve it now; otherwise mark, note, and park.** Never
 invent an answer, never implement around the gap, never halt the batch.
 
-**`[!]` may also warrant an ask.** Gary, 2026-09-07: park applies *"if the user is not
-able to answer/resolve the issue interactively during the run."* A watching user can
-often clear a technical wall on the spot — install the missing dependency, fix the path,
-grant the permission. So `[!]` is not unconditionally silent; what differs from `[?]` is
-what is being asked for (a fix, not an answer) and that a wall is far more likely to
-outlast the `--wait` window. **Decide at review** whether `[!]` asks by default, asks
-only when a run is known-interactive, or never asks.
+**Either marker may warrant an ask.** Gary, 2026-09-07: park applies *"if the user is
+not able to answer/resolve the issue interactively during the run."* A watching user can
+often clear a blocker on the spot — supply the missing information, unlock the file,
+grant the approval. Ask, and park on no answer, regardless of which marker applies.
+
+**Do not branch behaviour by marker type.** An earlier draft had `[!]` never asking, then
+asking only for "technical" blockers. Both were over-specified: a marker's meaning does
+not determine whether a person happens to be present to act on it. Gary, 2026-09-07:
+*"just define what ? and ! mean and use them where they apply, when they apply."*
 
 ```
-Anything blocking COMPLETE implementation
+Anything blocking COMPLETE implementation of the card
               │
               ▼
-          classify ──► [?] needs an answer ──► AskUserQuestion (--wait)
-              │                                        │
-              │        [!] hit a wall ────────────►    │   resolved in time
-              │        (ask only if a person can       │        │
-              │         fix it during the run)         │        ▼
-              │                                        │   clear marker,
-              │                                        │   continue card
-              │                                        │
-              │                              no answer / no one there / headless
-              │                                        │
-              └────────────────────────────────────────┤
-                                                       ▼
-                          mark the exact line + write the reason note
-                                       │
-                                       ▼
-                          doing → blocked ──► next card
+   AskUserQuestion (--wait) ──resolved in time──► clear marker, continue card
+              │
+     no answer / no one there / headless
+              │
+              ▼
+   mark the exact line — [?] need information · [!] something prevents completion
+   + write the reason note
+              │
+              ▼
+   doing → blocked ──► next card
 ```
 
 **Mark the line, write the reason, then move** (TECH-177, markers promoted 2026-09-07).
@@ -192,10 +188,14 @@ note.
 | Marker | Written when | Resolution is |
 |---|---|---|
 
-| Marker | Written when | Resolution is |
-|---|---|---|
-| `[?]` | An answer is needed that only the user can give | information |
-| `[!]` | A technical wall — command failed, dependency absent, file not where the card assumed | a fix |
+| Marker | Written when |
+|---|---|
+| `[?]` | More information is needed to complete the job |
+| `[!]` | Something prevents completion — technical, procedural, resource, or another card this sub-task waits on |
+
+Definitions per TECH-177; apply them where they fit rather than matching a scenario list.
+Note the level: `[!]` marks **one blocked sub-task**. When the *whole card* waits on
+another card, that is `Depends On:`, which is already mechanized.
 
 Both block `→ doing` on the next run, so a parked card cannot silently re-enter the queue
 before the thing that stopped it is cleared. The marker is its own unblock condition — no
@@ -207,10 +207,8 @@ cursor, and the answer the user gave lives only in a batch report nobody re-read
 
 **Implementation notes:**
 
-- **Classify before asking**, and ask only where a person could plausibly resolve it
-  during the run. `[?]` always warrants an ask. `[!]` sometimes does — see the open
-  question above; a wall a watching user can fix in thirty seconds should not park a
-  card, but a wall requiring real work should not burn the `--wait` window either.
+- **Ask first, park on no answer** — the same path for either marker. The marker records
+  *what kind* of blocker it was; it does not gate whether asking was worth trying.
 - The availability test **is** the `AskUserQuestion` timeout — do not build a separate
   presence probe. None exists (parent card documents what was ruled out).
 - **Headless (`claude -p`) must skip stage 1.** With `--permission-prompts none` the
@@ -281,10 +279,9 @@ The run is unattended, so the report is the entire user-facing output. It must s
 - [ ] Cards land in `accept/`
 - [ ] **Anything** blocking complete implementation trips the breaker — not only a
       missing fact; a card is never partially implemented and passed on
-- [ ] A trip is classified `[?]` (answer needed) or `[!]` (technical wall) before acting
-- [ ] A `[?]` asks, and continues the run when answered in time
+- [ ] A parked trip is marked `[?]` or `[!]` per TECH-177's definitions
+- [ ] A trip asks, and continues the run when resolved in time
 - [ ] A resolved trip clears its marker and the card completes normally
-- [ ] `[!]` ask-or-park behaviour is decided and implemented consistently
 - [ ] An unanswered `[?]` parks to `blocked/` and the run continues
 - [ ] A headless run parks without attempting an ask it cannot make
 - [ ] Every parked card carries its marker on the **exact line** that tripped, not only

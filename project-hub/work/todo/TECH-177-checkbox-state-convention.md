@@ -72,14 +72,44 @@ both, and the use case makes their semantics concrete rather than speculative.
 
 ### What each means
 
-| Marker | Means | Resolution is | Written by |
-|---|---|---|---|
-| `[?]` | **I need an answer.** A question only the user can resolve | information | a human planning, **or the batch mid-run** |
-| `[!]` | **I hit a wall.** A technical obstruction — command failed, dependency absent from the environment, file not where the card assumed | a fix | usually the batch mid-run |
+| Marker | Means |
+|---|---|
+| `[?]` | **I need more information to complete the job.** |
+| `[!]` | **Something prevents completion of this item.** A technical limitation (a file is locked), a procedural one (approval required), a resource one (hardware not yet available), or another card that this sub-task waits on. |
 
-Both **block `→ doing`**. `[?]` because the answer is missing; `[!]` because *"it's
-something that prevents COMPLETE implementation"* (Gary, 2026-09-07) — an unresolved wall
-means the card will simply fail again.
+Both **block `→ doing`** — `[?]` because the information is missing, `[!]` because *"it's
+something that prevents COMPLETE implementation"* (Gary, 2026-09-07). An unresolved
+marker means the card will simply fail again.
+
+**Both carry a note** saying what is needed to clear them. The marker is the *location*;
+the note is the *reason*.
+
+**Deliberately not sub-categorised.** An earlier draft split `[!]` into technical /
+procedural / resource cases with different ask-or-park behaviour per case. Gary,
+2026-09-07: *"I don't think we need to pigeon hole the exact scenarios, just define what
+? and ! mean and use them where they apply, when they apply."* The definitions are the
+contract; placement is judgment.
+
+**Either marker may be written at planning time or mid-run.** A card can be marked ready
+to go *except* for one blocked item — the `[!]` sits on that line from the start and
+takes a reader straight to it, even when the blocker is a card still in `backlog/`. This
+is why ask-or-park behaviour is not a property of the marker: it depends on the moment,
+not the symbol.
+
+### `[!]` vs. `Depends On:` — micro vs. macro
+
+Both express blocking; they operate at different levels and do not compete.
+
+| | Scope | Mechanism |
+|---|---|---|
+| `Depends On:` | **Macro** — the *whole card* waits on another card | `check_dependencies` hard-blocks `→ doing`, naming the dependency's current folder |
+| `[!]` | **Micro** — *one sub-task* is blocked, whatever the blocker is | marks the exact line; blocks `→ doing` |
+
+Gary, 2026-09-07: *"Depends On means the whole card depends on another card at the macro
+level. `[!]` identifies a blocking issue at one sub task."*
+
+A card whose every remaining line is clear but for one blocked sub-task is not
+`Depends On:` — it is a card with one `[!]`.
 
 ### Why a marker, when `blocked/` already exists
 
@@ -87,17 +117,18 @@ means the card will simply fail again.
 stuck*. It cannot say *which of 200 lines is stuck*. The marker is a cursor: grep it and
 land on the exact criterion, checklist step, or acceptance line.
 
-This closes a real gap. The framework has three blocking layers and only two are
-identified:
+This closes a real gap. The framework identifies blocking at the card level and not
+below it:
 
 | Layer | What identifies it | Mechanized? |
 |---|---|---|
-| Card blocks card | `Depends On:` field | **Yes** — `check_dependencies` hard-blocks `→ doing` and names the dependency's folder |
-| External party | `Blocked By:` / `External Reference:` | Fields exist; nothing enforces them |
-| **Technical issue mid-execution** | **nothing before this card** | **No** → `[!]` |
+| Whole card waits on another card | `Depends On:` field | **Yes** — `check_dependencies` hard-blocks `→ doing` and names the dependency's folder |
+| Whole card waits on an external party | `Blocked By:` / `External Reference:` | Fields exist; nothing enforces them |
+| **One sub-task is blocked** | **nothing before this card** | **No** → `[!]` |
 
-`Blocked By:` is shaped for an external party (see `BUG-144`: *Blocked By: Anthropic*).
-It does not fit "the build step failed on line 4 of the checklist."
+`Blocked By:` is shaped for an external party blocking a whole card (see `BUG-144`:
+*Blocked By: Anthropic*). It does not fit "checklist line 4 is waiting on approval while
+the rest of the card is ready."
 
 ### Two lifecycle moments, one symbol
 
@@ -125,8 +156,8 @@ reader will take these markers as a general ripeness gate and D7 gets quietly ov
 1. **Who clears the marker?** If the AI clears `[?]` after applying the user's answer, it
    self-heals. If only a human clears it, it is an audit trail. Different mechanisms —
    decide before implementing.
-2. **Does `[!]` need a companion note field**, or is the marked line plus surrounding
-   card text enough to say what the wall was?
+2. **Does the note have a required shape**, or is free text beside the marker enough?
+   Settled that a note is required; its form is not.
 - **Decorative markers** (`[>]`, `[*]`, `["]`, etc.): mention as existing in the ecosystem but out of
   scope — they duplicate signals we already have (DECIDE marker, `blocked/` folder) or are cosmetic.
 
