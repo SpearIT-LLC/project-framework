@@ -198,6 +198,13 @@ premise (no standard exists) is superseded by settling the format here.
   new build rather than reconcile the old copies.
 - Found while asking why the 2026-09-07 history deviated from the template. The answer
   turned out to be that there is no single template to deviate from.
+- **The fourth source was found by running the plugin edition of the command**, a
+  deliberate probe by Gary rather than an accident. Executing it meant following its
+  reference to `templates/session-history-template.md` and verifying that file existed —
+  which is what surfaced CHORE-146. Reading a description of the plugin edition would
+  have produced one more table row and none of the useful finding. **When a concept has
+  multiple editions, run the other edition and follow its references** — that is how the
+  remaining verdicts in this card should be gathered too.
 - The 2026-09-07 session history is the best available worked example of the
   core+justified-optional shape; use it as the reference when authoring, but re-derive
   the format rather than transcribing it.

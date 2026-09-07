@@ -441,9 +441,23 @@ a line that reads as "ignore history" undercuts the decision it implements.
 
 ## A Fourth Source Found — and It Is the Best One (Later — Continuation)
 
-Invoking `/spearit-framework:session-history` (the **plugin** edition, rather than the
-local `/fw-session-history` used earlier today) surfaced a source FEAT-222 had missed.
-The card said three formats; there are **four authored sources**.
+**This was a deliberate probe, not an accident.** Gary ran
+`/spearit-framework:session-history` — the **plugin** edition, rather than the local
+`/fw-session-history` used earlier in the day — *"just to add to the discussion."* It
+surfaced a source FEAT-222 had missed an hour after the card was filed. The card said
+three formats; there are **four authored sources**.
+
+**Why running it beat being told about it.** Had the plugin edition simply been
+mentioned, the AI would have added a row to the conflict table and moved on. Executing it
+meant following its reference to `templates/session-history-template.md` and checking
+whether that file existed — which is what surfaced CHORE-146 and turned the card's thesis
+from *"four copies disagree"* into *"the plugin already solved the mechanism, a
+reconciliation chore was filed, and it shipped unfinished."* The unfinished chore is the
+evidence that manual syncing does not hold; nothing else in the session established that.
+
+**The reusable method:** when a concept has multiple editions, *run the other edition and
+follow its references*, rather than reading its description. Descriptions agree more often
+than artifacts do.
 
 **The good news:** the plugin edition *agrees* with the running local command on
 sections. The split is 2-against-2, not four-way. Practice has been following a format
@@ -482,6 +496,11 @@ Acceptance criteria now require a verdict on all four sources, not three.
 template the command referenced actually existed* rather than assuming the command
 description was complete. It existed, and it disagreed with the card written an hour
 earlier. Verify the artifact, not the description of it.
+
+**Correction to the AI's framing, same session:** the first draft of this section
+presented the fourth source as an incidental discovery. It was a deliberate test by
+Gary. Recorded because a future session reading this should take the *method* as
+repeatable practice — not conclude that the gap in FEAT-222 was found by luck.
 
 ---
 
