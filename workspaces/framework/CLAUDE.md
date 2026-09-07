@@ -1,10 +1,20 @@
 # Framework Workspace — Authority Boundary
 
 **Inside `workspaces/framework/`, this directory and this file are the sole
-authority.** The old framework's structure and docs — `framework/`, `templates/`,
-`plugins/`, `tools/`, the root `.claude/` — are out of scope here: never read them
-as guidance for this workspace's design. ADR-009 governs; its decisions D1–D5 are
-binding.
+authority.** The old framework — `framework/`, `templates/`, `plugins/`, `tools/`,
+the root `.claude/` — holds **no design authority here**: its structure, its
+`sources:` index and its `CLAUDE.md` describe the *old* layout and must never be
+treated as current instructions or copied forward by default. ADR-009 governs; its
+decisions D1–D5 are binding.
+
+**Read the history; don't inherit the structure.** ADR-009 rejected a fresh repo
+precisely so the ADRs, retrospectives and session logs stay *live context* — the
+failure it named was "a settled decision gets re-proposed months later because the
+record that rejected it is no longer loaded." So: study what was built and why, mine
+the old docs for evidence (TECH-187's audit decides which of `framework/docs/`'s
+8,246 lines survive), and carry a lesson forward as a **justified decision** — never
+as an unexamined default. A carry-in is a `git mv` with the reason written down
+(ADR-008).
 
 ## What this workspace is
 

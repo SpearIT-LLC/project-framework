@@ -56,10 +56,30 @@ old copies retired rather than reconciled.
 
 ## Proposed Solution
 
-**Author fresh; do not port.** Per this workspace's `CLAUDE.md`, the old framework's
-docs *"are out of scope here: never read them as guidance for this workspace's design."*
-The three formats above are **input evidence about a known problem**, not a design to
-copy. Carry-ins are moves, justified in writing at the time (ADR-008).
+**Author fresh — which means read all three carefully, then decide.** "Fresh" is about
+*authority*, not ignorance: the old formats hold no design authority over the new build,
+but they are the best evidence available about what a session history needs — **88
+session histories** written between 2025-12-19 and 2026-09-07 sit behind them (verified
+2026-09-07). Read them, learn what each got right, and carry
+forward what earns its place as a **justified decision** rather than an inherited
+default. A carry-in is a `git mv` with the reason written down (ADR-008).
+
+What must *not* happen is porting the old command as-is, or reconciling the three into a
+fourth copy. The point of authoring in the new build is to end up with **one** source.
+
+**Specifically worth learning from:**
+
+- The **guide's** Blockers / Next Steps / Lessons Learned — the running command dropped
+  all three, and practice has been quietly re-inventing "what's next" inside Current
+  State ever since. That is evidence the guide was right about the need, whatever the
+  verdict on the section names.
+- The **command's** Files Created/Modified/Moved and Current State — these came from
+  real use and are what every recent history actually contains.
+- **TECH-072's** Work Items Touched status-change table — never implemented, but it is
+  the only proposal that captures board movement as data rather than prose.
+- **Practice itself** — the 2026-08-18 and 2026-09-03 histories are different shapes for
+  different session types (design vs implementation). A format that only fits one of
+  them will be worked around, as this session's file already demonstrates.
 
 ### The format question to settle
 
@@ -119,8 +139,10 @@ premise (no standard exists) is superseded by settling the format here.
 
 ## Acceptance Criteria
 
-- [ ] `/fw-session-history` exists in the new build and produces a history without
-      reading any old-framework doc
+- [ ] `/fw-session-history` exists in the new build, authored (not ported), with one
+      authored format
+- [ ] Each of the three old formats has a recorded verdict — what it got right, what
+      carries forward, what does not and why
 - [ ] Exactly one authored format; the command is its home (or points at one template —
       never both)
 - [ ] The core/optional rule is stated in the command, including that an optional
@@ -157,6 +179,14 @@ premise (no standard exists) is superseded by settling the format here.
 - The 2026-09-07 session history is the best available worked example of the
   core+justified-optional shape; use it as the reference when authoring, but re-derive
   the format rather than transcribing it.
+- Gary, 2026-09-07, on an earlier draft of this card that leaned on the workspace
+  boundary to justify not reading the old docs: *"How are we supposed to learn from what
+  we did in the past and improve?"* Correct, and the card was wrong. ADR-009 rejected a
+  fresh *repo* specifically so the ADRs, retrospectives and session logs stay live
+  context — the failure it named was a settled decision being re-proposed because the
+  record that rejected it is no longer loaded. The boundary is about **design
+  authority** (the old structure does not dictate the new one), never about refusing to
+  learn. `workspaces/framework/CLAUDE.md` was reworded the same day to say so.
 
 ---
 

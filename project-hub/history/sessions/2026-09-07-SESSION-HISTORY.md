@@ -382,4 +382,61 @@ append-only principle carries as-is.
 
 ---
 
+## "Never Read Them" — An AI Overreach, Corrected (Later — Continuation)
+
+Gary, on FEAT-222's justification for authoring fresh: *"Why did we say 'never read them
+as guidance for this workspace's design'? How are we supposed to learn from what we did
+in the past and improve?"*
+
+**The challenge was right and the card was wrong.** Checking ADR-009 rather than
+defending the line: the ADR's intent is close to the *opposite* of how the AI applied it.
+
+- **Option B (fresh repo) was rejected on exactly this ground.** Its recorded con: the
+  ADRs, retrospectives and session logs *"stop being live context and become a
+  disconnected archive,"* with the named failure being *"a settled decision gets
+  re-proposed months later because the record that rejected it is no longer loaded."*
+  Option C was chosen to keep history **connected and live**.
+- **ADR-009 explicitly plans to mine the old docs:** TECH-187's restatement audit
+  *"still determines which of `framework/docs/`'s 8,246 lines survive into the new
+  build."* You cannot audit what you are forbidden to read.
+
+**What the boundary actually guards** is narrower than the sentence implies:
+`framework/CLAUDE.md` and `framework.yaml`'s `sources:` describe the *old structure as
+current*. The AI loads them at session start and acts on a stale map — ADR-009 calls
+this *"the BUG-170 silent-degradation class applied to instructions."*
+
+The distinction the AI flattened:
+
+| | Old framework's standing |
+|---|---|
+| **Design authority** — what the new build's structure *is* | None. This is what the boundary protects |
+| **Evidence and lessons** — what was tried, what broke, why | Exactly what ADR-008, the retrospectives and 88 session logs exist for |
+
+**Two fixes applied:**
+
+1. **`workspaces/framework/CLAUDE.md` reworded.** *"Never read them as guidance for this
+   workspace's design"* → *"holds no design authority here"*, naming the real hazard
+   (stale `sources:`/`CLAUDE.md` treated as current instructions), plus a new paragraph:
+   **"Read the history; don't inherit the structure."** It cites ADR-009's own reason for
+   rejecting a fresh repo, and requires a carry-in to be a justified decision — a
+   `git mv` with the reason written down — never an unexamined default.
+2. **FEAT-222 reframed.** *"Author fresh"* now explicitly means *read all three formats
+   carefully, then decide*: fresh is about **authority, not ignorance**. Added a
+   "specifically worth learning from" list — the guide's Blockers/Next Steps (practice
+   has been re-inventing "what's next" inside Current State ever since they were
+   dropped), the command's Files/Current State sections, TECH-072's Work Items Touched
+   table (the only proposal capturing board movement as *data*), and the fact that
+   2026-08-18 and 2026-09-03 are different shapes for different session types. New
+   acceptance criterion: each old format gets a recorded verdict.
+
+**Also corrected in passing:** an unverified "three years of practice" claim in FEAT-222.
+Actual: 88 session histories, 2025-12-19 → 2026-09-07.
+
+**The wider lesson, worth keeping:** a boundary written to stop *structural* inheritance
+was phrased as a blanket prohibition on reading, and the AI that misread it had authored
+the surrounding cards. Given ADR-009 chose Option C *specifically* to keep history live,
+a line that reads as "ignore history" undercuts the decision it implements.
+
+---
+
 **Last Updated:** 2026-09-07
