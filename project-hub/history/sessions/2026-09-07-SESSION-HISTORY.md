@@ -21,6 +21,11 @@ corrections are the substance of the cards.
 
 ## The Journey (how the design arrived where it did)
 
+> **Non-template section.** Kept because this was a design session: no code was written,
+> so the reasoning *is* the work product. Same precedent as the 2026-08-18 ADR-009
+> session. Without it the cards read as arbitrary — three of their load-bearing
+> decisions are reversals of the AI's first position, and only the journey shows why.
+
 The path mattered here; the final cards read as obvious but three positions were
 reversed along the way.
 
@@ -252,6 +257,11 @@ own diagrams. Two rows: the folder-structure mind-graph (consumed by ADR-009) an
 
 ## Open Questions (deliberately left for pre-implementation review)
 
+> **Non-template section.** Kept because these are *unresolved* and therefore belong in
+> neither Decisions Made (nothing was decided) nor Current State (they are not board
+> state). One of them — whether `askUserQuestionTimeout` can be set per-invocation —
+> can force a design change in FEAT-221.2, so it must not be lost.
+
 - The `--wait` default — 60s is a starting value, expected to rise with real use.
 - Should repeated timeouts short-circuit? Once the first shows nobody is there, parking
   the remainder immediately avoids eating N full timeouts.
@@ -304,9 +314,7 @@ own diagrams. Two rows: the folder-structure mind-graph (consumed by ADR-009) an
 ### In done/ (awaiting release)
 - *(empty)*
 
----
-
-## Next Session
+### Next step
 
 **TASK-219 Group 2** is the unblocking step: decide `accept/` against FEAT-030 (one
 state or two), and widen `blocked/` metadata for internally-blocked cards. FEAT-221
@@ -315,6 +323,62 @@ cannot move until both are settled.
 Group 1 of TASK-219 (staged to `todo/` on 2026-09-03) remains the other open front, with
 its known FEAT-021 vs TECH-082 conflict — competing mechanisms for sub-item identity —
 to be resolved first.
+
+---
+
+## Session-History Format Drift, and FEAT-222 (Later — Continuation)
+
+Gary asked what this file did differently from the template and the 2026-08-18 /
+2026-09-03 precedents. Checking rather than answering from memory produced a correction
+and then a finding.
+
+**The correction:** the AI had cited *both* precedents for the non-template *Journey*
+section. Only 2026-08-18 supports it. 2026-09-03 follows the template exactly, folding
+its journey into Work Completed as a "Process correction" bullet. The two precedents are
+different shapes for different session types — 08-18 is a pure design session (Journey,
+no Work Completed; the reasoning *was* the work), 09-03 an implementation session (Work
+Completed, no Journey). This file is a hybrid neither used.
+
+**Gary's rule, now governing:** *"I'm ok with adding to the history if there's a case
+for it... But I do want to keep the template format at a minimum for consistency. An
+added section is ok if we have a good reason."*
+
+Applied to this file:
+
+- **Next Session — removed**, folded into Current State as `### Next step`. It
+  duplicated board state, so it had no case.
+- **The Journey and Open Questions — kept**, each now carrying a one-line block quote
+  stating why, so the justification travels with the file rather than living in a
+  conversation.
+
+**The finding:** there is no single template to deviate from. Three authored formats
+disagree —
+
+| Source | Notable sections |
+|---|---|
+| `workflow-guide.md#session-history` (the `sources:` source of truth) | Blockers Encountered, Next Steps, Lessons Learned, Duration |
+| `.claude/commands/fw-session-history.md` (what runs) | Files Modified/Created/Moved, Current State — none of the above |
+| TECH-072 (backlog) | Work Items Touched table, Blockers / Open Questions, Next Session |
+
+The guide's stated location (`project-hub/history/`) is also wrong; actual is
+`project-hub/history/sessions/`. And "Next Session" — the section removed above for
+being non-template — is called for by the guide *and* TECH-072. No one can satisfy all
+three.
+
+**Decision (Gary):** *"I see we haven't migrated the session-history command to the new
+framework yet. Let's fix it in the new command."* Fix forward, do not reconcile.
+**FEAT-222** filed: author one format in the ADR-009 build, where no session-history
+command exists yet. The old copies retire with the old framework rather than being
+edited into agreement — editing all three would create a fourth thing to keep in sync,
+which is the failure being ended.
+
+**TECH-072 marked superseded** by FEAT-222, with its proposed Blockers/Next-Session
+sections preserved as input to the format decision rather than discarded.
+
+**Not done here:** the format itself. FEAT-222 carries four open questions — whether
+Blockers and Next Steps are core or optional, whether Duration/Participants survive, how
+"a good reason" is mechanized (ADR-008: prose is not a guardrail), and whether the
+append-only principle carries as-is.
 
 ---
 

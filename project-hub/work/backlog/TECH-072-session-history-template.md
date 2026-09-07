@@ -110,7 +110,22 @@ Discovered during FEAT-025 validation testing. Session histories were created ad
 
 ---
 
+## Superseded by FEAT-222 (2026-09-07)
+
+**Do not implement as written.** This card targets
+`framework/templates/documentation/` — an old-framework path — and its premise ("no
+standard exists") was overtaken: the 2026-09-07 review found **three** authored
+session-history formats that disagree (this card's proposal being the third).
+
+The format is now settled in the new ADR-009 build by **FEAT-222**, which closes this
+card. The proposed structure above survives as *input* to that decision — in particular
+its **Blockers / Open Questions** and **Next Session** sections, which the running
+command lacks and which FEAT-222 must decide as core or optional.
+
+---
+
 ## Related
 
+- **FEAT-222** — session history in the new build. **Supersedes this card.**
 - FEAT-025: Manual Setup Validation (source of finding)
 - TECH-071: Session handoff checklist
