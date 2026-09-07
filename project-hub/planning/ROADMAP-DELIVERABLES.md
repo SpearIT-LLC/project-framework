@@ -4,9 +4,22 @@
 **Basis:** all open cards grouped by deliverable, ranked by what gets the ADR-009 build
 from **0.4.6 → 1.0**.
 **Updated 2026-09-02:** D8 executed (26 cards archived, TASK-218); D1b added for the
-board conventions that survived that review (TASK-219). Board now 84 open + 26 archived.
-**Companion to:** [`ROADMAP.md`](ROADMAP.md) — that one is theme-based and predates
-ADR-009 (last updated 2026-02-17). This one is deliverable-based and current.
+board conventions that survived that review (TASK-219).
+**Updated 2026-09-07:** reconciled against actual board state — the 09-02 snapshot had
+gone stale (TASK-213 shipped 09-03; D1b Group 1 promoted to `todo/` the same day).
+Progress checkboxes added. FEAT-221/222 slotted in.
+**Companion to:** [`ROADMAP.md`](ROADMAP.md) — theme-based, predates ADR-009 (last
+updated 2026-02-17). **Stale; do not plan from it.** This one is deliverable-based and
+current.
+
+**Board state (verified 2026-09-07):** 72 backlog · 16 todo · 0 doing · 8 done · 1 blocked.
+
+> **Progress marks** follow TECH-177's Obsidian convention: `[ ]` pending · `[/]`
+> in progress · `[x]` done · `[-]` cancelled/N-A. A deliverable is `[/]` when any of its
+> cards has shipped. **These marks are hand-kept** — the board folder is the source of
+> truth, this file is a view of it (ADR-008: derived, not authored). Re-verify against
+> `project-hub/work/` before trusting a mark; TECH-177 itself would let a script check
+> them once the states are implemented in the gate.
 
 > **Grouping rule.** A *deliverable* is one thing a user gets — a capability they can
 > name. Cards of every type (FEAT/BUG/TECH/TASK/SPIKE/DECISION) that serve the same
@@ -32,44 +45,49 @@ Everything below is ranked against one goal: **graduate `workspaces/framework/` 
 
 ## Ranked Deliverables
 
-### D1 — The Spine: Board, Operations, and kb at Root
-**Rank 1 · 5 cards · all in `todo/`**
+### D1 — The Spine: Board, Operations, and kb at Root  `[/]`
+**Rank 1 · 5 cards · 1 done, 4 in `todo/`**
 
 The repo-root structure the whole model rests on. Everything else assumes these paths
 are settled, so churn here is the most expensive churn available — it is first for that
 reason alone, not because it is the largest.
 
-| Card | Folder | Pri | What |
-|---|---|---|---|
-| TASK-213 | todo | Med | Operations moves out of `workspaces/` to root, as a peer queue beside the board |
-| TASK-214 | todo | Med | `Workspace:` field on ops records — restores the scoping the root move removes |
-| TASK-216 | todo | Med | `kb/` moves to root; framework gains a multi-source list (local + N external corpora) |
-| BUG-215 | todo | Med | New move engine dropped batch moves (`fw-move 001,002,003 todo`) — regression vs old engine |
-| TECH-177 | todo | Low | Obsidian checkbox states `[ ] [x] [/] [-]` + gate awareness in `fw-move.sh` |
+| ✓ | Card | Folder | Pri | What |
+|---|---|---|---|---|
+| `[x]` | TASK-213 | **done** | Med | Operations moved out of `workspaces/` to root, as a peer queue beside the board — *shipped 2026-09-03* |
+| `[ ]` | **BUG-215** | todo | Med | **← next.** New move engine dropped batch moves (`fw-move 001,002,003 todo`) — regression vs old engine |
+| `[ ]` | TECH-177 | todo | **Med** | Obsidian checkbox states `[ ] [x] [/] [-]` + gate awareness in `fw-move.sh`. **Re-scoped 2026-09-07:** `[?]`/`[!]` promoted from deferred — they mark *where* a card is blocked, which no folder can. **Now blocks D3b** |
+| `[ ]` | TASK-214 | todo | Med | `Workspace:` field on ops records — restores the scoping the root move removes |
+| `[ ]` | TASK-216 | todo | Med | `kb/` moves to root; framework gains a multi-source list (local + N external corpora) |
 
-**Why first:** TASK-213/216 relocate two top-level trees. Every command, script, and
-doc that names a path is downstream. BUG-215 is a live regression on the single most-used
-command. TECH-177 rides along because it edits the same `fw-move.sh` gate functions.
+**Why first:** TASK-216 relocates a top-level tree; every command, script, and doc that
+names a path is downstream. BUG-215 is a live regression on the single most-used command.
 
-**Ready?** TASK-213/214/216 were filed 2026-09-01 and are freshly specified. Start here.
+**Next card: BUG-215.** It is the only D1 card that is pure repair rather than design, it
+is self-contained (no path churn), and it **blocks the FEAT-221 dogfood** — that card's
+whole premise is batch processing, and its four-card group cannot even be staged while
+batch moves are broken in the new engine. **TECH-177 rides along**: same `fw-move.sh`
+gate functions, one visit instead of two, and it supplies the checkbox states this
+roadmap now uses.
 
 ---
 
-### D1b — Board Conventions for the New Build
-**Rank 2 · 16 cards + TASK-219 · owned by TASK-219**
+### D1b — Board Conventions for the New Build  `[ ]`
+**Rank 2 · 18 conventions + TASK-219 · owned by TASK-219**
 
 Sixteen board conventions that exist as analysis on old cards and as **nothing** in the
 ADR-009 build. Ranked here — immediately behind the spine — because it **blocks FEAT-175**
 and pairs with the D5 board crossover.
 
-| Card | Folder | Pri | What |
-|---|---|---|---|
-| TASK-219 | todo | **High** | Owns the set: decide each convention, give it a mechanism, close the source card |
-| FEAT-021, TECH-082, TECH-041, TECH-027, TECH-033 | backlog | — | **Group 1 — the blocker.** Numbering, parent/child, supporting files, cross-references, status-vs-folder. These five interlock and must be settled as a set before any work-item template is authored |
-| TECH-044, TECH-077, TECH-078, FEAT-030 | backlog | — | Board lifecycle: creation policy, never-delete, release archival, a hold state |
-| TECH-070, TECH-070.1, TECH-071, TECH-049 | backlog | — | Process: issue response, session handoff, human-AI concurrent work |
-| TECH-073, FEAT-149 | backlog | — | Templates the new build lacks: external reference, meeting record |
-| DECISION-171 | backlog | — | The `fw-` namespace rule the new build already follows but never wrote down |
+| ✓ | Card | Folder | Pri | What |
+|---|---|---|---|---|
+| `[ ]` | TASK-219 | todo | **High** | Owns the set: decide each convention, give it a mechanism, close the source card |
+| `[ ]` | FEAT-021, TECH-082, TECH-041, TECH-027, TECH-033 | **todo** | — | **Group 1 — the blocker.** Numbering, parent/child, supporting files, cross-references, status-vs-folder. Interlock; settle as a set before any work-item template is authored. *Promoted to `todo/` 2026-09-03* |
+| `[ ]` | TECH-044, TECH-077, TECH-078, FEAT-030 | backlog | — | Board lifecycle: creation policy, never-delete, release archival, a hold state |
+| `[ ]` | **`accept/` + `blocked/` metadata** | *(in TASK-219)* | — | **Added 2026-09-07.** `accept/` = finished but not yet accepted (UAT, or waiting on someone outside the team); `blocked/` metadata widened for internally-blocked cards. **Blocks FEAT-221.** Decide `accept/` against FEAT-030 — adjacent but not the same state |
+| `[ ]` | TECH-070, TECH-070.1, TECH-071, TECH-049 | backlog | — | Process: issue response, session handoff, human-AI concurrent work. **TECH-049 also owns locking/session identity** — FEAT-221 degrades safely without it but does not solve it |
+| `[ ]` | TECH-073, FEAT-149 | backlog | — | Templates the new build lacks: external reference, meeting record |
+| `[ ]` | DECISION-171 | backlog | — | The `fw-` namespace rule the new build already follows but never wrote down |
 
 **Why rank 2:** the new build ships **no work-item template of any kind**
 (`templates/records/` holds only `contact.md`, `ops-record.md`, `ts-case.md`). FEAT-175's
@@ -80,13 +98,18 @@ the templates encode these conventions. Author them first and they encode guesse
 grouping that moves with its parent — a concept nothing in the repo defines. The engine is
 ahead of the conventions.
 
+**Known conflict inside Group 1 (flagged 2026-09-03):** FEAT-021 and TECH-082 propose
+**competing mechanisms for the same concept** — dotted sub-ids (`FEAT-021.1`) vs. a
+`Parent:` field on independently numbered items. The board uses both styles today.
+Resolve this first; the other four hang off it.
+
 **Not a docs task.** Each convention needs a *mechanism* — a template field, a script
 check, a hook — or an explicit statement that it cannot be mechanized. A convention in
 prose only is ADR-008 Root 2, the failure this framework exists to avoid.
 
 ---
 
-### D2 — Knowledgebase That Stays Trustworthy
+### D2 — Knowledgebase That Stays Trustworthy  `[ ]`
 **Rank 2 · 3 cards**
 
 The kb is the asset with the longest half-life and the one Gary named as most at risk:
@@ -105,17 +128,18 @@ content raises the cost of retrofitting provenance. TASK-217 is the ADR-008
 
 ---
 
-### D3 — Command UX Good Enough to Hand Over
-**Rank 3 · 3 cards**
+### D3 — Command UX Good Enough to Hand Over  `[ ]`
+**Rank 3 · 4 cards**
 
 Everything in D3 works today; none of it *feels* finished. This is the gap between
 "the script runs" and "a person who is not Gary can use it."
 
-| Card | Folder | Pri | What |
-|---|---|---|---|
-| FEAT-210 | todo | **High** | New-build command UX pass — all UAT 2026-08-26..29 findings, grouped by command |
-| FEAT-211 | backlog | Med | Contact grammar rework: title vs function, `;` delimiter, batch assign |
-| FEAT-191 | backlog | Med | Guided purpose intake for `/fw-new-workspace` — 3–4 questions, not one vague one |
+| ✓ | Card | Folder | Pri | What |
+|---|---|---|---|---|
+| `[ ]` | FEAT-210 | todo | **High** | New-build command UX pass — all UAT 2026-08-26..29 findings, grouped by command |
+| `[ ]` | **FEAT-222** | backlog | Med | **New 2026-09-07.** Session history in the new build — it ships no such command, and **four** authored formats disagree. Adopt the plugin edition's separate-template-file mechanism; supersedes TECH-072, replaces the never-finished CHORE-146 sync |
+| `[ ]` | FEAT-211 | backlog | Med | Contact grammar rework: title vs function, `;` delimiter, batch assign |
+| `[ ]` | FEAT-191 | backlog | Med | Guided purpose intake for `/fw-new-workspace` — 3–4 questions, not one vague one |
 
 **Why third:** this is the 1.0 quality bar. FEAT-210 is explicitly the collected UAT
 findings and says *"split out any item that grows past a session's work"* — expect it
@@ -123,7 +147,35 @@ to spawn cards.
 
 ---
 
-### D4 — Reporting, Roadmaps, and History Per Workspace
+### D3b — Unattended Batch Implementation  `[ ]`
+**Rank 3 · 4 cards · new 2026-09-07 · blocked by D1b**
+
+`/fw-implement-todo` — implement every card in `todo/` in one unattended run: one batch
+review, then serial card-by-card implementation, landing each in `accept/`. Drafted from
+Gary's Lucid page *fw-implement-todo*
+(`project-hub/poc/fw-implement-todo/`; published link in
+[`../docs/diagram-index.md`](../docs/diagram-index.md)).
+
+| ✓ | Card | Folder | Pri | What |
+|---|---|---|---|---|
+| `[ ]` | FEAT-221 | backlog | Med | Parent — holds the ADR-001 conflict analysis, circuit-breaker, WIP/serial reasoning, batch membership, concurrency limits |
+| `[ ]` | FEAT-221.3 | backlog | Med | **First.** ADR-001 amendment: the checkpoint becomes per-batch, not per-card. Must land before the command ships |
+| `[ ]` | FEAT-221.1 | backlog | Med | Acceptance-criteria gate fires on either exit from `doing/`, not on `accept → done` |
+| `[ ]` | FEAT-221.2 | backlog | Med | The command itself |
+
+**Why rank 3, not higher:** it is **blocked by D1b** (`accept/` is a board lifecycle
+state TASK-219 owns) and by **TECH-177** (the `[?]`/`[!]` markers its circuit-breaker
+writes). It also cannot be staged until **BUG-215** restores batch moves — all three
+are D1 or D1b work.
+
+**Why it matters beyond itself:** this is the first card group that genuinely tests
+parent/child grouping (D1b Group 1's unresolved FEAT-021 vs TECH-082 conflict) on real
+work. Note the ordering trap recorded on the parent: **FEAT-221.2 cannot implement
+itself**, so the honest dogfood is the *next* feature group, not this one.
+
+---
+
+### D4 — Reporting, Roadmaps, and History Per Workspace  `[ ]`
 **Rank 4 · 4 cards**
 
 ADR-009 makes the repo the *customer*, hosting many workspaces. The reporting layer has
@@ -141,7 +193,7 @@ field settled first (TASK-214), which is why it sits behind the spine.
 
 ---
 
-### D5 — Troubleshooting, Proven on Real Work
+### D5 — Troubleshooting, Proven on Real Work  `[ ]`
 **Rank 5 · 3 cards**
 
 `fw-troubleshoot` shipped (FEAT-202) and is the only skill in the new build. It was
@@ -160,7 +212,7 @@ for its retro; building playbooks before the retro risks building the wrong shap
 
 ---
 
-### D6 — Time: Deadlines, Reminders, Calendar
+### D6 — Time: Deadlines, Reminders, Calendar  `[ ]`
 **Rank 6 · 2 cards**
 
 | Card | Folder | Pri | What |
@@ -174,7 +226,7 @@ on it. Post-1.0 candidate.
 
 ---
 
-### D7 — The ADR-008 Guards (carried forward, needs rewriting)
+### D7 — The ADR-008 Guards (carried forward, needs rewriting)  `[ ]`
 **Rank 7 · 4 cards · ⚠️ written against old paths**
 
 These are the two root causes from ADR-008 — hand-synced duplication, and enforcement
@@ -195,7 +247,7 @@ path. Do this *before* 1.0 — these are the guards that stop the onion regrowin
 
 ---
 
-### D8 — Deprecated: Old Framework Docs, Setup, and Distribution
+### D8 — Deprecated: Old Framework Docs, Setup, and Distribution  `[x]`
 **Rank 8 · 26 cards · archived 2026-09-02 · no work planned**
 
 **Archived by TASK-218**, which holds the full disposition table, the reason codes, and
@@ -226,7 +278,7 @@ incidental. Three whole classes failed that heuristic identically.
 
 ---
 
-### D9 — Blocked, External
+### D9 — Blocked, External  `[-]`
 **Rank — · 1 card · not schedulable**
 
 | Card | Folder | What |
@@ -241,9 +293,14 @@ the collision risk applies to it too.
 ## Sequence
 
 ```
+NEXT     BUG-215 (+TECH-177 riding along) ── restores batch moves, supplies
+              │                              the checkbox states this file uses
+              ▼
 NOW      D1 spine ──► D1b conventions ──► D2 kb trust ──► D3 command UX ──► 1.0
-              │              │
-              │              └──► unblocks FEAT-175 (board create gate)
+          [/]            │  [ ]              [ ]             [ ]
+              │          │
+              │          ├──► unblocks FEAT-175 (board create gate)
+              │          └──► unblocks D3b (accept/ state)  ← new 2026-09-07
               └──► D4 reporting (needs TASK-214)
 
 WITH D5   D1b + FEAT-175 pair with the ADR-009 D5 board crossover
@@ -253,11 +310,19 @@ BEFORE   D7 guards — rewrite TECH-189 + TECH-186 against the new build
 1.0
 LATER    D6 time/calendar · D5 troubleshooting (dev-stage, not demand-driven)
 DONE     D8 — 26 cards archived 2026-09-02 (TASK-218)
+         TASK-213 — operations at root, shipped 2026-09-03 (D1)
 ```
 
 **The one-line answer:** finish the spine (D1), define the conventions the board runs on
 (D1b), make the kb trustworthy (D2), polish the commands (D3) — that is 1.0. Rebuild the
 two ADR-008 guards (D7) before you call it 1.0, or the onion grows back.
+
+**The next card is BUG-215.** Pure repair, self-contained, on the most-used command, and
+it unblocks staging for D3b. TECH-177 rides with it.
+
+> **WIP warning:** `todo/` holds **16** against a `.limit` of **10**. It was already over
+> before D1b Group 1 was promoted. Nothing new should be promoted to `todo/` until it
+> drains — an over-limit queue is the condition the limit exists to surface.
 
 
 ---
@@ -290,3 +355,24 @@ two ADR-008 guards (D7) before you call it 1.0, or the onion grows back.
 
 3. **D5 trigger — no live case.** Troubleshooting is development-stage; TASK-205
    does not jump the queue. D5 stays at rank 5.
+
+---
+
+## Reconciliation Note (2026-09-07)
+
+The 2026-09-02 snapshot had drifted from the board in five days. What was wrong:
+
+- **TASK-213 listed in `todo/`** — shipped 2026-09-03, in `done/`.
+- **D1b Group 1 listed in `backlog/`** — all five promoted to `todo/` 2026-09-03.
+- **`done/` (8 cards) invisible here** — the file tracked open work only, so shipped work
+  left no trace and D1 looked untouched.
+
+**This is the ADR-008 pattern again:** a hand-kept view of a source of truth
+(`project-hub/work/`) drifts silently, and nothing fails when it does. The checkbox marks
+added today make drift *visible* but do not prevent it — they are still hand-kept. A real
+fix generates this file's status column from the folders. **Carded?** No — worth a card
+if this reconciliation is needed a third time.
+
+---
+
+**Last Updated:** 2026-09-07

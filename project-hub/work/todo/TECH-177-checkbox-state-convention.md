@@ -2,7 +2,7 @@
 
 **ID:** TECH-177
 **Type:** Tech Debt
-**Priority:** Low
+**Priority:** Medium
 **Version Impact:** MINOR
 **Created:** 2026-07-08
 **Workspace:** framework
@@ -58,6 +58,75 @@ correctly blocks *done* fix both.
 - **`[?]` (question) and `[!]` (important/blocked):** document as recognized markers, intended to be
   **blocking** eventually (a `[?]` is unresolved; `[!]` ≈ blocked). **Deferred** — not yet used, and
   we don't want to add complexity now. Tiered rollout.
+
+  > **Superseded 2026-09-07 — deferral lifted, both markers specified.** See
+  > *"`[?]` and `[!]` promoted"* below. The 2026-07-08 reason ("not yet used") expired:
+  > unattended batch implementation (FEAT-221) is the consumer, and it needs both.
+
+---
+
+## `[?]` and `[!]` Promoted from Deferred (2026-09-07)
+
+The 2026-07-08 deferral rested on *"not yet used."* FEAT-221's unattended batch run uses
+both, and the use case makes their semantics concrete rather than speculative.
+
+### What each means
+
+| Marker | Means | Resolution is | Written by |
+|---|---|---|---|
+| `[?]` | **I need an answer.** A question only the user can resolve | information | a human planning, **or the batch mid-run** |
+| `[!]` | **I hit a wall.** A technical obstruction — command failed, dependency absent from the environment, file not where the card assumed | a fix | usually the batch mid-run |
+
+Both **block `→ doing`**. `[?]` because the answer is missing; `[!]` because *"it's
+something that prevents COMPLETE implementation"* (Gary, 2026-09-07) — an unresolved wall
+means the card will simply fail again.
+
+### Why a marker, when `blocked/` already exists
+
+**The folder is a status; the marker is a location.** `blocked/` says *this card is
+stuck*. It cannot say *which of 200 lines is stuck*. The marker is a cursor: grep it and
+land on the exact criterion, checklist step, or acceptance line.
+
+This closes a real gap. The framework has three blocking layers and only two are
+identified:
+
+| Layer | What identifies it | Mechanized? |
+|---|---|---|
+| Card blocks card | `Depends On:` field | **Yes** — `check_dependencies` hard-blocks `→ doing` and names the dependency's folder |
+| External party | `Blocked By:` / `External Reference:` | Fields exist; nothing enforces them |
+| **Technical issue mid-execution** | **nothing before this card** | **No** → `[!]` |
+
+`Blocked By:` is shaped for an external party (see `BUG-144`: *Blocked By: Anthropic*).
+It does not fit "the build step failed on line 4 of the checklist."
+
+### Two lifecycle moments, one symbol
+
+A marker is **written** mid-implementation when a run trips, and **read** by the gate on
+the next `→ doing`. The card cannot re-enter `doing/` until the thing that stopped it is
+cleared, so the marker is its own unblock condition. No separate "parked" state is
+needed.
+
+### Does this reverse the readiness-gate decision?
+
+Partly, and deliberately. The 2026-07-08 ruling left the readiness gate alone (*"no clear
+value in blocking a queue move on an in-progress `[/]` subtask"*). That still holds for
+`[/]`. `[?]` and `[!]` are different: they are **not** ripeness judgments.
+
+**This does not contradict ADR-007 D7 / BUG-184.** D7 says plan *ripeness* cannot be
+mechanized — an unchecked box or the word "decide" is normal in a well-planned card, so
+`grep` must not adjudicate readiness. A `[?]`/`[!]` records **an event that happened**: a
+specific line stopped a specific run. That is a fact, not a judgment.
+
+**Write this distinction down in the gate's own documentation.** Without it, a future
+reader will take these markers as a general ripeness gate and D7 gets quietly overturned.
+
+### Open questions
+
+1. **Who clears the marker?** If the AI clears `[?]` after applying the user's answer, it
+   self-heals. If only a human clears it, it is an audit trail. Different mechanisms —
+   decide before implementing.
+2. **Does `[!]` need a companion note field**, or is the marked line plus surrounding
+   card text enough to say what the wall was?
 - **Decorative markers** (`[>]`, `[*]`, `["]`, etc.): mention as existing in the ecosystem but out of
   scope — they duplicate signals we already have (DECIDE marker, `blocked/` folder) or are cosmetic.
 
@@ -74,7 +143,7 @@ correctly blocks *done* fix both.
 - Verify no other checkbox consumer (pre-commit hook, other scripts) regresses.
 
 **Out of scope:**
-- Implementing `[?]`/`[!]` gate behavior (deferred tier).
+- ~~Implementing `[?]`/`[!]` gate behavior (deferred tier).~~ **Now in scope** — see the 2026-09-07 promotion above.
 - Restructuring workflow-guide.md.
 
 ---

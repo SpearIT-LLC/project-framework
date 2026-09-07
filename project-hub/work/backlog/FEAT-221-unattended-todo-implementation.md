@@ -10,7 +10,8 @@
 **Theme:** Workflow
 **Planning Period:** ADR-009 build
 
-**Depends On:** TASK-219 (Group 2 — the `accept/` state and board lifecycle policy)
+**Depends On:** TASK-219 (Group 2 — the `accept/` state and board lifecycle policy),
+TECH-177 (the `[?]`/`[!]` markers)
 
 ---
 
@@ -105,6 +106,12 @@ continue. Sometimes he is not. So the circuit-breaker is two-stage:
 
 **Destination decided: `blocked/`** (Gary, 2026-09-07). See *Availability Detection*
 below for the mechanism, and *Blocked Metadata* for the field problem it creates.
+
+**And the tripped line is marked** (Gary, 2026-09-07 — TECH-177's `[?]`/`[!]` promoted
+from deferred for this): `[?]` when an answer is needed, `[!]` when a technical wall
+prevents complete implementation. Both block `→ doing`, so a parked card cannot re-enter
+the queue until the blocker is cleared. The folder is the *status*; the marker is the
+*location* — `blocked/` cannot say which of 200 lines is stuck. Detail in FEAT-221.2.
 
 **Rationale for park-not-halt:** halting on card 2 of 8 forfeits the unattended window,
 which is the entire point of the command. The user returns to a batch report plus a

@@ -9,7 +9,8 @@
 **Completed:** <!-- Set automatically by /fw-move on → done/. Leave blank at creation. -->
 **Theme:** Workflow
 
-**Depends On:** FEAT-221.3 (the ADR-001 amendment authorises this), FEAT-221.1, TASK-219
+**Depends On:** FEAT-221.3 (the ADR-001 amendment authorises this), FEAT-221.1, TASK-219,
+TECH-177 (the `[?]`/`[!]` markers and their gate behaviour)
 
 ---
 
@@ -140,16 +141,40 @@ Defined in the parent (FEAT-221). On hitting a fact the AI does not have: **ask,
 park if unanswered** — never invent an answer, never halt the batch.
 
 ```
-Fact missing ──► AskUserQuestion (timeout) ──answered──► apply answer, continue card
-                          │
-                       timeout / headless
-                          │
-                          ▼
-                 doing → blocked, record condition, next card
+Trip ──► classify ──► [?] needs an answer ──► AskUserQuestion (--wait)
+                │                                    │
+                │                              answered ──► clear [?], continue card
+                │                                    │
+                │                            timeout / headless
+                │                                    │
+                └──► [!] hit a wall ─────────────────┤  (never asks — a wall is not
+                     (technical obstruction)         │   a question the user can
+                                                     ▼   answer in the moment)
+                                    mark the line, doing → blocked, next card
 ```
+
+**Mark the line, not just the card** (TECH-177, markers promoted 2026-09-07). Before
+moving to `blocked/`, write the marker on the **exact** criterion, checklist step, or
+acceptance line that tripped:
+
+| Marker | Written when | Resolution is |
+|---|---|---|
+| `[?]` | An answer is needed that only the user can give | information |
+| `[!]` | A technical wall — command failed, dependency absent, file not where the card assumed | a fix |
+
+Both block `→ doing` on the next run, so a parked card cannot silently re-enter the queue
+before the thing that stopped it is cleared. The marker is its own unblock condition — no
+separate parked state.
+
+**Why marking matters here specifically:** `blocked/` records *that* a card is stuck; it
+cannot record *where*. Without the marker, the next run reads a 200-line card with no
+cursor, and the answer the user gave lives only in a batch report nobody re-reads.
 
 **Implementation notes:**
 
+- **Classify before asking.** Only `[?]` warrants an ask; `[!]` is a wall, not a question,
+  and asking about it wastes the `--wait` window on something the user cannot resolve by
+  replying. Park `[!]` immediately.
 - The availability test **is** the `AskUserQuestion` timeout — do not build a separate
   presence probe. None exists (parent card documents what was ruled out).
 - **Headless (`claude -p`) must skip stage 1.** With `--permission-prompts none` the
@@ -176,15 +201,21 @@ belongs to the card currently in `doing/` — unambiguously, by construction. Th
 than trying to resolve it.
 
 **The report carries the consequence.** Answers to parked cards arrive after the run, so
-the report must make each parked card answerable on its own:
+the report must make each parked card actionable on its own:
 
 - The card ID, stated explicitly
-- The exact question that parked it — quoted, not paraphrased
-- Enough context to answer without re-opening the card
-- What the AI would need in order to resume
+- Whether it needs an **answer** (`[?]`) or a **fix** (`[!]`) — grouped, not lumped
+- The marked line, quoted, with a path and line reference so the user can jump to it
+- Enough context to act without reconstructing the run
 
-A report that says *"3 cards blocked, see blocked/"* fails this. The user should be able
-to answer all three from the report alone.
+**The marker changes what the report has to be.** Earlier drafts of this card required
+the report to restate every question in full, because nothing in the card marked the
+spot. With `[?]`/`[!]` written inline, the report becomes a **pointer** — it says where
+to look and why, and the card itself carries the detail. The answer then lands next to
+the question, in the file the next run actually reads.
+
+A report that says *"3 cards blocked, see blocked/"* still fails. So does one that
+restates everything and leaves the cards unmarked.
 
 ---
 
@@ -193,7 +224,8 @@ to answer all three from the report alone.
 The run is unattended, so the report is the entire user-facing output. It must state:
 
 - Cards completed and now in `accept/`
-- Cards parked, each with the exact question quoted and answerable from the report alone
+- Cards parked, split by `[?]` (needs an answer) and `[!]` (needs a fix), each pointing
+  at its marked line
 - Cards that failed the review gate and never ran
 - Anything discovered mid-run that affects a card not yet run
 - Roster cards that vanished or moved mid-run (another session touched them)
@@ -211,9 +243,14 @@ The run is unattended, so the report is the entire user-facing output. It must s
 - [ ] Exactly one card is in `doing/` at any moment — including when the WIP limit
       would permit more (verify with a limit raised above 1)
 - [ ] Cards land in `accept/`
-- [ ] A tripped card asks, and continues the run when answered in time
-- [ ] An unanswered question parks to `blocked/` and the run continues
+- [ ] A trip is classified `[?]` (answer needed) or `[!]` (technical wall) before acting
+- [ ] A `[?]` asks, and continues the run when answered in time
+- [ ] A `[!]` parks immediately without asking
+- [ ] An unanswered `[?]` parks to `blocked/` and the run continues
 - [ ] A headless run parks without attempting an ask it cannot make
+- [ ] Every parked card carries its marker on the **exact line** that tripped, not only
+      in a summary field
+- [ ] A card carrying an unresolved `[?]` or `[!]` is blocked from `→ doing`
 - [ ] The batch report covers completed, parked, and rejected cards
 - [ ] Each parked card in the report is answerable without opening the card file
 - [ ] `--wait` is honoured, including `--wait 0`
@@ -233,7 +270,8 @@ The run is unattended, so the report is the entire user-facing output. It must s
 - [ ] **PRE-IMPLEMENTATION REVIEW COMPLETED** — including the parked-card decision
 - [ ] Batch review pass (incl. cross-card conflict detection)
 - [ ] Serial implementation loop (fixed roster + pre-move existence check)
-- [ ] Circuit-breaker: ask-with-timeout, headless detection, parking
+- [ ] Circuit-breaker: classify `[?]`/`[!]`, ask-with-timeout, headless detection,
+      mark the line, park
 - [ ] Batch report
 - [ ] `review` and `--wait` arguments; same-session prompt
 - [ ] Plugin CHANGELOG updated
@@ -245,6 +283,8 @@ The run is unattended, so the report is the entire user-facing output. It must s
 - **FEAT-221** — parent (holds the ADR-001 conflict analysis and WIP reasoning)
 - **FEAT-221.3** — the amendment that authorises this command
 - **FEAT-221.1** — the gate that fires when this command moves a card to `accept/`
+- **TECH-177** — the checkbox-state convention. Its 2026-09-07 promotion of `[?]`/`[!]`
+  from deferred to specified was driven by this command; **blocks it**
 - `project-hub/poc/fw-implement-todo/` — the source diagram
 
 ---
