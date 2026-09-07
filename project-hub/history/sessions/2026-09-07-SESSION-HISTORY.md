@@ -439,4 +439,50 @@ a line that reads as "ignore history" undercuts the decision it implements.
 
 ---
 
+## A Fourth Source Found — and It Is the Best One (Later — Continuation)
+
+Invoking `/spearit-framework:session-history` (the **plugin** edition, rather than the
+local `/fw-session-history` used earlier today) surfaced a source FEAT-222 had missed.
+The card said three formats; there are **four authored sources**.
+
+**The good news:** the plugin edition *agrees* with the running local command on
+sections. The split is 2-against-2, not four-way. Practice has been following a format
+two of the four sources actually specify.
+
+**The better news:** the plugin edition is the only one that gets the *mechanism* right.
+It points at `plugins/spearit-framework/templates/session-history-template.md` — a
+**separate template file** — instead of carrying the format inline. That is the
+Single-Source Rule applied to precisely this problem, and it is the shape FEAT-222 should
+adopt. The new build already keeps record shapes in `templates/records/`, so the pattern
+transfers directly.
+
+**The damning news:** the drift was already known and filed. **CHORE-146** — *"Sync
+fw-session-history local command with plugin enhancements"* — sits in the **v5.2.0
+release archive with all four completion criteria unchecked**. Filed, shipped, never
+done. Its scope line is the moment the divergence was made deliberate:
+
+> *"Keep inline template (vs. plugin's external file reference)"*
+
+So the two editions were knowingly allowed to differ in mechanism, with a manual sync
+chore as the reconciliation plan — and that chore was archived unfinished. **Manual
+syncing between editions is the failure mode**, and this is the receipt. It is the same
+ADR-008 Root 2 pattern the framework keeps rediscovering: an invariant maintained by
+intention rather than by mechanism decays silently.
+
+**FEAT-222 updated:** fourth source added to the table, the plugin's separate-template-
+file mechanism recorded as the thing to adopt, CHORE-146 named as the failed
+reconciliation this card replaces, and two adjacent cards flagged for checking against
+the new format (**TECH-161** per-date rollover, **TECH-080** release session history).
+Acceptance criteria now require a verdict on all four sources, not three.
+
+**Placeholder style is a real (small) open question:** the plugin template uses
+`{Date}`, TECH-072 proposes `{{PROJECT_NAME}}`. Pick one when authoring.
+
+**Method note, since it recurs:** the fourth source was found by *checking whether the
+template the command referenced actually existed* rather than assuming the command
+description was complete. It existed, and it disagreed with the card written an hour
+earlier. Verify the artifact, not the description of it.
+
+---
+
 **Last Updated:** 2026-09-07

@@ -29,21 +29,36 @@ old copies die with the old framework.
 among them, though the new build has been producing session histories all along — onto
 the *old* repo's board, using the *old* repo's command.
 
-**Three formats, all authored, all disagreeing** (verified 2026-09-07):
+**Four authored sources, three distinct formats** (verified 2026-09-07):
 
 | Source | Sections it specifies |
 |---|---|
 | `framework/docs/collaboration/workflow-guide.md#session-history` — the `sources:` source of truth | Summary, Work Completed, Decisions Made, **Blockers Encountered**, **Next Steps**, **Lessons Learned**; a **Duration** field; location `project-hub/history/` |
 | `.claude/commands/fw-session-history.md` — what actually runs | Summary, Work Completed, Decisions Made, **Files Modified/Created/Moved**, **Current State**. No Blockers, no Next Steps, no Duration |
 | `TECH-072` (backlog) — a third proposal | **Work Items Touched** as a status-change table, **Blockers / Open Questions**, **Next Session**, **Notes**; a `{{PROJECT_NAME}}` field |
+| `plugins/spearit-framework/` — command + `templates/session-history-template.md` | **Same sections as the running command.** The one genuine improvement: the format lives in a **separate template file** the command points at, rather than inline |
 
 Practice follows the *command*, not the guide. The guide's stated location
 (`project-hub/history/`) is also wrong — actual is `project-hub/history/sessions/`.
 
+**The plugin edition is the good news:** it agrees with `.claude/commands/`, so the
+split is 2-against-2 rather than four-way. It also demonstrates the shape FEAT-222
+should adopt — **one template file, referenced**, not a format transcribed into every
+command that needs it. That is the Single-Source Rule applied to this exact problem, and
+the plugin already got it right.
+
+**And the drift is documented as a known, unfinished problem.** `CHORE-146` ("Sync
+fw-session-history local command with plugin enhancements") was **archived to release
+v5.2.0 with all four completion criteria still unchecked** — filed, shipped, never done.
+Its scope line *"Keep inline template (vs. plugin's external file reference)"* is the
+moment the two editions were deliberately allowed to diverge in mechanism. Manual
+syncing between editions is the failure mode; FEAT-222 ends it by authoring once.
+
 **Why is this a problem?**
 
-This is textbook ADR-008 drift: one concept, three authored copies, silently diverged
-until someone reads two of them. It has already produced a live cost — on 2026-09-07 the
+This is textbook ADR-008 drift: one concept, four authored copies, silently diverged
+until someone reads two of them — and a sync chore (CHORE-146) that was archived
+unfinished rather than resolving it. It has already produced a live cost — on 2026-09-07 the
 AI removed a "Next Session" section for being non-template, while the guide *and*
 TECH-072 both call for exactly that section. No one can follow all three.
 
@@ -77,6 +92,11 @@ fourth copy. The point of authoring in the new build is to end up with **one** s
   real use and are what every recent history actually contains.
 - **TECH-072's** Work Items Touched status-change table — never implemented, but it is
   the only proposal that captures board movement as data rather than prose.
+- **The plugin edition's separate template file** — the command points at
+  `templates/session-history-template.md` instead of carrying the format inline. This is
+  the mechanism FEAT-222 should adopt; the new build already keeps record shapes in
+  `templates/records/`. Note the placeholder style differs (`{Date}` vs TECH-072's
+  `{{PROJECT_NAME}}`) — pick one.
 - **Practice itself** — the 2026-08-18 and 2026-09-03 histories are different shapes for
   different session types (design vs implementation). A format that only fits one of
   them will be worked around, as this session's file already demonstrates.
@@ -141,8 +161,10 @@ premise (no standard exists) is superseded by settling the format here.
 
 - [ ] `/fw-session-history` exists in the new build, authored (not ported), with one
       authored format
-- [ ] Each of the three old formats has a recorded verdict — what it got right, what
+- [ ] Each of the four old sources has a recorded verdict — what it got right, what
       carries forward, what does not and why
+- [ ] CHORE-146 closed or archived with a note pointing here (it is already in a release
+      archive with unchecked criteria — decide whether it needs a closing record)
 - [ ] Exactly one authored format; the command is its home (or points at one template —
       never both)
 - [ ] The core/optional rule is stated in the command, including that an optional
@@ -193,6 +215,11 @@ premise (no standard exists) is superseded by settling the format here.
 ## Related
 
 - **TECH-072** — session history template (old-framework path). **Closed by this card.**
+- **CHORE-146** — sync the local command with the plugin edition. Archived to release
+  v5.2.0 with all criteria unchecked; the manual-sync approach it represents is what
+  this card replaces.
+- **TECH-161** — session history per-date rollover; **TECH-080** — release session
+  history. Both touch the same command and should be checked against the new format.
 - **TECH-071** — session handoff checklist; adjacent, owned by TASK-219 Group 3
 - **TASK-219** — board conventions for the new build; this is the same class of work
   (a convention the new build lacks) but is a command, not a board convention
