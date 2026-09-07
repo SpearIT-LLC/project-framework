@@ -54,15 +54,16 @@ turns on the kanban namespace, and these are the rules that namespace runs by.
 
 ---
 
-## The Eighteen
+## The Nineteen
 
 Grouped by what they block. **Source card** holds the analysis; this card holds the
 decision and the mechanism.
 
-> **Eighteen, not sixteen** — two were added to Group 2 on 2026-09-07 (the FEAT-221
-> rows): the `accept/` state, and `blocked/` metadata for internally-blocked cards.
-> Both are board lifecycle policy, so they belong here rather than in the command card
-> that first needs them.
+> **Nineteen, not sixteen** — three were added to Group 2 on 2026-09-07: the `accept/`
+> state, `blocked/` metadata for internally-blocked cards (both from FEAT-221), and
+> `cancelled/` as a board folder (from the BUG-215 review). All are board lifecycle
+> policy, so they belong here rather than in the cards that first needed them.
+> **Group 2a** collects the folder questions — decide the terminal states as one set.
 
 ### Group 1 — Blocks the work-item template (and therefore FEAT-175)
 
@@ -84,6 +85,65 @@ decision and the mechanism.
 | FEAT-030 | A hold/paused state for board items. Operations has `onhold/`; kanban has no equivalent defined |
 | FEAT-221 | **`accept/` — a state for work that is finished but not yet accepted.** Decide it alongside FEAT-030: the two are adjacent but not the same ("waiting on judgment of finished work" vs "paused mid-work"), and they have different exits. Blocks FEAT-221 |
 | FEAT-221 | **`blocked/` metadata for internally-blocked cards.** Today's fields assume an external party (`Blocked By`, `External Reference`, `Expected Resolution`). A card parked by an unattended batch is blocked on an *unanswered question*, not a third party. Widen the fields or add a batch-parked variant. Blocks FEAT-221.2 |
+| BUG-215 discussion | **`cancelled/` as a board folder — and the terminal-state set as a whole.** Cancelled is a traditional kanban lifecycle status, not a storage location. Today it is folded into `archive/`, which is doing double duty. **Decide the full set at once**, not folder-by-folder. See Group 2a |
+
+### Group 2a — Settle the terminal states as a set (added 2026-09-07)
+
+Three folder questions arrived within one week (`accept/`, `cancelled/`, and FEAT-030's
+hold state). Deciding them one at a time is how a board grows a fourth folder next month.
+**Decide them together**, as one terminal/parked-state model.
+
+**The `cancelled/` case** (Gary, 2026-09-07: *"Cancelled is a more traditional Kanban
+lifecycle status"*):
+
+- On the board, cancellation **already is a status change** — the transition matrix
+  treats `todo -> archive` and `doing -> archive` as lifecycle moves, and `/fw-move`
+  prompts for `Status: Cancelled`, `Cancelled Date:`, `Cancellation Reason:` on the way.
+  The state is modelled; it is just stored in a folder named for storage.
+- **`archive/` is doing double duty.** It holds cancelled cards *and* the 27
+  `deprecated/` cards from TASK-218 — which are not a lifecycle outcome at all. Verified
+  2026-09-07: 8 loose + 27 deprecated.
+- Splitting `cancelled/` out makes location-is-status true on the board without an
+  asterisk, and lets `/fw-wip` and reporting tell *"we decided not to"* from
+  *"superseded by a rewrite."*
+
+**Why the ops model does not simply port.** Operations has no `cancelled/` folder because
+FEAT-193 ruled location = *flow* state, outcome = a `Resolution:` field
+(`resolved | cancelled | duplicate | no-fault-found | rejected`). That worked there for a
+specific reason, quoted from FEAT-193:
+
+> *The kanban's separate `archive/` exists only because `done/` feeds a release sweep that
+> cancelled items must not enter; ops `closed/` has no such fork.*
+
+The board has a downstream consumer; operations does not. A cancelled card sitting in
+`done/` behind a field would ship in a release archive the moment one consumer forgot to
+filter. **The folder is doing protective work a field cannot** — which is why the two
+namespaces may legitimately stay different, and why "make the board work like ops" is the
+option to reject, not the default.
+
+**Questions to settle together:**
+
+1. **Does `cancelled/` exist?** If so, `archive/` reverts to meaning *put away* only
+   (deprecated cards, retired work) and stops being a lifecycle destination.
+2. **Which transitions reach it?** Cancellation is available from every pre-terminal
+   state today (`backlog`/`todo`/`doing` -> `archive`, and `done -> archive` "rare,
+   retroactive").
+3. **Is it terminal like `done`?** `done -> *` is blocked; presumably `cancelled -> *` too.
+4. **Does the board gain a closure code**, as ops has? Today cancellation carries
+   free-text `Cancellation Reason:` only. `duplicate` vs `rejected` vs `cancelled` is the
+   distinction ops found worth encoding, and reporting (FEAT-196) would want it here too.
+   **Additive** — no structural risk either way.
+5. **How does it interact with `accept/` and FEAT-030's hold state?** All three are new
+   folders proposed within a week. One model, decided once.
+6. **ID safety:** any new folder must live **under `work/`**. Both ID scanners walk that
+   tree recursively; a sibling root would be invisible to the old one and risk ID
+   reissue. (Same constraint recorded for `deprecated/` in this card's D8 review.)
+
+**A year-bucket sweep for `archive/` was also raised and set aside** — porting ops'
+`closed/YYYY/` bucketing to the board's 35-card `archive/`. It is a *grouping* action that
+changes no status, so it is unrelated to the folder question and can land any time.
+
+---
 
 ### Group 3 — Process and collaboration
 
@@ -133,7 +193,7 @@ test this card is held to.
 
 ## Acceptance Criteria
 
-- [ ] Every one of the eighteen has a recorded outcome: **defined** (with its mechanism),
+- [ ] Every one of the nineteen has a recorded outcome: **defined** (with its mechanism),
       **decided-by-construction** (with the rationale written down), or **dropped** (with
       the reason)
 - [ ] Group 1's five are settled **before** any work-item template is authored
@@ -147,6 +207,9 @@ test this card is held to.
       (FEAT-221.1) are settled
 - [ ] `blocked/` metadata covers an internally-blocked card (unanswered question), not
       only an external party
+- [ ] The terminal/parked-state set is decided **as a set** (Group 2a) — `accept/`,
+      `cancelled/`, FEAT-030's hold state — not folder-by-folder, with `archive/`'s
+      meaning restated once they are settled
 - [ ] Every source card is closed, moved to `done/`, or archived with a closing note —
       none is left open describing a convention that is now defined
 - [ ] Plugin CHANGELOG updated
@@ -162,6 +225,7 @@ test this card is held to.
 - [ ] Group 1 (FEAT-021, TECH-082, TECH-041, TECH-027, TECH-033) — decide as a set
 - [ ] Author the work-item template(s) from Group 1's outcome
 - [ ] Group 2 — board lifecycle policy + mechanisms
+- [ ] Group 2a — the terminal-state set, decided together
 - [ ] Group 3 — process and collaboration
 - [ ] Group 4 — the two missing templates
 - [ ] Group 5 — record the `fw-` namespace rule
