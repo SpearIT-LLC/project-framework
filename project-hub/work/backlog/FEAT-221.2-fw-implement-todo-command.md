@@ -137,25 +137,60 @@ rather than letting a reader infer a stronger promise.
 
 ## The Circuit-Breaker
 
-Defined in the parent (FEAT-221). On hitting a fact the AI does not have: **ask, then
-park if unanswered** — never invent an answer, never halt the batch.
+Defined in the parent (FEAT-221). **The trigger is anything that blocks *complete*
+implementation of the card** — not only a missing fact. A card the AI could finish
+"mostly" is a card that trips: partial implementation is the failure mode this exists to
+prevent, because a half-done card that lands in `accept/` looks finished.
+
+On trip: **ask if a person can resolve it now; otherwise mark, note, and park.** Never
+invent an answer, never implement around the gap, never halt the batch.
+
+**`[!]` may also warrant an ask.** Gary, 2026-09-07: park applies *"if the user is not
+able to answer/resolve the issue interactively during the run."* A watching user can
+often clear a technical wall on the spot — install the missing dependency, fix the path,
+grant the permission. So `[!]` is not unconditionally silent; what differs from `[?]` is
+what is being asked for (a fix, not an answer) and that a wall is far more likely to
+outlast the `--wait` window. **Decide at review** whether `[!]` asks by default, asks
+only when a run is known-interactive, or never asks.
 
 ```
-Trip ──► classify ──► [?] needs an answer ──► AskUserQuestion (--wait)
-                │                                    │
-                │                              answered ──► clear [?], continue card
-                │                                    │
-                │                            timeout / headless
-                │                                    │
-                └──► [!] hit a wall ─────────────────┤  (never asks — a wall is not
-                     (technical obstruction)         │   a question the user can
-                                                     ▼   answer in the moment)
-                                    mark the line, doing → blocked, next card
+Anything blocking COMPLETE implementation
+              │
+              ▼
+          classify ──► [?] needs an answer ──► AskUserQuestion (--wait)
+              │                                        │
+              │        [!] hit a wall ────────────►    │   resolved in time
+              │        (ask only if a person can       │        │
+              │         fix it during the run)         │        ▼
+              │                                        │   clear marker,
+              │                                        │   continue card
+              │                                        │
+              │                              no answer / no one there / headless
+              │                                        │
+              └────────────────────────────────────────┤
+                                                       ▼
+                          mark the exact line + write the reason note
+                                       │
+                                       ▼
+                          doing → blocked ──► next card
 ```
 
-**Mark the line, not just the card** (TECH-177, markers promoted 2026-09-07). Before
-moving to `blocked/`, write the marker on the **exact** criterion, checklist step, or
-acceptance line that tripped:
+**Mark the line, write the reason, then move** (TECH-177, markers promoted 2026-09-07).
+Three steps, in order, before the card leaves `doing/`:
+
+1. **Mark** the **exact** criterion, checklist step, or acceptance line that tripped.
+2. **Note the reason** alongside it — what was attempted, what happened, what is needed
+   to clear it. The marker says *where*; the note says *why*. A marker with no note
+   forces the next session to re-derive the problem from scratch, which is the cost this
+   whole mechanism exists to avoid.
+3. **Move** `doing → blocked`.
+
+A run that marks but does not note has done half the job. Treat the note as part of
+writing the marker, not as a separate report step — the report is a pointer *to* this
+note.
+
+| Marker | Written when | Resolution is |
+|---|---|---|
 
 | Marker | Written when | Resolution is |
 |---|---|---|
@@ -172,9 +207,10 @@ cursor, and the answer the user gave lives only in a batch report nobody re-read
 
 **Implementation notes:**
 
-- **Classify before asking.** Only `[?]` warrants an ask; `[!]` is a wall, not a question,
-  and asking about it wastes the `--wait` window on something the user cannot resolve by
-  replying. Park `[!]` immediately.
+- **Classify before asking**, and ask only where a person could plausibly resolve it
+  during the run. `[?]` always warrants an ask. `[!]` sometimes does — see the open
+  question above; a wall a watching user can fix in thirty seconds should not park a
+  card, but a wall requiring real work should not burn the `--wait` window either.
 - The availability test **is** the `AskUserQuestion` timeout — do not build a separate
   presence probe. None exists (parent card documents what was ruled out).
 - **Headless (`claude -p`) must skip stage 1.** With `--permission-prompts none` the
@@ -243,13 +279,18 @@ The run is unattended, so the report is the entire user-facing output. It must s
 - [ ] Exactly one card is in `doing/` at any moment — including when the WIP limit
       would permit more (verify with a limit raised above 1)
 - [ ] Cards land in `accept/`
+- [ ] **Anything** blocking complete implementation trips the breaker — not only a
+      missing fact; a card is never partially implemented and passed on
 - [ ] A trip is classified `[?]` (answer needed) or `[!]` (technical wall) before acting
 - [ ] A `[?]` asks, and continues the run when answered in time
-- [ ] A `[!]` parks immediately without asking
+- [ ] A resolved trip clears its marker and the card completes normally
+- [ ] `[!]` ask-or-park behaviour is decided and implemented consistently
 - [ ] An unanswered `[?]` parks to `blocked/` and the run continues
 - [ ] A headless run parks without attempting an ask it cannot make
 - [ ] Every parked card carries its marker on the **exact line** that tripped, not only
       in a summary field
+- [ ] Every parked card carries a **reason note** with the marker — what was attempted,
+      what happened, what would clear it
 - [ ] A card carrying an unresolved `[?]` or `[!]` is blocked from `→ doing`
 - [ ] The batch report covers completed, parked, and rejected cards
 - [ ] Each parked card in the report is answerable without opening the card file
@@ -271,7 +312,7 @@ The run is unattended, so the report is the entire user-facing output. It must s
 - [ ] Batch review pass (incl. cross-card conflict detection)
 - [ ] Serial implementation loop (fixed roster + pre-move existence check)
 - [ ] Circuit-breaker: classify `[?]`/`[!]`, ask-with-timeout, headless detection,
-      mark the line, park
+      mark the line, write the reason note, park
 - [ ] Batch report
 - [ ] `review` and `--wait` arguments; same-session prompt
 - [ ] Plugin CHANGELOG updated

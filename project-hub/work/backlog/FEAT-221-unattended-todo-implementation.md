@@ -86,9 +86,15 @@ Two different mechanisms, deliberately not conflated:
 
 | | Checkpoint (ADR-001) | Circuit-breaker (this card) |
 |---|---|---|
-| Asks | "May I proceed?" | "I hit a fact I do not have" |
+| Asks | "May I proceed?" | "Something blocks completing this card" |
 | When | Once, up front, per batch | Exception path, mid-card |
 | Batched? | Yes | No — never |
+
+**The trigger is completeness, not just missing facts.** Anything that prevents
+*complete* implementation trips it — an unanswerable question, a failed command, an
+absent dependency, a file not where the card assumed. The AI never implements partially
+and passes the card on: a half-done card arriving in `accept/` reads as finished, which
+is worse than one honestly parked.
 
 The circuit-breaker is **not new policy**. It is the existing Epistemic Standard
 applied to unattended mode: *"When verification fails (file missing, command errors),
@@ -107,11 +113,21 @@ continue. Sometimes he is not. So the circuit-breaker is two-stage:
 **Destination decided: `blocked/`** (Gary, 2026-09-07). See *Availability Detection*
 below for the mechanism, and *Blocked Metadata* for the field problem it creates.
 
-**And the tripped line is marked** (Gary, 2026-09-07 — TECH-177's `[?]`/`[!]` promoted
-from deferred for this): `[?]` when an answer is needed, `[!]` when a technical wall
-prevents complete implementation. Both block `→ doing`, so a parked card cannot re-enter
-the queue until the blocker is cleared. The folder is the *status*; the marker is the
-*location* — `blocked/` cannot say which of 200 lines is stuck. Detail in FEAT-221.2.
+**And the tripped line is marked, with its reason** (Gary, 2026-09-07 — TECH-177's
+`[?]`/`[!]` promoted from deferred for this). Three things happen before the card leaves
+`doing/`:
+
+1. `[?]` (an answer is needed) or `[!]` (a technical wall) on the **exact** line
+2. **A note saying why** — what was attempted, what happened, what would clear it
+3. `doing → blocked`
+
+Both markers block `→ doing`, so a parked card cannot re-enter the queue until the
+blocker is cleared. The folder is the *status*, the marker is the *location*, and the
+note is the *reason* — `blocked/` alone gives none of the last two. Detail in FEAT-221.2.
+
+**Parking is the fallback, not the first move.** Gary, 2026-09-07: mark and park applies
+*"if the user is not able to answer/resolve the issue interactively during the run."* A
+watching user resolves it and the card continues; only an unanswered trip parks.
 
 **Rationale for park-not-halt:** halting on card 2 of 8 forfeits the unattended window,
 which is the entire point of the command. The user returns to a batch report plus a
@@ -366,7 +382,9 @@ card. Not this card's problem to fix, but the batch should not be surprised by i
 - [ ] All three children are complete
 - [ ] ADR-001 carries the batch-checkpoint amendment with its rationale (not a silent bypass)
 - [ ] A batch run of ≥3 cards completes with exactly one human approval up front
-- [ ] A tripped card asks first, and continues the run if the question is answered
+- [ ] Anything blocking complete implementation trips the breaker — never partial work
+      passed on as finished
+- [ ] A tripped card asks first, and continues the run if resolved during the run
 - [ ] An unanswered question parks the card to `blocked/` and the run continues
 - [ ] A genuinely headless run (`-p`) parks without attempting to ask
 - [ ] `--wait <duration>` overrides the default; `--wait 0` parks without asking
@@ -378,7 +396,7 @@ card. Not this card's problem to fix, but the batch should not be surprised by i
 - [ ] The serial guarantee is documented as intra-run only, with concurrent runs named
       as a known limitation pointing at TECH-049
 - [ ] Cards land in `accept/`, not `done/`
-- [ ] The parked card records the blocking condition in a form the user can act on
+- [ ] The parked card carries both a marker on the exact line and a note saying why
 
 ---
 
