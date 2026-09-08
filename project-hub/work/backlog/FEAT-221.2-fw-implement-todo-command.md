@@ -10,7 +10,7 @@
 **Theme:** Workflow
 
 **Depends On:** FEAT-221.3 (the ADR-001 amendment authorises this), FEAT-221.1, TASK-219,
-TECH-177 (the `[?]`/`[!]` markers and their gate behaviour)
+TECH-177 (the `[?]`/`[h]` markers and their gate behaviour)
 
 ---
 
@@ -150,7 +150,7 @@ not able to answer/resolve the issue interactively during the run."* A watching 
 often clear a blocker on the spot — supply the missing information, unlock the file,
 grant the approval. Ask, and park on no answer, regardless of which marker applies.
 
-**Do not branch behaviour by marker type.** An earlier draft had `[!]` never asking, then
+**Do not branch behaviour by marker type.** An earlier draft had `[h]` never asking, then
 asking only for "technical" blockers. Both were over-specified: a marker's meaning does
 not determine whether a person happens to be present to act on it. Gary, 2026-09-07:
 *"just define what ? and ! mean and use them where they apply, when they apply."*
@@ -164,7 +164,7 @@ Anything blocking COMPLETE implementation of the card
      no answer / no one there / headless
               │
               ▼
-   mark the exact line — [?] need information · [!] something prevents completion
+   mark the exact line — [?] need information * [h] something prevents completion
    + write the reason note
               │
               ▼
@@ -191,10 +191,15 @@ note.
 | Marker | Written when |
 |---|---|
 | `[?]` | More information is needed to complete the job |
-| `[!]` | Something prevents completion — technical, procedural, resource, or another card this sub-task waits on |
+| `[h]` | Something prevents completion — technical, procedural, resource, or another card this sub-task waits on |
+
+> **`[h]`, not `[!]`** (settled 2026-09-07). `[!]` means *important* in all four Obsidian
+> theme collections and imports into Tasks as an ordinary TODO — a blocking gate on it
+> would fight the tool's own model. `[h]` is free in all four and is the symbol the Tasks
+> docs use for `ON_HOLD`. Evidence and rejected candidates are recorded in TECH-177.
 
 Definitions per TECH-177; apply them where they fit rather than matching a scenario list.
-Note the level: `[!]` marks **one blocked sub-task**. When the *whole card* waits on
+Note the level: `[h]` marks **one blocked sub-task**. When the *whole card* waits on
 another card, that is `Depends On:`, which is already mechanized.
 
 Both block `→ doing` on the next run, so a parked card cannot silently re-enter the queue
@@ -238,13 +243,13 @@ than trying to resolve it.
 the report must make each parked card actionable on its own:
 
 - The card ID, stated explicitly
-- Whether it needs an **answer** (`[?]`) or a **fix** (`[!]`) — grouped, not lumped
+- Whether it needs an **answer** (`[?]`) or a **fix** (`[h]`) — grouped, not lumped
 - The marked line, quoted, with a path and line reference so the user can jump to it
 - Enough context to act without reconstructing the run
 
 **The marker changes what the report has to be.** Earlier drafts of this card required
 the report to restate every question in full, because nothing in the card marked the
-spot. With `[?]`/`[!]` written inline, the report becomes a **pointer** — it says where
+spot. With `[?]`/`[h]` written inline, the report becomes a **pointer** — it says where
 to look and why, and the card itself carries the detail. The answer then lands next to
 the question, in the file the next run actually reads.
 
@@ -258,7 +263,7 @@ restates everything and leaves the cards unmarked.
 The run is unattended, so the report is the entire user-facing output. It must state:
 
 - Cards completed and now in `accept/`
-- Cards parked, split by `[?]` (needs an answer) and `[!]` (needs a fix), each pointing
+- Cards parked, split by `[?]` (needs an answer) and `[h]` (needs a fix), each pointing
   at its marked line
 - Cards that failed the review gate and never ran
 - Anything discovered mid-run that affects a card not yet run
@@ -279,7 +284,7 @@ The run is unattended, so the report is the entire user-facing output. It must s
 - [ ] Cards land in `accept/`
 - [ ] **Anything** blocking complete implementation trips the breaker — not only a
       missing fact; a card is never partially implemented and passed on
-- [ ] A parked trip is marked `[?]` or `[!]` per TECH-177's definitions
+- [ ] A parked trip is marked `[?]` or `[h]` per TECH-177's definitions
 - [ ] A trip asks, and continues the run when resolved in time
 - [ ] A resolved trip clears its marker and the card completes normally
 - [ ] An unanswered `[?]` parks to `blocked/` and the run continues
@@ -288,7 +293,7 @@ The run is unattended, so the report is the entire user-facing output. It must s
       in a summary field
 - [ ] Every parked card carries a **reason note** with the marker — what was attempted,
       what happened, what would clear it
-- [ ] A card carrying an unresolved `[?]` or `[!]` is blocked from `→ doing`
+- [ ] A card carrying an unresolved `[?]` or `[h]` is blocked from `→ doing`
 - [ ] The batch report covers completed, parked, and rejected cards
 - [ ] Each parked card in the report is answerable without opening the card file
 - [ ] `--wait` is honoured, including `--wait 0`
@@ -308,7 +313,7 @@ The run is unattended, so the report is the entire user-facing output. It must s
 - [ ] **PRE-IMPLEMENTATION REVIEW COMPLETED** — including the parked-card decision
 - [ ] Batch review pass (incl. cross-card conflict detection)
 - [ ] Serial implementation loop (fixed roster + pre-move existence check)
-- [ ] Circuit-breaker: classify `[?]`/`[!]`, ask-with-timeout, headless detection,
+- [ ] Circuit-breaker: classify `[?]`/`[h]`, ask-with-timeout, headless detection,
       mark the line, write the reason note, park
 - [ ] Batch report
 - [ ] `review` and `--wait` arguments; same-session prompt
@@ -321,7 +326,7 @@ The run is unattended, so the report is the entire user-facing output. It must s
 - **FEAT-221** — parent (holds the ADR-001 conflict analysis and WIP reasoning)
 - **FEAT-221.3** — the amendment that authorises this command
 - **FEAT-221.1** — the gate that fires when this command moves a card to `accept/`
-- **TECH-177** — the checkbox-state convention. Its 2026-09-07 promotion of `[?]`/`[!]`
+- **TECH-177** — the checkbox-state convention. Its 2026-09-07 promotion of `[?]`/`[h]`
   from deferred to specified was driven by this command; **blocks it**
 - `project-hub/poc/fw-implement-todo/` — the source diagram
 

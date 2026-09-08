@@ -11,7 +11,7 @@
 **Planning Period:** ADR-009 build
 
 **Depends On:** TASK-219 (Group 2 — the `accept/` state and board lifecycle policy),
-TECH-177 (the `[?]`/`[!]` markers)
+TECH-177 (the `[?]`/`[h]` markers)
 
 ---
 
@@ -114,10 +114,10 @@ continue. Sometimes he is not. So the circuit-breaker is two-stage:
 below for the mechanism, and *Blocked Metadata* for the field problem it creates.
 
 **And the tripped line is marked, with its reason** (Gary, 2026-09-07 — TECH-177's
-`[?]`/`[!]` promoted from deferred for this). Three things happen before the card leaves
+`[?]`/`[h]` promoted from deferred for this). Three things happen before the card leaves
 `doing/`:
 
-1. `[?]` (an answer is needed) or `[!]` (a technical wall) on the **exact** line
+1. `[?]` (an answer is needed) or `[h]` (a technical wall) on the **exact** line
 2. **A note saying why** — what was attempted, what happened, what would clear it
 3. `doing → blocked`
 
