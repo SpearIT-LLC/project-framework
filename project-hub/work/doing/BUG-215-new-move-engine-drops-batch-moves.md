@@ -96,10 +96,25 @@ at implementation:
 - [x] Per-item summary reported (moved / skipped / failed), matching the old engine *(T1, T4, T7)*
 - [x] A failing item does not prevent the others from moving *(T4 — 1 ok, 99 missing, 3 ok)*
 - [x] Command doc shows the batch form
-- [/] Verified against the built plugin, not the source tree (TECH-188) — **in progress.**
+
+**The namespace half (rescoped 2026-09-07) — not yet started:**
+
+- [ ] **Two commands exist**, one per namespace; neither infers a namespace from the
+      target folder or the id shape
+- [ ] Bare numerics work in **both** commands
+- [ ] One script invoked as `fw-move.sh <namespace> <ids> <target>`, policy table at the
+      top; the `""|INC|REQ) NS="operations"` guess is gone
+- [ ] ADR-009's "table entry, not a second engine" note is confirmed or amended in
+      writing, not left ambiguous
+
+**Verification:**
+
+- [ ] Verified against the built plugin, not the source tree (TECH-188) — **outstanding.**
       Tested at source via `--root` against a scratch git fixture (12 cases, below).
-      The built-plugin cycle needs a publish step not available in the remote session
-      of 2026-09-07. **This is the one criterion still open.**
+      The built-plugin cycle needs a publish step that was not available in the remote
+      session of 2026-09-07. Left as `[ ]` rather than `[/]` deliberately: the done-gate
+      counts only `[ ]` today, so `[ ]` is both true and enforced. TECH-177 makes `[/]`
+      blocking, but that is its work, not this card's.
 
 ---
 
