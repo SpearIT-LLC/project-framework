@@ -11,6 +11,17 @@ Progress checkboxes added. FEAT-221/222 slotted in.
 **Updated 2026-09-09:** checkbox legend corrected — `[!]` was replaced by `[h]` on
 2026-09-08 (it means *important* in every Obsidian theme collection, not blocked).
 BUG-215 rescoped and now in `doing/`.
+> **Superseded in shape by FEAT-198 (2026-09-09).** This file is an *authored
+> spine-level master roadmap*, which FEAT-198 says the new model should not have. Its
+> **ordering and phase rationale are the judgment worth keeping**; its per-card columns
+> (folder, priority, one-line summary) are duplicated from the cards and are the half
+> that rots — hand-reconciled twice in three days, each time because the copy went stale,
+> never because the ordering was wrong.
+>
+> **Do not reconcile it a third time.** The reconciliation note at the foot of this file
+> set that threshold and it has been reached. Read it for the ranking; go to the card for
+> anything else.
+
 **Companion to:** [`ROADMAP.md`](ROADMAP.md) — theme-based, predates ADR-009 (last
 updated 2026-02-17). **Stale; do not plan from it.** This one is deliverable-based and
 current.
@@ -383,6 +394,28 @@ The 2026-09-02 snapshot had drifted from the board in five days. What was wrong:
 added today make drift *visible* but do not prevent it — they are still hand-kept. A real
 fix generates this file's status column from the folders. **Carded?** No — worth a card
 if this reconciliation is needed a third time.
+
+---
+
+## Reconciliation Note (2026-09-09) — the threshold was reached
+
+Reconciled a **second** time: the checkbox legend still described the pre-`[h]` marker
+set, BUG-215 had moved to `doing/` and been rescoped, TECH-177 had stopped being a
+ride-along, and the counts had shifted (todo 16→15, doing 0→1).
+
+**What drifted, both times, was only the derived half** — folder, priority, mark, counts.
+The *ordering* has never been wrong. That is the split now recorded in **FEAT-198**: a
+roadmap holds judgment (order, phase rationale, done-conditions) and card ids; it holds no
+card detail.
+
+**And the completion question is answered.** Gary asked whether the pattern of never
+finishing a roadmap top-to-bottom is indiscipline or unacknowledged mid-flight change.
+Verified: this file carries **no success criteria for any deliverable**, so divergence was
+never *observable*. The framework already ships the fix — `/fw-roadmap`'s planning periods
+carry goals and success criteria — and this file does not use it. Two roadmap models
+exist; the ad-hoc one is the one we kept maintaining.
+
+**Status: superseded in shape by FEAT-198.** No third reconciliation.
 
 ---
 
