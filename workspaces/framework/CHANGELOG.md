@@ -5,16 +5,28 @@ plain semver 0.x during the framework workspace build.
 
 ## [Unreleased]
 
+### Changed
+- **The move engine takes its namespace as an argument; it is never inferred.**
+  `/fw-move` is renamed **`/fw-move-ops`** and always passes `operations` to
+  `fw-move.sh`. Previously a bare numeric silently meant operations
+  (`""|INC|REQ) NS="operations"`), so `fw-move 001,002,003 todo` resolved against
+  operations and then failed because `todo` is not an operations folder — the wrong
+  error, and a misroute waiting to happen at the ADR-009 D5 crossover. One command per
+  namespace, and the script now carries a policy table (root, folders, transitions,
+  terminal states) with a row per namespace. The `kanban` row is declared with its
+  authored folder set but **not wired**: its transitions and gates are not ported, so
+  it refuses with a pointer to the root `/fw-move` until crossover. (BUG-215)
+
 ### Fixed
-- `fw-move` accepts a **list of ids** again, restoring what the old engine had:
-  `fw-move "1, 2, 3" onhold`, comma- or space-separated, quoted or not. Items are
+- `fw-move-ops` accepts a **list of ids** again, restoring what the old engine had:
+  `fw-move-ops "1, 2, 3" onhold`, comma- or space-separated, quoted or not. Items are
   validated and moved one at a time and the run continues past a failure, so a batch
   may partially apply — the `moved / skipped / failed` summary reports it, and a record
   already in the target is skipped rather than failed. Exit is non-zero if any item
   failed. `sweep` is unchanged. (BUG-215)
 
 ### Added
-- A batch `fw-move ... closed` **prompts for each record's resolution code in turn**.
+- A batch `fw-move-ops ... closed` **prompts for each record's resolution code in turn**.
   The code classifies one record, and the close gate is already per record (it also
   asks for a one-line reason and, for incidents, the durable-knowledge question), so
   one shared code paired with N individually-written outcomes would be incoherent.

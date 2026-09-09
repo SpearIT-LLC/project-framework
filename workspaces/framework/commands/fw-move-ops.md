@@ -1,17 +1,26 @@
 ---
 description: Move an operations record between open/onhold/closed (with closure code), or sweep prior-year closed records into year buckets
-argument-hint: "<id> <open|onhold|closed> [--resolution <code>]  |  sweep"
+argument-hint: "<id|\"id, id, ...\"> <open|onhold|closed> [--resolution <code>]  |  sweep"
 ---
 
-# /fw-move - Move a Record (ADR-009 build engine)
+# /fw-move-ops - Move an Operations Record (ADR-009 build engine)
 
-The namespace-aware move engine of the new build. One engine, one policy table
+The operations half of the new build's move engine. One engine, one policy table
 per namespace; **status is the first path segment under the namespace root**,
 anything deeper (year buckets, artifact bundles `INC-nnn/`) is grouping, never
 status. Namespaces are root queues beside the board (ADR-009 D2 as amended by
-TASK-213): operations lives at `operations/`. Today only the **operations**
-namespace is active here — the kanban policy slot fills at board crossover
-(ADR-009 D5); until then the live board keeps using the root `/fw-move`.
+TASK-213): operations lives at `operations/`.
+
+**One command per namespace; the namespace is never inferred** (BUG-215). This
+command always passes `operations` to the script. Inferring it from the id shape
+or the target folder was rejected — a bare numeric silently meant operations, and
+inferring from the folder name would have made folder names globally unique across
+namespaces forever, enforced by nothing.
+
+The kanban row exists in the script's policy table but is **not wired up**: the
+live board is `project-hub/work/` under the root `/fw-move` until the ADR-009 D5
+crossover, a single atomic moment at graduation. `/fw-move-ops kanban ...` is not
+a thing — the namespace is fixed by which command you run.
 
 ## Operations policy (what the script enforces)
 
@@ -36,8 +45,8 @@ namespace is active here — the kanban policy slot fills at board crossover
 2. **Run the script:**
 
    ```bash
-   bash "${CLAUDE_PLUGIN_ROOT}/scripts/fw-move.sh" <id> <target> [--resolution <code>]
-   bash "${CLAUDE_PLUGIN_ROOT}/scripts/fw-move.sh" "<id, id, ...>" <target>
+   bash "${CLAUDE_PLUGIN_ROOT}/scripts/fw-move.sh" operations <id> <target> [--resolution <code>]
+   bash "${CLAUDE_PLUGIN_ROOT}/scripts/fw-move.sh" operations "<id, id, ...>" <target>
    ```
 
    **Batch (BUG-215).** The id argument accepts a list, comma- or space-separated;
@@ -58,7 +67,7 @@ namespace is active here — the kanban policy slot fills at board crossover
    calendar year move to `closed/YYYY/`; nothing changes status.
 
    ```bash
-   bash "${CLAUDE_PLUGIN_ROOT}/scripts/fw-move.sh" sweep
+   bash "${CLAUDE_PLUGIN_ROOT}/scripts/fw-move.sh" operations sweep
    ```
 
 4. **Report** what moved (and any stamp or bundle lines the script printed).

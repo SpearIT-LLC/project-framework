@@ -99,13 +99,18 @@ at implementation:
 
 **The namespace half (rescoped 2026-09-07) — not yet started:**
 
-- [ ] **Two commands exist**, one per namespace; neither infers a namespace from the
-      target folder or the id shape
-- [ ] Bare numerics work in **both** commands
-- [ ] One script invoked as `fw-move.sh <namespace> <ids> <target>`, policy table at the
-      top; the `""|INC|REQ) NS="operations"` guess is gone
-- [ ] ADR-009's "table entry, not a second engine" note is confirmed or amended in
-      writing, not left ambiguous
+- [x] **The namespace is an argument, never inferred** — `/fw-move` renamed
+      `/fw-move-ops`, which always passes `operations` *(N1–N4)*
+- [x] Bare numerics work, unambiguously, because the namespace came from the command
+      *(N1, N5)*
+- [x] One script invoked as `fw-move.sh <namespace> <ids> <target>`, policy table at the
+      top; the `""|INC|REQ) NS="operations"` guess is gone *(no `OPS_` refs remain)*
+- [x] ADR-009's "table entry, not a second engine" note is **confirmed** — the kanban row
+      is declared with its authored folder set and refuses clearly until wired *(N4, N12)*
+- [ ] **A second command exists for kanban.** Deferred deliberately: the kanban policy
+      (transitions, dependency gate, acceptance gate) is not ported, and the live board
+      is `project-hub/work/` under the root `/fw-move` until the D5 crossover. Owned by
+      the crossover work, not this card — see Related
 
 **Verification:**
 
@@ -136,6 +141,20 @@ Scratch git fixture: four INC records in `open/`, one carrying an artifact bundl
 | T10 | Unknown resolution code | refused |
 | T11b | Interactive prompt, two records | `duplicate` and `cancelled` stamped per record |
 | T12 | `sweep` regression | prior-year record bucketed to `closed/2025/` |
+
+**Namespace half, 2026-09-08** (fixture with both `operations/` and `kanban/`):
+
+| # | Case | Result |
+|---|---|---|
+| N1 | Batch with explicit namespace | 3 moved, bundle carried |
+| N2 | Namespace omitted | refused — the id list is read as a namespace and rejected |
+| N3 | Unknown namespace | refused, lists known namespaces |
+| N4 | `kanban` declared but not wired | refused with the crossover pointer — **no half-move** |
+| N5 | Partial failure, unquoted list | 1 and 3 moved, 99 reported, exit 1 |
+| N6–N10 | Single close, batch `--resolution` refusal, no-tty close, terminal guard, already-in-target | all unchanged from T5–T8 |
+| N11 | `sweep` with namespace | bucketed to `closed/2025/` |
+| N12 | `sweep` for kanban | refused |
+| N13 | Per-record prompting | two records, two different codes stamped |
 
 **T6 is the one worth keeping in mind:** a non-interactive batch close fails rather than
 hanging on a `read` that can never return. That is the headless case FEAT-221 cares about.

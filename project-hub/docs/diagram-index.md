@@ -32,7 +32,8 @@ are listed under it.
 | Page | Export in repo | Consumed by |
 |------|----------------|-------------|
 | (folder structure mind-graph) | [`../retrospectives/FrameworkPlanning-FolderStructure-Proposed.png`](../retrospectives/FrameworkPlanning-FolderStructure-Proposed.png) | [ADR-009](../research/adr/009-workspace-model-and-fresh-build-in-place.md), [2026-08-18 session history](../history/sessions/2026-08-18-SESSION-HISTORY.md) |
-| `fw-implement-todo` | [`../poc/fw-implement-todo/`](../poc/fw-implement-todo/) | *(in discussion 2026-09-07)* |
+| `fw-implement-todo` | [`../poc/fw-implement-todo/`](../poc/fw-implement-todo/) | [FEAT-221](../work/backlog/FEAT-221-unattended-todo-implementation.md) + children |
+| repo structure (kanban / operations / kb / workspaces / history) | *(export pending)* | [BUG-215](../work/doing/BUG-215-new-move-engine-drops-batch-moves.md), [TASK-219](../work/todo/TASK-219-board-conventions-for-the-new-build.md) — the authored folder set for the ADR-009 build |
 
 ---
 

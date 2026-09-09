@@ -7,18 +7,27 @@
 # Records are files <PREFIX>-<n>-<slug>.md; a sibling folder <PREFIX>-<n>/ is the
 # record's artifact bundle and always moves with it.
 #
+# THE NAMESPACE IS AN ARGUMENT, NEVER INFERRED (BUG-215). Each namespace gets its own
+# command; the command passes its namespace in. Inferring it from the id shape or the
+# target folder was rejected: a bare numeric silently meant operations, and inferring
+# from the folder name would have made folder names globally unique across namespaces
+# forever, enforced by nothing.
+#
 # Namespaces (root queues beside the board — ADR-009 D2 as amended by TASK-213):
 #   operations — root operations/; prefixes INC, REQ; folders open, onhold, closed
-#                transitions: open->onhold, onhold->open, open->closed, onhold->closed
-#                closed is terminal; -> closed REQUIRES --resolution <code> and stamps
-#                **Closed:** <today> and **Resolution:** <code>. No kanban gates apply.
-#   kanban     — not active in this repo until the board crosses over (ADR-009 D5);
-#                the live board uses the root /fw-move. The policy slot exists so the
-#                crossover is a table entry, not a second engine.
+#                closed is terminal; -> closed REQUIRES a resolution code (flag for one
+#                record, prompt for a list) and stamps **Closed:** and **Resolution:**.
+#   kanban     — root kanban/; the board. Folder set authored in the repo-structure
+#                diagram (see project-hub/docs/diagram-index.md). NOT WIRED UP HERE:
+#                the live board is project-hub/work/ under the root /fw-move until the
+#                ADR-009 D5 crossover, which is a single atomic moment at graduation.
+#                The policy row below is the crossover's landing spot; the gates it
+#                needs (dependencies, acceptance criteria, ripeness) are not ported yet.
 #
 # Usage:
-#   fw-move.sh [--root <dir>] <id|"id, id, ..."> <target> [--resolution <code>]
-#   fw-move.sh [--root <dir>] sweep          (operations: prior-year closed -> closed/YYYY/)
+#   fw-move.sh [--root <dir>] <namespace> <id|"id, id, ..."> <target> [--resolution <code>]
+#   fw-move.sh [--root <dir>] <namespace> sweep   (operations: prior-year closed -> closed/YYYY/)
+#   <namespace>: operations | kanban
 #   <id>: INC-012, REQ-3, or bare 12 (one shared sequence per namespace makes it unambiguous)
 #         A list is comma- or space-separated; quote it. Items are validated and moved
 #         one at a time, continuing past failures, with a summary at the end (BUG-215).
@@ -32,12 +41,46 @@ ROOT=""
 if [ "${1:-}" = "--root" ]; then ROOT="${2:?--root requires a directory}"; shift 2; fi
 [ -n "$ROOT" ] || ROOT="$(git rev-parse --show-toplevel 2>/dev/null)" || { echo "Error: not inside a git repository" >&2; exit 1; }
 
-OPS_ROOT="$ROOT/operations"
-OPS_FOLDERS="open onhold closed"
-OPS_TRANSITIONS="open:onhold onhold:open open:closed onhold:closed"
+# ---------------------------------------------------------------------------
+# POLICY TABLE — one row per namespace. Folders and transitions are data; the
+# gates each namespace needs are functions (see below), because a dependency
+# lookup and a resolution prompt are not expressible as a list.
+# ---------------------------------------------------------------------------
+NAMESPACES="operations kanban"
+
+operations_ROOT="operations"
+operations_FOLDERS="open onhold closed"
+operations_TRANSITIONS="open:onhold onhold:open open:closed onhold:closed"
+operations_TERMINAL="closed"
+
+# kanban: authored folder set (repo-structure diagram). Transitions and gates are
+# NOT yet ported from the old engine — see the header note. Declared so the
+# crossover is a table edit, not a new engine.
+kanban_ROOT="kanban"
+kanban_FOLDERS="backlog blocked todo doing accept done cancelled"
+kanban_TRANSITIONS=""
+kanban_TERMINAL="done cancelled"
+
 CODES="resolved cancelled duplicate no-fault-found rejected"
 
 die() { echo "❌ $*" >&2; exit 1; }
+
+# The namespace is the first positional argument. It is never inferred (BUG-215).
+NS="${1:-}"
+[ -n "$NS" ] || die "usage: fw-move.sh <namespace> <id|\"id, id, ...\"> <target> [--resolution <code>]  |  fw-move.sh <namespace> sweep"
+echo "$NAMESPACES" | grep -qw "$NS" || die "unknown namespace '$NS' (known: $NAMESPACES)"
+shift
+
+# Resolve this namespace's policy row.
+eval "NS_ROOT_REL=\"\$${NS}_ROOT\"; NS_FOLDERS=\"\$${NS}_FOLDERS\"; NS_TRANSITIONS=\"\$${NS}_TRANSITIONS\"; NS_TERMINAL=\"\$${NS}_TERMINAL\""
+NS_ROOT="$ROOT/$NS_ROOT_REL"
+
+# kanban is declared in the table but not wired: its transitions and gates are not
+# ported, and the live board is project-hub/work/ under the root /fw-move until the
+# ADR-009 D5 crossover. Refuse rather than half-move a card.
+if [ -z "$NS_TRANSITIONS" ]; then
+  die "namespace '$NS' is declared but not active in this engine yet — the live board is project-hub/work/ under the root /fw-move until the ADR-009 D5 crossover"
+fi
 
 # Per-item failure inside a batch: report, mark, and keep going (BUG-215).
 FAILED=0; MOVED=0; SKIPPED=0
@@ -50,17 +93,18 @@ gmv() { git -C "$ROOT" mv "$1" "$2" 2>/dev/null || mv "$1" "$2"; }
 # sweep: operations closed/*.md whose Closed: year < current year -> closed/YYYY/
 # ---------------------------------------------------------------------------
 if [ "${1:-}" = "sweep" ]; then
-  [ -d "$OPS_ROOT/closed" ] || die "no operations closed/ folder at operations/"
+  [ "$NS" = "operations" ] || die "sweep is an operations action (prior-year closed records into closed/YYYY/); '$NS' has no equivalent"
+  [ -d "$NS_ROOT/closed" ] || die "no operations closed/ folder at $NS_ROOT_REL/"
   THIS_YEAR="$(date +%Y)"; MOVED=0
-  for f in "$OPS_ROOT"/closed/*.md; do
+  for f in "$NS_ROOT"/closed/*.md; do
     [ -f "$f" ] || continue
     y="$(grep -m1 -oE '^\*\*Closed:\*\* *[0-9]{4}' "$f" | grep -oE '[0-9]{4}$' || true)"
     [ -n "$y" ] || { echo "⚠️  skipped (no Closed: stamp): $(basename "$f")"; continue; }
     [ "$y" -lt "$THIS_YEAR" ] || continue
-    mkdir -p "$OPS_ROOT/closed/$y"
-    gmv "$f" "$OPS_ROOT/closed/$y/"
-    b="$(basename "$f")"; bundle="$OPS_ROOT/closed/$(printf '%s' "$b" | grep -oE '^[A-Z]+-[0-9]+')"
-    [ -d "$bundle" ] && gmv "$bundle" "$OPS_ROOT/closed/$y/"
+    mkdir -p "$NS_ROOT/closed/$y"
+    gmv "$f" "$NS_ROOT/closed/$y/"
+    b="$(basename "$f")"; bundle="$NS_ROOT/closed/$(printf '%s' "$b" | grep -oE '^[A-Z]+-[0-9]+')"
+    [ -d "$bundle" ] && gmv "$bundle" "$NS_ROOT/closed/$y/"
     echo "✅ $b → closed/$y/"; MOVED=$((MOVED+1))
   done
   echo "Sweep done: $MOVED record(s) bucketed."
@@ -78,7 +122,7 @@ while [ $# -gt 0 ]; do
     *) ARGS+=("$1"); shift ;;
   esac
 done
-[ ${#ARGS[@]} -ge 2 ] || { echo "Usage: fw-move.sh <id|\"id, id, ...\"> <open|onhold|closed> [--resolution <code>]  |  fw-move.sh sweep" >&2; exit 1; }
+[ ${#ARGS[@]} -ge 2 ] || { echo "Usage: fw-move.sh $NS <id|\"id, id, ...\"> <$(echo "$NS_FOLDERS" | tr ' ' '|')> [--resolution <code>]" >&2; exit 1; }
 
 # The target is the LAST argument; everything before it is the id list. This lets an
 # unquoted list work too: fw-move.sh 1 2 3 closed
@@ -95,8 +139,8 @@ if [ ${#IDS[@]} -gt 1 ] && [ -n "$RESOLUTION" ]; then
 fi
 
 # Namespace/target validation is list-wide: one target, one namespace policy.
-[ -d "$OPS_ROOT" ] || die "no operations queue at operations/ — create the first record with /fw-new-ops-record"
-echo "$OPS_FOLDERS" | grep -qw "$TARGET" || die "invalid target '$TARGET' — operations folders: $OPS_FOLDERS"
+[ -d "$NS_ROOT" ] || die "no $NS queue at $NS_ROOT_REL/ — create the first record with /fw-new-ops-record"
+echo "$NS_FOLDERS" | grep -qw "$TARGET" || die "invalid target '$TARGET' — $NS folders: $NS_FOLDERS"
 
 # ---------------------------------------------------------------------------
 # move_one <id> — validate and move a single record. Never exits; returns non-zero
@@ -106,26 +150,25 @@ move_one() {
   local ID_IN="$1"
   local PREFIX NUM NUM_RE REL REC SOURCE BASE FULL_ID BUNDLE DEST RES TODAY
 
-  PREFIX="$(printf '%s' "$ID_IN" | grep -oE '^[A-Za-z]+' | tr '[:lower:]' '[:upper:]' || true)"
+  # The namespace came from the command line, so a bare numeric is unambiguous and a
+  # prefix is decoration. Only the number is used to locate the record (BUG-215).
   NUM="$(printf '%s' "$ID_IN" | grep -oE '[0-9]+$' || true)"
   [ -n "$NUM" ] || { fail_item "cannot parse an id from '$ID_IN'"; return 1; }
-  case "$PREFIX" in
-    ""|INC|REQ) : ;;
-    *) fail_item "prefix '$PREFIX' belongs to the kanban namespace, which is not active in this repo until the board crosses over (ADR-009 D5) — use the root /fw-move"; return 1 ;;
-  esac
 
   # Locate the record: status folder is the first segment; scan recursively (buckets)
   NUM_RE="$(printf '%s' "$NUM" | sed 's/^0*//')"
-  REL="$(find "$OPS_ROOT" -type f -name '*.md' -printf '%P\n' | grep -E "(^|/)(INC|REQ)-0*${NUM_RE}-[^/]*\.md$" | head -1 || true)"
-  [ -n "$REL" ] || { fail_item "no operations record with id $NUM"; return 1; }
-  REC="$OPS_ROOT/$REL"; SOURCE="${REL%%/*}"; BASE="$(basename "$REC")"
+  REL="$(find "$NS_ROOT" -type f -name '*.md' -printf '%P\n' | grep -E "(^|/)[A-Za-z]+-0*${NUM_RE}-[^/]*\.md$" | head -1 || true)"
+  [ -n "$REL" ] || { fail_item "no $NS record with id $NUM"; return 1; }
+  REC="$NS_ROOT/$REL"; SOURCE="${REL%%/*}"; BASE="$(basename "$REC")"
   FULL_ID="$(printf '%s' "$BASE" | grep -oE '^[A-Z]+-[0-9]+')"
 
   if [ "$SOURCE" = "$TARGET" ]; then
     echo "⚠️  $FULL_ID is already in $TARGET/ — skipped"; SKIPPED=$((SKIPPED+1)); return 0
   fi
-  [ "$SOURCE" = "closed" ] && { fail_item "$FULL_ID is closed — closed is terminal; open a new record instead"; return 1; }
-  echo "$OPS_TRANSITIONS" | grep -qw "$SOURCE:$TARGET" || { fail_item "$FULL_ID: invalid transition $SOURCE → $TARGET (allowed: $OPS_TRANSITIONS)"; return 1; }
+  if echo "$NS_TERMINAL" | grep -qw "$SOURCE"; then
+    fail_item "$FULL_ID is in $SOURCE/ — that is terminal; open a new record instead"; return 1
+  fi
+  echo "$NS_TRANSITIONS" | grep -qw "$SOURCE:$TARGET" || { fail_item "$FULL_ID: invalid transition $SOURCE → $TARGET (allowed: $NS_TRANSITIONS)"; return 1; }
 
   # Resolution is per record. Single id may pass --resolution; a batch is prompted.
   RES="$RESOLUTION"
@@ -143,10 +186,10 @@ move_one() {
   fi
 
   # Move record + bundle (bundle sits beside the record, named for the id)
-  gmv "$REC" "$OPS_ROOT/$TARGET/" || { fail_item "move failed for $BASE"; return 1; }
+  gmv "$REC" "$NS_ROOT/$TARGET/" || { fail_item "move failed for $BASE"; return 1; }
   BUNDLE="$(dirname "$REC")/$FULL_ID"
-  [ -d "$BUNDLE" ] && { gmv "$BUNDLE" "$OPS_ROOT/$TARGET/"; echo "   bundle $FULL_ID/ moved"; }
-  DEST="$OPS_ROOT/$TARGET/$BASE"
+  [ -d "$BUNDLE" ] && { gmv "$BUNDLE" "$NS_ROOT/$TARGET/"; echo "   bundle $FULL_ID/ moved"; }
+  DEST="$NS_ROOT/$TARGET/$BASE"
 
   # Stamp on terminal move: fill existing Closed:/Resolution: lines, else insert after Opened:
   if [ "$TARGET" = "closed" ]; then

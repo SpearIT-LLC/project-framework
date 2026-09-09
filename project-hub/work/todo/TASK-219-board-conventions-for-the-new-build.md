@@ -89,6 +89,43 @@ decision and the mechanism.
 
 ### Group 2a — Settle the terminal states as a set (added 2026-09-07)
 
+> **Largely answered by the authored structure diagram (2026-09-07).** Gary's Lucid
+> repo-structure page — the same document as `fw-implement-todo`, indexed in
+> [diagram-index.md](../../docs/diagram-index.md) — carries the intended folder set for
+> the ADR-009 build. It is an **authored design**, not a proposal, so the questions below
+> are mostly ratification rather than open decisions.
+>
+> ```
+> kanban/     backlog  blocked  todo  doing  accept  done  cancelled
+>             release/<product>          templates/ (marked "alt idea")
+> operations/ open  onhold  closed
+> kb/         <domain>/{cookbook,faq,reference,research}   index
+> workspaces/ <created as needed>
+> history/    sessions/YYYY/  retrospectives/  archive/
+> ```
+>
+> **What this settles:**
+> - **`accept/` exists** — first-class, sitting between `doing` and `done` exactly as the
+>   `fw-implement-todo` flow requires. Question 1's answer for accept.
+> - **`cancelled/` exists** — first-class, confirming the 2026-09-07 reasoning that
+>   cancelled is a lifecycle status rather than a storage location.
+> - **No `archive/` under `kanban/`.** With `cancelled/` first-class, archive's double
+>   duty splits: `history/archive/` is the storage home. **This still needs deciding for
+>   the 27 `deprecated/` cards** — they are neither cancelled nor released.
+> - **`release/` is per-product** (`app1`, `app2` in the diagram), matching
+>   `framework.yaml`'s `products[]` and the old board's `history/releases/<product>/`.
+>
+> **What it does not settle** — still genuinely open:
+> - **FEAT-030's hold state.** No hold folder appears under `kanban/`. Either the state is
+>   dropped for the board, or `blocked/` covers it, or the diagram predates the question.
+> - **Where deprecated cards live** (see above).
+> - **`templates/` under `kanban/`** is marked *"alt idea"* in the diagram — explicitly
+>   unsettled by its author.
+> - Questions 2, 3, 4 and 6 below (transitions into `cancelled/`, whether it is terminal,
+>   whether the board gains a closure code, ID-safety of the new folders) are unaffected
+>   by the diagram and still need answers.
+
+
 Three folder questions arrived within one week (`accept/`, `cancelled/`, and FEAT-030's
 hold state). Deciding them one at a time is how a board grows a fourth folder next month.
 **Decide them together**, as one terminal/parked-state model.

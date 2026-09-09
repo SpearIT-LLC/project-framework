@@ -23,7 +23,7 @@ files a BUG card; a surprising-but-correct result files a note on the owning FEA
 2. Install the plugin from the dev marketplace (`/plugin marketplace add …`, then
    `/plugin install spearit-framework-dev@dev-marketplace --scope local`); restart.
 3. **Expected:** `/help` lists `fw-new-workspace`, `fw-new-kb-domain`, `fw-contacts`,
-   `fw-new-ops-record`, `fw-move` under the plugin namespace, and the `fw-troubleshoot`
+   `fw-new-ops-record`, `fw-move-ops` under the plugin namespace, and the `fw-troubleshoot`
    skill is available. No `workspaces/` exists yet.
 4. **Pass:** all listed; nothing pre-created.
 
@@ -161,7 +161,7 @@ another editor (notepad), changing an assignment role. Do not touch Claude.
 
 ---
 
-## D. Operations records — `/fw-new-ops-record`, `/fw-move`, sweep
+## D. Operations records — `/fw-new-ops-record`, `/fw-move-ops`, sweep
 
 **UAT-14 — first use creates the queue (TASK-213).** In a repo without a root
 `operations/`: `> /fw-new-ops-record inc test`
@@ -188,7 +188,7 @@ client's ServiceNow/Jira) hands over a text file and a screenshot for INC-001:
 - Pass: files in `INC-001/`, links resolve from the record, no content invented; the
   bundle then travels in UAT-16/17/19/21 moves.
 
-**UAT-16 — flow moves.** `> /fw-move INC-001 onhold` then `> /fw-move 1 open`
+**UAT-16 — flow moves.** `> /fw-move-ops INC-001 onhold` then `> /fw-move-ops 1 open`
 - Pass: both succeed; a bare numeric id works; the file is in the named folder each time.
 
 **UAT-17 — close gate.** `> /fw-move INC-001 closed`
