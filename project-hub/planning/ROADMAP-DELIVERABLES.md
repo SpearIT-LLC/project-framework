@@ -8,15 +8,23 @@ board conventions that survived that review (TASK-219).
 **Updated 2026-09-07:** reconciled against actual board state — the 09-02 snapshot had
 gone stale (TASK-213 shipped 09-03; D1b Group 1 promoted to `todo/` the same day).
 Progress checkboxes added. FEAT-221/222 slotted in.
+**Updated 2026-09-09:** checkbox legend corrected — `[!]` was replaced by `[h]` on
+2026-09-08 (it means *important* in every Obsidian theme collection, not blocked).
+BUG-215 rescoped and now in `doing/`.
 **Companion to:** [`ROADMAP.md`](ROADMAP.md) — theme-based, predates ADR-009 (last
 updated 2026-02-17). **Stale; do not plan from it.** This one is deliverable-based and
 current.
 
-**Board state (verified 2026-09-07):** 72 backlog · 16 todo · 0 doing · 8 done · 1 blocked.
+**Board state (verified 2026-09-09):** 72 backlog · 15 todo · 1 doing · 8 done · 1 blocked.
 
 > **Progress marks** follow TECH-177's Obsidian convention: `[ ]` pending · `[/]`
-> in progress · `[x]` done · `[-]` cancelled/N-A. A deliverable is `[/]` when any of its
-> cards has shipped. **These marks are hand-kept** — the board folder is the source of
+> in progress · `[x]` done · `[-]` cancelled/N-A · `[?]` needs information ·
+> `[h]` something prevents completion. A deliverable is `[/]` when any of its cards has
+> shipped.
+>
+> **`[h]`, not `[!]`** (settled 2026-09-08). `[!]` means *important* in all four Obsidian
+> theme collections and imports into Tasks as an ordinary TODO; `[h]` is free in all four
+> and is the symbol the Tasks docs use for `ON_HOLD`. Evidence in TECH-177. **These marks are hand-kept** — the board folder is the source of
 > truth, this file is a view of it (ADR-008: derived, not authored). Re-verify against
 > `project-hub/work/` before trusting a mark; TECH-177 itself would let a script check
 > them once the states are implemented in the gate.
@@ -46,7 +54,7 @@ Everything below is ranked against one goal: **graduate `workspaces/framework/` 
 ## Ranked Deliverables
 
 ### D1 — The Spine: Board, Operations, and kb at Root  `[/]`
-**Rank 1 · 5 cards · 1 done, 4 in `todo/`**
+**Rank 1 · 5 cards · 1 done, 1 in `doing/`, 3 in `todo/`**
 
 The repo-root structure the whole model rests on. Everything else assumes these paths
 are settled, so churn here is the most expensive churn available — it is first for that
@@ -55,20 +63,22 @@ reason alone, not because it is the largest.
 | ✓ | Card | Folder | Pri | What |
 |---|---|---|---|---|
 | `[x]` | TASK-213 | **done** | Med | Operations moved out of `workspaces/` to root, as a peer queue beside the board — *shipped 2026-09-03* |
-| `[ ]` | **BUG-215** | todo | Med | **← next.** New move engine dropped batch moves (`fw-move 001,002,003 todo`) — regression vs old engine |
-| `[ ]` | TECH-177 | todo | **Med** | Obsidian checkbox states `[ ] [x] [/] [-]` + gate awareness in `fw-move.sh`. **Re-scoped 2026-09-07:** `[?]`/`[!]` promoted from deferred — they mark *where* a card is blocked, which no folder can. **Now blocks D3b** |
+| `[/]` | **BUG-215** | **doing** | Med | **In progress.** Rescoped 2026-09-08 from "batch moves dropped" to **parity across both namespaces** — batch was the symptom, the engine guessing its namespace was the cause. Batch half and namespace half both shipped and tested; two criteria open (kanban command → crossover work; built-plugin verification → needs a publish step) |
+| `[ ]` | TECH-177 | todo | **Med** | Obsidian checkbox states `[ ] [x] [/] [-]` + gate awareness in `fw-move.sh`. **Re-scoped 2026-09-07:** `[?]`/`[h]` promoted from deferred — they mark *where* a card is blocked, which no folder can. Symbol settled 2026-09-08 (`[h]`, not `[!]`). **Now blocks D3b** |
 | `[ ]` | TASK-214 | todo | Med | `Workspace:` field on ops records — restores the scoping the root move removes |
 | `[ ]` | TASK-216 | todo | Med | `kb/` moves to root; framework gains a multi-source list (local + N external corpora) |
 
 **Why first:** TASK-216 relocates a top-level tree; every command, script, and doc that
 names a path is downstream. BUG-215 is a live regression on the single most-used command.
 
-**Next card: BUG-215.** It is the only D1 card that is pure repair rather than design, it
-is self-contained (no path churn), and it **blocks the FEAT-221 dogfood** — that card's
-whole premise is batch processing, and its four-card group cannot even be staged while
-batch moves are broken in the new engine. **TECH-177 rides along**: same `fw-move.sh`
-gate functions, one visit instead of two, and it supplies the checkbox states this
-roadmap now uses.
+**BUG-215 is in `doing/`** (started 2026-09-07, both halves implemented 2026-09-08). What
+remains on it is a UAT pass against the built plugin — the source-tree tests pass, but
+"verified against the built plugin" is a separate claim and needs a publish step.
+
+**TECH-177 no longer rides along.** It was scoped as a cheap companion (same `fw-move.sh`
+gate functions), but it grew: it now owns sub-task-level blocking for the whole framework
+(`[?]`/`[h]`, their gate behaviour, and the `Depends On:` macro/micro split). It is the
+natural next card once BUG-215 closes, and it **blocks D3b**.
 
 ---
 
@@ -84,7 +94,7 @@ and pairs with the D5 board crossover.
 | `[ ]` | TASK-219 | todo | **High** | Owns the set: decide each convention, give it a mechanism, close the source card |
 | `[ ]` | FEAT-021, TECH-082, TECH-041, TECH-027, TECH-033 | **todo** | — | **Group 1 — the blocker.** Numbering, parent/child, supporting files, cross-references, status-vs-folder. Interlock; settle as a set before any work-item template is authored. *Promoted to `todo/` 2026-09-03* |
 | `[ ]` | TECH-044, TECH-077, TECH-078, FEAT-030 | backlog | — | Board lifecycle: creation policy, never-delete, release archival, a hold state |
-| `[ ]` | **`accept/` + `blocked/` metadata** | *(in TASK-219)* | — | **Added 2026-09-07.** `accept/` = finished but not yet accepted (UAT, or waiting on someone outside the team); `blocked/` metadata widened for internally-blocked cards. **Blocks FEAT-221.** Decide `accept/` against FEAT-030 — adjacent but not the same state |
+| `[ ]` | **`accept/` · `cancelled/` · `blocked/` metadata** | *(in TASK-219 Group 2a)* | — | **Added 2026-09-07/08.** `accept/` = finished but not yet accepted; `cancelled/` = a lifecycle status, not a storage location; `blocked/` metadata widened for internally-blocked cards. **Largely settled 2026-09-08** by the authored repo-structure diagram — `accept/` and `cancelled/` are first-class there. Still open: where the 27 `deprecated/` cards live (no `archive/` under `kanban/`), FEAT-030's hold state (absent from the diagram), `templates/` (the diagram marks it *"alt idea"*). **Blocks FEAT-221** |
 | `[ ]` | TECH-070, TECH-070.1, TECH-071, TECH-049 | backlog | — | Process: issue response, session handoff, human-AI concurrent work. **TECH-049 also owns locking/session identity** — FEAT-221 degrades safely without it but does not solve it |
 | `[ ]` | TECH-073, FEAT-149 | backlog | — | Templates the new build lacks: external reference, meeting record |
 | `[ ]` | DECISION-171 | backlog | — | The `fw-` namespace rule the new build already follows but never wrote down |
@@ -164,9 +174,8 @@ Gary's Lucid page *fw-implement-todo*
 | `[ ]` | FEAT-221.2 | backlog | Med | The command itself |
 
 **Why rank 3, not higher:** it is **blocked by D1b** (`accept/` is a board lifecycle
-state TASK-219 owns) and by **TECH-177** (the `[?]`/`[!]` markers its circuit-breaker
-writes). It also cannot be staged until **BUG-215** restores batch moves — all three
-are D1 or D1b work.
+state TASK-219 owns) and by **TECH-177** (the `[?]`/`[h]` markers its circuit-breaker
+writes). Batch moves are no longer a blocker — BUG-215 restored them 2026-09-07.
 
 **Why it matters beyond itself:** this is the first card group that genuinely tests
 parent/child grouping (D1b Group 1's unresolved FEAT-021 vs TECH-082 conflict) on real
@@ -293,8 +302,10 @@ the collision risk applies to it too.
 ## Sequence
 
 ```
-NEXT     BUG-215 (+TECH-177 riding along) ── restores batch moves, supplies
-              │                              the checkbox states this file uses
+NOW      BUG-215 in doing/ ── parity across both namespaces; UAT remains
+              │
+NEXT     TECH-177 ── the [ ] [/] [x] [-] [?] [h] gate behaviour this file's
+              │       own marks depend on; blocks D3b
               ▼
 NOW      D1 spine ──► D1b conventions ──► D2 kb trust ──► D3 command UX ──► 1.0
           [/]            │  [ ]              [ ]             [ ]
@@ -317,10 +328,10 @@ DONE     D8 — 26 cards archived 2026-09-02 (TASK-218)
 (D1b), make the kb trustworthy (D2), polish the commands (D3) — that is 1.0. Rebuild the
 two ADR-008 guards (D7) before you call it 1.0, or the onion grows back.
 
-**The next card is BUG-215.** Pure repair, self-contained, on the most-used command, and
-it unblocks staging for D3b. TECH-177 rides with it.
+**BUG-215 is in `doing/`**, both halves shipped; a built-plugin UAT pass is what closes
+it. **TECH-177 is next** — it is no longer a ride-along, and D3b waits on it.
 
-> **WIP warning:** `todo/` holds **16** against a `.limit` of **10**. It was already over
+> **WIP warning:** `todo/` holds **15** against a `.limit` of **10**. It was already over
 > before D1b Group 1 was promoted. Nothing new should be promoted to `todo/` until it
 > drains — an over-limit queue is the condition the limit exists to surface.
 
@@ -375,4 +386,4 @@ if this reconciliation is needed a third time.
 
 ---
 
-**Last Updated:** 2026-09-07
+**Last Updated:** 2026-09-09
