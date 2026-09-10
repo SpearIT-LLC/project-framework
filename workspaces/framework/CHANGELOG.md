@@ -6,6 +6,39 @@ plain semver 0.x during the framework workspace build.
 ## [Unreleased]
 
 ### Added
+- **`/fw-new` — the create gate for board items** (FEAT-175), the create-side
+  twin of `/fw-move` and the fifth and last create gate. It does exactly two
+  things: **assigns the id** (via `fw-next-id.sh`, never its own scan) and
+  **enforces the accepted type**. Items land in `kanban/backlog/`, and the queue
+  scaffold is created on first use like the operations one. Sub-items are
+  supported both ways — `--parent` mints a dotted id (tight coupling, moves with
+  the parent, one item against WIP) while the `Parent:` field carries provenance
+  for work that stands alone. Verified: dotted children do **not** consume ids
+  from the shared sequence.
+- **The accepted type set is now stated in exactly one place** — the `TYPES:`
+  line inside the `TYPES-SOT-BEGIN`/`END` markers in
+  `templates/records/work-item.md`. It lives in the template on purpose: a new
+  type needs a template that serves it, so the two cannot drift apart, and
+  editing that one line is the whole change. **The block is replaced by a
+  pointer when a card is created**, so no card becomes a stale copy of the list
+  (ADR-008). Previously the set was written down nowhere in this build.
+- **Strict script, lenient AI** (ADR-006 D6). `fw-new.sh` accepts only a member
+  of the SoT, case-insensitively, with **no alias or fuzzy logic at all** —
+  prefix normalization (`FEATURE`→`FEAT`) and semantic suggestion (`chore`→
+  `TECH`) belong to the AI layer in `commands/fw-new.md`, always as a suggestion
+  the user confirms. Fuzzy matching in the script would be safe only by property
+  of today's five names, not by property of the rule: add a type that prefixes
+  another and it silently picks wrong, and a create gate bakes its answer into a
+  filename that lives forever.
+- **The rejection message is an education surface, not a wall.** It names the
+  accepted set, gives a semantic suggestion where one applies and says *why*,
+  redirects incidents and requests to `/fw-new-ops-record`, and notes that
+  legacy prefixes are recognized when scanning but never offered for creation.
+  `story` gets the structural answer it is really asking for — how to model a
+  story with work under it — rather than a bare rejection.
+- A malformed or missing type list **fails loudly** rather than degrading into
+  "accept anything": missing markers, a missing `TYPES:` line, or a
+  non-alphabetic entry each abort with a message naming the fix.
 - **`kb/company/contacts/CONTACTS-ALL.md`** — a generated registry-wide view:
   everyone, grouped by `Affiliation:`, with group and role. It is the only view
   showing affiliation, and the only place a person with **no assignment** appears

@@ -4,9 +4,18 @@
      FOLDER carries the status (backlog -> todo -> doing -> accept -> done).
      Never create or move by hand - use /fw-new and /fw-move.
 
-     TYPES (ADR-006, five accepted): FEAT BUG TECH TASK SPIKE.
-     Any prefix already on disk outside these five is legacy - parsed, never
-     offered for creation.
+TYPES-SOT-BEGIN
+     TYPES - THIS IS THE SINGLE SOURCE OF TRUTH (ADR-006, ADR-008).
+     fw-new.sh PARSES the TYPES: line below and accepts nothing else. Do not
+     reword, wrap or move it; add or remove a type only by editing it here.
+     The list lives in the template on purpose: a new type needs a template that
+     supports it, so the two cannot be changed independently.
+TYPES: FEAT BUG TECH TASK SPIKE
+     Uppercase is canonical; fw-new.sh matches case-insensitively (feat==FEAT).
+     This block is REPLACED by a pointer when a card is created, so no card
+     becomes a stale copy of the list. Everything between the BEGIN/END markers
+     goes; the markers are the boundary, so edit freely inside them.
+TYPES-SOT-END
 
      SUB-ITEMS - two mechanisms, different jobs (TASK-219 Group 1):
        Dotted id (FEAT-021.1) = tight coupling. The child lives and dies with

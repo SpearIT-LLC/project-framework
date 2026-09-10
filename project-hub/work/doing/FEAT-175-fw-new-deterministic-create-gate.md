@@ -163,22 +163,27 @@ property; do not widen the scan.
 ## Acceptance Criteria
 
 **Gate + engine**
-- [ ] A type SoT ships inside `workspaces/framework/` and is the only place the accepted
-      set is written down
-- [ ] `fw-new.sh` reads it and **rejects** any non-accepted type, case-insensitively,
-      exiting non-zero
-- [ ] The script contains **no alias or fuzzy logic** — normalization is AI-layer only
-- [ ] Legacy prefixes are recognized by scanning but never offered for creation
-- [ ] ID assignment calls `fw-next-id.sh` rather than reimplementing the scan
-- [ ] Created item lands in the correct namespace folder with the correct filename shape
-- [ ] New item is committed once fully drafted (prompt-first, default-yes)
+- [x] A type SoT ships inside `workspaces/framework/` and is the only place the accepted
+      set is written down *(2026-09-10 — the `TYPES:` line in
+      `templates/records/work-item.md`, inside `TYPES-SOT-BEGIN`/`END` markers)*
+- [x] `fw-new.sh` reads it and **rejects** any non-accepted type, case-insensitively,
+      exiting non-zero *(verified: 7 rejection cases, all exit 1)*
+- [x] The script contains **no alias or fuzzy logic** — normalization is AI-layer only
+      *(verified: the script rejects `FEATURE`, which the AI layer would normalize)*
+- [x] Legacy prefixes are recognized by scanning but never offered for creation
+      *(`fw-next-id.sh` counts any `[A-Za-z]+-[0-9]+`; creation reads only the SoT)*
+- [x] ID assignment calls `fw-next-id.sh` rather than reimplementing the scan
+- [x] Created item lands in the correct namespace folder with the correct filename shape
+      *(`kanban/backlog/TYPE-nnn-slug.md`; dotted children inherit the parent's folder)*
+- [ ] New item is committed once fully drafted (prompt-first, default-yes) — *specified in
+      the command doc (step 6); it is an AI-layer step with no script surface to test*
 
 **Education**
-- [ ] Rejection names the accepted set, notes legacy-recognized-not-creatable, and gives a
+- [x] Rejection names the accepted set, notes legacy-recognized-not-creatable, and gives a
       semantic suggestion where one applies
-- [ ] Rejection on `story` explains hierarchical sub-items rather than merely rejecting
-- [ ] The SoT header explains how to add a type and that a new type needs a template
-- [ ] Plugin CHANGELOG updated
+- [x] Rejection on `story` explains hierarchical sub-items rather than merely rejecting
+- [x] The SoT header explains how to add a type and that a new type needs a template
+- [x] Plugin CHANGELOG updated
 
 ---
 
@@ -191,15 +196,35 @@ property; do not widen the scan.
       hazard documented.
 - [x] **Re-scoped for the ADR-009 build** — 2026-09-02 (TASK-218 Section E). Plugin-parity
       scope dropped (one copy by construction); target moves to the kanban namespace.
-- [ ] **PRE-IMPLEMENTATION REVIEW** — confirm sequencing against the D5 crossover, and
-      confirm the C6 convention cards are resolved enough to author templates
-- [ ] Author the type SoT inside the plugin
-- [ ] Author work-item templates for the accepted set
-- [ ] Build `fw-new.sh` (gate + `fw-next-id.sh` call + template resolution)
-- [ ] Write the `/fw-new` command doc (AI layer)
-- [ ] Rejection-message education
-- [ ] Verify against a **generated** repo, not this source tree (ADR-008)
-- [ ] Plugin CHANGELOG
+- [x] **PRE-IMPLEMENTATION REVIEW** — 2026-09-10. **Both blockers had already cleared, and
+      one design assumption was wrong:**
+      - *Templates:* TASK-219 Group 1 landed `templates/records/work-item.md` and the
+        kanban queue scaffold (2026-09-09). The five C6 conventions that blocked the
+        template are settled; the other fourteen were split to TASK-223 and never blocked
+        this card.
+      - *D5 sequencing:* this card said "land **with** the crossover." Superseded by
+        `049e071` the same morning — `.gitignore` makes `/kanban/` scratch in this repo,
+        so the command runs here for development without touching the live board. **No
+        repo-specific guard belongs in shipped code**; the ignore rule carries it.
+      - *Where the SoT lives:* the plan assumed a `work-item-types.txt` beside the script.
+        Rejected — `standards/` is staging that never ships (new build's `CLAUDE.md`), and
+        a standalone data file lets someone add a type without touching a template. **The
+        template is authoritative instead**, which makes "a new type needs a template"
+        structural rather than remembered.
+- [x] Author the type SoT inside the plugin — the marked `TYPES:` block in `work-item.md`
+- [x] Author work-item templates for the accepted set — *already existed (TASK-219); one
+      template serves all five via the `Type:` field, so there is one file to be
+      authoritative*
+- [x] Build `fw-new.sh` (gate + `fw-next-id.sh` call + template resolution)
+- [x] Write the `/fw-new` command doc (AI layer)
+- [x] Rejection-message education
+- [x] Verify against a **generated** repo, not this source tree (ADR-008) — *ran from an
+      installed-plugin layout (`scripts/` + `templates/` only, no source tree in reach)
+      into a fresh `git init` repo. 22-case regression: create for all five types, shared
+      sequence across types, lowercase normalization, 7 rejection paths, dotted children,
+      children not burning ids, bad parent, path traversal, no-args, and the created card
+      carrying neither the markers nor a copy of the list.*
+- [x] Plugin CHANGELOG
 
 ---
 
@@ -232,7 +257,62 @@ of the type vocabulary.
 - **SPIKE-178 / FEAT-179 / TECH-169** — the old three-channel parity work. **No longer
   gates this card**: the framework is the plugin, so there is one copy by construction.
 - **TASK-218** — the disposition that re-scoped this card instead of archiving it.
+- **TASK-224** — the graduation transition register, created from this card's leftovers:
+  ADR-006 D4/D5 naming a superseded SoT location, the dead
+  `.claude/scripts/work-item-types.txt`, and the unported kanban move gates.
 
 ---
 
-**Last Updated:** 2026-09-02
+## Implementation Notes (2026-09-10)
+
+**The SoT went into the template, not a data file.** The card assumed a
+`work-item-types.txt`. Two things ruled it out: `standards/` is staging that never ships,
+and — the substantive reason — a standalone list lets someone add a type and walk away,
+which is the drift the SoT exists to stop. Putting the list in the template makes the
+acceptance criterion *"a new type needs a matching template"* structural. This only works
+because TASK-219 chose **one** template serving all five types via a `Type:` field; five
+templates would have had no single authoritative home.
+
+**The block is stripped from created cards.** The header comment otherwise travels with
+the card (matching `ops-record.md`, deliberately — guidance belongs where the author is),
+but the `TYPES:` line is *parsed data*, and copying it onto every card would make each one
+a stale copy. `fw-new.sh` replaces the marked block with a pointer.
+
+**Delimiters, not line counts.** The first cut stripped a fixed number of lines and left an
+orphaned prose fragment in the output — caught in testing. `TYPES-SOT-BEGIN`/`END` make the
+boundary data, so the prose inside can be reworded freely.
+
+**Malformed input fails loudly.** Missing/duplicated markers, a missing `TYPES:` line, or a
+non-alphabetic entry each abort with a message naming the fix. A gate that silently
+degrades to "accept anything" would be worse than no gate.
+
+**Still open — the move side.** `fw-move.sh` declares the `kanban` folder set but its
+transitions and gates are not ported (its own header says so). Creating works end-to-end;
+moving a created card still reports *"declared but not active."* That is D5 work, and the
+folder set produced here matches what the engine declares, so the crossover stays a table
+edit rather than a second engine. **Registered as TASK-224 row 3** — the one deferred item
+from this card that does *not* resolve by deleting the old tree.
+
+**Type-change blast radius — verified 2026-09-10.** Adding or removing a type is a
+one-line edit to the `TYPES:` line, with **no downstream migration in either codebase**:
+
+- **`fw-move` is type-agnostic** in both builds. It locates records by *number*; its own
+  comment says *"the prefix is decoration."* This confirms ADR-006's D6 amendment
+  (*"the create path, not the move path"*) empirically.
+- **All eleven old commands are type-agnostic.** All 52 type mentions across them are
+  illustrative — sample output and `FEAT-042`-style placeholders. Decisively,
+  `/fw-release` derives version bumps from the **`Version Impact:` field, not the type** —
+  the one place hardcoding would be expected, and it isn't there.
+- **Removing a type needs no migration.** Existing cards keep working, still count in the
+  shared sequence (so no id is ever reissued), and the retired prefix becomes legacy *by
+  definition* under D2's disk-derived rule — nothing to mark or migrate. Verified by
+  adding then removing a sixth type against a generated repo.
+
+**The one hand-maintained surface** is the semantic-suggestion `case` block in
+`fw-new.sh` (~lines 105-135). The accepted-set line updates itself everywhere; the
+*tutoring* around it does not. Adding a type means revisiting that block, or its advice
+goes quietly stale — a wrong-advice failure, never a broken-gate one.
+
+---
+
+**Last Updated:** 2026-09-10
