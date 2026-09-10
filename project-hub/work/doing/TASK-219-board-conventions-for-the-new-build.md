@@ -11,6 +11,40 @@
 
 ---
 
+## Objective (restated 2026-09-09 — BD deadline)
+
+**The live objective is a work-item template so a real board can exist**, driven by the
+Boston Dynamics project starting ~2026-09-28 in a fresh repo on the new framework.
+
+That is narrower than this card's original framing (below), which aimed at unblocking
+FEAT-175 with no date attached. What BD actually needs:
+
+```
+Group 1 (5 conventions) --> work-item template(s) --> FEAT-175 (fw-new)
+                                                  --> kanban row in fw-move.sh
+```
+
+**Group 1 is the live slice.** The other fourteen conventions are **deferred, not
+abandoned** — they keep their rows below and their source cards stay open. Nothing about
+them blocks BD.
+
+**Verified 2026-09-09, so the slice is honest:**
+
+| Feature Gary named | State |
+|---|---|
+| workspaces | **built** — `fw-new-workspace`, 4 type scaffolds, UAT-01/02/05/06 |
+| kb | **built** — `fw-new-kb-domain`, UAT-04/07/08/09 |
+| operations | **built** — records, queue, `fw-move-ops`, `fw-troubleshoot`, UAT-14..26 |
+| **kanban** | **nothing** — no folders, no template, no create, no move |
+| **session-history** | **nothing** — FEAT-222 |
+
+Scaffolding is **not** a separate init step: the create command builds its queue on first
+use from `templates/queues/<ns>/` (`fw-new-ops-record.sh` does this for `operations/`), so
+`fw-new` will scaffold `kanban/`. There is no `/fw-init` gap — that name belongs to an
+ADR-007 discussion about a CLAUDE.md region-owner and was deliberately not filed.
+
+---
+
 ## Summary
 
 Sixteen board conventions exist as *analysis* on old cards and as **nothing at all** in
@@ -65,7 +99,37 @@ decision and the mechanism.
 > policy, so they belong here rather than in the cards that first needed them.
 > **Group 2a** collects the folder questions — decide the terminal states as one set.
 
-### Group 1 — Blocks the work-item template (and therefore FEAT-175)
+### Group 1 — Blocks the work-item template (and therefore FEAT-175)  ← **LIVE SLICE**
+
+> **Read before starting: FEAT-021 and TECH-082 are complementary, not competing.**
+> The 2026-09-03 note (repeated in the roadmap) called them "competing mechanisms for the
+> same concept." Reading both on 2026-09-09 says otherwise:
+>
+> - **FEAT-021** — dotted ids (`FEAT-021.1`) for **tight coupling**: children live and die
+>   with the parent, move together, count as **one** WIP item. Its own decision table says
+>   to use *separate* numbering when work "can stand alone" or "might be referenced
+>   independently."
+> - **TECH-082** — a `Parent:` field for **provenance**: its motivating case is FEAT-025
+>   spawning TECH-068..081, fourteen items that stand alone, are worked separately, but
+>   should trace back.
+>
+> FEAT-021 already carves out TECH-082's case. Likely outcome: **adopt both**, with a
+> written rule for which applies when. Confirm at implementation rather than treating it
+> as a fight to settle.
+>
+> **FEAT-021 is largely already decided** — seven design decisions with rationale, edge
+> cases, WIP counting, depth limit, file naming — and the old engine already implements
+> the mechanics (`find_children`, parent+children auto-move). **But it is written against
+> the old framework**: `project-hub/framework/templates/`, `workflow-guide.md`, and types
+> (`BUGFIX`, `BLOCKER`) that no longer exist. The work is *extract what survives and
+> re-scope*, not *decide from scratch*.
+>
+> **Type set is settled — do not re-open it.** ADR-006 (Accepted 2026-07-07, amended
+> 2026-07-08): **FEAT, BUG, TECH, TASK, SPIKE**. Reduced from 8 on usage data. Legacy
+> prefixes are **disk-derived, never authored** — anything on disk outside the accepted
+> five is legacy by definition, recognized for parsing, never offered for creation. Only a
+> fixed spelling-alias map ships (FEATURE→FEAT, BUGFIX→BUG, DOC→DOCS, TECHDEBT→TECH).
+
 
 | Source | Convention to settle |
 |---|---|
@@ -74,6 +138,43 @@ decision and the mechanism.
 | TECH-041 | Supporting files sharing a parent ID. The new build's artifact bundle (`<ID>/`, moves with its record) is the same problem already half-solved for ops — decide whether board items inherit it verbatim |
 | TECH-027 | Cross-reference convention for items that move between folders (a link by path breaks on every move) |
 | TECH-033 | Status field vs. folder. The new build **chose** location-is-status; this card is the analysis behind that and the record of what `Status:` is for, if anything. Likely closes as *decided-by-construction* with the rationale written down |
+
+### Group 1 — SETTLED 2026-09-09
+
+Each of the five, with its mechanism. **Mechanism is the test this card is held to**, so
+each row names where the rule is enforced, not just where it is described.
+
+| Source | Decision | Mechanism |
+|---|---|---|
+| **FEAT-021** numbering/naming | Dotted ids `TYPE-nnn.m`, max depth 3. Filename `TYPE-nnn-slug.md`, uppercase prefix matching the `ID:` field. Ids run past 999 without padding (`FEAT-1000`). One shared sequence per queue. | `fw-next-id.sh` (sequence); `fw-new.sh` (filename shape — FEAT-175); `fw-move.sh` `find_children` (dotted children travel with the parent) |
+| **TECH-082** parent/child | **Both mechanisms adopted, different jobs.** Dotted id = tight coupling, child dies with the parent, counts as *one* WIP item. `Parent:` field = provenance, child stands alone and counts as its *own* WIP item. Rule: *does this make sense on its own?* Yes → `Parent:`. No → dotted. | `Parent:` field in `templates/records/work-item.md`, with the rule stated in the template's own comment header so it travels with every card |
+| **TECH-041** supporting files | A sibling folder named for the id (`FEAT-nnn/`) holds working material and moves with the record — same convention operations already uses for `INC-nnn/`. | `fw-move.sh` bundle-move (already implemented for ops; kanban inherits it via the policy table) |
+| **TECH-027** cross-references | Reference by **id**, never by path. A path breaks on every move; an id survives. `Related` entries say *how* it relates. | `templates/records/work-item.md` — `Related` section; `Depends On:` is id-based and checked by `fw-move.sh` |
+| **TECH-033** status vs folder | **Decided by construction: the folder is the status.** No `Status:` field on the template — a second home for status is a second thing to contradict the first. `Completed:` is stamped by the engine, not hand-written. | Absence of the field in the template; `fw-move.sh` stamps `Completed:` on `→ done` |
+
+**Type set: FEAT, BUG, TECH, TASK, SPIKE** (ADR-006, not re-opened).
+
+**One template, not five.** `templates/records/work-item.md` serves all five types with a
+`Type:` field, mirroring `ops-record.md` serving both INC and REQ via `Kind:`. Five
+near-identical templates would be five things to keep in sync — the ADR-008 failure this
+framework exists to prevent.
+
+**Built 2026-09-09:**
+- `workspaces/framework/templates/records/work-item.md` — the record template
+- `workspaces/framework/templates/queues/kanban/` — the queue scaffold: `backlog blocked
+  todo doing accept done cancelled release` + `.limit` files (todo 10, doing 2) + README
+  carrying the flow and the rules
+
+**Still to build (FEAT-175 and the kanban policy row):** `fw-new.sh` to create cards and
+scaffold `kanban/` on first use, and the kanban row in `fw-move.sh` wired to real
+transitions and gates.
+
+> **Note on `accept/` and `cancelled/`:** the scaffold includes both, per the authored
+> repo-structure diagram. Group 2a's remaining questions (transitions into `cancelled/`,
+> whether it is terminal, a board closure code, where the 27 `deprecated/` cards live)
+> are **not** answered by scaffolding the folders and stay open below.
+
+---
 
 ### Group 2 — Board lifecycle policy
 
@@ -233,9 +334,9 @@ test this card is held to.
 - [ ] Every one of the nineteen has a recorded outcome: **defined** (with its mechanism),
       **decided-by-construction** (with the rationale written down), or **dropped** (with
       the reason)
-- [ ] Group 1's five are settled **before** any work-item template is authored
-- [ ] A work-item template exists for the accepted types and encodes the Group 1
-      conventions — unblocking FEAT-175
+- [x] Group 1's five are settled **before** any work-item template is authored *(2026-09-09)*
+- [x] A work-item template exists for the accepted types and encodes the Group 1
+      conventions — unblocking FEAT-175 *(2026-09-09: one template, `Type:` field)*
 - [ ] The never-delete rule (TECH-077) is written down and backed by a check, not habit
 - [ ] The `fw-` namespace rule (DECISION-171) is recorded where a future contributor will
       find it
@@ -259,8 +360,8 @@ test this card is held to.
 
 - [ ] **PRE-IMPLEMENTATION REVIEW** — confirm the grouping, confirm Group 1 goes first,
       and confirm sequencing against the D5 crossover and FEAT-175
-- [ ] Group 1 (FEAT-021, TECH-082, TECH-041, TECH-027, TECH-033) — decide as a set
-- [ ] Author the work-item template(s) from Group 1's outcome
+- [x] Group 1 (FEAT-021, TECH-082, TECH-041, TECH-027, TECH-033) — decide as a set *(2026-09-09)*
+- [x] Author the work-item template(s) from Group 1's outcome *(2026-09-09)*
 - [ ] Group 2 — board lifecycle policy + mechanisms
 - [ ] Group 2a — the terminal-state set, decided together
 - [ ] Group 3 — process and collaboration
