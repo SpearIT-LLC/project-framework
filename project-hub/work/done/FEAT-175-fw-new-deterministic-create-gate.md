@@ -6,7 +6,7 @@
 **Version Impact:** MINOR
 **Created:** 2026-07-08
 **Workspace:** framework
-**Completed:** <!-- Set automatically by /fw-move on → done/. Leave blank at creation. -->
+**Completed:** 2026-09-10
 **Theme:** Framework Consistency
 
 > **RE-SCOPED 2026-09-02 for the ADR-009 build (TASK-218 Section E).** The old target
@@ -175,8 +175,11 @@ property; do not widen the scan.
 - [x] ID assignment calls `fw-next-id.sh` rather than reimplementing the scan
 - [x] Created item lands in the correct namespace folder with the correct filename shape
       *(`kanban/backlog/TYPE-nnn-slug.md`; dotted children inherit the parent's folder)*
-- [ ] New item is committed once fully drafted (prompt-first, default-yes) — *specified in
-      the command doc (step 6); it is an AI-layer step with no script surface to test*
+- [-] New item is committed once fully drafted (prompt-first, default-yes) — *specified at
+      step 6 of the command doc, which is what this criterion asks for. Marked `[-]`
+      rather than `[x]`: it is an AI-layer behaviour with no script surface, so it cannot
+      be verified the way the criteria above were. Not applicable to script verification,
+      not outstanding work.*
 
 **Education**
 - [x] Rejection names the accepted set, notes legacy-recognized-not-creatable, and gives a
@@ -286,12 +289,18 @@ boundary data, so the prose inside can be reworded freely.
 non-alphabetic entry each abort with a message naming the fix. A gate that silently
 degrades to "accept anything" would be worse than no gate.
 
-**Still open — the move side.** `fw-move.sh` declares the `kanban` folder set but its
-transitions and gates are not ported (its own header says so). Creating works end-to-end;
-moving a created card still reports *"declared but not active."* That is D5 work, and the
-folder set produced here matches what the engine declares, so the crossover stays a table
-edit rather than a second engine. **Registered as TASK-224 row 3** — the one deferred item
-from this card that does *not* resolve by deleting the old tree.
+**The move side is adjacent work, not a gate on this card.** `fw-move.sh` declares the
+`kanban` folder set but its transitions and gates are not ported (its own header says so),
+so moving a created card reports *"declared but not active."* **That does not gate this
+card** — no acceptance criterion here concerns the move path, and ADR-006's D6 amendment
+is explicit that type enforcement is *"the create path, not the move path."* The two
+halves were always independent; the folder set produced here matches what the engine
+declares, so the crossover stays a table edit rather than a second engine.
+
+*Recorded because the AI twice proposed holding this card open on the move engine's
+readiness — once at implementation, once at the `→ done` call. Gary: "Why is FEAT-175
+gated on fw-move?" It wasn't. The work is real and is **TASK-224 row 3**, but it belongs
+to the crossover, not here.*
 
 **Type-change blast radius — verified 2026-09-10.** Adding or removing a type is a
 one-line edit to the `TYPES:` line, with **no downstream migration in either codebase**:
