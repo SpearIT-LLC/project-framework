@@ -14,10 +14,13 @@ plain semver 0.x during the framework workspace build.
   deliberately not `INDEX.md` — the kb's `INDEX.md` is hand-authored, this is
   generated and overwrites; one filename for two opposite contracts is a trap.
   Email and phone appear in neither view.
-- **`## Previously` section in each workspace `CONTACTS.md`** — past holders,
-  last, after the current list. Answers "who set that up originally?" in the file
-  you are already reading rather than by grep. Placed at the bottom and separate
-  so it is easy to leave out of a copy/paste.
+- **Past holders appear in each workspace `CONTACTS.md`**, tagged
+  `*(previously)*` and sitting **in their own group** beside the current people
+  (current first within a group, then past). Answers "who set that up
+  originally?" in the file you are already reading rather than by grep. A
+  trailing `## Previously` section was tried first and rejected: `Group:` is the
+  heading axis, so a state heading beside dept names conflates two axes — and it
+  stripped the past holder of their group entirely.
 - **`Previously:` on contact records** — an assignment that has ended. When
   someone is replaced mid-engagement, their `Assigned:` line moves to
   `Previously:` instead of being deleted, and the successor gets their own

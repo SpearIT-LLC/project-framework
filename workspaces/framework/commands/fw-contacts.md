@@ -18,16 +18,17 @@ counterparty is; people from any organisation live in the one registry
 
 **Replacing someone: move the line, do not delete it.** When Frank takes over
 from Joe, Joe's `**Assigned:**` line becomes `**Previously:**` (same grammar,
-no dates) and Frank gets his own `**Assigned:**` line. Past holders appear in
-the workspace view under a **`## Previously`** section at the bottom — after the
-current list, so it is easy to leave out of a copy/paste — and answer "who set
-that up originally?" without a grep.
+no dates) and Frank gets his own `**Assigned:**` line. In the workspace view
+Joe stays **in his own group**, tagged `*(previously)*` after his role — current
+people first within a group, then past ones. Group is the only heading axis, so
+a `## Previously` heading would sit an assignment *state* beside dept *names*
+and would strip the past holder of their group.
 
 **Two generated views, both `CONTACTS*`, both overwritten on every run:**
 
 | File | Scope | Shows |
 |---|---|---|
-| `<workspace>/CONTACTS.md` | one workspace | current people grouped by `Group:`, then `## Previously` |
+| `<workspace>/CONTACTS.md` | one workspace | everyone assigned, grouped by `Group:`; past holders tagged `*(previously)*` |
 | `kb/company/contacts/CONTACTS-ALL.md` | the whole registry | **everyone**, grouped by `Affiliation:`, with group and role |
 
 `CONTACTS-ALL.md` is the internal master list — it is the only view that shows
