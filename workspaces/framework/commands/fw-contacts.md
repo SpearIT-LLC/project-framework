@@ -16,6 +16,12 @@ The `company` domain holds this repo's engagement facts whoever the
 counterparty is; people from any organisation live in the one registry
 (`Affiliation: <org> (customer | vendor | subcontractor | spearit)`).
 
+**Replacing someone: move the line, do not delete it.** When Frank takes over
+from Joe, Joe's `**Assigned:**` line becomes `**Previously:**` (same grammar,
+no dates) and Frank gets his own `**Assigned:**` line. The view reads only
+`Assigned:`, so it stays current — while the registry can still answer "who set
+that up originally?" after the person is off the engagement.
+
 **The view groups by `Group:` (the person's dept/team within their org).**
 Groups are alphabetical; people whose group is not yet known appear last under
 *Group not recorded* — never dropped, because an invisible person makes a

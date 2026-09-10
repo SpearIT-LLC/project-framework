@@ -5,6 +5,17 @@ plain semver 0.x during the framework workspace build.
 
 ## [Unreleased]
 
+### Added
+- **`Previously:` on contact records** — an assignment that has ended. When
+  someone is replaced mid-engagement, their `Assigned:` line moves to
+  `Previously:` instead of being deleted, and the successor gets their own
+  `Assigned:` line. The generated view reads only `Assigned:` and so stays
+  current, while the registry keeps the answer to "who set up the servers
+  originally?" — a question that outlives the assignment and that nobody will
+  think to answer with `git log`. **No dates:** a start date would have to be
+  captured at assignment time to be true, and a field you must remember to fill
+  at the right moment is a field that stays empty.
+
 ### Changed
 - **`CONTACTS.md` groups people by `Group:`** — the dept/team within their org —
   so coverage is visible at a glance and there is an answer to "who else do I ask

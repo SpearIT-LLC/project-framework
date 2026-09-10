@@ -26,7 +26,16 @@
      Workspace ties live ONLY in Assigned, never in Activity.
 
      Assigned: one line per workspace, "<workspace> — <role in that work>", or
-     the single word "Unassigned" (registry membership needs no assignment). -->
+     the single word "Unassigned" (registry membership needs no assignment).
+
+     Previously: an assignment that has ENDED - same grammar as Assigned. When
+     someone is replaced, MOVE their Assigned line to Previously rather than
+     deleting it; add the successor's Assigned line to their own record. The
+     generated CONTACTS.md reads only Assigned, so the view stays current while
+     the record keeps the answer to "who set up the servers originally?" - a
+     question that outlives the assignment. No dates: a start date would have to
+     be captured at assignment time to be true, and the field you must remember
+     to fill at the right moment is the field that stays empty. -->
 # __FULL_NAME__
 
 **Affiliation:**
@@ -36,6 +45,7 @@
 **Phone:**
 **Activity:**
 **Assigned:** Unassigned
+**Previously:**
 
 ## Notes
 
