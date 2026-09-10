@@ -38,3 +38,17 @@ tmpclaude-*
 
 # Build artifacts
 distrib/temp/
+
+# Generated repo structure — test fixtures in THIS repo only (ADR-009 D5).
+# These roots are what the commands build in a consuming repo. Here they are
+# scratch: running /fw-new, /fw-new-ops-record, /fw-new-kb-domain or
+# /fw-new-workspace during development creates them, and none of it is real.
+# The live board is project-hub/work/ until the crossover at graduation.
+#
+# workspaces/framework/ is the EXCEPTION — it is the new framework's source
+# tree, not generated output, and is tracked.
+/kanban/
+/operations/
+/kb/
+/workspaces/*
+!/workspaces/framework/
