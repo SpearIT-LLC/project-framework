@@ -16,6 +16,15 @@ The `company` domain holds this repo's engagement facts whoever the
 counterparty is; people from any organisation live in the one registry
 (`Affiliation: <org> (customer | vendor | subcontractor | spearit)`).
 
+**The view groups by `Group:` (the person's dept/team within their org).**
+Groups are alphabetical; people whose group is not yet known appear last under
+*Group not recorded* — never dropped, because an invisible person makes a
+coverage view lie. With no groups recorded anywhere the list stays flat.
+**Affiliation is deliberately not shown.** `CONTACTS.md` is the file that gets
+pasted into a deck or project plan for the whole group to see, and flagging who
+is a contractor there is not ours to publish — the fact stays in the record,
+where it informs whose decision carries weight.
+
 **Arguments are never script arguments.** Words after the command name are a
 person's name, optionally followed by what to change about them (step 2) —
 except the single word `refresh` (step 1). The scripts take a slug or nothing.

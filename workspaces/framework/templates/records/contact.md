@@ -30,6 +30,7 @@
 # __FULL_NAME__
 
 **Affiliation:**
+**Group:**
 **Role:**
 **Email:**
 **Phone:**

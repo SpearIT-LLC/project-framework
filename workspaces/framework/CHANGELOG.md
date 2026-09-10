@@ -6,6 +6,14 @@ plain semver 0.x during the framework workspace build.
 ## [Unreleased]
 
 ### Changed
+- **`CONTACTS.md` groups people by `Group:`** — the dept/team within their org —
+  so coverage is visible at a glance and there is an answer to "who else do I ask
+  if this person is away". Groups alphabetical; unknown-group people last under
+  *Group not recorded*; flat list when no groups are recorded, so existing views
+  are unchanged until a `Group:` is filled in. **Affiliation is deliberately not
+  shown in the view**: this is the file pasted into decks and project plans, and
+  flagging who is a contractor there is not ours to publish. The fact stays in
+  the record.
 - **The move engine takes its namespace as an argument; it is never inferred.**
   `/fw-move` is renamed **`/fw-move-ops`** and always passes `operations` to
   `fw-move.sh`. Previously a bare numeric silently meant operations

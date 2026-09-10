@@ -95,6 +95,14 @@ for rec in "$REG"/*.md; do
   slug="${base%.md}"
   name="$(sed -n 's/^# \(.*\)$/\1/p' "$rec" | head -1)"
   [ -n "$name" ] || name="$slug"
+  # Group/dept within the person's org. Blank is the normal resting state (the
+  # template's fill rule: unknown stays blank), so it must sort and render.
+  # Affiliation is deliberately NOT collected: CONTACTS.md is a view people
+  # paste into decks and project files, and flagging who is a contractor there
+  # is not ours to publish.
+  group="$(sed -n 's/^\*\*Group:\*\*[[:space:]]*//p' "$rec" | head -1)"
+  group="${group%"${group##*[![:space:]]}"}"   # rtrim
+  case "$group" in __*) group="" ;; esac       # unfilled template placeholder
   sed -n 's/^\*\*Assigned:\*\*[[:space:]]*//p' "$rec" | while IFS= read -r line; do
     [ -n "$line" ] || continue
     ws="${line%%[[:space:]]*}"
@@ -104,7 +112,7 @@ for rec in "$REG"/*.md; do
     ctx="${ctx#"${ctx%%[![:space:]]*}"}"   # ltrim
     ctx="${ctx#—}"; ctx="${ctx#-}"
     ctx="${ctx#"${ctx%%[![:space:]]*}"}"   # ltrim again
-    printf '%s|%s|%s|%s\n' "$ws" "$slug" "$name" "$ctx" >> "$ASSIGN"
+    printf '%s|%s|%s|%s|%s\n' "$ws" "$group" "$slug" "$name" "$ctx" >> "$ASSIGN"
   done
 done
 
@@ -128,13 +136,27 @@ for ws in $WSLIST; do
     echo "$HDR"
     echo "# Contacts — $ws"
     echo ""
-    grep "^$ws|" "$ASSIGN" | sort -t'|' -k3 | while IFS='|' read -r _ slug name ctx; do
-      if [ -n "$ctx" ]; then
-        printf -- '- [%s](%s/%s.md) — %s\n' "$name" "$LNK" "$slug" "$ctx"
-      else
-        printf -- '- [%s](%s/%s.md)\n' "$name" "$LNK" "$slug"
-      fi
-    done
+    # Grouped by Group/dept so coverage is visible at a glance — a sparse or
+    # missing section is the point. Groups alphabetical; ungrouped people last
+    # under "Group not recorded" (never dropped: an invisible person makes the
+    # coverage view lie). With no groups recorded at all, the list stays flat
+    # exactly as before.
+    #
+    # Affiliation is deliberately absent from this view. CONTACTS.md is pasted
+    # into decks and project files, and flagging who is a contractor there is
+    # not ours to publish.
+    grep "^$ws|" "$ASSIGN" | awk -F'|' '{k=($2=="")?"2":"1"; print k "|" $0}' | sort -t'|' -k1,1 -k3,3 -k5,5 | cut -d'|' -f2- | awk -F'|' '
+      BEGIN { g = "\001" }
+      {
+        if ($2 != g) {
+          g = $2
+          if (g != "") { if (NR > 1) print ""; print "## " g }
+          else if (NR > 1) { print ""; print "## Group not recorded" }
+        }
+        if ($5 != "") printf "- [%s](%s/%s.md) — %s\n", $4, LNK, $3, $5
+        else          printf "- [%s](%s/%s.md)\n", $4, LNK, $3
+      }
+    ' LNK="$LNK"
   } > "$WSDIR/CONTACTS.md"
   GENERATED=$((GENERATED + 1))
   echo "Generated: ${WSDIR#"$ROOT"/}/CONTACTS.md"
