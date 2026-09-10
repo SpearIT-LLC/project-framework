@@ -121,6 +121,20 @@ at implementation:
       counts only `[ ]` today, so `[ ]` is both true and enforced. TECH-177 makes `[/]`
       blocking, but that is its work, not this card's.
 
+      **2026-09-10 — published, still unverified.** Bumped to `0.4.7` and ran
+      `tools/Publish-ToLocalMarketplace.ps1` (needs **`pwsh`**; PowerShell 5.1 refuses it).
+      This did **not** close the criterion, for a structural reason worth knowing:
+      **the dev-marketplace entries are symlinks to the source tree**
+      (`framework -> workspaces/framework`), so testing "against the marketplace" is
+      testing the same files. The built-artifact check means the **installed cache**
+      (`~/.claude/plugins/cache/`), a real copy exercised via `${CLAUDE_PLUGIN_ROOT}`.
+      Verified after a plugin refresh: cache empty, no `installed_plugins.json` entry —
+      the publish script's clean step removes it, and a marketplace *update* does not
+      reinstall.
+
+      **To close:** `/plugin install spearit-framework-dev@dev-marketplace --scope local`,
+      restart, then re-run **T1, T3, T4, T11b** — the four cases that exercise the fix.
+
 ---
 
 ## Test Evidence (2026-09-07, source tree via `--root`)
