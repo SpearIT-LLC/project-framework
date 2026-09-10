@@ -331,4 +331,207 @@ work-item templates do not exist and the conventions are unresolved. Both are do
 
 ---
 
+## FEAT-175 Implemented (Evening — Continuation)
+
+Resumed from the handoff above. **The board create gate now exists**, completing the
+create-gate set: workspaces, ops records, contacts, kb domains, and now board items.
+
+### The handoff's plan was wrong on step 1, and Gary caught it twice
+
+The handoff said *"Type SoT shipping inside the plugin"* and named
+`.claude/scripts/work-item-types.txt` as the model to follow. The AI opened by offering
+three locations for that file — including `standards/`.
+
+**First correction — a question, not an answer.** Gary: *"Before I answer, do we have a
+place in the new framework for framework standards? Do we need one or keep it self
+contained in the command?"* The AI had offered `standards/` without checking what it is
+for. The new build's own `CLAUDE.md` says: *"`standards/` is staging (ADR-009 OQ1): files
+move in via `git mv`, convert to skills, and leave in the same commit. One home at all
+times. It never ships."*
+
+It is a **loading dock, not a home**, and its being empty is it working correctly. That
+removed the option entirely — the new build has no "framework standards" folder by design.
+
+**Second correction — the better idea.** Gary: *"PERHAPS the authoritive list should be in
+the template?"*
+
+That is what shipped, and the reason is stronger than convenience. FEAT-175's own
+acceptance criterion is *"a new type needs a matching template."* With the list **in** the
+template, that requirement becomes **structural rather than remembered** — you cannot add
+a type without being in the template file. A standalone `.txt` lets someone add a line and
+walk away, which is precisely the drift the SoT exists to prevent.
+
+This only works because TASK-219 chose **one** template serving all five types via a
+`Type:` field. Five near-identical templates would have had no single authoritative home —
+an unplanned payoff from yesterday's decision.
+
+### The D5 guard question, raised a third time and closed by the record
+
+The AI's pre-implementation review again flagged D5 sequencing as open, and proposed a
+guard making `fw-new.sh` refuse to run in this source repo.
+
+Gary: *"Check the history. We said we'd allow creation with just a reminder... This is to
+allow testing in the repo."* The record was unambiguous — `049e071`, committed that same
+morning, states the resolution and its reason: the ignore rule serves the reminder
+*"without repo-specific text living in shipped code."*
+
+**The AI was about to write the guard that had already been rejected, hours earlier, in a
+commit message written to prevent exactly that.** Third occurrence of this same question in
+one day. The lesson is the one CLAUDE.md already states — read the source before raising
+the question — and the failure mode is specifically *re-litigating a settled decision
+because the record was not consulted*, which is the failure ADR-009 cited when it chose to
+build in place rather than start a fresh repo.
+
+### Delimiters beat line counts — caught in testing
+
+First cut stripped the SoT block from created cards by dropping a **fixed number of lines**
+after a matched phrase. It left an orphaned prose fragment (`supports it, so the two...`)
+mid-comment in every card.
+
+Replaced with `TYPES-SOT-BEGIN` / `TYPES-SOT-END` markers, so the boundary is **data rather
+than a count that rots silently when the prose is reworded**. The block is stripped and
+replaced with a pointer, so no card becomes a stale copy of the list (ADR-008).
+
+Worth noting the failure was invisible in the script and obvious in the output — it was
+caught only because a created card was actually read, not because a test asserted on it.
+
+### Type-change blast radius — the question that produced the register
+
+Gary asked two questions the card had not considered: *"Does fw-move care what a type is or
+is it only looking for the ID?"* and *"What happens if we add/remove a type in the future?"*
+Then: *"What about the other kanban commands from the old framework?"*
+
+Verified rather than reasoned about, and the answer is uniform — **the type is load-bearing
+for about one second, at creation:**
+
+| Surface | Type-aware? | Evidence |
+|---|---|---|
+| `fw-move.sh` (both builds) | **No** | Locates by *number*; its own comment: *"the prefix is decoration"* |
+| All 11 old commands | **No** | All 52 type mentions are illustrative (`FEAT-042` placeholders, sample output) |
+| `/fw-release` | **No** | Version bumps come from the **`Version Impact:` field**, not the type |
+| `fw-next-id.sh` | **No** | Matches any `[A-Za-z]+-[0-9]+` |
+| `fw-new.sh` | **Yes** | The only consumer of the accepted set |
+
+This confirms ADR-006's D6 amendment (*"the create path, not the move path"*) empirically,
+and it is **why putting the list in the template is safe** — there is no second consumer to
+fall out of sync with.
+
+Adding a type: verified by adding a sixth (`CHORE`) — gate accepts it, rejection message
+lists it, ids and moves work, nothing to sync. Removing: existing cards keep working, still
+**count in the shared sequence so no id is ever reissued**, and the retired prefix becomes
+legacy *by definition* under D2's disk-derived rule. **No migration in either direction.**
+
+**The one hand-maintained surface** is the semantic-suggestion `case` block in `fw-new.sh`.
+The accepted-set line updates itself; the *tutoring* around it does not. Adding a type means
+revisiting it — a wrong-advice failure, never a broken-gate one.
+
+### "In a year from now how do I find it?"
+
+Three deferred items had accumulated — stale ADR-006 D4/D5, the dead
+`work-item-types.txt`, the unported kanban move gates. The AI proposed deferring them to
+the crossover. Gary: *"Let's defer but keep a list of transition issues/questions to resolve
+so we don't forget about them"* — then, decisively: **"What I mean is in a year from now how
+do I find it?"**
+
+Checked first, and the finding reframed the answer: **D5 has no owner.** Thirteen cards
+reference the crossover; none owns it. ADR-009:342 lists what the graduation commit *does*,
+but nothing was collecting debt found along the way. A note filed "for the crossover" would
+have had **nowhere to land** — which is exactly how it gets lost.
+
+So: **TASK-224, a card in `backlog/`**, because the board is where we already look. An ADR
+requires remembering to reread it; a card surfaces in `/fw-status` and every board sweep.
+
+Each row carries **why deferring is safe** — the field that distinguishes a deliberate
+deferral from something forgotten. The card also states what does *not* belong in it
+(ordinary "later" work), since dilution until it stops being read is the failure mode a
+register like this dies of. It gates nothing: registers that block get worked around.
+
+**Row 3 is flagged as not self-resolving.** `fw-move.sh` declares the kanban folder set but
+its transitions and gates are unported — creating works end-to-end, moving a created card
+still reports *"declared but not active."* That must land **before** the
+`git mv project-hub/work/* kanban/` commit, or graduation produces a board with no move
+engine. Rows 1 and 2 resolve by deleting the old tree.
+
+### Verification
+
+22-case regression run from an **installed-plugin layout** (`scripts/` + `templates/` only,
+no source tree in reach) into a fresh `git init` repo — the card's ADR-008 criterion,
+verifying against what ships rather than the source. Covers: all five types, shared
+sequence across types, lowercase normalization, 7 rejection paths, dotted children, **children
+not consuming top-level ids**, bad parent, path traversal, no-args, and created cards
+carrying neither the markers nor a copy of the list.
+
+Also verified the gate **fails loudly** on a malformed SoT (missing markers, missing
+`TYPES:` line, non-alphabetic entry) rather than degrading to "accept anything" — the one
+failure a create gate must never have.
+
+All testing ran outside the repo; no scratch `kanban/` was created here.
+
+---
+
+## Decisions Made (evening)
+
+13. **The work-item template is the type SoT** — the `TYPES:` line inside
+    `TYPES-SOT-BEGIN`/`END` markers, not a standalone `work-item-types.txt`. Makes *"a new
+    type needs a template"* structural rather than remembered. Viable only because one
+    template serves all five types (TASK-219).
+14. **The SoT block is stripped from created cards** and replaced with a pointer. The rest
+    of the header travels with the card (matching `ops-record.md` — guidance belongs where
+    the author is), but a parsed list copied onto every card would be a stale copy per card.
+15. **No D5 guard in `fw-new.sh`.** Settled that morning in `049e071`; the `.gitignore`
+    carries it without repo-specific text in shipped code.
+16. **Deferred items get a board card, not an ADR note** — TASK-224. Findability is the
+    requirement, and the board is where we already look.
+17. **`standards/` is not a home for anything.** It is `git mv` staging that never ships;
+    empty is correct.
+
+---
+
+## Files Created (evening)
+
+- `workspaces/framework/scripts/fw-new.sh` — the create gate: strict type enforcement,
+  `fw-next-id.sh` for ids, scaffold on first use, `--parent` dotted children
+- `workspaces/framework/commands/fw-new.md` — the lenient AI layer (prefix normalization,
+  semantic suggestion, sub-item guidance); deliberately **no** alias lookup table
+- `project-hub/work/backlog/TASK-224-graduation-transition-register.md`
+
+## Files Modified (evening)
+
+- `workspaces/framework/templates/records/work-item.md` — now the authoritative type SoT
+- `workspaces/framework/CHANGELOG.md` — the create gate and the SoT decision
+- `project-hub/work/doing/FEAT-175-*.md` — checklist, criteria, implementation notes,
+  type-change blast radius
+
+---
+
+## Current State (end of day)
+
+**Board:** 74 backlog · 13 todo · **2 doing** · 9 done · 1 blocked.
+
+**`doing/`:**
+- **FEAT-175** — implemented and verified. One criterion left `[ ]`: commit-on-create is
+  specified in the command doc but is an AI-layer step with no script surface to test.
+  **Not moved to `done/`** — the move side is unported, so the gate is only half-exercised
+  in practice.
+- **BUG-215** — unchanged; a built-plugin UAT pass is all that remains.
+
+### Next
+
+**FEAT-175's remaining question is whether it is done.** It meets its own acceptance
+criteria, but a create gate whose companion move engine cannot move what it creates is
+worth a deliberate call rather than an automatic `→ done`.
+
+Then: **TASK-224 row 3** (port the kanban transitions and gates) is the largest unowned
+piece of the crossover, and the only register row that does not resolve by deletion.
+
+### Still not carded (carried from the afternoon, unchanged)
+
+- The WIP counter counts `.gitkeep` and `.limit` as items.
+- `fw-move.sh` / `fw-next-id.sh` kanban refusals point at old-framework command names that
+  will not exist in BD's repo. Message wording only.
+
+**`done/` is at 9.** The release nudge fires at 10.
+
+---
+
 **Last Updated:** 2026-09-10
