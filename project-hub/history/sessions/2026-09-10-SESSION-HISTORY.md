@@ -534,4 +534,130 @@ piece of the crossover, and the only register row that does not resolve by delet
 
 ---
 
+## Response Style Rewritten (Late Evening — Continuation)
+
+No work-item work. A meta-conversation about **why the AI keeps drifting from the
+contract's own Response Style rule**, ending in a rewrite of that section.
+
+### The trigger: a badly-shaped question
+
+The AI ended a three-paragraph explanation with *"Want me to draft the revised Response
+Style section against that trigger?"* Gary had to re-read to work out what "that trigger"
+referred to — the AI had introduced `/fw-decide` in the immediately preceding paragraph,
+so the nearest antecedent was the wrong one.
+
+Gary: *"I read three paragraphs that starts as explanation and ends with a call to
+action."*
+
+Two distinct defects, and the second causes the first: an **ambiguous referent**, and an
+**ask buried at the end of an explanation**. Had the ask come first, the referent would
+have been unambiguous because nothing would have sat between them.
+
+### The diagnosis: same failure as framework policy enforcement
+
+Gary: *"We're running into the same issues we had months ago trying to enforce policy in
+the framework. When you read and adhered to the policies we wrote together it worked
+great. The problem is you don't always do that."*
+
+This session was itself the evidence — the contract said *"Default to 5 lines or fewer.
+No headers or tables unless asked"* and the AI produced headers and tables in nearly every
+response.
+
+**A command was considered and rejected.** `/fw-move` and `/fw-session-history` work
+because they are chokepoints. Gary: *"I don't think a command is the answer for this one.
+At least I can't think of an occassion for it right now... the bigger issue comes from the
+casual converstations as we try to work through issues."*
+
+Correct, and it is a genuine limit rather than a missing mechanism: **conversational style
+has no chokepoint to hang a gate on.** The rule holds by adherence or not at all — so the
+rewrite says that outright rather than pretending otherwise.
+
+### Two ideas raised and set aside (recorded because they will recur)
+
+**1. Address Gary by role — "Project Manager" or "Executive Developer".** Rejected as the
+primary fix: it does not match how he works. This same session he asked the AI to verify
+whether `fw-move` cares about types, checked what `standards/` is for, and caught the D5
+error by reading a commit message. Taking "PM" literally would have produced conclusions
+where he wanted evidence.
+
+The sharper read: **the role does not change, the mode does.** Sometimes deciding,
+sometimes working the problem — which varies per message, so a standing title cannot
+capture it.
+
+**2. Gary declares a hat per task, mirroring the AI's role feature.** Gary: *"It would be
+something that would be easy for me to forget but might be helpful at times. What holes do
+you see in that?"*
+
+Three holes: he would have to remember (least likely exactly when drifting); it inverts
+the working mechanism (he declares, AI infers — the "instruction merely read" problem
+again); and **his hats do not map to what he needs** — he wore "developer" all session
+while needing executive-summary answers at every commit and approval point. The hat was
+constant; the mode flipped inside it.
+
+**Kept, narrowed:** role-invocation is genuinely useful for **stance** — *"review this as
+a security engineer," "argue against this"* — because it changes what the AI looks for,
+not merely how it writes. Not a fix for verbosity. Not added to the contract.
+
+### The reframe that produced the rule
+
+Gary: *"I'm naturally a very detailed person. The BLUF response style though was an attempt
+at reducing the verbosity and the mental fatigue that produces over the course of a day."*
+
+**That is the actual objective, and it changes the instrument.** If the cost is fatigue,
+the enemy is not word count — it is **how much work it takes to extract the point**. A
+5-line answer that buries the recommendation costs more than a 12-line one that leads with
+it. The old cap measured the wrong thing: it constrained length without requiring
+structure, so a 5-line survey still satisfied it.
+
+It also resolves the apparent contradiction of a detail-oriented person asking for
+brevity. He does not want less information — he wants **the decision free of the work of
+extracting it**. Detail *after* the bottom line is nearly free to skip; detail *before* it
+is mandatory reading.
+
+**So the rule now optimizes for skippability, not length.**
+
+### What changed in the section
+
+| Old | New | Why |
+|---|---|---|
+| "Default to 5 lines or fewer" | Skippability; no line cap | The cap constrained length without requiring structure |
+| Escape hatch: say "detail" to go long | BLUF always; depth follows when exploring | The old hatch required Gary to predict his mode *before* asking |
+| "No headers or tables unless asked" | A test: do they help the reader skip? | Violated on sight all session; some tables did earn their place. A rule ignored is worse than one calibrated |
+| — | One ask per turn, stated as an ask | The defect that started this conversation |
+| — | No ambiguous referents | "That trigger," and the re-read it cost |
+| — | "When action is required, tighten" | Gary's own trigger, verbatim in intent |
+| — | Blockquote: this cannot be mechanized, has drifted twice | Honesty matching the rest of the contract |
+
+Gary also noted **bold text aids focus** — kept deliberately as a scanning aid rather than
+emphasis.
+
+### Notes for future sessions
+
+- **The new rule takes effect next session.** It is read at session start; this
+  conversation had the old one loaded throughout.
+- **Expect drift, and correct it normally.** The rewrite explicitly frames *"you're being
+  verbose"* as an ordinary correction, not an exceptional failure. Its predicted failure
+  mode is casual problem-solving with no command in play.
+- **Not pursued, still open:** nudges inside `/fw-move`, `/fw-roadmap`, `/fw-swarm`, which
+  Gary flagged as *"MIGHT benefit from an extra nudge in the response"* since each produces
+  a decision point. Not carded — mentioned here so it is findable.
+
+---
+
+## Decisions Made (late evening)
+
+18. **Response Style optimizes for skippability, not line count.** Fatigue is the cost;
+    extraction effort drives it, not word count.
+19. **No command for conversational style.** No chokepoint exists to hang one on; the rule
+    holds by adherence, and the contract now says so.
+20. **No standing role/hat for Gary.** His mode varies per message inside a constant role.
+    Role-invocation kept as an occasional tool for *stance*, not style.
+21. **Headers/tables governed by a test, not a ban** — do they help the reader skip.
+
+## Files Modified (late evening)
+
+- `CLAUDE.md` — Response Style section rewritten (commit `9b20cda`)
+
+---
+
 **Last Updated:** 2026-09-10
