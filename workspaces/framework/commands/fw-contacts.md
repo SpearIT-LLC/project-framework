@@ -18,9 +18,25 @@ counterparty is; people from any organisation live in the one registry
 
 **Replacing someone: move the line, do not delete it.** When Frank takes over
 from Joe, Joe's `**Assigned:**` line becomes `**Previously:**` (same grammar,
-no dates) and Frank gets his own `**Assigned:**` line. The view reads only
-`Assigned:`, so it stays current — while the registry can still answer "who set
-that up originally?" after the person is off the engagement.
+no dates) and Frank gets his own `**Assigned:**` line. Past holders appear in
+the workspace view under a **`## Previously`** section at the bottom — after the
+current list, so it is easy to leave out of a copy/paste — and answer "who set
+that up originally?" without a grep.
+
+**Two generated views, both `CONTACTS*`, both overwritten on every run:**
+
+| File | Scope | Shows |
+|---|---|---|
+| `<workspace>/CONTACTS.md` | one workspace | current people grouped by `Group:`, then `## Previously` |
+| `kb/company/contacts/CONTACTS-ALL.md` | the whole registry | **everyone**, grouped by `Affiliation:`, with group and role |
+
+`CONTACTS-ALL.md` is the internal master list — it is the only view that shows
+affiliation, and the only one where someone with **no assignment at all**
+appears. Neither view carries email or phone: those stay in the record.
+
+It is deliberately **not** named `INDEX.md`. The kb's `INDEX.md` is authored by
+hand; these are generated and overwrite. One filename for two opposite contracts
+would be a trap.
 
 **The view groups by `Group:` (the person's dept/team within their org).**
 Groups are alphabetical; people whose group is not yet known appear last under

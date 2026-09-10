@@ -6,6 +6,18 @@ plain semver 0.x during the framework workspace build.
 ## [Unreleased]
 
 ### Added
+- **`kb/company/contacts/CONTACTS-ALL.md`** — a generated registry-wide view:
+  everyone, grouped by `Affiliation:`, with group and role. It is the only view
+  showing affiliation, and the only place a person with **no assignment** appears
+  (previously they were in the registry but visible in no generated file at all).
+  Named to be unmistakable beside the per-workspace `CONTACTS.md`, and
+  deliberately not `INDEX.md` — the kb's `INDEX.md` is hand-authored, this is
+  generated and overwrites; one filename for two opposite contracts is a trap.
+  Email and phone appear in neither view.
+- **`## Previously` section in each workspace `CONTACTS.md`** — past holders,
+  last, after the current list. Answers "who set that up originally?" in the file
+  you are already reading rather than by grep. Placed at the bottom and separate
+  so it is easy to leave out of a copy/paste.
 - **`Previously:` on contact records** — an assignment that has ended. When
   someone is replaced mid-engagement, their `Assigned:` line moves to
   `Previously:` instead of being deleted, and the successor gets their own
