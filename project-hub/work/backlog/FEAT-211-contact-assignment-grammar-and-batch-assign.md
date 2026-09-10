@@ -67,9 +67,14 @@ format — no migration, no back-compat period.
 
 - [ ] Does `Title:` want to be optional? (A contact may have no meaningful org title.)
 - [ ] Should batch assign also support batch *un*assign when a project closes?
-- [ ] Does the master `INDEX.md` (UAT-12 suggestion) land first? Batch assignment is
-      hard to verify without a whole-registry view, and "who are our architects?"
-      becomes a query across `Assigned:` lines rather than a title lookup.
+- [x] ~~Does the master `INDEX.md` (UAT-12 suggestion) land first?~~ **Answered
+      2026-09-10 — yes, it landed first**, as `kb/company/contacts/CONTACTS-ALL.md`
+      (not `INDEX.md`; see FEAT-210 for why). So the whole-registry view this card
+      wanted for verifying batch assignment now exists.
+      **Note for this card's design:** `CONTACTS-ALL.md` deliberately does *not* list
+      assigned workspaces — those live in each workspace's `CONTACTS.md`. If batch
+      assignment needs a single place to eyeball every assignment at once, that is a
+      new requirement to state here, not something the existing view already gives you.
 
 ## Acceptance Criteria
 

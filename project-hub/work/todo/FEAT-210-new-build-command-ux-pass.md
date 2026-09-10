@@ -58,9 +58,21 @@ row. Split out any item that grows past a session's work.
 - Seed `kb/company/contacts/` (+ pointer README) when the `company` domain is created,
   or via the `fw-new-contact.sh` option in BUG-207 — closes the one hand-made structural
   folder found by UAT-28.
-- Master view: `fw-contacts.sh` also emits `kb/company/contacts/INDEX.md` (machine
-  header; per person link, affiliation, role, assigned workspaces; grouped by
-  affiliation; no email/phone). Same script, same run, no new command.
+- ~~Master view: `fw-contacts.sh` also emits `kb/company/contacts/INDEX.md`~~
+  **DONE 2026-09-10** — shipped as **`kb/company/contacts/CONTACTS-ALL.md`**: machine
+  header, everyone grouped by `Affiliation:` with group and role, no email/phone, same
+  script and run. Two departures from the UAT-12 sketch, both deliberate:
+  - **Named `CONTACTS-ALL.md`, not `INDEX.md`.** The kb's `INDEX.md` is **hand-authored**;
+    this is generated and overwrites. One filename for two opposite contracts is a trap.
+    (`CONTACTS-MASTER` was considered and dropped — "master" claims an authority the file
+    does not have; the records are the source.)
+  - **Assigned workspaces are not listed.** They are already in each workspace's own
+    `CONTACTS.md`; repeating them here would be the second copy the Single-Source Rule
+    exists to prevent. This view answers *who do we know* and *at which org*.
+
+  Shipped in the same pass: `Group:` (dept/team) is now read and drives the grouping in
+  each workspace `CONTACTS.md`, and `Previously:` records an assignment that has ended so
+  a past holder still appears — in their own group, tagged `*(previously)*`.
 - Registry format: keep Markdown-per-record as the authored source; formalise the
   `**Field:** value` grammar as a spec; add `fw-contacts --check`; emit `contacts.csv`/
   `.json` and per-workspace `CONTACTS.csv` from the same collected data. YAML front
