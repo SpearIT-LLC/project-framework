@@ -69,10 +69,31 @@ never by path — a path breaks on every move; an id survives*. `feature/kanban`
 the workspace's declaration (TECH-232); it does not encode where the file sits today. The
 create gate supplies the prefix from the workspace type, so the author types only the name.
 
-**Rejected:** `Links To:` — names the mechanism rather than the relationship, and cards already
-have a `Related` section full of links. `Delivers:` — stronger and better in the common case,
-but wrong for a BUG. `Supports:` — too weak; it permits "vaguely related to", which is how the
-`Theme:` field drifted into 13 values against 5 declared.
+### The field name — TBD before implementation
+
+**Two finalists. `Serves:` has a narrow edge; settle it at implementation, not now.** The
+mechanism is identical either way — what prevents drift is the *qualified value resolving to a
+file*, not the verb — so this is a readability choice, and the person typing it a hundred times
+should make it.
+
+| | Pro | Con |
+|---|---|---|
+| **`Serves:`** | States **membership and direction** — this card is subordinate to a larger thing, which is exactly the claim the field makes. Correct for every card type, including a BUG (which restores rather than delivers). Correct in every workspace type. | The only **verb** among the card's fields (`Workspace:`, `Type:`, `Priority:` are nouns). Slightly less obvious cold: *"serves what?"* needs the value to answer. |
+| **`Focus:`** | Reads naturally and is a **noun**, matching the other fields. Clear to a cold reader. Works in every workspace type. | Closer to a **topic tag** than a membership claim — and a topic tag is what `Theme:` was. Loses the subordination that makes the relationship unambiguous. |
+
+**Rejected outright:**
+
+- **`Scope:`** — already means *in scope / out of scope* on every card. Two meanings on one page.
+- **`Links To:`** — names the mechanism, not the relationship; cards already have a `Related`
+  section full of links.
+- **`Delivers:`** — stronger and better in the common case, but wrong for a BUG.
+- **`Supports:`** — too weak. It permits *"vaguely related to"*, which is precisely how `Theme:`
+  reached 13 values against 5 declared.
+- **`Feature:`** — privileges the product workspace type; a project has deliverables and a kb has
+  domains, and all are probable.
+
+**Recorded because this has now been litigated twice** — 2026-02-03 (Theme, where *Feature Area*
+and *Feature Domain* were rejected as "too prescriptive") and 2026-09-11. A third round is waste.
 
 ### `Serves:` replaces `Theme:` — the history, because it was nearly re-litigated
 

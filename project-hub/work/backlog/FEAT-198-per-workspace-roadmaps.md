@@ -153,18 +153,32 @@ Three things it establishes:
    link to DECISION-093. **Project plans get invalidated by discovery**, so supersession is the
    normal case, not an exception — the same append-don't-rewrite discipline session history uses.
 
-### Scope boundary: no WBS, no schedule
+### Scope boundary — WBS and schedule are in, critical-path machinery is not
 
 Gary, 2026-09-11: *"The framework doesn't need to handle large projects but it should do the
 basics well."*
 
-The HPC plan **references** a WBS but contains none — no durations, no dependencies, no critical
-path. It is a phased plan with gates, and that is the basics done well.
+**Corrected the same day.** An earlier version of this section cut WBS and schedule entirely, on
+the argument that a WBS duplicates the board — cards already decompose work, carry `Depends On:`
+and parent/child structure. **That argument is wrong for the case that matters:**
 
-**Deliberately out of scope:** work breakdown structures, duration estimates, dependency
-networks, critical-path scheduling, resource levelling. That is PM tooling, a different product.
-Knowing *what is due and what is blocked* is the framework's version of it, and lives in
-FEAT-199/FEAT-200 (deadlines, calendar).
+> Gary: *"in the HPC scenario, there are people outside of SpearIT involved with the project.
+> That particular one is feeding the 'public' tasks into Jira while keeping our stuff private in
+> that repo."*
+
+**The board and the WBS have different audiences, so they are not duplicate content.** The board
+is SpearIT's private decomposition; the WBS is the shared one external parties work from — and
+in the Honda case it feeds Jira. The HPC project **has** both a WBS and a schedule, and Gary
+calls them part of the basics.
+
+**Still out of scope:** critical-path calculation, resource levelling, automatic date arithmetic
+across a dependency network. That is PM tooling and a different product. Knowing *what is due and
+what is blocked* is the framework's version, and lives in FEAT-199/FEAT-200.
+
+**Not solved here.** How a WBS relates to the board, and how public work is exported to an
+external tracker while private work stays in the repo, is **project-workspace scope** — deferred
+deliberately on 2026-09-11 so the current focus (kanban) is not derailed. What this card records
+is that the cut was wrong and why.
 
 ---
 
@@ -209,8 +223,10 @@ FEAT-199/FEAT-200 (deadlines, calendar).
       Both carry success criteria
 - [ ] A superseded plan is replaced by a new version that states what changed and why, with
       the prior versions kept — never edited in place
-- [ ] **No WBS, durations, dependency network or critical path.** The scope boundary is
-      explicit, and "what is due / what is blocked" belongs to FEAT-199/200
+- [ ] **No critical-path calculation, resource levelling, or date arithmetic across a
+      dependency network** — that is PM tooling. WBS and schedule themselves are in scope for a
+      project workspace but are **not designed by this card**; "what is due / what is blocked"
+      belongs to FEAT-199/200
 - [ ] `ROADMAP-DELIVERABLES.md`'s ordering and phase rationale are carried into the new
       shape and the file itself is retired
 - [ ] Verified against the built plugin, not the source tree
