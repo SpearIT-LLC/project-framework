@@ -214,13 +214,16 @@ unchecked boxes are tasks can · Human: a real card reads clearly under the spli
 
 ### §9. Every card names the feature it serves
 
-**Met when:** cards carry a `Feature:` field **beside** `Workspace:` — *whose work* and *what
-capability* are different questions — validated at creation against the set of feature files.
-An unknown value is refused and offers to create the feature file; `none` is a legitimate value
-for infrastructure cards that serve no capability.
-**Validated by:** AI: a card with an unknown feature is refused, `none` is accepted · Human: the
-create gate asks, and the answer is usable
-**State:** Pending — **FEAT-231**
+**Met when:** cards carry **`Serves:`** beside `Workspace:` — *whose work* and *what capability*
+are different questions — with a **qualified value** (`feature/kanban`) so a cold reader learns
+what kind of thing it is and values cannot collide across workspaces. Validated at creation
+against what the workspace declares it has; unknown values refused, `none` legitimate for
+infrastructure cards. It **replaces `Theme:`**, which carries the same intent as an unvalidated
+label and has drifted to 13 values against 5 declared.
+**Validated by:** AI: an unknown value is refused, `none` accepted, a wrong-kind prefix refused ·
+Human: the create gate asks in the workspace's own vocabulary
+**State:** Pending — **FEAT-231**, blocked by **TECH-232** (the workspace declaration that says
+what kind of thing a card serves here, and where those live)
 
 **Why it belongs here:** it makes feature membership *derivable* rather than hand-kept, and it
 catches a card that serves no feature — usually scope creep, caught cheaply at creation.

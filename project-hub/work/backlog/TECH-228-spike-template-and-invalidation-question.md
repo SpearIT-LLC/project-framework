@@ -44,8 +44,13 @@ Implementation Checklist.
 to fill in, output is a decision.** SPIKE-227 answers one question in a two-hour box;
 completing that template honestly would cost more than the spike.
 
-It also carries `Theme:` and `Planning Period:` — the old roadmap model, superseded by
-FEAT-198.
+It also carries `Theme:` and `Planning Period:`.
+
+> **Correction 2026-09-11:** an earlier draft of this card called those *"the old roadmap model,
+> superseded by FEAT-198."* **That is wrong.** FEAT-198 *keeps* Themes and Planning Periods —
+> it argues the framework already ships the missing piece and the repo should use it; what it
+> supersedes is `ROADMAP-DELIVERABLES.md`. `Theme:` is separately being replaced by `Serves:`
+> (FEAT-231), on usage evidence rather than by FEAT-198. `Planning Period:` stays.
 
 **Most of those 22 sections are what a spike *produces*, not what it needs at creation.** A
 findings section with three pre-numbered slots and confidence ratings is a reporting scaffold
