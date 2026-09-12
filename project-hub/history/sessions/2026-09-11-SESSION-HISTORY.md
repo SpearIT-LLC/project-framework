@@ -577,4 +577,236 @@ visible in one place:
 
 ---
 
+# Continuation 2 — time tracking, and spikes as a sequencing rule
+
+**Session Focus:** a second feature file from a standing start; why cheap spikes do not get
+run, and the mechanism that fixes it
+
+*(This section covers work after commit `500f865`. The system clock rolled to 2026-09-12
+during it; the work is recorded under the 11th, the day it started.)*
+
+---
+
+## Work Completed
+
+### Time Tracking — a new feature, method proven before it was specified
+
+Gary raised a standing idea: a punch-clock app cannot represent projects worked in parallel,
+and SpearIT's own projects have never been tracked at all. The hard part he named was **idle
+time** — *"this session was running all night while I slept."*
+
+**The method was proven against real data before any criterion was written.** Claude Code
+writes per-project transcripts under `~/.claude/projects/<slug>/*.jsonl` with ISO-8601
+timestamps on every entry. Clustering **user-message timestamps** into activity blocks — a run
+of interaction with no gap longer than a threshold — was tested over 2128 real messages from
+this project (2026-08-18 → 2026-09-12):
+
+| Idle threshold | Blocks | Hours tracked |
+|---|---|---|
+| 15 min | 116 | 36.0 |
+| 20 min | 93 | 42.8 |
+| 30 min | 59 | 56.8 |
+
+**The finding that mattered: the threshold swings the total by 58% over the same 26 days.** A
+reported number without its threshold is meaningless — which is why the criterion requires the
+threshold to be declared, tunable, and printed with every report. Default 20; 15 is the
+conservative choice because it under-counts.
+
+13 projects have transcripts on this machine, including a client one — so per-project
+attribution needs no tagging by the user, and parallel work stays parallel.
+
+---
+
+## Decisions Made (continuation 2)
+
+### 23. Time is measured in activity blocks, never sessions
+
+**Decision:** elapsed time comes from gaps between timestamped interactions. A session left
+open overnight contributes only the blocks in which something happened.
+
+**Rationale:** a Claude Code session is a container that can idle indefinitely. **This session
+is the worked example** — it ran overnight across a date rollover while Gary slept; session
+duration would have billed ~18 hours for two real blocks of work.
+
+### 24. The output is a floor on effort, and must be labelled as one
+
+**Decision:** state up front, in the feature file, that this measures *time interacting with
+Claude on a project* — not thinking away from the keyboard, client calls, whiteboards, reading,
+or coding without Claude.
+
+**Rationale:** a number presented as complete when it is systematically low is worse than no
+number. Consequence for use: **high value for internal work** (nothing is tracked today, so a
+floor beats zero), **supplementary for client work** — reconcile against punched time, catch
+unbilled hours, but never emit as an invoice line. A punched clock is a human assertion; a
+computed one is an inference, and a client querying a line item may not accept *"the transcript
+says so."*
+
+### 25. A session-end hook is the right instinct for the wrong feature
+
+Gary suggested capturing at session end via a hook *"so it's never lost."*
+
+**Correct for session summaries; wrong for time.** A `Stop` hook fires once per session and
+sees only session boundaries — the unit decision 23 rejects. Time needs *interaction*
+timestamps.
+
+**And the summary idea is a different feature that already exists:** `/fw-session-history`,
+unported in the new build (FEAT-222, four authored formats disagreeing). What Gary described —
+*"3 cards done, 2 created, maybe even listing the features, bugs"* — is a **factual delta a
+script can derive from git and the board**, distinct from the narrative, which cannot be
+derived.
+
+**The caution recorded:** the automatic half is cheap and reliable; the narrative half is the
+valuable half. If a hook emits a tidy summary every session, the risk is that it *feels*
+sufficient and the reasoning stops being written. Design the auto-summary as a visible
+skeleton awaiting the narrative.
+
+### 26. No separate implementation-planning doc — cards are that doc
+
+Gary proposed a separate planning doc so feature files do not churn.
+
+**Rejected, and the reasoning is the one that killed the Cards section:** a second doc is a
+second place to keep in sync. The transcript-vs-hook question would live in the feature file,
+the planning doc, *and* eventually a card — two of which drift.
+
+**Cards already are the implementation-planning doc.** BUG-225 carries an output format and a
+rejected diagnosis; FEAT-226 carries three open design questions. Versioned, moving through
+folders, and the thing an AI reads before implementing.
+
+**So detail moves *down*, not sideways:** the feature file holds intent and testable
+conditions; the moment a question needs analysis it becomes a card, and the feature file keeps
+one line pointing at it. **Applied immediately** — time-tracking's three supply-side open
+questions collapsed to one line pointing at SPIKE-227.
+
+**The exception:** a feature needing substantial design before any card is sensible is what
+SPIKE is for.
+
+**The real churn risk is not detail — it is the `State:` lines.** Fourteen criteria whose
+states change as work lands means frequent touches. If that becomes painful, the answer is
+deriving `State:` from the cards rather than hand-keeping it.
+
+### 27. What a large development department would do here — and what to refuse
+
+Gary asked what could be learned from large-org sequencing.
+
+**Worth taking (three):**
+- **Discovery as a funded phase with an exit gate**, not a preamble. The data-source question
+  would never sit as an open bullet — it would be spiked, timeboxed, decided.
+- **Sequencing by risk, not value.** *"What could kill this?"* pulled forward regardless of
+  value. The feature order here is value-ranked.
+- **Dependency mapping before commitment.** Dependencies have been discovered
+  conversationally — the unowned crossover surfaced only because kanban.md happened to get
+  written. That is luck, not method.
+
+**Worth refusing:** most large-org machinery solves **coordination**, not sequencing — keeping
+40 people from colliding, committing to stakeholders who cannot inspect the work, auditing
+decisions nobody remembers. Estimation ceremonies, capacity planning, phase gates, RACI: pure
+overhead for one practitioner holding the whole design in their head.
+
+**The failure mode is already on this project's record:** `ROADMAP-DELIVERABLES.md` is what a
+large org would have produced, and its own reconciliation notes say the derived half drifted
+twice while the ordering was never wrong.
+
+**The rule adopted is deliberately small:** every feature names the **one unknown that could
+invalidate it**, and that question is sequenced first. Not a phase, not a gate, not a ceremony.
+
+### 28. Why cheap spikes do not get run — two mechanical causes, not indiscipline
+
+Gary: *"Sometimes I'll do the cheap poc spikes but probably not as often as I should."*
+
+**Cause 1 — the type exists, the discipline does not.** `fw-new.sh` accepts SPIKE and even
+coaches toward it (*"time-boxed work whose deliverable is an answer"*), but
+`templates/records/` holds a single `work-item.md` for all five types. A created SPIKE has no
+timebox, no question, no exit criteria. It is a card with a different prefix.
+
+**Cause 2 — found when Gary recalled the old framework had a spike template.** It does:
+`framework/templates/work-items/SPIKE-TEMPLATE.md`, **355 lines across 22 sections** —
+Findings with per-finding confidence levels, Recommendations with trade-offs, Alternative
+Approaches, Risks with likelihood/impact/mitigation, a Retrospective, an Implementation
+Checklist.
+
+**It is long to fill in and its output is a report. A spike should be the inverse: short to
+fill in, output is a decision.** SPIKE-227 answers one question in a two-hour box; completing
+that template honestly would cost more than the spike itself.
+
+### 29. The spike template is a carry-in, deliberately trimmed
+
+Per `workspaces/framework/CLAUDE.md` — read the history, don't inherit the structure.
+
+**Carried, with reasons:** the timebox stop rule (*"Stop at time box even if investigation
+incomplete"* — the whole discipline in one sentence); *"What decision depends on this?"*;
+Out of Scope (spikes sprawl); the **research-vs-POC split** (a research spike is a doc, a POC
+spike is a folder under `project-hub/poc/` holding doc and code — `SPIKE-142`'s move-command
+harness is the POC form); and **spikes archive to `history/spikes/`, never
+`history/releases/`**.
+
+**Not carried, with reasons:** Findings / Recommendations / Alternatives / Risks /
+Retrospective / Implementation Checklist — all of it is what a spike *produces*, and
+pre-structuring it with numbered slots and confidence ratings imposes a reporting scaffold
+before anything is known. Plus `Theme:`/`Planning Period:`, superseded by FEAT-198.
+
+**Added:** **one question, singular** — the old template's three numbered "Research Questions"
+slots invite a spike to answer three things and finish none; and **exit criteria phrased as a
+decision** with candidate outcomes named up front, one of which must be *"not viable"* or the
+spike cannot honestly reach that answer.
+
+**Size is an acceptance criterion:** under 80 lines against the old 355. A spike costing more
+to write up than to run will not be run.
+
+### 30. A lifecycle gap the spike work exposed
+
+**Not every card leaves the board the same way**, and the new build does not distinguish them:
+a spike archives to `history/spikes/` (it produces no release — spikes are for learning), and
+a POC spike archives as a *folder*, not a file. The old framework knew this; the new one does
+not. **Recorded in `kanban§2`** — without it, `done/` means two different things.
+
+---
+
+## Files Created (continuation 2)
+
+- `project-hub/planning/features/time-tracking.md` — second feature file. Activity blocks,
+  declared idle threshold with the measured evidence, floor-not-measure stated up front,
+  per-card attribution guarded against fabrication
+- `project-hub/work/backlog/SPIKE-227-time-tracking-data-source.md` — the one unknown that can
+  invalidate time tracking; 2-hour timebox, three named outcomes including "not viable"
+- `project-hub/work/backlog/TECH-228-spike-template-and-invalidation-question.md` — the SPIKE
+  template as a trimmed carry-in, plus *What Could Invalidate This* as a required feature-file
+  section
+
+## Files Modified (continuation 2)
+
+- `project-hub/planning/features/kanban.md` — added *What Could Invalidate This* (the
+  FEAT-021/TECH-082 parent-child conflict, which blocks the MVP); added the spike/POC
+  archival gap to `kanban§2`
+- `project-hub/planning/features/time-tracking.md` — supply-side open questions collapsed to
+  one line pointing at SPIKE-227 (decision 26 applied to itself)
+
+---
+
+## Current State (end of continuation 2)
+
+### In doing/
+- **BUG-215** — unchanged from continuation 1. Still needs the decision-17 supersession note.
+
+### In backlog/
+- **BUG-225**, **FEAT-226** (continuation 1); **SPIKE-227**, **TECH-228** (this section).
+
+### Feature files
+- `kanban.md` v0.3 — 14 criteria, one Built
+- `time-tracking.md` v0.1 — method proven, supply unanswered (SPIKE-227)
+
+### Still not carded
+1. **The crossover** — nothing builds the new `kanban/`.
+2. **Acceptance criteria vs sub-tasks** (kanban§8).
+3. **The `Feature:` field** (kanban§9).
+
+### Next session (revised)
+1. BUG-215 supersession note — **three sessions running now**; it is the oldest loose thread.
+2. BUG-225 scope update (prompt removal + shared batch code).
+3. Rewrite UAT-36.
+4. `operations.md` — the third feature file, and the test of *"operations is just a variation
+   of kanban."*
+5. Consider running SPIKE-227 — it is two hours and gates a whole feature.
+
+---
+
 **Last Updated:** 2026-09-11

@@ -44,6 +44,20 @@ folders is the format that survives: no tool to install, no export, no API, no v
 The gates exist because an unenforced convention drifts silently — the failure this framework
 was built to prevent.
 
+## What Could Invalidate This
+
+**The parent/child conflict (§7).** FEAT-021 (dotted sub-ids) and TECH-082 (a `Parent:` field)
+propose competing mechanisms for the same concept, and **the board uses both today**. Nothing
+downstream can be authored until it resolves: a work-item template must commit to one, the
+create gate must assign ids under one, and the move engine already treats "child items" as
+grouping that moves with its parent — a concept nothing in the repo defines.
+
+This does not kill the feature — the board runs today — but it **blocks the MVP**, because
+every card-shaped decision waits on it. TASK-219 Group 1 owns it and calls it the blocker.
+
+<!-- Every feature names the one unknown that could kill or block it, and that
+     question is sequenced FIRST — before the valuable work, regardless of value. -->
+
 ---
 
 ## A. The Board
@@ -66,6 +80,12 @@ particular **`accept/` = finished but not yet accepted**, distinct from `done/`.
 **Validated by:** AI: every allowed and disallowed transition traced to the declared table ·
 Human: an illegal move is refused with a message naming the allowed paths
 **State:** Pending — the table exists for operations; kanban's row is declared empty
+
+**Not every card leaves the board the same way.** The old framework distinguishes them and the
+new build does not: a **spike archives to `history/spikes/`, never `history/releases/`** —
+spikes are for learning, not delivering, so they produce no release. A **POC spike** archives
+as a *folder* (doc plus code artifacts), not a file. The lifecycle must carry this, or
+`done/` means two different things. — see TECH-228
 
 ### §3. Entry to the board is two folders, and only two
 
