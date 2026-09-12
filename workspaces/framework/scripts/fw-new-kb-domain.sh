@@ -98,3 +98,16 @@ printf -- '- [%s](%s/) — _one-line description pending_\n' "$DOMAIN" "$DOMAIN"
 echo "Created domain: $DOMAIN"
 echo "INDEX.md: + [$DOMAIN]($DOMAIN/) — _one-line description pending_"
 ( cd "$KB" && find . -type d | sort )
+
+# On first use, read the declaration back through the reader the gates use
+# (TECH-232) — proving it is present and parseable while a fix is still cheap.
+if [ -n "$CREATED_KB" ]; then
+  . "$SCRIPT_DIR/lib/workspace-decl.sh"
+  if ws_decl_read "$KB"; then
+    echo ""
+    echo "Work in this workspace serves a ${WS_SERVES_KIND}."
+    echo "  ${WS_SERVES_KIND}s are authored in: $WS_SERVES_LOCATION (the kb root)"
+  else
+    echo "Warning: the kb was created but its declaration did not read back cleanly (above)." >&2
+  fi
+fi

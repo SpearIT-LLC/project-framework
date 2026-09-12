@@ -160,3 +160,20 @@ done
 
 echo "Created workspace: $WS ($TYPE)"
 ( cd "$WS" && find . -type d | sort )
+
+# Read the declaration back through the same reader every gate uses (TECH-232).
+# This is not decoration: it proves the file the gates depend on is present and
+# parseable AT CREATION, where a broken scaffold is cheap to fix — rather than
+# later, when a create gate refuses a card and the cause is three steps away.
+# It also tells the user, in this workspace's own vocabulary, what a card here
+# will be asked to serve.
+. "$SCRIPT_DIR/lib/workspace-decl.sh"
+if ws_decl_read "$WS"; then
+  SERVES_DIR="$(ws_serves_dir "$WS")"
+  echo ""
+  echo "Work in this workspace serves a ${WS_SERVES_KIND}."
+  echo "  ${WS_SERVES_KIND}s are authored in: $WS_SERVES_LOCATION"
+  [ -d "$SERVES_DIR" ] || echo "  (none yet — the folder is created with the first one)"
+else
+  echo "Warning: the workspace was created but its declaration did not read back cleanly (above)." >&2
+fi
