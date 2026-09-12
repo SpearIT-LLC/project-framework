@@ -52,13 +52,18 @@ was built to prevent.
 
 ## What Could Invalidate This
 
-**The parent/child conflict (§7).** Two mechanisms for the same concept are in use on the board
-today, and nothing downstream can be authored until one wins: the work-item template must commit
-to one, and the create gate must assign ids under one. The move engine already treats "child
-items" as grouping that moves with its parent — a concept nothing in the repo defines.
+**Nothing — the mechanism is proven.** The board has run this project for months; the risk here
+is not viability but *drift between the two boards* during the build, since `project-hub/work/`
+stays live until the cutover.
 
-This does not kill the feature — the board runs today — but it **blocks the MVP**, because every
-card-shaped decision waits on it, including all of FEAT-229. **TASK-219 Group 1** owns it.
+<!-- "Nothing" is a legitimate answer to this section, given a reason (TECH-228).
+     A feature whose mechanism is already running does not have a killer unknown. -->
+
+**Recorded 2026-09-11, because a draft of this file claimed otherwise:** the FEAT-021 /
+TECH-082 parent-child conflict was named here as the MVP blocker. **It is not a conflict.**
+TASK-219 read both cards on 2026-09-09 and found them complementary — dotted ids for tight
+coupling, `Parent:` for provenance — and **adopted both** with a rule for which applies. The
+claim came from `ROADMAP-DELIVERABLES.md`, which is stale on card state by its own admission.
 
 <!-- Every feature names the one unknown that could kill or block it, and that
      question is sequenced FIRST — before the valuable work, regardless of value. -->
@@ -70,11 +75,13 @@ card-shaped decision waits on it, including all of FEAT-229. **TASK-219 Group 1*
 ### §1. The board is a fixed, authored folder set
 
 **Met when:** the board holds `backlog blocked todo doing accept done cancelled`, matching the
-authored repo-structure diagram. Today's board has five of the seven — `accept/` and
-`cancelled/` are the delta.
+authored repo-structure diagram. The **live** board at `project-hub/work/` has five of the
+seven — `accept/` and `cancelled/` are the delta, and arrive with the cutover.
 **Validated by:** AI: folder set matches the authored set by inspection · Human: a card moved
 into each folder lands where expected
-**State:** Pending — TASK-219 (Group 2a owns the `accept`/`cancelled`/`blocked` metadata)
+**State:** **Built as a scaffold** — `templates/queues/kanban/` holds all seven plus `release/`,
+with `.limit` files and a README (TASK-219, 2026-09-09). Pending: the live board gaining them
+at the cutover, and Group 2a's open questions (below)
 
 ### §2. The lifecycle is specified as data, not as behaviour
 
@@ -164,23 +171,29 @@ or an explicit statement that it cannot be mechanized:
 - **Cross-references** between cards
 - **Required fields**, including the feature the card serves (§9)
 
-The new build currently defines none of these and ships **no work-item template of any kind**.
 **Validated by:** AI: each convention traces to a mechanism, not a paragraph · Human: the
 conventions hold when a real card is created and moved
-**State:** Pending — TASK-219 owns the set; Group 1 is the blocker
+**State:** **Built** — TASK-219 settled all five with mechanisms (2026-09-09) and authored
+`templates/records/work-item.md`; FEAT-175's create gate shipped in 0.4.7. Fourteen further
+conventions are TASK-223, none blocking.
 
-### §7. Sub-tasks have one defined form
+### §7. Sub-work has three forms, and a rule for choosing
 
-**Met when:** it is settled *when* a piece of work is a checkbox inside a card versus a child
-card of its own, and the chosen mechanism is the only one in use.
+**Met when:** the three are distinguishable and the choice between them is stated where a card
+author will see it:
 
-**Why it is not merely a style choice:** a checkbox and a child card are not interchangeable —
-a checkbox cannot move, be assigned, or be blocked on its own; a child card cannot be ticked
-off in a list. The competing mechanisms and the conflict between them are on **TASK-219
-Group 1**.
-**Validated by:** AI: one mechanism present, the other absent · Human: a card with sub-work
-reads unambiguously
-**State:** Pending — TASK-219 Group 1; blocks §6
+- **Checkbox** — cannot move, be assigned, or be blocked on its own. Tracked inside the card.
+- **Dotted id** (`FEAT-042.1`) — tight coupling: dies with the parent, moves with it, counts
+  as **one** WIP item.
+- **`Parent:` field** — provenance: stands alone, worked separately, counts as its **own** WIP
+  item.
+
+**The rule:** *does this make sense on its own?* Yes → `Parent:`. No → dotted. Neither → a
+checkbox.
+**Validated by:** AI: the engine moves dotted children with their parent and leaves `Parent:`
+children alone · Human: a card with sub-work reads unambiguously
+**State:** **Built** — TASK-219 (2026-09-09) adopted both id mechanisms with the rule in the
+template's comment header, so it travels with every card
 
 ### §8. Acceptance criteria are distinguishable from sub-tasks
 
@@ -238,7 +251,8 @@ sequence, resolves a template for its type, enforces the required fields (§6, �
 respects the legal entry points (§3).
 **Validated by:** AI: ids never collide, template fields present, unknown feature refused ·
 Human: a UAT case per card type
-**State:** Pending — FEAT-175 (blocked on the conventions in §6)
+**State:** **Built for the board's card types** — FEAT-175 shipped in 0.4.7. Pending: scaffolding
+`kanban/` on first use (FEAT-229), the `Feature:` field (§9), and the SPIKE shape (TECH-228)
 
 ### §13. Batch moves work, with per-item outcomes
 
@@ -279,14 +293,16 @@ Human: n/a
       nobody noticed there was no card for the capability.*
 - [ ] **§8** (criteria vs sub-tasks) — **not yet carded**
 - [ ] **§9** (the `Feature:` field) — **not yet carded**
-- [ ] **Where the 27 `deprecated/` cards live** — no `archive/` in the authored folder set.
-      — owned by TASK-219 (Group 2a)
-- [ ] **FEAT-030's hold state** — absent from the authored diagram. — owned by TASK-219
+- [ ] **Group 2a leftovers** — transitions into `cancelled/`, whether it is terminal, a board
+      closure code, and where the 27 `deprecated/` cards live (no `archive/` in the authored
+      folder set). Explicitly left open by TASK-219; **carried by TASK-223**.
+- [ ] **FEAT-030's hold state** — absent from the authored diagram. — TASK-223
 
 ## Change Log
 
 | Version | Date | Change |
 |---------|------|--------|
+| v0.4 | 2026-09-11 | **Reconciled against the board, not the roadmap.** TASK-219 shipped 2026-09-09 and FEAT-175 in 0.4.7, so §1, §6, §7 and §12 move from Pending to Built or part-Built. **The FEAT-021/TECH-082 "conflict" was not one** — TASK-219 found the two complementary and adopted both with a selection rule; *What Could Invalidate This* is corrected to "nothing", and §7 now states the three forms of sub-work. Group 2a leftovers reassigned to TASK-223. **Cause of the errors: card state was taken from `ROADMAP-DELIVERABLES.md`, which says in its own header not to trust it for that.** |
 | v0.3 | 2026-09-11 | **§3 decided** — entry is `backlog/` (normal) or `todo/` (urgent), nothing else; anything else destroys planning. **§5 decided** — WIP limits warn loudly on moves *into* an over-limit folder and never block; limits stay per-repo editable by design; no remedy advice in the message. Both moved from open question to settled criterion. |
 | v0.2 | 2026-09-11 | Grouped into Board / Cards / Gates; lifecycle, entry points, WIP limits, and card anatomy added as criteria; "file-based" stated in the Definition; command names removed in favour of functions; §10 (was §7) sharpened to say what the states buy. |
 | v0.1 | 2026-09-11 | Initial draft. First feature file — the template-by-example for the other four. |

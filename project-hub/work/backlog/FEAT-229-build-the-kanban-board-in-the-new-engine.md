@@ -56,9 +56,21 @@ parsed**, which is why seeding kanban fixtures proves nothing today.
 all three gates and has run this project for months. This is a **port with justified carry-ins**
 (`workspaces/framework/CLAUDE.md`), not a design exercise.
 
-**What does not exist anywhere:** a work-item template. `templates/records/` holds
-`contact.md`, `ops-record.md`, `ts-case.md`, `work-item.md` — and `work-item.md` serves all five
-types identically, which is its own defect (TECH-228).
+**What already exists — verified 2026-09-11, correcting an earlier draft of this card:**
+
+- **The work-item template** — `templates/records/work-item.md`, built by TASK-219 on
+  2026-09-09, encoding the Group 1 conventions. One template with a `Type:` field, mirroring
+  `ops-record.md`; five near-identical templates would be five things to keep in sync.
+- **The kanban queue scaffold** — `templates/queues/kanban/`: `backlog blocked todo doing
+  accept done cancelled release`, `.limit` files (todo 10, doing 2), and a README carrying the
+  flow.
+- **The create gate** — FEAT-175, shipped in 0.4.7. `fw-new.sh` creates cards.
+- **The Group 1 conventions** — numbering, parent/child, supporting files, cross-references,
+  status-vs-folder: all five settled **with mechanisms** on 2026-09-09.
+
+**So the remaining work is narrower than first written.** TASK-219 line 167 names it exactly:
+*"`fw-new.sh` to create cards and scaffold `kanban/` on first use, and the kanban row in
+`fw-move.sh` wired to real transitions and gates."*
 
 ## Scope
 
@@ -83,22 +95,32 @@ types identically, which is its own defect (TECH-228).
 - **Checkbox state semantics** — TECH-177.
 - **Batch output format** — BUG-225, which lands in the shared engine and is inherited here.
 
-## Dependencies — and the honest critical path
+## Dependencies
 
-This card **cannot start** until the conventions it encodes are settled. Writing it makes the
-path concrete, and the path is longer than `kanban.md` currently implies:
+**This card is not blocked.** An earlier draft said it was gated on the FEAT-021 / TECH-082
+parent-child conflict. **That conflict does not exist** — TASK-219 read both cards on
+2026-09-09 and found them *complementary, not competing*:
 
-- **TASK-219 Group 1** — numbering, parent/child, supporting files, cross-references,
-  status-vs-folder. **The blocker**, and it contains an unresolved conflict: FEAT-021 (dotted
-  sub-ids) vs TECH-082 (a `Parent:` field), with the board using both styles today. A template
-  authored before this resolves encodes a guess.
-- **TECH-177** — checkbox states, including `[?]`/`[h]`; the gates must read them.
-- **TECH-228** — the SPIKE template, and the type-per-template split this card's create
-  function must resolve.
+- **Dotted ids** (`FEAT-042.1`) = tight coupling. The child dies with the parent, moves with
+  it, counts as **one** WIP item.
+- **`Parent:` field** = provenance. The child stands alone, is worked separately, counts as
+  its **own** WIP item.
 
-**Consequence worth stating plainly:** kanban's MVP is gated on a *decision* (the parent/child
-conflict), not on effort. Until that is settled, no amount of implementation time moves this
-card.
+**Both adopted**, with the rule *"does this make sense on its own?"* — yes → `Parent:`,
+no → dotted. The rule lives in the template's own comment header so it travels with every card.
+
+**Soft dependencies, neither blocking the core work:**
+
+- **TECH-177** — checkbox states `[?]`/`[h]`. The gates should read them, but the three ported
+  gates do not require them.
+- **TECH-228** — the SPIKE template. Affects what the create function resolves for one type,
+  not whether it works.
+
+**The stale-roadmap lesson, recorded because it cost a draft:** `ROADMAP-DELIVERABLES.md` lists
+TASK-219 in `todo/` as "the blocker" and says the new build ships no work-item template. Both
+were true on 2026-09-02 and false by 2026-09-09. The file's own header says **"do not reconcile
+it a third time — read it for the ranking; go to the card for anything else."** Card state must
+come from the board, never from the roadmap.
 
 ## Acceptance Criteria
 
