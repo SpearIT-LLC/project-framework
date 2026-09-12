@@ -809,4 +809,357 @@ not. **Recorded in `kanban§2`** — without it, `done/` means two different thi
 
 ---
 
+# Continuation 3 — kanban defined, and the first implementation of the day
+
+**Session Focus:** closing BUG-215's stale design, finishing kanban.md, and building TECH-232
+
+*(Gary was remote all morning, which is why the whole session avoided anything needing direct
+machine access — no plugin install, no UAT against the installed cache.)*
+
+---
+
+## Work Completed
+
+### BUG-215 — the supersession note finally written
+
+Three sessions overdue. The card described **per-record prompting** as the settled design
+(2026-09-07); that was reversed on 2026-09-11 and the decision lived only in session history, so
+a future session reading the card would have implemented the rejected mechanism.
+
+Written as a **dated supersession block** rather than an edit — the 2026-09-07 reasoning stays
+visible because the new decision only makes sense against it. Two acceptance criteria struck
+through with their replacements; the verification section updated with the UAT-33..35 results.
+**BUG-225** took the prompt removal into scope (same file, same commit, and with no interactive
+branch every emitted line is a report line — which is what makes one shared formatter
+achievable). **UAT-34 and UAT-36 rewritten** to match.
+
+### kanban.md — finished as a definition, after a reconciliation that overturned three claims
+
+**The reconciliation is the important part.** Reading TASK-219 (which is in `done/`, not `todo/`)
+overturned three things this file and FEAT-229 had been built on:
+
+1. **TASK-219 Group 1 is settled and shipped** (2026-09-09) — not "the blocker".
+2. **The FEAT-021 / TECH-082 parent-child conflict does not exist.** TASK-219 read both cards and
+   found them *complementary*: dotted ids for tight coupling (child dies with the parent, counts
+   as one WIP item), `Parent:` for provenance (child stands alone, counts as its own). **Both
+   adopted**, with the rule *"does this make sense on its own?"*
+3. **The work-item template and kanban queue scaffold exist**, and FEAT-175's create gate shipped
+   in 0.4.7.
+
+**All three errors came from reading card state out of `ROADMAP-DELIVERABLES.md`** — whose own
+header says *"do not reconcile it a third time; read it for the ranking, go to the card for
+anything else."* That happened three times in one day. **Card state comes from the board.**
+
+Consequences: §1, §6, §7, §12 moved to Built or part-Built; §7 now states the *three* forms of
+sub-work rather than a conflict; *What Could Invalidate This* became **"nothing — the mechanism
+is proven"**, which TECH-228 allows as a legitimate answer; FEAT-229 is **not blocked**.
+
+### TECH-232 — built, and it is the day's only running code
+
+`workspace.yaml` per workspace, `scripts/lib/workspace-decl.sh` as the single reader, and both
+creation paths reading the declaration back.
+
+---
+
+## Decisions Made (continuation 3)
+
+### 31. Cards are the implementation-planning doc — no separate planning file
+
+Already recorded as decision 26, **re-confirmed and applied**: TECH-232's format question moved
+onto the card, and TECH-233 was split off rather than letting TECH-232 grow into the
+configuration-model decision.
+
+### 32. FEAT-229 builds the board; the cutover is its own card
+
+**Nothing in the roadmap built the new `kanban/`.** The ADR-009 D5 crossover is referenced from
+four places and owned by none.
+
+**The cause was a naming habit:** "the crossover" names a *moment*, so the conversation kept
+pointing at a future event and nobody noticed there was no card for the **capability**. The
+moment is the last ten minutes of the work.
+
+Gary: *"I see crossover as a card of its own."* So **FEAT-229 builds** (transitions, the three
+ported gates, create/move functions, WIP warnings, spike archival) and the **cutover** —
+atomic, one-way — stays a separate, still-unwritten card. Building and switching are separable
+work with different risk.
+
+### 33. Feature-file length rule replaces the line cap
+
+Gary: *"each line has a purpose with no redundancy, stated as simply and directly as possible."*
+
+**A cap is a bad proxy** — it punishes a feature with genuinely many criteria and permits a short
+file full of padding. Applied immediately to its own first violation: the parent/child conflict
+detail was restated in kanban.md while TASK-219 owned it; both became pointers. **The file is
+306 lines and that is no longer the problem — the duplication was.**
+
+### 34. Acceptance criteria are claims, not tasks → TECH-230
+
+The done-gate counts unchecked boxes under `## Acceptance Criteria`, so *"all boxes checked"*
+means the work was done, not that the result was verified.
+
+**The distinguishing test:** *could a stranger check this without being told what work was
+performed?* A criterion survives that; a task does not.
+
+**Marker vocabulary, Gary's proposal:** `[ ]` untested · `[P]` passed · `[F]` failed · `[I]`
+inconclusive (reason required). Tasks keep `[ ]`/`[x]`. This makes the two **syntactically**
+distinct, so the gate does not depend on section headers, and lets it **refuse on `[F]`** — which
+it cannot do today, where a failed criterion is indistinguishable from an untested one.
+
+**`[F]` is not sticky.** A permanent fail would block the gate forever and push people to delete
+the line rather than record it — *the mechanism would punish honesty*. The marker is current
+state; the journey goes in a **one-line-per-attempt log** beneath it, saying what failed and why,
+required only once a criterion has failed. Gary: *"useful history to know why a test failed but
+it shouldn't be an essay."*
+
+**Deliberate Obsidian divergence, recorded so nobody reverts it:** Obsidian has no pass/fail
+concept — the Tasks plugin resolves every custom status to TODO/IN_PROGRESS/DONE/CANCELLED, and
+*cancelled* means "we are not doing this", not "this was checked and it is wrong."
+
+### 35. `Serves:` — the field, its value shape, and why not `Feature:`
+
+**Not `Feature:`.** Gary: *"The framework needs to handle all supported features as equally as
+possible because all are probable."* A product has features, a **project has deliverables**, a
+**kb has domains**. A field named `Feature:` privileges the type Gary happens to work on most.
+
+**The value is qualified — `feature/kanban`, not `kanban`.** Gary: *"you are also a newcomer at
+the start of each session… we want no confusion."* **This session proved the cost**: "D5" read as
+two different things, card state taken from a stale file three times. A bare value tells a cold
+reader nothing about what kind of thing it is or where its definition lives. It also stops a
+product feature and a project deliverable both called "Reporting" from colliding.
+
+**Logical reference, not a path** — TECH-027's rule (*reference by id, never by path*),
+settled by TASK-219.
+
+**Rejected:** `Links To:` (names the mechanism, not the relationship), `Delivers:` (wrong for a
+BUG), `Supports:` (too weak — permits "vaguely related to"), `Scope:` (already means in/out of
+scope on every card). **`Serves:` vs `Focus:` left as finalists**, `Serves:` with a narrow edge,
+**TBD at implementation** — the mechanism is identical either way, so the person typing it a
+hundred times should choose.
+
+### 36. `Serves:` replaces `Theme:` — on usage evidence, not preference
+
+**The naming was litigated once before.** On 2026-02-03 (FEAT-095), "Feature Area" and "Feature
+Domain" were considered and **rejected as "too prescriptive, tied to 'features'"**. Genericness
+was recorded as a **virtue** — "flexible", "open to user interpretation". There is no recorded
+objection anywhere that Theme is too generic. **Today we re-derived the rejected option.**
+
+**The usage data says the rejection was wrong** (measured across 142 board files):
+
+- 101 cards carry a `Theme:` — adopted, not ignored
+- **13 distinct values against 5 declared** in `ROADMAP.md`
+- *Framework Consistency* is the **third most-used theme (15 cards) and is not in the roadmap at
+  all**; *Reporting & Visibility* is declared and has **zero** cards
+- Splinters: *Workflow*, *Workflow Precision*, *Workflow Commands*, *Workflow Commands /
+  Distribution*
+- One value: `Distribution & Onboarding (Sprint D&O 4 - Polish)` — a planning period smuggled into
+  the theme field, the exact conflation the 2026-02-03 design existed to prevent
+
+**The difference is mechanization, not vocabulary.** FEAT-095 chose *"loose coupling — no
+referential integrity, no sync logic"* deliberately, so nothing can refuse a near-duplicate.
+`Serves:` resolves against a file that exists.
+
+**Correction, recorded in two places:** `Theme:` and `Planning Period:` are **not** superseded by
+FEAT-198. That card *keeps* both and supersedes `ROADMAP-DELIVERABLES.md`. Claude asserted the
+opposite twice, from the roadmap's summary rather than the card.
+
+### 37. Migration: no bulk backfill
+
+New cards require the field; `backlog/` fills in **during grooming**; **`todo/` → `doing/` is the
+enforcement point**; cards already in `doing/` are **grandfathered**.
+
+**Why that gate:** the ripeness review already happens there, so it is one more check rather than
+a new ceremony — and it is the last moment the answer is cheap. The long tail of `backlog/` is
+where an unanswerable `Serves:` most likely means *the card should not exist*, which is a
+grooming question, not a migration one.
+
+### 38. The roadmap's vocabulary is the workspace's vocabulary → FEAT-198
+
+Gary: *"if the roadmap is for a project, then the question is which deliverables exist?
+Otherwise roadmap becomes product-roadmap."*
+
+**One command, three vocabularies**, read from the workspace declaration:
+
+| | temporal layer | capability layer |
+|---|---|---|
+| product | planning period | feature |
+| project | **phase** | deliverable |
+| knowledgebase | — | domain |
+
+**Evidenced by the real Honda HPC 2016→2019 plan** (read on disk, v3, on its fourth revision):
+
+1. **Projects have a temporal layer and call it phases** — Phase 0 Discovery → 1 New Head Node →
+   2 Gold Image + QA → 3 Migration → 4 Decommission. **This corrected an earlier proposal** that
+   projects need deliverables *and* milestones as two axes; they need one temporal axis.
+2. **Deliverables are phase outputs**, not a separately declared list.
+3. **The plan is versioned by supersession, not edited** — v3 exists because v1/v2 described a
+   cross-version DB upgrade Microsoft does not support. **Project plans get invalidated by
+   discovery**, so supersession is the normal case.
+
+**Also noted:** Gary reached for `/fw-swarm` rather than `/fw-roadmap` to plan that upgrade —
+direct evidence about where the roadmap command does not fit, worth understanding at
+implementation.
+
+### 39. The WBS cut was wrong — corrected same day
+
+Claude first cut WBS and schedule entirely, arguing a WBS duplicates the board (cards already
+decompose work and carry dependencies).
+
+**Gary's counter:** *"in the HPC scenario, there are people outside of SpearIT involved… feeding
+the 'public' tasks into Jira while keeping our stuff private in that repo."*
+
+**Different audiences, not duplicate content.** The board is SpearIT's private decomposition; the
+WBS is the shared one external parties work from. HPC has both, and Gary calls them basics.
+**Still out:** critical-path calculation, resource levelling, date arithmetic across a dependency
+network. **How a WBS relates to the board, and how public work exports to an external tracker, is
+project-workspace scope and deliberately deferred** so the kanban focus was not derailed.
+
+### 40. `workspace.yaml` is permanent, not a proxy for `framework.yaml`
+
+Gary initially framed it as *"a proxy for framework.yaml for new features until the cutover"* —
+which implies a later merge. **Resolved: no consolidation.** They answer different questions.
+`framework.yaml` indexes framework-internal paths; `workspace.yaml` holds what only the repo can
+know. ADR-009 hosts many workspace types in one repo, so collapsing them reintroduces the problem.
+
+### 41. Most of `framework.yaml` should not survive → TECH-233
+
+Gary: *"Where is framework.yaml going to come from in the new framework? We won't have an archive
+file to start from."*
+
+**The new model has no archive** (ADR-009 D3), so a repo-level file can only come from a command
+that writes it, or not exist. **The argument recorded:** `framework.yaml`'s `sources:` block is
+entirely framework-internal paths — **plugin knowledge**. Templating a copy into every consuming
+repo means every repo carries a map of the plugin's internals, and every copy goes stale on
+reorganization — ADR-008's failure mode reintroduced by template.
+
+**Proposed three tiers:** plugin defaults (never copied) · repo overrides (only when a repo
+deviates, created on demand) · workspace declarations (always present).
+
+---
+
+## TECH-232 — Implementation
+
+### What was built
+
+- **`workspace.yaml` in all three workspace overlays** (product/project/knowledgebase), declaring
+  `type` and `serves: {kind, location}`.
+- **`scripts/lib/workspace-decl.sh`** — THE one reader, so there is one parse and one set of error
+  messages rather than one per command (ADR-008). Deliberately **not** a yaml parser: the
+  declaration is small, flat and authored, and a real parser would be a dependency for no gain.
+- **`fw-new-workspace.sh`** — fills placeholders in `*.yaml` as well as `*.md` (a literal
+  `__NAME__` in config is a *bug*, not a cosmetic flaw), refuses a scaffold that produced no
+  declaration, and reads it back.
+- **`fw-new-kb-domain.sh`** — seeds the declaration with the kb shell (its only creation path) and
+  reads it back on first use.
+
+### Verified
+
+Scratch repo, all three types: each declares correctly, the reader resolves each, and all three
+failure paths (missing file, missing `serves` block, unknown type) **refuse with an explanation
+rather than guessing** — a guessed workspace type silently mis-files work.
+
+### Two corrections during implementation, both worth keeping
+
+**1. Claude wrote a smell and caught it.** The framework workspace's `serves.location` was first
+written as `planning/features/` *with a comment explaining it was not true yet* — a declaration
+the gates read, annotated to say it is wrong, which is exactly the prose-instead-of-mechanism
+failure. Fixed to point at the spine path where the features actually are: correct as written,
+and it moves with the board at the crossover.
+
+**2. This repo's own workspace claimed `**Type:** application`** — the name TASK-197 retired and
+`fw-new-workspace.sh` now **rejects outright**. Backfilled to `product`.
+
+### The honest report Gary had to ask for
+
+After the first commit, Gary: *"I read everything and still have no idea what was implemented…
+What can I do now that I couldn't do before the change?"*
+
+**The honest answer was: nothing.** The declaration existed and the reader existed, but **nothing
+called it** — no behaviour had changed, and the card's own criterion *"at least one gate reads it
+back"* was unmet. Claude had written it up as though something shipped.
+
+**Fixed by making both creation paths read it back**, which is not decoration: it proves the file
+the gates depend on is present and parseable **at creation**, where a broken scaffold costs
+nothing to fix — rather than later, when a create gate refuses a card and the cause is three
+steps away.
+
+```
+Work in this workspace serves a feature.
+  features are authored in: planning/features/
+  (none yet — the folder is created with the first one)
+```
+
+**The lesson for future sessions: lead with what changed for the user.** "No visible change, this
+is plumbing for FEAT-231" was the correct summary and should have been the first line.
+
+---
+
+## A Framework Bug Found While Using It
+
+`/fw-move 232 doing` reported `⚠️ WIP limit: 2/2 items already in doing/` when only **one** card
+was there. The old engine's final count (`.claude/scripts/fw-move.sh:461`) does not exclude
+`.limit`, though the earlier check at line 299 does — so **the warning fires one card early,
+every time**.
+
+Relevant because `kanban§5` was specified this session: it means the gate has been noisier than
+its own policy intends, which is part of why `todo/` felt permanently over limit. Not carded yet.
+
+---
+
+## Files Created (continuation 3)
+
+- `project-hub/work/backlog/FEAT-229-build-the-kanban-board-in-the-new-engine.md`
+- `project-hub/work/backlog/TECH-230-acceptance-criteria-are-claims-not-tasks.md`
+- `project-hub/work/backlog/FEAT-231-feature-field-on-every-card.md`
+- `project-hub/work/backlog/TECH-233-repo-level-configuration-in-the-new-build.md`
+- `workspaces/framework/scripts/lib/workspace-decl.sh`
+- `workspaces/framework/workspace.yaml` (+ three template overlays)
+
+## Files Modified (continuation 3)
+
+- `project-hub/work/doing/BUG-215-…` — supersession block, struck criteria, verification update
+- `project-hub/work/backlog/BUG-225-…` — prompt removal in scope, four criteria added
+- `project-hub/work/backlog/TECH-228-…` — Theme/Planning-Period correction
+- `project-hub/work/backlog/FEAT-198-…` — vocabulary by workspace type, HPC evidence, WBS
+  boundary corrected
+- `project-hub/planning/features/kanban.md` — v0.5; reconciled, both open questions carded
+- `workspaces/framework/tests/UAT-COMMANDS.md` — UAT-34 and UAT-36 rewritten
+- `workspaces/framework/scripts/fw-new-workspace.sh`, `fw-new-kb-domain.sh`, three template
+  READMEs, `workspaces/framework/README.md`
+
+## Files Moved
+
+- `TECH-232` — `backlog/` → `todo/` → `doing/` (the matrix refuses `backlog → doing`)
+
+---
+
+## Current State (end of session)
+
+### In doing/
+- **BUG-215** — unchanged all session. Needs the plugin installed to the cache, a restart,
+  `--reset` + re-seed, then UAT-33..36. **Requires direct machine access.**
+- **TECH-232** — **complete**; every acceptance criterion met. Ready for `→ done`.
+
+### In backlog/ (filed today, none started)
+BUG-225 · FEAT-226 · SPIKE-227 · TECH-228 · FEAT-229 · TECH-230 · FEAT-231 · TECH-233
+
+### Feature files
+- `kanban.md` **v0.5 — complete as a definition.** 14 criteria, all owned; no unowned open
+  questions.
+- `time-tracking.md` v0.1 — method proven, supply gated on SPIKE-227.
+
+### Next session
+1. **Move TECH-232 to `done/`** — it is finished and the gate will pass.
+2. **Close BUG-215** — one plugin install, a restart, and a UAT pass.
+3. **FEAT-231** — everything it needs now exists.
+4. **`operations.md`** — the third feature file; tests *"operations is just a variation of
+   kanban"* against the judgment-gate caveat.
+
+### The honest tally
+**Eight cards filed today, one implemented, nothing in `done/`.** The session was planning-heavy
+by circumstance — remote, no machine access — and the planning was load-bearing: it produced a
+complete kanban definition and caught three stale beliefs that would have misdirected
+implementation. But the ratio is worth watching.
+
+---
+
 **Last Updated:** 2026-09-11
