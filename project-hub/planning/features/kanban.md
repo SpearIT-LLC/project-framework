@@ -14,7 +14,13 @@
 
      This file names FUNCTIONS, never commands. "A card enters the board through
      a create gate" — not the name of the script that does it. Command names are
-     implementation and drift; the function does not. -->
+     implementation and drift; the function does not.
+
+     LENGTH RULE (settled 2026-09-11): not a line cap. Every line must have a
+     purpose, state it as simply and directly as possible, and appear nowhere
+     else. A cap is a bad proxy — it punishes a feature with genuinely many
+     criteria and permits a short file full of padding. Detail that needs
+     analysis belongs on a card, with one line here pointing at it. -->
 
 ---
 
@@ -46,14 +52,13 @@ was built to prevent.
 
 ## What Could Invalidate This
 
-**The parent/child conflict (§7).** FEAT-021 (dotted sub-ids) and TECH-082 (a `Parent:` field)
-propose competing mechanisms for the same concept, and **the board uses both today**. Nothing
-downstream can be authored until it resolves: a work-item template must commit to one, the
-create gate must assign ids under one, and the move engine already treats "child items" as
-grouping that moves with its parent — a concept nothing in the repo defines.
+**The parent/child conflict (§7).** Two mechanisms for the same concept are in use on the board
+today, and nothing downstream can be authored until one wins: the work-item template must commit
+to one, and the create gate must assign ids under one. The move engine already treats "child
+items" as grouping that moves with its parent — a concept nothing in the repo defines.
 
-This does not kill the feature — the board runs today — but it **blocks the MVP**, because
-every card-shaped decision waits on it. TASK-219 Group 1 owns it and calls it the blocker.
+This does not kill the feature — the board runs today — but it **blocks the MVP**, because every
+card-shaped decision waits on it, including all of FEAT-229. **TASK-219 Group 1** owns it.
 
 <!-- Every feature names the one unknown that could kill or block it, and that
      question is sequenced FIRST — before the valuable work, regardless of value. -->
@@ -107,7 +112,8 @@ implementation — no second engine, no namespace-specific copy of the move logi
 namespace is always an argument, never inferred from an id or a folder name.
 **Validated by:** AI: one code path serves both, verified at the call sites · Human: UAT cases
 for kanban mirroring the operations set
-**State:** Door — opens at the ADR-009 D5 crossover *(no card owns this — see Open Questions)*
+**State:** Pending — **FEAT-229** builds the kanban namespace; the cutover to the live board is
+a separate card
 
 ### §5. WIP limits warn loudly, and never block
 
@@ -168,11 +174,10 @@ conventions hold when a real card is created and moved
 **Met when:** it is settled *when* a piece of work is a checkbox inside a card versus a child
 card of its own, and the chosen mechanism is the only one in use.
 
-**The conflict to resolve:** FEAT-021 proposes dotted sub-ids (`FEAT-042.1` — a real file, its
-own lifecycle), TECH-082 proposes a `Parent:` field on independently numbered cards. **The
-board uses both today.** A checkbox and a child card are not interchangeable: a checkbox
-cannot move, be assigned, or be blocked on its own; a child card cannot be ticked off in a
-list.
+**Why it is not merely a style choice:** a checkbox and a child card are not interchangeable —
+a checkbox cannot move, be assigned, or be blocked on its own; a child card cannot be ticked
+off in a list. The competing mechanisms and the conflict between them are on **TASK-219
+Group 1**.
 **Validated by:** AI: one mechanism present, the other absent · Human: a card with sub-work
 reads unambiguously
 **State:** Pending — TASK-219 Group 1; blocks §6
@@ -266,11 +271,12 @@ Human: n/a
 
 ## Open Questions
 
-- [ ] **Nothing owns the crossover.** The ADR-009 D5 board crossover is referenced from four
-      places in `ROADMAP-DELIVERABLES.md` and has no card, no rank, no acceptance criteria.
-      §4 cannot open until one exists. *Recommended: one card owning the kanban transition
-      table and the kanban move function, with TASK-219 and TECH-177 as dependencies.*
-      — owned by **nobody yet**
+- [x] ~~**Nothing owns the crossover.**~~ **Closed 2026-09-11 — FEAT-229** builds the board
+      (transitions, gates, create and move functions, work-item template). The **cutover** —
+      making `kanban/` live and retiring `project-hub/work/` — is deliberately a separate
+      card, not yet written: building and switching are separable work with different risk.
+      *The naming was the reason this stayed invisible: "the crossover" names a moment, so
+      nobody noticed there was no card for the capability.*
 - [ ] **§8** (criteria vs sub-tasks) — **not yet carded**
 - [ ] **§9** (the `Feature:` field) — **not yet carded**
 - [ ] **Where the 27 `deprecated/` cards live** — no `archive/` in the authored folder set.
