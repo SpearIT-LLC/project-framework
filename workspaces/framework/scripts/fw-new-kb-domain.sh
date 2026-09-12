@@ -54,7 +54,10 @@ if [ ! -d "$KB" ]; then
     exit 1
   fi
   mkdir -p "$KB"
-  for f in README.md INDEX.md; do
+  # workspace.yaml is seeded with the shell, not per domain: the kb declares
+  # itself once, and the gates read it (TECH-232). The kb reaches this script
+  # directly from fw-new-workspace.sh, so this is its only creation path.
+  for f in README.md INDEX.md workspace.yaml; do
     if [ -f "$TPL/knowledgebase/$f" ]; then
       cp "$TPL/knowledgebase/$f" "$KB/$f"
     fi
@@ -62,6 +65,7 @@ if [ ! -d "$KB" ]; then
   # The seeded INDEX lists the placeholder domain line; strip it — domains are
   # appended per-domain below, so the shell starts with an empty list.
   sed -i "/__DOMAIN__/d; s/__NAME__/kb/g" "$KB/INDEX.md" "$KB/README.md"
+  [ -f "$KB/workspace.yaml" ] || { echo "Error: knowledgebase template produced no workspace.yaml — the gates read it; broken template set?" >&2; exit 1; }
   CREATED_KB="yes"
 else
   if [ ! -f "$KB/INDEX.md" ]; then

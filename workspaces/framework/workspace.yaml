@@ -1,0 +1,23 @@
+# Workspace declaration — what this workspace is, and the conventions that follow.
+#
+# THE GATES READ THIS FILE. It is not documentation: the create gate asks its
+# question in this workspace's own vocabulary, and the Serves: validator resolves
+# a card's value against `serves.location`. The README's **Type:** line is the
+# human-readable half and points here; this file is the authored source (ADR-008).
+#
+# Repo-level configuration is NOT here — see TECH-233.
+
+type: product
+
+# What a card in this workspace serves, and where those are authored.
+# A product accumulates capabilities that persist and get refined — so its unit
+# is the FEATURE. (A project's unit is the deliverable; a kb's is the domain.)
+#
+# The location is at the repo SPINE, not under this workspace, and is correct as
+# written: this workspace's board is also at the spine (project-hub/work/) with
+# `Workspace: framework` until the ADR-009 D5 crossover, and its features live
+# beside that board. The path moves with the board at the crossover — one edit,
+# at the moment everything else moves.
+serves:
+  kind: feature
+  location: ../../project-hub/planning/features/

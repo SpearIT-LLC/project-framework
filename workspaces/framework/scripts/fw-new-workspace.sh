@@ -147,10 +147,16 @@ mkdir -p "$WS"
 cp -R "$TPL/floor/." "$WS/"
 cp -R "$TPL/$TYPE/." "$WS/"
 
-# Fill placeholders in seeded markdown (__NAME__, __DOMAIN__).
-find "$WS" -type f -name '*.md' -print0 | while IFS= read -r -d '' f; do
+# Fill placeholders in seeded markdown and in workspace.yaml (__NAME__, __DOMAIN__).
+# workspace.yaml is included because the gates read it (TECH-232) — a literal
+# __NAME__ there would be a config bug, not a cosmetic one.
+find "$WS" -type f \( -name '*.md' -o -name '*.yaml' \) -print0 | while IFS= read -r -d '' f; do
   sed -i "s/__NAME__/$NAME/g; s/__DOMAIN__/$DOMAIN/g" "$f"
 done
+
+# The declaration is what makes the workspace legible to the gates, so its
+# absence is a broken scaffold rather than a missing nicety (TECH-232).
+[ -f "$WS/workspace.yaml" ] || { echo "Error: $TYPE overlay produced no workspace.yaml — the gates read it; broken template set?" >&2; exit 1; }
 
 echo "Created workspace: $WS ($TYPE)"
 ( cd "$WS" && find . -type d | sort )

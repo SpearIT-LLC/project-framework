@@ -1,6 +1,6 @@
 # __NAME__
 
-**Type:** product
+**Type:** product — see [workspace.yaml](workspace.yaml), which the gates read
 **Purpose:** _PURPOSE_PENDING_
 
 A product is created, delivered, and **maintained** — this workspace lives as long as

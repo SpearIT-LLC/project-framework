@@ -1,6 +1,6 @@
 # __NAME__
 
-**Type:** project
+**Type:** project — see [workspace.yaml](workspace.yaml), which the gates read
 **Purpose:** _PURPOSE_PENDING_
 
 A project is a finite initiative coordinated to completion: it reaches its goal,

@@ -1,6 +1,6 @@
 # Framework Workspace
 
-**Type:** application
+**Type:** product — see [workspace.yaml](workspace.yaml), which the gates read
 **Purpose:** Source tree of the next SpearIT Framework, built fresh per
 [ADR-009](../../project-hub/research/adr/009-workspace-model-and-fresh-build-in-place.md).
 

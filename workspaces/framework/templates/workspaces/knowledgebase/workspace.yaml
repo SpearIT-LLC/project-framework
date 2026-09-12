@@ -1,0 +1,18 @@
+# Workspace declaration — what this workspace is, and the conventions that follow.
+#
+# THE GATES READ THIS FILE. It is not documentation: the create gate asks its
+# question in this workspace's own vocabulary, and the Serves: validator resolves
+# a card's value against `serves.location`. The README's **Type:** line is the
+# human-readable half and points here; this file is the authored source (ADR-008).
+#
+# Repo-level configuration is NOT here — see TECH-233.
+
+type: knowledgebase
+
+# What a card in this workspace serves, and where those are authored.
+# The kb's unit is the DOMAIN, and domains are folders in the kb itself — the
+# location is the workspace root, not a planning/ folder, because a domain is
+# the content rather than a document about it. INDEX.md lists them.
+serves:
+  kind: domain
+  location: ./
