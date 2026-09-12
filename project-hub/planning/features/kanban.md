@@ -204,17 +204,23 @@ claim the gate is supposed to protect.
 
 Each criterion names who validates it: **AI**, **human**, or both; anything user-facing needs
 both.
-**Validated by:** AI: a card with all sub-tasks done but criteria unmet is refused at `→ done`
-· Human: a real card reads clearly under the split
-**State:** Pending — **not yet carded**
+Criteria and tasks are **syntactically** distinct, not merely sectioned: criteria use
+`[ ]` untested · `[P]` passed · `[F]` failed · `[I]` inconclusive (reason required); tasks keep
+`[ ]`/`[x]`. A criterion that has ever failed carries a one-line attempt log saying what failed
+and why. The gate refuses on `[ ]` or `[F]`.
+**Validated by:** AI: a card with one `[F]` criterion cannot reach `done/`; a card whose only
+unchecked boxes are tasks can · Human: a real card reads clearly under the split
+**State:** Pending — **TECH-230**
 
 ### §9. Every card names the feature it serves
 
-**Met when:** cards carry a `Feature:` field, validated at creation against the set of feature
-files; an unknown value is refused and offers to create the feature file.
-**Validated by:** AI: a card with an unknown feature is refused · Human: the create gate asks,
-and the answer is usable
-**State:** Pending — **not yet carded**
+**Met when:** cards carry a `Feature:` field **beside** `Workspace:` — *whose work* and *what
+capability* are different questions — validated at creation against the set of feature files.
+An unknown value is refused and offers to create the feature file; `none` is a legitimate value
+for infrastructure cards that serve no capability.
+**Validated by:** AI: a card with an unknown feature is refused, `none` is accepted · Human: the
+create gate asks, and the answer is usable
+**State:** Pending — **FEAT-231**
 
 **Why it belongs here:** it makes feature membership *derivable* rather than hand-kept, and it
 catches a card that serves no feature — usually scope creep, caught cheaply at creation.
@@ -291,8 +297,8 @@ Human: n/a
       card, not yet written: building and switching are separable work with different risk.
       *The naming was the reason this stayed invisible: "the crossover" names a moment, so
       nobody noticed there was no card for the capability.*
-- [ ] **§8** (criteria vs sub-tasks) — **not yet carded**
-- [ ] **§9** (the `Feature:` field) — **not yet carded**
+- [x] ~~**§8** (criteria vs sub-tasks)~~ — **TECH-230** (2026-09-11)
+- [x] ~~**§9** (the `Feature:` field)~~ — **FEAT-231** (2026-09-11)
 - [ ] **Group 2a leftovers** — transitions into `cancelled/`, whether it is terminal, a board
       closure code, and where the 27 `deprecated/` cards live (no `archive/` in the authored
       folder set). Explicitly left open by TASK-219; **carried by TASK-223**.
@@ -302,6 +308,7 @@ Human: n/a
 
 | Version | Date | Change |
 |---------|------|--------|
+| v0.5 | 2026-09-11 | **The two unowned questions are carded.** §8 → **TECH-230**: acceptance criteria are *claims*, not tasks — separate sections, criteria marked `[ ] [P] [F] [I]` with a one-line attempt log when one has ever failed, tasks keep `[ ]`/`[x]`. §9 → **FEAT-231**: `Feature:` sits *beside* `Workspace:`, required, with `none` as a legitimate value for infrastructure cards. Every open question now has an owner. |
 | v0.4 | 2026-09-11 | **Reconciled against the board, not the roadmap.** TASK-219 shipped 2026-09-09 and FEAT-175 in 0.4.7, so §1, §6, §7 and §12 move from Pending to Built or part-Built. **The FEAT-021/TECH-082 "conflict" was not one** — TASK-219 found the two complementary and adopted both with a selection rule; *What Could Invalidate This* is corrected to "nothing", and §7 now states the three forms of sub-work. Group 2a leftovers reassigned to TASK-223. **Cause of the errors: card state was taken from `ROADMAP-DELIVERABLES.md`, which says in its own header not to trust it for that.** |
 | v0.3 | 2026-09-11 | **§3 decided** — entry is `backlog/` (normal) or `todo/` (urgent), nothing else; anything else destroys planning. **§5 decided** — WIP limits warn loudly on moves *into* an over-limit folder and never block; limits stay per-repo editable by design; no remedy advice in the message. Both moved from open question to settled criterion. |
 | v0.2 | 2026-09-11 | Grouped into Board / Cards / Gates; lifecycle, entry points, WIP limits, and card anatomy added as criteria; "file-based" stated in the Definition; command names removed in favour of functions; §10 (was §7) sharpened to say what the states buy. |
