@@ -72,10 +72,27 @@ required rather than blank: a blank field tells you nothing, `none` tells you so
 - **Is `Feature:` also wanted on operations records?** An INC serves a customer, not a
   framework capability — the answer is probably no, and the field stays board-only. Confirm when
   `operations.md` is written.
-- **Migration of existing cards.** ~100 open cards have no `Feature:`. Backfilling by hand is
-  the kind of work that does not get finished. Options: backfill only cards in `todo/`/`doing/`
-  and let `backlog/` fill in as cards are groomed, or accept the field as required for *new*
-  cards only until a card is next touched.
+*(Migration is settled — see below.)*
+
+## Migration — settled 2026-09-11
+
+**No bulk backfill.** ~100 open cards have no `Feature:`, and hand-backfilling them is the kind
+of work that does not get finished.
+
+- **New cards** — required at creation.
+- **`backlog/`** — filled in **during grooming**, when the card is being read anyway.
+- **`todo/` → `doing/`** — **required.** The field must be present to start work.
+- **Already in `doing/`** — **grandfathered**, unless a card would genuinely benefit.
+
+**Why `todo → doing` is the enforcement point:** it is already where the ripeness review
+happens, so this is one more thing that gate checks rather than a new ceremony. It is also the
+last moment the answer is cheap — by the time work starts, the card has been read closely enough
+that its feature is obvious.
+
+**Consequence:** the field is effectively required for everything that *matters* (work in
+flight, work about to start) and optional for the long tail of `backlog/`, which is where an
+unanswerable `Feature:` would most likely mean *the card should not exist* — a question better
+asked at grooming than at migration.
 
 ## Acceptance Criteria
 
@@ -84,6 +101,8 @@ required rather than blank: a blank field tells you nothing, `none` tells you so
 - [ ] Creation refuses an unknown feature and offers to create the feature file
 - [ ] `Feature: none` is accepted for infrastructure cards
 - [ ] A blank or missing `Feature:` is refused at creation
+- [ ] `todo/` → `doing/` is refused when `Feature:` is missing — the migration enforcement point
+- [ ] Cards already in `doing/` when the field ships are not blocked by it
 - [ ] A card list for a feature can be produced by query, with no hand-kept list anywhere
 - [ ] Validated: **AI** — an unknown value is refused, `none` is accepted, the query returns the
       right cards · **Human** — the create gate's question is answerable without looking
@@ -91,7 +110,6 @@ required rather than blank: a blank field tells you nothing, `none` tells you so
 
 ## Tasks
 
-- [ ] Decide the migration approach for existing cards (see Open)
 - [ ] Update `templates/records/work-item.md`
 - [ ] Add validation to the create gate
 - [ ] Backfill per the chosen approach
