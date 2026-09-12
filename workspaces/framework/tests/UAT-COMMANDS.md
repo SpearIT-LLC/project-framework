@@ -233,23 +233,32 @@ with `--reset` then seed again.
 - Pass: three records in `onhold/`, `onhold/INC-902/evidence.txt` present, summary shown.
 - Note: INC-9010 must **not** move — the substring trap. `901` matches INC-901 only.
 
-**UAT-34 — `--resolution` refused on a list.**
-`> /fw-move-ops "901, 902" closed --resolution resolved`
-- Expected: refused — the flag is a per-record decision and cannot speak for a list; the
-  AI does **not** silently fall back to prompting after the refusal.
-- Pass: clear message, exit 1, nothing moved.
+**UAT-34 — `--resolution` on a list.** `> /fw-move-ops "901, 902" closed --resolution resolved`
+- **Rewritten 2026-09-11** (BUG-215 supersession). It previously expected a *refusal*;
+  `--resolution` now applies to the whole batch, because a batch close happens precisely
+  when the records share a root cause.
+- Expected: both records close, each stamped `**Closed:** <today>` and the **same**
+  `**Resolution:** resolved`.
+- Pass: both in `closed/`, both stamped, summary `moved: 2`.
+- Note: the AI still runs the close gate per record for the *reason* and the
+  durable-knowledge answer — one shared code, but each record's Outcome written on its own.
 
 **UAT-35 — partial failure continues.** With 901 and 903 in `onhold/` and no record 999:
 `> /fw-move-ops 901 999 903 open` (unquoted list)
 - Expected: 901 and 903 move; 999 reported as not found; `📊 moved: 2 … failed: 1`.
 - Pass: the bad id in the middle did not stop 903 from moving; both good records in `open/`.
 
-**UAT-36 — per-record close prompting.** `> /fw-move-ops "901, 903" closed`
-- Expected: **AI runs the close gate per record** — asks each record's code and one-line
-  reason in turn, writes each answer into that record's Outcome. Give two **different**
-  codes (e.g. `duplicate` and `cancelled`).
-- Pass: both in `closed/`, each stamped with today's `**Closed:**` and its **own**
-  `**Resolution:**` — not one code shared across both.
+**UAT-36 — close with no resolution is refused, per record.** `> /fw-move-ops "901, 903" closed`
+- **Rewritten 2026-09-11** (BUG-215 supersession). It previously tested per-record
+  *prompting*; the engine no longer prompts at all. Operations now behaves like kanban —
+  a move missing its required input is refused and the user runs again.
+- Expected: **the script refuses each record**, naming what is missing and enumerating the
+  five valid codes. **Nothing moves.** No prompt appears, and the behaviour is identical
+  whether or not a terminal is attached (pipe the command to confirm).
+- Pass: exit 1, both records still in their source folder, message names the codes.
+- Note: the **AI-side close gate is unchanged** — it still asks for the code, a one-line
+  reason per record, and the incident durable-knowledge question, then calls the script
+  with `--resolution`. What was removed is the *script* prompting, not the judgment step.
 
 ---
 

@@ -80,14 +80,70 @@ at implementation:
   **`--resolution` on a batch:** with more than one id, the flag cannot express the
   decision. Reject it rather than silently applying one code to all.
   Single-id invocations keep the flag exactly as today (scriptable, no prompt).
+
+  > ### ⚠️ SUPERSEDED 2026-09-11 — the whole per-record decision above
+  >
+  > **The engine does not prompt. `--resolution` applies to the whole batch.**
+  >
+  > The 2026-09-07 text above is kept because it is the record of why per-record
+  > prompting looked right, and the new decision only makes sense against it. **It is
+  > not the design. Do not implement it.**
+  >
+  > **Two decisions, in order:**
+  >
+  > **1. Prompting comes out of the engine entirely.** Gary: *"In the kanban cards, we
+  > simply reject the move if it's missing the proper criteria. I see no reason not to
+  > do the same thing for operations."* A `→ closed` move with no `--resolution` is
+  > refused, per record, with stdout naming what is missing and the valid codes. The
+  > human resolves and runs again — the kanban experience, and the only one the old
+  > engine has ever offered (it never prompts: every `read` in it is string parsing).
+  >
+  > Removes `read`, `/dev/tty`, and `[ -t 0 ]`. Which also disposes of a guard bug found
+  > the same day: `[ -t 0 ]` tests **stdin** while the read was from **`/dev/tty`**, so
+  > `echo x | fw-move.sh … closed` failed closed while a usable terminal was attached.
+  > The engine becomes fully mechanical and headless-safe — what FEAT-221 needs anyway.
+  >
+  > **2. `--resolution` applies to the whole batch.** Gary: *"adding multiple resolutions
+  > to the same operation is not likely to be needed. […] If I had a batch of INC about
+  > the same root issue, then they would all close with the same resolution."*
+  >
+  > **This inverts the 2026-09-07 conclusion on its own evidence.** That decision assumed
+  > a batch close meant *different records with different outcomes*, which is what made a
+  > shared code incoherent. The realistic case is the opposite: **a batch close happens
+  > precisely because the records share a root cause**, and sharing a cause means sharing
+  > a classification. Records that genuinely differ get closed separately — you would have
+  > to open them separately to remember what each was about.
+  >
+  > **What stays per-record:** the one-line reason and the durable-knowledge answer, each
+  > in its own record's **Outcome** section. The code is shared; the story is not.
+  >
+  > **And the code is cheap by design** (settled the same day): `Resolution:` is a filter
+  > for counting and excluding noise, not knowledge. The diagnosis — the thing worth
+  > having — belongs in the kb, linked from Outcome. That hand-off is enforced nowhere
+  > today: **FEAT-226**.
+  >
+  > **Fallout to land with this change:**
+  > - `fw-move.sh` — remove the prompt branch; refuse `→ closed` without a code, per record
+  > - `commands/fw-move-ops.md` — the close gate still asks its questions (it is an AI-side
+  >   judgment step); it then passes one `--resolution` for the batch
+  > - **UAT-36** — currently specifies per-record prompting. Rewrite to "refuses per record
+  >   without a code"
+  > - The T6 / N6-N10 no-tty cases become moot — there is no prompt to fail
+  >
+  > Full reasoning: `project-hub/history/sessions/2026-09-11-SESSION-HISTORY.md`,
+  > decisions 15-18.
 - **`sweep` is unaffected** — it already operates on a set.
 
 ## Acceptance Criteria
 
 - [x] `fw-move.sh "1, 2, 3" onhold` moves all three *(T1)*
-- [x] `fw-move.sh "1, 2, 3" closed` prompts for each record's resolution in turn
-      *(T11b — two records, two different codes stamped)*
-- [x] `--resolution` with a multi-id list is rejected with a clear message *(T3)*
+- [x] ~~`fw-move.sh "1, 2, 3" closed` prompts for each record's resolution in turn~~
+      *(T11b — two records, two different codes stamped)* — **superseded 2026-09-11:
+      no prompting. Replaced by:** a batch `→ closed` with no `--resolution` is refused
+      per record, naming the valid codes
+- [x] ~~`--resolution` with a multi-id list is rejected with a clear message~~ *(T3)* —
+      **superseded 2026-09-11: `--resolution` now applies to the whole batch.** T3
+      verified the opposite behaviour and is retired with it
 - [x] `fw-move.sh 1 closed --resolution duplicate` still works unprompted (single id) *(T5)*
 - [x] Comma-separated, space-separated, and mixed forms all parse; quoted and unquoted
       *(T1 quoted commas, T4 unquoted spaces)*
@@ -133,7 +189,25 @@ at implementation:
       reinstall.
 
       **To close:** `/plugin install spearit-framework-dev@dev-marketplace --scope local`,
-      restart, then re-run **T1, T3, T4, T11b** — the four cases that exercise the fix.
+      restart, then re-run the cases that exercise the fix.
+
+      **2026-09-11 — the runbook cases now exist, and the set has changed.** The four
+      cases were written into `workspaces/framework/tests/UAT-COMMANDS.md` as section
+      **D2 (UAT-33..36)**, against 900-block fixtures seeded by
+      `workspaces/framework/tests/seed-uat-fixtures.sh --root <repo> operations`.
+
+      Run at source 2026-09-11 (**does not close this criterion** — the dev-marketplace
+      entry is a symlink to the source tree):
+      - **UAT-33** PASS — 3 moved, bundle travelled, substring trap cleared (`901` moved
+        INC-901, left INC-9010)
+      - **UAT-34** PASS — refused pre-flight, nothing half-applied
+      - **UAT-35** PASS *(caveat: start state drifted — ran as skip+skip+fail rather than
+        the documented partial-failure path)*
+      - **UAT-36** — **not run; being rewritten.** It specifies per-record prompting,
+        which the supersession above removes.
+
+      The built-plugin run still needs: install to the cache, restart, `--reset` and
+      re-seed, then UAT-33..36 as one set.
 
 ---
 
@@ -175,6 +249,11 @@ hanging on a `read` that can never return. That is the headless case FEAT-221 ca
 
 ## Related
 
+- **BUG-225** — the batch output layer (bundle line misattributed, report format). Found by
+  this card's UAT; filed separately so this card stays closeable. **Carries the prompt
+  removal from the 2026-09-11 supersession.**
+- **FEAT-226** — the durable-knowledge hand-off, enforced nowhere. The reason the
+  `Resolution:` code is allowed to stay cheap.
 - **TASK-213** — surfaced during that discussion; independent of the root move.
 - **ADR-009 D5** — the crossover that makes the new engine the only engine; this gap
   must close before then, or the board loses batch moves at graduation.

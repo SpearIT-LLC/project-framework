@@ -94,6 +94,26 @@ Decisions settled at design time (2026-09-11):
 **Open:** whether `❌`/`✅` glyphs survive alongside the OK/FAILED/SKIPPED words, and
 whether the failure reasons stay on stderr (scriptable) while the rows go to stdout.
 
+### Also in scope: remove the prompt (added 2026-09-11)
+
+Same file, same commit, and it simplifies the code this card already rewrites.
+
+**Decided 2026-09-11, superseding BUG-215's 2026-09-07 design:** the engine does not prompt.
+A `→ closed` move with no `--resolution` is **refused per record**, naming what is missing and
+the valid codes; `--resolution` applies to the **whole batch**, because a batch close happens
+precisely when records share a root cause.
+
+**What comes out:** the `read`/`/dev/tty` branch and the `[ -t 0 ]` guard — which was wrong
+independently of this decision: it tests **stdin** while the read is from **`/dev/tty`**, so a
+piped invocation failed closed while a usable terminal was attached.
+
+**Why it belongs on this card:** with no interactive branch, every line the engine emits is a
+report line — which is what makes the single shared formatter above achievable rather than a
+formatter plus an escape hatch.
+
+Full reasoning: BUG-215's supersession note, and the 2026-09-11 session history (decisions
+15-18).
+
 ## Acceptance Criteria
 
 - [ ] A batch with a bundle on a non-first record attributes the bundle to the correct
@@ -104,6 +124,10 @@ whether the failure reasons stay on stderr (scriptable) while the rows go to std
 - [ ] Single-id moves are unchanged (no header, no summary)
 - [ ] The report is emitted by one shared function, so a second namespace gets it without
       new code — verified by inspection at the call sites
+- [ ] The engine never prompts: `→ closed` with no `--resolution` is refused per record,
+      naming the valid codes; `read`, `/dev/tty` and `[ -t 0 ]` are gone from the script
+- [ ] `--resolution` is accepted with a list and applied to the whole batch
+- [ ] A piped or headless invocation behaves identically to an interactive one
 - [ ] Validated: **AI** — re-run the BUG-215 source-tree cases and diff the output shape;
       **Human** — UAT-33 and UAT-35 in `framework-uat` read correctly without the
       filesystem needing to be checked to interpret them
