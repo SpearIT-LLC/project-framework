@@ -101,14 +101,83 @@ threshold, and it has now been reached.
 
 ---
 
+## The Two Layers, in Each Workspace's Vocabulary (2026-09-11)
+
+**One command, one shape, three vocabularies — supplied by the workspace's own declaration
+(TECH-232), never by a separate command per type.**
+
+| | temporal layer | capability layer |
+|---|---|---|
+| **product** | planning period | **feature** |
+| **project** | phase | **deliverable** |
+| **knowledgebase** | — | **domain** |
+
+**Why not `/fw-product-roadmap` and `/fw-project-roadmap`:** the shapes overlap almost entirely
+— ordering, references, temporal markers with success criteria. Two implementations of that is
+the sync problem ADR-008 exists to prevent, there are four workspace types (so it would be four
+commands), and the framework's established pattern is one command per *capability*, parameterized
+— `fw-new-workspace` already takes the type as an argument.
+
+### The capability layer is now an authored file, not a declared list
+
+**`Theme:` is replaced by `Serves:` (FEAT-231), on usage evidence.** A theme was a *label* in a
+list that nothing validated — FEAT-095 chose "loose coupling, no referential integrity"
+deliberately. Result, measured 2026-09-11: 13 distinct theme values against 5 declared in
+`ROADMAP.md`, the third most-used theme absent from the roadmap entirely, a declared theme with
+zero cards, and one value with a planning period smuggled inside it.
+
+**So the roadmap stops declaring categories and starts referencing files.** Features,
+deliverables and domains are authored documents with definition, MVP and testable success
+criteria; the roadmap points at them. That is this card's own rule applied one layer up —
+*a roadmap holds judgment and references, never content authored elsewhere.*
+
+**The cost, accepted:** a theme was cheap (a line in a list); a feature file is not. Expect
+fewer, larger categories. That is the correct pressure — cheap is what produced 13 values.
+
+### Worked example: the Honda HPC 2016→2019 upgrade
+
+Read 2026-09-11 (`HPC/HPCJobQueuePrototype/customers/honda/hpc-2019-upgrade/plan/`), because
+it is a **real project plan, on its fourth version** — and Gary reached for `/fw-swarm` rather
+than `/fw-roadmap` for it, which is itself evidence the roadmap command did not fit.
+
+Three things it establishes:
+
+1. **Projects have a temporal layer and call it phases.** Phase 0 Discovery → 1 New Head Node →
+   2 Gold Image + QA → 3 Migration → 4 Decommission. Sequential, each gating the next — planning
+   periods with a different word. **This corrects an earlier proposal** that projects need
+   *deliverables and milestones* as two axes; they need one temporal axis, same as products.
+2. **Deliverables are phase outputs**, not a separately declared list — "a new head node", "a
+   validated gold image", "a decommissioned 2016 cluster".
+3. **The plan is versioned by supersession, not edited.** v3 exists because v1/v2 described a
+   cross-version DB schema upgrade Microsoft does not support; the reason sits at the top with a
+   link to DECISION-093. **Project plans get invalidated by discovery**, so supersession is the
+   normal case, not an exception — the same append-don't-rewrite discipline session history uses.
+
+### Scope boundary: no WBS, no schedule
+
+Gary, 2026-09-11: *"The framework doesn't need to handle large projects but it should do the
+basics well."*
+
+The HPC plan **references** a WBS but contains none — no durations, no dependencies, no critical
+path. It is a phased plan with gates, and that is the basics done well.
+
+**Deliberately out of scope:** work breakdown structures, duration estimates, dependency
+networks, critical-path scheduling, resource levelling. That is PM tooling, a different product.
+Knowing *what is due and what is blocked* is the framework's version of it, and lives in
+FEAT-199/FEAT-200 (deadlines, calendar).
+
+---
+
 ## Open Questions (resolve before → doing)
 
 - [ ] Is the roadmap file scaffolded (empty/template in the product/project overlays)
       or created on first `/fw-roadmap` run? (Lean: created on demand — a scaffolded
       empty roadmap is noise for workspaces that never need one.)
-- [ ] Does the existing repo-level `/fw-roadmap` flow (themes, planning periods)
-      carry over per-workspace unchanged, or does planning-period vocabulary stay
-      spine-level while themes go per-workspace?
+- [x] ~~Does the existing repo-level `/fw-roadmap` flow (themes, planning periods) carry over
+      per-workspace unchanged?~~ **Answered 2026-09-11 — see "The two layers, in each
+      workspace's vocabulary" below. Neither: both layers carry over, both get the
+      workspace's own word, and the theme layer is replaced by an authored file rather than
+      a declared list.**
 - [ ] **Where does the framework's own roadmap live** once the spine master is retired?
       `workspaces/framework/` is a workspace, so its roadmap belongs there — but the
       board it plans is at the spine until the ADR-009 D5 crossover. (Lean: it lives in
@@ -131,7 +200,17 @@ threshold, and it has now been reached.
       divergence is observable rather than inferred
 - [ ] **Recording a course change is a one-line append**, not a rewrite
 - [ ] The themes/planning-periods model `/fw-roadmap` already produces is used, not
-      re-invented
+      re-invented — **with the capability layer replaced by authored files** (features /
+      deliverables / domains) rather than a declared list of labels
+- [ ] `/fw-roadmap` asks in the workspace's own vocabulary, read from its declaration
+      (TECH-232): *features* in a product, *deliverables* in a project, *domains* in a kb —
+      one command, not one per type
+- [ ] A project roadmap's temporal layer is **phases**; a product's is **planning periods**.
+      Both carry success criteria
+- [ ] A superseded plan is replaced by a new version that states what changed and why, with
+      the prior versions kept — never edited in place
+- [ ] **No WBS, durations, dependency network or critical path.** The scope boundary is
+      explicit, and "what is due / what is blocked" belongs to FEAT-199/200
 - [ ] `ROADMAP-DELIVERABLES.md`'s ordering and phase rationale are carried into the new
       shape and the file itself is retired
 - [ ] Verified against the built plugin, not the source tree
@@ -142,6 +221,16 @@ threshold, and it has now been reached.
 - **TASK-197** — workspace type taxonomy; the refinement that surfaced this.
 - **FEAT-163** — board/history slicing by workspace (the tactical layer; this item is
   the strategic layer).
+- **TECH-232** — the workspace declaration this card reads for its vocabulary. **Blocks the
+  vocabulary half of this card.**
+- **FEAT-231** — `Serves:` on every card, replacing `Theme:`. The card-side half of the same
+  change: this card stops the roadmap *declaring* categories, that one makes the card
+  *reference* an authored file.
+- **FEAT-199 / FEAT-200** — deadlines and calendar. Where "what is due, what is blocked" lives,
+  now that WBS and scheduling are explicitly out of scope here.
+- **`/fw-swarm`** — what Gary actually used to plan the Honda HPC upgrade. Worth asking during
+  implementation *why* it fit where `/fw-roadmap` did not; the answer is likely that a swarm
+  produces a plan for one problem while a roadmap sequences many, and a project may want both.
 - **FEAT-196** — layered progress reporting; the derived engagement-level view.
 - **FEAT-164** — `/fw-new-workspace` scaffolds; touchpoint if the roadmap is scaffolded.
 - **FEAT-093** — planning-period archival; the other half of the periods model (what
