@@ -74,18 +74,26 @@ data the gate reads rather than a constant (`kanban§5`).
 **Why not prose in a CLAUDE.md:** ADR-008 Root 2 — an instruction the AI merely reads is not a
 mechanism. This session hit that failure twice in one day.
 
-### Open: the format and the file
+### The format — DECIDED 2026-09-11: `workspace.yaml`
 
-- **Extend the README's front matter**, which already carries `**Type:**` and is where a human
-  looks first — but it is prose, and parsing prose for configuration is fragile.
-- **A `workspace.yaml` beside the README** — parseable, conventional, and mirrors the old
-  build's `framework.yaml`; costs a second file and risks the two disagreeing about `Type:`.
+A **`workspace.yaml` beside the README**, with the README *pointing* at it rather than restating
+it (ADR-008: one authored source, the other a pointer).
 
-**Lean: `workspace.yaml`, with the README pointing at it** rather than restating it — one
-authored source, the README carrying a pointer (ADR-008).
+**Why not the README's front matter**, which already carries `**Type:**`: it is authored prose
+that people reformat, and parsing prose for configuration is fragile. The `**Type:**` line stays
+as human-readable text; `workspace.yaml` is what the gates read.
 
-This is a **structural decision about how the new build configures itself**, so it may warrant
-an ADR rather than being settled inside this card.
+**Permanent, not a stopgap.** It is *not* a per-workspace proxy for the old `framework.yaml` and
+does not consolidate into one at the cutover. They answer different questions: `framework.yaml`
+is a repo-level index of framework-internal paths; `workspace.yaml` holds what only the repo can
+know — *this* workspace is a product, *its* features live *here*. ADR-009 hosts many workspaces
+of different types in one repo, so a product and a project side by side genuinely need different
+answers; collapsing them to one repo-level file reintroduces the problem.
+
+**Repo-level configuration is deliberately out of scope — see TECH-233.** That card owns what
+the new build does about `framework.yaml`'s role now that ADR-009 D3 removed the archive that
+seeded it. Keeping it separate is what stops this card growing into the configuration-model
+decision.
 
 ### What must read it
 
@@ -109,7 +117,6 @@ an ADR rather than being settled inside this card.
 
 ## Tasks
 
-- [ ] Decide README front matter vs `workspace.yaml` (consider an ADR)
 - [ ] Update the four workspace overlays
 - [ ] Update `fw-new-workspace.sh`
 - [ ] Backfill existing workspaces
@@ -123,4 +130,9 @@ an ADR rather than being settled inside this card.
 - **ADR-008** — one authored source; the README points at the declaration rather than
   restating it.
 - **FEAT-163 / FEAT-196** — reporting needs the same declaration to slice correctly.
+- **TECH-233** — repo-level configuration: what replaces `framework.yaml`'s role now that
+  ADR-009 D3 removed the archive that seeded it. **Deliberately separate from this card**, and
+  independent of it.
+- **FEAT-198** — `/fw-roadmap` reads the same declaration for its vocabulary (features /
+  deliverables / domains).
 - **TASK-197** — named the type set (`product`, `project`, `floor`, `knowledgebase`).
