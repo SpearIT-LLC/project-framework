@@ -302,4 +302,279 @@ files becoming essays. Past a page, it is absorbing card detail and the problem 
 
 ---
 
+---
+
+# Continuation — UAT run, two cards filed, kanban.md drafted
+
+**Session Focus:** running the BUG-215 UAT cases at source; filing what they found; writing
+the first feature file
+
+---
+
+## UAT Run (source tree, `framework-uat`)
+
+Gary ran the new cases in the UAT project with a second Claude session driving; results
+relayed here. **All at source** — the plugin is still not installed to
+`~/.claude/plugins/cache/`, and `claude-local-marketplace/framework/` is a symlink to
+`workspaces/framework/`, so none of this closes BUG-215's built-plugin criterion.
+
+| Case | Result | Notes |
+|---|---|---|
+| UAT-33 | PASS | 3 moved, bundle `INC-902/` travelled, `moved: 3 skipped: 0 failed: 0`, exit 0. **Substring trap cleared** — `901` moved INC-901 and left INC-9010 alone. |
+| UAT-34 | PASS | `--resolution` on a list refused, exit 1, **nothing moved** — the refusal is pre-flight, before any record is touched. An extra isolation test confirmed an invalid code is refused on a single record with the five valid codes enumerated. |
+| UAT-35 | PASS *(with caveat)* | Ran as skip+skip+fail rather than the documented partial-failure path: 901/903 were already in `open/` from a direction-reversed UAT-33, so the start state did not match the case. Confirmed skip ≠ fail, run continues past a failure, output order matches argument order, exit 1 on any failure. |
+
+**Two false alarms from the UAT session, both corrected there:**
+
+1. *"The script invented filenames"* — it reported moves for records the session believed did
+   not exist. Cause: it trusted the session-start `git status` snapshot (which the environment
+   notice marks as non-updating) over the filesystem. The 900-block fixtures were real and
+   staged. **Lesson worth keeping: verify against the filesystem, not a start-of-session
+   snapshot.**
+2. *"The bundle line is emitted an iteration early"* — it is not. See BUG-225 below.
+
+**Outstanding for the UAT list:** UAT-35 re-run from the documented start state
+(`--reset` + re-seed), the partial-failure variant `"905 999 902" onhold` (905 skips, 902
+really moves, 999 fails — the case that proves a successful move survives a later failure),
+and UAT-36, which is being **rewritten** rather than run (see decision 16).
+
+---
+
+## Decisions Made (continuation)
+
+### 14. Two output defects → BUG-225, filed separately from BUG-215
+
+**Decision:** file the batch-output defects as their own card rather than folding them into
+BUG-215.
+
+**Rationale:** BUG-215's criteria are met and it is one verification step from done. Folding
+cosmetic defects in would reopen a nearly-closed card — how cards become immortal.
+
+**The diagnosis was corrected.** The UAT session read the bundle line as emitted one iteration
+early. It is not: in `move_one` the record moves, the bundle notice prints, *then* that
+record's `✅` prints. The line belongs to the record **below** it while the indentation implies
+the one **above**. Presentational, not ordering — so the fix is to put the bundle inline on its
+own row, not to re-order.
+
+**Output format agreed** (Gary's shape, with alignment):
+
+```
+Move from onhold → open
+  OK       INC-901-batch-item-one.md
+  OK       INC-902-batch-item-two.md  (bundle INC-902/)
+  FAILED   REQ-903-batch-item-three.md — invalid transition closed → open
+  📊 moved: 2  skipped: 0  failed: 1
+```
+
+Status-first because trailing designators cannot align without padding every filename; bundle
+inline because it *removes* the misattribution rather than working around it; reason on the row
+because that is when the report is read closely; summary kept because it survives scrollback
+and is what a script greps.
+
+**Shared formatter is an acceptance criterion**, not a note — Gary: *"fw-move should behave the
+same for operations and kanban."* The crossover must inherit the report by construction.
+
+### 15. The tty guard tests the wrong thing (found, then made moot)
+
+The script's `[ -t 0 ]` tests **stdin**, then reads from **`/dev/tty`**. Those can differ:
+`echo x | fw-move.sh … closed` leaves `/dev/tty` perfectly usable but fails closed anyway.
+Found while establishing that the script needs *no* stdin at all — every other `read` in it is
+string parsing.
+
+**Superseded by decision 16** before it was fixed.
+
+### 16. Prompting comes out of the engine entirely
+
+**Decision (Gary):** *"In the kanban cards, we simply reject the move if it's missing the
+proper criteria. I see no reason not to do the same thing for operations."*
+
+The script refuses `→ closed` without `--resolution`, per record, with stdout explaining what
+is missing — the human resolves and runs again. No prompt, no `/dev/tty`, no `[ -t 0 ]`.
+
+**What this kills:** the tty guard bug (15), any need for `--no-prompt`, and the no-tty UAT
+case. The engine becomes fully mechanical and headless-safe, which is what FEAT-221 needs.
+
+**Checked for precedent:** the old engine **never prompts** — every `read` in it is
+`IFS=… read -ra` string parsing. Its gates are all greppable (transition matrix, dependency in
+`done/`, unchecked criteria), so there was never a judgment to ask about. Its `--force` is a
+*bypass* flag, a different concept, and not a model here.
+
+**Which surfaced the one real asymmetry between the namespaces:** operations needs a gate type
+kanban does not have — a judgment no grep can compute. The engine header already anticipates
+it (*"a dependency lookup and a resolution prompt are not expressible as a list"*). So
+**operations ≈ kanban + different folders + a judgment gate** — a caveat on Gary's "operations
+is just a variation of kanban," not a refutation.
+
+### 17. `--resolution` applies to the whole batch (supersedes BUG-215's 2026-09-07 decision)
+
+**Decision (Gary):** *"If I had a batch of INC about the same root issue, then they would all
+close with the same resolution."*
+
+**This inverts the 2026-09-07 decision on its own evidence.** That decision assumed a batch
+close meant *different records with different outcomes*, and therefore required per-record
+prompting. The realistic case is the opposite: **a batch close happens precisely because the
+records share a root cause**, and sharing a cause means sharing a classification. The
+incoherence it worried about ("one shared code paired with N individually-written outcomes")
+does not arise.
+
+**What stays per-record:** the one-line reason and the durable-knowledge answer, each in its
+own record's Outcome section. The code is shared; the story is not.
+
+**⚠️ NOT YET WRITTEN TO BUG-215.** This supersession exists only here and in conversation. It
+must be recorded on the card as a dated note — *without* deleting the 2026-09-07 reasoning,
+which is the record of why the earlier conclusion was reached.
+
+### 18. The resolution code is a filter, not knowledge → FEAT-226
+
+**Gary:** *"A 'code' only records basic information about the closure. The value is some record
+of how we identified the problem and resolved it."*
+
+**The value split, settled:**
+
+| Artifact | Holds | Value |
+|---|---|---|
+| `Resolution:` code | One of five words | Filtering and counting — macro only |
+| Outcome reason | One line, per record | Why *this* record closed |
+| **kb entry** | The diagnosis | **Solving the next one** |
+
+**So the code stays cheap and the attention goes to the kb hand-off** — and the audit found
+that hand-off is **prose at three layers and enforced at none**: the close gate asks the
+durable-knowledge question, the record template says to link the kb entry or say "nothing
+durable", and the move engine never reads the Outcome section. An AI that skips the question
+closes the record exactly as successfully as one that asks it. ADR-008 Root 2, in the workflow
+whose entire value is the knowledge it captures.
+
+**Contrast that makes it sharp:** kanban's `→ done` blocks mechanically on unchecked criteria;
+operations has no equivalent gate.
+
+**No live evidence either way** — this repo holds zero real ops records (verified), and
+`framework-uat`'s are fixtures. A defect in the mechanism, not a measured failure rate.
+
+**Filed as FEAT-226, sequenced to build *with* the kb feature**, not now — designing the kb
+hand-off before kanban and operations settle is the guessing pattern this project keeps
+catching.
+
+### 19. kanban.md — one feature, three groups
+
+**Rejected:** splitting into kanban-board / kanban-cards / kanban-orchestration. Cards and
+board are not separable — *status **is** folder*, so the card's format and the board's states
+are one design, and the seam would be arbitrary.
+
+**Accepted:** grouping *within* one file — **Board** (what it is), **Cards** (what is in it),
+**Gates** (what protects it). Gates was not in Gary's proposed list but is where most criteria
+live; it is the difference between a board and a folder tree.
+
+**Also rejected from the grouping:** Lifecycle as a separate group (it *is* the board's
+definition — states plus legal transitions are what make folders a board), and Orchestration
+and Reporting as groups (both are *consumers* of the board; pulling them in makes kanban absorb
+everything that touches it, which is how the roadmap's deliverables lost their edges).
+
+**Numbering is flat across groups** so `kanban§8` stays unambiguous; groups are headings, not
+namespaces.
+
+### 20. Feature files name functions, never commands
+
+**Gary:** the doc should say what function is served, not which command serves it.
+
+**The test applied:** *if the command were renamed tomorrow, would this criterion change?* For
+lifecycle and gates, no. For "the command is called `fw-move`", yes — so that does not belong.
+
+**And the corollary:** creation and movement **are** the two operations the lifecycle is
+defined for, so the *functions* must appear. A lifecycle spec that never says cards enter here
+and move along these paths is incomplete.
+
+### 21. §3 — entry is `backlog/` or `todo/`, nothing else
+
+**Gary:** *"New cards can enter in backlog (normal) or todo (urgent), that's it. Anything else
+destroys planning."*
+
+**Rationale recorded on the criterion:** a card that appears mid-board was never planned,
+estimated, or queued — invisible to every decision made before it arrived.
+
+### 22. §5 — WIP limits warn loudly and never block
+
+**Decision reversed mid-discussion, and the reversal is the point.** The lean was toward
+blocking (with the override question framed as hard-block / `--force` / must-move-something-out).
+Gary reversed it on evidence: *"I've only had one project where I've had issues with WIP, the
+Honda HPC project. All the others WIP limits as they are worked great."*
+
+**Why blocking is wrong here:** one project out of many hitting the limit is a signal about
+*that board* (it needs grooming), not about the gate. Blocking would force a backlog problem to
+surface as a fight with the tooling, and the predictable workaround — editing `.limit` to get
+unblocked — is worse than the breach: a permanent change made to solve a temporary problem,
+with nothing recording that it happened.
+
+**Narrowed on Gary's correction:** warn on moves **into** an over-limit folder, not on every
+move while over limit. A board at 15/10 stays quiet while cards move *out* of `todo/` — that
+direction drains it.
+
+**Editable limits are a feature:** each repo tunes its own balance, so the limit is a per-repo
+declaration the gate reads. No mechanism can stop someone editing a declaration and the feature
+does not pretend otherwise.
+
+**No remedy advice in the message** (Gary): suggesting "move something out or finish something
+nearly done" would not change the behaviour. **"The real purpose of WIP is to encourage
+focus"** — a nag that does not block is honest about being a nudge.
+
+**Correction to an earlier claim in this session:** Claude reported WIP limits as "declared but
+nothing enforces them," citing the roadmap's warning note. Verified against code, it is
+narrower — the **old** engine warns but only on `→ doing` (so a board stuck at 15/10 in `todo/`
+never warns again), and the **new** engine has no `.limit` handling at all.
+
+---
+
+## What kanban.md Surfaced
+
+Writing the feature file did the job it was supposed to do — it made the shape of the work
+visible in one place:
+
+- **14 criteria, and exactly one is Built** (§13 batch moves, and only for operations).
+- **§4 is a Door with no card behind it** — nothing in the roadmap builds the new `kanban/`.
+- **Three criteria have no owner at all:** the crossover (§4), criteria-vs-sub-tasks (§8), and
+  the `Feature:` field (§9).
+- **The MVP is smaller than feared** — today's board has five of the seven authored folders;
+  `accept/` and `cancelled/` are the whole structural delta. This confirms Gary's correction
+  from the morning: kanban is the *most* developed part of the framework, and what is undefined
+  is the convention inventory, not the capability.
+
+---
+
+## Files Created (continuation)
+
+- `project-hub/work/backlog/BUG-225-move-engine-batch-output-misattributes-bundles.md` —
+  bundle misattribution + batch report format; shared-formatter requirement so the crossover
+  inherits it
+- `project-hub/work/backlog/FEAT-226-close-gate-enforces-durable-knowledge-handoff.md` —
+  the kb hand-off has no mechanism; High priority, sequenced with the kb feature
+- `project-hub/planning/features/kanban.md` — **the first feature file** (v0.3), the
+  template-by-example for operations, kb, workspaces, and other
+
+---
+
+## Current State (end of session)
+
+### In doing/
+- **BUG-215** — unchanged. Both halves shipped; UAT-33..35 pass at source. **Blocked on:**
+  plugin install to the cache + restart, then the full set re-run. Also needs the decision-17
+  supersession note written on the card.
+
+### In backlog/
+- **BUG-225**, **FEAT-226** — filed today, not started.
+
+### Not carded (tracked only in kanban.md's Open Questions)
+1. **The crossover** — nothing builds the new `kanban/`. Recommended: one card owning the
+   kanban transition table and the kanban move function, with TASK-219 and TECH-177 as
+   dependencies.
+2. **Acceptance criteria vs sub-tasks** (kanban§8).
+3. **The `Feature:` field** (kanban§9).
+
+### Next session
+1. Write the BUG-215 supersession note (decision 17) — the one loose thread from today.
+2. Update BUG-225's scope: prompt removal (16) and the shared batch code (17).
+3. Rewrite UAT-36 — it currently tests per-record prompting, which is being removed.
+4. Draft `operations.md` — and use it to test Gary's "operations is just a variation of
+   kanban" claim against the judgment-gate caveat.
+
+---
+
 **Last Updated:** 2026-09-11
