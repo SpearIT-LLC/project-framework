@@ -271,21 +271,50 @@ reasons stay on stderr (scriptable) while rows go to stdout.
 
 **Merged in from BUG-225 (2026-09-12) — the engine change:**
 
-- [ ] The engine never prompts: `→ closed` with no `--resolution` is refused per record,
+*All ticks below are the **source-tree** run of 2026-09-13 against `framework-uat` via
+`--root`, fixtures re-seeded first. They do **not** close the built-plugin criterion under
+Verification, which is a separate check against the installed cache.*
+
+- [x] The engine never prompts: `→ closed` with no `--resolution` is refused per record,
       naming the valid codes; `read`, `/dev/tty` and `[ -t 0 ]` are gone from the script
-- [ ] `--resolution` is accepted with a list and applied to the whole batch
-- [ ] A piped or headless invocation behaves identically to an interactive one
-- [ ] A batch with a bundle on a non-first record attributes the bundle to the correct
+      *(UAT-36; verified by grep over comment-stripped source — the only `read` left is the
+      `IFS=', ' read -ra` list parser)*
+- [x] `--resolution` is accepted with a list and applied to the whole batch *(UAT-34 — both
+      records stamped `Closed: 2026-09-13`, `Resolution: resolved`)*
+- [x] A piped or headless invocation behaves identically to an interactive one *(UAT-36 vs
+      UAT-36b — byte-identical output, both exit 1, nothing moved)*
+- [x] A batch with a bundle on a non-first record attributes the bundle to the correct
       record, unambiguously — verified with the bundle on the **second** of three
-- [ ] Status appears first in a fixed-width column; rows align regardless of filename length
-- [ ] A failed item's reason appears on that item's row
-- [ ] The `moved / skipped / failed` summary line is retained
-- [ ] Single-id moves are unchanged (no header, no summary)
-- [ ] The report is emitted by one shared function, so a second namespace gets it without
-      new code — verified by inspection at the call sites
-- [ ] Validated: **AI** — re-run the source-tree cases and diff the output shape;
-      **Human** — UAT-33 and UAT-35 in `framework-uat` read correctly without the
-      filesystem needing to be checked to interpret them
+      *(UAT-33 — `(bundle INC-902/)` inline on INC-902's row)*
+- [x] Status appears first in a fixed-width column; rows align regardless of filename length
+      *(`printf '  %-8s %s\n'`)*
+- [x] A failed item's reason appears on that item's row *(UAT-35 — `FAILED   999 — no
+      operations record with that id`, in order between the two `OK` rows)*
+- [x] The `moved / skipped / failed` summary line is retained *(byte-identical to before;
+      asserted verbatim by UAT-33/35, and the script now carries a comment saying so)*
+- [x] Single-id moves are unchanged (no header, no summary) *(single move prints one row
+      carrying its destination: `OK  INC-904-… → onhold/`)*
+- [x] The report is emitted by one shared function, so a second namespace gets it without
+      new code — verified by inspection at the call sites *(`row()`; every outcome path —
+      OK, SKIPPED, FAILED via `fail_item` — goes through it)*
+- [x] Validated: **AI** — re-run the source-tree cases and diff the output shape *(done;
+      ten cases below)*; **Human** — UAT-33 and UAT-35 in `framework-uat` read correctly
+      without the filesystem needing to be checked to interpret them *(**outstanding — your
+      call at the built-plugin run**)*
+
+**Source run 2026-09-13 — ten cases, all pass.** UAT-36 (tty), UAT-36b (piped), unknown
+code, UAT-33, UAT-35, single move, already-in-target, terminal guard, UAT-34, stamp check.
+
+**One BUG-225 open question decided during implementation:** *whether failure reasons stay
+on stderr.* They do **not**. A stderr copy was implemented first, then removed — every
+failure printed twice and the two streams interleaved on a terminal, which is the
+detached-reason problem the card exists to fix. Reasons are on the rows, on stdout. `die`
+still writes to stderr: a usage error (unknown namespace, bad target, unknown code) is about
+the whole invocation, not a record outcome. `commands/fw-move-ops.md` updated to match.
+
+**The other open question — whether `✅`/`❌` glyphs survive alongside OK/FAILED/SKIPPED —
+decided by the tests:** the words replace the glyphs on rows, and the `📊` summary line is
+kept byte-identical because UAT-33 and UAT-35 assert it verbatim.
 
 **Verification:**
 

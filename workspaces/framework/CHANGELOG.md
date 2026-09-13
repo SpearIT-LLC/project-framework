@@ -5,6 +5,31 @@ plain semver 0.x during the framework workspace build.
 
 ## [Unreleased]
 
+### Changed
+- **The move engine never prompts** (BUG-215, superseding its own 2026-09-07 design).
+  A `→ closed` with no resolution code is **refused per record**, naming the valid
+  codes; the human supplies one and runs again — the same experience the board gives.
+  `read`, `/dev/tty` and `[ -t 0 ]` are gone from `fw-move.sh`, so behaviour is
+  identical with or without a terminal and the engine is safe to run headless.
+  This also disposes of a guard bug: `[ -t 0 ]` tested **stdin** while the read was
+  from **`/dev/tty`**, so a piped invocation failed closed while a usable terminal
+  was attached.
+- **`--resolution` now applies to the whole batch**, where it was previously refused
+  with a list. A batch close happens precisely when the records share a root cause,
+  and sharing a cause means sharing a classification; records that genuinely differ
+  are closed separately. The per-record *reason* and the durable-knowledge answer
+  still belong to each record's own **Outcome** section. An unknown code is validated
+  **once**, before any record is touched — it is a usage error about the invocation,
+  not a property of a record.
+- **One report formatter for every namespace** (BUG-225, merged into BUG-215). A batch
+  prints a `Move → <target>/` header, one fixed-width `OK`/`SKIPPED`/`FAILED` row per
+  record, and the `moved / skipped / failed` summary. **The bundle note is inline on its
+  own record's row** — previously a free-floating line that indentation attributed to the
+  record *above* it. **Failure reasons are on their rows, on stdout**, where they were
+  previously detached onto stderr and interleaved out of order. A single move is
+  unchanged: one row, no header, no summary. The kanban row inherits the report by
+  construction at the ADR-009 D5 crossover rather than growing a second one.
+
 ### Added
 - **`/fw-new` — the create gate for board items** (FEAT-175), the create-side
   twin of `/fw-move` and the fifth and last create gate. It does exactly two

@@ -229,8 +229,17 @@ with `--reset` then seed again.
 
 **UAT-33 — batch move, quoted commas.** `> /fw-move-ops "901, 902, 903" onhold`
 - Expected: all three move in one invocation; bundle `INC-902/` travels with its record;
-  a summary line `📊 moved: 3  skipped: 0  failed: 0`.
+  a summary line `📊 moved: 3  skipped: 0  failed: 0`. Report shape (BUG-225):
+
+  ```
+  Move → onhold/
+    OK       INC-901-batch-item-one.md
+    OK       INC-902-batch-item-two.md  (bundle INC-902/)
+    OK       REQ-903-batch-item-three.md
+  📊 moved: 3  skipped: 0  failed: 0
+  ```
 - Pass: three records in `onhold/`, `onhold/INC-902/evidence.txt` present, summary shown.
+  **The bundle note is on INC-902's own row** — it must not appear under INC-901.
 - Note: INC-9010 must **not** move — the substring trap. `901` matches INC-901 only.
 
 **UAT-34 — `--resolution` on a list.** `> /fw-move-ops "901, 902" closed --resolution resolved`
@@ -245,8 +254,17 @@ with `--reset` then seed again.
 
 **UAT-35 — partial failure continues.** With 901 and 903 in `onhold/` and no record 999:
 `> /fw-move-ops 901 999 903 open` (unquoted list)
-- Expected: 901 and 903 move; 999 reported as not found; `📊 moved: 2 … failed: 1`.
+- Expected: 901 and 903 move; 999 reported as not found; `📊 moved: 2 … failed: 1`:
+
+  ```
+  Move → open/
+    OK       INC-901-batch-item-one.md
+    FAILED   999 — no operations record with that id
+    OK       REQ-903-batch-item-three.md
+  📊 moved: 2  skipped: 0  failed: 1
+  ```
 - Pass: the bad id in the middle did not stop 903 from moving; both good records in `open/`.
+  **The failure reason is on the failing row**, in order, not on a detached stderr line.
 
 **UAT-36 — close with no resolution is refused, per record.** `> /fw-move-ops "901, 903" closed`
 - **Rewritten 2026-09-11** (BUG-215 supersession). It previously tested per-record
@@ -254,8 +272,19 @@ with `--reset` then seed again.
   a move missing its required input is refused and the user runs again.
 - Expected: **the script refuses each record**, naming what is missing and enumerating the
   five valid codes. **Nothing moves.** No prompt appears, and the behaviour is identical
-  whether or not a terminal is attached (pipe the command to confirm).
-- Pass: exit 1, both records still in their source folder, message names the codes.
+  whether or not a terminal is attached (pipe the command to confirm):
+
+  ```
+  Move → closed/
+    FAILED   INC-901-batch-item-one.md — → closed requires a resolution: pass --resolution <resolved|cancelled|duplicate|no-fault-found|rejected>
+    FAILED   REQ-903-batch-item-three.md — → closed requires a resolution: pass --resolution <resolved|cancelled|duplicate|no-fault-found|rejected>
+  📊 moved: 0  skipped: 0  failed: 2
+  ```
+- Pass: exit 1, both records still in their source folder, rows name the codes, and the
+  piped run is **byte-identical** to the interactive one.
+- Related: an *unknown* code is a usage error about the invocation, not a per-record
+  outcome, so it is refused once on stderr before any record is touched:
+  `❌ unknown resolution 'bogus' (codes: …)`, exit 1.
 - Note: the **AI-side close gate is unchanged** — it still asks for the code, a one-line
   reason per record, and the incident durable-knowledge question, then calls the script
   with `--resolution`. What was removed is the *script* prompting, not the judgment step.

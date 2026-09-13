@@ -28,9 +28,12 @@ a thing — the namespace is fixed by which command you run.
   terminal (reopening = a new record).
 - `→ closed` **requires** a resolution code: `resolved | cancelled | duplicate |
   no-fault-found | rejected` — the outcome is a field, not a folder. The engine
-  stamps `**Closed:**` and `**Resolution:**`. Supply it with `--resolution` for a
-  single record; a batch is prompted per record, because the code classifies one
-  record and the close gate is already per record (BUG-215).
+  stamps `**Closed:**` and `**Resolution:**`. Supply it with `--resolution`, which
+  **applies to the whole batch** (BUG-215). **The engine never prompts:** a `→ closed`
+  with no code is refused, per record, naming the valid codes — you supply one and run
+  again, exactly as the board behaves. A batch shares one code because a batch close
+  happens precisely when the records share a root cause; the per-record *reason* and the
+  durable-knowledge answer go in each record's own **Outcome** section.
 - The record's artifact bundle (`INC-nnn/` sibling folder) moves with it.
 - No kanban gates (ripeness, dependencies, acceptance criteria) apply to ops.
 
@@ -55,13 +58,24 @@ a thing — the namespace is fixed by which command you run.
    (`moved / skipped / failed`) is what reports it. A record already in the target is
    *skipped*, not failed. Exit is non-zero if any item failed.
 
-   **`--resolution` is per record, so it is refused with a list.** A batch
-   `-> closed` prompts for each record's code in turn; with no terminal to prompt,
-   those items fail rather than silently sharing one code.
+   **`--resolution` applies to the whole batch** (BUG-215). The engine never prompts —
+   a `→ closed` with no code is refused per record, and behaviour is identical whether or
+   not a terminal is attached, so this is safe to run headless. Pass the code the close
+   gate produced in step 1:
+
+   ```bash
+   bash "${CLAUDE_PLUGIN_ROOT}/scripts/fw-move.sh" operations "<id, id>" closed --resolution <code>
+   ```
+
+   **Reading the output.** A batch prints a `Move → <target>/` header, one
+   `OK` / `SKIPPED` / `FAILED` row per record with the reason on the row, and the
+   `moved / skipped / failed` summary. A single move prints one row and no summary.
+   **Failure reasons are on the rows, on stdout** — only a whole-invocation usage error
+   (unknown namespace, bad target, unknown resolution code) goes to stderr.
 
    Ids: `INC-012`, `REQ-3`, or bare `12`. If the script rejects the move
-   (invalid transition, closed-is-terminal, missing/unknown code), report its
-   message verbatim and stop — never `git mv` a record by hand.
+   (invalid transition, closed-is-terminal, missing/unknown code), report the row
+   verbatim and stop — never `git mv` a record by hand.
 
 3. **Sweep** (on demand, when `closed/` gets long): records closed in a prior
    calendar year move to `closed/YYYY/`; nothing changes status.
