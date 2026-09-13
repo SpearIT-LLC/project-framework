@@ -1,9 +1,24 @@
 # Bug: Move Engine Batch Output Misattributes Bundles and Is Hard to Scan
 
+> # ⚠️ SUPERSEDED 2026-09-12 — MERGED INTO BUG-215. DO NOT IMPLEMENT.
+>
+> This card's content now lives on **BUG-215** (`doing/`), under **"Merged in from
+> BUG-225"** — design sections verbatim, acceptance criteria in its list. Work it there.
+>
+> **Why:** this card and BUG-215 were never two bugs. They are one engine change (remove the
+> prompt, fix the report) plus one verification, in the same file, in the same commit. The
+> 2026-09-11 supersession moved the prompt removal here while BUG-215's UAT-34 and UAT-36
+> were rewritten to the new design — so BUG-215 could not pass its own UAT until this card
+> shipped, and this card sat in `backlog/`, unreachable under the Implementation Rule. The
+> merge eliminates the cross-dependency by construction.
+>
+> Kept in place as the record of the split and its reasoning. **Archive when convenient —
+> the file has no remaining owner.**
+
 **ID:** BUG-225
 **Type:** Bug
 **Priority:** Medium
-**Version Impact:** PATCH
+**Version Impact:** MINOR
 **Created:** 2026-09-11
 **Workspace:** framework
 **Completed:** <!-- Set automatically by /fw-move on → done/. Leave blank at creation. -->
@@ -14,7 +29,11 @@
 
 Two defects in the **output layer** of `workspaces/framework/scripts/fw-move.sh`, both
 found during BUG-215's UAT run on 2026-09-11 (UAT-33). The moves themselves are correct —
-this is entirely presentation.
+the two defects below are entirely presentation.
+
+> **Scope grew 2026-09-11:** this card also carries the **prompt removal** (see "Also in
+> scope", below), which is a behaviour change, not presentation — it changes what
+> `--resolution` accepts and what a `→ closed` move does. Hence **MINOR**, not PATCH.
 
 1. **The bundle notice reads as belonging to the wrong record.** It is indented under the
    *previous* record's success line, so on a batch you attribute a bundle move to the
@@ -22,9 +41,29 @@ this is entirely presentation.
 2. **The batch report is hard to scan** and the failure reason is detached from the row it
    explains.
 
-Filed separately from BUG-215 deliberately: that card's criteria are met and it is one
+~~Filed separately from BUG-215 deliberately: that card's criteria are met and it is one
 verification step from done. Folding cosmetic defects into it would reopen a nearly-closed
-card.
+card.~~
+
+> **The premise above expired 2026-09-11.** It was true when filed: BUG-215 was one
+> verification step from done, and this card was cosmetic. Both halves then changed —
+> this card absorbed the prompt removal, and BUG-215's **UAT-34 and UAT-36 were rewritten**
+> to the post-supersession design.
+>
+> **The dependency now runs the other way: BUG-215 cannot pass its own UAT until this card
+> ships.** UAT-34 expects `--resolution` to apply to a batch; UAT-36 expects a `→ closed`
+> with no code to be refused per record, with no prompt and no tty-dependence. The engine
+> still implements the superseded 2026-09-07 design
+> ([fw-move.sh:137-138](../../../workspaces/framework/scripts/fw-move.sh#L137-L138) and
+> [:174-184](../../../workspaces/framework/scripts/fw-move.sh#L174-L184)), so both fail today.
+>
+> Confirmed empirically 2026-09-12: a batch `→ closed` refused with *"no terminal is
+> available to prompt"* — the right end state (nothing moved, `failed: 2`) reached by the
+> wrong mechanism. That is the no-tty arm of the prompt branch, not the refusal UAT-36
+> specifies; with a terminal attached the same command prompts instead.
+>
+> The separation still holds for the **output-layer** defects. What no longer holds is
+> "BUG-215 is nearly closed and unaffected."
 
 ## Evidence
 
