@@ -6,7 +6,7 @@
 **Version Impact:** MINOR
 **Created:** 2026-09-01
 **Workspace:** framework
-**Completed:** <!-- Set automatically by /fw-move on → done/. Leave blank at creation. -->
+**Completed:** 2026-09-21
 
 ---
 
@@ -256,18 +256,14 @@ reasons stay on stderr (scriptable) while rows go to stdout.
       top; the `""|INC|REQ) NS="operations"` guess is gone *(no `OPS_` refs remain)*
 - [x] ADR-009's "table entry, not a second engine" note is **confirmed** — the kanban row
       is declared with its authored folder set and refuses clearly until wired *(N4, N12)*
-- [ ] **A second command exists for kanban — OUT OF SCOPE, owned by FEAT-229.** Deferred
-      deliberately: the kanban policy (transitions, dependency gate, acceptance gate) is not
-      ported, and the live board is `project-hub/work/` under the root `/fw-move` until the
-      D5 crossover.
 
-      **Left as `[ ]` deliberately** — this card's convention (see Verification, below) is
-      that `[ ]` is both true and enforced, because the done-gate counts only `[ ]`. Marking
-      an out-of-scope item `[x]` would make it indistinguishable from completed work and
-      silently drop it from the gate. **It therefore still blocks this card**, which is the
-      open question to settle at the done-gate: either strike it from this list entirely
-      (it is FEAT-229's criterion, not this card's), or accept that this card waits on the
-      D5 crossover. Recommend striking it. Tracked by **FEAT-229**.
+**Struck 2026-09-21 — a second command for kanban is not this card's criterion.** It was
+carried here as an unchecked box while the ownership question was open; **FEAT-229** now
+lists it explicitly in its own Scope (items 3 and 4) and Acceptance Criteria. Recorded as
+prose rather than ticked: a `[x]` would make out-of-scope work indistinguishable from
+completed work and silently drop it from the done-gate, which is the failure the original
+note warned against. Removing the box removes it from the gate honestly. Tracked by
+**FEAT-229**.
 
 **Merged in from BUG-225 (2026-09-12) — the engine change:**
 
@@ -318,7 +314,7 @@ kept byte-identical because UAT-33 and UAT-35 assert it verbatim.
 
 **Verification:**
 
-- [ ] Verified against the built plugin, not the source tree (TECH-188) — **outstanding.**
+- [x] Verified against the built plugin, not the source tree (TECH-188) — **closed 2026-09-21.**
       Tested at source via `--root` against a scratch git fixture (12 cases, below).
       The built-plugin cycle needs a publish step that was not available in the remote
       session of 2026-09-07. Left as `[ ]` rather than `[/]` deliberately: the done-gate
@@ -332,6 +328,50 @@ kept byte-identical because UAT-33 and UAT-35 assert it verbatim.
       (`framework -> workspaces/framework`), so testing "against the marketplace" is
       testing the same files. The built-artifact check means the **installed cache**
       (`~/.claude/plugins/cache/`), a real copy exercised via `${CLAUDE_PLUGIN_ROOT}`.
+
+      **2026-09-21 — CLOSED. Verified against the installed cache**, in
+      `~/.claude/plugins/cache/dev-marketplace/spearit-framework-dev/**0.4.7**/scripts/fw-move.sh`
+      — note the **version directory**, which the 2026-09-10 note's path omits. The cached
+      copy was first `diff`ed against the source and is **byte-identical**, so the source-tree
+      grep of 2026-09-13 (no `read`/`/dev/tty`/`[ -t 0 ]` beyond the `IFS=', ' read -ra` list
+      parser) carries to the artifact.
+
+      Five cases run in `framework-uat` against freshly seeded fixtures, each with a
+      **before/after snapshot** diffed against the report:
+
+      - **UAT-33** *(via `/spearit-framework-dev:fw-move-ops`)* — 3 OK → `onhold/`;
+        `(bundle INC-902/)` inline on INC-902's own row; `INC-9010` did not move (substring
+        trap); `📊 moved: 3  skipped: 0  failed: 0`; exit 0.
+      - **UAT-34** *(plugin command)* — batch `--resolution resolved`; both stamped
+        `Closed: 2026-09-21` / `Resolution: resolved`, **inserted after `Opened:`** in the
+        field block; the `INC-902/` bundle followed across a two-hop path
+        (`open → onhold → closed`); `moved: 2`; exit 0.
+        **Scope note: the close gate (step 1) was skipped by choice** — the 9xx fixtures have
+        no **Outcome** section, so the gate has nowhere to write. Engine mechanics verified;
+        the command's judgment step is **not** exercised by this run. See the fixture gap
+        below.
+      - **UAT-35** *(plugin command, unquoted list)* — `901 999 903 open`: OK / FAILED / OK
+        with the failure row **in order between** the two OKs, reason on the row, on stdout;
+        `moved: 2  skipped: 0  failed: 1`; exit 1; nothing created for `999`.
+      - **UAT-36** *(plugin command)* — `→ closed` with no code refused **per record**, each
+        row naming all five codes; `moved: 0  failed: 2`; exit 1; nothing moved. The refusal
+        comes from the rule itself, **not** from a no-tty branch — which is the mechanism
+        BUG-225 recorded as wrong even when the end state was right.
+      - **UAT-36b** *(cached script directly — redirection cannot be applied through a slash
+        command)* — tty vs `< /dev/null`, both `> file 2>&1`: **byte-identical, 352 bytes**,
+        both exit 1, queue unchanged. This is the headless-safety criterion demonstrated
+        rather than argued.
+
+      **A first attempt at UAT-36b produced a false `BYTE-IDENTICAL`**: the plugin path was
+      written from memory, omitted the version directory, and both files captured the same
+      *bash* "No such file or directory" error. Recorded because the failure mode is general —
+      **a `diff` of two failed runs passes**, so a byte-comparison test must also assert the
+      content is the expected output, not merely that two captures match.
+
+      **Not exercised by these cases** (none are this card's criteria): the close gate's
+      Outcome step, the `closed`-is-terminal refusal, an invalid resolution code (which
+      routes to **stderr** as a whole-invocation parse error, unlike a *missing* code's
+      per-record row), and the sweep.
       Verified after a plugin refresh: cache empty, no `installed_plugins.json` entry —
       the publish script's clean step removes it, and a marketplace *update* does not
       reinstall.
