@@ -416,3 +416,101 @@ ADR-006 and ADR-008 — records they will never have. The others are read; this 
 ---
 
 **Last Updated:** 2026-09-22 (later, cont.)
+
+---
+
+# (Later, cont.) — TECH-177 Completed, and the Gate That Almost Stopped It
+
+## TECH-177 → `done/`
+
+**`Completed: 2026-09-22`**, stamped by the engine. 11/11 criteria, no artifact folder.
+`done/` is now **12**; `doing/` drops to **1** (TECH-232) — **back under its 2-item WIP limit**
+for the first time since 2026-09-21.
+
+## The move was refused first — a false positive, known since 2026-07-02
+
+```
+❌ TECH-177 has 1 unchecked acceptance criteria — cannot move to done/
+```
+
+**There were zero unchecked criteria.** The gate matched **line 33** — historical prose, inside
+backticks, describing the very problem the card fixes: *"they were struck through with `~~...~~`
+but remained `- [ ]`"*.
+
+`check_acceptance_criteria` runs `grep -ce '- \[ \]'` across the **whole file**, unanchored. It
+does not scope to the Acceptance Criteria section and does not exclude inline code. The earlier
+verification in this session used `^- \[ \]` (line-anchored) and correctly reported zero — the
+anchor is the whole difference.
+
+**This is TECH-166 item 4, verbatim**, filed 2026-07-02 and in `backlog/` since. That card names
+the exact case, notes it is **not `--force`-able** (acceptance checks ignore the flag), records
+that the only workaround is rewording the quoted content, and prescribes the fix: count
+checkboxes only in the Acceptance Criteria section, or exclude fenced/inline-code and table
+content.
+
+## The workaround was taken deliberately, and marked
+
+**Claude stopped rather than working around it**, because the offered recovery (*"Mark them
+complete?"*) was wrong: there was nothing to mark, and the only path through was **editing a
+true sentence in the card's historical record to satisfy a faulty grep** — the dishonest-`[x]`
+failure TECH-177 exists to end.
+
+**Gary: *"I was concerned about this one. Reword line 33 and move on."*** — one word changed
+(`- [ ]` → "unchecked"), with a **blockquote left on the line recording the protest**: what was
+changed, why, that nothing was wrong with the original, and that TECH-166 item 4 is the real
+defect.
+
+**The irony is load-bearing, not decorative:** the card specifying correct checkbox semantics
+was hard-blocked by incorrect checkbox semantics — in the old engine it *deliberately chose not
+to fix* (2026-09-21, "new engine only"). That choice was right and this is its cost, paid once.
+
+## Decisions Made (Later, cont.)
+
+12. **Reword the line; record the protest in place.** The alternatives were worse: parking a
+    finished card in `doing/` indefinitely, or hand-`git mv`-ing around the chokepoint. Editing
+    the record is the lesser evil **and is marked as such**, so the next reader does not mistake
+    it for a correction.
+
+13. **TECH-166 item 4 must not be inherited by the new engine.** FEAT-229 ports the gates;
+    TECH-177's specification — now in `done/` — is what tells it to count checkboxes in the
+    Acceptance Criteria section only. **Flagged for FEAT-229's pre-implementation review.**
+
+## Files Modified (Later, cont.)
+
+- `project-hub/work/doing/TECH-177-...md` → **`project-hub/work/done/`**; line 33 reworded with
+  the protest note; `Completed: 2026-09-22` stamped by the engine.
+
+---
+
+## Current State (Final)
+
+### In done/ — 12 items
+- **TECH-177** completed today. **Release nudge band (10–14): worth releasing soon.**
+
+### In doing/ — 1/2, back under WIP
+- **TECH-232** — workspace declarations; still to reconcile against `workspace.yaml`, which is
+  already in the tree.
+
+### In backlog/ — filed today
+- **TECH-237** (create-gate question), **TECH-238** (113 unresolvable references).
+
+### Still over WIP
+- `todo/` at 15/10. A `/fw-backlog` pass remains due.
+
+---
+
+## Next Session (Final)
+
+1. **FEAT-221's stale dependency** — correct it to name TASK-223. The live instance of TECH-237's
+   problem, and what is actually blocking the card.
+2. **FEAT-229 → `doing/`** and its pre-implementation review. Its contract exists now, and
+   **TECH-166 item 4 must be raised in that review** so the new gates do not inherit the
+   unanchored grep.
+3. **A release** — 12 in `done/`.
+4. **TECH-232 reconcile** — three criteria look satisfied by work already in the tree.
+5. **Carried:** BUG-237 unwritten; the four uncovered UAT paths; `git mv` BUG-225 to `archive/`
+   (fourth session); a `/fw-backlog` pass.
+
+---
+
+**Last Updated:** 2026-09-22 (final)

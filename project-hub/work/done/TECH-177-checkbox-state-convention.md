@@ -5,6 +5,7 @@
 **Priority:** Medium
 **Version Impact:** MINOR
 **Created:** 2026-07-08
+**Completed:** 2026-09-22
 **Workspace:** framework
 **Theme:** Workflow Precision
 
@@ -30,8 +31,20 @@ correctly blocks *done* fix both.
   incomplete. `[x]`, `[/]`, `[-]` all pass.
 - There is **no way to mark a criterion "cancelled / not-applicable / moved-out"** that the gate
   understands. TECH-173 hit this: several checklist items were deliberately moved to follow-ups
-  (FEAT-175/TECH-176) or superseded; they were struck through with `~~...~~` but remained `- [ ]`, so
-  the done-gate wrongly counted them as pending. (Worked around by marking them `[x]`.)
+  (FEAT-175/TECH-176) or superseded; they were struck through with `~~...~~` but remained
+  unchecked, so the done-gate wrongly counted them as pending. (Worked around by marking them
+  `[x]`.)
+
+  > **The quoted marker was removed from this line on 2026-09-22 — under protest, and this note
+  > is the protest.** The word "unchecked" replaces an inline-code space-state marker. Nothing
+  > was wrong with the original: `check_acceptance_criteria` greps `- \[ \]` across the **whole
+  > file**, unanchored, so prose *quoting* the marker counted as a live unchecked criterion and
+  > **hard-blocked** this card's `→ done` (acceptance checks ignore `--force`). This is
+  > **TECH-166 item 4**, filed 2026-07-02, which names this exact case and prescribes the fix:
+  > count checkboxes only in the Acceptance Criteria section, or exclude inline-code and table
+  > content. Rewording the record to satisfy a faulty grep is the lesser evil here, not a good
+  > outcome — and the card specifying correct checkbox semantics being blocked by incorrect ones
+  > is the argument for FEAT-229 not inheriting the bug.
 - An **in-progress `[/]`** subtask currently passes the done-gate, which is semantically wrong — you
   should not be able to complete an item whose subtasks are still in progress.
 
