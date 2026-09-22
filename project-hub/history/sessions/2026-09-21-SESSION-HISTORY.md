@@ -220,4 +220,202 @@ runs. The seeder's `no operations queue` guard required one real record to be cr
 
 ---
 
-**Last Updated:** 2026-09-21
+---
+
+# (Later Session) — TECH-177 Retargeted
+
+**Session Focus:** the sequencing question from item 2 above, answered — and the card it was
+about turned out to need rewriting rather than implementing.
+
+---
+
+## Summary
+
+The earlier "Next Session" list asked whether TECH-177 should be settled before FEAT-229.
+**Answered: yes**, and TECH-177 was pulled into `doing/`. Its pre-implementation review then
+found that **the card's target does not exist** — the new engine has no checkbox gate to
+change — so the card was retargeted from a code change into the authored specification that
+FEAT-229 implements. Both of its open questions were closed. No code was written.
+
+---
+
+## Work Completed
+
+### The sequencing question (item 2 above) — answered
+
+Gary moved TECH-177 to `doing/` directly, which settles it: **TECH-177 first.** The reasoning
+recorded this morning holds — FEAT-229 ports three gates, and if TECH-177 lands after them,
+those gates are revised twice.
+
+`doing/` went to **3/2 — over WIP**, warning only. Accepted deliberately: TECH-232 is parked,
+not active.
+
+### TECH-177 pre-implementation review — the finding that reshaped the card
+
+**The new engine has no checkbox gate at all.** Verified rather than assumed:
+`workspaces/framework/scripts/fw-move.sh` is **263 lines with five functions** — `die`, `row`,
+`fail_item`, `gmv`, `move_one`. No `check_acceptance_criteria`, no `check_dependencies`, no
+checkbox grep anywhere. The operations namespace does not need one.
+
+The card's Scope said *"update `fw-move.sh` done-gate to block on `[ ]` and `[/]`"* and its
+Related named `.claude/scripts/fw-move.sh` — the **old** engine, where
+[`check_acceptance_criteria`](.claude/scripts/fw-move.sh#L222-L237) does exist and greps
+unchecked boxes.
+
+**So the card as written targeted the engine being retired.** That framed the decision below.
+
+### TECH-177 retargeted — card rewritten, no code
+
+Scope, Acceptance Criteria and Related rewritten; everything above them preserved as the
+historical record. The card now has **11 open criteria, all specification work**.
+
+FEAT-229 updated to match — this is the half that makes the contract two-sided:
+
+- *"Checkbox state semantics — TECH-177"* struck from **Out of Scope**; it is now this card's
+  job.
+- The **soft dependency** entry superseded — TECH-177 is no longer soft, it is the contract.
+- **Scope item 8** added: implement TECH-177's checkbox contract, gates checkbox-aware from
+  the start.
+- **An acceptance criterion** added, so the specification cannot land with nothing obliged to
+  honour it.
+
+---
+
+## Decisions Made (Later Session)
+
+1. **New engine only — and the card changes kind, not just target.** (Gary)
+   - Three options were weighed. *Old engine only* fixes today's board, ships nothing to the
+     new build, and leaves FEAT-229 writing its gates without the convention — guaranteed
+     rework, which is the very thing sequencing TECH-177 first was meant to avoid. *Both
+     engines* means two implementations of one rule, the duplication ADR-008 exists to
+     prevent.
+   - **Chosen: new engine only.** The old engine keeps its current behaviour until the D5
+     crossover retires it, including its passes-by-accident `[-]`.
+   - **The consequence is structural:** TECH-177 stops being a code change and becomes the
+     **authored specification**. FEAT-229 ports its gates checkbox-aware the first time.
+
+2. **`[?]` clearing — the AI attempts first, defers when it cannot.** (Gary)
+   - Closes the card's first open question. The AI tries to answer the question itself
+     (research, reading the tree, checking a source) and clears the marker only when it
+     genuinely has the answer; otherwise it defers and the marker stands. Self-healing where
+     possible, audit trail where not.
+   - **Scoped to `[?]` only.** `[h]` is not researchable — no amount of reading unlocks a
+     file, grants an approval, or delivers hardware. An `[h]` clears when the blocking
+     condition changes.
+
+3. **Note form — fixed label, free text, task line preserved.**
+   - Gary proposed two candidate shapes: inline (`- [h] <reason>`) or the original task text
+     with the reason on its own line. **The second, and the existing spec already required
+     it:** FEAT-221.2 step 1 says to mark *"the exact criterion, checklist step, or
+     acceptance line that tripped"*, and the inline form destroys that line.
+
+     ```markdown
+     - [h] Verify the gate refuses a `[/]` criterion on `→ done`
+           **Hold:** needs a fixture with a `[/]` line; `seed-uat-fixtures.sh` writes none.
+     ```
+
+   - Three properties earn it: the task text survives so clearing is just `[h]` → `[ ]`;
+     grepping the marker still lands on the task, which is its whole job as a cursor; and the
+     indented note travels with the item.
+   - **Fixed label, free text after it.** The label is what makes *"a marker with no note"*
+     greppable — the one thing here worth mechanizing, since FEAT-221.2 says *"a run that
+     marks but does not note has done half the job."* Without a label that check cannot be
+     written. The reason is for a human, so a schema would buy nothing and cost enforcement.
+   - **Inline tolerated, not documented** — where the reason genuinely *is* the whole item,
+     the two collapse and a rule would be noise.
+
+4. **`[-]` is to be handled properly** (Gary) — specified as passing the done-gate **by
+   design**, with the accident it replaces called out: today both engines count only unchecked
+   boxes, so `[-]` already passes for the wrong reason.
+
+---
+
+## A Misremembering, Corrected from History
+
+**Gary: *"I think we decided that `[?]` would replace `[h]`. Confirm from history."***
+
+**It was `[!]` that `[h]` replaced, not `[?]`.** Checked rather than argued from the card:
+
+- Commit **`e7740f0`** — *"docs: blocked marker becomes [h], not [!] — [!] means 'important'
+  in Obsidian"*
+- [2026-09-08 session history](project-hub/history/sessions/2026-09-08-SESSION-HISTORY.md#L95)
+  — *"`[h]` replaces `[!]` for blocked."*
+- The 2026-09-09 session then corrected the roadmap legend to `[ ] [/] [x] [-] [?] [h]`.
+
+`[!]` was rejected because it means *important* in all four Obsidian theme collections and
+imports into Tasks as an ordinary TODO, so a blocking gate on it would fight the tool's own
+model.
+
+**`[?]` and `[h]` are distinct and both retained**, and the distinction is load-bearing for
+decision 2: *attempt an answer, then defer* is coherent for a **question** and incoherent for
+a **hold**. Had the two been collapsed, that decision would have been wrong for half the cases
+it covered.
+
+Asking for confirmation from history rather than asserting it is what caught this.
+
+---
+
+## Files Modified (Later Session)
+
+- `project-hub/work/doing/TECH-177-checkbox-state-convention.md` — moved from `todo/`; both
+  open questions closed in place with `SETTLED 2026-09-21` blocks; Scope, Acceptance Criteria
+  and Related rewritten for the new engine. Everything above Scope preserved.
+- `project-hub/work/todo/FEAT-229-build-the-kanban-board-in-the-new-engine.md` — TECH-177
+  moved out of *Out of Scope* and out of *soft dependencies*; Scope item 8 and a new
+  acceptance criterion added.
+
+## Files Moved (Later Session)
+
+- `project-hub/work/todo/TECH-177-...md` → `project-hub/work/doing/`
+
+---
+
+## Current State (End of Day)
+
+### In doing/ — 3/2, over WIP
+- **TECH-177** — retargeted today, **11 open criteria, all specification work.** No code
+  written. This is the active card.
+- **TECH-232** — workspace declarations. Parked; untouched since 2026-09-12.
+
+### In todo/ — 15/10, over WIP
+- **FEAT-229** — now carries TECH-177's contract as Scope item 8 and an acceptance criterion.
+
+### In done/
+- **BUG-215** — closed this morning. 11 items in `done/`; a release is due.
+
+### Commits
+- `33509dc` — BUG-215 complete, pushed
+- `a844077` — TECH-177 retarget + FEAT-229 update
+
+---
+
+## Next Session (Revised)
+
+**The first question is where the specification lives** — and it is a real ADR-008 decision,
+not a formatting choice. Candidates: a new `framework/docs/ref/` document, a "Checkbox States"
+section in `workflow-guide.md`, or somewhere inside the ADR-009 workspace. **The constraint
+that decides it:** the home must be reachable from the **new build**, which argues against
+anything under `project-hub/`. One authored home; `workflow-guide.md`, the work-item template
+and FEAT-229 point at it rather than restating it.
+
+Then, in order:
+
+1. **Author the specification** — the six states, their gate semantics, the note form, and the
+   ADR-007 D7 boundary written *where the gate lives* (a marker records an event that
+   happened; it is not a ripeness judgment). Without that last part, the next reader takes
+   these markers as a general ripeness gate and D7 is quietly overturned.
+2. **FEAT-229 → `doing/`** once the contract exists, and its pre-implementation review.
+3. **BUG-237 — still not written.** The 9xx fixtures have no **Outcome** section, so no UAT run
+   can exercise the close gate. Surfaced twice on 2026-09-21 and deferred twice.
+4. **The four uncovered UAT paths** — close gate, `closed`-is-terminal, invalid resolution code
+   (stderr route), sweep. Unchanged from this morning's list.
+5. **`git mv` BUG-225 to `archive/`** — third session carrying it.
+6. **Two WIP limits are over:** `doing/` 3/2 and `todo/` 15/10. A `/fw-backlog` pass is due.
+7. **Consider a release** — 11 items in `done/`.
+
+**Carried, unchanged:** the mechanical `[-]` conversion pass — BUG-215's struck prose line and
+`FEAT-175:178` — becomes available once FEAT-229 ships the gates.
+
+---
+
+**Last Updated:** 2026-09-21 (later session)
