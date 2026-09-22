@@ -86,13 +86,21 @@ all three gates and has run this project for months. This is a **port with justi
 6. **WIP warnings** — loud on a move *into* an over-limit folder, never blocking (`kanban§5`).
 7. **Terminal-state archival** — a spike archives to `history/spikes/`, a POC spike as a
    *folder*; neither produces a release (`kanban§2`, TECH-228).
+8. **Implement TECH-177's checkbox contract** (added 2026-09-21). The gates are written
+   checkbox-aware from the start: the done-gate blocks on `[ ]` **and** `[/]` while `[x]` and
+   `[-]` pass **by design**; `→ doing` blocks on `[?]` and `[h]`, naming the marked line and
+   its note; readiness is unchanged (only `[ ]` blocks). TECH-177 is the authored source —
+   point at it, do not restate it (ADR-008).
 
 ## Out of Scope
 
 - **The cutover itself** — making `kanban/` the live board and retiring `project-hub/work/`.
   Own card; this one leaves the new board built and unused.
 - **The board conventions** — TASK-219 decides them; this card *encodes* them.
-- **Checkbox state semantics** — TECH-177.
+- ~~**Checkbox state semantics** — TECH-177.~~ **Moved INTO scope 2026-09-21.** TECH-177
+  was retargeted at the new engine as a *specification*, and this card implements it — see
+  Scope item 8. Listing it here would now be false: there is no checkbox gate in the new
+  engine for TECH-177 to change on its own.
 - **Batch output format** — BUG-225, which lands in the shared engine and is inherited here.
 
 ## Dependencies
@@ -111,8 +119,14 @@ no → dotted. The rule lives in the template's own comment header so it travels
 
 **Soft dependencies, neither blocking the core work:**
 
-- **TECH-177** — checkbox states `[?]`/`[h]`. The gates should read them, but the three ported
-  gates do not require them.
+- ~~**TECH-177** — checkbox states `[?]`/`[h]`. The gates should read them, but the three
+  ported gates do not require them.~~
+
+  > **Superseded 2026-09-21 — TECH-177 is no longer a soft dependency; it is this card's
+  > contract.** It was retargeted (new engine only) from a code change into the authored
+  > specification of the convention, precisely so these gates are written checkbox-aware
+  > the first time instead of being revised afterwards. TECH-177 was pulled into `doing/`
+  > ahead of this card for that reason. **Read it before porting the gates.**
 - **TECH-228** — the SPIKE template. Affects what the create function resolves for one type,
   not whether it works.
 
@@ -128,6 +142,10 @@ come from the board, never from the roadmap.
 - [ ] All three gates refuse correctly, each naming what is missing — verified with a fixture
       that violates each
 - [ ] Ripeness is **not** claimed as a script check anywhere
+- [ ] **TECH-177's checkbox contract is implemented in these gates** (added 2026-09-21):
+      `[ ]`/`[/]` block `→ done`, `[x]`/`[-]` pass, `[?]`/`[h]` block `→ doing` naming the
+      marked line and its note, readiness unchanged. The ADR-007 D7 boundary — a marker
+      records an event, it is not a ripeness judgment — is documented where the gate lives
 - [ ] A card can be created into `backlog/` or `todo/` and nowhere else
 - [ ] The work-item template exists and encodes the TASK-219 conventions; each convention traces
       to a mechanism, not a paragraph

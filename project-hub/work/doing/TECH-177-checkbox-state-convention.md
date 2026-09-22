@@ -204,8 +204,46 @@ reader will take these markers as a general ripeness gate and D7 gets quietly ov
 1. **Who clears the marker?** If the AI clears `[?]` after applying the user's answer, it
    self-heals. If only a human clears it, it is an audit trail. Different mechanisms —
    decide before implementing.
+
+   > **SETTLED 2026-09-21 — the AI attempts first, and defers when it cannot.** For `[?]`
+   > the AI tries to answer the question itself (research, reading the tree, checking a
+   > source) and clears the marker when it genuinely has the answer; where it cannot, it
+   > defers to a human response and the marker stands. Self-healing where possible, audit
+   > trail where not.
+   >
+   > **This applies to `[?]` only.** `[h]` is not researchable — no amount of reading
+   > unlocks a file, grants an approval, or delivers hardware. An `[h]` is cleared when the
+   > blocking condition changes, by whoever changes it.
+
 2. **Does the note have a required shape**, or is free text beside the marker enough?
    Settled that a note is required; its form is not.
+
+   > **SETTLED 2026-09-21 — fixed label, free text, task line preserved.** The note goes on
+   > an indented continuation line beneath the marked item, introduced by a **fixed bold
+   > label** (`**Hold:**` for `[h]`, `**Question:**` for `[?]`); the text after the label is
+   > free.
+   >
+   > ```markdown
+   > - [h] Verify the gate refuses a `[/]` criterion on `→ done`
+   >       **Hold:** needs a fixture with a `[/]` line; `seed-uat-fixtures.sh` writes none.
+   > ```
+   >
+   > **Why the task text stays on the marked line.** An inline form (`- [h] <reason>`)
+   > destroys the criterion it replaces, and FEAT-221.2 step 1 requires marking *"the exact
+   > criterion, checklist step, or acceptance line that tripped"*. Preserving it means
+   > clearing the marker is just changing `[h]` back to `[ ]` — the line is already correct
+   > — and grepping for the marker still lands on the task, which is the marker's whole job
+   > as a cursor.
+   >
+   > **Why the label is fixed while the text is free.** The label is what makes *"a marker
+   > with no note"* greppable, and that is the one thing here worth mechanizing: FEAT-221.2
+   > says *"a run that marks but does not note has done half the job."* Without a fixed
+   > label that check cannot be written. The reason itself is for a human to read, so a
+   > schema would buy nothing and cost enforcement.
+   >
+   > **The inline form is tolerated, not documented.** Where the reason genuinely *is* the
+   > whole item — a placeholder never written as a task — the two collapse and a rule would
+   > be noise.
 - **Decorative markers** (`[>]`, `[*]`, `["]`, etc.): mention as existing in the ecosystem but out of
   scope — they duplicate signals we already have (DECIDE marker, `blocked/` folder) or are cosmetic.
 
@@ -213,37 +251,106 @@ reader will take these markers as a general ripeness gate and D7 gets quietly ov
 
 ## Scope
 
+> **RETARGETED 2026-09-21 — this card specifies the convention; FEAT-229 implements it.**
+>
+> The sections above were written against `.claude/scripts/fw-move.sh` (the **old** engine),
+> whose `check_acceptance_criteria` is the unchecked-box grep this card set out to change.
+> **That is no longer the target.** Verified 2026-09-21: the ADR-009 build's
+> `workspaces/framework/scripts/fw-move.sh` is 263 lines with five functions — `die`, `row`,
+> `fail_item`, `gmv`, `move_one` — and **has no checkbox gate at all**. The operations
+> namespace does not need one; the gates arrive with kanban, in **FEAT-229**.
+>
+> Three options were weighed. *Old engine only* fixes today's board, ships nothing to the new
+> build, and leaves FEAT-229 writing its gates without the convention — guaranteed rework.
+> *Both engines* means two implementations of one rule, which is the duplication ADR-008
+> exists to prevent. **Chosen: new engine only** (Gary, 2026-09-21), the old engine keeping
+> its current behaviour until the D5 crossover retires it.
+>
+> **The consequence is a change of kind, not just of target.** This card stops being a code
+> change and becomes the **authored specification** of the convention. FEAT-229 ports its
+> three gates *checkbox-aware from the start*, rather than porting them and then revising
+> them. That is also why TECH-177 was pulled into `doing/` ahead of FEAT-229.
+
 **In scope:**
-- Update `fw-move.sh` done-gate to block on `[ ]` **and** `[/]` (currently only `[ ]`).
-- Document the convention in `workflow-guide.md` (a "Checkbox States" subsection) — all four active
-  markers + `[?]`/`[h]` + a note on decorative ones. *(Note: workflow-guide is already
-  large; a docs-restructure is a separate concern.)*
-- Thread the convention into work-item templates' guidance where checklists appear.
-- Verify no other checkbox consumer (pre-commit hook, other scripts) regresses.
+
+- **Author the convention as a specification** — the six states (`[ ]` `[x]` `[/]` `[-]` `[?]`
+  `[h]`), their gate semantics, and the note form settled above. One authored source
+  (ADR-008); FEAT-229 and `workflow-guide.md` refer to it rather than restating it.
+- **Gate semantics for the new engine, written as a contract FEAT-229 implements:**
+  - **done-gate:** `[ ]` and `[/]` block; `[x]` and `[-]` pass. `[-]` passes **by design**,
+    not by the accident of a grep that only counts unchecked boxes.
+  - **`→ doing` gate:** `[?]` and `[h]` block, each naming the marked line and its note.
+  - **readiness (`→ todo`/`backlog`/`blocked`): unchanged** — only `[ ]` blocks (2026-07-08).
+- **Document the ADR-007 D7 boundary in the gate's own documentation.** A `[?]`/`[h]` records
+  **an event that happened** — a specific line stopped a specific run — not a ripeness
+  *judgment*. The card argues this above; it must be written where the gate lives, or the
+  next reader takes these markers as a general ripeness gate and D7 is quietly overturned.
+- **Document the convention in `workflow-guide.md`** — a "Checkbox States" subsection, pointing
+  at the authored source, plus the note that `[!]` is deliberately not used.
+- **Thread the convention into the work-item template** (`templates/records/work-item.md`)
+  where checklists appear.
+- **Verify no other checkbox consumer regresses** — the pre-commit hook and any script that
+  greps for unchecked boxes.
 
 **Out of scope:**
-- ~~Implementing `[?]`/`[h]` gate behavior (deferred tier).~~ **Now in scope** — see the 2026-09-07 promotion above.
-- Restructuring workflow-guide.md.
+
+- **Changing the old engine.** `.claude/scripts/fw-move.sh` keeps its current behaviour until
+  the D5 crossover retires it. Its passes-by-accident `[-]` is left alone.
+- **Implementing the gates.** FEAT-229 does that; this card is the contract it implements.
+- Restructuring `workflow-guide.md`.
+- ~~Implementing `[?]`/`[h]` gate behavior (deferred tier).~~ Promotion recorded 2026-09-07.
 
 ---
 
 ## Acceptance Criteria
 
-- [ ] `fw-move.sh` done-gate blocks on both `[ ]` and `[/]`; `[x]` and `[-]` pass
-- [ ] Readiness-gate behavior unchanged (only `[ ]` blocks)
-- [ ] `workflow-guide.md` documents the four active states + `[?]`/`[h]` + decorative note,
-      and records that `[!]` is deliberately NOT used (it means "important" in the theme
-      collections)
-- [ ] Templates' checklist guidance references the convention
-- [ ] Verified: an item with a `[-]` criterion moves to done; an item with a `[/]` criterion is blocked
+- [ ] The convention is authored in **one** place, and `workflow-guide.md`, the template and
+      FEAT-229 point at it rather than restating it (ADR-008)
+- [ ] The six states are specified with their gate semantics: `[ ]`/`[/]` block `→ done`;
+      `[x]`/`[-]` pass; `[?]`/`[h]` block `→ doing`; readiness unchanged
+- [ ] **`[-]` is specified as passing by design**, with the accident it replaces called out —
+      today both engines count only unchecked boxes, so `[-]` already passes for the wrong
+      reason
+- [ ] The note form is specified: task text preserved on the marked line, indented
+      continuation, fixed label (`**Hold:**` / `**Question:**`), free text after it
+- [ ] `[?]` clearing is specified: the AI attempts an answer first and clears only when it
+      genuinely has one; it defers to a human otherwise. `[h]` is not researchable and is
+      cleared when the blocking condition changes
+- [ ] The ADR-007 D7 boundary (marker = recorded event, not ripeness judgment) is written in
+      the gate's own documentation, not only in this card
+- [ ] `workflow-guide.md` records that `[!]` is **not** used, and why (it means *important* in
+      all four Obsidian theme collections)
+- [ ] The work-item template's checklist guidance references the convention
+- [ ] No other checkbox consumer regresses — pre-commit hook and any unchecked-box grep audited
+- [ ] **FEAT-229 carries a criterion making it responsible for implementing this contract**,
+      so the specification cannot land with nothing obliged to honour it
+- [ ] Validated: **AI** — every state exercised against a scratch fixture once FEAT-229 ships
+      the gates; **Human** — a `[-]` criterion moves to done and a `[/]` criterion is blocked,
+      against the **installed plugin** (TECH-188)
 
 ---
 
 ## Related
 
-- **TECH-173** — surfaced this: its struck-through moved-out criteria couldn't be expressed to the
-  done-gate (worked around with `[x]`). This item makes `[-]` a first-class, gate-aware state.
-- **`.claude/scripts/fw-move.sh`** — `check_acceptance_criteria` (done-gate) is the code to change.
-- Convention basis — Obsidian Tasks custom statuses plus `[h]` for ON_HOLD. Only
-  `[ ]`/`[x]` are core to Tasks; `[/]`/`[-]` ship as editable defaults; `[?]` and `[!]`
-  come from the theme collections. Verified 2026-09-07.
+- **FEAT-229** — **implements this contract.** Ports the three kanban gates into the ADR-009
+  build; this card's specification is what makes them checkbox-aware from the start rather
+  than revised afterwards.
+- **FEAT-221.2** — the consumer that promoted `[?]`/`[h]` from deferred. Its three steps
+  (*mark the exact line · note the reason · move*) are why the note form preserves the task
+  text and why a fixed label matters.
+- **TECH-173** — surfaced this: its struck-through moved-out criteria could not be expressed to
+  the done-gate (worked around with `[x]`). This card makes `[-]` a first-class, gate-aware
+  state.
+- **BUG-215** (done 2026-09-21) — hit the same gap from the other side. Its out-of-scope kanban
+  criterion could not be `[x]` (dishonest) or `[ ]` (blocking), so it was **struck as prose**.
+  With `[-]` specified and implemented, that line and `FEAT-175:178` — the one `[-]` already in
+  the tree, written ahead of its mechanism — convert in a mechanical pass.
+- **`workspaces/framework/scripts/fw-move.sh`** — the engine the gates land in. **No checkbox
+  gate exists there today** (verified 2026-09-21); FEAT-229 adds it.
+- **`.claude/scripts/fw-move.sh`** — the old engine's `check_acceptance_criteria`. **Retargeted
+  away from 2026-09-21**; left unchanged until the D5 crossover.
+- **ADR-007 D7** — the ripeness boundary these markers must not erode.
+- **ADR-008** — why the convention is authored once and pointed at, never restated.
+- Convention basis — Obsidian Tasks custom statuses plus `[h]` for ON_HOLD. Only `[ ]`/`[x]`
+  are core to Tasks; `[/]`/`[-]` ship as editable defaults; `[?]` and `[!]` come from the theme
+  collections. Verified 2026-09-07.
