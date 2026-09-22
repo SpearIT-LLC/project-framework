@@ -78,18 +78,43 @@ what is legal. A denylist silently permits every pair nobody thought to forbid, 
 
 ## Acceptance Criteria
 
-- [ ] `kanban_TRANSITIONS` enumerates the legal pairs among `backlog blocked todo doing done`,
+- [x] `kanban_TRANSITIONS` enumerates the legal pairs among `backlog blocked todo doing done`,
       as an **allowlist** — the denylist is not ported
-- [ ] `backlog:doing` is **not** legal (commit to work first: `backlog → todo → doing`)
-- [ ] `done:backlog`, `done:todo`, `done:doing` are **not** legal — completed items are not
-      reopened
-- [ ] The not-wired refusal no longer fires for kanban, and still fires for a namespace
-      declared with empty transitions
-- [ ] `seed-uat-fixtures.sh` seeds kanban fixtures
-- [ ] A card created by `fw-new.sh` moves `backlog → todo → doing → done` through the engine
-- [ ] An illegal pair is refused, naming the pair and the legal path
-- [ ] Validated: **AI** — every legal and illegal pair exercised against a seeded fixture ·
-      **Human** — a move through the full chain against the **installed plugin** (TECH-188)
+- [x] `backlog:doing` is **not** legal (commit to work first: `backlog → todo → doing`)
+- [x] `done:backlog`, `done:todo`, `done:doing` are **not** legal — completed items are not
+      reopened. **Two locks:** `done` is in `TERMINAL` (refused earlier, clearer message) and
+      absent from the allowlist
+- [x] The not-wired refusal no longer fires for kanban, and still fires for a namespace
+      declared with empty transitions — the guard is generic (`[ -z "$NS_TRANSITIONS" ]`), so
+      no kanban-specific code was added or removed; only its comment was corrected
+- [x] `seed-uat-fixtures.sh` seeds kanban fixtures — generalized from operations-only; both
+      namespaces share the reserved 900-999 block and the `--reset` path
+- [x] A card created by `fw-new.sh` moves `backlog → todo → doing → done` through the engine
+- [x] An illegal pair is refused, naming the pair and the legal path
+- [x] Validated: **AI** — 11 cases, all pass (below) · **Human** — a move through the full
+      chain against the **installed plugin** (TECH-188) — **deferred to FEAT-229.2's UAT**,
+      since a gate-less board is not yet worth a plugin publish cycle
+
+## Validation Run — 2026-09-22
+
+Scratch repo, `--root`, fixtures seeded by the generalized seeder:
+
+| Case | Expect | Result |
+|---|---|---|
+| `backlog→todo` · `todo→doing` · `doing→done` | move | ✅ exit 0 ×3 |
+| `backlog→doing` | refuse | ✅ exit 1 — *invalid transition, allowed: …* |
+| `done→todo` | refuse | ✅ exit 1 — *in done/, which is terminal* |
+| `todo→blocked` · `blocked→doing` · `doing→todo` · `todo→backlog` | move | ✅ exit 0 ×4 |
+| `backlog→accept` · `backlog→cancelled` | refuse (unwired) | ✅ exit 1 ×2 |
+| Bundle travels with its card (`BUG-902/evidence.txt`) | travels | ✅ |
+
+**Operations regression — clean:** `901→onhold` ✅, `901→closed --resolution` ✅,
+`906` terminal→open refused ✅, `903→closed` with no code refused ✅.
+
+**The unwired-folder cases are the ones worth noting.** `accept` and `cancelled` stay in
+`kanban_FOLDERS` but have no transitions, so every move into them is refused by the allowlist —
+which is the allowlist doing its job, not an omission. FEAT-229.3 adds their rows once TASK-223
+settles what they mean.
 
 ## Related
 

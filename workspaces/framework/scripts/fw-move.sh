@@ -57,12 +57,34 @@ operations_FOLDERS="open onhold closed"
 operations_TRANSITIONS="open:onhold onhold:open open:closed onhold:closed"
 operations_TERMINAL="closed"
 
-# kanban: authored folder set (repo-structure diagram). Transitions and gates are
-# NOT yet ported from the old engine — see the header note. Declared so the
-# crossover is a table edit, not a new engine.
+# kanban: authored folder set (repo-structure diagram).
+#
+# TRANSITIONS IS AN ALLOWLIST, not a denylist (FEAT-229.1). The old engine listed
+# INVALID pairs and permitted everything else, which silently allows every pair
+# nobody thought to forbid — backlog:done among them. Enumerate what is legal.
+#
+# The five settled folders only. `accept` and `cancelled` stay declared in FOLDERS
+# with NO transitions: their semantics (what enters accept, whether cancelled is
+# terminal, the closure code) are TASK-223 Group 2a and are not settled. FEAT-229.3
+# adds their rows once they are. An unsettled pair stays illegal — that is the
+# allowlist doing its job, not an omission.
+#
+# The pairs, and why each is legal:
+#   backlog:todo    commit to work            todo:backlog    de-prioritize
+#   todo:doing      start work                doing:todo      stop without abandoning
+#   doing:done      finish                    todo:blocked    blocked before starting
+#   backlog:blocked blocked before ranking    doing:blocked   blocked mid-flight
+#   blocked:todo    unblocked, queued         blocked:backlog unblocked, de-prioritized
+#   blocked:doing   unblocked, resume         done:blocked    NOT legal (see below)
+#
+# Deliberately absent, carried from the old engine's INVALID list:
+#   backlog:doing — commit to work first (backlog → todo → doing)
+#   done:*        — completed items are not reopened; create a new item.
+#                   `done` is also in TERMINAL, which refuses it earlier with a
+#                   clearer message; the absence here is the second lock.
 kanban_ROOT="kanban"
 kanban_FOLDERS="backlog blocked todo doing accept done cancelled"
-kanban_TRANSITIONS=""
+kanban_TRANSITIONS="backlog:todo todo:backlog todo:doing doing:todo doing:done backlog:blocked todo:blocked doing:blocked blocked:backlog blocked:todo blocked:doing"
 kanban_TERMINAL="done cancelled"
 
 CODES="resolved cancelled duplicate no-fault-found rejected"
@@ -79,11 +101,17 @@ shift
 eval "NS_ROOT_REL=\"\$${NS}_ROOT\"; NS_FOLDERS=\"\$${NS}_FOLDERS\"; NS_TRANSITIONS=\"\$${NS}_TRANSITIONS\"; NS_TERMINAL=\"\$${NS}_TERMINAL\""
 NS_ROOT="$ROOT/$NS_ROOT_REL"
 
-# kanban is declared in the table but not wired: its transitions and gates are not
-# ported, and the live board is project-hub/work/ under the root /fw-move until the
-# ADR-009 D5 crossover. Refuse rather than half-move a card.
+# A namespace declared in the table with no transitions is not wired yet. Refuse
+# rather than half-move a record. This is generic, not kanban-specific: it fired for
+# kanban until FEAT-229.1 filled its row, and it is the guard any future namespace
+# gets for free between being declared and being wired.
+#
+# NOTE: kanban is now wired for MOVES but has NO GATES — FEAT-229.2 ports those.
+# Until then a kanban move is unchecked: no dependency check, no acceptance-criteria
+# check, no WIP warning. The live board remains project-hub/work/ under the root
+# /fw-move until the ADR-009 D5 crossover, so nothing real depends on those gates yet.
 if [ -z "$NS_TRANSITIONS" ]; then
-  die "namespace '$NS' is declared but not active in this engine yet — the live board is project-hub/work/ under the root /fw-move until the ADR-009 D5 crossover"
+  die "namespace '$NS' is declared but not active in this engine yet — its transitions are not wired"
 fi
 
 # Per-item failure inside a batch: report, mark, and keep going (BUG-215).

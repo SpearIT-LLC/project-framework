@@ -50,16 +50,23 @@ if [ -z "$NS" ]; then
 fi
 
 case "$NS" in
-  operations) ;;
-  kanban)
-    die "kanban fixtures are not useful yet: fw-move.sh refuses the namespace before it reads
-    any record (kanban_TRANSITIONS is empty until the ADR-009 D5 crossover), so seeded cards
-    would change nothing. Seed kanban once the crossover ports its gates." ;;
+  operations|kanban) ;;
   *) die "unknown namespace '$NS' (operations|kanban)" ;;
 esac
 
-QUEUE="$ROOT/operations"
-[ -d "$QUEUE" ] || die "no operations queue at $ROOT/operations — create the first record with /fw-new-ops-record"
+# Per-namespace fixture shape. Both use the reserved 900-999 id block, so --reset
+# never touches a live record. Generalized from operations-only by FEAT-229.1.
+case "$NS" in
+  operations)
+    QUEUE="$ROOT/operations"
+    ID_RE='(INC|REQ)'
+    CREATE_HINT="/fw-new-ops-record" ;;
+  kanban)
+    QUEUE="$ROOT/kanban"
+    ID_RE='(FEAT|BUG|TECH|TASK|SPIKE)'
+    CREATE_HINT="/fw-new" ;;
+esac
+[ -d "$QUEUE" ] || die "no $NS queue at $QUEUE — create the first record with $CREATE_HINT"
 
 LAST_YEAR=$(( $(date +%Y) - 1 ))
 TODAY="$(date +%Y-%m-%d)"
@@ -71,14 +78,15 @@ if [ "$RESET" -eq 1 ]; then
     [ -n "$p" ] || continue
     git -C "$ROOT" rm -rq --ignore-unmatch "$p" 2>/dev/null || rm -rf "$ROOT/$p"
     N=$((N+1))
-  done < <(cd "$ROOT" && find operations -regextype posix-extended \
-             -regex '.*/(INC|REQ)-9[0-9]{2}(-[^/]*\.md|)$' -printf '%p\n' 2>/dev/null)
-  echo "🧹 removed $N fixture path(s) from $ROOT/operations"
+  done < <(cd "$ROOT" && find "$NS" -regextype posix-extended \
+             -regex ".*/${ID_RE}-9[0-9]{2}(-[^/]*\.md|)$" -printf '%p\n' 2>/dev/null)
+  echo "🧹 removed $N fixture path(s) from $QUEUE"
   exit 0
 fi
 
 # --- fixture table --------------------------------------------------------
-# folder | id | slug | closed-stamp (blank = none)
+# folder | id | slug | 4th field (operations: closed-stamp · kanban: criteria state)
+if [ "$NS" = "operations" ]; then
 FIXTURES="
 open|INC-901|batch-item-one|
 open|INC-902|batch-item-two|
@@ -89,45 +97,106 @@ closed|INC-906|terminal-record|$TODAY
 closed|INC-907|sweep-candidate|$LAST_YEAR-11-14
 open|INC-9010|substring-trap|
 "
+else
+# kanban: the 4th field seeds the ACCEPTANCE CRITERIA state, so FEAT-229.2's gate
+# work has a fixture per checkbox state (TECH-177's six). Until those gates exist
+# the field is inert and the cards simply move.
+FIXTURES="
+backlog|FEAT-901|batch-item-one|open
+backlog|BUG-902|batch-item-two|open
+backlog|TECH-903|batch-item-three|open
+todo|FEAT-904|partial-failure-survivor|open
+todo|TASK-905|already-in-todo|open
+doing|FEAT-906|all-criteria-done|done
+doing|BUG-907|in-progress-criterion|inprogress
+doing|TECH-908|cancelled-criterion|cancelled
+doing|TASK-909|question-marker|question
+doing|SPIKE-910|hold-marker|hold
+doing|FEAT-911|quoted-marker-in-prose|quoted
+backlog|FEAT-9010|substring-trap|open
+"
+fi
 
 mk_record() {
-  local folder="$1" id="$2" slug="$3" closed="$4"
-  local kind="Incident"; case "$id" in REQ-*) kind="Request" ;; esac
+  local folder="$1" id="$2" slug="$3" extra="$4"
   local f="$QUEUE/$folder/$id-$slug.md"
-  {
-    printf '# %s: %s\n\n' "$kind" "$(printf '%s' "$slug" | tr '-' ' ')"
-    printf '**ID:** %s\n' "$id"
-    printf '**Kind:** %s\n' "$kind"
-    printf '**Opened:** %s\n' "$TODAY"
-    [ -n "$closed" ] && printf '**Closed:** %s\n**Resolution:** resolved\n' "$closed"
-    printf '\n---\n\nUAT fixture — reserved id block 900-999. Safe to delete with --reset.\n'
-  } > "$f"
+
+  if [ "$NS" = "operations" ]; then
+    local kind="Incident"; case "$id" in REQ-*) kind="Request" ;; esac
+    {
+      printf '# %s: %s\n\n' "$kind" "$(printf '%s' "$slug" | tr '-' ' ')"
+      printf '**ID:** %s\n' "$id"
+      printf '**Kind:** %s\n' "$kind"
+      printf '**Opened:** %s\n' "$TODAY"
+      [ -n "$extra" ] && printf '**Closed:** %s\n**Resolution:** resolved\n' "$extra"
+      printf '\n---\n\nUAT fixture — reserved id block 900-999. Safe to delete with --reset.\n'
+    } > "$f"
+  else
+    # kanban. The criteria block is what the done-gate will read (FEAT-229.2): one
+    # fixture per checkbox state so every branch of TECH-177's contract is
+    # exercisable. Semantics: skills/fw-checkbox-states/SKILL.md.
+    local crit
+    case "$extra" in
+      done)       crit='- [x] A finished criterion' ;;
+      inprogress) crit='- [x] A finished criterion
+- [/] A criterion still in progress — must BLOCK the move to done' ;;
+      cancelled)  crit='- [x] A finished criterion
+- [-] A cancelled criterion — must PASS to done, by design' ;;
+      question)   crit='- [x] A finished criterion
+- [?] Needs information — must BLOCK the move to doing
+      **Question:** what the run needs to know before it can proceed.' ;;
+      hold)       crit='- [x] A finished criterion
+- [h] Blocked — must BLOCK the move to doing
+      **Hold:** what prevents completion of this one line.' ;;
+      quoted)     crit='- [x] A finished criterion
+
+  TECH-166 item 4 regression fixture: the marker `- [ ]` is QUOTED in prose here
+  and must NOT be counted as a live unchecked criterion.' ;;
+      *)          crit='- [ ] An open criterion' ;;
+    esac
+    {
+      printf '# Fixture: %s\n\n' "$(printf '%s' "$slug" | tr '-' ' ')"
+      printf '**ID:** %s\n' "$id"
+      printf '**Type:** %s\n' "${id%%-*}"
+      printf '**Created:** %s\n' "$TODAY"
+      printf '**Completed:**\n'
+      printf '\n---\n\n## Acceptance Criteria\n\n%s\n' "$crit"
+      printf '\n---\n\nUAT fixture — reserved id block 900-999. Safe to delete with --reset.\n'
+    } > "$f"
+  fi
   echo "  created $folder/$id-$slug.md"
 }
 
-echo "Seeding operations fixtures into $ROOT/operations"
-printf '%s\n' "$FIXTURES" | while IFS='|' read -r folder id slug closed; do
+echo "Seeding $NS fixtures into $QUEUE"
+printf '%s\n' "$FIXTURES" | while IFS='|' read -r folder id slug extra; do
   [ -n "${folder:-}" ] || continue
   mkdir -p "$QUEUE/$folder"
-  mk_record "$folder" "$id" "$slug" "$closed"
+  mk_record "$folder" "$id" "$slug" "$extra"
 done
 
-# Bundle on INC-902 — must travel with its record on every move (UAT-33).
-mkdir -p "$QUEUE/open/INC-902"
-printf 'UAT fixture attachment for INC-902.\n' > "$QUEUE/open/INC-902/evidence.txt"
-echo "  created open/INC-902/evidence.txt (bundle)"
+# Bundles — a bundle sits beside its record and must travel with it on every move.
+if [ "$NS" = "operations" ]; then
+  mkdir -p "$QUEUE/open/INC-902"
+  printf 'UAT fixture attachment for INC-902.\n' > "$QUEUE/open/INC-902/evidence.txt"
+  echo "  created open/INC-902/evidence.txt (bundle)"
 
-# Bundle on the sweep candidate — must travel into the year bucket.
-mkdir -p "$QUEUE/closed/INC-907"
-printf 'UAT fixture attachment for INC-907.\n' > "$QUEUE/closed/INC-907/evidence.txt"
-echo "  created closed/INC-907/evidence.txt (bundle)"
+  # Bundle on the sweep candidate — must travel into the year bucket.
+  mkdir -p "$QUEUE/closed/INC-907"
+  printf 'UAT fixture attachment for INC-907.\n' > "$QUEUE/closed/INC-907/evidence.txt"
+  echo "  created closed/INC-907/evidence.txt (bundle)"
+else
+  mkdir -p "$QUEUE/backlog/BUG-902"
+  printf 'UAT fixture attachment for BUG-902.\n' > "$QUEUE/backlog/BUG-902/evidence.txt"
+  echo "  created backlog/BUG-902/evidence.txt (bundle)"
+fi
 
 # git mv needs the files tracked; stage them.
-git -C "$ROOT" add operations >/dev/null 2>&1 || true
+git -C "$ROOT" add "$NS" >/dev/null 2>&1 || true
 
+if [ "$NS" = "operations" ]; then
 cat <<EOF
 
-✅ Fixtures staged in $ROOT/operations
+✅ Fixtures staged in $QUEUE
 
   open/    INC-901, INC-902 (+bundle), REQ-903, INC-904, INC-9010
   onhold/  REQ-905
@@ -136,3 +205,24 @@ cat <<EOF
 Live records 1-6 are untouched. Remove fixtures with:
   bash $0 --root $ROOT operations --reset
 EOF
+else
+cat <<EOF
+
+✅ Fixtures staged in $QUEUE
+
+  backlog/ FEAT-901, BUG-902 (+bundle), TECH-903, FEAT-9010
+  todo/    FEAT-904, TASK-905
+  doing/   FEAT-906 (all done), BUG-907 ([/]), TECH-908 ([-]),
+           TASK-909 ([?]), SPIKE-910 ([h]), FEAT-911 (quoted marker)
+
+The doing/ set is one fixture per checkbox state — FEAT-229.2's gate work reads
+these. FEAT-911 is the TECH-166 item 4 regression: a marker quoted in prose that
+must NOT count as a live criterion.
+
+NOTE: kanban has NO GATES yet (FEAT-229.1 wired transitions only). Every card
+here moves unchecked until FEAT-229.2 ports them.
+
+Live cards are untouched. Remove fixtures with:
+  bash $0 --root $ROOT kanban --reset
+EOF
+fi

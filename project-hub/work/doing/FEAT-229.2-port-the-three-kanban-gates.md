@@ -69,6 +69,12 @@ section only**, or exclude fenced/inline-code and table-cell content.
 Loud on a move *into* an over-limit folder, **never blocking** (`kanban§5`). The limit is read
 from the folder's `.limit` file — per-folder data the gate reads, not a constant.
 
+**⚠️ Do not inherit BUG-240 either — the count is of *work items*, not files.** A dotted
+family (`FEAT-229` + `.1/.2/.3`) is **one** WIP item (TASK-219 Group 1), not four. The old
+engine has never collapsed dotted ids; the convention was settled 2026-09-09 and left a
+paragraph. Collapse to the base id, then count distinct. A `Parent:`-field child has no dotted
+suffix and correctly still counts as its own item.
+
 **⚠️ Do not inherit BUG-174.** The old engine's count excludes `.limit` but **not `.gitkeep`**,
 inflating every count by one. Verified 2026-09-22: `doing/` reported 3/2 holding **two** cards.
 The kanban scaffold ships `.gitkeep` in every folder and `.limit` in `todo/`+`doing/`, so a
@@ -100,7 +106,19 @@ pre-implementation review, not by `grep`.
       inline-code and table content) — a card quoting `- [ ]` in prose moves to `done/`
       without being reworded. **Regression fixture: TECH-177's own line 33 case**
 - [ ] **Counts exclude all dotfiles** — a folder holding two cards plus `.gitkeep` and `.limit`
-      reports 2, not 3 or 4
+      reports 2, not 3 or 4 (**BUG-174**)
+- [ ] **Counts collapse dotted ids to their base** — a folder holding `FEAT-229` + `.1/.2/.3`
+      plus one standalone card reports **2**, not 5 (**BUG-240**). The limit warning and the
+      final count use **one** implementation, not two
+- [ ] **A family move is gated as a family** (**BUG-239**): the dependency and acceptance gates
+      run against **every member**, not only the named item, and a refusal names the
+      responsible child. Tight coupling is preserved — no partial family move.
+
+      > **Observed live on 2026-09-22 while moving this card's own family:** FEAT-229.3
+      > declares `Depends On: TASK-223` (in `backlog/`) and entered `doing/` unchallenged,
+      > because gates run at `fw-move.sh:336` on the named item while children are collected
+      > at `:392` inside the move. BUG-239 carries the design question — a family's
+      > dependencies are the union of its members', and the refusal must name which member.
 - [ ] The WIP warning fires on a move *into* an over-limit folder and **never blocks**
 - [ ] The ADR-007 D7 boundary is documented where the gate lives, not only on a card
 - [ ] Ripeness is **not** claimed as a script check anywhere
@@ -117,5 +135,9 @@ pre-implementation review, not by `grep`.
 - **TECH-177** (done 2026-09-22) — the authored contract. `skills/fw-checkbox-states/SKILL.md`.
 - **TECH-166 item 4** — the unanchored checkbox grep. **Must not be inherited.**
 - **BUG-174** — the dotfile count inflation. **Must not be inherited.**
+- **BUG-240** — the WIP count does not collapse dotted ids to their base. **Must not be
+  inherited**; TASK-219 settled the rule and never mechanized it.
+- **BUG-239** — dotted children bypass every gate. **Carries the design question this card must
+  answer** before writing the gates.
 - **ADR-007 D7** — the ripeness boundary · **ADR-008** — why the contract is pointed at, not
   restated.
