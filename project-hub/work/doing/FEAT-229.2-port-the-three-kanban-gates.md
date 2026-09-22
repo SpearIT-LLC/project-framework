@@ -69,12 +69,6 @@ section only**, or exclude fenced/inline-code and table-cell content.
 Loud on a move *into* an over-limit folder, **never blocking** (`kanban§5`). The limit is read
 from the folder's `.limit` file — per-folder data the gate reads, not a constant.
 
-**⚠️ Do not inherit BUG-240 either — the count is of *work items*, not files.** A dotted
-family (`FEAT-229` + `.1/.2/.3`) is **one** WIP item (TASK-219 Group 1), not four. The old
-engine has never collapsed dotted ids; the convention was settled 2026-09-09 and left a
-paragraph. Collapse to the base id, then count distinct. A `Parent:`-field child has no dotted
-suffix and correctly still counts as its own item.
-
 **⚠️ Do not inherit BUG-174.** The old engine's count excludes `.limit` but **not `.gitkeep`**,
 inflating every count by one. Verified 2026-09-22: `doing/` reported 3/2 holding **two** cards.
 The kanban scaffold ships `.gitkeep` in every folder and `.limit` in `todo/`+`doing/`, so a
@@ -88,6 +82,18 @@ pre-implementation review, not by `grep`.
 ## Out of Scope
 
 - **`accept/` and `cancelled/`** — FEAT-229.3.
+- **Dotted-id family semantics** — **FEAT-229.4**, split out 2026-09-22. Gating a family per
+  member (**BUG-239**) and collapsing a family to one WIP item (**BUG-240**) both require
+  addressable members, which **BUG-241** shows the engine does not have. Keeping them here
+  would have made this card depend on an unfixed bug — the hidden-dependency pattern TECH-237
+  exists to stop, hit for the third time in one session.
+
+  **What this costs, stated plainly:** the WIP warning ships counting a dotted family as N
+  rather than 1, so it over-warns until .4 lands. Cosmetic — the limit is warning-only — and
+  it is the behaviour today regardless.
+
+  **Every fixture this card validates against is flat** (FEAT-901…FEAT-911, no dots), so
+  nothing here is left untested by the split.
 - **Fixing BUG-174 / TECH-166 in the old engine.** They are Low/Medium in `backlog/`, and the
   old engine retires at the D5 crossover. **If this card gets them right, both become
   old-engine-only defects with a shelf life** — worth noting on those cards so nobody works
@@ -97,32 +103,21 @@ pre-implementation review, not by `grep`.
 
 ## Acceptance Criteria
 
-- [ ] The dependency gate refuses `→ doing` when a `Depends On:` card is not in `done/`, naming
+- [x] The dependency gate refuses `→ doing` when a `Depends On:` card is not in `done/`, naming
       that card's current folder; `--force` does not bypass it
-- [ ] The acceptance gate implements TECH-177's contract exactly: `[ ]`/`[/]` block `→ done`,
+- [x] The acceptance gate implements TECH-177's contract exactly: `[ ]`/`[/]` block `→ done`,
       `[x]`/`[-]` pass, `[?]`/`[h]` block `→ doing` naming the marked line **and its note**,
       readiness unchanged
-- [ ] **The checkbox scan is scoped to the Acceptance Criteria section** (or excludes
+- [x] **The checkbox scan is scoped to the Acceptance Criteria section** (or excludes
       inline-code and table content) — a card quoting `- [ ]` in prose moves to `done/`
       without being reworded. **Regression fixture: TECH-177's own line 33 case**
-- [ ] **Counts exclude all dotfiles** — a folder holding two cards plus `.gitkeep` and `.limit`
+- [x] **Counts exclude all dotfiles** — a folder holding two cards plus `.gitkeep` and `.limit`
       reports 2, not 3 or 4 (**BUG-174**)
-- [ ] **Counts collapse dotted ids to their base** — a folder holding `FEAT-229` + `.1/.2/.3`
-      plus one standalone card reports **2**, not 5 (**BUG-240**). The limit warning and the
-      final count use **one** implementation, not two
-- [ ] **A family move is gated as a family** (**BUG-239**): the dependency and acceptance gates
-      run against **every member**, not only the named item, and a refusal names the
-      responsible child. Tight coupling is preserved — no partial family move.
-
-      > **Observed live on 2026-09-22 while moving this card's own family:** FEAT-229.3
-      > declares `Depends On: TASK-223` (in `backlog/`) and entered `doing/` unchallenged,
-      > because gates run at `fw-move.sh:336` on the named item while children are collected
-      > at `:392` inside the move. BUG-239 carries the design question — a family's
-      > dependencies are the union of its members', and the refusal must name which member.
-- [ ] The WIP warning fires on a move *into* an over-limit folder and **never blocks**
-- [ ] The ADR-007 D7 boundary is documented where the gate lives, not only on a card
-- [ ] Ripeness is **not** claimed as a script check anywhere
-- [ ] One engine serves both namespaces — no kanban-specific copy of the gate logic, verified
+- [x] The limit warning and the final count use **one** implementation, not two
+- [x] The WIP warning fires on a move *into* an over-limit folder and **never blocks**
+- [x] The ADR-007 D7 boundary is documented where the gate lives, not only on a card
+- [x] Ripeness is **not** claimed as a script check anywhere
+- [x] One engine serves both namespaces — no kanban-specific copy of the gate logic, verified
       at the call sites
 - [ ] Validated: **AI** — each of the six checkbox states exercised against a seeded fixture,
       plus each gate's refusal · **Human** — a `[-]` criterion moves to `done/` and a `[/]`
@@ -135,9 +130,55 @@ pre-implementation review, not by `grep`.
 - **TECH-177** (done 2026-09-22) — the authored contract. `skills/fw-checkbox-states/SKILL.md`.
 - **TECH-166 item 4** — the unanchored checkbox grep. **Must not be inherited.**
 - **BUG-174** — the dotfile count inflation. **Must not be inherited.**
-- **BUG-240** — the WIP count does not collapse dotted ids to their base. **Must not be
-  inherited**; TASK-219 settled the rule and never mechanized it.
-- **BUG-239** — dotted children bypass every gate. **Carries the design question this card must
-  answer** before writing the gates.
+- **FEAT-229.4** — dotted-id family semantics (**BUG-239**, **BUG-240**, **BUG-241**). Takes
+  the family half of the gate work; depends on this card, not the reverse.
 - **ADR-007 D7** — the ripeness boundary · **ADR-008** — why the contract is pointed at, not
   restated.
+
+
+---
+
+## Validation Run — 2026-09-22
+
+Scratch repo, `--root`, fixtures from the generalized seeder. **Every branch of TECH-177's
+contract exercised.**
+
+| Case | Fixture | Expect | Result |
+|---|---|---|---|
+| All criteria `[x]` | FEAT-906 | move | ✅ exit 0 |
+| `[/]` in progress | BUG-907 | **block** | ✅ *"0 unchecked, 1 in progress: both block → done/"* |
+| `[-]` cancelled | TECH-908 | **pass by design** | ✅ exit 0 |
+| Marker quoted in prose | FEAT-911 | **pass** (TECH-166 item 4) | ✅ exit 0 |
+| `[?]` question | TASK-909 | block `→ doing`, name line + note | ✅ line and `**Question:**` both printed |
+| `[h]` hold | SPIKE-910 | block `→ doing`, name line + note | ✅ line and `**Hold:**` both printed |
+| Dep in `backlog/` + dep in `done/` | FEAT-904 | block, **name only the unmet one** | ✅ *"depends on TECH-903 (currently in backlog/)"* |
+| Dep in `done/` only | FEAT-904 | move | ✅ exit 0 |
+| `doing/` at 2 cards + 2 dotfiles, limit 2 | — | warn **2/2**, not 4/2 | ✅ warns and **still moves** |
+
+**The FEAT-911 row is the one that matters most.** That fixture is the exact shape that
+hard-blocked TECH-177 this morning: a marker quoted in prose, counted as a live criterion by a
+whole-file grep. It now moves cleanly — **TECH-166 item 4 is not inherited.**
+
+**Operations regression — clean, 5 cases.** `901→onhold` ✅ · `901→closed --resolution` ✅ ·
+`906` terminal→open refused ✅ · `903→closed` with no code refused ✅ · a batch of three with
+one bad id reported `moved: 2 skipped: 0 failed: 1`, exit 1, bundle inline ✅.
+
+**Operations takes no gates** (`operations_GATES=""`) — a record there has no acceptance
+criteria and no dependencies, and its one policy (a resolution code on `→ closed`) writes
+stamps rather than merely refusing, so it stays in `move_one`.
+
+### Design notes worth keeping
+
+**Gates are data, not an if-chain.** `kanban_GATES="gate_dependencies gate_markers
+gate_acceptance"` sits in the policy table beside `kanban_TRANSITIONS`, for the same reason:
+policy belongs in the table. Adding a gate to a namespace is a row edit.
+
+**All gates run; the move is refused once.** One invocation names *every* reason, rather than
+making the user fix one thing and run again.
+
+**Gates run after the transition check.** An illegal transition is a usage error and its
+message is the useful one — listing unmet dependencies for a move that could never have
+happened is noise.
+
+**The WIP warning fires once per invocation, not per record.** A batch of three into an
+over-limit folder is one situation a human is being told about, not three.

@@ -56,6 +56,10 @@ operations_ROOT="operations"
 operations_FOLDERS="open onhold closed"
 operations_TRANSITIONS="open:onhold onhold:open open:closed onhold:closed"
 operations_TERMINAL="closed"
+# No gates: an operations record has no acceptance criteria and no dependencies.
+# Its one policy — a resolution code on -> closed — lives in move_one, because it
+# writes stamps rather than merely refusing.
+operations_GATES=""
 
 # kanban: authored folder set (repo-structure diagram).
 #
@@ -86,6 +90,9 @@ kanban_ROOT="kanban"
 kanban_FOLDERS="backlog blocked todo doing accept done cancelled"
 kanban_TRANSITIONS="backlog:todo todo:backlog todo:doing doing:todo doing:done backlog:blocked todo:blocked doing:blocked blocked:backlog blocked:todo blocked:doing"
 kanban_TERMINAL="done cancelled"
+# The gates, as data (FEAT-229.2). Order is report order, not precedence: all of
+# them run, so one invocation names every reason a move is refused.
+kanban_GATES="gate_dependencies gate_markers gate_acceptance"
 
 CODES="resolved cancelled duplicate no-fault-found rejected"
 
@@ -106,10 +113,9 @@ NS_ROOT="$ROOT/$NS_ROOT_REL"
 # kanban until FEAT-229.1 filled its row, and it is the guard any future namespace
 # gets for free between being declared and being wired.
 #
-# NOTE: kanban is now wired for MOVES but has NO GATES — FEAT-229.2 ports those.
-# Until then a kanban move is unchecked: no dependency check, no acceptance-criteria
-# check, no WIP warning. The live board remains project-hub/work/ under the root
-# /fw-move until the ADR-009 D5 crossover, so nothing real depends on those gates yet.
+# NOTE: kanban's gates are wired (FEAT-229.2) — see the *_GATES rows above. The live
+# board remains project-hub/work/ under the root /fw-move until the ADR-009 D5
+# crossover; kanban here is exercised by fixtures until that moment.
 if [ -z "$NS_TRANSITIONS" ]; then
   die "namespace '$NS' is declared but not active in this engine yet — its transitions are not wired"
 fi
@@ -141,6 +147,163 @@ fail_item() { row FAILED "$*"; FAILED=$((FAILED+1)); }
 
 # git mv with untracked fallback (fixtures and fresh records are often untracked)
 gmv() { git -C "$ROOT" mv "$1" "$2" 2>/dev/null || mv "$1" "$2"; }
+
+# ---------------------------------------------------------------------------
+# GATES (FEAT-229.2). Which gates a namespace gets is DATA — the *_GATES row in
+# the policy table — for the same reason its transitions are: policy belongs in
+# the table, not in an if-chain inside the mover.
+#
+# Each gate takes <record> <target>, prints its own refusal via fail_item, and
+# returns non-zero. The engine never prompts (BUG-215): a refusal names what is
+# missing and the human runs again.
+#
+# RIPENESS IS NOT A GATE, and must never become one (ADR-007 D7). Whether a plan
+# is *ready* is a judgment — an unchecked box, or the word "decide", is normal in
+# a well-planned card — and the command's pre-implementation review enforces it.
+# What a gate may read is a FACT that has already happened: which folder a
+# dependency sits in, which state a checkbox carries. The distinction is the one
+# TECH-177 draws for [?] and [h]: a marker records an event, not an opinion.
+# ---------------------------------------------------------------------------
+
+# Criteria live under "## Acceptance Criteria" and nowhere else in the record.
+#
+# WHY A SECTION AND NOT THE WHOLE FILE (TECH-166 item 4): the old engine greps
+# for an unchecked box across the entire file, so PROSE QUOTING A MARKER counts
+# as a live criterion. On 2026-09-22 that hard-blocked TECH-177 — whose own line
+# 33 described this very bug, in backticks — and since the check ignores --force
+# the only way through was rewording a true sentence to satisfy a faulty grep.
+# Scoping to the section is the fix TECH-166 itself prescribes.
+#
+# Fenced blocks inside the section are skipped: a fence may legitimately show a
+# marker as an example.
+criteria_block() {
+  awk '
+    /^##[[:space:]]+Acceptance Criteria[[:space:]]*$/ { inblock=1; next }
+    inblock && /^##[[:space:]]/                       { inblock=0 }
+    inblock && /^```/                                 { fence = !fence; next }
+    inblock && !fence                                 { print }
+  ' "$1"
+}
+
+# Count criteria lines carrying one of the six states (see the fw-checkbox-states
+# skill). Anchored at line start, allowing indentation, so an inline marker in the
+# middle of a sentence is not counted.
+count_state() { # count_state <file> <state char, or space>
+  criteria_block "$1" | grep -cE "^[[:space:]]*- \[$2\]" || true
+}
+
+# --- GATE: acceptance criteria (target: done) ------------------------------
+# TECH-177's contract, IMPLEMENTED, not restated (ADR-008). The authored source
+# is skills/fw-checkbox-states/SKILL.md.
+#
+#   [ ] and [/] BLOCK        [x] and [-] PASS
+#
+# [-] passes BY DESIGN. Today's engines count only unchecked boxes, so [-] slips
+# through because nothing looked — indistinguishable from correct until someone
+# writes [/] and it sails past too. The rule is "cancelled work does not block
+# completion", and it is written as that rule.
+gate_acceptance() {
+  local f="$1" target="$2" base open inprog
+  [ "$target" = "done" ] || return 0
+  base="$(basename "$f")"
+  open="$(count_state "$f" ' ')"
+  inprog="$(count_state "$f" '/')"
+  if [ "$open" -gt 0 ] || [ "$inprog" -gt 0 ]; then
+    fail_item "$base — $open unchecked, $inprog in progress: both block → done/ (mark [x] when done, [-] if cancelled)"
+    return 1
+  fi
+  return 0
+}
+
+# --- GATE: markers (target: doing) -----------------------------------------
+# [?] needs information; [h] something prevents completion. Both block → doing,
+# because an unresolved marker means the card will fail again for a reason
+# already known.
+#
+# The refusal NAMES THE MARKED LINE. A marker's whole job is to be a cursor onto
+# the exact criterion, so a refusal that does not point at it has discarded the
+# information the marker exists to carry.
+gate_markers() {
+  local f="$1" target="$2" base hit n
+  [ "$target" = "doing" ] || return 0
+  base="$(basename "$f")"
+  n=0
+  while IFS= read -r hit; do
+    [ -n "$hit" ] || continue
+    n=$((n+1))
+    fail_item "$base — $(printf '%s' "$hit" | sed 's/^[[:space:]]*//')"
+  done < <(criteria_block "$f" | grep -E "^[[:space:]]*- \[[?h]\]" || true)
+  [ "$n" -eq 0 ] && return 0
+  # The note sits on an indented continuation line beneath the marker, behind a
+  # fixed label. That fixed label is the one thing here worth mechanizing: it is
+  # what makes "a marker with no note" greppable.
+  criteria_block "$f" | grep -E "^[[:space:]]+\*\*(Hold|Question):\*\*" \
+    | sed 's/^[[:space:]]*/           /' || true
+  return 1
+}
+
+# --- GATE: dependencies (target: doing) ------------------------------------
+# Depends On: names whole cards that must reach done/ first. Never bypassable.
+# The refusal names the dependency's CURRENT FOLDER: "not done" without saying
+# where it is leaves the user to search the board by hand.
+#
+# SCOPE NOTE (FEAT-229.4): this gates the NAMED record only. Gating a dotted
+# family per member needs addressable members, which BUG-241 shows the engine
+# does not have yet. Deliberately out of scope here rather than half-built.
+gate_dependencies() {
+  local f="$1" target="$2" base deps dep found loc n
+  [ "$target" = "doing" ] || return 0
+  base="$(basename "$f")"
+  deps="$(grep -m1 -i '^\*\*Depends On:\*\*' "$f" 2>/dev/null | sed 's/^\*\*[Dd]epends [Oo]n:\*\*//' || true)"
+  [ -n "$deps" ] || return 0
+  n=0
+  for dep in $(printf '%s' "$deps" | grep -oE '[A-Za-z]+-[0-9]+(\.[0-9]+)*' || true); do
+    found="$(find "$NS_ROOT" -type f -name "$dep-*.md" -printf '%P\n' 2>/dev/null | head -1 || true)"
+    if [ -z "$found" ]; then
+      fail_item "$base — depends on $dep, which is not on this board"
+      n=$((n+1)); continue
+    fi
+    loc="${found%%/*}"
+    if [ "$loc" != "done" ]; then
+      fail_item "$base — depends on $dep (currently in $loc/), which must reach done/ first"
+      n=$((n+1))
+    fi
+  done
+  [ "$n" -eq 0 ]
+}
+
+# --- WIP warning — WARNS, NEVER BLOCKS (kanban section 5) ------------------
+# A limit is a signal to a human, not a machine's veto: the move still succeeds.
+#
+# COUNTS .md ONLY (BUG-174). The old engine excludes .limit but not .gitkeep, so
+# every count is inflated by one — verified 2026-09-22, doing/ reported 3/2 while
+# holding two cards. The queue scaffold ships .gitkeep in every folder, so a naive
+# file count is wrong from the very first move.
+#
+# SCOPE NOTE (FEAT-229.4 / BUG-240): this counts FILES, so a dotted family counts
+# as N rather than the one WIP item TASK-219 says it is. It over-warns until .4
+# lands; the limit is warning-only, so the cost is cosmetic.
+count_items() { find "$1" -maxdepth 1 -type f -name '*.md' 2>/dev/null | wc -l | tr -d '[:space:]'; }
+
+wip_warn() {
+  local folder="$NS_ROOT/$1" limit count
+  [ -f "$folder/.limit" ] || return 0
+  limit="$(tr -d '[:space:]' < "$folder/.limit")"
+  [ -n "$limit" ] || return 0
+  count="$(count_items "$folder")"
+  [ "$count" -ge "$limit" ] && echo "⚠️  WIP limit: $count/$limit items already in $1/"
+  return 0
+}
+
+# Run every gate this namespace declares. ALL of them run — one invocation
+# reports every reason a move is refused, rather than making the user fix one
+# thing at a time and run again.
+run_gates() { # run_gates <record> <target>
+  local f="$1" target="$2" g rc=0 list
+  eval "list=\"\${${NS}_GATES:-}\""
+  for g in $list; do "$g" "$f" "$target" || rc=1; done
+  return $rc
+}
 
 # ---------------------------------------------------------------------------
 # sweep: operations closed/*.md whose Closed: year < current year -> closed/YYYY/
@@ -227,6 +390,12 @@ move_one() {
   fi
   echo "$NS_TRANSITIONS" | grep -qw "$SOURCE:$TARGET" || { fail_item "$BASE — invalid transition $SOURCE → $TARGET (allowed: $NS_TRANSITIONS)"; return 1; }
 
+  # Gates run AFTER the transition is known legal and BEFORE anything is moved
+  # (FEAT-229.2). Order matters: an illegal transition is a usage error and its
+  # message is the useful one, so it is not worth also listing a card's unmet
+  # dependencies for a move that could never have happened.
+  run_gates "$REC" "$TARGET" || return 1
+
   # THE ENGINE NEVER PROMPTS (BUG-215). A → closed with no code is refused, per record,
   # naming what is missing and the valid codes; the human supplies one and runs again.
   # The code was validated once at parse time, so there is nothing to re-check here.
@@ -273,6 +442,11 @@ move_one() {
   MOVED=$((MOVED+1))
   return 0
 }
+
+# WIP warning fires ONCE per invocation, before anything moves — not per record.
+# A batch of three into an over-limit folder is one situation the human is being
+# told about, not three. It never blocks (kanban§5).
+wip_warn "$TARGET"
 
 # A batch gets a header and a summary; a single move keeps its own one-line output
 # (BUG-225 — unchanged behaviour for the single case).
