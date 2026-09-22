@@ -345,3 +345,74 @@ without another card shipping first?*
 ---
 
 **Last Updated:** 2026-09-22 (later)
+
+---
+
+# (Later, cont.) — The Reference Rule, Stated and Checked
+
+## The governing rule
+
+> **No reference to anything that doesn't exist or has no context.** (Gary, 2026-09-22)
+
+**Scope confirmed first:** the 113 count covers **deliverables only** — `scripts/`, `commands/`,
+`skills/`, `hooks/`, `templates/` in `workspaces/framework/`. Nothing under `project-hub/` was
+scanned. References in cards, ADRs and session histories are fine and expected; the rule binds
+only what installs into a consuming repo.
+
+## The 71 card references, split three ways
+
+Every cited id checked against the board and the release archive:
+
+| Kind | Ids | Refs |
+|---|---|---|
+| **Illustrative examples** | `FEAT-003`, `TASK-004`, `FEAT-007` | 3 |
+| **Released cards** (in `history/releases/framework-dev/v0.4.0/`) | `FEAT-192`, `FEAT-194`, `FEAT-202`, `TASK-197` | 4 |
+| **Live cards** | `BUG-215` ×14, `TASK-213` ×11, `TECH-232` ×7, + 12 more ids | ~64 |
+
+## The premature-id no-no: checked, zero instances
+
+Gary raised it — *"we sometimes get card IDs that don't exist because they sometimes get an ID
+before they're actually created, which we've agreed is a no-no."*
+
+**It has not happened.** The four ids with no card file are **all illustrative examples**, not
+citations to unwritten cards. **The discipline is holding** — and nothing enforces it, which is
+the argument for a check rather than for trust.
+
+## What the worst offenders are, and why one matters more
+
+| File | Refs |
+|---|---|
+| `scripts/fw-move.sh` | 19 |
+| `scripts/fw-new-workspace.sh` | 12 |
+| `commands/fw-move-ops.md` | 9 |
+| `skills/fw-checkbox-states/SKILL.md` | 7 *(written this session)* |
+| `templates/records/work-item.md` | 4 |
+
+**The template is the one that propagates.** Every card a consumer creates is born citing
+ADR-006 and ADR-008 — records they will never have. The others are read; this one *reproduces*.
+
+## Decisions Made (Later, cont.)
+
+9. **Examples must be visibly examples, via a reserved never-allocated range.**
+   - `--parent FEAT-007` and *"`FEAT-003` and `TASK-004` cannot both exist"* are correct
+     teaching, and **indistinguishable from real citations** to a reader or a script.
+   - The reserved range is what makes the pre-commit check possible at all — otherwise every
+     example is a false positive. The template's `TYPE-nnn` placeholder is the existing
+     precedent.
+
+10. **The check catches the premature-id no-no at its source.** An id cited before its card
+    exists falls outside the reserved range and trips the same arm. One mechanism, two problems.
+
+11. **The `fw-checkbox-states` skill is not patched piecemeal.** It is fourth on the offender
+    list with 7 references. Converting it alone would produce exactly the half-converted state
+    TECH-238 exists to avoid; it converts with the rest.
+
+## Files Modified (Later, cont.)
+
+- `project-hub/work/backlog/TECH-238-...md` — the governing rule, the three-way split of the 71
+  card references, the premature-id finding, the reserved-range requirement, and the
+  pre-commit arm that catches both problems.
+
+---
+
+**Last Updated:** 2026-09-22 (later, cont.)

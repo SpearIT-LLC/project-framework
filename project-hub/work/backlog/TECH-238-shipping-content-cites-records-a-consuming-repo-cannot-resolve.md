@@ -41,6 +41,36 @@ packaged.** A consumer installs the plugin, reads `fw-new.sh`'s *"STRICT SCRIPT,
 **This is not hypothetical drift — it is growing.** Four of the 42 ADR references were added in
 this session, by the skill written to *fix* a single-source problem.
 
+### The governing rule — stated 2026-09-22
+
+> **No reference to anything that doesn't exist or has no context.** (Gary)
+
+Shipping content cites **nothing external**. References in cards, ADRs and session histories
+are fine and expected — that is this repo's record, and those records *should* cite each other.
+The rule binds only what installs into a consuming repo.
+
+### The 71 card references split three ways (verified 2026-09-22)
+
+Every cited id was checked against the board and the release archive:
+
+| Kind | Ids | Refs | State |
+|---|---|---|---|
+| **Illustrative examples** | `FEAT-003`, `TASK-004`, `FEAT-007` | 3 | Teaching examples, not citations. Doing their job — but indistinguishable from real citations to `grep` **or to a consumer** |
+| **Released cards** | `FEAT-192`, `FEAT-194`, `FEAT-202`, `TASK-197` | 4 | Real, archived in `project-hub/history/releases/framework-dev/v0.4.0/`. Do not ship |
+| **Live cards** | `BUG-215` ×14, `TASK-213` ×11, `TECH-232` ×7, `FEAT-195` ×5, `BUG-225` ×5, + 10 more | ~64 | Resolve here, absent there |
+
+**The premature-id failure did not occur.** Gary raised it — *"we sometimes get card IDs that
+don't exist because they sometimes get an ID before they're actually created, which we've agreed
+is a no-no."* **Checked: zero instances.** The four ids with no card file are all illustrative
+examples, not citations to unwritten cards. **The discipline is holding** — but nothing enforces
+it, which is the argument for a check rather than for trust.
+
+**Examples must be visibly examples.** `--parent FEAT-007` in `fw-new.md` and *"`FEAT-003` and
+`TASK-004` cannot both exist"* in the kanban README are correct teaching, and a reader cannot
+tell them from a real citation. A **reserved, never-allocated range** makes the distinction
+mechanical — and it is what lets the pre-commit check below exist at all, since otherwise every
+example is a false positive.
+
 ### Three kinds, and the kind decides the fix
 
 | Kind | Example | In a fresh repo |
@@ -118,6 +148,10 @@ that one. A card proposing generated rule text is a different and much larger ca
 - **Bare citation** → write the rule the citation was standing in for, then slug it. This is the
   real work: a bare citation means the rule was *never* stated in shipping content.
 - **Transitional** (4 sites) → **leave alone.** They expire at graduation with the code.
+- **The 71 card references**, by the three-way split above: examples converted to the reserved
+  range, released and live citations removed — the rule they stood for stated inline and
+  slugged where one exists.
+- **Reserve and document the example range**, following the template's `TYPE-nnn` precedent.
 - **Author the owning skill(s)** for the slugs used. `single-source-rule` is certain; others
   emerge from the classification.
 - **A pre-commit check**: no `ADR-\d+` or card reference in shipping content, and no slug
@@ -138,12 +172,19 @@ that one. A card proposing generated rule text is a different and much larger ca
 
 - [ ] All 113 sites are classified and resolved: rationale re-stated and slugged, bare citations
       written out and slugged, the 4 transitional sites left intact
+- [ ] **Every id in shipping content is either a reserved example or is removed.** No shipping
+      file cites a real card id — live, released or archived
+- [ ] **A reserved example range is documented and never allocated**, so an example is
+      distinguishable from a citation by both a reader and a script. The work-item template's
+      `TYPE-nnn` placeholder form is the existing precedent
 - [ ] Every slug used resolves to a skill that **ships**
 - [ ] The owning skill is a **policy**, not a list of applications, and says so
 - [ ] `grep -rn 'ADR-[0-9]' commands/ skills/ scripts/ templates/ hooks/` returns **only** the
       transitional sites
 - [ ] A pre-commit check fails on a new ADR/card reference in shipping content, and on a slug
-      with no owning skill
+      with no owning skill. **The card-id arm also catches the premature-id no-no at its
+      source**: an id cited before its card exists is outside the reserved range and trips the
+      same check
 - [ ] Validated: **AI** — a rule change can be traced to every stating site by `grep` alone ·
       **Human** — a consumer reading an installed plugin can resolve every reference it makes
 
