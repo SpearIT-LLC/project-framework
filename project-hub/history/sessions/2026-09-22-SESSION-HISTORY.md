@@ -638,3 +638,184 @@ straight through FEAT-229 without the churn"*).
 ---
 
 **Last Updated:** 2026-09-22 (final, revised)
+
+---
+
+# (Later, cont.) — The Kanban Board Moves and Gates
+
+**Session Focus:** FEAT-229.1 and .2 implemented; three bugs filed from one root cause.
+
+---
+
+## Summary
+
+The kanban namespace went from **declared-and-refused** to **moving and gated** in two slices.
+Along the way a third hidden dependency surfaced — and Gary's *"here we go again"* forced the
+question of whether it actually blocked anything. **It did not**, and testing that properly is
+what let .2 finish today.
+
+---
+
+## FEAT-229.1 — transitions wired
+
+**`kanban_TRANSITIONS` is an allowlist**, not the old engine's denylist. The old engine lists
+*invalid* pairs and permits everything else, which silently allows every pair nobody thought to
+forbid — `backlog:done` among them. The new row enumerates what is legal.
+
+**`accept/` and `cancelled/` stay declared with no transitions**, so every move into them is
+refused. That is the allowlist doing its job, not an omission.
+
+**The not-wired guard needed no code change.** It fires on empty transitions, so it stopped for
+kanban by itself and still protects any future namespace between declaration and wiring. Only
+its comment was stale — worth noting as the *cheapest* possible outcome of a design that put
+the signal in data rather than in an `if`.
+
+**The seeder was generalized** from operations-only. The kanban set seeds **one fixture per
+checkbox state**, so .2's gate work had something real to read the moment it started.
+
+**Validated: 11 transition cases, bundle travel, and a clean operations regression.**
+
+---
+
+## FEAT-229.2 — the gates
+
+**Three gates, declared as DATA:** `kanban_GATES="gate_dependencies gate_markers
+gate_acceptance"` sits in the policy table beside the transitions. Adding a gate to a namespace
+is a row edit, not a new branch in the mover — the same shape BUG-215 established for
+namespaces themselves.
+
+**All gates run.** One invocation names every reason a move is refused, rather than making the
+user fix one thing and run again.
+
+**TECH-177's contract implemented, not restated** (ADR-008 — the skill is the authored source).
+
+### The validation run — 9 cases, every branch
+
+| Case | Fixture | Result |
+|---|---|---|
+| All `[x]` → done | FEAT-906 | ✅ moves |
+| `[/]` in progress → done | BUG-907 | ✅ **blocked** — the case the old engine gets wrong |
+| `[-]` cancelled → done | TECH-908 | ✅ **passes by design** |
+| Marker quoted in prose → done | FEAT-911 | ✅ **passes** — TECH-166 item 4 |
+| `[?]` → doing | TASK-909 | ✅ blocked, line **and** `**Question:**` note printed |
+| `[h]` → doing | SPIKE-910 | ✅ blocked, line **and** `**Hold:**` note printed |
+| Unmet + met dependency | FEAT-904 | ✅ names **only** the unmet one, with its folder |
+| Met dependency only | FEAT-904 | ✅ moves |
+| 2 cards + 2 dotfiles, limit 2 | — | ✅ warns **2/2** not 4/2, and still moves |
+
+**FEAT-911 is the row that matters.** That fixture is the exact shape that hard-blocked
+TECH-177 **this morning** — a marker quoted in prose, counted by a whole-file grep. It now moves
+cleanly. **The defect that cost a reworded record at 11am was fixed by 4pm, in the engine that
+will inherit the board.**
+
+**Operations regression clean — 5 cases**, including a batch that continues past a bad id.
+Gates are inert there via an empty `operations_GATES` row: an operations record has no
+acceptance criteria and no dependencies.
+
+---
+
+## Three Bugs, One Root Cause
+
+**BUG-239, BUG-240 and BUG-241 all trace to the same gap:** TASK-219 settled dotted-id
+semantics on 2026-09-09 — *a child lives and dies with the parent, moves with it, counts as one
+WIP item* — **and nothing ever mechanized it.** It was a paragraph in a template comment.
+
+| Bug | Found by | Symptom |
+|---|---|---|
+| **BUG-239** | Moving FEAT-229's own family | Children carried past every gate (old engine) |
+| **BUG-240** | Gary questioning the WIP count | A family of 4 counts as 4, not 1 |
+| **BUG-241** | Testing `--parent` before writing gates | A child cannot be addressed; asking for one **silently moves the parent** |
+
+**BUG-241 is the severe one.** `grep -oE '[0-9]+$'` on `FEAT-001.1` captures the trailing `1`,
+which matches `FEAT-001`; and the locating pattern requires a hyphen after the digits, so
+`FEAT-001.1-slug.md` is unreachable by any input. The engine reported
+`SKIPPED FEAT-001-parent-card.md` for a card the user never named, and exited 0.
+
+**ADR-008 Root 2, demonstrated three times in one afternoon:** an instruction the AI merely
+reads is not a guardrail.
+
+---
+
+## Decisions Made (Later, cont.)
+
+17. **FEAT-229.4 created to absorb all three bugs** — after Gary pushed back on yet another
+    hidden dependency: *"What happens if we leave it as a bug unique to dotted IDs? Can we move
+    on then?"*
+    - **Tested rather than assumed.** Two of the three gates have **no** dotted-id dependency:
+      the dependency gate reads a field on one card, the acceptance gate reads one card's
+      criteria. Only WIP-collapsing and family-gating need addressable members.
+    - **Every fixture is flat** (FEAT-901…FEAT-911), so nothing .2 validates was left untested
+      by the split.
+    - **The answer was yes** — and .2 finished the same afternoon because of it.
+
+18. **The cost of the split is stated on the card, not hidden.** The WIP warning ships counting
+    a dotted family as N rather than 1, so it over-warns until .4 lands. Cosmetic — the limit
+    is warning-only — and it is the behaviour today regardless.
+
+19. **Ripeness is not a gate, and the reason lives in the code.** A gate may read a **fact that
+    happened** (a dependency's folder, a checkbox's state); it may never read a **judgment**
+    about whether a plan is ready (ADR-007 D7). Without that paragraph beside the gates, the
+    next person adds a ripeness check next to them and D7 erodes with nobody deciding to erode
+    it. This is TECH-177's `[?]`/`[h]` argument, applied where the gate lives.
+
+20. **The WIP warning fires once per invocation, not per record.** A batch of three into an
+    over-limit folder is one situation a human is being told about, not three.
+
+---
+
+## Files Created (Later, cont.)
+
+- `project-hub/work/backlog/BUG-239-dotted-children-bypass-every-move-gate.md`
+- `project-hub/work/backlog/BUG-240-wip-count-does-not-collapse-dotted-ids.md`
+- `project-hub/work/backlog/BUG-241-new-engine-cannot-address-a-dotted-child.md`
+- `project-hub/work/doing/FEAT-229.4-dotted-id-family-semantics.md`
+
+## Files Modified (Later, cont.)
+
+- `workspaces/framework/scripts/fw-move.sh` — kanban transitions (allowlist), the three gates,
+  `*_GATES` policy rows, WIP warning. 291 → ~460 lines.
+- `workspaces/framework/tests/seed-uat-fixtures.sh` — generalized to both namespaces; kanban
+  fixtures seed one card per checkbox state.
+- `project-hub/work/doing/FEAT-229.1` (8/8), `FEAT-229.2` (9/10) — validation runs recorded.
+- `project-hub/work/backlog/BUG-174`, `TECH-166` — shelf-life notes: FEAT-229.2 fixed both in
+  the new engine, so they are now old-engine-only defects that retire at the crossover.
+
+## Commits (Later, cont.)
+
+- `a01551d` — FEAT-221 dependencies corrected
+- `96a18d5` — FEAT-229 split into three children
+- `47344b9` — FEAT-229.1 transitions wired; BUG-239, BUG-240 filed
+- `4493d60` — BUG-241 filed
+- `4252e86` — FEAT-229.2 the gates
+
+---
+
+## Current State (End of Session)
+
+### In doing/ — 2 WIP items (6 files)
+- **FEAT-229** family: parent + `.1` (8/8 ✅) + `.2` (9/10) + `.3` (blocked on TASK-223) +
+  `.4` (the dotted-id work). One WIP item by the dotted-id rule.
+- **TECH-232** — workspace declarations, still to reconcile.
+
+### In done/ — 12 cards
+Release overdue. *(Engine reports 13 — BUG-174 in the old engine, unfixed by design.)*
+
+### In backlog/ — 89
+Five filed today: TECH-237, TECH-238, BUG-239, BUG-240, BUG-241.
+
+---
+
+## Next Session
+
+1. **FEAT-229.4** — dotted-id family semantics. Closes BUG-239/240/241 together; unblocks the
+   two criteria deferred from .2. **The engine cannot address a dotted child, so this is
+   load-bearing for the crossover.**
+2. **FEAT-229.2's last criterion** — human UAT against the installed plugin (needs a publish).
+3. **A release** — 12 in `done/`.
+4. **TASK-223** — unblocks `.3` *and* FEAT-221. The parked-state set decided as a set.
+5. **Carried:** TECH-232 reconcile · `/fw-backlog` pass · BUG-237 unwritten · four uncovered
+   UAT paths · `git mv` BUG-225 to `archive/`.
+
+---
+
+**Last Updated:** 2026-09-22 (end of session)
