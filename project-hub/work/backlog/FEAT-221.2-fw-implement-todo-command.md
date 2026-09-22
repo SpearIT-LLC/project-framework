@@ -9,8 +9,16 @@
 **Completed:** <!-- Set automatically by /fw-move on → done/. Leave blank at creation. -->
 **Theme:** Workflow
 
-**Depends On:** FEAT-221.3 (the ADR-001 amendment authorises this), FEAT-221.1, TASK-219,
-TECH-177 (the `[?]`/`[h]` markers and their gate behaviour)
+**Depends On:** FEAT-221.3 (the ADR-001 amendment authorises this), FEAT-221.1, TASK-223
+(Group 2a — the `accept/` state), FEAT-229 (the gates that read `[?]`/`[h]`)
+
+<!-- Corrected 2026-09-22. Two changes:
+       · TASK-219 → TASK-223. TASK-219 went to done/ 2026-09-10 with its Group 2 work
+         deferred to TASK-223.
+       · TECH-177 → FEAT-229. TECH-177 completed 2026-09-22, but it is the SPECIFICATION;
+         this card needs the markers to actually gate, which FEAT-229 implements. Naming
+         the spec rather than the implementer would have read as satisfied while the
+         behaviour was still absent. -->
 
 ---
 

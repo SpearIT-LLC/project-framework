@@ -9,7 +9,10 @@
 **Completed:** <!-- Set automatically by /fw-move on → done/. Leave blank at creation. -->
 **Theme:** Workflow
 
-**Depends On:** TASK-219 (Group 2 — the `accept/` state must exist first)
+**Depends On:** TASK-223 (Group 2a — the `accept/` state must exist first)
+
+<!-- Corrected 2026-09-22: was TASK-219, in done/ since 2026-09-10 with its Group 2 work
+     deferred to TASK-223. The blocker was real; the card named was not. -->
 
 ---
 

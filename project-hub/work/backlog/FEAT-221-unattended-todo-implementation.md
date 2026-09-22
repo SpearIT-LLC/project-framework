@@ -10,8 +10,17 @@
 **Theme:** Workflow
 **Planning Period:** ADR-009 build
 
-**Depends On:** TASK-219 (Group 2 — the `accept/` state and board lifecycle policy),
-TECH-177 (the `[?]`/`[h]` markers)
+**Depends On:** TASK-223 (Group 2a — the `accept/` state, decided as a set with `cancelled/`
+and FEAT-030's hold)
+
+<!-- Corrected 2026-09-22. Previously read "TASK-219 (Group 2 — the accept/ state and board
+     lifecycle policy), TECH-177". Both were stale:
+       · TASK-219 has been in done/ since 2026-09-10. Its Group 2 work was DEFERRED to
+         TASK-223, which this card did not name — so the declared blocker was satisfied
+         while the real one was invisible. That is why this card could not move.
+       · TECH-177 completed 2026-09-22. The [?]/[h] markers are specified in the
+         fw-checkbox-states skill; FEAT-229 implements the gates.
+     The live instance that produced TECH-237 (the create-gate dependency question). -->
 
 ---
 
