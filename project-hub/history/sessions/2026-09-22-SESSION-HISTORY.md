@@ -514,3 +514,127 @@ to fix* (2026-09-21, "new engine only"). That choice was right and this is its c
 ---
 
 **Last Updated:** 2026-09-22 (final)
+
+---
+
+# (Later, cont.) — FEAT-221 Corrected; FEAT-229 Split Into Three
+
+## FEAT-221's stale dependency — three cards, not one
+
+**FEAT-221, .1 and .2 all named TASK-219**, in `done/` since 2026-09-10 with its Group 2 work
+deferred to **TASK-223**, which none of them named. Declared blocker satisfied; real blocker
+invisible. **That is why FEAT-221 could not move.**
+
+**FEAT-221.2 also named TECH-177**, which completed today. **Retargeted to FEAT-229** — TECH-177
+is the *specification*; that card needs the markers to actually **gate**, which FEAT-229
+implements. Naming the spec would have read as satisfied while the behaviour was still absent.
+
+Each correction carries an inline note recording what it read before and why it was wrong.
+
+**Board scanned for others:** only FEAT-179 also names a `done/` card (FEAT-175) — correctly,
+since SPIKE-178 still blocks it. Left alone.
+
+## FEAT-229 — TECH-237's test applied to it, on Gary's prompt
+
+**Gary: *"Does FEAT-229 include our new card test we added today (TECH-237)? If not let's apply
+the spirit of TECH-237 so we don't run into the dependency issue on this one."***
+
+**It did not, and applying it found a hidden dependency.** FEAT-229 had **no `Depends On:`
+field** while carrying a TASK-223 dependency through `accept/` — both `accept/` and `cancelled/`
+sit in `kanban_FOLDERS` with semantics TASK-223 has not settled, and `kanban_TERMINAL="done
+cancelled"` presumes an answer it has not given. **The same defect that stalled FEAT-221, caught
+before it stalled anything.**
+
+## Two scope items were already done — found by running the code
+
+Before splitting, the card's claims were tested in a scratch repo rather than read:
+
+```
+$ fw-new.sh FEAT test-scaffold
+Created kanban queue at kanban/ (first use)          ← scaffold: ALREADY WORKS
+Created: kanban/backlog/FEAT-001-test-scaffold.md    ← create:   ALREADY WORKS
+$ fw-new.sh BUG t2  →  BUG-002                        ← shared sequence: correct
+$ fw-move.sh kanban FEAT-001 todo
+❌ namespace 'kanban' is declared but not active      ← the ONLY real gap
+```
+
+`fw-new.sh:155-163` scaffolds on first use (FEAT-175, 0.4.7). **Gary's proposed split
+(scaffold → create → move) collapsed on this evidence** — two of its three stages were built
+months ago. The card's own *"narrower than first written"* note had not gone far enough.
+
+## The split — three children, smallest bite first
+
+**Gary: *"a. Split. Smaller bites are better."***
+
+| Child | Scope | Depends On |
+|---|---|---|
+| **.1** | Wire `kanban_TRANSITIONS` (five settled folders); retire the not-wired refusal; teach the seeder | *(nothing)* |
+| **.2** | The gates — dependency, acceptance with TECH-177's contract, WIP warnings | .1 |
+| **.3** | `accept/` + `cancelled/` + terminal archival | .2, **TASK-223** |
+
+**Nothing blocks .1 or .2** — that is what deferring `accept/`/`cancelled/` bought (Gary:
+*"Let's defer accept/ and cancelled/ for a followup enhancement, then we should be able to get
+straight through FEAT-229 without the churn"*).
+
+## Decisions Made (Later, cont.)
+
+14. **Defer `accept/` and `cancelled/` to .3.** Both are declared in `kanban_FOLDERS` with
+    unsettled semantics; TASK-223 requires the parked-state set to be decided **as a set**.
+    Deferring them moves the only external dependency off the critical path.
+
+15. **BUG-174 and TECH-166 are not dependencies — they are warnings.** Verified: the new engine
+    has **zero** limit logic and **zero** acceptance-criteria logic, so there is nothing to
+    inherit yet. Both are old-engine defects in code retiring at the D5 crossover. They became
+    **acceptance criteria on .2** (exclude all dotfiles; scope the checkbox scan to the
+    Acceptance Criteria section) rather than `Depends On:` entries.
+    - **A note was appended to both cards:** if .2 lands correctly they become old-engine-only
+      defects with a shelf life — *do not work them twice*.
+
+16. **The dotted-id family stays in one folder — the engine was right, the plan was wrong.**
+    `.3` was written expecting `backlog/`; `/fw-move 229 todo` moved all three children with
+    the parent. That is TASK-219 Group 1 working as designed: tight coupling, one WIP item.
+    **`.3`'s `Depends On: TASK-223` is what records that it cannot start — not its folder.**
+    Both cards corrected to say so.
+
+## Files Created (Later, cont.)
+
+- `project-hub/work/todo/FEAT-229.1-wire-kanban-transitions.md`
+- `project-hub/work/todo/FEAT-229.2-port-the-three-kanban-gates.md`
+- `project-hub/work/todo/FEAT-229.3-accept-and-cancelled-states.md`
+
+## Files Modified (Later, cont.)
+
+- `project-hub/work/backlog/FEAT-221*.md` (three cards) — dependencies corrected, each with an
+  inline note.
+- `project-hub/work/todo/FEAT-229-...md` — split header; Scope items annotated with their
+  destination, two marked **ALREADY DONE**; moved `doing/` → `todo/`.
+- `project-hub/work/backlog/BUG-174-...md`, `TECH-166-...md` — shelf-life notes.
+
+---
+
+## Current State (Final, revised)
+
+### In doing/ — 1 card
+- **TECH-232** only. (The engine reports 2/2 because of **BUG-174** — `.gitkeep` is counted.
+  Gary caught this misreport during the session; `done/` is really **11**, not 12.)
+
+### In todo/ — 16 cards
+- **FEAT-229 + .1/.2/.3** — one WIP item by the dotted-id rule. **.1 is the next implementation
+  card and is blocked by nothing.**
+
+### In backlog/
+- **TECH-237**, **TECH-238** filed today · **FEAT-221** family now naming real blockers.
+
+---
+
+## Next Session (Final, revised)
+
+1. **FEAT-229.1 → `doing/`** — wire the transitions. Blocked by nothing; the smallest slice.
+2. **FEAT-229.2** — the gates, with TECH-177's contract and the two must-not-inherit defects.
+3. **A release** — 11 in `done/`.
+4. **TECH-232 reconcile** · **`/fw-backlog` pass** (`todo/` at 16).
+5. **Carried:** BUG-237 unwritten; four uncovered UAT paths; `git mv` BUG-225 to `archive/`.
+
+---
+
+**Last Updated:** 2026-09-22 (final, revised)

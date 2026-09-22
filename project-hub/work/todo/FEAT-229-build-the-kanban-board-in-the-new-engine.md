@@ -72,21 +72,70 @@ all three gates and has run this project for months. This is a **port with justi
 *"`fw-new.sh` to create cards and scaffold `kanban/` on first use, and the kanban row in
 `fw-move.sh` wired to real transitions and gates."*
 
-## Scope
+## SPLIT INTO THREE CHILDREN — 2026-09-22
 
-1. **Fill `kanban_TRANSITIONS`** and remove the not-wired refusal for this namespace.
-2. **Port the three gates** — dependency (`→ doing` requires deps complete), acceptance criteria
-   (`→ done` requires no unchecked boxes), and the transition matrix. **Ripeness stays a
-   judgment step** enforced by the command, never claimed as a script check (ADR-007 D7).
-3. **The move function for kanban** — one engine, one policy table; the namespace is an
-   argument, never inferred (BUG-215).
-4. **The create function for kanban** — next id from the shared sequence, template per type,
-   required fields, legal entry folders only (`kanban§3`: `backlog/` or `todo/`, nothing else).
-5. **Author the work-item template**, encoding the conventions TASK-219 settles.
-6. **WIP warnings** — loud on a move *into* an over-limit folder, never blocking (`kanban§5`).
-7. **Terminal-state archival** — a spike archives to `history/spikes/`, a POC spike as a
-   *folder*; neither produces a release (`kanban§2`, TECH-228).
-8. **Implement TECH-177's checkbox contract** (added 2026-09-21). The gates are written
+**This card is now the parent. The work is in FEAT-229.1/.2/.3.** (Gary: *"I'm good with
+splitting the card into sub-task cards"* / *"Smaller bites are better."*)
+
+| Child | Scope | Depends On | Folder |
+|---|---|---|---|
+| **.1** | Wire `kanban_TRANSITIONS` for the five settled folders; retire the not-wired refusal; teach the seeder | *(nothing)* | `todo/` |
+| **.2** | The gates — dependency, acceptance (TECH-177's contract), WIP warnings | .1 | `todo/` |
+| **.3** | `accept/` + `cancelled/` + terminal archival | .2, **TASK-223** | `todo/` |
+
+**All four sit in `todo/` together, and that is correct.** A dotted id is *tight coupling*: the
+child moves with the parent and the family counts as **one** WIP item (TASK-219 Group 1). An
+earlier plan put .3 in `backlog/` because it is blocked; the engine moved it with the parent
+and **the engine is right** — `.3`'s `Depends On: TASK-223` is what records that it cannot
+start, not its folder. Splitting the family across folders would fight the convention and
+double-count the WIP.
+
+**Two Scope items below are already satisfied — verified by execution, not inspection.** Run in
+a scratch repo on 2026-09-22:
+
+```
+$ fw-new.sh FEAT test-scaffold
+Created kanban queue at kanban/ (first use)          ← item 4's scaffold: DONE
+Created: kanban/backlog/FEAT-001-test-scaffold.md    ← item 4's create: DONE
+$ fw-new.sh BUG t2  →  BUG-002                        ← shared sequence: correct
+$ fw-move.sh kanban FEAT-001 todo
+❌ namespace 'kanban' is declared but not active      ← the only real gap
+```
+
+`fw-new.sh:155-163` scaffolds on first use (FEAT-175, shipped 0.4.7) and `templates/records/
+work-item.md` already encodes the TASK-219 conventions. **Items 4 and 5 are verification, not
+authoring** — this card's own *"narrower than first written"* note did not go far enough.
+
+**`accept/` and `cancelled/` were deferred deliberately** (Gary, 2026-09-22): both sit in
+`kanban_FOLDERS` with semantics TASK-223 has not settled, so leaving them to .3 means **.1 and
+.2 are blocked by nothing** and run straight through.
+
+**The dependency review that produced this split** applied TECH-237's test — *can this card,
+finished, verify this without another card shipping first?* This card had **no `Depends On:`
+field** while carrying a hidden TASK-223 dependency through `accept/`, which is the same defect
+TECH-237 was written to prevent and the same one that stalled FEAT-221.
+
+---
+
+## Scope (original — now distributed across the children)
+
+1. **Fill `kanban_TRANSITIONS`** and remove the not-wired refusal for this namespace. → **.1**
+2. **Port the three gates** → **.2** — dependency (`→ doing` requires deps complete),
+   acceptance criteria (`→ done` requires no unchecked boxes), and the transition matrix.
+   **Ripeness stays a judgment step** enforced by the command, never claimed as a script
+   check (ADR-007 D7).
+3. **The move function for kanban** → **.1** — one engine, one policy table; the namespace
+   is an argument, never inferred (BUG-215).
+4. **The create function for kanban** → **ALREADY DONE** (FEAT-175, verified by execution
+   2026-09-22) — next id from the shared sequence, template per type, required fields, legal
+   entry folders only (`kanban§3`).
+5. **Author the work-item template** → **ALREADY DONE** (TASK-219, 2026-09-09) — it exists
+   and encodes the Group 1 conventions. Reduces to verification.
+6. **WIP warnings** → **.2** — loud on a move *into* an over-limit folder, never blocking
+   (`kanban§5`).
+7. **Terminal-state archival** → **.3** — a spike archives to `history/spikes/`, a POC spike
+   as a *folder*; neither produces a release (`kanban§2`, TECH-228).
+8. **Implement TECH-177's checkbox contract** → **.2** (added 2026-09-21). The gates are written
    checkbox-aware from the start: the done-gate blocks on `[ ]` **and** `[/]` while `[x]` and
    `[-]` pass **by design**; `→ doing` blocks on `[?]` and `[h]`, naming the marked line and
    its note; readiness is unchanged (only `[ ]` blocks). TECH-177 is the authored source —

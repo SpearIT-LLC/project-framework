@@ -85,3 +85,16 @@ Three readiness heuristics produce false-positives for planning items:
 ## Related
 
 - FEAT-163, FEAT-164, FEAT-165 (the items that surfaced this)
+
+---
+
+## Note — 2026-09-22: this defect has a shelf life
+
+**FEAT-229.2 writes the new engine's equivalent logic from scratch** and carries an explicit
+criterion not to inherit this bug. The new engine has none of it today (verified 2026-09-22:
+zero limit logic, no acceptance-criteria logic), so there is nothing there to fix — only
+something to get right the first time.
+
+**If FEAT-229.2 lands correctly, this becomes an old-engine-only defect** that retires with
+`.claude/scripts/fw-move.sh` at the ADR-009 D5 crossover. **Do not work it twice:** check
+FEAT-229.2's state before scheduling this card.
