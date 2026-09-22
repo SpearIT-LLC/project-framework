@@ -215,3 +215,133 @@ implementing in the wrong order."* Claude's first answer had led with the parked
 ---
 
 **Last Updated:** 2026-09-22
+
+---
+
+# (Later) — The Two Open Items, Closed
+
+**Session Focus:** the ADR-leak card written, and TECH-177's `[h]` resolved rather than carried.
+
+---
+
+## Summary
+
+Both items from the "Next Session" list above were done in the same session. The ADR leak
+turned out to be **nearly three times larger than reported** once card references were counted.
+TECH-177 reached **11/11 with nothing held**, by moving its validation criterion to the card
+that can actually perform it.
+
+---
+
+## Work Completed (Later)
+
+### TECH-238 — and the count that grew under investigation
+
+**Filed: `TECH-238-shipping-content-cites-records-a-consuming-repo-cannot-resolve.md`.**
+
+**The number in the morning's finding was wrong — too small.** It reported 41 ADR references.
+Counting card references as well, which are the *same defect*, the real figure is **113**:
+
+| Reference | Count |
+|---|---|
+| ADR references | **42** — ADR-009 ×18, ADR-008 ×17, ADR-006 ×5, ADR-007 ×2 |
+| Card references | **71** — BUG-215 ×14, TASK-213 ×11, TECH-232 ×7, FEAT-195 ×5, BUG-225 ×5, ~20 more |
+
+**Recorded on the card as a note**, because the miss is instructive: the investigation looked
+for what it had named (`ADR-\d+`) rather than for the *class* (records that do not ship). A
+`BUG-215` citation in `fw-move.sh` dangles in a consumer's repo exactly as an ADR tag does.
+
+**Priority set Medium, not High, deliberately** — nothing is broken *here*; the cost lands at
+the first external install and at every rule change before then.
+
+### TECH-177 — 11/11, nothing held
+
+**The `[h]` was removed by fixing the structure, not by satisfying the criterion.**
+
+The gate-exercising validation moved to **FEAT-229**, which builds the gates. Both cards now
+carry the reasoning: a *Validation Ownership* section on TECH-177, and a quoted note on
+FEAT-229's new criterion explaining why it lives there.
+
+**The generalizable lesson, written onto TECH-177:**
+
+> **A correct hold on a card's own acceptance criterion is a signal that the card was split at
+> the wrong seam.**
+
+The marker was used correctly — not researchable, blocked on other work — and that is precisely
+why it deserved a second look rather than acceptance.
+
+**And the trap it avoided:** declaring `Depends On: FEAT-229` would have formalized a **cycle**,
+since FEAT-229's Scope item 8 depends on TECH-177's specification existing. Two cards, each
+correctly waiting on the other, permanently.
+
+**The resolving test, now recorded for reuse:** *can this card, finished, verify this criterion
+without another card shipping first?*
+
+---
+
+## Decisions Made (Later)
+
+7. **The ADR-leak fix is not "delete the tags."**
+   - Following the morning's correction (*"A copy IS duplication"*), a naive de-tagging pass
+     would make each copy **harder to trace back** — the opposite of the goal. The card says so
+     explicitly, so the next reader does not take the shortcut.
+   - **Three kinds, three treatments:** load-bearing rationale (state the rule, slug it, drop
+     the tag), bare citation (**write the rule the citation stood in for** — the real work,
+     because a bare citation means the rule was *never* stated in shipping content), and
+     transitional (**4 sites, leave alone** — they expire at graduation with the code).
+
+8. **TECH-177's validation belongs to FEAT-229, not to a dependency declaration.**
+   - The seam was wrong, not the dependency. Validating a contract is part of implementing it.
+   - TECH-177 closes as a completed specification with **no `Depends On:` field** — correctly,
+     since it now has no dependency.
+
+---
+
+## Files Created (Later)
+
+- `project-hub/work/backlog/TECH-238-shipping-content-cites-records-a-consuming-repo-cannot-resolve.md`
+
+## Files Modified (Later)
+
+- `project-hub/work/doing/TECH-177-checkbox-state-convention.md` — `[h]` replaced with a closed
+  criterion; *Validation Ownership — DECIDED 2026-09-22* section added. **11/11.**
+- `project-hub/work/todo/FEAT-229-build-the-kanban-board-in-the-new-engine.md` — gained the
+  validation criterion with its why; the contract criterion now names the skill and says
+  *implement it, do not restate it*.
+
+## Commits (Later)
+
+- `df0cc83` — TECH-177 specification authored as the `fw-checkbox-states` skill
+- `b41de58` — TECH-238 filed; TECH-177's validation moved to FEAT-229
+
+---
+
+## Current State (End of Day)
+
+### In doing/ — 3/2, over WIP
+- **TECH-177** — **11/11, nothing held, ready for `→ done`.** Not moved: the move is Gary's
+  call, and `/fw-move` runs the done-gate.
+- **TECH-232** — workspace declarations; still to reconcile against work already in the tree.
+
+### In backlog/ — filed today
+- **TECH-237** — the create-gate question (dependencies + validation ownership).
+- **TECH-238** — the 113 unresolvable references.
+
+### In done/
+- 11 items; a release remains due. TECH-177 would make 12.
+
+---
+
+## Next Session (Revised)
+
+1. **TECH-177 → `done/`** — 11/11 and gate-ready.
+2. **FEAT-221's stale dependency** — correct it to name TASK-223. It is the live instance of the
+   problem TECH-237 prevents, and it is what is actually blocking FEAT-221.
+3. **FEAT-229 → `doing/`** and its pre-implementation review. Its contract now exists.
+4. **TECH-232 reconcile** — three criteria look satisfied by `workspace.yaml` already in the tree.
+5. **Carried:** BUG-237 unwritten; the four uncovered UAT paths; `git mv` BUG-225 to `archive/`
+   (fourth session); a release; a `/fw-backlog` pass (two WIP limits over).
+
+---
+
+**Last Updated:** 2026-09-22 (later)
