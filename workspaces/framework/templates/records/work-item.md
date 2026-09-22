@@ -59,9 +59,11 @@ why the chosen one won - a decision without its reason gets re-litigated.__
 
 ## Acceptance Criteria
 
-<!-- The done-gate reads these. [ ] and [/] block the move to done/;
-     [x] done and [-] cancelled/not-applicable pass. Write them so they can be
-     checked, not admired. -->
+<!-- The done-gate reads these. Six states are available - [ ] [x] [/] [-] [?]
+     [h] - and which ones block which move is specified in ONE place: the
+     fw-checkbox-states skill. Do not restate its rules here (ADR-008); ask the
+     AI for the convention, or read skills/fw-checkbox-states/SKILL.md.
+     Write criteria so they can be checked, not admired. -->
 
 - [ ] __Something observable that is true when this is finished__
 - [ ] __Verified against the built plugin, not the source tree__

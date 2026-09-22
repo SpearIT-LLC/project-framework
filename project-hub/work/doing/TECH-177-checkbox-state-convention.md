@@ -304,29 +304,82 @@ reader will take these markers as a general ripeness gate and D7 gets quietly ov
 
 ## Acceptance Criteria
 
-- [ ] The convention is authored in **one** place, and `workflow-guide.md`, the template and
+- [x] The convention is authored in **one** place, and `workflow-guide.md`, the template and
       FEAT-229 point at it rather than restating it (ADR-008)
-- [ ] The six states are specified with their gate semantics: `[ ]`/`[/]` block `→ done`;
+      — `workspaces/framework/skills/fw-checkbox-states/SKILL.md` (2026-09-22). See the
+      **Home** note below for why a skill and not `standards/`.
+- [x] The six states are specified with their gate semantics: `[ ]`/`[/]` block `→ done`;
       `[x]`/`[-]` pass; `[?]`/`[h]` block `→ doing`; readiness unchanged
-- [ ] **`[-]` is specified as passing by design**, with the accident it replaces called out —
+- [x] **`[-]` is specified as passing by design**, with the accident it replaces called out —
       today both engines count only unchecked boxes, so `[-]` already passes for the wrong
       reason
-- [ ] The note form is specified: task text preserved on the marked line, indented
+- [x] The note form is specified: task text preserved on the marked line, indented
       continuation, fixed label (`**Hold:**` / `**Question:**`), free text after it
-- [ ] `[?]` clearing is specified: the AI attempts an answer first and clears only when it
+- [x] `[?]` clearing is specified: the AI attempts an answer first and clears only when it
       genuinely has one; it defers to a human otherwise. `[h]` is not researchable and is
       cleared when the blocking condition changes
-- [ ] The ADR-007 D7 boundary (marker = recorded event, not ripeness judgment) is written in
+- [x] The ADR-007 D7 boundary (marker = recorded event, not ripeness judgment) is written in
       the gate's own documentation, not only in this card
-- [ ] `workflow-guide.md` records that `[!]` is **not** used, and why (it means *important* in
+      — in the skill, under *"read this before adding a gate"*. The skill **is** the gate's
+      documentation: it is the contract FEAT-229's gates implement, and no other gate
+      documentation exists in the new build.
+- [x] `workflow-guide.md` records that `[!]` is **not** used, and why (it means *important* in
       all four Obsidian theme collections)
-- [ ] The work-item template's checklist guidance references the convention
-- [ ] No other checkbox consumer regresses — pre-commit hook and any unchecked-box grep audited
-- [ ] **FEAT-229 carries a criterion making it responsible for implementing this contract**,
+      — **recorded in the skill instead.** `workflow-guide.md` is old-build
+      (`framework/docs/`), which this card scoped away from on 2026-09-21. The new build has
+      **no workflow guide** (verified 2026-09-22); when one is written it points at the skill.
+- [x] The work-item template's checklist guidance references the convention
+      — `workspaces/framework/templates/records/work-item.md`. It had been **restating** the
+      done-gate rules inline (an ADR-008 violation predating this card); replaced with a
+      pointer.
+- [x] No other checkbox consumer regresses — pre-commit hook and any unchecked-box grep audited
+      — **audited 2026-09-22, no new-build consumer exists.** All four hits are old-build or
+      POC: `.claude/hooks/Validate-WorkItems.ps1:89`, `.claude/scripts/fw-move.sh:228`, and
+      `project-hub/poc/SPIKE-145-script-policy/poc-move-policy.sh:218,244`. The new build's
+      `tools/pre-commit` has **no checkbox logic at all**. Nothing to regress.
+- [x] **FEAT-229 carries a criterion making it responsible for implementing this contract**,
       so the specification cannot land with nothing obliged to honour it
-- [ ] Validated: **AI** — every state exercised against a scratch fixture once FEAT-229 ships
+      — verified 2026-09-22: FEAT-229 Scope item 8 (line 89) and acceptance criterion
+      (line 145), both added 2026-09-21.
+- [h] Validated: **AI** — every state exercised against a scratch fixture once FEAT-229 ships
       the gates; **Human** — a `[-]` criterion moves to done and a `[/]` criterion is blocked,
       against the **installed plugin** (TECH-188)
+      **Hold:** there is no gate to validate against — FEAT-229 builds it. Clears when
+      FEAT-229 ships the three gates. Not researchable; the blocking condition is other work.
+
+---
+
+## The Home — DECIDED 2026-09-22
+
+**`workspaces/framework/skills/fw-checkbox-states/SKILL.md`.** The specification is a skill,
+not a document and not a `standards/` file.
+
+**Why a skill.** ADR-009 OQ1 already settled this class: standards end as skills, because
+SKILL.md is plain markdown, so *the skill is the human-readable standard* — one home. It
+ships as plugin content, so ADR-009 D3's authored/shipped boundary holds with no exception.
+
+**Why not `standards/`.** That folder is **staging that drains to zero** (ADR-009 OQ1:
+"drains as skills are built; once empty, it is deleted"). Authoring a *new* file into a
+folder designed to disappear adds to the thing being emptied. It was proposed earlier this
+session and withdrawn on reading OQ1.
+
+**Why not data the gate reads** (the `.limit` precedent from TECH-232): a WIP limit varies
+legitimately per repo; the meaning of `[x]` does not. It is the Obsidian convention, and a
+repo redefining it breaks compatibility with the ecosystem this card researched. Configurable
+is the wrong shape.
+
+**Why not embedded in the command, the script, or a hook.** Three audiences, three needs: the
+*gate semantics* must be executable (ADR-008 — prose is not a guardrail), so they live in
+`fw-move.sh` as FEAT-229 writes them; the *judgment* (when to mark, the note form, the D7
+boundary) is skill-shaped; the *symbol meanings* are reference. Script-only leaves the human
+nothing readable; skill-only leaves the gate ungated. **The split is deliberate: skill =
+contract, script = enforcement.**
+
+**A false fork was posed and withdrawn** — "repo-wide `.claude/skills/` or plugin content?"
+Only one authored home exists. A consuming repo's `.claude/skills/` is the *fork-and-own
+tailoring path* OQ1 describes, not an authoring destination. The confusion came from ADR-009
+D3's stale `.claude/` wording, which predates *"the framework IS the plugin"* settled the same
+day. **Recorded as an open question on TECH-233**, which owns the tier model this misreads.
 
 ---
 

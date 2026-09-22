@@ -77,6 +77,28 @@ one"*).
       reach it?
 - [ ] **Does the old `framework.yaml` survive the cutover** in this repo, or is it retired with
       the rest of the old build?
+- [ ] **ADR-009 D3's `.claude/` wording is stale and actively misleads** (found 2026-09-22).
+      D3 names the deliverable as *"`.claude/` — commands, scripts, hooks, skills, templates"*
+      and OQ1 says standards end *"under `.claude/skills/`"*. **That language predates "the
+      framework IS the plugin"**, settled the same day (2026-08-18) and recorded in D3's own
+      closing paragraph. Once the framework is the plugin, distribution is a marketplace
+      install and skills land in the **plugin cache**, not in a consuming repo's
+      `.claude/skills/`. The authored home is `workspaces/framework/skills/` — which is what
+      the tree actually does (`fw-troubleshoot`).
+
+      **`.claude/` in D3 is shorthand for "plugin content, not generated structure."** The
+      distinction it draws — authored/shipped vs. generated — is live; the literal path is
+      not.
+
+      **It cost real time in this session**: it produced a false fork ("repo-wide
+      `.claude/skills/` *or* plugin content?") for TECH-177's skill, when only one home
+      exists. A consuming repo's `.claude/skills/` is the **fork-and-own tailoring path**
+      OQ1 already describes — not an authoring destination.
+
+      **Why here and not a card of its own:** this is an instance of this card's fourth
+      question — the `.claude/` reading is exactly the plugin-tier/repo-tier confusion the
+      three-tier model exists to settle. Fixing the wording without settling the tiers would
+      just move the ambiguity.
 
 ## Acceptance Criteria
 
