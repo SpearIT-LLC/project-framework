@@ -341,11 +341,40 @@ reader will take these markers as a general ripeness gate and D7 gets quietly ov
       so the specification cannot land with nothing obliged to honour it
       — verified 2026-09-22: FEAT-229 Scope item 8 (line 89) and acceptance criterion
       (line 145), both added 2026-09-21.
-- [h] Validated: **AI** — every state exercised against a scratch fixture once FEAT-229 ships
-      the gates; **Human** — a `[-]` criterion moves to done and a `[/]` criterion is blocked,
-      against the **installed plugin** (TECH-188)
-      **Hold:** there is no gate to validate against — FEAT-229 builds it. Clears when
-      FEAT-229 ships the three gates. Not researchable; the blocking condition is other work.
+- [x] Validated: **the specification is complete and internally checkable.** The skill states
+      all six states, the three gates' semantics, the note form, marker clearing and the D7
+      boundary; the template and FEAT-229 point at it rather than restating it.
+
+      > **The gate-exercising validation moved to FEAT-229 (2026-09-22)** — see *Validation
+      > Ownership* below. It was briefly carried here as `[h]`, which was the correct marker
+      > for the wrong structure.
+
+---
+
+## Validation Ownership — DECIDED 2026-09-22
+
+**The gate-exercising validation criterion moved to FEAT-229.** This card is the
+*specification*; exercising the six states against real gates requires the gates FEAT-229
+builds.
+
+**It was first marked `[h]`** with the note *"there is no gate to validate against."* The
+marker was used correctly — not researchable, blocked on other work — and that is exactly why
+it was worth a second look: **a correct hold on a card's own acceptance criterion is a signal
+that the card was split at the wrong seam.**
+
+**Declaring `Depends On: FEAT-229` would have made it worse.** FEAT-229's Scope item 8 depends
+on *this* card's specification existing, so the dependency is a **cycle**. Formalizing it would
+have turned a misplaced criterion into a permanent deadlock between two cards, each correctly
+waiting on the other.
+
+**The test that resolves it:** *can this card, finished, verify this criterion without another
+card shipping first?* No — so the criterion is not this card's. FEAT-229 already carries the
+obligation to implement the contract; **validating the contract is part of implementing it**,
+not a separate handoff.
+
+**This produced TECH-237**, which adds the question to the create gate — *"any criterion here
+that another card must verify?"* — so the next instance is caught while the card is being
+written, when moving a criterion costs one edit.
 
 ---
 

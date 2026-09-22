@@ -145,7 +145,21 @@ come from the board, never from the roadmap.
 - [ ] **TECH-177's checkbox contract is implemented in these gates** (added 2026-09-21):
       `[ ]`/`[/]` block `→ done`, `[x]`/`[-]` pass, `[?]`/`[h]` block `→ doing` naming the
       marked line and its note, readiness unchanged. The ADR-007 D7 boundary — a marker
-      records an event, it is not a ripeness judgment — is documented where the gate lives
+      records an event, it is not a ripeness judgment — is documented where the gate lives.
+      The contract is authored in `workspaces/framework/skills/fw-checkbox-states/SKILL.md`
+      (TECH-177, 2026-09-22); implement it, do not restate it.
+- [ ] **The checkbox contract is validated** (moved here from TECH-177, 2026-09-22):
+      **AI** — every one of the six states exercised against a scratch fixture; **Human** — a
+      `[-]` criterion moves to `done/` and a `[/]` criterion is blocked, against the
+      **installed plugin**, not the source tree (TECH-188).
+
+      > **Why this criterion lives here and not on TECH-177.** TECH-177 is the
+      > *specification*; validating it requires the gates **this card builds**. A criterion
+      > its own card cannot verify made TECH-177 unfinishable, and declaring
+      > `Depends On: FEAT-229` there would have formalized a **cycle** — Scope item 8 depends
+      > on TECH-177's specification existing. The seam was wrong, not the dependency.
+      > Validating the contract is part of implementing it. See **TECH-237**, which adds the
+      > create-gate question that would have caught this at authoring time.
 - [ ] A card can be created into `backlog/` or `todo/` and nowhere else
 - [ ] The work-item template exists and encodes the TASK-219 conventions; each convention traces
       to a mechanism, not a paragraph
