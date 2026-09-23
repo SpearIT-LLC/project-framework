@@ -112,3 +112,15 @@ rule already settled. Recorded rather than decided; decide it when the gate is w
 - **BUG-174**, **TECH-166 item 4** — the other two old-engine gate defects the new engine must
   not inherit. **This is the third.**
 - **BUG-240** — WIP counting ignores dotted-id collapsing. Same family, different mechanism.
+
+---
+
+## Fixed in the New Engine — 2026-09-22 (FEAT-229.4)
+
+**Fixed in `workspaces/framework/scripts/fw-move.sh`** and validated across 9 cases; see
+FEAT-229.4's validation run.
+
+**This card stays open only for the OLD engine** (`.claude/scripts/fw-move.sh`), which retires
+at the ADR-009 D5 crossover. **Do not fix it there** unless something starts depending on the
+old engine after the crossover date — the correct behaviour ships with the new engine, and
+patching a retiring script is work done twice.

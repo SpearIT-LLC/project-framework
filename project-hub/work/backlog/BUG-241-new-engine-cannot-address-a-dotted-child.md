@@ -117,3 +117,19 @@ over the file returns **0** — there is no child handling to have a bug in.
   needs members to be addressable first.
 - **BUG-215** — established "only the number is used to locate the record", the simplification
   this bug is the cost of. Correct for operations; incomplete for a namespace with dotted ids.
+
+---
+
+## FIXED — 2026-09-22 (FEAT-229.4)
+
+**All three failures are fixed** in `workspaces/framework/scripts/fw-move.sh`:
+
+- The id grammar parses `[0-9]+(\.[0-9]+)*$`, so `FEAT-001.1` resolves to *that* card.
+- **No fallback to the base id.** An unmatched dotted id fails, naming itself — the silent
+  substitution that made this bug dangerous is gone.
+- A parent move carries its family; a child move carries it too, since tight coupling is a
+  property of the family rather than of which member was typed.
+- `FULL_ID` keeps the dotted suffix, so a child's bundle no longer resolves to its parent's.
+
+**Validated:** 9 cases including depth 3 and a `Parent:`-field child (which correctly does
+*not* travel). Operations regression clean. **Ready to close** when FEAT-229.4 moves to `done/`.

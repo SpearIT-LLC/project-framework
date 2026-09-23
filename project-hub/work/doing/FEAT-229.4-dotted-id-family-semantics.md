@@ -103,18 +103,18 @@ FEAT-229.2 already fixes the dotfile half.
 
 ## Acceptance Criteria
 
-- [ ] A dotted child is addressable by its own id and moves as itself
-- [ ] An id matching nothing **fails, naming the id** — no silent fallback to the base
-- [ ] Moving a parent moves its children; the family never splits
-- [ ] A family move is refused when **any** member's `Depends On:` is unsatisfied, naming the
+- [x] A dotted child is addressable by its own id and moves as itself
+- [x] An id matching nothing **fails, naming the id** — no silent fallback to the base
+- [x] Moving a parent moves its children; the family never splits
+- [x] A family move is refused when **any** member's `Depends On:` is unsatisfied, naming the
       member and the dependency's current folder
-- [ ] A family move is refused when **any** member has blocking acceptance criteria on `→ done`
-- [ ] No partial family move under any refusal
-- [ ] WIP counts collapse dotted ids to the base: a folder with `FEAT-229`+`.1/.2/.3` plus one
+- [x] A family move is refused when **any** member has blocking acceptance criteria on `→ done`
+- [x] No partial family move under any refusal
+- [x] WIP counts collapse dotted ids to the base: a folder with `FEAT-229`+`.1/.2/.3` plus one
       standalone card reports **2**
-- [ ] A `Parent:`-field child still counts as its own item
-- [ ] Depth 3 resolves correctly
-- [ ] Operations unaffected — regression pass
+- [x] A `Parent:`-field child still counts as its own item
+- [x] Depth 3 resolves correctly
+- [x] Operations unaffected — regression pass
 - [ ] Validated: **AI** — each case against a seeded fixture, including a dotted fixture set
       the seeder does not yet produce · **Human** — the same against the **installed plugin**
 
@@ -126,3 +126,56 @@ FEAT-229.2 already fixes the dotfile half.
 - **FEAT-229.2** — the gates this runs per member. **Must land first.**
 - **TECH-237** — the create-gate question that would have caught all three at authoring time.
 - **ADR-008 Root 2** — an instruction the AI merely reads is not a guardrail.
+
+
+---
+
+## Validation Run — 2026-09-22
+
+Scratch repos, `--root`, cards created through `fw-new.sh --parent` so the fixtures are exactly
+what the create gate produces.
+
+| # | Case | Expect | Result |
+|---|---|---|---|
+| 1 | Move **parent** `FEAT-001` | family travels | ✅ `.1` and `.2` follow, each on its own row |
+| 2 | Move **child** `FEAT-001.1` directly | that card moves, family follows | ✅ — **BUG-241's core** |
+| 3 | `FEAT-001.9` (no such card) | **fail, no fallback** | ✅ *"no kanban record with that id"*, exit 1 |
+| 4 | WIP count, 3 family files, limit 2 | counts **1**, no warning | ✅ — **BUG-240** |
+| 5 | Family → doing, one child blocked | **refuse, name the child, move nothing** | ✅ (below) |
+| 6 | Depth 3, `FEAT-001.1.1` | resolves | ✅ whole family travels |
+| 7 | `Parent:`-field child | **does not** travel; own WIP item | ✅ stayed put; `todo/` counts 2 |
+| 8 | Operations regression | unchanged | ✅ 5 moves + batch + sweep |
+| 9 | FEAT-229.2 gate suite re-run | unchanged | ✅ 8/8 |
+
+**Case 5's output is the answer to the design question:**
+
+```
+  FAILED   FEAT-001.2-child-b.md — depends on TECH-002 (currently in backlog/), which must reach done/ first
+  FAILED   FEAT-001 family — not moved: tightly-coupled members move together or not at all
+```
+
+Two rows: the **member** that is blocked and why, then the **family** that therefore did not
+move. That is *"float up to the parent"* with the sub-card still designated — Gary's question,
+answered without adding a field. **Nothing moved**, verified on disk.
+
+### A gate hole found by a faulty test
+
+**Test 5 passed on the first run when it should have failed**, because the fixture still carried
+the template's placeholder `**Depends On:** __TYPE-nnn …__` *above* the real field. `grep -m1`
+matched the placeholder, whose `TYPE-nnn` is not an id, so the gate found nothing to check and
+passed.
+
+**My test was wrong — and so was the gate.** No live card is in that state (checked: zero across
+`backlog/`, `todo/`, `doing/`), but **a gate that depends on the author having tidied up is not a
+gate.** `gate_dependencies` now skips placeholder lines and takes the first real field.
+
+### Design notes
+
+**`family_members` takes any member's id and returns the whole family.** Tight coupling is a
+property of the family, not of which member you typed — so moving a child gates its siblings too.
+
+**Members are not counted in `MOVED`.** One `/fw-move` of one card that carries three files is
+one work item moved. Counting 4 would be the same category error BUG-240 fixes in the WIP count.
+
+**`Parent:`-field children need no special case.** They have no dotted suffix, so nothing
+collects them and nothing collapses them — the distinction falls out of the id shape.

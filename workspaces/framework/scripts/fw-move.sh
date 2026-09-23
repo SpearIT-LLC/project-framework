@@ -247,14 +247,21 @@ gate_markers() {
 # The refusal names the dependency's CURRENT FOLDER: "not done" without saying
 # where it is leaves the user to search the board by hand.
 #
-# SCOPE NOTE (FEAT-229.4): this gates the NAMED record only. Gating a dotted
-# family per member needs addressable members, which BUG-241 shows the engine
-# does not have yet. Deliberately out of scope here rather than half-built.
+# FAMILY NOTE (FEAT-229.4): this gate reads ONE record. gate_family runs it across
+# every member of a dotted family, so a child's unmet dependency blocks the whole
+# family — the union rule. The gate itself stays single-record; the family logic
+# lives in one place rather than in each gate.
 gate_dependencies() {
   local f="$1" target="$2" base deps dep found loc n
   [ "$target" = "doing" ] || return 0
   base="$(basename "$f")"
-  deps="$(grep -m1 -i '^\*\*Depends On:\*\*' "$f" 2>/dev/null | sed 's/^\*\*[Dd]epends [Oo]n:\*\*//' || true)"
+  # Skip the template's unfilled placeholder (`__TYPE-nnn ... __`) and take the
+  # first REAL field. Found 2026-09-22 while testing FEAT-229.4: a card that still
+  # carries the placeholder above its real field had the placeholder matched by
+  # `grep -m1`, and the placeholder's own "TYPE-nnn" is not an id, so the gate found
+  # nothing to check and passed. No live card is in that state — but a gate that
+  # depends on the author having tidied up is not a gate.
+  deps="$(grep -i '^\*\*Depends On:\*\*' "$f" 2>/dev/null | grep -v '__' | head -1 | sed 's/^\*\*[Dd]epends [Oo]n:\*\*//' || true)"
   [ -n "$deps" ] || return 0
   n=0
   for dep in $(printf '%s' "$deps" | grep -oE '[A-Za-z]+-[0-9]+(\.[0-9]+)*' || true); do
@@ -280,10 +287,19 @@ gate_dependencies() {
 # holding two cards. The queue scaffold ships .gitkeep in every folder, so a naive
 # file count is wrong from the very first move.
 #
-# SCOPE NOTE (FEAT-229.4 / BUG-240): this counts FILES, so a dotted family counts
-# as N rather than the one WIP item TASK-219 says it is. It over-warns until .4
-# lands; the limit is warning-only, so the cost is cosmetic.
-count_items() { find "$1" -maxdepth 1 -type f -name '*.md' 2>/dev/null | wc -l | tr -d '[:space:]'; }
+# COUNTS WORK ITEMS, NOT FILES (BUG-240, fixed by FEAT-229.4). A dotted family is
+# ONE item (TASK-219 Group 1), so ids are collapsed to their base and counted
+# distinct: FEAT-229 + .1 + .2 + .3 is 1, not 4. Before this, a single split card
+# tripped the doing/ limit of 2 on its own — a warning that fires wrongly on correct
+# work trains the user to ignore it, which costs the limit its whole value.
+#
+# A `Parent:`-field child still counts as its own item, and that needs no special
+# case: it has no dotted suffix, so there is nothing to collapse.
+count_items() {
+  find "$1" -maxdepth 1 -type f -name '*.md' -printf '%f\n' 2>/dev/null \
+    | grep -oE '^[A-Za-z]+-[0-9]+' \
+    | sort -u | wc -l | tr -d '[:space:]'
+}
 
 wip_warn() {
   local folder="$NS_ROOT/$1" limit count
@@ -302,6 +318,64 @@ run_gates() { # run_gates <record> <target>
   local f="$1" target="$2" g rc=0 list
   eval "list=\"\${${NS}_GATES:-}\""
   for g in $list; do "$g" "$f" "$target" || rc=1; done
+  return $rc
+}
+
+# ---------------------------------------------------------------------------
+# DOTTED-ID FAMILIES (FEAT-229.4 — BUG-239, BUG-240, BUG-241)
+#
+# A dotted id is TIGHT COUPLING (TASK-219 Group 1): the child lives and dies with
+# the parent, moves with it, and the family counts as ONE WIP item. That was
+# settled 2026-09-09 and lived only as a paragraph in a template comment until
+# this card — which is why three separate bugs fell out of it.
+#
+# A `Parent:`-field child is the OTHER mechanism: it stands alone, is moved
+# separately, and counts as its own item. Nothing here touches it, and that falls
+# out of the id shape rather than needing a special case: it has no dotted suffix.
+# ---------------------------------------------------------------------------
+
+# The base id of a record: FEAT-001.2 -> FEAT-001, FEAT-001 -> FEAT-001.
+id_base() { printf '%s' "$1" | sed 's/\..*$//'; }
+
+# Every member of a family, parent first, then children in id order. Given any
+# member's id, the whole family is found — so moving a child by name gates its
+# siblings too, because tight coupling is a property of the family, not of which
+# member you happened to type.
+family_members() { # family_members <FULL_ID> -> relative paths, one per line
+  local base; base="$(id_base "$1")"
+  {
+    find "$NS_ROOT" -type f -name "$base-*.md" -printf '%P\n' 2>/dev/null
+    find "$NS_ROOT" -type f -name "$base.*-*.md" -printf '%P\n' 2>/dev/null | sort -t. -k2 -n
+  } || true
+}
+
+# Gate EVERY member, then move all or none (BUG-239).
+#
+# THE UNION RULE: a family's dependencies are the union of its members'. This is
+# not an extra rule — it follows from tight coupling. If a child cannot move on its
+# own, then the family cannot move while any member is blocked, because there is no
+# such thing as moving part of it.
+#
+# ATTRIBUTION IS THE HARD PART, and it is why this is not just a loop. Gary,
+# 2026-09-22: "Perhaps the rule should float up to the parent card, but how to
+# designate the dependency is only on one sub-card?" A refusal reading
+# "FEAT-229 is blocked" leaves the user to open every card in the family. So each
+# gate failure is already reported against the MEMBER's own filename by fail_item,
+# and the summary line below names the family. Same shape as TECH-177's [h] vs
+# Depends On:: the field says the family is stuck, the row says which member.
+#
+# No `Blocks Family:` field was added: the data already lives on the child, and a
+# second home for a dependency is exactly what ADR-008 forbids.
+gate_family() { # gate_family <FULL_ID> <target> -> 0 = every member may move
+  local full="$1" target="$2" rel rc=0 n=0
+  while IFS= read -r rel; do
+    [ -n "$rel" ] || continue
+    n=$((n+1))
+    run_gates "$NS_ROOT/$rel" "$target" || rc=1
+  done < <(family_members "$full")
+  if [ "$rc" -ne 0 ] && [ "$n" -gt 1 ]; then
+    row FAILED "$(id_base "$full") family — not moved: tightly-coupled members move together or not at all"
+  fi
   return $rc
 }
 
@@ -372,15 +446,30 @@ move_one() {
 
   # The namespace came from the command line, so a bare numeric is unambiguous and a
   # prefix is decoration. Only the number is used to locate the record (BUG-215).
-  NUM="$(printf '%s' "$ID_IN" | grep -oE '[0-9]+$' || true)"
+  #
+  # THE NUMBER INCLUDES ITS DOTTED SUFFIX (FEAT-229.4, fixing BUG-241). The old
+  # pattern was `[0-9]+$`, which on FEAT-001.1 captured the TRAILING 1 — the child
+  # index — and then matched FEAT-001, the parent. Asking to move a child moved a
+  # different card and reported success. A dotted child was also unreachable by any
+  # input, because the locating pattern required a hyphen straight after the digits
+  # and FEAT-001.1-slug.md has a dot there.
+  NUM="$(printf '%s' "$ID_IN" | grep -oE '[0-9]+(\.[0-9]+)*$' || true)"
   [ -n "$NUM" ] || { fail_item "$ID_IN — cannot parse an id"; return 1; }
 
-  # Locate the record: status folder is the first segment; scan recursively (buckets)
+  # Locate the record: status folder is the first segment; scan recursively (buckets).
+  # Leading zeros are stripped from the BASE only — 001.1 and 1.1 are the same id,
+  # but the suffix is an index and is matched literally.
   NUM_RE="$(printf '%s' "$NUM" | sed 's/^0*//')"
   REL="$(find "$NS_ROOT" -type f -name '*.md' -printf '%P\n' | grep -E "(^|/)[A-Za-z]+-0*${NUM_RE}-[^/]*\.md$" | head -1 || true)"
+  # NO FALLBACK TO THE BASE ID. A dotted id that matches nothing fails, naming
+  # itself. Falling back would resurrect exactly the bug above: acting on the parent
+  # while the user asked for the child, and saying nothing about the substitution.
   [ -n "$REL" ] || { fail_item "$ID_IN — no $NS record with that id"; return 1; }
   REC="$NS_ROOT/$REL"; SOURCE="${REL%%/*}"; BASE="$(basename "$REC")"
-  FULL_ID="$(printf '%s' "$BASE" | grep -oE '^[A-Z]+-[0-9]+')"
+  # The id as the FILE spells it, dotted suffix included — this is what names the
+  # record's bundle folder. `^[A-Z]+-[0-9]+` truncated a child's id to its parent's,
+  # so a child's bundle resolved to the parent's bundle (BUG-241, second half).
+  FULL_ID="$(printf '%s' "$BASE" | grep -oE '^[A-Z]+-[0-9]+(\.[0-9]+)*')"
 
   if [ "$SOURCE" = "$TARGET" ]; then
     row SKIPPED "$BASE — already in $TARGET/"; SKIPPED=$((SKIPPED+1)); return 0
@@ -394,7 +483,10 @@ move_one() {
   # (FEAT-229.2). Order matters: an illegal transition is a usage error and its
   # message is the useful one, so it is not worth also listing a card's unmet
   # dependencies for a move that could never have happened.
-  run_gates "$REC" "$TARGET" || return 1
+  #
+  # EVERY MEMBER of a dotted family is gated, not just the one named (FEAT-229.4).
+  # A family with one blocked member does not move at all — see gate_family.
+  gate_family "$FULL_ID" "$TARGET" || return 1
 
   # THE ENGINE NEVER PROMPTS (BUG-215). A → closed with no code is refused, per record,
   # naming what is missing and the valid codes; the human supplies one and runs again.
@@ -414,6 +506,26 @@ move_one() {
   BUNDLE_NOTE=""
   [ -d "$BUNDLE" ] && { gmv "$BUNDLE" "$NS_ROOT/$TARGET/"; BUNDLE_NOTE="  (bundle $FULL_ID/)"; }
   DEST="$NS_ROOT/$TARGET/$BASE"
+
+  # THE FAMILY TRAVELS WITH THE RECORD (FEAT-229.4, fixing BUG-241's split).
+  # Every other member — and its own bundle — follows, because a dotted child has
+  # no independent existence: it lives and dies with the parent (TASK-219 Group 1).
+  # The gates already passed for all of them, so nothing here can be refused.
+  #
+  # Each member gets its own report row, indented under the named record: the user
+  # asked for one id and several files moved, so the report says which. They are NOT
+  # counted in MOVED — the family is one work item, and a count of 4 for one /fw-move
+  # of one card is the same category error BUG-240 fixes in the WIP count.
+  local m_rel m_base m_bundle
+  while IFS= read -r m_rel; do
+    [ -n "$m_rel" ] || continue
+    m_base="$(basename "$m_rel")"
+    [ "$m_base" = "$BASE" ] && continue
+    m_bundle="$NS_ROOT/$(dirname "$m_rel")/$(printf '%s' "$m_base" | grep -oE '^[A-Z]+-[0-9]+(\.[0-9]+)*')"
+    gmv "$NS_ROOT/$m_rel" "$NS_ROOT/$TARGET/" || { row FAILED "$m_base — family member move failed"; continue; }
+    [ -d "$m_bundle" ] && gmv "$m_bundle" "$NS_ROOT/$TARGET/"
+    row OK "  ↳ $m_base"
+  done < <(family_members "$FULL_ID")
 
   # Stamp on terminal move: fill existing Closed:/Resolution: lines, else insert after Opened:
   if [ "$TARGET" = "closed" ]; then
