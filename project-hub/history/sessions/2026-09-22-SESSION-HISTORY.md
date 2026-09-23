@@ -819,3 +819,229 @@ Five filed today: TECH-237, TECH-238, BUG-239, BUG-240, BUG-241.
 ---
 
 **Last Updated:** 2026-09-22 (end of session)
+
+---
+
+# (Evening, after a reboot) — Family Semantics, and One More Split
+
+**Session Focus:** FEAT-229.4 implemented; TASK-223's Group 2a split out as TASK-242.
+
+---
+
+## Summary
+
+FEAT-229.4 mechanized dotted-id family semantics, closing **BUG-239, BUG-240 and BUG-241** in one
+card. Then TASK-223 got the same treatment FEAT-229 got this morning: the one group blocking real
+work was split out as **TASK-242** and queued. The kanban engine is now functionally complete for
+the five settled folders.
+
+---
+
+## FEAT-229.4 — dotted-id family semantics
+
+**One card for three bugs, because they were one gap.** TASK-219 settled the rule on 2026-09-09 —
+*a dotted child lives and dies with the parent, moves with it, counts as one WIP item* — and left
+it a paragraph in a template comment. Nothing in either engine knew about it.
+
+### What changed in `scripts/fw-move.sh`
+
+**The id grammar parses its dotted suffix.** `[0-9]+(\.[0-9]+)*$` replaces `[0-9]+$`, which on
+`FEAT-001.1` captured the trailing `1` and matched `FEAT-001` — the parent.
+
+**No fallback to the base id.** An unmatched dotted id fails naming itself. This was the
+dangerous half of BUG-241: the engine reported `SKIPPED FEAT-001-parent-card.md` for a card the
+user never named, and exited 0.
+
+**`FULL_ID` keeps its suffix**, so a child's bundle no longer resolves to the parent's.
+
+**`family_members` takes *any* member's id and returns the whole family** — tight coupling is a
+property of the family, not of which member was typed. So moving a child gates its siblings too.
+
+**Members are not counted in `MOVED`.** One `/fw-move` of one card that carries three files is one
+work item moved. Counting 4 is the same category error BUG-240 fixes in the WIP count.
+
+**`count_items` collapses to base ids**, so a family is one WIP item.
+
+### The union rule, with attribution — Gary's design question answered
+
+Gary had asked (earlier today): *"Perhaps the rule should float up to the parent card, but how to
+designate the dependency is only on one sub-card?"* The output is the answer:
+
+```
+FAILED   FEAT-001.2-child-b.md — depends on TECH-002 (currently in backlog/), which must reach done/ first
+FAILED   FEAT-001 family — not moved: tightly-coupled members move together or not at all
+```
+
+**Two rows: the member that is blocked and why, then the family that therefore did not move.**
+Nothing moved, verified on disk.
+
+**No new field was added.** A `Blocks Family:` marker was considered and rejected — the data
+already lives on the child, and a second home for a dependency is what ADR-008 forbids. The union
+rule *follows from* tight coupling rather than being an extra rule.
+
+### A faulty test found a real gate hole
+
+**Case 5 passed when it should have failed.** The fixture still carried the template's
+`**Depends On:** __TYPE-nnn …__` placeholder *above* the real field; `grep -m1` matched the
+placeholder, whose `TYPE-nnn` is not an id, so the gate found nothing to check and passed.
+
+**The test was wrong and so was the gate.** No live card is in that state — checked, zero across
+`backlog/`, `todo/`, `doing/` — but **a gate that relies on the author having tidied up is not a
+gate.** `gate_dependencies` now skips placeholder lines.
+
+**Worth keeping as a pattern:** a test that passes on the first run deserves the same suspicion as
+one that fails. This one passed for the wrong reason and nearly shipped a hole.
+
+### Validation — 9 cases
+
+| Case | Result |
+|---|---|
+| Move parent → family travels | ✅ each member on its own row |
+| Move child `FEAT-001.1` directly | ✅ that card moves, family follows — BUG-241's core |
+| `FEAT-001.9` (no such card) | ✅ fails naming itself, exit 1 — **no fallback** |
+| WIP: 3 family files, limit 2 | ✅ counts **1**, no warning — BUG-240 |
+| Family → doing, one child blocked | ✅ refused, member named, nothing moved — BUG-239 |
+| Depth 3 (`FEAT-001.1.1`) | ✅ whole family travels |
+| `Parent:`-field child | ✅ does **not** travel; counts as its own item |
+| Operations regression | ✅ 5 moves + batch + sweep |
+| FEAT-229.2 gate suite re-run | ✅ 8/8, no regression |
+
+**BUG-239 and BUG-240 keep a note** saying they now apply only to the old engine, which retires at
+the D5 crossover: *do not fix them there* — patching a retiring script is work done twice.
+
+---
+
+## TASK-242 — Group 2a split out of TASK-223
+
+**Gary asked how much work TASK-223 was.** Reading it rather than estimating: **14 conventions
+across four groups**, with an acceptance block requiring all of them *plus* closing every source
+card. Days.
+
+**But only Group 2a blocks anything** — FEAT-229.3 and FEAT-221 both wait on it. Leaving them
+together meant the kanban transitions waited on an external-reference template and a
+meeting-record standard.
+
+**The same split TASK-223 itself came from**, and that card records the lesson:
+
+> *"a card owning nineteen decisions under one acceptance block cannot be closed until the least
+> urgent one is done."*
+
+### TASK-242 is smaller than the group reads
+
+**The authored repo-structure diagram already settles which folders exist** — `accept/` and
+`cancelled/` first-class, no `archive/` under `kanban/` — and they are already in the scaffold and
+in `kanban_FOLDERS`. Three real decisions remain:
+
+1. **Transitions into `accept/` and `cancelled/`** — including what leaves `accept/` on rejection,
+   the transition that gives the state its purpose.
+2. **Is `cancelled` terminal?** The engine already presumes yes via `kanban_TERMINAL`, carried
+   from the diagram. **Ratify with the reason recorded, or change it** — a presumption is not a
+   decision.
+3. **FEAT-030's hold state** — the only question the diagram does not address. Dropped, covered by
+   `blocked/`, or given a folder. FEAT-030 (open since 2026-01-08) closes either way.
+
+Plus an additive yes/no on a board closure code.
+
+**Two Group 2a questions stayed on TASK-223** — where the 27 `deprecated/` cards live (8 loose +
+27, verified) and whether `templates/` belongs under `kanban/`. Both are **storage, not
+lifecycle**, and block nothing.
+
+**Four cards retargeted** TASK-223 → TASK-242: FEAT-229.3, FEAT-221, FEAT-221.1, FEAT-221.2.
+Verified: no live `Depends On:` field names TASK-223 any more.
+
+---
+
+## Decisions Made (Evening)
+
+21. **One card for BUG-239/240/241, not three.** Fixing them separately means touching the same
+    code three times and answering the same question three times — *what is a family, and what
+    operations treat it as one thing?*
+
+22. **Union with attribution, no new field.** The refusal prints the blocked member and the
+    family. Rejected: a `Blocks Family:` marker (second home for a dependency, ADR-008) and a
+    partial family move (breaks tight coupling, which is the whole meaning of a dotted id).
+
+23. **A family is one row in `MOVED` and one item in the WIP count.** Both follow from the same
+    rule; neither is a special case.
+
+24. **`Parent:`-field children need no special case at all.** No dotted suffix means nothing
+    collects them and nothing collapses them — the distinction falls out of the id shape.
+
+25. **Split TASK-223's Group 2a.** (Gary: *"Yes. Split. and move to todo."*) The third split
+    today, and the third time the reason was the same: a card carrying one urgent decision among
+    several unurgent ones blocks on its least urgent member.
+
+---
+
+## Files Created (Evening)
+
+- `project-hub/work/todo/TASK-242-the-terminal-and-parked-state-set.md`
+
+## Files Modified (Evening)
+
+- `workspaces/framework/scripts/fw-move.sh` — id grammar, `family_members`, `gate_family`,
+  family carry in `move_one`, base-id collapsing in `count_items`, placeholder skip in
+  `gate_dependencies`.
+- `project-hub/work/doing/FEAT-229.4-...md` — 10/11, validation run recorded.
+- `project-hub/work/backlog/BUG-239`, `BUG-240` — fixed-in-new-engine notes.
+- `project-hub/work/backlog/BUG-241-...md` — **FIXED** section.
+- `project-hub/work/backlog/TASK-223-...md` — Group 2a marked split; two questions retained.
+- `FEAT-229.3`, `FEAT-221`, `FEAT-221.1`, `FEAT-221.2` — dependencies retargeted to TASK-242.
+
+## Commits (Evening)
+
+- `3b92db1` — FEAT-229.4 dotted-id family semantics
+- `bf7f2da` — TASK-223 Group 2a split into TASK-242
+
+---
+
+## Current State (End of Day)
+
+### In doing/ — 2 WIP items
+- **FEAT-229** family: `.1` **8/8** ✅ · `.2` **9/10** · `.4` **10/11** · `.3` blocked on
+  TASK-242. **All three open criteria are the same human UAT** against the installed plugin,
+  which needs one publish cycle.
+- **TECH-232** — workspace declarations, still to reconcile.
+
+### In todo/ — 13
+- **TASK-242** — next up. Three decisions, a conversation not an implementation.
+
+### In done/ — 12
+**A release is overdue** — deferred every session since 2026-09-21.
+
+### In backlog/
+Six cards filed today: TECH-237, TECH-238, BUG-239, BUG-240, BUG-241, plus TASK-242 (queued to
+`todo/`).
+
+---
+
+## The Thread of the Day
+
+**The kanban board went from declared-and-refused to moving, gated, and family-aware** — and the
+convention it gates by was specified, authored and implemented in the same day.
+
+**Three splits, one reason each time.** FEAT-229 → four children; FEAT-229.2 → FEAT-229.4;
+TASK-223 → TASK-242. Every one was a card carrying an urgent piece and an unurgent piece under
+one acceptance block.
+
+**Four bugs traced to the same root:** a convention settled in prose with no mechanism. TECH-166
+item 4, BUG-239, BUG-240, BUG-241 — all decided correctly, documented clearly, and enforced
+nowhere. **ADR-008 Root 2 is the most expensive lesson in this repo.**
+
+**And one defect was paid for twice in one day:** TECH-166 item 4 cost a reworded record at 11am
+and was fixed by 4pm — as fixture FEAT-911, which now regression-tests it.
+
+---
+
+## Next Session
+
+1. **TASK-242** — three decisions. Unblocks FEAT-229.3 **and** the FEAT-221 family.
+2. **A release** — 12 in `done/`, overdue.
+3. **The human UAT** for FEAT-229.1/.2/.4 — one publish cycle closes three criteria.
+4. **TECH-232 reconcile** — three criteria look satisfied by `workspace.yaml` already in the tree.
+5. **Carried:** `/fw-backlog` pass (`todo/` at 13) · BUG-237 unwritten · four uncovered UAT paths
+   · `git mv` BUG-225 to `archive/` (fourth session).
+
+---
+
+**Last Updated:** 2026-09-22 (end of day)
