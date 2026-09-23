@@ -52,6 +52,17 @@ blocking something real.
 
 ### Group 2a — Settle the terminal states as a set (added 2026-09-07)
 
+> **SPLIT OUT 2026-09-22 → TASK-242.** Group 2a is no longer this card's work. It was the only
+> part of this card blocking anything — **FEAT-229.3** and **FEAT-221** both wait on it — and
+> leaving it here meant they waited on an external-reference template and a meeting-record
+> standard too. Gary: *"Yes. Split. and move to todo."*
+>
+> **This section stays as the source analysis** TASK-242 draws on; the decisions are made there.
+>
+> **Two Group 2a questions remain HERE**, because they block nothing and are storage rather than
+> lifecycle: where the 27 `deprecated/` cards live, and whether `templates/` belongs under
+> `kanban/` (marked *"alt idea"* in the diagram, so unsettled by its author).
+
 > **Largely answered by the authored structure diagram (2026-09-07).** Gary's Lucid
 > repo-structure page — the same document as `fw-implement-todo`, indexed in
 > [diagram-index.md](../../docs/diagram-index.md) — carries the intended folder set for
@@ -195,9 +206,12 @@ For each convention:
 - [ ] The never-delete rule (TECH-077) is written down and backed by a check, not habit
 - [ ] The `fw-` namespace rule (DECISION-171) is recorded where a future contributor will
       find it
-- [ ] The terminal/parked-state set is decided **as a set** (Group 2a) — `accept/`,
-      `cancelled/`, FEAT-030's hold state — not folder-by-folder, with `archive/`'s
-      meaning restated once they are settled
+- [x] ~~The terminal/parked-state set is decided **as a set** (Group 2a)~~ — **moved to
+      TASK-242 on 2026-09-22.** Not done here; owned there. Left as `[x]` deliberately: the
+      obligation is discharged from *this* card, which is what the done-gate asks
+- [ ] Where the 27 `deprecated/` cards live (8 loose + 27 deprecated, verified 2026-09-22) —
+      a storage question, retained here when Group 2a split out
+- [ ] Whether `templates/` belongs under `kanban/` — marked *"alt idea"* in the diagram
 - [ ] `blocked/` metadata covers an internally-blocked card (unanswered question), not
       only an external party
 - [ ] Every source card is closed, moved to `done/`, or archived with a closing note —
@@ -220,6 +234,9 @@ For each convention:
 
 ## Related
 
+- **TASK-242** — **Group 2a, split out 2026-09-22.** The terminal/parked-state set, which was
+  the only part of this card blocking real work. Its source analysis stays in the Group 2a
+  section above.
 - **TASK-219** — the parent. Holds Group 1's five settled conventions and the work-item
   template they produced. Closed 2026-09-10.
 - **TASK-218** (done) — its Section C6 holds the original per-card analysis.

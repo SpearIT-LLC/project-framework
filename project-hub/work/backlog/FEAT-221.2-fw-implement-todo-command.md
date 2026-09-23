@@ -9,8 +9,8 @@
 **Completed:** <!-- Set automatically by /fw-move on → done/. Leave blank at creation. -->
 **Theme:** Workflow
 
-**Depends On:** FEAT-221.3 (the ADR-001 amendment authorises this), FEAT-221.1, TASK-223
-(Group 2a — the `accept/` state), FEAT-229 (the gates that read `[?]`/`[h]`)
+**Depends On:** FEAT-221.3 (the ADR-001 amendment authorises this), FEAT-221.1, TASK-242
+(the `accept/` state), FEAT-229.2 (the gates that read `[?]`/`[h]` — shipped 2026-09-22)
 
 <!-- Corrected 2026-09-22. Two changes:
        · TASK-219 → TASK-223. TASK-219 went to done/ 2026-09-10 with its Group 2 work

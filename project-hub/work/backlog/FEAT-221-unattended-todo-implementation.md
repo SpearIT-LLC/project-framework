@@ -10,8 +10,10 @@
 **Theme:** Workflow
 **Planning Period:** ADR-009 build
 
-**Depends On:** TASK-223 (Group 2a — the `accept/` state, decided as a set with `cancelled/`
-and FEAT-030's hold)
+**Depends On:** TASK-242 (the terminal/parked-state set — `accept/`, `cancelled/`, hold)
+
+<!-- Retargeted 2026-09-22: TASK-223 → TASK-242, where Group 2a now lives. Second correction
+     to this field today; the first (TASK-219 → TASK-223) is recorded below. -->
 
 <!-- Corrected 2026-09-22. Previously read "TASK-219 (Group 2 — the accept/ state and board
      lifecycle policy), TECH-177". Both were stale:

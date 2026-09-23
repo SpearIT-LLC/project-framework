@@ -6,7 +6,11 @@
 **Version Impact:** MINOR
 **Created:** 2026-09-22
 **Workspace:** framework
-**Depends On:** FEAT-229.2 (the gates), TASK-223 (Group 2a — the parked-state set, decided as a set)
+**Depends On:** FEAT-229.2 (the gates), TASK-242 (the terminal/parked-state set)
+
+<!-- Retargeted 2026-09-22: was TASK-223. Group 2a split out of that card into TASK-242
+     precisely because it was the only part blocking this one. TASK-223 keeps its other
+     eleven conventions and blocks nothing here. -->
 **Completed:** <!-- Set automatically by /fw-move on → done/. Leave blank at creation. -->
 
 ---
