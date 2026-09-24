@@ -6,7 +6,7 @@
 **Version Impact:** MINOR
 **Created:** 2026-09-22
 **Workspace:** framework
-**Depends On:** FEAT-229.2 (the gates), TASK-242 (the terminal/parked-state set)
+**Depends On:** FEAT-229.2 (the gates) — TASK-242 SETTLED 2026-09-23, see below
 
 <!-- Retargeted 2026-09-22: was TASK-223. Group 2a split out of that card into TASK-242
      precisely because it was the only part blocking this one. TASK-223 keeps its other
@@ -91,3 +91,76 @@ runs.
 - **FEAT-221 / FEAT-221.1** — `accept/` is *their* blocker too, via TASK-223. This card does
   not unblock them; TASK-223 does.
 - **TECH-228** — the SPIKE template, which affects what archival resolves for one type.
+
+---
+
+## The Decisions to Encode — TASK-242, 2026-09-23
+
+**TASK-242 is settled (9/9).** This card now has a complete specification and no open questions.
+Encode it; do not re-decide it.
+
+### The transition set
+
+```
+backlog:todo      todo:backlog
+todo:doing        doing:todo
+doing:accept      accept:doing      accept:done
+backlog:blocked   todo:blocked      doing:blocked
+backlog:hold      todo:hold         doing:hold
+blocked:backlog   blocked:todo      blocked:doing
+hold:backlog      hold:todo         hold:doing
+backlog:cancelled todo:cancelled    doing:cancelled
+```
+
+**Terminal:** `done cancelled`.
+
+### ⚠️ `doing:done` is REMOVED — a change to what FEAT-229.1 shipped
+
+FEAT-229.1 wired `doing:done` before `accept/` was decided. **`accept/` is now the only route to
+`done/`**, which is what makes the state mean anything: a card cannot reach `done` without passing
+through the user's acceptance.
+
+**This is a deliberate reversal, not an oversight.** Verify it is gone from `kanban_TRANSITIONS`.
+
+### `accept/` has exactly two exits — and this is the load-bearing decision
+
+`accept → doing` (refine) and `accept → done` (close). **Nothing else.**
+
+> **Why, in Gary's words (2026-09-23):** *"We have implemented something and it's in the repo.
+> We've determined it needs more work… Leaving buggy code while we work on something else would be
+> a bad idea."*
+
+**A card in `accept/` has merged code.** `accept → todo` puts it behind unstarted work;
+`→ backlog` files it as an unranked idea; `→ hold`/`→ blocked` parks it indefinitely. All three
+strand known-imperfect code with nothing scheduled to finish it.
+
+**Do not add a convenience exit here later without re-reading that argument.** It is the one
+transition rule in the set whose absence will feel wrong in the moment and be right anyway.
+
+### `hold/` is new to this card's scope
+
+TASK-242 adopted **both** `blocked/` and `hold/` (rejecting a combined `park/` on the grounds that
+newcomers — including a fresh AI session — understand the conventional words without a lookup).
+
+- **blocked** — cannot proceed due to an external issue
+- **hold** — a decision to prioritise another card
+
+**`hold/` must be added to `kanban_FOLDERS`** — it is not there today, and it is not in the
+scaffold (`templates/queues/kanban/`). Both need it.
+
+**No `blocked:hold` or `hold:blocked`.** A changed cause goes via a real state; parked folders are
+not a shuffling ground.
+
+### `done → cancelled` is invalid, and there is no `archive/` transition
+
+Cancelling completed work contradicts the definition of done (Gary). The old matrix's
+`done → archive` *"rare, retroactive"* was **a hole, not a practice** — verified 2026-09-23: the
+six completed cards in `project-hub/work/archive/` carry no cancellation fields and appear in no
+release. They were *stored*, not cancelled. `history/archive/` owns storage; `cancelled/` owns the
+outcome.
+
+### No closure code
+
+Free-text `Cancellation Reason:` stays. Ops' code set lives in a `Resolution:` field **because ops
+has no `cancelled/` folder**; the board gets the folder instead. Revisit only when FEAT-196 needs
+it (TASK-242 decision 4).

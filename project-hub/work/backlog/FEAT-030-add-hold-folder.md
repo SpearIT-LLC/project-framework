@@ -37,17 +37,17 @@ Reality of work: Urgent items sometimes interrupt planned work, requiring the cu
 
 ### Functional Requirements
 
-- [ ] Add work/hold/ folder to project-hub/work/ structure
-- [ ] Document when to use hold/ vs. other folders
-- [ ] Define what "on hold" means (vs. blocked, paused, etc.)
-- [ ] Establish process for moving items to/from hold/
-- [ ] Update workflow documentation with hold/ folder usage
+- [-] Add work/hold/ folder to project-hub/work/ structure
+- [-] Document when to use hold/ vs. other folders
+- [x] Define what "on hold" means (vs. blocked, paused, etc.)
+- [x] Establish process for moving items to/from hold/
+- [-] Update workflow documentation with hold/ folder usage
 
 ### Non-Functional Requirements
 
-- [ ] Documentation: Update workflow-guide.md and CLAUDE.md
-- [ ] Compatibility: Ensure existing work items not affected
-- [ ] Simplicity: Keep workflow simple and intuitive
+- [-] Documentation: Update workflow-guide.md and CLAUDE.md
+- [-] Compatibility: Ensure existing work items not affected
+- [-] Simplicity: Keep workflow simple and intuitive
 
 ---
 
@@ -100,10 +100,10 @@ project-hub/work/
 
 ### Files to Update
 
-- [ ] framework/process/workflow-guide.md - Add hold/ folder explanation
-- [ ] framework/CLAUDE.md - Update folder list
-- [ ] Work item templates - Add "Hold Information" section (optional)
-- [ ] INDEX.md - Reference hold/ folder usage
+- [-] framework/process/workflow-guide.md - Add hold/ folder explanation
+- [-] framework/CLAUDE.md - Update folder list
+- [-] Work item templates - Add "Hold Information" section (optional)
+- [-] INDEX.md - Reference hold/ folder usage
 
 ### New Documentation
 
@@ -131,12 +131,12 @@ Items in hold/ are temporarily paused due to:
 
 ## Implementation Checklist
 
-- [ ] Create work/hold/ folder
-- [ ] Update workflow-guide.md with hold/ documentation
-- [ ] Update CLAUDE.md folder structure
-- [ ] Add examples of when to use hold/
-- [ ] Consider adding Hold Information section to templates (optional)
-- [ ] Update INDEX.md
+- [-] Create work/hold/ folder
+- [-] Update workflow-guide.md with hold/ documentation
+- [-] Update CLAUDE.md folder structure
+- [-] Add examples of when to use hold/
+- [-] Consider adding Hold Information section to templates (optional)
+- [-] Update INDEX.md
 
 ---
 
@@ -191,3 +191,50 @@ Items in hold/ are temporarily paused due to:
 ---
 
 **Last Updated:** 2026-01-08
+
+---
+
+## RESOLVED — 2026-09-23 (TASK-242)
+
+**`hold/` is adopted, with this card's purpose intact and its definition sharpened.**
+
+Decided in **TASK-242**, which settled the board's terminal and parked states as one set rather
+than folder-by-folder:
+
+> **hold** — a decision to prioritise another card
+> **blocked** — cannot proceed due to some external issue
+
+**That is this card's distinction, stated more tightly.** This card said hold is *"temporarily
+paused but intend to resume"* and explicitly **not** for *"blocked items waiting on other work"* —
+which is exactly the line TASK-242 draws by giving that case its own folder.
+
+**A combined `park/` folder was proposed and rejected.** More concise, but *blocked* and *hold* are
+what a newcomer — including a fresh AI session — understands without a lookup (Gary, 2026-09-23).
+
+**What changed from this card's design:**
+
+- **The folder set is the new build's** (`kanban/`), not `project-hub/work/`. This card's folder
+  diagram predates ADR-009.
+- **`accept/` now exists** between `doing` and `done`, which this card did not anticipate. It
+  matters here: **a card with merged code does not go to `hold/`** — it stays in `accept/` or
+  returns to `doing/` (TASK-242 decision 1). This card's *"urgent work interrupts current item"*
+  case therefore applies to work **not yet implemented**, not to half-finished code.
+- **Transitions are mechanized**, not documented: `backlog|todo|doing → hold` and
+  `hold → backlog|todo|doing`. No `hold ↔ blocked` — a changed cause goes via a real state rather
+  than shuffling between parked folders.
+
+**Implementation is FEAT-229.3**, which encodes TASK-242's transition set.
+
+**On the checklists above:** the two items TASK-242 genuinely answered — *define what "on hold"
+means* and *when to use hold/ vs other folders* — are `[x]`. **Everything else is `[-]`
+(cancelled / not applicable)**, because every one names an **old-build** path
+(`project-hub/work/`, `framework/process/workflow-guide.md`, `framework/CLAUDE.md`, `INDEX.md`)
+that this work no longer touches. The folder lands in `kanban/` via FEAT-229.3, and the new build
+has no workflow-guide to update.
+
+`[-]` is used deliberately rather than `[x]`: ticking them would claim old-build documentation was
+updated when it never will be (TECH-177's convention — cancelled work does not block completion,
+and it is not the same as completed work).
+
+**Closing as resolved, not superseded** — the folder this card asked for exists, for the reason it
+gave. Open 2026-01-08 → 2026-09-23.
