@@ -17,12 +17,12 @@
 #   operations — root operations/; prefixes INC, REQ; folders open, onhold, closed
 #                closed is terminal; -> closed REQUIRES a resolution code (--resolution,
 #                which applies to the whole batch) and stamps **Closed:** and **Resolution:**.
-#   kanban     — root kanban/; the board. Folder set authored in the repo-structure
-#                diagram (see project-hub/docs/diagram-index.md). NOT WIRED UP HERE:
-#                the live board is project-hub/work/ under the root /fw-move until the
-#                ADR-009 D5 crossover, which is a single atomic moment at graduation.
-#                The policy row below is the crossover's landing spot; the gates it
-#                needs (dependencies, acceptance criteria, ripeness) are not ported yet.
+#   kanban     — root kanban/; the board. Folders backlog, blocked, hold, todo, doing,
+#                accept, done, cancelled. done and cancelled are terminal; accept/ is
+#                the only route to done/. Transitions and gates are WIRED (FEAT-229.1,
+#                .2, .3). The LIVE board is still project-hub/work/ under the root
+#                /fw-move until the ADR-009 D5 crossover, a single atomic moment at
+#                graduation; kanban here is exercised by fixtures until then.
 #
 # Usage:
 #   fw-move.sh [--root <dir>] <namespace> <id|"id, id, ..."> <target> [--resolution <code>]
@@ -61,34 +61,67 @@ operations_TERMINAL="closed"
 # writes stamps rather than merely refusing.
 operations_GATES=""
 
-# kanban: authored folder set (repo-structure diagram).
+# kanban: the board. Folder set authored in the repo-structure diagram; the
+# transition set decided in TASK-242 (2026-09-23) and encoded by FEAT-229.3.
 #
 # TRANSITIONS IS AN ALLOWLIST, not a denylist (FEAT-229.1). The old engine listed
 # INVALID pairs and permitted everything else, which silently allows every pair
 # nobody thought to forbid — backlog:done among them. Enumerate what is legal.
 #
-# The five settled folders only. `accept` and `cancelled` stay declared in FOLDERS
-# with NO transitions: their semantics (what enters accept, whether cancelled is
-# terminal, the closure code) are TASK-223 Group 2a and are not settled. FEAT-229.3
-# adds their rows once they are. An unsettled pair stays illegal — that is the
-# allowlist doing its job, not an omission.
-#
 # The pairs, and why each is legal:
 #   backlog:todo    commit to work            todo:backlog    de-prioritize
 #   todo:doing      start work                doing:todo      stop without abandoning
-#   doing:done      finish                    todo:blocked    blocked before starting
-#   backlog:blocked blocked before ranking    doing:blocked   blocked mid-flight
-#   blocked:todo    unblocked, queued         blocked:backlog unblocked, de-prioritized
-#   blocked:doing   unblocked, resume         done:blocked    NOT legal (see below)
+#   doing:accept    implemented, needs UAT    accept:doing    refine after UAT
+#   accept:done     accepted                  *:cancelled     abandon (pre-accept only)
+#   *:blocked       external blocker          blocked:*       external blocker cleared
+#   *:hold          deprioritized for other   hold:*          resumed
+#                   work
 #
-# Deliberately absent, carried from the old engine's INVALID list:
-#   backlog:doing — commit to work first (backlog → todo → doing)
-#   done:*        — completed items are not reopened; create a new item.
-#                   `done` is also in TERMINAL, which refuses it earlier with a
-#                   clearer message; the absence here is the second lock.
+# ACCEPT HAS EXACTLY TWO EXITS — doing and done. This is the one rule here whose
+# absence will feel wrong in the moment and be right anyway, so the reason is
+# recorded rather than left to be re-litigated (TASK-242 decision 1; Gary):
+#
+#   "We have implemented something and it's in the repo. We've determined it needs
+#    more work (or else it would have gone straight to done). Leaving buggy code
+#    while we work on something else would be a bad idea."
+#
+# A card in accept/ has MERGED CODE. accept:todo puts it behind unstarted work;
+# accept:backlog files finished code as an unranked idea; accept:hold and
+# accept:blocked park it indefinitely. All three strand known-imperfect code with
+# nothing scheduled to finish it. Going back to doing/ costs queue position and
+# nothing else. Do not add a convenience exit here without re-reading this.
+#
+# DOING:DONE IS DELIBERATELY ABSENT. FEAT-229.1 shipped it before accept/ was
+# decided; accept/ is now the ONLY route to done/, which is what makes the state
+# mean anything — a card cannot reach done without passing the user's acceptance.
+#
+# blocked vs hold — cause, not severity (TASK-242 decision 3; Gary's definitions):
+#   blocked — cannot proceed due to some EXTERNAL issue
+#   hold    — a DECISION to prioritize another card
+# A combined park/ was proposed and rejected: `blocked` and `hold` are what a
+# newcomer — including a fresh AI session — understands without a lookup, and every
+# session here starts as a newcomer.
+#
+# Deliberately absent, each for its own reason:
+#   backlog:doing     — commit to work first (backlog → todo → doing)
+#   doing:done        — see above; accept/ is the only route to done
+#   done:*            — completed items are not reopened; create a new item. `done`
+#                       is also in TERMINAL, which refuses earlier with a clearer
+#                       message; the absence here is the second lock
+#   done:cancelled    — cancelling completed work contradicts the definition of
+#                       done. The old matrix's done→archive "rare, retroactive" was
+#                       a HOLE, not a practice: verified 2026-09-23, the six
+#                       completed cards in work/archive/ carry no cancellation
+#                       fields and appear in no release. They were STORED. Storage
+#                       is history/archive/; the outcome is cancelled/
+#   accept:cancelled  — UAT can reveal work that should not ship, but that is
+#                       "revert the code, then cancel" — an action, not a move
+#   blocked:hold      — a changed cause goes via a real state. Parked folders are
+#   hold:blocked        not a shuffling ground
+#   *:accept          — only doing/ produces implemented work
 kanban_ROOT="kanban"
-kanban_FOLDERS="backlog blocked todo doing accept done cancelled"
-kanban_TRANSITIONS="backlog:todo todo:backlog todo:doing doing:todo doing:done backlog:blocked todo:blocked doing:blocked blocked:backlog blocked:todo blocked:doing"
+kanban_FOLDERS="backlog blocked hold todo doing accept done cancelled"
+kanban_TRANSITIONS="backlog:todo todo:backlog todo:doing doing:todo doing:accept accept:doing accept:done backlog:blocked todo:blocked doing:blocked blocked:backlog blocked:todo blocked:doing backlog:hold todo:hold doing:hold hold:backlog hold:todo hold:doing backlog:cancelled todo:cancelled doing:cancelled"
 kanban_TERMINAL="done cancelled"
 # The gates, as data (FEAT-229.2). Order is report order, not precedence: all of
 # them run, so one invocation names every reason a move is refused.
@@ -526,6 +559,47 @@ move_one() {
     [ -d "$m_bundle" ] && gmv "$m_bundle" "$NS_ROOT/$TARGET/"
     row OK "  ↳ $m_base"
   done < <(family_members "$FULL_ID")
+
+  # A SPIKE REACHING A TERMINAL STATE ARCHIVES OUT OF THE BOARD (FEAT-229.3, kanban§2).
+  #
+  # A spike produces KNOWLEDGE, not a shippable change, so it must never enter a release
+  # archive: history/spikes/, never history/releases/ (TECH-228). Its answer stays
+  # findable — that is the entire deliverable — while the board stops carrying a card
+  # whose work is over.
+  #
+  # Why this is a redirect AFTER the move rather than a different TARGET: the transition
+  # matrix, the gates and the family carry all reason about board folders. Making
+  # `history/spikes` a pseudo-target would put a non-folder in the policy table and
+  # every check downstream would need a special case. The record lands in done/ or
+  # cancelled/ exactly like any other card, then leaves the board.
+  #
+  # Research spike vs POC spike (TECH-228's structural split): a research spike is a
+  # document; a POC spike is a document PLUS working code in its bundle. The bundle is
+  # what makes the difference, so no type flag is needed — if a bundle came along, the
+  # archive gets a folder; if not, a file.
+  if [ "$NS" = "kanban" ] && printf '%s' "$FULL_ID" | grep -qE '^SPIKE-'; then
+    local sp_root="$ROOT/history/spikes" pf
+    mkdir -p "$sp_root"
+    if [ -d "$NS_ROOT/$TARGET/$FULL_ID" ]; then
+      # POC spike: the record and its code archive TOGETHER as one folder named for
+      # the id, so the code is never separated from the write-up explaining it. The
+      # bundle's contents move up beside the record rather than nesting a second
+      # <ID>/ inside it.
+      mkdir -p "$sp_root/$FULL_ID"
+      gmv "$NS_ROOT/$TARGET/$BASE" "$sp_root/$FULL_ID/" || true
+      for pf in "$NS_ROOT/$TARGET/$FULL_ID"/* "$NS_ROOT/$TARGET/$FULL_ID"/.[!.]*; do
+        [ -e "$pf" ] || continue
+        gmv "$pf" "$sp_root/$FULL_ID/" || true
+      done
+      rmdir "$NS_ROOT/$TARGET/$FULL_ID" 2>/dev/null || true
+      row OK "  ↳ archived to history/spikes/$FULL_ID/ (POC spike — record + code)"
+      DEST="$sp_root/$FULL_ID/$BASE"
+    else
+      gmv "$NS_ROOT/$TARGET/$BASE" "$sp_root/" || true
+      row OK "  ↳ archived to history/spikes/ (research spike)"
+      DEST="$sp_root/$BASE"
+    fi
+  fi
 
   # Stamp on terminal move: fill existing Closed:/Resolution: lines, else insert after Opened:
   if [ "$TARGET" = "closed" ]; then

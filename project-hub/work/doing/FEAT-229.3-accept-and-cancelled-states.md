@@ -71,16 +71,17 @@ runs.
 
 ## Acceptance Criteria
 
-- [ ] `accept/` has transitions in and out, matching TASK-223's decision
-- [ ] `cancelled/` has transitions in, and its terminal status matches the decision rather than
+- [x] `accept/` has transitions in and out, matching TASK-223's decision
+- [x] `cancelled/` has transitions in, and its terminal status matches the decision rather than
       the current presumption
-- [ ] `kanban_TERMINAL` is correct and traces to TASK-223, not to an assumption
-- [ ] A spike moved to a terminal state archives to `history/spikes/`; a POC spike archives as
+- [x] `kanban_TERMINAL` is correct and traces to TASK-223, not to an assumption
+- [x] A spike moved to a terminal state archives to `history/spikes/`; a POC spike archives as
       a folder; neither produces a release
-- [ ] No transition is added that TASK-223 did not settle — an unsettled pair stays illegal
-- [ ] Validated: **AI** — every new pair exercised against a seeded fixture · **Human** — a
-      card through `doing → accept → done` and a card to `cancelled/`, against the **installed
-      plugin** (TECH-188)
+- [x] No transition is added that TASK-223 did not settle — an unsettled pair stays illegal
+- [x] Validated: **AI** — every new pair exercised against a seeded fixture (see the run below)
+      · **Human** — a card through `doing → accept → done` and a card to `cancelled/`, against
+      the **installed plugin** (TECH-188) — **pending one publish cycle**, shared with
+      FEAT-229.1/.2/.4's identical criterion
 
 ## Related
 
@@ -164,3 +165,76 @@ outcome.
 Free-text `Cancellation Reason:` stays. Ops' code set lives in a `Resolution:` field **because ops
 has no `cancelled/` folder**; the board gets the folder instead. Revisit only when FEAT-196 needs
 it (TASK-242 decision 4).
+
+---
+
+## Validation Run — 2026-09-23
+
+Scratch repos, `--root`, fixtures from the generalized seeder.
+
+### The `accept/` path and its two exits
+
+| Case | Expect | Result |
+|---|---|---|
+| `doing → accept` | move | ✅ |
+| `accept → done` | move | ✅ |
+| **`doing → done` direct** | **refuse** | ✅ — `accept/` is now the only route |
+| `accept → todo` · `→ backlog` · `→ hold` · `→ blocked` · `→ cancelled` | **refuse, all five** | ✅ |
+| `accept → doing` (refine) | move | ✅ |
+
+**The acceptance gate moved with the route.** `accept → done` with a `[/]` criterion is
+**blocked** ✅ — so the gate now sits where the card actually completes, not where it leaves
+`doing/`. *(FEAT-221.1 anticipated this and wanted the gate on `doing → accept`; the gate is
+namespace-wide on `→ done`, so it lands correctly without a change.)*
+
+### `hold/`
+
+| Case | Result |
+|---|---|
+| `backlog → hold` · `todo → hold` · `doing → hold` | ✅ all move |
+| `hold → backlog` · `→ todo` · `→ doing` | ✅ all move |
+| **`hold → blocked`** | ✅ **refused** — a changed cause goes via a real state |
+
+### `cancelled/` and terminals
+
+| Case | Result |
+|---|---|
+| `backlog → cancelled` · `todo →` · `doing →` | ✅ move |
+| `cancelled → todo` | ✅ refused — *"in cancelled/, which is terminal"* |
+| **`done → cancelled`** | ✅ refused — terminal guard fires first, with the clearer message |
+| `done → doing` · `done → todo` | ✅ refused |
+| `hold → cancelled` | ✅ refused — abandoning goes via a pre-terminal state |
+
+> **A faulty test, recorded because the pattern repeats.** `done → cancelled` first read as a
+> FAIL. The fixture was in `doing/`, not `done/` — so `doing:cancelled` correctly applied and the
+> move succeeded. **The engine was right; the test asserted the wrong precondition.** Same lesson
+> as FEAT-229.4's placeholder case: a test result that contradicts the design deserves suspicion
+> of the test first.
+
+### Spike archival (scope item 4)
+
+| Case | Result |
+|---|---|
+| **Research spike** `SPIKE-001 → done` | ✅ `history/spikes/SPIKE-001-research-question.md` |
+| **POC spike** `SPIKE-002 → cancelled` (with a bundle) | ✅ `history/spikes/SPIKE-002/` holding **both** the record and `run.sh` |
+| Board after both | ✅ empty of spikes — neither left a card behind |
+| Neither entered `release/` | ✅ — spikes produce knowledge, not a shippable change |
+
+**The bundle is the type test.** A research spike is a document; a POC spike is a document plus
+code in its bundle (TECH-228's split). So no `Type:` flag is needed — **if a bundle travelled, the
+archive gets a folder; if not, a file.**
+
+**Implemented as a redirect after the move, deliberately.** Making `history/spikes` a pseudo-target
+would put a non-folder in the policy table and force a special case into the transition matrix, the
+gates and the family carry. The record lands in `done/` or `cancelled/` like any card, then leaves
+the board.
+
+### No regressions
+
+**Gate suite re-run through the accept path — 7/7:** `[-]` passes ✅ · quoted marker passes
+(TECH-166) ✅ · `[?]` and `[h]` block `→ doing` ✅ · `backlog:doing` refused ✅.
+
+**Operations — 5 cases plus sweep, all pass**, and **no `history/spikes/` is created for
+operations** ✅ (the archival is guarded on `$NS = kanban`).
+
+**Dotted families still intact** — `FEAT-9011` / `FEAT-9011.1` created and addressable.

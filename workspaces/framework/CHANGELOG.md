@@ -5,6 +5,61 @@ plain semver 0.x during the framework workspace build.
 
 ## [Unreleased]
 
+### Added
+- **The kanban board is a working namespace** (FEAT-229.1/.2/.3/.4). It was declared in
+  the policy table and refused before any id was parsed; it now creates, moves, gates
+  and archives. The live board remains `project-hub/work/` until the ADR-009 D5
+  crossover — kanban here is exercised by fixtures until that moment.
+  - **Transitions are an allowlist**, not the old engine's denylist. Listing *invalid*
+    pairs permits every pair nobody thought to forbid, `backlog:done` among them.
+  - **Three gates, declared as data** (`kanban_GATES`) beside the transitions, because
+    policy belongs in the table rather than an if-chain in the mover. All of them run,
+    so one invocation names every reason a move is refused.
+  - **`accept/`** between `doing` and `done`, with **exactly two exits — `done` and
+    `doing`**. A card there has merged code, so parking it or returning it to a queue
+    would strand known-imperfect work with nothing scheduled to finish it.
+    **`doing → done` is gone**; `accept/` is the only route to `done/`, which is what
+    makes the state mean anything (TASK-242).
+  - **`hold/`** — a decision to prioritise other work — beside **`blocked/`** — cannot
+    proceed for an external reason. Two words, differing by *cause*, both understood on
+    arrival without a lookup; a combined `park/` was proposed and rejected. No
+    `hold ↔ blocked`: a changed cause goes via a real state. Closes FEAT-030, open
+    since 2026-01-08.
+  - **`cancelled/`** as a first-class terminal state. `done → cancelled` is refused —
+    cancelling completed work contradicts the definition of done. Storage is
+    `history/archive/`; the outcome is `cancelled/`.
+  - **Spike archival** — a spike reaching a terminal state leaves the board for
+    `history/spikes/`, never a release archive: a spike produces knowledge, not a
+    shippable change. A research spike archives as a file, a POC spike as a folder
+    holding its record *and* its code. The bundle is the type test, so no flag is
+    needed.
+  - **Dotted-id family semantics**, mechanized for the first time since TASK-219
+    settled them on 2026-09-09: a child is addressable by its own id, a family moves
+    together, **every member is gated** (a blocked child refuses the whole move, naming
+    the member), and a family counts as **one** WIP item.
+
+### Fixed
+- **A dotted child could not be addressed, and asking for one silently moved the
+  parent** (BUG-241). The id parser took the trailing integer, so `FEAT-001.1` yielded
+  `1` and matched `FEAT-001` — reporting success for a card the user never named. An
+  unmatched dotted id now **fails, naming itself**; there is no fallback to the base id.
+- **A parent move split the family** (BUG-241). The engine had no child collection at
+  all.
+- **The WIP count counted files rather than work items** (BUG-240). A dotted family of
+  four counted as four against the limit; it now collapses to its base id and counts
+  one. A `Parent:`-field child still counts as its own item — no special case needed,
+  since it has no dotted suffix.
+- **Counts included dotfiles** (BUG-174, in the new engine's equivalent logic). A folder
+  holding two cards plus `.gitkeep` and `.limit` reported four.
+- **Prose quoting a checkbox marker counted as a live acceptance criterion**
+  (TECH-166 item 4, in the new engine's equivalent logic). The scan is scoped to the
+  Acceptance Criteria section and skips fenced blocks. This defect hard-blocked TECH-177
+  on 2026-09-22 — a card whose own text described the bug — and the only way through was
+  rewording a true sentence.
+- **An unfilled `Depends On:` placeholder satisfied the dependency gate.** `grep -m1`
+  matched the template's `__TYPE-nnn__` line, which holds no id, so the gate found
+  nothing to check. Placeholder lines are now skipped.
+
 ### Changed
 - **The move engine never prompts** (BUG-215, superseding its own 2026-09-07 design).
   A `→ closed` with no resolution code is **refused per record**, naming the valid

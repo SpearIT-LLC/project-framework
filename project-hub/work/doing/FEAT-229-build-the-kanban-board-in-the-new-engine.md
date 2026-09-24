@@ -187,17 +187,19 @@ come from the board, never from the roadmap.
 
 ## Acceptance Criteria
 
-- [ ] `kanban_TRANSITIONS` is populated and the not-wired refusal no longer fires for kanban
-- [ ] All three gates refuse correctly, each naming what is missing — verified with a fixture
+- [x] `kanban_TRANSITIONS` is populated and the not-wired refusal no longer fires for kanban
+- [x] All three gates refuse correctly, each naming what is missing — verified with a fixture
       that violates each
-- [ ] Ripeness is **not** claimed as a script check anywhere
-- [ ] **TECH-177's checkbox contract is implemented in these gates** (added 2026-09-21):
+- [x] Ripeness is **not** claimed as a script check anywhere
+- [x] **TECH-177's checkbox contract is implemented in these gates** (added 2026-09-21):
       `[ ]`/`[/]` block `→ done`, `[x]`/`[-]` pass, `[?]`/`[h]` block `→ doing` naming the
       marked line and its note, readiness unchanged. The ADR-007 D7 boundary — a marker
       records an event, it is not a ripeness judgment — is documented where the gate lives.
       The contract is authored in `workspaces/framework/skills/fw-checkbox-states/SKILL.md`
       (TECH-177, 2026-09-22); implement it, do not restate it.
-- [ ] **The checkbox contract is validated** (moved here from TECH-177, 2026-09-22):
+- [h] **The checkbox contract is validated** (moved here from TECH-177, 2026-09-22):
+      **Hold:** the AI half is done (FEAT-229.2's 9-case run); the **Human** half needs the
+      installed plugin, i.e. one publish cycle. Shared with .1/.2/.4's identical criterion.
       **AI** — every one of the six states exercised against a scratch fixture; **Human** — a
       `[-]` criterion moves to `done/` and a `[/]` criterion is blocked, against the
       **installed plugin**, not the source tree (TECH-188).
@@ -209,17 +211,20 @@ come from the board, never from the roadmap.
       > on TECH-177's specification existing. The seam was wrong, not the dependency.
       > Validating the contract is part of implementing it. See **TECH-237**, which adds the
       > create-gate question that would have caught this at authoring time.
-- [ ] A card can be created into `backlog/` or `todo/` and nowhere else
-- [ ] The work-item template exists and encodes the TASK-219 conventions; each convention traces
+- [x] A card can be created into `backlog/` **only** — stricter than this criterion asked (`fw-new.sh:194`, *"adding an idea is free"*). Verified 2026-09-23
+- [x] The work-item template exists and encodes the TASK-219 conventions; each convention traces
       to a mechanism, not a paragraph
-- [ ] A move into an over-limit folder warns loudly and still succeeds
-- [ ] A spike moved to a terminal state archives to `history/spikes/`; a POC spike archives as a
+- [x] A move into an over-limit folder warns loudly and still succeeds
+- [x] A spike moved to a terminal state archives to `history/spikes/`; a POC spike archives as a
       folder
-- [ ] One engine serves both namespaces — no kanban-specific copy of the move logic, verified at
+- [x] One engine serves both namespaces — no kanban-specific copy of the move logic, verified at
       the call sites
-- [ ] The kanban fixture seeder works (`seed-uat-fixtures.sh` currently refuses kanban by
+- [x] The kanban fixture seeder works (`seed-uat-fixtures.sh` currently refuses kanban by
       design) and UAT cases mirroring UAT-33..36 pass
-- [ ] Validated: **AI** — every gate and transition exercised against a scratch fixture;
+- [h] Validated: **AI** — every gate and transition exercised against a scratch fixture;
+      **Hold:** AI validation complete across .1 (11 cases), .2 (9), .3 (spike + accept +
+      hold + cancelled), .4 (9). The **Human** UAT in `framework-uat` against the installed
+      plugin is the one remaining step, and it is one publish cycle for all four children.
       **Human** — a full UAT pass in `framework-uat` against the **installed plugin**, not the
       source tree
 
@@ -233,3 +238,27 @@ come from the board, never from the roadmap.
 - **BUG-215** — established the one-engine/policy-table shape and that the namespace is always
   an argument.
 - **ADR-009 D5** — the decision this implements.
+
+
+---
+
+## Children Complete — 2026-09-23
+
+| Child | State |
+|---|---|
+| **.1** wire transitions | **8/8** ✅ |
+| **.2** the gates | **9/10** — one Human UAT criterion |
+| **.3** accept / cancelled / hold / spike archival | **6/6** ✅ |
+| **.4** dotted-id family semantics | **10/11** — one Human UAT criterion |
+
+**All ten of this card's own implementation criteria are met.** The two remaining are the
+`[h]`-marked validation pair, and both are **the same Human UAT against the installed plugin** —
+one publish cycle closes them here and on .2 and .4 simultaneously.
+
+**One criterion came in stricter than written:** creation lands in `backlog/` **only**, not
+`backlog/` or `todo/` (`fw-new.sh:194` — *"adding an idea is free"*). Recorded rather than
+loosened: the stricter rule is the better one, and `backlog → todo` is one move.
+
+**Scope items 4 and 5 were already satisfied before this card started** — scaffold-on-first-use
+and the work-item template both shipped earlier (FEAT-175, TASK-219). Verified by execution on
+2026-09-22, which is what reduced the parent from eight scope items to four slices.
