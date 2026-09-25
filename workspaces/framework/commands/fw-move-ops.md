@@ -17,10 +17,11 @@ or the target folder was rejected — a bare numeric silently meant operations, 
 inferring from the folder name would have made folder names globally unique across
 namespaces forever, enforced by nothing.
 
-The kanban row exists in the script's policy table but is **not wired up**: the
+The script's kanban row is wired (FEAT-229), but this command never uses it: the
 live board is `project-hub/work/` under the root `/fw-move` until the ADR-009 D5
 crossover, a single atomic moment at graduation. `/fw-move-ops kanban ...` is not
-a thing — the namespace is fixed by which command you run.
+a thing — the namespace is fixed by which command you run, so a `FEAT-` id given
+here is still looked up in operations.
 
 ## Operations policy (what the script enforces)
 

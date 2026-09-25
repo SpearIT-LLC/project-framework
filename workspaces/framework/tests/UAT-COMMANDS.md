@@ -23,7 +23,7 @@ files a BUG card; a surprising-but-correct result files a note on the owning FEA
 2. Install the plugin from the dev marketplace (`/plugin marketplace add …`, then
    `/plugin install spearit-framework-dev@dev-marketplace --scope local`); restart.
 3. **Expected:** `/help` lists `fw-new-workspace`, `fw-new-kb-domain`, `fw-contacts`,
-   `fw-new-ops-record`, `fw-move-ops` under the plugin namespace, and the `fw-troubleshoot`
+   `fw-new-ops-record`, `fw-move-ops`, `fw-new`, `fw-move` under the plugin namespace, and the `fw-troubleshoot`
    skill is available. No `workspaces/` exists yet.
 4. **Pass:** all listed; nothing pre-created.
 
@@ -203,8 +203,13 @@ client's ServiceNow/Jira) hands over a text file and a screenshot for INC-001:
 **UAT-19 — bundle travels.** Create `open/REQ-002/notes.txt`; `> /fw-move REQ-002 onhold`
 - Pass: `onhold/REQ-002/notes.txt` exists; the script reports "bundle REQ-002/ moved".
 
-**UAT-20 — kanban prefix.** `> /fw-move FEAT-12 doing` (the plugin command)
-- Pass: refused with the pointer to the root `/fw-move` until board crossover.
+**UAT-20 — the namespace is the command, never the prefix.** `> /fw-move-ops FEAT-901 doing`
+- **Rewritten 2026-09-24** (FEAT-229). It previously expected a refusal because kanban was
+  *not wired*; kanban now moves (section G), so what this case guards is BUG-215's rule:
+  `/fw-move-ops` always means operations, whatever the id looks like.
+- Expected: `❌ invalid target 'doing' — operations folders: open onhold closed`, exit 1.
+  The `FEAT-` prefix is not read as a request for the board.
+- Pass: refused on the target; nothing moves in `kanban/` or `operations/`.
 
 **UAT-21 — sweep.** Edit `closed/INC-001-….md` so `**Closed:**` is a date last year.
 `> /fw-move sweep`
@@ -320,6 +325,214 @@ with `--reset` then seed again.
   (including the image) and records only what they show; the scrub reminder appears
   before the drop.
 - Pass: no verdict is asserted before the evidence lands.
+
+---
+
+## G. The kanban board (FEAT-229)
+
+**What this proves.** The board creates, moves, gates and archives from the **installed**
+plugin, in a repo where `workspaces/framework/` does not exist. It runs in two layers:
+**UAT-37..51 call the engine directly** — the rules are facts, and testing the `.sh`
+isolates them from the AI — then **UAT-52..57 run the same board through `/fw-move`**, the
+command a user actually types, for the judgment the engine cannot do.
+
+**`$K` is a shell variable, not a slash command.** Open a **Git Bash** terminal in
+`framework-uat` and set it once — it points at the installed plugin's move engine, with
+the `kanban` namespace already supplied:
+
+```bash
+K='bash ../claude-local-marketplace/framework/scripts/fw-move.sh kanban'
+$K FEAT-901 todo     # = bash …/fw-move.sh kanban FEAT-901 todo
+```
+
+In UAT-37..51, every `$K …` is typed in that terminal; only the `>` lines (UAT-37,
+UAT-49) are typed to Claude. G2 is all `>`. A terminal is used rather than `!` in the Claude prompt so the variable
+reliably persists from one case to the next.
+
+**Fixtures.** Reserved 900 block, seeded **after** UAT-37 creates the board:
+`bash ../project-framework/workspaces/framework/tests/seed-uat-fixtures.sh --root . kanban`.
+Start state — `backlog/` FEAT-901, BUG-902 (+bundle), TECH-903, FEAT-9010 · `todo/`
+FEAT-904, TASK-905, the FEAT-912 family (.1 has a bundle, .2 `Depends On: FEAT-906`),
+TASK-915 (`Depends On: FEAT-999`, not on the board), SPIKE-914 (POC, +bundle) · `doing/`
+one card per checkbox state — FEAT-906 `[x]`, BUG-907 `[/]`, TECH-908 `[-]`, TASK-909 `[?]`,
+SPIKE-910 `[h]`, FEAT-911 (a marker quoted in prose), plus SPIKE-913 (research). Run in
+order; each case starts from the state the last one left. Re-run with `--reset`, then seed.
+`doing/` starts over its limit of 2 **on purpose** — every move into it should warn.
+
+**UAT-37 — the board is created on first use.** In a repo with no `kanban/`:
+`> /fw-new add CSV export to the report page`
+- Expected: **AI proposes** `FEAT` and says why; on yes, the script prints
+  `Created kanban queue at kanban/ (first use)` and creates `kanban/backlog/FEAT-001-….md`.
+- Pass: `kanban/` = `accept backlog blocked cancelled doing done hold release todo` +
+  `README.md`; `todo/.limit` = 10, `doing/.limit` = 2; the card is in `backlog/` and
+  nowhere else. Then seed the fixtures.
+
+**UAT-38 — the transitions are an allowlist.** `$K FEAT-901 done`, then `$K 901 doing`,
+then `$K 901 accept`
+- Expected: each refused on its row — `invalid transition backlog → done (allowed: …)`,
+  likewise `→ doing` and `→ accept`; exit 1. A card goes backlog → todo → doing →
+  accept → done, and skips nothing.
+- Pass: FEAT-901 still in `backlog/`. (`$K 901 doing` also prints the WIP warning first;
+  the warning never decides anything — see UAT-41.)
+
+**UAT-39 — batch move (mirrors UAT-33).** `$K "901, 902, 903" todo`
+
+  ```
+  Move → todo/
+    OK       FEAT-901-batch-item-one.md
+    OK       BUG-902-batch-item-two.md  (bundle BUG-902/)
+    OK       TECH-903-batch-item-three.md
+  📊 moved: 3  skipped: 0  failed: 0
+  ```
+- Pass: three cards and `todo/BUG-902/evidence.txt` in `todo/`; **FEAT-9010 has not
+  moved** (the substring trap — `901` matches FEAT-901 only).
+
+**UAT-40 — partial failure and skip (mirrors UAT-35).** `$K 901 999 903 backlog`
+- Expected: `OK` FEAT-901, `FAILED 999 — no kanban record with that id`, `OK` TECH-903,
+  `📊 moved: 2  skipped: 0  failed: 1`, exit 1. Then `$K "904, 905" todo` → both
+  `SKIPPED … already in todo/`, `moved: 0  skipped: 2  failed: 0`, exit 0.
+- Pass: the bad id in the middle did not stop 903; a no-op is a skip, not a failure.
+
+**UAT-41 — WIP warns, never blocks.** `$K 904 doing`
+- Expected: `⚠️  WIP limit: 7/2 items already in doing/` **and** `OK FEAT-904-… → doing/`.
+- Pass: the card moved despite the warning; the count is 7 cards, not 8 (the `.gitkeep`
+  and `.limit` files are not counted — BUG-174).
+
+**UAT-42 — `[?]` and `[h]` block `→ doing`, naming the line.** `$K "909, 910" todo`
+(both move — and **SPIKE-910 stays on the board**: only a *terminal* move archives a
+spike), then `$K "909, 910" doing`
+
+  ```
+  Move → doing/
+    FAILED   TASK-909-question-marker.md — - [?] Needs information — must BLOCK the move to doing
+             **Question:** what the run needs to know before it can proceed.
+    FAILED   SPIKE-910-hold-marker.md — - [h] Blocked — must BLOCK the move to doing
+             **Hold:** what prevents completion of this one line.
+  📊 moved: 0  skipped: 0  failed: 2
+  ```
+- Pass: both in `todo/`; each refusal quotes the marked line **and** its note.
+
+**UAT-43 — the dependency gate, and the family union rule.** `$K 915 doing`, then `$K 912 doing`
+- Expected: TASK-915 refused — `depends on FEAT-999, which is not on this board`. The
+  FEAT-912 family is refused **as a family**, the reason on the member that carries it:
+
+  ```
+    FAILED   FEAT-912.2-family-child-with-dep.md — depends on FEAT-906 (currently in doing/), which must reach done/ first
+    FAILED   FEAT-912 family — not moved: tightly-coupled members move together or not at all
+  ```
+- Pass: FEAT-912, .1, .2 and the `FEAT-912.1/` bundle **all** still in `todo/` — no
+  partial family move. The refusal names where the dependency is, not just "not done".
+
+**UAT-44 — the done gate: the checkbox contract (TECH-177).** This is the Human half of
+FEAT-229/.2's validation. `$K "906, 907, 908, 911" accept` (all four move — no gate on
+`→ accept`), then `$K "906, 907, 908, 911" done`
+
+  ```
+  Move → done/
+    OK       FEAT-906-all-criteria-done.md
+    FAILED   BUG-907-in-progress-criterion.md — 0 unchecked, 1 in progress: both block → done/ (mark [x] when done, [-] if cancelled)
+    OK       TECH-908-cancelled-criterion.md
+    OK       FEAT-911-quoted-marker-in-prose.md
+  📊 moved: 3  skipped: 0  failed: 1
+  ```
+- Pass: **`[/]` blocks; `[-]` passes by design**; FEAT-911 passes — a marker quoted in
+  prose is not a criterion (TECH-166 item 4). Each card in `done/` has
+  **`**Completed:** <today>`** stamped (the template and `/fw-new` both promise it).
+
+**UAT-45 — `accept/` has exactly two exits.** BUG-907 is in `accept/`.
+`$K 907 todo`, `$K 907 hold`, `$K 907 cancelled` → each `invalid transition accept → …`.
+`$K 907 doing` → moves. Then `$K 907 done` → `invalid transition doing → done`.
+- Pass: code that has merged cannot be parked, requeued or cancelled — only refined
+  (`→ doing`) or accepted (`→ done`); and `accept/` is the **only** route to `done/`.
+
+**UAT-46 — terminal states.** `$K 906 doing`, then `$K 906 cancelled`
+- Expected: both `in done/, which is terminal; open a new record instead`.
+- Pass: FEAT-906 still in `done/`. Completed work is never cancelled.
+
+**UAT-47 — `hold/`, `blocked/`, `cancelled/`.** On FEAT-901 (in `backlog/`), in order:
+`hold` ✅ · `blocked` ❌ (`hold → blocked`) · `todo` ✅ · `blocked` ✅ · `hold` ❌
+(`blocked → hold`) · `cancelled` ❌ (`blocked → cancelled`) · `backlog` ✅ ·
+`cancelled` ✅ · `todo` ❌ (`in cancelled/, which is terminal`)
+- Pass: every ✅ moves and every ❌ is refused as shown. A changed *cause* goes via a
+  real state; parked folders are not a shuffling ground.
+
+**UAT-48 — the family moves together, named by any member.** FEAT-906 is now `done/`,
+so FEAT-912.2's dependency is met. `$K 912.1 doing` — naming a **child**:
+
+  ```
+    OK         ↳ FEAT-912-family-parent.md
+    OK         ↳ FEAT-912.2-family-child-with-dep.md
+    OK       FEAT-912.1-family-child-one.md → doing/  (bundle FEAT-912.1/)
+  ```
+- Pass: all three plus `doing/FEAT-912.1/notes.txt` in `doing/` (the child's bundle is its
+  own, not the parent's — BUG-241). Then `$K 905 doing`: the WIP line counts the FEAT-912
+  family as **one** item (BUG-240) — check it against the distinct base ids in `doing/`.
+
+**UAT-49 — dotted create, and the depth cap.**
+`> add a sub-task under FEAT-912.1: write the migration note`
+- Expected: **AI picks the dotted mechanism** (the child is meaningless alone) and creates
+  `FEAT-912.1.1-…` in **`doing/`** — a dotted child is born in its parent's folder, not
+  `backlog/`. Then `> add a sub-task under FEAT-912.1.1` → refused: `max dotted-id depth
+  is 3 … the parent is too big`, reported verbatim, nothing created.
+- Pass: depth 3 exists; depth 4 does not; the AI does not work around the refusal.
+
+**UAT-50 — spikes leave the board, only on a terminal move.** `$K 913 accept` (moves,
+**stays on the board**), `$K 913 done`, then `$K 914 cancelled`
+- Expected: SPIKE-913 → `↳ archived to history/spikes/ (research spike)`; SPIKE-914 →
+  `↳ archived to history/spikes/SPIKE-914/ (POC spike — record + code)`.
+- Pass: `history/spikes/SPIKE-913-research-spike.md` (a file);
+  `history/spikes/SPIKE-914/` holds the record **and** `poc.sh` (a folder); neither is left
+  in `kanban/done/` or `kanban/cancelled/`; **no `history/releases/`** exists — a spike
+  produces knowledge, not a release.
+
+**UAT-51 — reset, and operations unaffected.** `…/seed-uat-fixtures.sh --root . kanban --reset`
+- Pass: no `*-9xx*` path remains in `kanban/` or `history/spikes/` — including the
+  FEAT-912.1.1 card UAT-49 created — and FEAT-001 from UAT-37 is untouched. Then re-run
+  **D2 (UAT-33..36)**: the engine the board now shares must behave for operations exactly
+  as before.
+
+### G2. Through the command — `/fw-move`
+
+Re-seed first (`--reset`, then seed). These are typed to **Claude**, not the terminal:
+what is under test is the command's judgment layer — the engine's rules were proven above.
+
+**UAT-52 — a refusal is reported, not worked around.** `> /fw-move FEAT-901 done`
+- Expected: the AI runs the engine, quotes the `invalid transition backlog → done` row
+  **verbatim**, and names the legal path (`backlog → todo → doing → accept → done`) as an
+  offer, not an action.
+- Pass: FEAT-901 still in `backlog/`; no `git mv` by hand; nothing else moved.
+
+**UAT-53 — the pre-implementation review on `→ doing`.** `> /fw-move 904 doing`
+- Expected: the move succeeds (the WIP warning is reported, not treated as a refusal);
+  then the AI reads FEAT-904 in full and presents what is being built, the decisions,
+  open questions and scope — and **stops**. A fixture card has almost no plan, so the
+  honest review says so and offers `/fw-move 904 todo`.
+- Pass: the AI waits for a go-ahead and implements nothing; the review is a judgment,
+  never a script check (ADR-007 D7).
+
+**UAT-54 — a gate is never cheated.** `> /fw-move 907 accept`, then `> /fw-move 907 done`
+- Expected: `→ accept` moves and the AI says what there is to accept (the criteria).
+  `→ done` is refused — `0 unchecked, 1 in progress` — and the AI **offers** to walk the
+  open criterion with you.
+- Pass: the AI does not tick `[/]` to `[x]` (or `[-]`) on its own to get the move through;
+  BUG-907 stays in `accept/`.
+
+**UAT-55 — cancelling records why.** `> /fw-move TECH-903 cancelled`
+- Expected: **AI asks why** before moving, writes `**Cancellation Reason:** <your answer>`
+  into the card header, runs the move, and offers to commit (`chore: Cancel TECH-903 - …`).
+- Pass: TECH-903 in `cancelled/` with the reason; no closure code is asked for (TASK-242 D4).
+
+**UAT-56 — naming a child moves the family, without asking.** `> /fw-move FEAT-912.2 hold`
+- Expected: the AI confirms `hold` is a *prioritization decision* (not an external
+  blocker), then runs the move; FEAT-912, .1 (with its bundle) and .2 all land in `hold/`.
+- Pass: the AI does **not** ask whether to move the siblings — a dotted family is one item.
+
+**UAT-57 — a repo whose board is elsewhere is untouched.** In the **framework repo**, where
+the live board is `project-hub/work/` and there is no `kanban/`:
+`> /spearit-framework-dev:fw-move FEAT-229 accept`
+- Expected: `❌ no kanban queue at kanban/ — create the first record with /fw-new`, exit 1.
+- Pass: nothing in `project-hub/work/` moves; the root `/fw-move` is unaffected. The two
+  commands live in different namespaces and cannot reach each other's board.
 
 ---
 

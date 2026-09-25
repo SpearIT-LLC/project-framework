@@ -37,8 +37,25 @@ plain semver 0.x during the framework workspace build.
     settled them on 2026-09-09: a child is addressable by its own id, a family moves
     together, **every member is gated** (a blocked child refuses the whole move, naming
     the member), and a family counts as **one** WIP item.
+  - **`**Completed:**` is stamped on `→ done`**, for every family member, and before a
+    spike archives so the date travels with it. An existing date is kept. The port
+    from the old engine had dropped BUG-167's stamp while the template kept promising
+    it.
+- **`/fw-move` — the board's command** (`spearit-framework-dev:fw-move`), sibling of
+  `/fw-move-ops`. The engine enforces every fact; the command carries the judgment it
+  cannot: the **pre-implementation review** on `→ doing` (ripeness is never a script
+  check, ADR-007 D7), a `Cancellation Reason:` before `→ cancelled`, and the
+  blocked-vs-hold cause check. It lives in the plugin's namespace, so it cannot reach a
+  repo whose board is elsewhere — the framework repo's `project-hub/work/` stays under
+  the root `/fw-move` until the ADR-009 D5 crossover.
+- **UAT section G** — the board end to end: UAT-37..51 against the engine, UAT-52..57
+  through `/fw-move`. The seeder gains a dotted family, dependency cards and both spike
+  kinds, and `--reset` now also clears dotted ids, archived spikes, the four-digit
+  substring trap and cards the UAT itself created.
 
 ### Fixed
+- **The "no queue" refusal named `/fw-new-ops-record` for the board too.** The create
+  command is now a column of the policy table, so kanban's refusal names `/fw-new`.
 - **A dotted child could not be addressed, and asking for one silently moved the
   parent** (BUG-241). The id parser took the trailing integer, so `FEAT-001.1` yielded
   `1` and matched `FEAT-001` — reporting success for a card the user never named. An

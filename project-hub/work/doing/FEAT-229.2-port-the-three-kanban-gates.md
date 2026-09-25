@@ -119,10 +119,12 @@ pre-implementation review, not by `grep`.
 - [x] Ripeness is **not** claimed as a script check anywhere
 - [x] One engine serves both namespaces — no kanban-specific copy of the gate logic, verified
       at the call sites
-- [ ] Validated: **AI** — each of the six checkbox states exercised against a seeded fixture,
+- [h] Validated: **AI** — each of the six checkbox states exercised against a seeded fixture,
       plus each gate's refusal · **Human** — a `[-]` criterion moves to `done/` and a `[/]`
       criterion is blocked, against the **installed plugin**, not the source tree (TECH-188).
       *(Moved from TECH-177 on 2026-09-22: validating the contract is part of implementing it.)*
+      **Hold:** AI half done 2026-09-23 (see FEAT-229 parent); the **Human** half needs the
+      installed plugin — one publish cycle shared with the family.
 
 ## Related
 

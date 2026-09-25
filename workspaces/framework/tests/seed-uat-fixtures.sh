@@ -74,12 +74,20 @@ TODAY="$(date +%Y-%m-%d)"
 # --- reset: remove only the 900 block -------------------------------------
 if [ "$RESET" -eq 1 ]; then
   N=0
+  # 9[0-9]{2,3}: the substring-trap fixtures (INC-9010, FEAT-9010) are four digits.
+  # (\.[0-9]+)*: dotted family fixtures. Spikes leave the board for history/spikes/
+  # on a terminal move (FEAT-229.3), so the kanban reset looks there too.
+  SCAN="$NS"; [ "$NS" = "kanban" ] && [ -d "$ROOT/history/spikes" ] && SCAN="$NS history/spikes"
   while IFS= read -r p; do
     [ -n "$p" ] || continue
-    git -C "$ROOT" rm -rq --ignore-unmatch "$p" 2>/dev/null || rm -rf "$ROOT/$p"
+    [ -e "$ROOT/$p" ] || continue   # already removed with its bundle folder
+    # --ignore-unmatch succeeds on an UNTRACKED path without removing it (a card the
+    # UAT created with /fw-new, never staged), so check the disk, not the exit code.
+    git -C "$ROOT" rm -rq --ignore-unmatch "$p" 2>/dev/null
+    [ -e "$ROOT/$p" ] && rm -rf "$ROOT/$p"
     N=$((N+1))
-  done < <(cd "$ROOT" && find "$NS" -regextype posix-extended \
-             -regex ".*/${ID_RE}-9[0-9]{2}(-[^/]*\.md|)$" -printf '%p\n' 2>/dev/null)
+  done < <(cd "$ROOT" && find $SCAN -regextype posix-extended \
+             -regex ".*/${ID_RE}-9[0-9]{2,3}(\.[0-9]+)*(-[^/]*\.md|)$" -printf '%p\n' 2>/dev/null)
   echo "🧹 removed $N fixture path(s) from $QUEUE"
   exit 0
 fi
@@ -98,9 +106,11 @@ closed|INC-907|sweep-candidate|$LAST_YEAR-11-14
 open|INC-9010|substring-trap|
 "
 else
-# kanban: the 4th field seeds the ACCEPTANCE CRITERIA state, so FEAT-229.2's gate
-# work has a fixture per checkbox state (TECH-177's six). Until those gates exist
-# the field is inert and the cards simply move.
+# kanban: the 4th field seeds the ACCEPTANCE CRITERIA state — one fixture per
+# checkbox state (TECH-177's six), read by the gates (FEAT-229.2). `dep:<ID>` seeds
+# all-done criteria plus a **Depends On:** line, for the dependency gate and the
+# family union rule (FEAT-229.4). FEAT-912 is a dotted family; SPIKE-913/914 are
+# the research and POC spikes that archive to history/spikes/ (FEAT-229.3).
 FIXTURES="
 backlog|FEAT-901|batch-item-one|open
 backlog|BUG-902|batch-item-two|open
@@ -114,6 +124,12 @@ doing|TASK-909|question-marker|question
 doing|SPIKE-910|hold-marker|hold
 doing|FEAT-911|quoted-marker-in-prose|quoted
 backlog|FEAT-9010|substring-trap|open
+todo|FEAT-912|family-parent|done
+todo|FEAT-912.1|family-child-one|done
+todo|FEAT-912.2|family-child-with-dep|dep:FEAT-906
+todo|TASK-915|depends-off-board|dep:FEAT-999
+todo|SPIKE-914|poc-spike|done
+doing|SPIKE-913|research-spike|done
 "
 fi
 
@@ -135,7 +151,8 @@ mk_record() {
     # kanban. The criteria block is what the done-gate will read (FEAT-229.2): one
     # fixture per checkbox state so every branch of TECH-177's contract is
     # exercisable. Semantics: skills/fw-checkbox-states/SKILL.md.
-    local crit
+    local crit dep=""
+    case "$extra" in dep:*) dep="${extra#dep:}"; extra="done" ;; esac
     case "$extra" in
       done)       crit='- [x] A finished criterion' ;;
       inprogress) crit='- [x] A finished criterion
@@ -160,6 +177,7 @@ mk_record() {
       printf '**Type:** %s\n' "${id%%-*}"
       printf '**Created:** %s\n' "$TODAY"
       printf '**Completed:**\n'
+      [ -n "$dep" ] && printf '**Depends On:** %s\n' "$dep"
       printf '\n---\n\n## Acceptance Criteria\n\n%s\n' "$crit"
       printf '\n---\n\nUAT fixture — reserved id block 900-999. Safe to delete with --reset.\n'
     } > "$f"
@@ -188,6 +206,17 @@ else
   mkdir -p "$QUEUE/backlog/BUG-902"
   printf 'UAT fixture attachment for BUG-902.\n' > "$QUEUE/backlog/BUG-902/evidence.txt"
   echo "  created backlog/BUG-902/evidence.txt (bundle)"
+
+  # A dotted child's bundle is named for the FULL id — it must travel with the
+  # family and never resolve to the parent's bundle (BUG-241, second half).
+  mkdir -p "$QUEUE/todo/FEAT-912.1"
+  printf 'UAT fixture attachment for FEAT-912.1.\n' > "$QUEUE/todo/FEAT-912.1/notes.txt"
+  echo "  created todo/FEAT-912.1/notes.txt (child bundle)"
+
+  # A POC spike is a record plus working code; the bundle is what makes it one.
+  mkdir -p "$QUEUE/todo/SPIKE-914"
+  printf '#!/usr/bin/env bash\necho "UAT fixture POC for SPIKE-914"\n' > "$QUEUE/todo/SPIKE-914/poc.sh"
+  echo "  created todo/SPIKE-914/poc.sh (POC bundle)"
 fi
 
 # git mv needs the files tracked; stage them.
@@ -211,16 +240,16 @@ cat <<EOF
 ✅ Fixtures staged in $QUEUE
 
   backlog/ FEAT-901, BUG-902 (+bundle), TECH-903, FEAT-9010
-  todo/    FEAT-904, TASK-905
+  todo/    FEAT-904, TASK-905 · FEAT-912 + .1 (+bundle) + .2 (Depends On FEAT-906)
+           TASK-915 (Depends On FEAT-999, off-board) · SPIKE-914 (POC, +bundle)
   doing/   FEAT-906 (all done), BUG-907 ([/]), TECH-908 ([-]),
-           TASK-909 ([?]), SPIKE-910 ([h]), FEAT-911 (quoted marker)
+           TASK-909 ([?]), SPIKE-910 ([h]), FEAT-911 (quoted marker),
+           SPIKE-913 (research)
 
-The doing/ set is one fixture per checkbox state — FEAT-229.2's gate work reads
-these. FEAT-911 is the TECH-166 item 4 regression: a marker quoted in prose that
-must NOT count as a live criterion.
-
-NOTE: kanban has NO GATES yet (FEAT-229.1 wired transitions only). Every card
-here moves unchecked until FEAT-229.2 ports them.
+The doing/ set is one fixture per checkbox state, read by the gates. FEAT-911 is
+the TECH-166 item 4 regression: a marker quoted in prose that must NOT count as a
+live criterion. doing/ starts over its limit of 2 on purpose: WIP warns, never
+blocks.
 
 Live cards are untouched. Remove fixtures with:
   bash $0 --root $ROOT kanban --reset

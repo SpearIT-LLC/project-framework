@@ -60,6 +60,8 @@ operations_TERMINAL="closed"
 # Its one policy — a resolution code on -> closed — lives in move_one, because it
 # writes stamps rather than merely refusing.
 operations_GATES=""
+# The command that creates this namespace's first record — named by the "no queue" refusal.
+operations_CREATE="/fw-new-ops-record"
 
 # kanban: the board. Folder set authored in the repo-structure diagram; the
 # transition set decided in TASK-242 (2026-09-23) and encoded by FEAT-229.3.
@@ -126,6 +128,7 @@ kanban_TERMINAL="done cancelled"
 # The gates, as data (FEAT-229.2). Order is report order, not precedence: all of
 # them run, so one invocation names every reason a move is refused.
 kanban_GATES="gate_dependencies gate_markers gate_acceptance"
+kanban_CREATE="/fw-new"
 
 CODES="resolved cancelled duplicate no-fault-found rejected"
 
@@ -138,7 +141,7 @@ echo "$NAMESPACES" | grep -qw "$NS" || die "unknown namespace '$NS' (known: $NAM
 shift
 
 # Resolve this namespace's policy row.
-eval "NS_ROOT_REL=\"\$${NS}_ROOT\"; NS_FOLDERS=\"\$${NS}_FOLDERS\"; NS_TRANSITIONS=\"\$${NS}_TRANSITIONS\"; NS_TERMINAL=\"\$${NS}_TERMINAL\""
+eval "NS_ROOT_REL=\"\$${NS}_ROOT\"; NS_FOLDERS=\"\$${NS}_FOLDERS\"; NS_TRANSITIONS=\"\$${NS}_TRANSITIONS\"; NS_TERMINAL=\"\$${NS}_TERMINAL\"; NS_CREATE=\"\$${NS}_CREATE\""
 NS_ROOT="$ROOT/$NS_ROOT_REL"
 
 # A namespace declared in the table with no transitions is not wired yet. Refuse
@@ -344,6 +347,30 @@ wip_warn() {
   return 0
 }
 
+# --- Completed stamp (kanban → done) ----------------------------------------
+# Ported from the old engine's stamp_completed (BUG-167). The port dropped it, so a
+# card reached done/ with the blank **Completed:** its template promises the engine
+# fills — found by the UAT dry run, 2026-09-24.
+#
+# Called ONLY after a successful move into done/, so a date is never written to a
+# file that did not move. Idempotent: an existing date is kept (first completion
+# wins). Fills a blank **Completed:** line, else inserts one after **Created:**.
+# awk via a temp file rather than sed -i, for Git Bash/macOS portability.
+stamp_completed() { # stamp_completed <file already in done/>
+  local f="$1" tmp today
+  today="$(date +%Y-%m-%d)"
+  if ! grep -qE '^\*\*Completed:\*\* *[0-9]{4}-[0-9]{2}-[0-9]{2}' "$f" 2>/dev/null; then
+    tmp="$(mktemp)"
+    if grep -qE '^\*\*Completed:\*\*' "$f"; then
+      awk -v d="$today" '/^\*\*Completed:\*\*/ && !done { print "**Completed:** " d; done=1; next } { print }' "$f" > "$tmp"
+    else
+      awk -v d="$today" '{ print } /^\*\*Created:\*\*/ && !done { print "**Completed:** " d; done=1 }' "$f" > "$tmp"
+    fi
+    mv "$tmp" "$f"
+  fi
+  git -C "$ROOT" add "$f" 2>/dev/null || true
+}
+
 # Run every gate this namespace declares. ALL of them run — one invocation
 # reports every reason a move is refused, rather than making the user fix one
 # thing at a time and run again.
@@ -466,7 +493,7 @@ if [ -n "$RESOLUTION" ]; then
 fi
 
 # Namespace/target validation is list-wide: one target, one namespace policy.
-[ -d "$NS_ROOT" ] || die "no $NS queue at $NS_ROOT_REL/ — create the first record with /fw-new-ops-record"
+[ -d "$NS_ROOT" ] || die "no $NS queue at $NS_ROOT_REL/ — create the first record with $NS_CREATE"
 echo "$NS_FOLDERS" | grep -qw "$TARGET" || die "invalid target '$TARGET' — $NS folders: $NS_FOLDERS"
 
 # ---------------------------------------------------------------------------
@@ -539,6 +566,9 @@ move_one() {
   BUNDLE_NOTE=""
   [ -d "$BUNDLE" ] && { gmv "$BUNDLE" "$NS_ROOT/$TARGET/"; BUNDLE_NOTE="  (bundle $FULL_ID/)"; }
   DEST="$NS_ROOT/$TARGET/$BASE"
+  # Stamped here, in done/, BEFORE any spike archival below — the date travels
+  # with the record to history/spikes/ rather than being written after it leaves.
+  [ "$NS" = "kanban" ] && [ "$TARGET" = "done" ] && stamp_completed "$DEST"
 
   # THE FAMILY TRAVELS WITH THE RECORD (FEAT-229.4, fixing BUG-241's split).
   # Every other member — and its own bundle — follows, because a dotted child has
@@ -557,6 +587,7 @@ move_one() {
     m_bundle="$NS_ROOT/$(dirname "$m_rel")/$(printf '%s' "$m_base" | grep -oE '^[A-Z]+-[0-9]+(\.[0-9]+)*')"
     gmv "$NS_ROOT/$m_rel" "$NS_ROOT/$TARGET/" || { row FAILED "$m_base — family member move failed"; continue; }
     [ -d "$m_bundle" ] && gmv "$m_bundle" "$NS_ROOT/$TARGET/"
+    [ "$NS" = "kanban" ] && [ "$TARGET" = "done" ] && stamp_completed "$NS_ROOT/$TARGET/$m_base"
     row OK "  ↳ $m_base"
   done < <(family_members "$FULL_ID")
 
@@ -577,7 +608,13 @@ move_one() {
   # document; a POC spike is a document PLUS working code in its bundle. The bundle is
   # what makes the difference, so no type flag is needed — if a bundle came along, the
   # archive gets a folder; if not, a file.
-  if [ "$NS" = "kanban" ] && printf '%s' "$FULL_ID" | grep -qE '^SPIKE-'; then
+  #
+  # TERMINAL TARGETS ONLY. The first cut tested the namespace and the prefix but not
+  # the target, so EVERY spike move archived — doing → todo and doing → accept took the
+  # card off the board mid-flight (found by the UAT dry run, 2026-09-24). The AI
+  # validation exercised only terminal moves, which is exactly where the bug hides.
+  if [ "$NS" = "kanban" ] && echo "$NS_TERMINAL" | grep -qw "$TARGET" \
+     && printf '%s' "$FULL_ID" | grep -qE '^SPIKE-'; then
     local sp_root="$ROOT/history/spikes" pf
     mkdir -p "$sp_root"
     if [ -d "$NS_ROOT/$TARGET/$FULL_ID" ]; then

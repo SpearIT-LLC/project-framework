@@ -115,8 +115,10 @@ FEAT-229.2 already fixes the dotfile half.
 - [x] A `Parent:`-field child still counts as its own item
 - [x] Depth 3 resolves correctly
 - [x] Operations unaffected — regression pass
-- [ ] Validated: **AI** — each case against a seeded fixture, including a dotted fixture set
+- [h] Validated: **AI** — each case against a seeded fixture, including a dotted fixture set
       the seeder does not yet produce · **Human** — the same against the **installed plugin**
+      **Hold:** AI half done 2026-09-23 (see FEAT-229 parent); the **Human** half needs the
+      installed plugin — one publish cycle shared with the family.
 
 ## Related
 
