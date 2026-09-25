@@ -403,6 +403,7 @@ then `$K 901 accept`
 spike), then `$K "909, 910" doing`
 
   ```
+  ⚠️  WIP limit: 6/2 items already in doing/
   Move → doing/
     FAILED   TASK-909-question-marker.md — - [?] Needs information — must BLOCK the move to doing
              **Question:** what the run needs to know before it can proceed.
