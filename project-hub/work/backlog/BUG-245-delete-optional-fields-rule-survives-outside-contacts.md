@@ -64,6 +64,39 @@ A user without that preference gets lossy records.
    the same pattern as WIP (UAT-41). Revisit refusal once cards with two dependencies
    can be counted on the live board.
 
+## Folded in from UAT-49 (2026-09-26)
+
+Two more `/fw-new` instruction defects, found in the same files this fix already
+edits. They are folded in here so `fw-new.md` and `work-item.md` are opened and fixed
+once, not twice.
+
+**A. The docs say a card is always created in `backlog/`, but the script doesn't do
+that.** `fw-new.sh:189` correctly puts a dotted child (`--parent`) in its **parent's
+folder**, so it moves with the parent. UAT-49 created FEAT-912.1.1 in `doing/`, as the
+runbook expects. Three places state the old rule with no exception:
+
+| File | Line | Text |
+|---|---|---|
+| `commands/fw-new.md` | 11 | "the item lands in `kanban/backlog/`" |
+| `commands/fw-new.md` | 15 | "**Creation is always into `backlog/`.**" |
+| `templates/records/work-item.md` | 2 | "Created ONLY by fw-new.sh, into kanban/backlog/" |
+
+**Fix:** state the exception once, in the template, which is the authored home, and
+have `fw-new.md` agree: "Created into `backlog/`; a dotted child is created in its
+parent's folder." Put the reason next to the step 4 text on dotted ids (the child
+moves with its parent).
+
+**B. The AI makes up a slug when the user gives no description.** In UAT-49,
+`add a sub-task under FEAT-912.1.1` gave no description, and the AI invented
+`migration-note-subtask` instead of asking. The depth check refused first, so no
+harm was done. At a legal depth, though, the card would have been created under an
+invented name, and a slug lives in the filename forever. Step 1 only says to ask
+when the *type* is ambiguous. UAT-05 has the equivalent rule for
+`/fw-new-workspace` ("What should this workspace be called?").
+
+**Fix:** in step 3, if the user hasn't said what the work is, ask. Never build a
+slug or title from nothing.
+
 ## Acceptance Criteria
 
 - [ ] `grep -rni "delete optional"` over `commands/ templates/ scripts/` returns nothing
@@ -72,9 +105,12 @@ A user without that preference gets lossy records.
 - [ ] `/fw-new` step 5 says a second dependency means proposing a split, not refusing; if the user keeps two, the reason goes in Notes
 - [ ] UAT-37 re-run PASS against the built plugin: the card keeps blank `Workspace` / `Parent` / `Depends On` lines and no `__` placeholder survives
 - [ ] UAT-15 and UAT-25 records re-checked: blank optionals kept, not deleted
+- [ ] (A) `grep -rn "always into\|into kanban/backlog" commands/ templates/` returns nothing; `work-item.md` states that a dotted child is created in its parent's folder, and `fw-new.md` agrees with it without restating it
+- [ ] (B) `/fw-new` says to ask when the user gives no description of the work, and never to invent a slug or title
+- [ ] (B) UAT-49 re-run: `add a sub-task under FEAT-912.1` with no description → the AI asks what the sub-task is before it runs the script
 
 ## Related
 
 - **BUG-207** — the same defect, fixed for contact records only; its Expected text is the rule to reuse here.
 - **FEAT-229** — the kanban board section (UAT-37..49) where this was found.
-- `workspaces/framework/tests/UAT-RESULTS-2026-08-26.md` — Section G, row UAT-37.
+- `workspaces/framework/tests/UAT-RESULTS-2026-08-26.md` — Section G, rows UAT-37 and UAT-49.

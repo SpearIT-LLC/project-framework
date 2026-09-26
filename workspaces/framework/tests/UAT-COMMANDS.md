@@ -232,6 +232,11 @@ INC-9010 · `onhold/` REQ-905 · `closed/` INC-906, INC-907 (+bundle, `Closed:` 
 Live records 1–6 are untouched by the fixtures and by these tests. Re-seed between runs
 with `--reset` then seed again.
 
+**Two layers, as in G.** UAT-33..35 are typed to Claude (`>`). UAT-36 tests the engine's
+own refusal, which the command's close gate never lets the script see, so it runs in a
+Git Bash terminal in the consuming repo against the installed engine:
+`O='bash ../claude-local-marketplace/framework/scripts/fw-move.sh operations'`.
+
 **UAT-33 — batch move, quoted commas.** `> /fw-move-ops "901, 902, 903" onhold`
 - Expected: all three move in one invocation; bundle `INC-902/` travels with its record;
   a summary line `📊 moved: 3  skipped: 0  failed: 0`. Report shape (BUG-225):
@@ -247,13 +252,17 @@ with `--reset` then seed again.
   **The bundle note is on INC-902's own row** — it must not appear under INC-901.
 - Note: INC-9010 must **not** move — the substring trap. `901` matches INC-901 only.
 
-**UAT-34 — `--resolution` on a list.** `> /fw-move-ops "901, 902" closed --resolution resolved`
+**UAT-34 — `--resolution` on a list.** `> /fw-move-ops "902, 904" closed --resolution resolved`
 - **Rewritten 2026-09-11** (BUG-215 supersession). It previously expected a *refusal*;
   `--resolution` now applies to the whole batch, because a batch close happens precisely
   when the records share a root cause.
+- **Ids changed 2026-09-26.** It closed `"901, 902"`, but closed is terminal, and
+  UAT-35/36 need INC-901 alive in `onhold/`. INC-902 (from `onhold/`, with its bundle) and
+  INC-904 (from `open/`) close instead; 901 and 903 stay in `onhold/` for UAT-35.
 - Expected: both records close, each stamped `**Closed:** <today>` and the **same**
   `**Resolution:** resolved`.
-- Pass: both in `closed/`, both stamped, summary `moved: 2`.
+- Pass: both in `closed/`, both stamped, `closed/INC-902/evidence.txt` present, summary
+  `moved: 2`.
 - Note: the AI still runs the close gate per record for the *reason* and the
   durable-knowledge answer — one shared code, but each record's Outcome written on its own.
 
@@ -271,10 +280,15 @@ with `--reset` then seed again.
 - Pass: the bad id in the middle did not stop 903 from moving; both good records in `open/`.
   **The failure reason is on the failing row**, in order, not on a detached stderr line.
 
-**UAT-36 — close with no resolution is refused, per record.** `> /fw-move-ops "901, 903" closed`
+**UAT-36 — close with no resolution is refused, per record.** `$O "901, 903" closed`
+(terminal, not Claude — both records are in `open/` after UAT-35)
 - **Rewritten 2026-09-11** (BUG-215 supersession). It previously tested per-record
   *prompting*; the engine no longer prompts at all. Operations now behaves like kanban —
   a move missing its required input is refused and the user runs again.
+- **Moved to the engine layer 2026-09-26.** It was a `>` command, but through
+  `/fw-move-ops` the AI's close gate asks for the code first, so the script never sees a
+  call without one — the 2026-09-26 run had to skip the gate on purpose to reach it. The
+  gate itself is exercised by UAT-17 and UAT-34.
 - Expected: **the script refuses each record**, naming what is missing and enumerating the
   five valid codes. **Nothing moves.** No prompt appears, and the behaviour is identical
   whether or not a terminal is attached (pipe the command to confirm):
