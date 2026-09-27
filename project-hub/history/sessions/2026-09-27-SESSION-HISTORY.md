@@ -93,7 +93,7 @@ rule, and lists where each removed section goes.
 ### In doing/ — 1 WIP item (5 files)
 The FEAT-229 family. UAT-37 to UAT-52 pass. **Resume at UAT-53** on the local machine.
 
-### In done/ — 13 · todo/ — 13 · backlog/ — 96
+### In done/ — 13 · todo/ — 13 · backlog/ — 95
 
 ---
 
