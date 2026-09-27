@@ -74,6 +74,10 @@ rule, and lists where each removed section goes.
 
 **Pending:** Gary's yes on the release recommendation.
 
+3. **Release order — decided (later in the session).** Gary confirmed: **one release,
+   `framework-dev-v0.5.0`, after G2 passes and the FEAT-229 family reaches `done/`. No `v5.7.0`.**
+   The v5.x line ended at `v5.6.0`; the 13 cards in `done/` ship with the board in v0.5.0.
+
 ---
 
 ## Files Created
@@ -101,8 +105,7 @@ The FEAT-229 family. UAT-37 to UAT-52 pass. **Resume at UAT-53** on the local ma
 
 1. **Resume at UAT-53** (local): `/fw-move 904 doing` typed to Claude in `framework-uat`, then
    UAT-54 to UAT-57.
-2. **FEAT-229 family to `done/`**, then `/fw-release` for `framework-dev-v0.5.0`, if Gary
-   confirms the recommendation.
+2. **FEAT-229 family to `done/`**, then `/fw-release` for `framework-dev-v0.5.0` (decided).
 3. **SPIKE-248:** prioritize it against the backlog. It feeds the ADR-009 build, so it is
    cheaper to do before graduation.
 4. **Carried:** BUG-245 (now including the UAT-49 findings), BUG-246, TECH-247, the old-vs-new
