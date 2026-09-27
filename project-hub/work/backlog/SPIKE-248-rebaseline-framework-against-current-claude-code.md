@@ -118,5 +118,9 @@ A spike ends in a **decision, not a document**:
 - **ADR-008**: the test applied throughout (mechanism over prose, one source)
 - **ADR-009**: the build this re-baseline feeds
 - **TECH-189**: the drift guard, which the contract drift shows is still needed
+- `project-hub/research/jev-typesafe-evaluation.md` (2026-09-27): a decision-only model
+  that could make the judgment half of the framework (the Implementation Rule, card
+  ripeness) callable from hooks. The recommendation is not yet. If it is trialled, it is
+  advisory and fails open, and only facts block.
 - `project-hub/history/sessions/2026-09-27-SESSION-HISTORY.md`: the conversation that
   produced this card
