@@ -89,6 +89,29 @@ BUG-170's own notes reached this conclusion: a git pre-commit hook is the wrong 
 framework (`core.hooksPath` never survives clone/archive). Target the build or `/fw-release` — surfaces
 that ship and run. This item generalizes BUG-170's one-off downstream check into a standing guard.
 
+**2026-09-28 — retarget before implementation: the archive retires; the artifact is the plugin.**
+This card was written against `Build-FrameworkArchive.ps1`, but ADR-009 D3 retires the archive
+channel at graduation, and its Graduation Criteria make this check apply to the **plugin** ("builds
+and installs from the local marketplace and passes built-artifact verification"). Two things the
+card must now decide, because ADR-009 leaves both open:
+
+1. **The published shape.** `workspaces/framework/` also holds dev-only content (`tests/`, `tools/`,
+   `standards/`, `CLAUDE.md`, `workspace.yaml`). Define the shipped file list and the build/filter
+   step that produces it; the smoke test verifies *that* output, not the source tree.
+2. **The host — recommended: SpearIT's own GitHub marketplace**, a separate small repo (e.g.
+   `SpearIT-LLC/claude-plugins`) with `.claude-plugin/marketplace.json` listing
+   `spearit-framework`; users `/plugin marketplace add` it. Rationale: the earlier official-directory
+   submission got no response; a self-hosted marketplace needs no approval, and the cost
+   (discoverability) is nil for a framework SpearIT installs on client repos itself. A separate repo
+   lets the published copy be the stripped build rather than this whole repo. This reverses the
+   "submit to official marketplace only" note in `project-hub/research/plugin-anthropic-standards.md`
+   §6 (FEAT-118 era); resubmitting to the official directory later remains possible.
+   *Unverified, check when implementing:* whether a project's `.claude/settings.json` can declare
+   the marketplace so client repos prompt for the install.
+
+The Scope, Acceptance Criteria and Files above still name the archive; rewrite them at the
+pre-implementation review, not before.
+
 ---
 
 ## Related
