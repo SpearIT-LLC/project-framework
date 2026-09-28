@@ -84,19 +84,26 @@ belongs to the card. It catches the commonest failure, starting work with no car
 
 ## What to Determine
 
-1. **Inventory:** list every rule, command, hook and document that ships (in the new build and
-   the root `.claude/`). Mark each one keep, mechanize, move to a skill, move to user level,
-   or delete. Give a one-line reason for each.
+1. **Inventory:** list every rule, command, hook and document that ships in the new build
+   (`workspaces/framework/`), plus the root `CLAUDE.md`. Mark each one keep, mechanize, move
+   to a skill, move to user level, or delete. Give a one-line reason for each. The root
+   `.claude/` is deleted at graduation (ADR-009); look at its parts only where they are meant
+   to carry over. *(Scope narrowed at the pre-implementation review, 2026-09-28, to fit the
+   timebox.)*
 2. **Native overlap:** for each framework feature, is there a current Claude Code feature that
    does the job? Verify against current Claude Code documentation, not memory.
 3. **`CLAUDE.md` target:** what is the smallest set that must be auto-loaded? Test the draft in
    `SPIKE-248/claude-md-slim-draft.md` against real sessions: does the AI still do the things
-   that mattered?
+   that mattered? **Method (2026-09-28):** a few fresh sessions doing ordinary tasks, with no
+   mention of the spike or the draft (a session that knows it is under test proves little;
+   see TECH-249). Check whether these still happen: implement only from `doing/`, `git mv`
+   for board moves, lead with the answer, verify before stating.
 4. **The drift:** decide the fate of `.claude/framework-contract.md`. Either the build composes
    `CLAUDE.md` from it and a check fails on drift (TECH-189), or it is deleted and `CLAUDE.md`
    becomes the only source.
-5. **Scope of change:** which findings go into the ADR-009 build now, and which wait until
-   after `framework-dev-v0.5.0`?
+5. **Scope of change:** which findings go into the ADR-009 build before graduation, and which
+   wait until after it? *(Reworded 2026-09-28: the question originally asked what waits until
+   after `framework-dev-v0.5.0`, which shipped that day.)*
 
 ## Exit Criteria
 
