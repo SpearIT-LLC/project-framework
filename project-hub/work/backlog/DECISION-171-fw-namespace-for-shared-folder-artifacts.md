@@ -4,6 +4,7 @@
 **Type:** Decision (ADR — Minor)
 **Status:** Accepted
 **Date:** 2026-07-06
+**Legacy:** TASK-218 C6 — board convention; closing it is owned by TASK-223
 **Deciders:** Gary Elliott, Claude Code
 **Impact:** Minor
 **Version Impact:** None (convention; applied incrementally by referencing items)

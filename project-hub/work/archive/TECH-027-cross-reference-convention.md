@@ -5,6 +5,10 @@
 **Priority:** Medium
 **Version Impact:** PATCH
 **Created:** 2026-01-07
+**Legacy:** TASK-218 C6 — board convention; closing it is owned by TASK-223
+**Status:** Cancelled
+**Cancelled Date:** 2026-09-28
+**Cancellation Reason:** Superseded — the convention was decided and built by TASK-219 (released in framework-dev v0.5.0). The acceptance criteria below target the old tree (`framework/docs/`, old templates) and will not be met there.
 **Theme:** Workflow
 
 ---
@@ -215,3 +219,11 @@ Add section to collaboration guide or process documentation:
 ---
 
 **Last Updated:** 2026-01-07
+
+---
+
+## Closing Note (2026-09-28)
+
+Settled by **TASK-219** (Group 1, decided 2026-09-09; archived at `project-hub/history/releases/framework-dev/v0.5.0/`), and closed here per **TASK-223**'s "every source card is closed" criterion. Outcome: reference by id, never by path (a path breaks on every move); `Related` entries say how the card relates. Lives in the `Related` section of `workspaces/framework/templates/records/work-item.md`; `Depends On:` is id-based and checked by `fw-move.sh`.
+
+The unchecked criteria above were written against the old framework and are left as-is on purpose: ticking them would claim work that was not done there.

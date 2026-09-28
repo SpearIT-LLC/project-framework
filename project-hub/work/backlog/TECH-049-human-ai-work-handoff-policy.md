@@ -5,6 +5,7 @@
 **Priority:** Medium
 **Version Impact:** PATCH
 **Created:** 2026-01-11
+**Legacy:** TASK-218 C6 — board convention; closing it is owned by TASK-223
 **Theme:** Workflow
 
 ---

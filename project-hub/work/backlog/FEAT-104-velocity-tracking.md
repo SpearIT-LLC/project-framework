@@ -5,6 +5,7 @@
 **Priority:** Low
 **Version Impact:** MINOR
 **Created:** 2026-02-03
+**Legacy:** TASK-218 C2 — product idea, unbuilt in both frameworks
 **Theme:** Workflow
 
 ---

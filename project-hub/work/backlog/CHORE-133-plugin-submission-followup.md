@@ -4,6 +4,7 @@
 **Type:** Chore
 **Priority:** Medium
 **Created:** 2026-02-16
+**Legacy:** TASK-218 C4 — holds until its command, plugin or script crosses over to the new build
 **Theme:** Distribution & Onboarding
 
 ---

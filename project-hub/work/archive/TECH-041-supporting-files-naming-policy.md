@@ -5,6 +5,10 @@
 **Priority:** Medium
 **Version Impact:** PATCH
 **Created:** 2026-01-11
+**Legacy:** TASK-218 C6 — board convention; closing it is owned by TASK-223
+**Status:** Cancelled
+**Cancelled Date:** 2026-09-28
+**Cancellation Reason:** Superseded — the convention was decided and built by TASK-219 (released in framework-dev v0.5.0). The acceptance criteria below target the old tree (`framework/docs/`, old templates) and will not be met there.
 **Theme:** Workflow
 
 ---
@@ -191,3 +195,11 @@ git mv project-hub/work/todo/FEAT-025* project-hub/work/doing/
 
 **Last Updated:** 2026-01-11
 **Status:** Backlog
+
+---
+
+## Closing Note (2026-09-28)
+
+Settled by **TASK-219** (Group 1, decided 2026-09-09; archived at `project-hub/history/releases/framework-dev/v0.5.0/`), and closed here per **TASK-223**'s "every source card is closed" criterion. Outcome: a sibling folder named for the id (`FEAT-nnn/`) holds working material and moves with the record, the same convention operations uses for `INC-nnn/`. Lives in the bundle move of `workspaces/framework/scripts/fw-move.sh`. Verified by UAT-39, UAT-48 and UAT-50.
+
+The unchecked criteria above were written against the old framework and are left as-is on purpose: ticking them would claim work that was not done there.

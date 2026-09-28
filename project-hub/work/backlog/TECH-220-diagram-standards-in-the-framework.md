@@ -5,6 +5,7 @@
 **Priority:** Low
 **Version Impact:** MINOR
 **Created:** 2026-09-04
+**Workspace:** framework
 **Completed:** <!-- Set automatically by /fw-move on → done/. Leave blank at creation. -->
 **Theme:** Developer Guidance
 **Planning Period:** Opportunistic

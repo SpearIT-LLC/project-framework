@@ -5,6 +5,7 @@
 **Priority:** Low
 **Version Impact:** PATCH
 **Created:** 2026-01-21
+**Legacy:** TASK-218 C4 — holds until its command, plugin or script crosses over to the new build
 **Theme:** Workflow
 **Planning Period:** Sprint WF 2
 

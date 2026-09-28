@@ -5,6 +5,7 @@
 **Priority:** Medium
 **Version Impact:** MINOR
 **Created:** 2026-01-08
+**Legacy:** TASK-218 C4 — holds until its command, plugin or script crosses over to the new build
 **Theme:** Workflow
 
 ---

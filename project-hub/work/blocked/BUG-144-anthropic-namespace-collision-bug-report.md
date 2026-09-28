@@ -5,6 +5,7 @@
 **Priority:** Medium
 **Version Impact:** None (tracking only)
 **Created:** 2026-02-18
+**Workspace:** framework
 **Theme:** Plugin Development
 
 ---

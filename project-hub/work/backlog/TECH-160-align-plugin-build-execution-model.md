@@ -5,6 +5,7 @@
 **Priority:** Medium
 **Version Impact:** PATCH
 **Created:** 2026-06-29
+**Legacy:** TASK-218 C4 — holds until its command, plugin or script crosses over to the new build
 **Theme:** Distribution Hygiene
 
 ---

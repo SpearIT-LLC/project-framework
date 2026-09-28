@@ -4,6 +4,7 @@
 **Type:** Feature
 **Priority:** Medium
 **Created:** 2026-02-22
+**Legacy:** TASK-218 C6 — board convention; closing it is owned by TASK-223
 
 ---
 

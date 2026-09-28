@@ -5,6 +5,7 @@
 **Priority:** Low
 **Version Impact:** PATCH
 **Created:** 2026-07-07
+**Legacy:** TASK-218 C4 — holds until its command, plugin or script crosses over to the new build
 **Completed:** <!-- Set automatically by /fw-move on → done/. Leave blank at creation. -->
 **Theme:** Workflow
 

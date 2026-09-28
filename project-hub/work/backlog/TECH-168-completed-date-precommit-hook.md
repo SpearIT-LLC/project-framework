@@ -5,6 +5,7 @@
 **Priority:** Medium
 **Version Impact:** MINOR
 **Created:** 2026-07-02
+**Legacy:** TASK-218 C1 — kanban gate design input for the new engine
 **Completed:** <!-- Set automatically by /fw-move on → done/. Leave blank at creation. -->
 **Theme:** Workflow
 

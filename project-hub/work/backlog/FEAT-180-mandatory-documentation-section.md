@@ -5,6 +5,7 @@
 **Priority:** Medium
 **Version Impact:** MINOR
 **Created:** 2026-07-09
+**Legacy:** TASK-218 C3 — re-earn candidate; keep until a new-build card replaces it
 **Theme:** Framework Consistency
 **Completed:** <!-- Set automatically by /fw-move on → done/. Leave blank at creation. -->
 

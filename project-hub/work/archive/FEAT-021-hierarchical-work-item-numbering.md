@@ -5,6 +5,10 @@
 **Priority:** Low
 **Version Impact:** PATCH
 **Created:** 2025-12-22
+**Legacy:** TASK-218 C6 — board convention; closing it is owned by TASK-223
+**Status:** Cancelled
+**Cancelled Date:** 2026-09-28
+**Cancellation Reason:** Superseded — the convention was decided and built by TASK-219 (released in framework-dev v0.5.0). The acceptance criteria below target the old tree (`framework/docs/`, old templates) and will not be met there.
 **Theme:** Workflow
 
 ---
@@ -785,3 +789,11 @@ FEAT-022-another-feature.md
 
 **Last Updated:** 2025-12-22
 **Status:** Backlog
+
+---
+
+## Closing Note (2026-09-28)
+
+Settled by **TASK-219** (Group 1, decided 2026-09-09; archived at `project-hub/history/releases/framework-dev/v0.5.0/`), and closed here per **TASK-223**'s "every source card is closed" criterion. Outcome: dotted ids `TYPE-nnn.m`, max depth 3; filename `TYPE-nnn-slug.md` with an uppercase prefix matching `ID:`; ids run past 999 unpadded (`FEAT-1000`); one shared sequence per queue. Lives in `workspaces/framework/scripts/fw-next-id.sh` (sequence), `fw-new.sh` (filename shape, depth cap) and `fw-move.sh` (dotted children travel with the parent). Verified on the installed plugin by UAT-43, UAT-48, UAT-49 and UAT-56.
+
+The unchecked criteria above were written against the old framework and are left as-is on purpose: ticking them would claim work that was not done there.

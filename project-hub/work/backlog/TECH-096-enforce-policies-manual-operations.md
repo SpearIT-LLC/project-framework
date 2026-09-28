@@ -5,6 +5,7 @@
 **Priority:** Low
 **Version Impact:** MINOR
 **Created:** 2026-01-29
+**Legacy:** TASK-218 C5 — hook design; input for the new build's hooks
 **Theme:** Workflow
 
 ---

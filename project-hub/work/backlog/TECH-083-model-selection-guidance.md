@@ -5,6 +5,7 @@
 **Priority:** Low
 **Version Impact:** PATCH
 **Created:** 2026-01-23
+**Legacy:** TASK-218 C2 — product idea, unbuilt in both frameworks
 **Theme:** Project Guidance
 
 ---

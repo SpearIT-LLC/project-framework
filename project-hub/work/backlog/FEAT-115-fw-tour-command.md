@@ -5,6 +5,7 @@
 **Priority:** Medium
 **Version Impact:** MINOR
 **Created:** 2026-02-06
+**Legacy:** TASK-218 C3 — re-earn candidate; keep until a new-build card replaces it
 **Theme:** Distribution & Onboarding
 **Planning Period:** Sprint D&O 1
 

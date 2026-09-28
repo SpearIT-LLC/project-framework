@@ -3,6 +3,7 @@
 **Type:** DOC
 **Status:** backlog
 **Created:** 2026-09-12
+**Legacy:** not in TASK-218 (filed later) — edits `framework/docs/plugin-development-guide.md`, which graduation deletes; the new-build guide is DOC-252
 
 ## Problem
 

@@ -5,6 +5,10 @@
 **Priority:** Low
 **Version Impact:** PATCH
 **Created:** 2026-01-08
+**Legacy:** TASK-218 C6 — board convention; closing it is owned by TASK-223
+**Status:** Cancelled
+**Cancelled Date:** 2026-09-28
+**Cancellation Reason:** Superseded — the convention was decided and built by TASK-219 (released in framework-dev v0.5.0). The acceptance criteria below target the old tree (`framework/docs/`, old templates) and will not be met there.
 **Theme:** Workflow
 
 ---
@@ -236,3 +240,11 @@ Current situation:
 ---
 
 **Last Updated:** 2026-01-08
+
+---
+
+## Closing Note (2026-09-28)
+
+Settled by **TASK-219** (Group 1, decided 2026-09-09; archived at `project-hub/history/releases/framework-dev/v0.5.0/`), and closed here per **TASK-223**'s "every source card is closed" criterion. Outcome: decided by construction, so the folder is the status. The template has no `Status:` field, because a second home for status is a second thing that can contradict the first. `Completed:` is stamped by the engine, not written by hand. Lives in `workspaces/framework/templates/records/work-item.md` (by absence) and `fw-move.sh` (the stamp).
+
+The unchecked criteria above were written against the old framework and are left as-is on purpose: ticking them would claim work that was not done there.

@@ -5,6 +5,7 @@
 **Priority:** Medium
 **Version Impact:** MINOR
 **Created:** 2026-02-17
+**Legacy:** TASK-218 (kept) — re-scope for the new build
 **Theme:** Project Guidance
 **Planning Period:** v1.3
 
