@@ -6,7 +6,7 @@
 **Version Impact:** MINOR
 **Created:** 2026-09-11
 **Workspace:** framework
-**Completed:** <!-- Set automatically by /fw-move on → done/. Leave blank at creation. -->
+**Completed:** 2026-09-28
 
 ---
 
@@ -197,9 +197,10 @@ come from the board, never from the roadmap.
       records an event, it is not a ripeness judgment — is documented where the gate lives.
       The contract is authored in `workspaces/framework/skills/fw-checkbox-states/SKILL.md`
       (TECH-177, 2026-09-22); implement it, do not restate it.
-- [h] **The checkbox contract is validated** (moved here from TECH-177, 2026-09-22):
-      **Hold:** the AI half is done (FEAT-229.2's 9-case run); the **Human** half needs the
-      installed plugin, i.e. one publish cycle. Shared with .1/.2/.4's identical criterion.
+- [x] **The checkbox contract is validated** (moved here from TECH-177, 2026-09-22):
+      AI half: FEAT-229.2's 9-case run (2026-09-23). Human half verified 2026-09-28 on the
+      installed plugin 0.4.7 — UAT-44 (`[-]` → `done/`, `[/]` blocked), UAT-42 (`[?]`/`[h]`
+      block `→ doing`), UAT-54 (gate held through `/fw-move`); `021c3c1`.
       **AI** — every one of the six states exercised against a scratch fixture; **Human** — a
       `[-]` criterion moves to `done/` and a `[/]` criterion is blocked, against the
       **installed plugin**, not the source tree (TECH-188).
@@ -221,10 +222,11 @@ come from the board, never from the roadmap.
       the call sites
 - [x] The kanban fixture seeder works (`seed-uat-fixtures.sh` currently refuses kanban by
       design) and UAT cases mirroring UAT-33..36 pass
-- [h] Validated: **AI** — every gate and transition exercised against a scratch fixture;
-      **Hold:** AI validation complete across .1 (11 cases), .2 (9), .3 (spike + accept +
-      hold + cancelled), .4 (9). The **Human** UAT in `framework-uat` against the installed
-      plugin is the one remaining step, and it is one publish cycle for all four children.
+- [x] Validated: **AI** — every gate and transition exercised against a scratch fixture;
+      AI validation complete across .1 (11 cases), .2 (9), .3 (spike + accept + hold +
+      cancelled), .4 (9). **Human** UAT in `framework-uat` against the installed plugin
+      0.4.7: UAT-37..57 all pass, verified 2026-09-28 (`021c3c1`; results in
+      `workspaces/framework/tests/UAT-RESULTS-2026-08-26.md`).
       **Human** — a full UAT pass in `framework-uat` against the **installed plugin**, not the
       source tree
 

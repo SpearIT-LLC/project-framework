@@ -7,7 +7,7 @@
 **Created:** 2026-09-22
 **Workspace:** framework
 **Depends On:** FEAT-229.1 (the namespace must be live for a gate to attach to)
-**Completed:** <!-- Set automatically by /fw-move on → done/. Leave blank at creation. -->
+**Completed:** 2026-09-28
 
 ---
 
@@ -119,12 +119,12 @@ pre-implementation review, not by `grep`.
 - [x] Ripeness is **not** claimed as a script check anywhere
 - [x] One engine serves both namespaces — no kanban-specific copy of the gate logic, verified
       at the call sites
-- [h] Validated: **AI** — each of the six checkbox states exercised against a seeded fixture,
+- [x] Validated: **AI** — each of the six checkbox states exercised against a seeded fixture,
       plus each gate's refusal · **Human** — a `[-]` criterion moves to `done/` and a `[/]`
       criterion is blocked, against the **installed plugin**, not the source tree (TECH-188).
       *(Moved from TECH-177 on 2026-09-22: validating the contract is part of implementing it.)*
-      **Hold:** AI half done 2026-09-23 (see FEAT-229 parent); the **Human** half needs the
-      installed plugin — one publish cycle shared with the family.
+      AI half done 2026-09-23 (see FEAT-229 parent). Human half verified 2026-09-28 on the
+      installed plugin 0.4.7 — UAT-44, UAT-42, UAT-54 (`021c3c1`).
 
 ## Related
 

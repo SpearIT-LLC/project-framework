@@ -7,7 +7,7 @@
 **Created:** 2026-09-22
 **Workspace:** framework
 **Depends On:** FEAT-229.2 (the gates a family move must run per member)
-**Completed:** <!-- Set automatically by /fw-move on → done/. Leave blank at creation. -->
+**Completed:** 2026-09-28
 
 ---
 
@@ -115,10 +115,10 @@ FEAT-229.2 already fixes the dotfile half.
 - [x] A `Parent:`-field child still counts as its own item
 - [x] Depth 3 resolves correctly
 - [x] Operations unaffected — regression pass
-- [h] Validated: **AI** — each case against a seeded fixture, including a dotted fixture set
+- [x] Validated: **AI** — each case against a seeded fixture, including a dotted fixture set
       the seeder does not yet produce · **Human** — the same against the **installed plugin**
-      **Hold:** AI half done 2026-09-23 (see FEAT-229 parent); the **Human** half needs the
-      installed plugin — one publish cycle shared with the family.
+      AI half done 2026-09-23 (see FEAT-229 parent). Human half verified 2026-09-28 on the
+      installed plugin 0.4.7 — UAT-43, UAT-48, UAT-49, UAT-56 (`021c3c1`).
 
 ## Related
 

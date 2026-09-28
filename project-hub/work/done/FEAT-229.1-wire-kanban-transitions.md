@@ -6,7 +6,7 @@
 **Version Impact:** MINOR
 **Created:** 2026-09-22
 **Workspace:** framework
-**Completed:** <!-- Set automatically by /fw-move on → done/. Leave blank at creation. -->
+**Completed:** 2026-09-28
 
 ---
 
