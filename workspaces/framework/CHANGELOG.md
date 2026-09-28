@@ -6,6 +6,26 @@ plain semver 0.x during the framework workspace build.
 ## [Unreleased]
 
 ### Added
+
+None
+
+### Changed
+
+None
+
+### Fixed
+
+None
+
+---
+
+## [0.5.0] - 2026-09-28
+
+Work items: BUG-207, BUG-208, BUG-212, BUG-215, FEAT-175, FEAT-193, FEAT-195,
+FEAT-229 (.1–.4), TASK-206, TASK-213, TASK-218, TASK-219, TASK-242, TECH-177 —
+archived at `project-hub/history/releases/framework-dev/v0.5.0/`.
+
+### Added
 - **The kanban board is a working namespace** (FEAT-229.1/.2/.3/.4). It was declared in
   the policy table and refused before any id was parsed; it now creates, moves, gates
   and archives. The live board remains `project-hub/work/` until the ADR-009 D5
