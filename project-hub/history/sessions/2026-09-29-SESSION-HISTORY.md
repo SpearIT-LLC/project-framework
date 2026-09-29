@@ -125,10 +125,10 @@ into the `printf` (caught by reading the diff, fixed before testing).
 ## Current State
 
 ### In done/ (awaiting release)
-- BUG-241, SPIKE-248, BUG-251, TECH-247, BUG-250, TASK-223, DECISION-171, BUG-258
+- BUG-241, SPIKE-248, BUG-251, TECH-247, BUG-250, TASK-223, DECISION-171, BUG-258, TECH-243
 
 ### In doing/
-- (none). BUG-258 closed: UAT-50 re-run passed (spikes stay on the board).
+- (none). BUG-258 closed: UAT-50 re-run passed (spikes stay on the board). TECH-243 closed.
 
 ### Earlier today
 - BUG-250 closed after Gary's UAT-55 re-run passed on 0.5.0 (BUG-902, fresh session).
@@ -153,9 +153,14 @@ into the `printf` (caught by reading the diff, fixed before testing).
    **TASK-259**. Superseded: TECH-228's `history/spikes/` carry-in and TASK-242 D5's
    `history/archive/` for board cards.
    UAT-50 re-run **PASS**; BUG-258 closed.
-4. **TECH-243** and **TECH-253**, completing the kanban finish line. TECH-253 now also denies
-   deleting a card (TECH-077).
-5. **Carried:** re-run `.\tools\Publish-ToLocalMarketplace.ps1` so the marketplace reports
+4. ~~TECH-243~~ — **done**. `.claude/scripts/fw-release-guard.sh` replaces `/fw-release`'s
+   prose `ls`: `doing/`/`accept/` block; `blocked/`/`hold/` warn if the card was started, info
+   otherwise. Both engines now stamp `**Started:**` on first `→ doing` (Gary's challenge: git
+   history can't tell, a stamp can). Full move history filed as **FEAT-260** (backlog; session
+   history covers "which day" roughly). FEAT-028 carries the guard for the new release command.
+5. **TECH-253**, the last card on the kanban finish line. It now also denies deleting a card
+   (TECH-077).
+6. **Carried:** re-run `.\tools\Publish-ToLocalMarketplace.ps1` so the marketplace reports
    0.5.0; BUG-181 (High, `todo/`); BUG-255.
 
 ---

@@ -6,8 +6,10 @@ plain semver 0.x during the framework workspace build.
 ## [Unreleased]
 
 ### Added
-
-None
+- **`**Started:**` stamp** (TECH-243): the move engine writes today's date on a card's
+  first move into `doing/` and never changes it. It records that the card entered
+  implementation, which is how a release guard tells a parked card that may have code in
+  the repo from one that was never started. The work-item template carries the blank line.
 
 ### Changed
 - **A refused move names only the moves out of the card's folder** (TECH-247):

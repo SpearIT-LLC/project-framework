@@ -250,46 +250,43 @@ check_acceptance_criteria() {
 # ---------------------------------------------------------------------------
 
 # ---------------------------------------------------------------------------
-# Stamp Completed date (for → done) — BUG-167
-# Writes **Completed:** <today> into the item header. Call ONLY after a
-# confirmed-successful move into done/ (never on the failure path), so the
+# Date stamps — **Started:** on → doing (TECH-243), **Completed:** on → done (BUG-167)
+# Call ONLY after a confirmed-successful move (never on the failure path), so a
 # date is never written to a file that did not actually move.
-# Idempotent: if a Completed date is already set, leave it (first-completion
-# wins). Fills a blank **Completed:** line if present, else inserts one after
-# **Created:**. Stages the modified file so move + stamp are one change.
+# Idempotent: a field that already holds a date is left alone — FIRST start and
+# first completion win. A card that goes doing → hold → doing keeps its first
+# Started:, which is what the release guard asks: "was this card ever started?"
+# Fills a blank line if present, else inserts one: Started: after **Created:**,
+# Completed: after **Started:** if present, else after **Created:**. Stages the
+# file so move + stamp are one change. awk via a temp file, not sed -i
+# (Git Bash/macOS/Linux portability).
 # ---------------------------------------------------------------------------
-stamp_completed() {
-  local moved_file="$1"   # path to the file AFTER it was moved into done/
-  local today
+stamp_date() {
+  local moved_file="$1" field="$2"   # field: Started | Completed
+  local today anchor line tmp
   today=$(date +%Y-%m-%d)
 
-  # Already has a real date (YYYY-MM-DD, not the template placeholder) → leave it.
-  if grep -qE "^\*\*Completed:\*\* *[0-9]{4}-[0-9]{2}-[0-9]{2}" "$moved_file" 2>/dev/null; then
-    git add "$moved_file" 2>/dev/null || true
-    return 0
-  fi
-
-  if grep -qE "^\*\*Completed:\*\*" "$moved_file" 2>/dev/null; then
-    # Blank/placeholder Completed line exists → replace the whole line.
-    # Use a temp file to avoid sed -i portability issues (Git Bash/macOS/Linux).
-    local tmp
+  if ! grep -qE "^\*\*${field}:\*\* *[0-9]{4}-[0-9]{2}-[0-9]{2}" "$moved_file" 2>/dev/null; then
     tmp=$(mktemp)
-    awk -v d="$today" '
-      /^\*\*Completed:\*\*/ && !done { print "**Completed:** " d; done=1; next }
-      { print }
-    ' "$moved_file" > "$tmp" && mv "$tmp" "$moved_file"
-  else
-    # No Completed line → insert one immediately after the Created line.
-    local tmp
-    tmp=$(mktemp)
-    awk -v d="$today" '
-      { print }
-      /^\*\*Created:\*\*/ && !done { print "**Completed:** " d; done=1 }
-    ' "$moved_file" > "$tmp" && mv "$tmp" "$moved_file"
+    if grep -qE "^\*\*${field}:\*\*" "$moved_file" 2>/dev/null; then
+      awk -v f="$field" -v d="$today" '
+        index($0, "**" f ":**") == 1 && !done { print "**" f ":** " d; done=1; next }
+        { print }
+      ' "$moved_file" > "$tmp" && mv "$tmp" "$moved_file"
+    else
+      anchor="Created"
+      [ "$field" = "Completed" ] && grep -qE "^\*\*Started:\*\*" "$moved_file" && anchor="Started"
+      awk -v f="$field" -v a="$anchor" -v d="$today" '
+        { print }
+        index($0, "**" a ":**") == 1 && !done { print "**" f ":** " d; done=1 }
+      ' "$moved_file" > "$tmp" && mv "$tmp" "$moved_file"
+    fi
   fi
 
   git add "$moved_file" 2>/dev/null || true
 }
+stamp_completed() { stamp_date "$1" Completed; }
+stamp_started()   { stamp_date "$1" Started; }
 
 # ---------------------------------------------------------------------------
 # WIP limit warning (for → doing) — warning only, does not block
@@ -411,10 +408,9 @@ move_item() {
         echo "❌ git mv failed for $pname"; ((FAILED++)) || true; continue
       fi
     fi
-    # BUG-167: stamp Completed date only after a confirmed move into done/
-    if [ "$target" = "done" ]; then
-      stamp_completed "$WORK_DIR/$target/$pname"
-    fi
+    # Stamp only after a confirmed move: Completed on done (BUG-167), Started on doing (TECH-243)
+    [ "$target" = "done" ] && stamp_completed "$WORK_DIR/$target/$pname"
+    [ "$target" = "doing" ] && stamp_started "$WORK_DIR/$target/$pname"
     if [ "$first_moved" = false ]; then
       echo "✅ $pname → $target/$move_note"
       ((MOVED++)) || true; first_moved=true
@@ -430,12 +426,14 @@ move_item() {
       child_name=$(basename "$child")
       if git mv "$child" "$WORK_DIR/$target/" 2>/dev/null; then
         [ "$target" = "done" ] && stamp_completed "$WORK_DIR/$target/$child_name"
+        [ "$target" = "doing" ] && stamp_started "$WORK_DIR/$target/$child_name"
         echo "   ↳ $child_name"
       else
         git ls-files --error-unmatch "$child" 2>/dev/null && child_tracked=true || child_tracked=false
         if [ "$child_tracked" = false ]; then
           if mv "$child" "$WORK_DIR/$target/" 2>/dev/null; then
             [ "$target" = "done" ] && stamp_completed "$WORK_DIR/$target/$child_name"
+            [ "$target" = "doing" ] && stamp_started "$WORK_DIR/$target/$child_name"
             echo "   ↳ $child_name (untracked)"
           fi
         else

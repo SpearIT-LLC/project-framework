@@ -58,27 +58,38 @@ Use these variables throughout Steps 3–9. Do not hardcode product names, paths
 
 ## Step 2: Pre-Release Validation
 
-### 2a. Check doing/ for in-progress work
+### 2a. Check for unfinished work (TECH-243)
+
+Run the guard. It checks every unfinished state and names each card; the severity
+table lives in the script's header.
 
 ```bash
-ls project-hub/work/doing/
+bash .claude/scripts/fw-release-guard.sh
 ```
 
-**If doing/ is non-empty:**
+Report its output to the user as printed, then act on the **exit code**:
 
-> ❌ **Release blocked — items in doing/**
->
-> The following items are in progress:
-> - FEAT-NNN: [title]
->
-> Releasing with in-progress work risks an incomplete or out-of-sync release.
->
-> Options:
-> 1. Move doing/ items to done/ first, then release
-> 2. Move doing/ items back to todo/, then release
-> 3. Use `--force` to release anyway (not recommended)
+- **Exit 1: blocked.** `BLOCK` rows are cards in `doing/` or `accept/`. They are
+  unfinished or unaccepted, and their code may ship in this release.
 
-Stop unless `--force` is given.
+  > ❌ **Release blocked — unfinished work**
+  >
+  > [the BLOCK rows]
+  >
+  > Options:
+  > 1. Finish them: `doing/` → `done/` (via `accept/` where the board has it); `accept/` → `done/` once accepted
+  > 2. Move `doing/` items back to `todo/` (and take their code out of the release)
+  > 3. Use `--force` to release anyway (not recommended)
+
+  Stop unless `--force` is given.
+
+- **Exit 2: confirm.** `WARN` rows are cards in `blocked/` or `hold/` that were
+  started, so their code may be in the repo. Ask the user to confirm the release
+  should go ahead with them, naming each card. Stop unless they say yes. `--force`
+  does **not** skip this question.
+
+- **Exit 0: clear.** `INFO` rows (parked cards that were never started) are reported
+  and need no confirmation.
 
 ### 2b. Check done/ is not empty
 
@@ -324,7 +335,9 @@ Display:
 
 | Condition | Behavior |
 |---|---|
-| `doing/` non-empty | Block (bypassable with `--force`) |
+| Card in `doing/` or `accept/` | Block (bypassable with `--force`) — `fw-release-guard.sh` exit 1 |
+| Started card in `blocked/` or `hold/` | Warn, name it, confirm — exit 2 |
+| Never-started card in `blocked/` or `hold/` | Info line only — exit 0 |
 | `done/` empty | Block (not bypassable) |
 | Unknown product-id argument | Use as literal path segment, warn user |
 | Git tag already exists | Block — report duplicate tag, ask for different version |

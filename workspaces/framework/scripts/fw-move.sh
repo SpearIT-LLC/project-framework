@@ -348,29 +348,37 @@ wip_warn() {
   return 0
 }
 
-# --- Completed stamp (kanban → done) ----------------------------------------
-# Ported from the old engine's stamp_completed (BUG-167). The port dropped it, so a
-# card reached done/ with the blank **Completed:** its template promises the engine
-# fills — found by the UAT dry run, 2026-09-24.
+# --- Date stamps (kanban): Started on → doing, Completed on → done ------------
+# Completed was ported from the old engine's stamp_completed (BUG-167); the port
+# had dropped it (UAT dry run, 2026-09-24). Started (TECH-243) records that a card
+# ENTERED IMPLEMENTATION, which is what the release guard asks of a parked card:
+# a card in blocked/ or hold/ that was started may have code in the repo.
 #
-# Called ONLY after a successful move into done/, so a date is never written to a
-# file that did not move. Idempotent: an existing date is kept (first completion
-# wins). Fills a blank **Completed:** line, else inserts one after **Created:**.
+# Called ONLY after a successful move, so a date is never written to a file that
+# did not move. Idempotent: an existing date is kept — FIRST start and first
+# completion win, so doing → hold → doing keeps the first Started:. Fills a blank
+# line, else inserts one: Started: after **Created:**, Completed: after
+# **Started:** if present, else after **Created:**. A full move history is
+# FEAT-260's question, deliberately not answered here.
 # awk via a temp file rather than sed -i, for Git Bash/macOS portability.
-stamp_completed() { # stamp_completed <file already in done/>
-  local f="$1" tmp today
+stamp_date() { # stamp_date <file already moved> <Started|Completed>
+  local f="$1" field="$2" tmp today anchor
   today="$(date +%Y-%m-%d)"
-  if ! grep -qE '^\*\*Completed:\*\* *[0-9]{4}-[0-9]{2}-[0-9]{2}' "$f" 2>/dev/null; then
+  if ! grep -qE "^\*\*${field}:\*\* *[0-9]{4}-[0-9]{2}-[0-9]{2}" "$f" 2>/dev/null; then
     tmp="$(mktemp)"
-    if grep -qE '^\*\*Completed:\*\*' "$f"; then
-      awk -v d="$today" '/^\*\*Completed:\*\*/ && !done { print "**Completed:** " d; done=1; next } { print }' "$f" > "$tmp"
+    if grep -qE "^\*\*${field}:\*\*" "$f"; then
+      awk -v k="$field" -v d="$today" 'index($0, "**" k ":**") == 1 && !done { print "**" k ":** " d; done=1; next } { print }' "$f" > "$tmp"
     else
-      awk -v d="$today" '{ print } /^\*\*Created:\*\*/ && !done { print "**Completed:** " d; done=1 }' "$f" > "$tmp"
+      anchor="Created"
+      [ "$field" = "Completed" ] && grep -qE '^\*\*Started:\*\*' "$f" && anchor="Started"
+      awk -v k="$field" -v a="$anchor" -v d="$today" '{ print } index($0, "**" a ":**") == 1 && !done { print "**" k ":** " d; done=1 }' "$f" > "$tmp"
     fi
     mv "$tmp" "$f"
   fi
   git -C "$ROOT" add "$f" 2>/dev/null || true
 }
+stamp_completed() { stamp_date "$1" Completed; }
+stamp_started()   { stamp_date "$1" Started; }
 
 # Run every gate this namespace declares. ALL of them run — one invocation
 # reports every reason a move is refused, rather than making the user fix one
@@ -574,6 +582,7 @@ move_one() {
   [ -d "$BUNDLE" ] && { gmv "$BUNDLE" "$NS_ROOT/$TARGET/"; BUNDLE_NOTE="  (bundle $FULL_ID/)"; }
   DEST="$NS_ROOT/$TARGET/$BASE"
   [ "$NS" = "kanban" ] && [ "$TARGET" = "done" ] && stamp_completed "$DEST"
+  [ "$NS" = "kanban" ] && [ "$TARGET" = "doing" ] && stamp_started "$DEST"
 
   # THE FAMILY TRAVELS WITH THE RECORD (FEAT-229.4, fixing BUG-241's split).
   # Every other member — and its own bundle — follows, because a dotted child has
@@ -596,6 +605,7 @@ move_one() {
     m_note=""
     [ -d "$m_bundle" ] && { gmv "$m_bundle" "$NS_ROOT/$TARGET/"; m_note="  (bundle $m_id/)"; }
     [ "$NS" = "kanban" ] && [ "$TARGET" = "done" ] && stamp_completed "$NS_ROOT/$TARGET/$m_base"
+    [ "$NS" = "kanban" ] && [ "$TARGET" = "doing" ] && stamp_started "$NS_ROOT/$TARGET/$m_base"
     row OK "  ↳ $m_base$m_note"
   done < <(family_members "$FULL_ID")
 

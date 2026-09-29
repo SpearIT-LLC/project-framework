@@ -6,8 +6,9 @@
 **Version Impact:** MINOR
 **Created:** 2026-09-23
 **Workspace:** framework
-**Depends On:** TASK-242 (the parked-state set must be decided before a guard can name it)
-**Completed:** <!-- Set automatically by /fw-move on → done/. Leave blank at creation. -->
+**Depends On:**
+**Depended On (satisfied):** TASK-242, released in framework-dev v0.5.0. Moved off the `Depends On:` line on 2026-09-29: the old engine reads that line word by word and only searches `project-hub/work/`, so it refused the move.
+**Completed:** 2026-09-29
 
 ---
 
@@ -86,21 +87,43 @@ cheap signal exists, warn on all of them** — imprecise and loud beats silent.
 - **The new engine's release command**, which does not exist yet. This card fixes the **old**
   engine's `/fw-release`, because that is the one that will cut the next release. Record the
   requirement so the new one is born with it rather than inheriting the hole.
-- **Post-release archival** — **TECH-078** owns moving `done/` items to
-  `history/releases/vX.Y.Z/`. That is the step *after* a release; this is the gate *before* one.
+- **Post-release archival** — the step *after* a release; this is the gate *before* one.
+  TECH-078 owned it; archived 2026-09-29 and carried by **FEAT-028**.
 - **Release automation** — FEAT-028.
+
+## Review Findings and Decisions (2026-09-29)
+
+- **The live board has no `accept/` or `hold/`.** Its folders are backlog, todo, doing, done,
+  blocked, archive. The guard skips a missing folder, so both are guarded the day they exist.
+  On the live board, `blocked/` is the new case today.
+- **The old guard was prose, not a script.** Step 2a told the AI to run `ls`. It is now
+  `.claude/scripts/fw-release-guard.sh`, and `fw-release.md` acts on its exit code
+  (0 clear · 1 blocked · 2 confirm).
+- **The open question has an answer: a `**Started:**` stamp** (Gary challenged "no cheap
+  signal"). Git history cannot tell: folder moves reach git only when committed, and TASK-223's
+  history shows `backlog → done` for a card that went through `doing/`. Both engines now stamp
+  `**Started:**` on `→ doing`, first start only, never overwritten. The guard warns on a parked
+  card with a `Started:` date and prints an info line for one without.
+- **Full move history** (Gary's "big perhaps") is filed as **FEAT-260**, not built. Session
+  history already answers "which day", roughly.
 
 ## Acceptance Criteria
 
-- [ ] `accept/` is a hard block on release, naming the cards
-- [ ] `blocked/` and `hold/` warn, name the cards, and require confirmation
-- [ ] `doing/` behaves exactly as today — no regression to the one guard that works
-- [ ] The severity table is written down **where the guard lives**, so the next reader does not
-      flatten it back to one rule
-- [ ] One implementation serves all four folders — no copy per folder
-- [ ] Validated: **AI** — a release attempted with a card in each state, one at a time ·
-      **Human** — a real release cut with `accept/` occupied is refused, and the message says
-      what to do about it
+- [x] `accept/` is a hard block on release, naming the cards *(guard exit 1; scratch-tested)*
+- [x] `blocked/` and `hold/` warn, name the cards, and require confirmation *(started cards only;
+      never-started cards get an info line; exit 2; scratch-tested)*
+- [x] `doing/` behaves exactly as today — no regression to the one guard that works *(BLOCK,
+      `--force` bypasses; live board: blocked on TECH-243 itself)*
+- [x] The severity table is written down **where the guard lives**, so the next reader does not
+      flatten it back to one rule *(`fw-release-guard.sh` header, and as data in `POLICY`)*
+- [x] One implementation serves all four folders — no copy per folder *(one loop)*
+- [x] Validated: **AI** — each state, one at a time, on a scratch board *(2026-09-29)* ·
+      **Human** — replaced: the live board has no `accept/`. Instead, the next real release
+      runs the guard and reports BUG-144 as `INFO … (never started)`
+- [x] `**Started:**` stamped on `→ doing` by both engines, first start only; the path
+      todo → doing → hold → doing → accept → done keeps the first date *(scratch-tested,
+      new engine; old engine tested with blocked)*
+- [x] FEAT-028 carries the guard as a requirement for the new release command
 
 ## Related
 

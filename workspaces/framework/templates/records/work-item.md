@@ -29,7 +29,8 @@ TYPES-SOT-END
 
      Working material (drafts, logs, screenshots) lives in a sibling folder
      named for the id (FEAT-nnn/) that the move engine carries with the record.
-     Completed: is stamped by the move engine on -> done; leave it blank.
+     Started: and Completed: are stamped by the move engine (on -> doing and
+     on -> done); leave both blank.
      Delete optional fields that do not apply rather than leaving placeholders. -->
 # __TITLE__
 
@@ -40,6 +41,7 @@ TYPES-SOT-END
 **Workspace:** __workspace name, or delete if repo-level__
 **Parent:** __TYPE-nnn - only for discovered work that stands alone; or delete__
 **Depends On:** __TYPE-nnn, TYPE-nnn - must be in done/ before this can start; or delete__
+**Started:**
 **Completed:**
 
 ## Summary

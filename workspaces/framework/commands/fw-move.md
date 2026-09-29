@@ -90,7 +90,7 @@ What the engine cannot do is **judgment**, and that is this command's whole job:
    - **`→ accept`** — tell the user what to accept: the card's acceptance criteria, and
      how to check them. `accept/` has exactly two exits — `done` when accepted, `doing`
      to refine.
-   - **`→ done`** — the engine stamps `**Completed:**`; never hand-edit it. A spike
+   - **`→ done`** — the engine stamps `**Completed:**` (and `**Started:**` on `→ doing`); never hand-edit either. A spike
      is an ordinary card: it stays in `done/` or `cancelled/` like any other (BUG-258).
    - **`→ done` or `→ cancelled`** — offer to commit (default yes):
      `feat: Complete <ID> - <title>` or `chore: Cancel <ID> - <reason>`.

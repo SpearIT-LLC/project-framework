@@ -81,8 +81,8 @@ and call the script again. A corrected type re-enters the gate on its own merits
    won, since a decision without its reason gets re-litigated. Write Acceptance
    Criteria that can be **checked, not admired** (the done-gate reads them).
    Set `Priority`, and **delete optional fields that don't apply** (`Workspace`,
-   `Parent`, `Depends On`) rather than leaving placeholders. Leave `Completed:`
-   blank — the move engine stamps it.
+   `Parent`, `Depends On`) rather than leaving placeholders. Leave `Started:` and `Completed:`
+   blank — the move engine stamps them.
 
 6. **Commit once the card is fully drafted** — prompt first, default yes. A
    half-written card in the tree is worse than none.

@@ -267,6 +267,12 @@ Once this proves useful:
 
 ## Related Work
 
+- **Unfinished-work guard (TECH-243, 2026-09-29).** The new release command must be born with
+  it: `doing/` and `accept/` block (`--force` bypasses); `blocked/` and `hold/` warn and confirm
+  for a card with a `**Started:**` date, info line otherwise. Reuse the old repo's
+  `.claude/scripts/fw-release-guard.sh` logic (its header holds the severity table). Don't
+  reinvent it.
+
 - **Spike filing and release notes (TASK-259, decided 2026-09-29).** Requirements for this
   command: (1) the sweep empties `done/`, and files each `SPIKE-` card, with its bundle, under
   `release/<ws>/spikes/`, not the version folder; (2) release notes are built from the
