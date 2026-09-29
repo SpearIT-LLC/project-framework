@@ -97,7 +97,9 @@ card no longer waits for it.
 - **The contract's content.** It must be re-read before the move: the fragment is the
   2026-07-22 text and predates the 2026-09-10 Response Style rewrite. Response Style stays
   in it (ADR-007 D5 confirmed 2026-09-29). Gary's condition: review each Response Style rule
-  against what is already built in the new build, and refine any that work against it.
+  against the current Claude model's default behaviour. Drop or refine any rule that is old-model
+  baggage: redundant with what the model now does unprompted, or working against it (SPIKE-248's
+  purpose, applied to Response Style).
 - **The file's name and location** inside `workspaces/framework/`.
 - **Whether the hook also prints on `fork`.**
 

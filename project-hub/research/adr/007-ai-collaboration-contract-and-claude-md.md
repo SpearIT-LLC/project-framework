@@ -866,7 +866,8 @@ applies ADR-008 (mechanism over prose) to the contract's own bootstrap.
 - **D5 stands: Response Style stays in the contract.** SPIKE-248 had proposed moving it to user
   level, which would have reversed D5. Under A1 the contract reaches every plugin repo on every
   machine, so the cross-machine reason for moving it is gone. Gary's condition: consider
-  refinements to rules that work against what is already built in the new build. That review
+  refinements to rules that work against the current Claude model's built-in behaviour (old-model
+  baggage, redundant or counter-productive today). That review
   happens at BUG-181's pre-implementation review, before the contract moves.
 - **No advisory Implementation-Rule hook.** A PreToolUse `ask` keyed on an empty `doing/` fires
   on legitimate edits and misses edits unrelated to the item in `doing/`. The rule stays prose in
