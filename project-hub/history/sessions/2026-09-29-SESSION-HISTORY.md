@@ -153,7 +153,7 @@ into the `printf` (caught by reading the diff, fixed before testing).
    filed under `release/<ws>/spikes/` at release, never in release notes) and carried by
    **TASK-259**. Superseded: TECH-228's `history/spikes/` carry-in and TASK-242 D5's
    `history/archive/` for board cards.
-   **Gary:** publish (`.	ools\Publish-ToLocalMarketplace.ps1`), restart, run UAT-50 in
+   **Gary:** publish (`.\tools\Publish-ToLocalMarketplace.ps1`), restart, run UAT-50 in
    `framework-uat` (reseed first). Then close BUG-258.
 4. **TECH-243** and **TECH-253**, completing the kanban finish line. TECH-253 now also denies
    deleting a card (TECH-077).
