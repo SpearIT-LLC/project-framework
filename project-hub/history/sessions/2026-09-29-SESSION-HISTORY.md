@@ -139,7 +139,7 @@ into the `printf` (caught by reading the diff, fixed before testing).
 1. ~~UAT-55 re-run~~ — **done**, PASS on 0.5.0; BUG-250 closed. Two observations in the
    UAT-55 (re-run) row: the AI asked for a reason before finding the card already
    cancelled, and worded its commit offer as default-yes.
-2. **Split TASK-223** Groups 3–4 into their own card; then work Groups 2 and 5.
+2. ~~Split TASK-223~~ — **done**: Groups 3–4 → TASK-257 (backlog). Next: work Groups 2 and 5.
 3. **TECH-243** and **TECH-253**, completing the kanban finish line.
 4. **Carried:** re-run `.\tools\Publish-ToLocalMarketplace.ps1` so the marketplace reports
    0.5.0; BUG-181 (High, `todo/`); BUG-255.

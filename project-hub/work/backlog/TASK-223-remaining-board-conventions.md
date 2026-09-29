@@ -1,4 +1,4 @@
-# Task: The Remaining Board Conventions (Groups 2–5)
+# Task: The Remaining Board Conventions (Groups 2 and 5)
 
 **ID:** TASK-223
 **Type:** Task
@@ -15,6 +15,10 @@
 
 The fourteen board conventions that did **not** block the work-item template. Split out of
 **TASK-219** on 2026-09-10, which closed on the five (Group 1) that did.
+
+**Groups 3–4 split out to TASK-257 on 2026-09-29.** Gary set the kanban finish line to
+this card's Groups 2 and 5; Groups 3–4 (process and templates) are not board work. Eight
+conventions remain here.
 
 Same contract as its parent: for each convention, **decide it against the new build, give
 it a mechanism, and close the source card.** A convention decided but written only in prose
@@ -156,21 +160,10 @@ changes no status, so it is unrelated to the folder question and can land any ti
 
 ---
 
-### Group 3 — Process and collaboration
+### Groups 3–4 — split out to TASK-257 (2026-09-29)
 
-| Source | Convention to settle |
-|---|---|
-| TECH-070 | Issue-response process (triage → assess → decide → resolve) |
-| TECH-070.1 | Its validation sub-task — travels with TECH-070 |
-| TECH-071 | Session handoff checklist — the new build has session history but no start/end checklist |
-| TECH-049 | Human-AI concurrent-work handoff, especially around git operations |
-
-### Group 4 — Templates the new build lacks
-
-| Source | Convention to settle |
-|---|---|
-| TECH-073 | External-reference template |
-| FEAT-149 | Meeting-record standard, incl. AI-participant transparency — `meetings/` folders are scaffolded with nothing to put in them |
+Process and collaboration (TECH-070, TECH-070.1, TECH-071, TECH-049) and templates the new
+build lacks (TECH-073, FEAT-149). Owned by **TASK-257**.
 
 ### Group 5 — Already followed, not yet written
 
@@ -184,7 +177,7 @@ changes no status, so it is unrelated to the folder question and can land any ti
 
 ## Approach
 
-**Do not do all fourteen at once.** They are independent; Group 2a is the only set that
+**Do not do all eight at once.** They are independent; Group 2a is the only set that
 must be decided together (the terminal-state model). Take a group when something needs it.
 
 For each convention:
@@ -200,7 +193,7 @@ For each convention:
 
 ## Acceptance Criteria
 
-- [ ] Every one of the fourteen has a recorded outcome: **defined** (with its mechanism),
+- [ ] Every one of the eight has a recorded outcome: **defined** (with its mechanism),
       **decided-by-construction** (with the rationale written down), or **dropped** (with
       the reason)
 - [ ] The never-delete rule (TECH-077) is written down and backed by a check, not habit
@@ -234,6 +227,8 @@ For each convention:
 
 ## Related
 
+- **TASK-257** — **Groups 3–4, split out 2026-09-29.** Process and template conventions;
+  not board work.
 - **TASK-242** — **Group 2a, split out 2026-09-22.** The terminal/parked-state set, which was
   the only part of this card blocking real work. Its source analysis stays in the Group 2a
   section above.
@@ -248,4 +243,4 @@ For each convention:
 
 ---
 
-**Last Updated:** 2026-09-10
+**Last Updated:** 2026-09-29
