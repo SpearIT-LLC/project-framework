@@ -125,10 +125,10 @@ into the `printf` (caught by reading the diff, fixed before testing).
 ## Current State
 
 ### In done/ (awaiting release)
-- BUG-241, SPIKE-248, BUG-251, TECH-247
+- BUG-241, SPIKE-248, BUG-251, TECH-247, BUG-250
 
 ### In doing/
-- BUG-250 — its last criterion is Gary's UAT-55 re-run
+- (none) — BUG-250 closed after Gary's UAT-55 re-run passed on 0.5.0 (BUG-902, fresh session)
 
 **todo/ — 8 · backlog/ — 96 · blocked/ — 1**
 
@@ -136,9 +136,9 @@ into the `printf` (caught by reading the diff, fixed before testing).
 
 ## Next Session
 
-1. **Gary:** after restarting VS Code, UAT-55 in `framework-uat`: a fresh session,
-   `/fw-move TECH-903 cancelled`, no mention of the test. Pass = the AI asks and offers no
-   reason, then records the words as given. Then close BUG-250.
+1. ~~UAT-55 re-run~~ — **done**, PASS on 0.5.0; BUG-250 closed. Two observations in the
+   UAT-55 (re-run) row: the AI asked for a reason before finding the card already
+   cancelled, and worded its commit offer as default-yes.
 2. **Split TASK-223** Groups 3–4 into their own card; then work Groups 2 and 5.
 3. **TECH-243** and **TECH-253**, completing the kanban finish line.
 4. **Carried:** re-run `.\tools\Publish-ToLocalMarketplace.ps1` so the marketplace reports

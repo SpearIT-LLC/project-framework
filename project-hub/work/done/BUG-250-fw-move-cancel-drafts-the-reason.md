@@ -7,7 +7,7 @@
 **Created:** 2026-09-28
 **Workspace:** framework
 **Depends On:**
-**Completed:**
+**Completed:** 2026-09-29
 
 ---
 
@@ -51,7 +51,8 @@ than inherit either behavior.
       *(one rule over all of step 1's questions, 2026-09-29)*
 - [x] Decision recorded for `/fw-move-ops`'s close gate (draft allowed or not, and why)
       *(decided by Gary 2026-09-29; recorded and carried on BUG-255)*
-- [ ] UAT-55 re-run on the installed plugin *(Gary; the expected text in `UAT-COMMANDS.md` now says "offering no reason of its own")*: the AI asks, offers no reason, and records the answer verbatim
+- [x] UAT-55 re-run on the installed plugin *(Gary; the expected text in `UAT-COMMANDS.md` now says "offering no reason of its own")*: the AI asks, offers no reason, and records the answer verbatim
+      *(PASS 2026-09-29 on 0.5.0, BUG-902; see UAT-55 (re-run) row)*
 
 ## Related
 
