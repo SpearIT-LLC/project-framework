@@ -109,14 +109,18 @@ belongs to the card. It catches the commonest failure, starting work with no car
 
 A spike ends in a **decision, not a document**:
 
-- [ ] The inventory is complete, and every item has a keep / mechanize / move / delete verdict
-      with its reason
-- [ ] Native-overlap claims are verified against current Claude Code docs, with a source for
+- [x] The inventory is complete, and every item has a keep / mechanize / move / delete verdict
+      with its reason *(findings.md §1–2, 2026-09-28)*
+- [/] Native-overlap claims are verified against current Claude Code docs, with a source for
       each
-- [ ] The `CLAUDE.md` target is decided: the slim draft is accepted, or revised with reasons
-- [ ] The contract drift is resolved: the fate of `framework-contract.md` is decided
-- [ ] Follow-up cards are filed for each accepted change, or an ADR if the change is
+      **In progress:** re-read directly: hooks, memory, skills, plan mode, marketplace. Still subagent-sourced: task tracking and the `extraKnownMarketplaces` key; re-read both before closing.
+- [x] The `CLAUDE.md` target is decided: the slim draft is accepted, or revised with reasons
+      *(revised: repo-specific only, per D2 / Amendment 1 A3)*
+- [x] The contract drift is resolved: the fate of `framework-contract.md` is decided
+      *(retired into the plugin, per D5 / A2)*
+- [/] Follow-up cards are filed for each accepted change, or an ADR if the change is
       architectural (it likely amends ADR-007)
+      **In progress:** ADR-007 Amendment 1, BUG-181 re-scoped, TECH-253 and TECH-254 are done. D3 is open (it may reverse ADR-007 D5) and D6 is tabled to 2026-09-29.
 
 ## Related
 

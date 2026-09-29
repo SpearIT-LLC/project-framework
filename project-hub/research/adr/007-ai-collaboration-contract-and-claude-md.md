@@ -3,6 +3,7 @@
 **Status:** Accepted
 **Date:** 2026-07-13
 **Accepted:** 2026-07-15
+**Amended:** 2026-09-28 (Amendment 1, SPIKE-248: the contract ships in the plugin)
 **Deciders:** Gary Elliott, Claude Code
 **Impact:** Major
 **Scope:** Every `CLAUDE.md` in the framework and its distribution channels — what the file is for, what
@@ -821,6 +822,61 @@ deterministic. **ADR-007 does not depend on it and must not claim enforcement it
 
 ---
 
+## Amendment 1 — The Contract Ships in the Plugin (2026-09-28, SPIKE-248)
+
+**Status:** Accepted 2026-09-28 (Gary). **Amends:** D4 and OQ1–OQ2 for the ADR-009 build.
+D1, D3, D6 and D7 stand unchanged. **D5 is under review** (see below).
+
+**The premise that changed.** This ADR was written when "`CLAUDE.md` is the only file Claude
+Code auto-loads" held. That premise is no longer true. A plugin cannot ship a `CLAUDE.md`, but
+its **SessionStart hook** output is added to Claude's context at session start. Plain stdout
+works, capped at 10,000 characters, with the matchers `startup`, `resume`, `clear`, `compact`
+and `fork`. A plugin's hooks run in every repo where the plugin is enabled
+(code.claude.com/docs/en/hooks, verified 2026-09-28). ADR-009 made the framework *be* the
+plugin, so the plugin is now a channel that reaches every consuming repo, with nothing written
+into the repo at all.
+
+**A1 — Delivery is a plugin hook, not a composed region (replaces D4 for the new build).** The
+contract's single authored home is one file inside the plugin (`workspaces/framework/`). A
+plugin SessionStart hook on `startup|resume|clear|compact` prints it. There is no composer, no
+region markers and no copy in any consuming repo. Upgrading the contract is a plugin update.
+- **What this dissolves.** OQ1 (detecting a hand-modified contract region) has no subject,
+  because no region is written. The `/init` collision risk in D4's consequences goes the same
+  way. D4's "derive the region, not the file" was the right answer for a channel that could
+  only write files; this channel doesn't need to.
+- **Constraint.** The contract must stay under 10,000 characters. The current fragment is
+  4,807 bytes.
+
+**A2 — `.claude/framework-contract.md` is retired (replaces OQ2).** Its content *moves* into
+A1's plugin file in the same commit (one home at all times). No composer was ever built:
+nothing reads the file (verified 2026-09-28), and it had drifted from the root `CLAUDE.md` by
+then. That is the failure ADR-008 names.
+
+**A3 — Root `CLAUDE.md` files carry only what is specific to their repo.** In a repo with the
+plugin enabled, a `CLAUDE.md` must not restate the contract, or there are two copies again.
+This repo's root `CLAUDE.md` shrinks to its identity, the `framework.yaml` pointer and the
+ADR-009 workspace exception.
+
+**A4 — Bootstrap steps that are mechanical become hooks.** "Report `doing/`" becomes a
+SessionStart hook. "`git mv` only" becomes a PreToolUse deny, which Claude Code shows to Claude
+with its reason. "Ask what kind of work" and the `roles.default` persona are dropped. This
+applies ADR-008 (mechanism over prose) to the contract's own bootstrap.
+
+**Under review, not decided here:**
+- **D5 (Response Style belongs in the contract).** SPIKE-248 proposed moving it to user level.
+  That reverses D5, whose reason was that the framework must ship its behavioral rules and not
+  keep them as a personal preference. Under A1, keeping it in the contract also makes it reach
+  every plugin repo on every machine. To be settled with Gary.
+- **An advisory Implementation-Rule hook** (a PreToolUse `ask` when source changes while
+  `doing/` is empty). This would bear on D7 and TECH-114. Tabled by Gary on 2026-09-28.
+
+**Carried by:**
+- **BUG-181**, re-scoped 2026-09-28 to deliver A1–A3;
+- **TECH-253**, the bootstrap hooks (A4);
+- the evidence: `project-hub/work/doing/SPIKE-248/findings.md`.
+
+---
+
 ## Related
 
 - **ADR-006** — established one-authored-source + per-channel derivation for the work-item type SoT.
@@ -855,4 +911,4 @@ deterministic. **ADR-007 does not depend on it and must not claim enforcement it
 
 ---
 
-**Last Updated:** 2026-07-15 (Accepted)
+**Last Updated:** 2026-09-28 (Amendment 1)

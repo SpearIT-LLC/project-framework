@@ -94,9 +94,9 @@ Both are corrected below.
 | Root `CLAUDE.md` size | Target under 200 lines; "Longer files … reduce adherence." Block-level HTML comments are stripped before injection. Project-root `CLAUDE.md` is re-injected after `/compact`. | Guidance | keep slim (D2) | docs/en/memory: "Write effective instructions"; "How CLAUDE.md files load"; "Instructions seem lost after /compact" |
 | Drift / stale-instruction checks (TECH-189 in part; this spike's manual audit) | **`/doctor prompt-audit`** reads the `CLAUDE.md` files and the rules, skills, commands and output styles under `.claude/` and `~/.claude/`, and flags "instructions written for older models, references to files or commands that don't exist, and files that contradict each other". It proposes edits and changes nothing until asked. Requires v2.1.283+. | Partial | **adopt as a check** (D7) | docs/en/memory: "Write effective instructions" |
 | Plugin `commands/*.md` | "Custom commands have been merged into skills… Your existing `.claude/commands/` files keep working." Skills add a folder for supporting files and invocation control (`disable-model-invocation: true` means only the user can invoke it). "Keep `SKILL.md` under 500 lines." | Format only | keep now; convert later (D8) | docs/en/skills: note at top; frontmatter reference; tip |
-| `→ doing` pre-implementation review | Plan mode is a **permission mode** (read and propose, no edits), set by `--permission-mode plan` or `permissions.defaultMode`. It holds no card and leaves no record. | None | keep | docs/en/permission-modes *(subagent-sourced; not re-read)* |
+| `→ doing` pre-implementation review | Plan mode is a **permission mode** (read and propose, no edits), set by `--permission-mode plan` or `permissions.defaultMode`. It holds no card and leaves no record. | None | keep | docs/en/permission-modes: modes table ("Claude Code blocks edits until you approve a plan"); starting-mode table (re-read 2026-09-28) |
 | The board (`project-hub/work/`, `kanban/`) | Task/todo tools track steps **within** a session and don't persist to the repo. | None | keep | docs/en/agent-sdk/todo-tracking *(subagent-sourced; not re-read)* |
-| Self-hosted marketplace (TECH-188) | A marketplace is a repo with `.claude-plugin/marketplace.json`, added with `/plugin marketplace add owner/repo`. A project's settings can declare `extraKnownMarketplaces` and `enabledPlugins`; a `git-subdir` source takes `path` and `ref`. | Confirms TECH-188's recommendation | — | docs/en/plugins/create-marketplace; settings-reference *(subagent-sourced; not re-read; check the exact key shapes when implementing)* |
+| Self-hosted marketplace (TECH-188) | A marketplace is a repo with `.claude-plugin/marketplace.json`, added with `/plugin marketplace add owner/repo`. A project's settings can declare `extraKnownMarketplaces` and `enabledPlugins`; a `git-subdir` source takes `path` and `ref`. | Confirms TECH-188's recommendation | — | docs/en/plugin-marketplaces (re-read 2026-09-28: marketplace.json location, `claude plugin marketplace add <owner>/<repo>`, `git-subdir` with `path`; `ref`/`sha` pinning is on the marketplace-reference page). **`extraKnownMarketplaces` is still subagent-sourced; check its shape when implementing (TECH-188).** |
 
 ## 5. Decisions (proposed; awaiting Gary)
 
@@ -167,3 +167,16 @@ replace the board or the `→ doing` review; the new build's prompting style is 
 - one card for the bootstrap hooks (D4, D6);
 - one low-priority card for the command-to-skill conversion (D8);
 - TECH-189 is re-scoped at its own review. D3 is Gary's to do.
+
+## 6. Status of the decisions (2026-09-28, Gary)
+
+| Decision | Status | Carried by |
+|---|---|---|
+| D1 contract via plugin hook | **Approved** (after the explanation that the hook is part of the plugin and runs every session; it is not an update prompt) | ADR-007 Amendment 1 (A1); BUG-181 re-scoped |
+| D2 root `CLAUDE.md` repo-specific | **Approved** | A3; BUG-181 |
+| D3 Response Style to user level | **Open.** Gary asked how it works across machines. Answer given: a OneDrive file imported by a one-line `~/.claude/CLAUDE.md` on each machine. **Then found:** this reverses ADR-007 D5, which decided Response Style belongs *in the contract* and rejected `~/.claude/`. Under D1 the contract reaches every plugin repo on every machine, so keeping it in the contract solves the cross-machine problem too. Needs Gary's call. | Amendment 1 "under review" |
+| D4 bootstrap hooks | **Approved** | A4; TECH-253 |
+| D5 retire `framework-contract.md` | **Approved** | A2; BUG-181 |
+| D6 advisory Implementation-Rule hook | **Tabled to 2026-09-29** ("feels awkward") | Amendment 1 "under review" |
+| D7 `/doctor prompt-audit` | **Approved**, with a reminder | An acceptance criterion on BUG-181, so the done-gate enforces it |
+| D8 commands stay commands | **Approved** | TECH-254 (Low) |

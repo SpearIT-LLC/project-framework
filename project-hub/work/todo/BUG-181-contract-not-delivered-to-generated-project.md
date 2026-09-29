@@ -16,6 +16,12 @@
 > contract?* In the new model nothing generates a `CLAUDE.md` at all, so today the answer
 > is a harder "no" than it was in July. Full history of the old investigation is preserved
 > below under **Superseded History** — it is why the fix is a *composer*, not a copy.
+>
+> **RE-SCOPED AGAIN 2026-09-28 (SPIKE-248, ADR-007 Amendment 1).** The fix is no longer a
+> composer. A plugin SessionStart hook delivers the contract to every repo with the plugin
+> enabled, so nothing is written into the project. The 2026-09-02 composer design (in
+> `/fw-init`, with region markers and a hand-edit guard) is summarised under
+> **Superseded History**.
 
 ---
 
@@ -65,76 +71,58 @@ hasn't shipped*).
 
 ---
 
-## Fix Design
+## Fix Design (2026-09-28: ADR-007 Amendment 1)
 
-**ADR-007's decisions still govern** — they were about the contract's *shape*, which
-ADR-009 did not change. Carried forward:
+**Deliver the contract through the plugin, not into the project.** SPIKE-248 found that a
+plugin's SessionStart hook output is added to Claude's context in every repo where the plugin
+is enabled (up to 10,000 characters; code.claude.com/docs/en/hooks, verified 2026-09-28).
+ADR-007 Amendment 1 adopts that as the channel:
 
-- **D1** — `CLAUDE.md` is a **contract**, not a manual: binding rules that exist nowhere
-  else, plus bootstrap and project identity. ≤150 lines. No restatement of any guide.
-- **D3** — route to sources through the config index, never through summary layers.
-- **D4** — **derive the region, not the file.** A generated `CLAUDE.md` is partitioned
-  into `<!-- BEGIN FRAMEWORK CONTRACT -->` (derived, replaced on upgrade) and
-  `<!-- BEGIN PROJECT INSTRUCTIONS -->` (the project's, never touched).
-- **OQ2** — the authored-once fragment is `.claude/framework-contract.md`.
+- **A1:** the contract's one authored home is a file inside the plugin. A plugin
+  SessionStart hook on `startup|resume|clear|compact` prints it. Nothing is written into a
+  consuming repo, so there is no composer, no region markers and no hand-edit guard.
+- **A2:** `.claude/framework-contract.md` *moves* into that file (`git mv` plus edits, one
+  commit), then the old path is gone.
+- **A3:** this repo's root `CLAUDE.md` drops everything the contract now carries. What stays
+  is the repo identity, the `framework.yaml` pointer and the ADR-009 workspace exception.
+  The draft to start from is `SPIKE-248/claude-md-slim-draft.md`, minus its Implementation
+  Rule, Epistemic and Single-Source sections.
 
-**What changes for the new build:** the composer is a **command**, not a build step.
-ADR-009 retires `Build-FrameworkArchive.ps1`; `/fw-init` takes its place. The composer
-must therefore live in the plugin and run at init time, reading the contract from
-`${CLAUDE_PLUGIN_ROOT}` the way every other new-build script resolves its assets.
+**Why this replaces the composer:** the composer existed because `CLAUDE.md` was the only
+channel. Now that it isn't, the composer's hard problems (detecting an edited region, and
+colliding with `/init`) have no subject. `/fw-init` no longer owns contract delivery, so this
+card no longer waits for it.
 
-**Two open design questions** (resolve at pre-implementation review):
-
-1. **Where does the contract SoT live in the new build?** It is currently at the repo
-   root (`.claude/framework-contract.md`), which is old-tree territory. It must move into
-   `workspaces/framework/` to ship with the plugin — most likely
-   `templates/framework-contract.md` beside the other templates. This is a `git mv` plus
-   a pointer update, but it must happen before `/fw-init` can read it.
-2. **Does the new build's own `CLAUDE.md` get the region markers?** ADR-007 D3 settled
-   *compose-starter / verify-root* — generated projects are composed, this repo's own file
-   is only checked, because root has history to protect. `workspaces/framework/CLAUDE.md`
-   has no markers today. Adopting them here is dogfooding; skipping them means the
-   framework does not follow its own contract-delivery rule.
+**Open at review:**
+- **The contract's content.** It must be re-read before the move: the fragment is the
+  2026-07-22 text and predates the 2026-09-10 Response Style rewrite. Whether Response Style
+  stays in it is pending (ADR-007 D5 is under review).
+- **The file's name and location** inside `workspaces/framework/`.
+- **Whether the hook also prints on `fork`.**
 
 ---
 
 ## Scope
 
-**In scope:**
-- Relocate the contract SoT into the plugin so it ships (design question 1).
-- `/fw-init` composes the contract region into the generated project's root `CLAUDE.md`.
-- The composer is **literal** — byte-substitution into the guarded region, no templating
-  (ADR-007 D4, *"keep the composer stupid"*).
-- A guard: a hand-edited contract region must be detectable, so the copy-fresh guarantee
-  does not silently degrade into duplication.
+**In scope:** the plugin contract file and its SessionStart hook; retiring
+`.claude/framework-contract.md`; slimming this repo's root `CLAUDE.md`; verifying on the
+installed plugin.
 
 **Out of scope:**
-- Building `/fw-init` itself as a general repo-scaffolding command — that is its own
-  feature. This item owns **the contract-delivery half** of it and should be sequenced
-  with, not ahead of, that work.
-- The contract's *content* (ADR-007 D1 settled it; the SoT is authored).
-- Per-workspace `CLAUDE.md` files. ADR-009 gives `workspaces/framework/` its own authority
-  file, but whether *every* workspace gets one is a separate question — do not widen this
-  item into it.
+- The bootstrap hooks: TECH-253.
+- `/fw-init` repo scaffolding: its own feature.
+- Response Style's final home: pending, see the Fix Design.
+- The advisory Implementation-Rule hook: tabled 2026-09-28.
 
 ---
 
 ## Acceptance Criteria
 
-- [ ] The contract SoT lives inside `workspaces/framework/` and ships with the plugin
-- [ ] `/fw-init` generates a root `CLAUDE.md` containing a populated framework-contract
-      region, composed from that SoT
-- [ ] The generated file carries both region markers, with PROJECT INSTRUCTIONS non-empty
-      (a placeholder comment) so the boundary is visible to whoever edits it
-- [ ] **The done-gate test:** an AI reading *only* the generated project's root
-      `CLAUDE.md` receives role wiring, the Implementation Rule, the Epistemic Standards,
-      and the command surface — verified by generating a project in a scratch repo and
-      reading the result, not by inspecting the source tree (ADR-008: verify the built
-      artifact)
-- [ ] A hand-edited contract region is detected rather than silently overwritten or
-      silently preserved
-- [ ] Re-running `/fw-init` (or an upgrade) replaces the contract region and leaves the
-      PROJECT INSTRUCTIONS region byte-identical
+- [ ] The contract's single authored home is a file inside `workspaces/framework/`, under 10,000 characters; `.claude/framework-contract.md` no longer exists
+- [ ] A plugin SessionStart hook prints it on `startup`, `resume`, `clear` and `compact`
+- [ ] **Built-artifact test:** in `framework-uat`, with the *installed* plugin and no contract text in its `CLAUDE.md`, a fresh session can state the Implementation Rule and the Epistemic Standards, and `/context` or the transcript shows the hook output (ADR-008: verify the built artifact)
+- [ ] This repo's root `CLAUDE.md` restates none of the contract; a fresh session here still follows the Implementation Rule (the SPIKE-248 blind-test method: ordinary task, no mention of the test)
+- [ ] Gary runs `/doctor prompt-audit` after the change; its findings are resolved or filed (SPIKE-248 D7)
 - [ ] Plugin CHANGELOG updated
 
 ---
@@ -143,19 +131,15 @@ must therefore live in the plugin and run at init time, reading the contract fro
 
 <!-- ⚠️ AI: Complete items in order. STOP at each [ ] and wait for approval. -->
 
-- [x] **Root cause investigated** — 2026-07-13. Found the delivery gap, and found the
-      artifact to be delivered was itself ~95% duplicate and materially stale.
-- [x] **ADR-007 ratified** — Accepted 2026-07-15; contract shape settled (D1–D7, OQ2).
-- [x] **Contract SoT authored** — `.claude/framework-contract.md`, 2026-07-22.
-- [x] **Re-scoped for the ADR-009 build** — 2026-09-02 (TASK-218 Section E). Old-pipeline
-      composer/drift-guard/archive items are dead; the composer becomes `/fw-init`.
-- [ ] **PRE-IMPLEMENTATION REVIEW** — resolve the two open design questions (SoT location;
-      whether the new build's own `CLAUDE.md` adopts the markers), and confirm sequencing
-      against the `/fw-init` build
-- [ ] Relocate the contract SoT into `workspaces/framework/` (`git mv` + pointer update)
-- [ ] Compose the contract region in `/fw-init`
-- [ ] Hand-edit guard
-- [ ] Verify against a **generated** project, not the source tree
+- [x] **Root cause investigated** (2026-07-13)
+- [x] **ADR-007 ratified** (2026-07-15)
+- [x] **Re-scoped for the ADR-009 build** (2026-09-02)
+- [x] **Re-scoped to plugin delivery** (2026-09-28, SPIKE-248 / ADR-007 Amendment 1)
+- [ ] **PRE-IMPLEMENTATION REVIEW**: settle the contract content, including Response Style, and the file location
+- [ ] Move the contract into the plugin; add the hook
+- [ ] Slim the root `CLAUDE.md`
+- [ ] Publish, install, and run the built-artifact test in `framework-uat`
+- [ ] `/doctor prompt-audit` (Gary)
 - [ ] Plugin CHANGELOG
 
 ---
@@ -164,9 +148,8 @@ must therefore live in the plugin and run at init time, reading the contract fro
 
 | Surface | What it must say |
 |---|---|
-| Generated `CLAUDE.md` | which region is framework-owned and replaced on upgrade, which is the project's |
-| `/fw-init` command doc | that it delivers the contract, and what the project may safely edit |
-| Plugin CHANGELOG | generated projects now receive the contract |
+| The contract file's header | that it is delivered by the plugin's SessionStart hook, and that no repo should restate it |
+| Plugin CHANGELOG | repos with the plugin enabled now receive the contract |
 
 ---
 
@@ -190,6 +173,12 @@ reading before re-designing anything:
 - **The authored half shipped; the mechanism half never did.** Verified 2026-08-18: the
   SoT exists and the old shells carried region markers, but no composer, no drift guard,
   and no shipped check were ever built — and they targeted the pipeline ADR-009 retires.
+- **The 2026-09-02 plan (superseded 2026-09-28).** That plan moved the composer into
+  `/fw-init`. It would compose a `BEGIN FRAMEWORK CONTRACT` region into each generated root
+  `CLAUDE.md` from a relocated SoT, plus a hand-edit guard and a re-run test that kept
+  PROJECT INSTRUCTIONS byte-identical. It was never started. SPIKE-248 found that a plugin
+  hook reaches every repo without writing into it, which removes the composer's reason to
+  exist.
 
 **Dead artifacts** (do not resurrect): `templates/starter/CLAUDE.md`,
 `Build-FrameworkArchive.ps1` Step 5.5 + its drift guard, `tools/Check-ContractDrift.ps1`,
@@ -199,9 +188,13 @@ reading before re-designing anything:
 
 ## Related
 
-- **ADR-007** (Accepted 2026-07-15) — owns the contract's shape. Still governs.
-- **ADR-009** — replaces the delivery mechanism: commands build the structure, so the
-  composer is `/fw-init` rather than a build step.
+- **ADR-007** (Accepted 2026-07-15) — owns the contract's shape. **Amendment 1
+  (2026-09-28)** sets the delivery mechanism this card now implements.
+- **SPIKE-248** — the re-baseline that found the plugin channel; evidence in
+  `SPIKE-248/findings.md`.
+- **TECH-253** — the bootstrap hooks (the rest of Amendment 1, A4).
+- **ADR-009** — the framework is the plugin, which is what makes a plugin hook a channel to
+  every consuming repo.
 - **ADR-008** — *verify against the built artifact, not the source repo.* This item's
   done-gate is written to that rule.
 - **TECH-182 / TECH-183** — the old retirements and pointer fixes. **Archived 2026-09-02**
@@ -210,4 +203,4 @@ reading before re-designing anything:
 
 ---
 
-**Last Updated:** 2026-09-02
+**Last Updated:** 2026-09-28
