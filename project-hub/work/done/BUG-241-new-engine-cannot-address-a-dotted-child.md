@@ -6,7 +6,7 @@
 **Version Impact:** MINOR
 **Created:** 2026-09-22
 **Workspace:** framework
-**Completed:** <!-- Set automatically by /fw-move on → done/. Leave blank at creation. -->
+**Completed:** 2026-09-28
 
 ---
 
@@ -95,15 +95,24 @@ over the file returns **0** — there is no child handling to have a bug in.
 
 ## Acceptance Criteria
 
-- [ ] A dotted child is addressable by its own id: `fw-move.sh kanban FEAT-001.1 todo` moves
+- [x] A dotted child is addressable by its own id: `fw-move.sh kanban FEAT-001.1 todo` moves
       **that card**
-- [ ] An id that matches nothing **fails**, naming the id. No silent fallback to the base id
-- [ ] Moving a parent moves its children with it — the family never splits
-- [ ] A child moved directly is reported as itself, never as its parent
-- [ ] Depth 3 (`FEAT-001.1.1`) resolves correctly — the template permits it
-- [ ] Operations is unaffected — its ids are never dotted; a regression pass proves it
-- [ ] Validated: **AI** — parent move, direct child move, unmatched dotted id, and a depth-3
+- [x] An id that matches nothing **fails**, naming the id. No silent fallback to the base id
+- [x] Moving a parent moves its children with it — the family never splits
+- [x] A child moved directly is reported as itself, never as its parent
+- [x] Depth 3 (`FEAT-001.1.1`) resolves correctly — the template permits it
+- [x] Operations is unaffected — its ids are never dotted; a regression pass proves it
+- [x] Validated: **AI** — parent move, direct child move, unmatched dotted id, and a depth-3
       id, each against a seeded fixture · **Human** — the same against the **installed plugin**
+
+## Verification (2026-09-28)
+
+Fixed by **FEAT-229.4** (released in framework-dev v0.5.0). **AI half:** FEAT-229.4 validation cases 1–3 and 6–8 (parent move, direct child, unmatched `FEAT-001.9`, depth 3, `Parent:` child, operations regression). **Human half, installed plugin 0.5.0, `framework-uat`:**
+- Direct child addressed as itself: UAT-48 (`$K 912.1 doing`) and UAT-56 (`/fw-move FEAT-912.2 hold`); the named child is on the main row, and siblings are on `↳` rows.
+- The family never splits: UAT-43 (refused as a family), UAT-48, UAT-56, and a parent-named move, `$K FEAT-912 hold`, which carried .1, .1.1 and .2 (exit 0, run 2026-09-28).
+- Unmatched dotted id: `$K FEAT-912.9 todo` gave `FAILED FEAT-912.9 — no kanban record with that id`, exit 1 (run 2026-09-28).
+- Depth 3: `fw-new.sh --parent FEAT-912.1` created `FEAT-912.1.1` in `hold/`, then `$K FEAT-912.1.1 todo` moved the whole family, exit 0 (run 2026-09-28).
+- Operations unaffected: D2 re-run (UAT-33..36) on the shared engine.
 
 ## Related
 
