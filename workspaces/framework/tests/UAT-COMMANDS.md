@@ -383,8 +383,8 @@ order; each case starts from the state the last one left. Re-run with `--reset`,
 
 **UAT-38 — the transitions are an allowlist.** `$K FEAT-901 done`, then `$K 901 doing`,
 then `$K 901 accept`
-- Expected: each refused on its row — `invalid transition backlog → done (allowed: …)`,
-  likewise `→ doing` and `→ accept`; exit 1. A card goes backlog → todo → doing →
+- Expected: each refused on its row — `invalid transition backlog → done (from backlog: todo, blocked, hold, cancelled)`,
+  likewise `→ doing` and `→ accept`, listing only backlog's exits (TECH-247); exit 1. A card goes backlog → todo → doing →
   accept → done, and skips nothing.
 - Pass: FEAT-901 still in `backlog/`. (`$K 901 doing` also prints the WIP warning first;
   the warning never decides anything — see UAT-41.)
@@ -533,13 +533,15 @@ what is under test is the command's judgment layer — the engine's rules were p
   BUG-907 stays in `accept/`.
 
 **UAT-55 — cancelling records why.** `> /fw-move TECH-903 cancelled`
-- Expected: **AI asks why** before moving, writes `**Cancellation Reason:** <your answer>`
+- Expected: **AI asks why** before moving, **offering no reason of its own** (BUG-250), writes `**Cancellation Reason:** <your answer>`
   into the card header, runs the move, and offers to commit (`chore: Cancel TECH-903 - …`).
 - Pass: TECH-903 in `cancelled/` with the reason; no closure code is asked for (TASK-242 D4).
 
 **UAT-56 — naming a child moves the family, without asking.** `> /fw-move FEAT-912.2 hold`
 - Expected: the AI confirms `hold` is a *prioritization decision* (not an external
   blocker), then runs the move; FEAT-912, .1 (with its bundle) and .2 all land in `hold/`.
+  The unnamed sibling's row carries its bundle (BUG-251):
+  `↳ FEAT-912.1-family-child-one.md  (bundle FEAT-912.1/)`.
 - Pass: the AI does **not** ask whether to move the siblings — a dotted family is one item.
 
 **UAT-57 — a repo whose board is elsewhere is untouched.** In the **framework repo**, where

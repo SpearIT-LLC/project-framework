@@ -21,6 +21,9 @@
 **Version Impact:** MINOR
 **Created:** 2026-09-11
 **Workspace:** framework
+**Status:** Cancelled
+**Cancelled Date:** 2026-09-29
+**Cancellation Reason:** Superseded 2026-09-12: merged into BUG-215, which carries its design and acceptance criteria (see banner). The card had no remaining owner.
 **Completed:** <!-- Set automatically by /fw-move on → done/. Leave blank at creation. -->
 
 ---

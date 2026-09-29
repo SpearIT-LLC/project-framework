@@ -33,7 +33,10 @@ What the engine cannot do is **judgment**, and that is this command's whole job:
 
 ## Steps
 
-1. **Pre-move, by target** (skip when nothing applies):
+1. **Pre-move, by target** (skip when nothing applies). **When you ask, only ask** — offer
+   no answer of your own and don't invite an `ok` (BUG-250). The answer is the user's
+   judgment; record it as given, even when brief. A plausible reason the user waved
+   through is worse than none, because it looks like a decision that was never made.
    - **`→ cancelled`** — ask why, and write a free-text `**Cancellation Reason:**` into
      the card header before moving. There is no closure code on the board (TASK-242 D4):
      the `cancelled/` folder *is* the outcome. The state is terminal, so ask once — the

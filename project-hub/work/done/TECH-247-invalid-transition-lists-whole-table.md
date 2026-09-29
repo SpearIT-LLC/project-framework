@@ -7,7 +7,7 @@
 **Created:** 2026-09-26
 **Workspace:** framework
 **Depends On:**
-**Completed:**
+**Completed:** 2026-09-29
 
 ---
 
@@ -45,9 +45,12 @@ the change affects only kanban.
 
 ## Acceptance Criteria
 
-- [ ] `$K FEAT-901 done` from `backlog/` prints `(from backlog: todo, blocked, hold, cancelled)`, with no pairs that start in another folder
-- [ ] A folder with few exits renders cleanly (`accept` → `from accept: doing, done`), and D2 (UAT-33..36) still passes unchanged
-- [ ] UAT-38 and UAT-52's expected text in `UAT-COMMANDS.md` updated to the new form; the other checks in those cases are unchanged
+- [x] `$K FEAT-901 done` from `backlog/` prints `(from backlog: todo, blocked, hold, cancelled)`, with no pairs that start in another folder
+      *(2026-09-29, scratch repo: also `→ doing` and `→ accept`, same list)*
+- [x] A folder with few exits renders cleanly (`accept` → `from accept: doing, done`), and D2 (UAT-33..36) still passes unchanged
+      *(`$K 907 backlog` from `accept/` → `(from accept: doing, done)`; UAT-33 shape re-run unchanged)*
+- [x] UAT-38 and UAT-52's expected text in `UAT-COMMANDS.md` updated to the new form; the other checks in those cases are unchanged
+      *(UAT-38 updated; UAT-52 quotes the row verbatim and names no list, so it needed no change)*
 
 ## Related
 

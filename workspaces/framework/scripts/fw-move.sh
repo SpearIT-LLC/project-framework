@@ -537,7 +537,13 @@ move_one() {
   if echo "$NS_TERMINAL" | grep -qw "$SOURCE"; then
     fail_item "$BASE — in $SOURCE/, which is terminal; open a new record instead"; return 1
   fi
-  echo "$NS_TRANSITIONS" | grep -qw "$SOURCE:$TARGET" || { fail_item "$BASE — invalid transition $SOURCE → $TARGET (allowed: $NS_TRANSITIONS)"; return 1; }
+  # The refusal names only the moves out of the record's current folder (TECH-247):
+  # the whole table buried the useful part among pairs that start somewhere else.
+  if ! echo "$NS_TRANSITIONS" | grep -qw "$SOURCE:$TARGET"; then
+    local exits
+    exits="$(printf '%s\n' $NS_TRANSITIONS | sed -n "s/^$SOURCE://p" | paste -sd, - | sed 's/,/, /g')"
+    fail_item "$BASE — invalid transition $SOURCE → $TARGET (from $SOURCE: $exits)"; return 1
+  fi
 
   # Gates run AFTER the transition is known legal and BEFORE anything is moved
   # (FEAT-229.2). Order matters: an illegal transition is a usage error and its
@@ -579,16 +585,19 @@ move_one() {
   # asked for one id and several files moved, so the report says which. They are NOT
   # counted in MOVED — the family is one work item, and a count of 4 for one /fw-move
   # of one card is the same category error BUG-240 fixes in the WIP count.
-  local m_rel m_base m_bundle
+  local m_rel m_base m_bundle m_id m_note
   while IFS= read -r m_rel; do
     [ -n "$m_rel" ] || continue
     m_base="$(basename "$m_rel")"
     [ "$m_base" = "$BASE" ] && continue
-    m_bundle="$NS_ROOT/$(dirname "$m_rel")/$(printf '%s' "$m_base" | grep -oE '^[A-Z]+-[0-9]+(\.[0-9]+)*')"
+    m_id="$(printf '%s' "$m_base" | grep -oE '^[A-Z]+-[0-9]+(\.[0-9]+)*')"
+    m_bundle="$NS_ROOT/$(dirname "$m_rel")/$m_id"
     gmv "$NS_ROOT/$m_rel" "$NS_ROOT/$TARGET/" || { row FAILED "$m_base — family member move failed"; continue; }
-    [ -d "$m_bundle" ] && gmv "$m_bundle" "$NS_ROOT/$TARGET/"
+    # A member's bundle goes inline on its own row, as the named record's does (BUG-251).
+    m_note=""
+    [ -d "$m_bundle" ] && { gmv "$m_bundle" "$NS_ROOT/$TARGET/"; m_note="  (bundle $m_id/)"; }
     [ "$NS" = "kanban" ] && [ "$TARGET" = "done" ] && stamp_completed "$NS_ROOT/$TARGET/$m_base"
-    row OK "  ↳ $m_base"
+    row OK "  ↳ $m_base$m_note"
   done < <(family_members "$FULL_ID")
 
   # A SPIKE REACHING A TERMINAL STATE ARCHIVES OUT OF THE BOARD (FEAT-229.3, kanban§2).

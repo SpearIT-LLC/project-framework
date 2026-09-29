@@ -37,16 +37,21 @@ One line in step 1's `→ cancelled` bullet: *ask the question without offering 
 if the user's answer is brief, record it as given.* Apply the same rule to `→ blocked`
 ("ask what the card is waiting on") and `→ hold`.
 
-**Check the ops side separately.** In UAT-34 (2026-09-26), `/fw-move-ops`'s close gate also
+**Ops side split out to BUG-255 (2026-09-29).** Gary: this card was carrying two things,
+and the kanban finish line doesn't include operations. His decision is recorded there.
+
+~~**Check the ops side separately.**~~ In UAT-34 (2026-09-26), `/fw-move-ops`'s close gate also
 drafted a reason and a durable-knowledge answer, and that was graded PASS. An ops Outcome
 summarizes work already done, so a draft there may be fine. Decide deliberately rather
 than inherit either behavior.
 
 ## Acceptance Criteria
 
-- [ ] `commands/fw-move.md` step 1 tells the AI to ask without drafting for `→ cancelled`, `→ blocked` and `→ hold`
-- [ ] Decision recorded for `/fw-move-ops`'s close gate (draft allowed or not, and why)
-- [ ] UAT-55 re-run on the installed plugin: the AI asks, offers no reason, and records the answer verbatim
+- [x] `commands/fw-move.md` step 1 tells the AI to ask without drafting for `→ cancelled`, `→ blocked` and `→ hold`
+      *(one rule over all of step 1's questions, 2026-09-29)*
+- [x] Decision recorded for `/fw-move-ops`'s close gate (draft allowed or not, and why)
+      *(decided by Gary 2026-09-29; recorded and carried on BUG-255)*
+- [ ] UAT-55 re-run on the installed plugin *(Gary; the expected text in `UAT-COMMANDS.md` now says "offering no reason of its own")*: the AI asks, offers no reason, and records the answer verbatim
 
 ## Related
 

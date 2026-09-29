@@ -10,12 +10,15 @@ plain semver 0.x during the framework workspace build.
 None
 
 ### Changed
-
-None
+- **A refused move names only the moves out of the card's folder** (TECH-247):
+  `invalid transition backlog → done (from backlog: todo, blocked, hold, cancelled)`,
+  instead of every allowed pair in the namespace.
+- **`/fw-move` asks without answering** (BUG-250): for `→ cancelled`, `→ blocked` and
+  `→ hold` the AI asks, offers no reason of its own, and records the answer as given.
 
 ### Fixed
-
-None
+- **Family member rows show their bundle** (BUG-251): an unnamed sibling that carries a
+  bundle folder now reports `(bundle <ID>/)` on its `↳` row, as the named record does.
 
 ---
 

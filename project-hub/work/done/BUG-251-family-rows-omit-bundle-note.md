@@ -7,7 +7,7 @@
 **Created:** 2026-09-28
 **Workspace:** framework
 **Depends On:**
-**Completed:**
+**Completed:** 2026-09-29
 
 ---
 
@@ -42,10 +42,13 @@ Build a note in the loop the same way as line 567, and append it to the `↳` ro
 
 ## Acceptance Criteria
 
-- [ ] Naming a family member whose sibling has a bundle prints `(bundle <ID>/)` on that sibling's `↳` row
-- [ ] Naming the member that has the bundle is unchanged (UAT-48 output)
-- [ ] Operations output unchanged (D2, UAT-33..36)
-- [ ] UAT-56's expected output in `UAT-COMMANDS.md` shows the note
+- [x] Naming a family member whose sibling has a bundle prints `(bundle <ID>/)` on that sibling's `↳` row
+      *(2026-09-29, scratch repo with seeded fixtures: `$K FEAT-912.2 hold` → `↳ FEAT-912.1-family-child-one.md  (bundle FEAT-912.1/)`)*
+- [x] Naming the member that has the bundle is unchanged (UAT-48 output)
+      *(`$K FEAT-912.1 todo` → `FEAT-912.1-family-child-one.md → todo/  (bundle FEAT-912.1/)`)*
+- [x] Operations output unchanged (D2, UAT-33..36)
+      *(UAT-33 shape re-run: identical rows, bundle inline on INC-902)*
+- [x] UAT-56's expected output in `UAT-COMMANDS.md` shows the note
 
 ## Related
 
