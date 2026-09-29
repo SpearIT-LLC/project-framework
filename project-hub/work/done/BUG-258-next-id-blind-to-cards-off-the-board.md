@@ -7,7 +7,7 @@
 **Created:** 2026-09-29
 **Workspace:** framework
 **Depends On:**
-**Completed:**
+**Completed:** 2026-09-29
 
 ---
 
@@ -59,7 +59,7 @@ deciding then.
 - [x] Fixture: a spike holding the highest id (`FEAT-003`, `SPIKE-005` moved `accept → done`) gives next id **006** *(scratch repo, 2026-09-29)*
 - [x] Seeded board: `913 → done`, `914 → cancelled` land on the board, SPIKE-914's `poc.sh` beside it, and no `history/` is created *(scratch repo, 2026-09-29)*
 - [x] `commands/fw-move.md`, `UAT-COMMANDS.md` UAT-50/51 and `seed-uat-fixtures.sh` no longer describe spikes leaving the board
-- [ ] UAT-50 re-run on the installed plugin *(Gary)*
+- [x] UAT-50 re-run on the installed plugin *(Gary)* *(PASS 2026-09-29; UAT-50 (re-run) row)*
 - [x] Plugin CHANGELOG updated
 
 ## Related

@@ -125,11 +125,10 @@ into the `printf` (caught by reading the diff, fixed before testing).
 ## Current State
 
 ### In done/ (awaiting release)
-- BUG-241, SPIKE-248, BUG-251, TECH-247, BUG-250, TASK-223, DECISION-171
+- BUG-241, SPIKE-248, BUG-251, TECH-247, BUG-250, TASK-223, DECISION-171, BUG-258
 
 ### In doing/
-- **BUG-258**: fixed by keeping every record in its namespace root (the `history/spikes/`
-  redirect removed). Last criterion: Gary's UAT-50 re-run on the installed plugin.
+- (none). BUG-258 closed: UAT-50 re-run passed (spikes stay on the board).
 
 ### Earlier today
 - BUG-250 closed after Gary's UAT-55 re-run passed on 0.5.0 (BUG-902, fresh session).
@@ -153,8 +152,7 @@ into the `printf` (caught by reading the diff, fixed before testing).
    filed under `release/<ws>/spikes/` at release, never in release notes) and carried by
    **TASK-259**. Superseded: TECH-228's `history/spikes/` carry-in and TASK-242 D5's
    `history/archive/` for board cards.
-   **Gary:** publish (`.\tools\Publish-ToLocalMarketplace.ps1`), restart, run UAT-50 in
-   `framework-uat` (reseed first). Then close BUG-258.
+   UAT-50 re-run **PASS**; BUG-258 closed.
 4. **TECH-243** and **TECH-253**, completing the kanban finish line. TECH-253 now also denies
    deleting a card (TECH-077).
 5. **Carried:** re-run `.\tools\Publish-ToLocalMarketplace.ps1` so the marketplace reports
