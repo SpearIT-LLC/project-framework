@@ -8,7 +8,7 @@
 **Workspace:** framework
 **Timebox:** 4 hours
 **Depends On:**
-**Completed:**
+**Completed:** 2026-09-29
 
 ---
 
@@ -118,9 +118,10 @@ A spike ends in a **decision, not a document**:
       *(revised: repo-specific only, per D2 / Amendment 1 A3)*
 - [x] The contract drift is resolved: the fate of `framework-contract.md` is decided
       *(retired into the plugin, per D5 / A2)*
-- [/] Follow-up cards are filed for each accepted change, or an ADR if the change is
+- [x] Follow-up cards are filed for each accepted change, or an ADR if the change is
       architectural (it likely amends ADR-007)
-      **In progress:** ADR-007 Amendment 1, BUG-181 re-scoped, TECH-253 and TECH-254 are done. D3 (Response Style; it may reverse ADR-007 D5) and D6 (the advisory hook) are both tabled by Gary, 2026-09-28.
+      *(ADR-007 Amendment 1; BUG-181 re-scoped; TECH-253; TECH-254. 2026-09-29: D3 withdrawn,
+      Response Style stays in the contract with a refinement review on BUG-181; D6 dropped)*
 
 ## Related
 

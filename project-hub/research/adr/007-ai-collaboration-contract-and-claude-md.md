@@ -825,7 +825,7 @@ deterministic. **ADR-007 does not depend on it and must not claim enforcement it
 ## Amendment 1 — The Contract Ships in the Plugin (2026-09-28, SPIKE-248)
 
 **Status:** Accepted 2026-09-28 (Gary). **Amends:** D4 and OQ1–OQ2 for the ADR-009 build.
-D1, D3, D6 and D7 stand unchanged. **D5 is under review** (see below).
+D1, D3, D5, D6 and D7 stand unchanged (D5 confirmed 2026-09-29, see below).
 
 **The premise that changed.** This ADR was written when "`CLAUDE.md` is the only file Claude
 Code auto-loads" held. That premise is no longer true. A plugin cannot ship a `CLAUDE.md`, but
@@ -862,13 +862,15 @@ SessionStart hook. "`git mv` only" becomes a PreToolUse deny, which Claude Code 
 with its reason. "Ask what kind of work" and the `roles.default` persona are dropped. This
 applies ADR-008 (mechanism over prose) to the contract's own bootstrap.
 
-**Under review, not decided here:**
-- **D5 (Response Style belongs in the contract).** SPIKE-248 proposed moving it to user level.
-  That reverses D5, whose reason was that the framework must ship its behavioral rules and not
-  keep them as a personal preference. Under A1, keeping it in the contract also makes it reach
-  every plugin repo on every machine. To be settled with Gary.
-- **An advisory Implementation-Rule hook** (a PreToolUse `ask` when source changes while
-  `doing/` is empty). This would bear on D7 and TECH-114. Tabled by Gary on 2026-09-28.
+**Settled 2026-09-29 (Gary):**
+- **D5 stands: Response Style stays in the contract.** SPIKE-248 had proposed moving it to user
+  level, which would have reversed D5. Under A1 the contract reaches every plugin repo on every
+  machine, so the cross-machine reason for moving it is gone. Gary's condition: consider
+  refinements to rules that work against what is already built in the new build. That review
+  happens at BUG-181's pre-implementation review, before the contract moves.
+- **No advisory Implementation-Rule hook.** A PreToolUse `ask` keyed on an empty `doing/` fires
+  on legitimate edits and misses edits unrelated to the item in `doing/`. The rule stays prose in
+  the contract, the one guard the root `CLAUDE.md` already calls unmechanizable.
 
 **Carried by:**
 - **BUG-181**, re-scoped 2026-09-28 to deliver A1–A3;

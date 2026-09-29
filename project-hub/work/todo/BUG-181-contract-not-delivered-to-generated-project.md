@@ -95,8 +95,9 @@ card no longer waits for it.
 
 **Open at review:**
 - **The contract's content.** It must be re-read before the move: the fragment is the
-  2026-07-22 text and predates the 2026-09-10 Response Style rewrite. Whether Response Style
-  stays in it is pending (ADR-007 D5 is under review).
+  2026-07-22 text and predates the 2026-09-10 Response Style rewrite. Response Style stays
+  in it (ADR-007 D5 confirmed 2026-09-29). Gary's condition: review each Response Style rule
+  against what is already built in the new build, and refine any that work against it.
 - **The file's name and location** inside `workspaces/framework/`.
 - **Whether the hook also prints on `fork`.**
 
@@ -111,8 +112,7 @@ installed plugin.
 **Out of scope:**
 - The bootstrap hooks: TECH-253.
 - `/fw-init` repo scaffolding: its own feature.
-- Response Style's final home: pending, see the Fix Design.
-- The advisory Implementation-Rule hook: tabled 2026-09-28.
+- An advisory Implementation-Rule hook: dropped 2026-09-29 (ADR-007 Amendment 1).
 
 ---
 
@@ -135,7 +135,7 @@ installed plugin.
 - [x] **ADR-007 ratified** (2026-07-15)
 - [x] **Re-scoped for the ADR-009 build** (2026-09-02)
 - [x] **Re-scoped to plugin delivery** (2026-09-28, SPIKE-248 / ADR-007 Amendment 1)
-- [ ] **PRE-IMPLEMENTATION REVIEW**: settle the contract content, including Response Style, and the file location
+- [ ] **PRE-IMPLEMENTATION REVIEW**: settle the contract content (including the Response Style refinement review) and the file location
 - [ ] Move the contract into the plugin; add the hook
 - [ ] Slim the root `CLAUDE.md`
 - [ ] Publish, install, and run the built-artifact test in `framework-uat`
