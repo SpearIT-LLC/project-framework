@@ -111,16 +111,16 @@ A spike ends in a **decision, not a document**:
 
 - [x] The inventory is complete, and every item has a keep / mechanize / move / delete verdict
       with its reason *(findings.md §1–2, 2026-09-28)*
-- [/] Native-overlap claims are verified against current Claude Code docs, with a source for
+- [x] Native-overlap claims are verified against current Claude Code docs, with a source for
       each
-      **In progress:** re-read directly: hooks, memory, skills, plan mode, marketplace. Still subagent-sourced: task tracking and the `extraKnownMarketplaces` key; re-read both before closing.
+      *(findings.md §4; all rows re-read directly 2026-09-28; two subagent errors corrected)*
 - [x] The `CLAUDE.md` target is decided: the slim draft is accepted, or revised with reasons
       *(revised: repo-specific only, per D2 / Amendment 1 A3)*
 - [x] The contract drift is resolved: the fate of `framework-contract.md` is decided
       *(retired into the plugin, per D5 / A2)*
 - [/] Follow-up cards are filed for each accepted change, or an ADR if the change is
       architectural (it likely amends ADR-007)
-      **In progress:** ADR-007 Amendment 1, BUG-181 re-scoped, TECH-253 and TECH-254 are done. D3 is open (it may reverse ADR-007 D5) and D6 is tabled to 2026-09-29.
+      **In progress:** ADR-007 Amendment 1, BUG-181 re-scoped, TECH-253 and TECH-254 are done. D3 (Response Style; it may reverse ADR-007 D5) and D6 (the advisory hook) are both tabled by Gary, 2026-09-28.
 
 ## Related
 
