@@ -134,7 +134,6 @@ method may differ, not verified.)
    BUG-237, and `git mv` of BUG-225 to `archive/`.
 
 ---
----
 
 # Later Session (same day): Release, Board Clean-Up, SPIKE-248
 
