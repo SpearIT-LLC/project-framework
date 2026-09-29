@@ -134,5 +134,123 @@ method may differ, not verified.)
    BUG-237, and `git mv` of BUG-225 to `archive/`.
 
 ---
+---
 
-**Last Updated:** 2026-09-28
+# Later Session (same day): Release, Board Clean-Up, SPIKE-248
+
+## Summary (later)
+
+`framework-dev-v0.5.0` was released and pushed. The UAT findings were filed as cards. Every
+open card was tagged `Workspace:` or `Legacy:`. SPIKE-248 moved through review into `doing/`
+and produced ADR-007 Amendment 1: **the framework's rules ship in the plugin through a
+SessionStart hook, not in `CLAUDE.md`.** Two of its decisions are tabled to the next session.
+
+## Work Completed (later)
+
+### Release `framework-dev-v0.5.0`
+- `/fw-release framework-dev`. The CHANGELOG `[Unreleased]` text was kept verbatim as the
+  single source; the command normally synthesizes from cards. Three batches remain under one
+  version, on purpose.
+- `plugin.json` 0.4.7 → 0.5.0, tag `framework-dev-v0.5.0` on `8ec04ef`, 18 cards archived to
+  `history/releases/framework-dev/v0.5.0/`. Pushed with the tag.
+- **Where v0.5.0 lives:** only in git. The tag is the release; there is no build artifact.
+  The installed plugin is a junction to the live working tree, so it reports 0.5.0 even after
+  later edits.
+- **Correction:** after a version bump, the local marketplace needs
+  `.\tools\Publish-ToLocalMarketplace.ps1` re-run before `/plugin marketplace update`.
+  `marketplace.json` records the version at publish time (DOC-234's finding). The first advice
+  given today left that step out.
+
+### Publishing shape → TECH-188
+- Gary: the earlier official-marketplace submission got neither acceptance nor rejection.
+  **Recommendation recorded on TECH-188: SpearIT's own GitHub marketplace**, in a separate
+  small repo. The docs confirm a marketplace is any repo with `.claude-plugin/marketplace.json`.
+  This reverses the FEAT-118-era "official only" note. TECH-188 now also owns the published
+  file list, since `workspaces/framework/` holds dev-only content.
+
+### Cards filed
+- **TECH-249** (G2 ran test-aware), **BUG-250** (`/fw-move` drafts the cancellation reason;
+  the ops close gate's drafting to be decided separately), **BUG-251** (family `↳` rows omit
+  the bundle note; reproduced again today on 0.5.0).
+- **DOC-252:** a developer guide for the new build, replacing DOC-234, which stays Legacy.
+- **TECH-253** (bootstrap hooks) and **TECH-254** (commands to skills, Low), from SPIKE-248.
+
+### Board clean-up
+- **Tagging.** 57 cards got `**Legacy:** TASK-218 <group> — <reason>` from TASK-218's C1–C6
+  classification, plus DOC-234. Seven got `**Workspace:** framework`: TECH-185, TECH-186,
+  TECH-188, TECH-189, TECH-220, BUG-144, and feature-015 (Gary: "still a valid idea").
+  **Every open card now carries one of the two tags.**
+- **The five `todo/` cards Claude first called "old framework" were not.** FEAT-021, TECH-027,
+  TECH-033, TECH-041 and TECH-082 are TASK-219's board conventions, decided and built in
+  v0.5.0 and awaiting closure under TASK-223. They were **archived as superseded**, not moved
+  to `done/`, because their criteria target the old tree (FEAT-021 alone has ~100 lines).
+  Ticking them would claim work never done. Each has a closing note: outcome and where it
+  now lives.
+- **BUG-241 closed** (`done/`). Its Human half was completed today on installed 0.5.0 (an
+  unmatched dotted id, a depth-3 child, and a parent-named family move) on top of UAT-43, 48
+  and 56. **BUG-239 and BUG-240 were NOT closed**, though Gary approved closing them. Their
+  own recorded decisions keep them open for the *old* engine until the D5 crossover, and
+  today's old-engine output (`doing/: 2/2` with one card) shows the defects are still live
+  there. Claude's recommendation to close all three was wrong on that point.
+
+### SPIKE-248 (`doing/`)
+- **Review changes:** scope narrowed to the new build plus the root `CLAUDE.md`; Q5 reworded
+  (v0.5.0 had shipped); a blind-test method added for the slim draft.
+- **Findings** (`SPIKE-248/findings.md`):
+  - F1: the new build has no channel for its rules to reach a consuming repo.
+  - F3: Response Style exists in three copies, none of them user-level.
+  - F4: `framework-contract.md` has no composer; it is a hand copy and has drifted.
+  - The new build's prompting style is already clean.
+  - The board state set was settled by TASK-242.
+- **Native overlap** was verified against code.claude.com, first by a subagent and then
+  re-read directly. The subagent made three errors, all corrected: the skill field is
+  `disable-model-invocation`; there *is* a 500-line guidance for `SKILL.md`; and
+  `extraKnownMarketplaces` is an object. New to the framework: **`/doctor prompt-audit`**.
+- **Decisions:** D1, D2, D4, D5, D7 and D8 approved; D3 (Response Style) and D6 (advisory
+  Implementation-Rule hook, "feels awkward") tabled.
+- **ADR-007 Amendment 1** (A1–A4): the contract ships in the plugin via a SessionStart hook;
+  `framework-contract.md` retires into it; root `CLAUDE.md` files carry repo-specific content
+  only; mechanical bootstrap steps become hooks. It dissolves ADR-007 OQ1 (detecting an
+  edited contract region), because nothing is written into a repo.
+- **BUG-181 re-scoped** from the `/fw-init` composer to plugin delivery, with Gary's
+  `/doctor prompt-audit` reminder as an acceptance criterion.
+
+## Decisions Made (later)
+
+4. **Release as-is** (Gary): 0.5.0, verbatim CHANGELOG, three batches kept.
+5. **Own GitHub marketplace** recommended and recorded on TECH-188 (Gary: "continue").
+6. **Tag every open card** `Workspace:` or `Legacy:`; archive the five TASK-219 source cards
+   as superseded (Gary: "Ok").
+7. **SPIKE-248 D1** (Gary asked how a SessionStart hook ships; the answer is that it is part
+   of the plugin, runs every session, and is not an update prompt), then approved along with
+   D2, D4, D5, D7 and D8.
+8. **D6 tabled:** "#6 feels awkward. Let's table it till tomorrow."
+9. **D3 tabled** after Claude found that moving Response Style to user level reverses
+   ADR-007 D5 (2026-07-15), which put it *in* the contract and rejected `~/.claude/`. Under
+   D1, keeping it in the contract also reaches every machine. Claude missed this conflict
+   when first recommending D3.
+
+## Current State (end of session)
+
+- **doing/ — 1:** SPIKE-248. Four of five exit criteria are met; it waits on D3 and D6.
+- **done/ — 1:** BUG-241.
+- **todo/ — 8 · backlog/ — 99 · blocked/ — 1.** The backlog count includes the three
+  lowercase `feature-*` cards, which earlier counts excluded.
+- `framework-uat` is at `60ed6c6`; it has no remote.
+
+## Next Session
+
+1. **SPIKE-248:** decide D6 (advisory Implementation-Rule hook) and D3 (Response Style: stay
+   in the contract per ADR-007 D5, or move to user level). Then file any cards and close the
+   spike.
+2. **BUG-181** (High, `todo/`): the plugin contract hook, the first implementation of
+   Amendment 1.
+3. Re-run `.\tools\Publish-ToLocalMarketplace.ps1`, then `/plugin marketplace update
+   dev-marketplace` and restart, so the installed plugin reports 0.5.0.
+4. **Carried:** BUG-245, BUG-246, TECH-247, BUG-250, BUG-251, TECH-249, TECH-188 (published
+   shape), DOC-252, the old-vs-new `fw-move.sh` audit, the duplicate `installed_plugins.json`
+   entry, TECH-243, the TECH-232 reconcile, BUG-237, and `git mv` of BUG-225 to `archive/`.
+
+---
+
+**Last Updated:** 2026-09-28 (later session)
