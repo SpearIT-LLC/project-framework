@@ -128,7 +128,11 @@ into the `printf` (caught by reading the diff, fixed before testing).
 - BUG-241, SPIKE-248, BUG-251, TECH-247, BUG-250, TASK-223, DECISION-171
 
 ### In doing/
-- (none). BUG-250 closed after Gary's UAT-55 re-run passed on 0.5.0 (BUG-902, fresh session).
+- **BUG-258**: fixed by keeping every record in its namespace root (the `history/spikes/`
+  redirect removed). Last criterion: Gary's UAT-50 re-run on the installed plugin.
+
+### Earlier today
+- BUG-250 closed after Gary's UAT-55 re-run passed on 0.5.0 (BUG-902, fresh session).
   TASK-223 closed: all eight board conventions have outcomes (table on the card).
 
 **todo/ — 8 · backlog/ — 93 · blocked/ — 1**
@@ -144,10 +148,16 @@ into the `printf` (caught by reading the diff, fixed before testing).
    source cards archived (FEAT-030, TECH-044, TECH-077, TECH-078), DECISION-171 done. Filed
    **BUG-256** (the "default yes" commit offer) and **BUG-258** (High: `fw-next-id.sh` scans only
    `kanban/`, so spike ids in `history/spikes/` can be reissued; reproduced).
-3. **BUG-258**, **TECH-243** and **TECH-253**, completing the kanban finish line. TECH-253 now also
-   denies deleting a card (TECH-077). The 27 `deprecated/` cards move to `history/archive/` after
-   BUG-258.
-4. **Carried:** re-run `.\tools\Publish-ToLocalMarketplace.ps1` so the marketplace reports
+3. **BUG-258 decided and implemented:** no record leaves its namespace root. The spike lifecycle
+   was settled with it (POC in `workspaces/<ws>/poc/<SPIKE-id>/`, results in `<ws>` or `kb/`,
+   filed under `release/<ws>/spikes/` at release, never in release notes) and carried by
+   **TASK-259**. Superseded: TECH-228's `history/spikes/` carry-in and TASK-242 D5's
+   `history/archive/` for board cards.
+   **Gary:** publish (`.	ools\Publish-ToLocalMarketplace.ps1`), restart, run UAT-50 in
+   `framework-uat` (reseed first). Then close BUG-258.
+4. **TECH-243** and **TECH-253**, completing the kanban finish line. TECH-253 now also denies
+   deleting a card (TECH-077).
+5. **Carried:** re-run `.\tools\Publish-ToLocalMarketplace.ps1` so the marketplace reports
    0.5.0; BUG-181 (High, `todo/`); BUG-255.
 
 ---

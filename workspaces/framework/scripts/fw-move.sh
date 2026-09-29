@@ -114,8 +114,9 @@ operations_CREATE="/fw-new-ops-record"
 #                       done. The old matrix's done→archive "rare, retroactive" was
 #                       a HOLE, not a practice: verified 2026-09-23, the six
 #                       completed cards in work/archive/ carry no cancellation
-#                       fields and appear in no release. They were STORED. Storage
-#                       is history/archive/; the outcome is cancelled/
+#                       fields and appear in no release. They were STORED, not
+#                       cancelled; the outcome is cancelled/, and completed work
+#                       leaves done/ only by release (BUG-258: no card leaves kanban/)
 #   accept:cancelled  — UAT can reveal work that should not ship, but that is
 #                       "revert the code, then cancel" — an action, not a move
 #   blocked:hold      — a changed cause goes via a real state. Parked folders are
@@ -572,8 +573,6 @@ move_one() {
   BUNDLE_NOTE=""
   [ -d "$BUNDLE" ] && { gmv "$BUNDLE" "$NS_ROOT/$TARGET/"; BUNDLE_NOTE="  (bundle $FULL_ID/)"; }
   DEST="$NS_ROOT/$TARGET/$BASE"
-  # Stamped here, in done/, BEFORE any spike archival below — the date travels
-  # with the record to history/spikes/ rather than being written after it leaves.
   [ "$NS" = "kanban" ] && [ "$TARGET" = "done" ] && stamp_completed "$DEST"
 
   # THE FAMILY TRAVELS WITH THE RECORD (FEAT-229.4, fixing BUG-241's split).
@@ -600,52 +599,13 @@ move_one() {
     row OK "  ↳ $m_base$m_note"
   done < <(family_members "$FULL_ID")
 
-  # A SPIKE REACHING A TERMINAL STATE ARCHIVES OUT OF THE BOARD (FEAT-229.3, kanban§2).
-  #
-  # A spike produces KNOWLEDGE, not a shippable change, so it must never enter a release
-  # archive: history/spikes/, never history/releases/ (TECH-228). Its answer stays
-  # findable — that is the entire deliverable — while the board stops carrying a card
-  # whose work is over.
-  #
-  # Why this is a redirect AFTER the move rather than a different TARGET: the transition
-  # matrix, the gates and the family carry all reason about board folders. Making
-  # `history/spikes` a pseudo-target would put a non-folder in the policy table and
-  # every check downstream would need a special case. The record lands in done/ or
-  # cancelled/ exactly like any other card, then leaves the board.
-  #
-  # Research spike vs POC spike (TECH-228's structural split): a research spike is a
-  # document; a POC spike is a document PLUS working code in its bundle. The bundle is
-  # what makes the difference, so no type flag is needed — if a bundle came along, the
-  # archive gets a folder; if not, a file.
-  #
-  # TERMINAL TARGETS ONLY. The first cut tested the namespace and the prefix but not
-  # the target, so EVERY spike move archived — doing → todo and doing → accept took the
-  # card off the board mid-flight (found by the UAT dry run, 2026-09-24). The AI
-  # validation exercised only terminal moves, which is exactly where the bug hides.
-  if [ "$NS" = "kanban" ] && echo "$NS_TERMINAL" | grep -qw "$TARGET" \
-     && printf '%s' "$FULL_ID" | grep -qE '^SPIKE-'; then
-    local sp_root="$ROOT/history/spikes" pf
-    mkdir -p "$sp_root"
-    if [ -d "$NS_ROOT/$TARGET/$FULL_ID" ]; then
-      # POC spike: the record and its code archive TOGETHER as one folder named for
-      # the id, so the code is never separated from the write-up explaining it. The
-      # bundle's contents move up beside the record rather than nesting a second
-      # <ID>/ inside it.
-      mkdir -p "$sp_root/$FULL_ID"
-      gmv "$NS_ROOT/$TARGET/$BASE" "$sp_root/$FULL_ID/" || true
-      for pf in "$NS_ROOT/$TARGET/$FULL_ID"/* "$NS_ROOT/$TARGET/$FULL_ID"/.[!.]*; do
-        [ -e "$pf" ] || continue
-        gmv "$pf" "$sp_root/$FULL_ID/" || true
-      done
-      rmdir "$NS_ROOT/$TARGET/$FULL_ID" 2>/dev/null || true
-      row OK "  ↳ archived to history/spikes/$FULL_ID/ (POC spike — record + code)"
-      DEST="$sp_root/$FULL_ID/$BASE"
-    else
-      gmv "$NS_ROOT/$TARGET/$BASE" "$sp_root/" || true
-      row OK "  ↳ archived to history/spikes/ (research spike)"
-      DEST="$sp_root/$BASE"
-    fi
-  fi
+  # A SPIKE IS AN ORDINARY CARD HERE (BUG-258, reversing FEAT-229.3's history/spikes/
+  # redirect). No record ever leaves its namespace root: every place a record can live
+  # is then under the one folder fw-next-id.sh scans, so an id cannot drop out of sight
+  # and be reissued. The first cut archived terminal spikes to history/spikes/, which
+  # the scanner never saw. A spike leaves done/ with the next release, like any card;
+  # the release command files it under release/<ws>/spikes/, not a version folder,
+  # because a spike ships nothing (BUG-258 decisions; carried by FEAT-028).
 
   # Stamp on terminal move: fill existing Closed:/Resolution: lines, else insert after Opened:
   if [ "$TARGET" = "closed" ]; then

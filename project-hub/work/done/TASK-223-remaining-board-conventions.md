@@ -205,7 +205,7 @@ Plan approved by Gary at the pre-implementation review.
 | FEAT-221 `blocked/` metadata | **Settled by TASK-242 D3** | `Blocked By:` / `External Reference:` optional, filled when the party is nameable (`commands/fw-move.md` step 1) |
 | BUG-215 `cancelled/` and the terminal set | **Settled by TASK-242** | Shipped in 0.5.0 |
 | DECISION-171 `fw-` namespace | **Defined** | Rule line in `workspaces/framework/CLAUDE.md`, scoped to command names. **Check:** AC added to TECH-189's drift guard; until that lands, the rule is prose only. DECISION-171 → `done/` |
-| 27 `deprecated/` cards | **Decided: `history/archive/`** (TASK-242 D5) | **Not moved yet.** Moving them out of `work/` would hide their ids from the scanner. Found at review: the new build's `fw-next-id.sh` already misses ids in `history/spikes/`, so spike ids can be reissued (reproduced). Filed **BUG-258**; the move waits on it |
+| 27 `deprecated/` cards | **Decided: `history/archive/`** (TASK-242 D5). **Superseded by BUG-258** (no card leaves the board root); home to be decided at the ADR-009 D5 crossover | **Not moved yet.** Moving them out of `work/` would hide their ids from the scanner. Found at review: the new build's `fw-next-id.sh` already misses ids in `history/spikes/`, so spike ids can be reissued (reproduced). Filed **BUG-258**; the move waits on it |
 | `templates/` under `kanban/` | **No, by construction** | Record templates ship in the plugin (`templates/records/`); the board is generated and holds cards only |
 
 ## Acceptance Criteria

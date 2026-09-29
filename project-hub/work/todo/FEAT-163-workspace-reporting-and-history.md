@@ -83,6 +83,10 @@ reliably labeled and unlabeled items are surfaced.
 
 ## Related
 
+- **TASK-259** (spike lifecycle, 2026-09-29): spikes are kept out of release notes and
+  **appear in activity and progress reports** instead, as work done and knowledge gained.
+  Released spikes are filed under `kanban/release/<ws>/spikes/`.
+
 - ADR-009 (workspace model — supersedes ADR-005)
 - FEAT-164 (workspace scaffolding)
 - FEAT-190 (framework workspace kickoff)

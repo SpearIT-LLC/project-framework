@@ -91,7 +91,7 @@ What the engine cannot do is **judgment**, and that is this command's whole job:
      how to check them. `accept/` has exactly two exits — `done` when accepted, `doing`
      to refine.
    - **`→ done`** — the engine stamps `**Completed:**`; never hand-edit it. A spike
-     leaves the board for `history/spikes/` — report where it went.
+     is an ordinary card: it stays in `done/` or `cancelled/` like any other (BUG-258).
    - **`→ done` or `→ cancelled`** — offer to commit (default yes):
      `feat: Complete <ID> - <title>` or `chore: Cancel <ID> - <reason>`.
 

@@ -75,8 +75,8 @@ TODAY="$(date +%Y-%m-%d)"
 if [ "$RESET" -eq 1 ]; then
   N=0
   # 9[0-9]{2,3}: the substring-trap fixtures (INC-9010, FEAT-9010) are four digits.
-  # (\.[0-9]+)*: dotted family fixtures. Spikes leave the board for history/spikes/
-  # on a terminal move (FEAT-229.3), so the kanban reset looks there too.
+  # (\.[0-9]+)*: dotted family fixtures. history/spikes/ is scanned only to clear
+  # leftovers from boards run before BUG-258, when terminal spikes left the board.
   SCAN="$NS"; [ "$NS" = "kanban" ] && [ -d "$ROOT/history/spikes" ] && SCAN="$NS history/spikes"
   while IFS= read -r p; do
     [ -n "$p" ] || continue
@@ -110,7 +110,7 @@ else
 # checkbox state (TECH-177's six), read by the gates (FEAT-229.2). `dep:<ID>` seeds
 # all-done criteria plus a **Depends On:** line, for the dependency gate and the
 # family union rule (FEAT-229.4). FEAT-912 is a dotted family; SPIKE-913/914 are
-# the research and POC spikes that archive to history/spikes/ (FEAT-229.3).
+# a research spike and a POC spike (with a bundle); both stay on the board (BUG-258).
 FIXTURES="
 backlog|FEAT-901|batch-item-one|open
 backlog|BUG-902|batch-item-two|open

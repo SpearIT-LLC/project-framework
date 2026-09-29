@@ -267,6 +267,11 @@ Once this proves useful:
 
 ## Related Work
 
+- **Spike filing and release notes (TASK-259, decided 2026-09-29).** Requirements for this
+  command: (1) the sweep empties `done/`, and files each `SPIKE-` card, with its bundle, under
+  `release/<ws>/spikes/`, not the version folder; (2) release notes are built from the
+  version folder only, so a spike never appears in them. A spike ships nothing.
+
 - **TECH-078 (archived 2026-09-29, closed into this card by TASK-223).** Its release-archival
   convention is settled for the new build: shipped work moves from `done/` to
   `release/<product>/` (the board README; per product, matching `framework.yaml`'s `products[]`),

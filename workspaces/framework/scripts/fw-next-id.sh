@@ -7,6 +7,10 @@
 # status is only the first path segment under the root; deeper folders (year
 # buckets, release buckets, bundles) are grouping, never status, and still count.
 #
+# INVARIANT: no record ever leaves its namespace root (BUG-258). This scan is correct
+# only because of that. A move, sweep or release that writes a record outside the root
+# makes its id invisible here, and the id can be issued again.
+#
 # Usage: fw-next-id.sh [--root <dir>] <namespace>
 #   namespace: operations | kanban | <path to a namespace root>
 # Prints the next id zero-padded to 3 digits (e.g. 007). --root is TESTING ONLY.

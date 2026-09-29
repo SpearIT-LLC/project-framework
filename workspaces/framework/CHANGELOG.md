@@ -17,6 +17,11 @@ None
   `→ hold` the AI asks, offers no reason of its own, and records the answer as given.
 
 ### Fixed
+- **A spike stays on the board** (BUG-258): a spike moved to `done/` or `cancelled/`
+  stays there like any card, instead of leaving for `history/spikes/`, where
+  `fw-next-id.sh` could not see it and could issue its id again. No record now leaves
+  its namespace root. A spike leaves `done/` with the next release, filed under
+  `release/<ws>/spikes/` (the release command, FEAT-028).
 - **Family member rows show their bundle** (BUG-251): an unnamed sibling that carries a
   bundle folder now reports `(bundle <ID>/)` on its `↳` row, as the named record does.
 

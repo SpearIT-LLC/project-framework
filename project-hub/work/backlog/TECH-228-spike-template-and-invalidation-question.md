@@ -91,8 +91,10 @@ template is mined for what earned its place; the rest does not carry forward.
   folder under `project-hub/poc/SPIKE-NNN-description/` holding the doc *and* code artifacts.
   `SPIKE-142`'s move-command harness is the POC form. This is a genuine structural insight and
   the new build has no equivalent.
-- **Spikes archive to `history/spikes/`, never `history/releases/`** (old line 336) — they are
-  for learning, not delivering. This is a **lifecycle gap in the new build**; see Related.
+- ~~**Spikes archive to `history/spikes/`, never `history/releases/`**~~ (old line 336). **Superseded
+  2026-09-29 (BUG-258, TASK-259):** no record leaves its namespace root. A spike stays on the
+  board, leaves `done/` with the next release filed under `release/<ws>/spikes/`, and is never
+  in release notes. The "learning, not delivering" point survives as that notes rule.
 
 **Not carried, with reasons:**
 

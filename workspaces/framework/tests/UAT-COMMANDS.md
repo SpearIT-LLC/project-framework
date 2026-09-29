@@ -491,17 +491,17 @@ so FEAT-912.2's dependency is met. `$K 912.1 doing` — naming a **child**:
   is 3 … the parent is too big`, reported verbatim, nothing created.
 - Pass: depth 3 exists; depth 4 does not; the AI does not work around the refusal.
 
-**UAT-50 — spikes leave the board, only on a terminal move.** `$K 913 accept` (moves,
-**stays on the board**), `$K 913 done`, then `$K 914 cancelled`
-- Expected: SPIKE-913 → `↳ archived to history/spikes/ (research spike)`; SPIKE-914 →
-  `↳ archived to history/spikes/SPIKE-914/ (POC spike — record + code)`.
-- Pass: `history/spikes/SPIKE-913-research-spike.md` (a file);
-  `history/spikes/SPIKE-914/` holds the record **and** `poc.sh` (a folder); neither is left
-  in `kanban/done/` or `kanban/cancelled/`; **no `history/releases/`** exists — a spike
-  produces knowledge, not a release.
+**UAT-50 — a spike is an ordinary card; nothing leaves the board.** `$K 913 accept`,
+`$K 913 done`, then `$K 914 cancelled`
+- Expected: SPIKE-913 → `OK … → done/`; SPIKE-914 → `OK … → cancelled/  (bundle SPIKE-914/)`.
+  No `↳ archived to …` row (BUG-258 removed the `history/spikes/` redirect).
+- Pass: `kanban/done/SPIKE-913-research-spike.md`; `kanban/cancelled/SPIKE-914-…` with
+  `kanban/cancelled/SPIKE-914/poc.sh` beside it; **no `history/spikes/`** is created. Then
+  `bash "${CLAUDE_PLUGIN_ROOT}/scripts/fw-next-id.sh" kanban` prints an id above every id on
+  the board, spikes included.
 
 **UAT-51 — reset, and operations unaffected.** `…/seed-uat-fixtures.sh --root . kanban --reset`
-- Pass: no `*-9xx*` path remains in `kanban/` or `history/spikes/` — including the
+- Pass: no `*-9xx*` path remains in `kanban/` (or in `history/spikes/`, left by pre-BUG-258 runs) — including the
   FEAT-912.1.1 card UAT-49 created — and FEAT-001 from UAT-37 is untouched. Then re-run
   **D2 (UAT-33..36)**: the engine the board now shares must behave for operations exactly
   as before.

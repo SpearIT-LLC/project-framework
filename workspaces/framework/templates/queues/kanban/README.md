@@ -46,15 +46,21 @@ makes the state mean anything.
   > **`blocked` and `hold` differ by cause, not severity** (TASK-242). A combined `park/`
   > was proposed and rejected: these two words are understood on arrival without a lookup.
   > There is no `blocked ↔ hold` transition — a changed cause goes via a real state.
-- **`release/<product>/`** — shipped work, bucketed per product.
+- **`release/<product>/`** — shipped work, bucketed per product: a version folder per
+  release (`release/<product>/<version>/`). **Spikes go to `release/<product>/spikes/`**,
+  not a version folder: a spike ships nothing, so it is never in release notes. It leaves
+  `done/` with the next release after it finishes, and its links join it to the feature
+  it informed.
 
 ## Rules
 
 - **The folder is the status.** No `Status:` field to contradict it.
 - **One shared id sequence** across all types in this queue — `FEAT-003` and `TASK-004`
   cannot both exist. (Operations has its own separate sequence.)
+- **No card ever leaves `kanban/`.** Every place a card can be is under this folder, which
+  is what the id scan relies on (BUG-258): a card stored outside would have its id issued
+  again.
 - **Never delete a card.** Cancelled work moves to `cancelled/`; it is history, not
-  clutter. Completed work *put away* goes to `history/archive/` — storage, never a
-  lifecycle outcome.
+  clutter. Completed work leaves `done/` only by release, into `release/`.
 - **WIP limits are a ceiling**, enforced at the move. A parent and its dotted children
   count as one item.
