@@ -6,6 +6,9 @@
 **Version Impact:** PATCH
 **Created:** 2026-01-23
 **Legacy:** TASK-218 C6 — board convention; closing it is owned by TASK-223
+**Status:** Cancelled
+**Cancelled Date:** 2026-09-29
+**Cancellation Reason:** Superseded — the release-archival convention is defined for the new build (`done/` → `release/<product>/` by `git mv`, board README), and its mechanism is carried by FEAT-028, the release command, when it crosses over. The acceptance criteria below target the old release process. Closed by TASK-223.
 **Theme:** Workflow
 
 ---

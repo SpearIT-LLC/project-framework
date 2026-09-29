@@ -125,12 +125,13 @@ into the `printf` (caught by reading the diff, fixed before testing).
 ## Current State
 
 ### In done/ (awaiting release)
-- BUG-241, SPIKE-248, BUG-251, TECH-247, BUG-250
+- BUG-241, SPIKE-248, BUG-251, TECH-247, BUG-250, TASK-223, DECISION-171
 
 ### In doing/
-- (none) — BUG-250 closed after Gary's UAT-55 re-run passed on 0.5.0 (BUG-902, fresh session)
+- (none). BUG-250 closed after Gary's UAT-55 re-run passed on 0.5.0 (BUG-902, fresh session).
+  TASK-223 closed: all eight board conventions have outcomes (table on the card).
 
-**todo/ — 8 · backlog/ — 96 · blocked/ — 1**
+**todo/ — 8 · backlog/ — 93 · blocked/ — 1**
 
 ---
 
@@ -139,8 +140,13 @@ into the `printf` (caught by reading the diff, fixed before testing).
 1. ~~UAT-55 re-run~~ — **done**, PASS on 0.5.0; BUG-250 closed. Two observations in the
    UAT-55 (re-run) row: the AI asked for a reason before finding the card already
    cancelled, and worded its commit offer as default-yes.
-2. ~~Split TASK-223~~ — **done**: Groups 3–4 → TASK-257 (backlog). Next: work Groups 2 and 5.
-3. **TECH-243** and **TECH-253**, completing the kanban finish line.
+2. ~~Split TASK-223~~ and ~~work Groups 2 and 5~~ — **done**. Groups 3–4 → TASK-257. Four
+   source cards archived (FEAT-030, TECH-044, TECH-077, TECH-078), DECISION-171 done. Filed
+   **BUG-256** (the "default yes" commit offer) and **BUG-258** (High: `fw-next-id.sh` scans only
+   `kanban/`, so spike ids in `history/spikes/` can be reissued; reproduced).
+3. **BUG-258**, **TECH-243** and **TECH-253**, completing the kanban finish line. TECH-253 now also
+   denies deleting a card (TECH-077). The 27 `deprecated/` cards move to `history/archive/` after
+   BUG-258.
 4. **Carried:** re-run `.\tools\Publish-ToLocalMarketplace.ps1` so the marketplace reports
    0.5.0; BUG-181 (High, `todo/`); BUG-255.
 

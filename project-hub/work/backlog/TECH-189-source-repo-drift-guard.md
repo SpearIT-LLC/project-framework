@@ -112,6 +112,10 @@ installer, new `.github/workflows/drift-guard.yml`, `framework/CLAUDE.md` (corre
       mechanism (Claude Code `PreToolUse` hook) plus this new git/CI drift-guard.
 - [ ] Single-source honored by the guard itself: the manifest is authored once and drives the check (and,
       where practical, the build) — the guard does not restate what it protects.
+- [ ] **Naming check (DECISION-171, added by TASK-223 on 2026-09-29):** the guard fails when a file in
+      `workspaces/framework/commands/` is not named `fw-*`. The rule is recorded in
+      `workspaces/framework/CLAUDE.md`. This guard is its mechanism because the repo has no other
+      commit-time check.
 - [ ] `framework/CHANGELOG.md` updated.
 
 ---

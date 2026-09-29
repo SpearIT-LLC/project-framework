@@ -6,7 +6,7 @@
 **Version Impact:** MINOR
 **Created:** 2026-09-10
 **Workspace:** framework
-**Completed:** <!-- Set automatically by /fw-move on → done/. Leave blank at creation. -->
+**Completed:** 2026-09-29
 **Theme:** Framework Consistency
 
 ---
@@ -191,25 +191,48 @@ For each convention:
 
 ---
 
+## Outcomes (2026-09-29)
+
+Plan approved by Gary at the pre-implementation review.
+
+| Convention | Outcome | Where it lives |
+|---|---|---|
+| TECH-044 creation in `backlog/` | **Decided by construction** | `fw-new.sh` always creates into `backlog/`; the board README defines backlog vs todo. TECH-044 archived |
+| TECH-077 never delete | **Defined** | Written in the board README's Rules; the engine never deletes a card. **Check:** TECH-253's PreToolUse hook denies `rm`/`git rm`/`Remove-Item` on a card (AC added there). TECH-077 archived |
+| TECH-078 release archival | **Defined; mechanism deferred** | `done/` → `release/<product>/` by `git mv` (board README). No release command exists in the new build; the mechanism is carried by **FEAT-028** (note added). TECH-078 archived |
+| FEAT-030 hold state | **Settled by TASK-242 D3** | `hold/`, shipped in FEAT-229.3 (v0.5.0). FEAT-030 archived as superseded |
+| FEAT-221 `accept/` | **Settled by TASK-242 D1** | Shipped in FEAT-229.3. FEAT-221 stays open: it is a feature, not a convention |
+| FEAT-221 `blocked/` metadata | **Settled by TASK-242 D3** | `Blocked By:` / `External Reference:` optional, filled when the party is nameable (`commands/fw-move.md` step 1) |
+| BUG-215 `cancelled/` and the terminal set | **Settled by TASK-242** | Shipped in 0.5.0 |
+| DECISION-171 `fw-` namespace | **Defined** | Rule line in `workspaces/framework/CLAUDE.md`, scoped to command names. **Check:** AC added to TECH-189's drift guard; until that lands, the rule is prose only. DECISION-171 → `done/` |
+| 27 `deprecated/` cards | **Decided: `history/archive/`** (TASK-242 D5) | **Not moved yet.** Moving them out of `work/` would hide their ids from the scanner. Found at review: the new build's `fw-next-id.sh` already misses ids in `history/spikes/`, so spike ids can be reissued (reproduced). Filed **BUG-258**; the move waits on it |
+| `templates/` under `kanban/` | **No, by construction** | Record templates ship in the plugin (`templates/records/`); the board is generated and holds cards only |
+
 ## Acceptance Criteria
 
-- [ ] Every one of the eight has a recorded outcome: **defined** (with its mechanism),
+- [x] Every one of the eight has a recorded outcome: **defined** (with its mechanism),
       **decided-by-construction** (with the rationale written down), or **dropped** (with
-      the reason)
-- [ ] The never-delete rule (TECH-077) is written down and backed by a check, not habit
-- [ ] The `fw-` namespace rule (DECISION-171) is recorded where a future contributor will
-      find it
+      the reason) *(Outcomes table above)*
+- [x] The never-delete rule (TECH-077) is written down and backed by a check, not habit
+      *(written: board README; check: TECH-253's hook, AC added there)*
+- [x] The `fw-` namespace rule (DECISION-171) is recorded where a future contributor will
+      find it *(`workspaces/framework/CLAUDE.md`, Rules)*
 - [x] ~~The terminal/parked-state set is decided **as a set** (Group 2a)~~ — **moved to
       TASK-242 on 2026-09-22.** Not done here; owned there. Left as `[x]` deliberately: the
       obligation is discharged from *this* card, which is what the done-gate asks
-- [ ] Where the 27 `deprecated/` cards live (8 loose + 27 deprecated, verified 2026-09-22) —
-      a storage question, retained here when Group 2a split out
-- [ ] Whether `templates/` belongs under `kanban/` — marked *"alt idea"* in the diagram
-- [ ] `blocked/` metadata covers an internally-blocked card (unanswered question), not
-      only an external party
-- [ ] Every source card is closed, moved to `done/`, or archived with a closing note —
-      none is left open describing a convention that is now defined
-- [ ] Plugin CHANGELOG updated
+- [x] Where the 27 `deprecated/` cards live (8 loose + 27 deprecated, verified 2026-09-22) —
+      a storage question, retained here when Group 2a split out *(decided: `history/archive/`;
+      the move waits on BUG-258)*
+- [x] Whether `templates/` belongs under `kanban/` — marked *"alt idea"* in the diagram
+      *(no; see Outcomes)*
+- [x] `blocked/` metadata covers an internally-blocked card (unanswered question), not
+      only an external party *(TASK-242 D3; `commands/fw-move.md` step 1)*
+- [x] Every source card is closed, moved to `done/`, or archived with a closing note —
+      none is left open describing a convention that is now defined *(FEAT-030, TECH-044,
+      TECH-077, TECH-078 archived; DECISION-171 done; FEAT-221 stays open as a feature)*
+- [-] Plugin CHANGELOG updated *(dropped: no plugin behavior changed. The only build-tree
+      edit is a rule line in `workspaces/framework/CLAUDE.md`, contributor guidance that no
+      command or script reads)*
 
 ---
 

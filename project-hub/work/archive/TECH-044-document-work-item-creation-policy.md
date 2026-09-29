@@ -6,6 +6,9 @@
 **Version Impact:** PATCH
 **Created:** 2026-01-10
 **Legacy:** TASK-218 C6 — board convention; closing it is owned by TASK-223
+**Status:** Cancelled
+**Cancelled Date:** 2026-09-29
+**Cancellation Reason:** Superseded — decided by construction in the new build: `fw-new.sh` always creates into `backlog/` ("adding an idea is free"), and the board README defines `backlog/` vs `todo/`. The acceptance criteria below target the old `workflow-guide.md` and will not be met there. Closed by TASK-223.
 **Theme:** Workflow
 
 ---

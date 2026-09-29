@@ -267,6 +267,12 @@ Once this proves useful:
 
 ## Related Work
 
+- **TECH-078 (archived 2026-09-29, closed into this card by TASK-223).** Its release-archival
+  convention is settled for the new build: shipped work moves from `done/` to
+  `release/<product>/` (the board README; per product, matching `framework.yaml`'s `products[]`),
+  by `git mv`, leaving `done/` empty. The new build has no release command yet, so the mechanism
+  for that convention is this card's, when it crosses over.
+
 **FEAT-019:** Release Checklist Template
 - This script could be step 7 of that checklist
 - Or could replace manual checklist with automation

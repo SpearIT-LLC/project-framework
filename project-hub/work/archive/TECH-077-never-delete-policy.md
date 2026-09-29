@@ -6,6 +6,9 @@
 **Version Impact:** PATCH
 **Created:** 2026-01-23
 **Legacy:** TASK-218 C6 — board convention; closing it is owned by TASK-223
+**Status:** Cancelled
+**Cancelled Date:** 2026-09-29
+**Cancellation Reason:** Superseded — the never-delete rule is written in the new board's README (Rules: "Never delete a card"), the move engine never deletes a card, and the check that enforces it is TECH-253's PreToolUse hook (deny `rm`/`git rm`/`Remove-Item` on a board card). The acceptance criteria below target the old `workflow-guide.md`. Closed by TASK-223.
 **Theme:** Workflow
 
 ---

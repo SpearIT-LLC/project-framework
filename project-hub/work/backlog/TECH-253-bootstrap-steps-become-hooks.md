@@ -22,6 +22,11 @@ steps are prose that a hook can enforce, which ADR-008's test says they should b
   `cp` against the board path. Its reason names `/fw-move`; Claude Code shows the reason to
   Claude (code.claude.com/docs/en/hooks, verified 2026-09-28).
 
+**Added 2026-09-29 (TASK-223):** the same PreToolUse hook also denies **deleting** a board
+card (`rm`, `git rm`, `Remove-Item`). That is the check behind TECH-077's never-delete rule,
+which the board README already states. The rule and the move rule protect the same thing, the
+card's history, so one hook covers both.
+
 The other two steps are deleted, not mechanized: "ask what kind of work" and the
 `roles.default` persona.
 
@@ -47,6 +52,7 @@ contacts refresh).
 
 - [ ] A fresh session in a repo with the plugin shows the `doing/` state without being asked
 - [ ] `mv`, `cp` and `Move-Item` on a board card are denied with a reason naming `/fw-move`; `git mv` and moves outside the board pass
+- [ ] `rm`, `git rm` and `Remove-Item` on a board card are denied with a reason naming `cancelled/` (TECH-077's never-delete rule, added by TASK-223 on 2026-09-29)
 - [ ] Verified on the installed plugin in `framework-uat`, not the source tree
 - [ ] Bootstrap steps 1–4 are removed from the root `CLAUDE.md` (coordinate with BUG-181's slim-down)
 - [ ] Plugin CHANGELOG updated

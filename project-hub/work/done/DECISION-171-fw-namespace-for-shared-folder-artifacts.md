@@ -5,6 +5,8 @@
 **Status:** Accepted
 **Date:** 2026-07-06
 **Legacy:** TASK-218 C6 — board convention; closing it is owned by TASK-223
+**Recorded (2026-09-29, TASK-223):** the rule for the new build is in `workspaces/framework/CLAUDE.md` (Rules). Its scope there is command names only: plugin `scripts/` and `hooks/` stay inside the plugin and never reach a user-shared folder. The check is an acceptance criterion on TECH-189 (drift guard).
+**Completed:** 2026-09-29
 **Deciders:** Gary Elliott, Claude Code
 **Impact:** Minor
 **Version Impact:** None (convention; applied incrementally by referencing items)

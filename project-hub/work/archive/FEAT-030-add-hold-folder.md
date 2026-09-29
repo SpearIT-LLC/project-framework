@@ -6,6 +6,9 @@
 **Version Impact:** MINOR
 **Created:** 2026-01-08
 **Legacy:** TASK-218 C6 — board convention; closing it is owned by TASK-223
+**Status:** Cancelled
+**Cancelled Date:** 2026-09-29
+**Cancellation Reason:** Superseded — the hold state was decided by TASK-242 (D3: `hold/` = a decision to prioritize other work; `blocked/` = an external issue) and built by FEAT-229.3 (released in framework-dev v0.5.0). The acceptance criteria below target the old tree and will not be met there.
 **Theme:** Workflow
 
 ---
