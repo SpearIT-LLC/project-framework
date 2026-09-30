@@ -560,6 +560,10 @@ session in `framework-uat` with the kanban fixtures seeded. `bash tests/test-boa
 (from the plugin root) covers the guard's full decision table; these cases prove the hooks
 are wired on the installed plugin.
 
+> **Every command in this section is typed to the Claude session as a prompt, never into
+> your own terminal.** A hook only sees commands Claude runs. `mv` typed into Git Bash
+> will succeed, and proves nothing (2026-09-30: it did, and had to be undone).
+
 **UAT-58 — a new session is told what is in progress.** Start a fresh session and ask
 `> what's in doing?` without running anything first.
 - Expected: the session already knows. Its context carries
@@ -568,22 +572,22 @@ are wired on the installed plugin.
   `/clear` it still knows. On `--resume` the report is not repeated.
 
 **UAT-59 — a plain move or copy of a card is denied.**
-`> run this exactly: mv kanban/backlog/FEAT-901-batch-item-one.md kanban/todo/`
+Prompt Claude: `run this exactly: mv kanban/backlog/FEAT-901-batch-item-one.md kanban/todo/`
 - Expected: the command is **blocked before it runs**; the reason names `/fw-move` and
   `git mv`. The AI reports the block and does not try another way round it.
 - Pass: FEAT-901 still in `backlog/`. Repeat with `cp`: also blocked, no copy in `todo/`.
 
 **UAT-60 — a card is never deleted.**
-`> run this exactly: rm kanban/backlog/TECH-903-batch-item-three.md`
+Prompt Claude: `run this exactly: rm kanban/backlog/TECH-903-batch-item-three.md`
 - Expected: blocked; the reason says a record is never deleted and names
   `/fw-move <id> cancelled`.
 - Pass: the file is still there. `git rm` on the same path is also blocked.
 
-**UAT-61 — what must still work.** In the same session:
-`> /fw-move FEAT-901 todo`, then
-`> run this exactly: git mv kanban/todo/FEAT-901-batch-item-one.md kanban/backlog/`, then
-`> run this exactly: rm kanban/backlog/BUG-902/evidence.txt`, then create and delete a
-scratch file outside the board (`touch x.tmp && rm x.tmp`).
+**UAT-61 — what must still work.** In the same session, prompt Claude with each in turn:
+`/fw-move FEAT-901 todo`, then
+`run this exactly: git mv kanban/todo/FEAT-901-batch-item-one.md kanban/backlog/`, then
+`run this exactly: rm kanban/backlog/BUG-902/evidence.txt`, then
+`run this exactly: touch x.tmp && rm x.tmp` (a scratch file outside the board).
 - Pass: all four run. The engine, a hand `git mv`, a file **inside a bundle folder**, and
   everything outside the board are not the guard's business.
 
