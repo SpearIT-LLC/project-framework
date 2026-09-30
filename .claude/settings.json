@@ -1,4 +1,7 @@
 {
+  "env": {
+    "SPRIT_BOARD_ROOTS": "project-hub/work"
+  },
   "hooks": {
     "PreToolUse": [
     ]

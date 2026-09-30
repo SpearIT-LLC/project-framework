@@ -21,10 +21,12 @@ if [ "${1:-}" = "--root" ]; then ROOT="${2:?--root requires a directory}"; shift
 [ $# -eq 1 ] || { echo "Usage: fw-next-id.sh <operations|kanban|path>" >&2; exit 1; }
 [ -n "$ROOT" ] || ROOT="$(git rev-parse --show-toplevel)"
 
+. "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/lib/namespace-roots.sh"
+
 case "$1" in
-  operations) NS="$ROOT/operations" ;;
+  operations) NS="$ROOT/$operations_ROOT" ;;
   kanban)
-    NS="$ROOT/kanban"
+    NS="$ROOT/$kanban_ROOT"
     if [ ! -d "$NS" ]; then
       echo "Error: the kanban namespace is not active in this repo until the board crosses over (ADR-009 D5) — the live board uses the root /fw-next-id" >&2
       exit 1

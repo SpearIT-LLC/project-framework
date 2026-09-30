@@ -128,7 +128,7 @@ into the `printf` (caught by reading the diff, fixed before testing).
 - BUG-241, SPIKE-248, BUG-251, TECH-247, BUG-250, TASK-223, DECISION-171, BUG-258, TECH-243
 
 ### In doing/
-- (none). BUG-258 closed: UAT-50 re-run passed (spikes stay on the board). TECH-243 closed.
+- **TECH-253**: built, waiting on UAT-58..62. (BUG-258 and TECH-243 closed earlier.)
 
 ### Earlier today
 - BUG-250 closed after Gary's UAT-55 re-run passed on 0.5.0 (BUG-902, fresh session).
@@ -158,8 +158,13 @@ into the `printf` (caught by reading the diff, fixed before testing).
    otherwise. Both engines now stamp `**Started:**` on first `→ doing` (Gary's challenge: git
    history can't tell, a stamp can). Full move history filed as **FEAT-260** (backlog; session
    history covers "which day" roughly). FEAT-028 carries the guard for the new release command.
-5. **TECH-253**, the last card on the kanban finish line. It now also denies deleting a card
-   (TECH-077).
+5. **TECH-253** (in `doing/`, last card on the kanban finish line): built. `hooks/report-wip.sh`
+   (SessionStart) and `hooks/board-guard.sh` (PreToolUse) ship in the plugin; roots come from
+   `scripts/lib/namespace-roots.sh`; this repo's board is covered by `SPRIT_BOARD_ROOTS` in
+   `.claude/settings.json`. Table test passes (29 cases).
+   **Gary:** publish, restart, run UAT-58..61 in `framework-uat` and UAT-62 in this repo.
+   After UAT-62 passes: remove bootstrap steps 1, 3, 4 (and step 2's persona) from the root
+   `CLAUDE.md`, then close the card.
 6. **Carried:** re-run `.\tools\Publish-ToLocalMarketplace.ps1` so the marketplace reports
    0.5.0; BUG-181 (High, `todo/`); BUG-255.
 

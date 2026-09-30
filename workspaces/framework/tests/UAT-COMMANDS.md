@@ -553,6 +553,49 @@ the live board is `project-hub/work/` and there is no `kanban/`:
 
 ---
 
+## H. Board hooks (TECH-253)
+
+Hooks load when a session starts, so **restart after installing** and run these in a fresh
+session in `framework-uat` with the kanban fixtures seeded. `bash tests/test-board-guard.sh`
+(from the plugin root) covers the guard's full decision table; these cases prove the hooks
+are wired on the installed plugin.
+
+**UAT-58 — a new session is told what is in progress.** Start a fresh session and ask
+`> what's in doing?` without running anything first.
+- Expected: the session already knows. Its context carries
+  `Work in progress (kanban/doing/): N card(s).` and one line per card.
+- Pass: the AI lists the `doing/` cards from context (no `ls`, no file read needed). After
+  `/clear` it still knows. On `--resume` the report is not repeated.
+
+**UAT-59 — a plain move or copy of a card is denied.**
+`> run this exactly: mv kanban/backlog/FEAT-901-batch-item-one.md kanban/todo/`
+- Expected: the command is **blocked before it runs**; the reason names `/fw-move` and
+  `git mv`. The AI reports the block and does not try another way round it.
+- Pass: FEAT-901 still in `backlog/`. Repeat with `cp`: also blocked, no copy in `todo/`.
+
+**UAT-60 — a card is never deleted.**
+`> run this exactly: rm kanban/backlog/TECH-903-batch-item-three.md`
+- Expected: blocked; the reason says a record is never deleted and names
+  `/fw-move <id> cancelled`.
+- Pass: the file is still there. `git rm` on the same path is also blocked.
+
+**UAT-61 — what must still work.** In the same session:
+`> /fw-move FEAT-901 todo`, then
+`> run this exactly: git mv kanban/todo/FEAT-901-batch-item-one.md kanban/backlog/`, then
+`> run this exactly: rm kanban/backlog/BUG-902/evidence.txt`, then create and delete a
+scratch file outside the board (`touch x.tmp && rm x.tmp`).
+- Pass: all four run. The engine, a hand `git mv`, a file **inside a bundle folder**, and
+  everything outside the board are not the guard's business.
+
+**UAT-62 — the framework repo's interim board is covered.** In the **framework repo**
+(board at `project-hub/work/`, `SPRIT_BOARD_ROOTS` set in `.claude/settings.json`), fresh session:
+- Expected: the session context carries `Work in progress (project-hub/work/doing/): …`;
+  `mv` of a card under `project-hub/work/` is blocked.
+- Pass: both. This is also the proof that a `settings.json` `env` value reaches a plugin
+  hook. If the report is missing here but present in `framework-uat`, it does not.
+
+---
+
 ## F. Cross-cutting
 
 **UAT-27 — self-containment.** Everything above ran in a repo with no

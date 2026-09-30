@@ -50,9 +50,10 @@ if [ "${1:-}" = "--root" ]; then ROOT="${2:?--root requires a directory}"; shift
 # gates each namespace needs are functions (see below), because a dependency
 # lookup is not expressible as a list.
 # ---------------------------------------------------------------------------
-NAMESPACES="operations kanban"
+# Where each namespace lives (NAMESPACES, <ns>_ROOT) is authored in
+# lib/namespace-roots.sh, shared with the id scanner and the board hooks (TECH-253).
+. "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/lib/namespace-roots.sh"
 
-operations_ROOT="operations"
 operations_FOLDERS="open onhold closed"
 operations_TRANSITIONS="open:onhold onhold:open open:closed onhold:closed"
 operations_TERMINAL="closed"
@@ -122,7 +123,6 @@ operations_CREATE="/fw-new-ops-record"
 #   blocked:hold      — a changed cause goes via a real state. Parked folders are
 #   hold:blocked        not a shuffling ground
 #   *:accept          — only doing/ produces implemented work
-kanban_ROOT="kanban"
 kanban_FOLDERS="backlog blocked hold todo doing accept done cancelled"
 kanban_TRANSITIONS="backlog:todo todo:backlog todo:doing doing:todo doing:accept accept:doing accept:done backlog:blocked todo:blocked doing:blocked blocked:backlog blocked:todo blocked:doing backlog:hold todo:hold doing:hold hold:backlog hold:todo hold:doing backlog:cancelled todo:cancelled doing:cancelled"
 kanban_TERMINAL="done cancelled"

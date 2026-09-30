@@ -6,6 +6,15 @@ plain semver 0.x during the framework workspace build.
 ## [Unreleased]
 
 ### Added
+- **Board hooks** (TECH-253). Two rules that were prose in `CLAUDE.md` are now enforced:
+  - A **SessionStart** hook (`hooks/report-wip.sh`) tells a new, cleared or compacted
+    session which cards are in `kanban/doing/`.
+  - A **PreToolUse** hook (`hooks/board-guard.sh`) blocks a plain `mv`, `cp`, `rm`,
+    `git rm` (and the PowerShell equivalents) aimed at a record under `kanban/` or
+    `operations/`. `git mv`, the engine, files inside a record's bundle folder and
+    everything outside the namespaces pass. `tests/test-board-guard.sh` is its table test.
+  - `scripts/lib/namespace-roots.sh` is now the one place the namespace folders are
+    named; the engine, the id scanner and both hooks read it.
 - **`**Started:**` stamp** (TECH-243): the move engine writes today's date on a card's
   first move into `doing/` and never changes it. It records that the card entered
   implementation, which is how a release guard tells a parked card that may have code in
