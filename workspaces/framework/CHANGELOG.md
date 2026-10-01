@@ -11,8 +11,9 @@ plain semver 0.x during the framework workspace build.
     session which cards are in `kanban/doing/`.
   - A **PreToolUse** hook (`hooks/board-guard.sh`) blocks a plain `mv`, `cp`, `rm`,
     `git rm` (and the PowerShell equivalents) aimed at a record under `kanban/` or
-    `operations/`. `git mv`, the engine, files inside a record's bundle folder and
-    everything outside the namespaces pass. `tests/test-board-guard.sh` is its table test.
+    `operations/`. A hand `git mv` that moves a record **between status folders** is blocked too: it keeps
+    history but skips every gate. A `git mv` that renames within a folder, the engine, files
+    inside a record's bundle folder and everything outside the namespaces pass. `tests/test-board-guard.sh` is its table test.
   - `scripts/lib/namespace-roots.sh` is now the one place the namespace folders are
     named; the engine, the id scanner and both hooks read it.
 - **`**Started:**` stamp** (TECH-243): the move engine writes today's date on a card's

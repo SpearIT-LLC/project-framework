@@ -286,6 +286,17 @@ stamp_date() {
   git add "$moved_file" 2>/dev/null || true
 }
 stamp_completed() { stamp_date "$1" Completed; }
+
+# Move a record's artifact folder (<ID>/, beside the record) with it. This was an
+# AI step in the /fw-move command ("check for an artifact folder and git mv it");
+# TECH-253's guard now denies a hand git mv between status folders, so the engine
+# does it, as the new build's engine already does. Prints " (+ <ID>/)" when moved.
+move_bundle() { # move_bundle <source dir> <record basename> <target>
+  local id
+  id=$(printf '%s' "$2" | grep -oE '^[A-Z]+-[0-9]+(\.[0-9]+)*')
+  [ -n "$id" ] && [ -d "$1/$id" ] || return 0
+  git mv "$1/$id" "$WORK_DIR/$3/" 2>/dev/null && printf ' (+ %s/)' "$id"
+}
 stamp_started()   { stamp_date "$1" Started; }
 
 # ---------------------------------------------------------------------------
@@ -393,6 +404,7 @@ move_item() {
   while IFS= read -r parent_file; do
     local pname move_note=""
     pname=$(basename "$parent_file")
+    local psrc; psrc=$(dirname "$parent_file")
     if git mv "$parent_file" "$WORK_DIR/$target/" 2>/dev/null; then
       :
     else
@@ -411,6 +423,7 @@ move_item() {
     # Stamp only after a confirmed move: Completed on done (BUG-167), Started on doing (TECH-243)
     [ "$target" = "done" ] && stamp_completed "$WORK_DIR/$target/$pname"
     [ "$target" = "doing" ] && stamp_started "$WORK_DIR/$target/$pname"
+    move_note="$move_note$(move_bundle "$psrc" "$pname" "$target")"
     if [ "$first_moved" = false ]; then
       echo "✅ $pname → $target/$move_note"
       ((MOVED++)) || true; first_moved=true

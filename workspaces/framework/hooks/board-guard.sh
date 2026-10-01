@@ -11,7 +11,9 @@
 #   mv cp rm rmdir unlink · git rm · Move-Item Copy-Item Remove-Item Rename-Item and
 #   their aliases · find ... -delete / -exec rm|mv|cp · xargs rm|mv|cp
 # WHAT PASSES:
-#   - `git mv` (the engine's own primitive; also right for a rename in place)
+#   - `git mv` that RENAMES a record within its own status folder. A hand `git mv`
+#     BETWEEN status folders is denied: it keeps history but skips every gate
+#     (transitions, dependencies, acceptance criteria, Started:). Gary, 2026-10-01.
 #   - anything outside the namespace roots, and every read (cat, ls, grep, ...)
 #   - files INSIDE a record's bundle folder (kanban/doing/FEAT-012/scratch.log):
 #     working material is the author's to reshape. The bundle folder itself is not.
@@ -99,6 +101,23 @@ under_board() {
   return 1
 }
 
+# status_of <path> -> prints "<root>|<status folder>" for any path under a root
+# (the root itself prints an empty status). Used to tell a rename from a move.
+status_of() {
+  local p r full rel
+  p="$(printf '%s' "$1" | sed -E "s/^[\"']+//; s/[\"',;)]+\$//")"
+  [ -n "$p" ] || return 1
+  if is_abs "$p"; then full="$(norm "$p")"; else full="$(norm "$EFF_CWD/$p")"; fi
+  for r in $ROOTS; do
+    r="$REPO/$(printf '%s' "$r" | tr '[:upper:]' '[:lower:]')"
+    case "$full" in
+      "$r") printf '%s|' "$r"; return 0 ;;
+      "$r"/*) rel="${full#"$r"/}"; printf '%s|%s' "$r" "${rel%%/*}"; return 0 ;;
+    esac
+  done
+  return 1
+}
+
 deny() { # deny <reason>
   local reason
   reason="$(printf '%s' "$1" | sed -E 's/\\/\\\\/g; s/"/\\"/g')"
@@ -127,7 +146,21 @@ while IFS= read -r seg; do
     git)
       sub="$(printf '%s' "${2:-}" | tr '[:upper:]' '[:lower:]')"
       [ "$sub" = "rm" ] && kind="del"
-      shift 2 2>/dev/null || true ;;        # `git mv` and every other git verb pass
+      shift 2 2>/dev/null || true
+      if [ "$sub" = "mv" ]; then
+        # A hand `git mv` keeps history but skips every gate when it changes a
+        # record's status folder. Only a rename within one folder passes.
+        paths=(); for a in "$@"; do case "$a" in -*) ;; *) paths+=("$a") ;; esac; done
+        if [ "${#paths[@]}" -ge 2 ]; then
+          dest="${paths[${#paths[@]}-1]}"; to="$(status_of "$dest")"
+          for src in "${paths[@]:0:${#paths[@]}-1}"; do
+            from="$(status_of "$src")" || continue
+            [ "$from" = "$to" ] && continue
+            deny "Blocked: a hand git mv would change this record's status folder without the engine's gates (transitions, dependencies, acceptance criteria, Started: stamp). Use /fw-move <id> <folder> (board) or /fw-move-ops <id> <folder> (operations). A git mv that renames a record within its own folder is fine."
+          done
+        fi
+        continue
+      fi ;;                                 # every other git verb passes
     find)
       printf '%s' "$seg" | grep -qiE -- "-delete|-exec[[:space:]]+($DEL_VERBS)\b" && kind="del"
       [ -z "$kind" ] && printf '%s' "$seg" | grep -qiE -- "-exec[[:space:]]+($MOVE_VERBS)\b" && kind="move"

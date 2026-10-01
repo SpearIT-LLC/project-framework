@@ -58,6 +58,12 @@ contacts refresh).
   (found while building; without it, deleting a scratch log in `FEAT-012/` would be blocked).
   The guard stops the ordinary mistake, not a determined workaround (`eval`, a path in a
   variable); its header says so.
+- **Hand `git mv` between status folders is blocked (Gary, 2026-10-01, from the UAT-61 finding).**
+  The "git mv only" rule protected history; with gates in the engine, a hand `git mv` keeps the
+  history but skips transitions, dependencies, acceptance criteria and `Started:`. Only a rename
+  within one folder passes. The engine is unaffected (the hook never sees inside a script).
+  Consequence: the old `/fw-move` command told the AI to `git mv` an artifact folder by hand after
+  the script; the old engine now moves it itself (`(+ <ID>/)`), as the new engine already did.
 - **Known trade-off.** Copying a card *out* of the board is also denied. Rare, and safer than
   guessing which argument is the destination.
 - **`resume`.** The WIP report runs on `startup`, `clear` and `compact`, not `resume`.

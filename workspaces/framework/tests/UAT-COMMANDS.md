@@ -575,7 +575,9 @@ are wired on the installed plugin.
 Prompt Claude: `run this exactly: mv kanban/backlog/FEAT-901-batch-item-one.md kanban/todo/`
 - Expected: the command is **blocked before it runs**; the reason names `/fw-move` and
   `git mv`. The AI reports the block and does not try another way round it.
-- Pass: FEAT-901 still in `backlog/`. Repeat with `cp`: also blocked, no copy in `todo/`.
+- Pass: FEAT-901 still in `backlog/`. Repeat with `cp`, and with
+  `git mv kanban/backlog/FEAT-901-batch-item-one.md kanban/todo/` (a hand `git mv` between
+  status folders skips the gates, 2026-10-01): each blocked, nothing in `todo/`.
 
 **UAT-60 — a card is never deleted.**
 Prompt Claude: `run this exactly: rm kanban/backlog/TECH-903-batch-item-three.md`
@@ -585,11 +587,12 @@ Prompt Claude: `run this exactly: rm kanban/backlog/TECH-903-batch-item-three.md
 
 **UAT-61 — what must still work.** In the same session, prompt Claude with each in turn:
 `/fw-move FEAT-901 todo`, then
-`run this exactly: git mv kanban/todo/FEAT-901-batch-item-one.md kanban/backlog/`, then
+`run this exactly: git mv kanban/todo/FEAT-901-batch-item-one.md kanban/todo/FEAT-901-renamed.md` (a rename within one folder), then
 `run this exactly: rm kanban/backlog/BUG-902/evidence.txt`, then
 `run this exactly: touch x.tmp && rm x.tmp` (a scratch file outside the board).
-- Pass: all four run. The engine, a hand `git mv`, a file **inside a bundle folder**, and
-  everything outside the board are not the guard's business.
+- Pass: all four run. The engine, a `git mv` that renames within a folder, a file **inside a
+  bundle folder**, and everything outside the board are not the guard's business. (Rename
+  FEAT-901 back afterwards the same way.)
 
 **UAT-62 — the framework repo's interim board is covered.** In the **framework repo**
 (board at `project-hub/work/`, `SPRIT_BOARD_ROOTS` set in `.claude/settings.json`), fresh session:

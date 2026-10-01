@@ -27,7 +27,12 @@ t() { # t <allow|deny> <cwd> <command> [extra roots]
 # --- moves and copies --------------------------------------------------------
 t deny  "$R" 'mv kanban/backlog/FEAT-901-x.md kanban/todo/'
 t deny  "$R" 'cp kanban/backlog/FEAT-901-x.md kanban/todo/'
-t allow "$R" 'git mv kanban/backlog/FEAT-901-x.md kanban/todo/'
+t deny  "$R" 'git mv kanban/backlog/FEAT-901-x.md kanban/todo/'
+t allow "$R" 'git mv kanban/todo/FEAT-901-x.md kanban/todo/FEAT-901-better-slug.md'
+t allow "$R" 'git mv kanban/doing/FEAT-012/a.txt kanban/doing/FEAT-012/b.txt'
+t deny  "$R" 'git mv kanban/todo/FEAT-901-x.md docs/'
+t deny  "$R" 'git mv -f kanban/todo/A-1-x.md kanban/todo/B-2-y.md kanban/doing/'
+t allow "$R" 'git mv docs/a.md docs/b.md'
 t deny  "$RW" 'Move-Item kanban\backlog\FEAT-901-x.md kanban\todo\'
 t deny  "$R" 'mv operations/open/INC-901-a.md operations/closed/'
 # --- deletes -----------------------------------------------------------------
@@ -57,6 +62,7 @@ t allow "$R" 'rm ../other-repo/kanban/x.md'
 # --- SPRIT_BOARD_ROOTS: an extra root is guarded only when it is declared -----
 t allow "$R" 'mv project-hub/work/todo/TECH-1-x.md project-hub/work/doing/'
 t deny  "$R" 'mv project-hub/work/todo/TECH-1-x.md project-hub/work/doing/' 'project-hub/work'
-t allow "$R" 'git mv project-hub/work/todo/TECH-1-x.md project-hub/work/doing/' 'project-hub/work'
+t deny  "$R" 'git mv project-hub/work/todo/TECH-1-x.md project-hub/work/doing/' 'project-hub/work'
+t allow "$R" 'git mv project-hub/work/todo/TECH-1-x.md project-hub/work/todo/TECH-1-y.md' 'project-hub/work'
 
 [ "$FAILS" -eq 0 ] && echo "all passed" || { echo "$FAILS wrong"; exit 1; }
