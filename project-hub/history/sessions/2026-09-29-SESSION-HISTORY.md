@@ -122,13 +122,77 @@ into the `printf` (caught by reading the diff, fixed before testing).
 
 ---
 
+## Later Session (afternoon and evening)
+
+Picked up after `ad74b53`. Worked the kanban finish line card by card. Four cards closed, three
+filed, and one design reversal came out of Gary's challenge questions.
+
+### BUG-250 → done
+- Gary re-ran UAT-55 on 0.5.0 in a fresh session. On BUG-902 the AI asked, offered no reason,
+  and recorded "Issue turned out to be a false issue." verbatim. PASS.
+- Two observations recorded in the `UAT-55 (re-run)` row: the AI asked for TECH-903's reason
+  before noticing the card was already cancelled, and it worded its commit offer as "I'll go
+  ahead unless you say no".
+- **BUG-256 filed** for that commit wording. The cause is the command text: "default yes" in
+  `fw-move.md:95` and `fw-new.md:87` was meant as the recommended answer, and was read as consent.
+
+### TASK-223 → split, then done
+- Groups 3–4 (process and templates, not board work) moved to **TASK-257**.
+- Pre-implementation review settled all eight remaining conventions. FEAT-030, TECH-044,
+  TECH-077 and TECH-078 were archived as superseded; DECISION-171 went to done.
+  - TECH-077's never-delete check was added to TECH-253's hook.
+  - TECH-078 closed into **FEAT-028**: the release-command card already existed, so no new
+    card was needed.
+  - DECISION-171's `fw-` rule went into `workspaces/framework/CLAUDE.md`. Its check became an
+    AC on TECH-189, because the repo has no commit-time check yet.
+- **Found in review: BUG-258.** `fw-next-id.sh` scanned only `kanban/`, while spikes were moved
+  to `history/spikes/`. Reproduced: next id 004 with SPIKE-005 off-board.
+
+### BUG-258 → done, and the design reversal
+- Proposed fix: a shared list of off-board folders for the scanner to read.
+- **Gary's challenge:** why does kanban send records outside its root when operations never does?
+  Operations' archive equivalent, the `closed/YYYY/` sweep, stays inside `operations/`.
+- The pros and cons were weighed: off-board moves break ID safety, are a special case in the
+  engine that had already caused one bug, and give the framework two models for one idea.
+- **Decision: no record leaves its namespace root.** The `history/spikes/` redirect was removed,
+  which fixes the bug by construction.
+- Scenario walk-throughs (a POC for `workspaces/app1`; a spike whose feature ships later) settled
+  the spike lifecycle, recorded on **TASK-259**:
+  - POC code goes in `workspaces/<ws>/poc/<SPIKE-id>/`, linked from the card.
+  - Results go to `<ws>` or `kb/`.
+  - The card leaves `done/` with the next release and is filed under `release/<ws>/spikes/`.
+    Gary proposed that folder, replacing my version-folder idea.
+  - Spikes are never in release notes, only in activity reports.
+  - Spike and feature are joined by links, not timing.
+- **Superseded:** TECH-228's `history/spikes/` carry-in, and TASK-242 D5's `history/archive/` for
+  board cards. The 27 legacy `deprecated/` cards wait until the board crosses over.
+- UAT-50 re-run PASS (spikes stay on the board).
+
+### TECH-243 → done
+- Review found that the live board has no `accept/` or `hold/`, and that the old `/fw-release`
+  guard was prose (`ls`), not a script.
+- **Gary's challenge:** "why is there no cheap way to tell parked-with-code from never-started?"
+  - Git history can't tell: moves reach git only when committed, and TASK-223's history shows
+    `backlog → done`.
+  - A `**Started:**` stamp can. Both engines now write it on the first move into `doing/`, and
+    the first start wins (Gary's path todo → doing → hold → doing → accept → done keeps the
+    first date).
+- `.claude/scripts/fw-release-guard.sh`:
+  - `doing/` and `accept/` block the release.
+  - `blocked/` and `hold/` warn and need confirmation when the card was started, and print an
+    info line otherwise.
+- **FEAT-260 filed** (Gary's "big perhaps"): a timestamped move history on every card. Deferred
+  until something reads it. Gary noted that session history already answers "which day", roughly.
+
+---
+
 ## Current State
 
 ### In done/ (awaiting release)
 - BUG-241, SPIKE-248, BUG-251, TECH-247, BUG-250, TASK-223, DECISION-171, BUG-258, TECH-243
 
 ### In doing/
-- **TECH-253**: built, waiting on UAT-58..62. (BUG-258 and TECH-243 closed earlier.)
+- **TECH-253**: built after midnight; continued in `2026-09-30-SESSION-HISTORY.md`.
 
 ### Earlier today
 - BUG-250 closed after Gary's UAT-55 re-run passed on 0.5.0 (BUG-902, fresh session).
