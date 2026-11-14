@@ -6,6 +6,10 @@ plain semver 0.x during the framework workspace build.
 ## [Unreleased]
 
 ### Added
+- **`fw-llm-guide` skill** (FEAT-262): write or review an app's `docs/llm-guide.md`, the guide
+  that gives any AI agent the exact facts to use the app. `standard.md` is the authored source
+  (outline, quality rules, model-neutral rules, review checklist); `skeleton.md` is the file to
+  fill in. The guides it produces assume nothing about the reader's model or tools.
 - **Board hooks** (TECH-253). Two rules that were prose in `CLAUDE.md` are now enforced:
   - A **SessionStart** hook (`hooks/report-wip.sh`) tells a new, cleared or compacted
     session which cards are in `kanban/doing/`.
