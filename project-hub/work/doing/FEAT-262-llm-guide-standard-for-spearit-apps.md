@@ -146,7 +146,7 @@ not left empty.
 - [x] A guide produced with the skill contains no vendor or tool names (checked on Burst's:
       none; 216 lines, ASCII. Two gaps fixed in Burst 7ef9a67: never edit the install; what to do
       without a shell.)
-- [/] Gary has tried a guide with a non-Claude assistant (e.g. Copilot) on one real task, or
+- [x] Gary has tried a guide with a non-Claude assistant (e.g. Copilot) on one real task, or
       chosen to leave that for the first app that needs it.
 
 ---
@@ -215,3 +215,10 @@ guide's Verify section points to that message standard.
 - 2026-11-14: skill built (`standard.md`, `skeleton.md`, `SKILL.md`). The review of Burst's guide also changed the
   standard: a console tool may put its options and exit codes first in the Reference. Gary is
   trying Burst's guide with Copilot or Codex.
+- 2026-11-14: Gary tried Burst's guide with **Codex**, from an unzipped release folder (no source).
+  It found `docs\llm-guide.md` on its own (through the README), explained the app correctly, and
+  did a real task: a `.cmd` job reading `%MYFILE%` (no tokens), a log per job with
+  `${MYFILE_BASENAME}`, dry run, run, failures read from the results CSV. One slip: `%MYFILE%`
+  unquoted in the script (a file name with `&` would run a command; measured). Fixed in Burst's
+  guide: the reason the quotes matter, with an example. Lesson for the standard (rule 3, a reason
+  with every rule): a guide that shows a safe form without saying why gets copied without it.
