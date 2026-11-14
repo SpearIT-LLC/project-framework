@@ -123,24 +123,30 @@ not left empty.
 
 ## Requirements
 
-- [ ] `workspaces/framework/skills/fw-llm-guide/SKILL.md`: when to use it (write or review an
+- [x] `workspaces/framework/skills/fw-llm-guide/SKILL.md`: when to use it (write or review an
       app's `docs/llm-guide.md`), the steps (read the app's manual, help and settings; fill the
       outline; add the verify loop; check against the rules), and the rules above.
-- [ ] The outline, the quality rules and the model-neutral rules, in one place in the skill
+- [x] The outline, the quality rules and the model-neutral rules, in one place in the skill
       folder (single source), readable without Claude Code (plain Markdown).
-- [ ] A skeleton file in the skill folder, with Hearth's and Burst's guides named as worked
+- [x] A skeleton file in the skill folder, with Hearth's and Burst's guides named as worked
       examples.
-- [ ] A review checklist in the skill: what to check in an existing guide, including the
+- [x] A review checklist in the skill: what to check in an existing guide, including the
       model-neutral rules.
-- [ ] The skill passes the framework workspace's own checks and builds into the dev plugin.
-- [ ] Burst's guide checked against the finished rules (it was written before them); any gap
+- [/] The skill passes the framework workspace's own checks and builds into the dev plugin.
+      (2026-11-14: the workspace has no checks for skills yet; the dev channel publishes by
+      junction, so the skill should load from `skills/`. To confirm in a session with the dev
+      plugin: `/fw-llm-guide` is offered.)
+- [x] Burst's guide checked against the finished rules (it was written before them); any gap
       fixed in the Burst repo.
 
 ## Acceptance
 
-- [ ] The skill's files read cleanly as plain Markdown outside Claude Code.
-- [ ] A guide produced with the skill contains no vendor or tool names (checked on Burst's).
-- [ ] Gary has tried a guide with a non-Claude assistant (e.g. Copilot) on one real task, or
+- [x] The skill's files read cleanly as plain Markdown outside Claude Code. (`standard.md` and
+      `skeleton.md` have no front matter and are ASCII; `SKILL.md`'s front matter is two lines.)
+- [x] A guide produced with the skill contains no vendor or tool names (checked on Burst's:
+      none; 216 lines, ASCII. Two gaps fixed in Burst 7ef9a67: never edit the install; what to do
+      without a shell.)
+- [/] Gary has tried a guide with a non-Claude assistant (e.g. Copilot) on one real task, or
       chosen to leave that for the first app that needs it.
 
 ---
@@ -203,3 +209,9 @@ open question 6 and session records). Gary chose project-framework over SpearIT-
 (*"Let's start with project-framework when you're ready."*): the guide is a document every app
 has, whatever its language; the common library is the message standard plus .NET code. The
 guide's Verify section points to that message standard.
+
+## Progress
+
+- 2026-11-14: skill built (`standard.md`, `skeleton.md`, `SKILL.md`). The review of Burst's guide also changed the
+  standard: a console tool may put its options and exit codes first in the Reference. Gary is
+  trying Burst's guide with Copilot or Codex.
