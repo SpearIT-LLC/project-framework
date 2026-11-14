@@ -5,6 +5,7 @@
 **Priority:** Medium
 **Version Impact:** MINOR
 **Created:** 2026-11-14
+**Started:** 2026-11-14
 **Workspace:** framework
 **Depends On:**
 **Completed:**
@@ -92,28 +93,55 @@ not left empty.
 
 ---
 
+## Decided (Gary, 2026-11-14)
+
+- **A skill in the new framework:** `workspaces/framework/skills/fw-llm-guide/`, "write or
+  review this app's LLM guide", carrying the outline, the rules and the skeleton. (The other
+  option, a template in the old `framework/templates/documentation/`, would add to the layout
+  ADR-009 is retiring.)
+- **The guide must be useful whatever AI reads it** (Gary: *"we have to accept the reality
+  someone else might not use Claude so the resulting llm-guide should be useful regardless of the
+  AI model used."*). The skill is a Claude Code aid for *writing* a guide; the guide it produces
+  belongs to the app and must assume nothing about the reader's model or tools.
+
+## Model-neutral: what that means for a guide
+
+- **Plain Markdown, one self-contained file.** No links the reader must follow to understand it
+  (pointers to the manual are fine), no includes, no front matter a tool must parse.
+- **No vendor or tool assumptions.** Don't name a model or assistant as the reader ("an AI
+  agent"); no tool names (`Read`, `Bash`, MCP servers, skills); no prompt syntax tuned to one
+  model (XML tags, role markers). Instructions are plain imperatives.
+- **The interface is the command line and files:** plain commands any shell can run, exit codes,
+  files to read. An agent that can only read (no shell) can still use the reference and the
+  rules; the Verify step says what to ask a person to run.
+- **Found by neutral routes:** the app's `README`, its `--help`, and `AGENTS.md` (a convention
+  several agent tools read) where an agent works. A Claude-specific file (`CLAUDE.md`) may point
+  to the guide but is never the only route.
+- **Short enough to read in full** in one pass by a small-context model: the reference in tables,
+  no history or design rationale (that stays in the project's own records).
+- **Plain ASCII** (also for logs and terminals).
+
 ## Requirements
 
-- [ ] The outline and the rules above, as the framework's standard for an app's LLM guide.
-- [ ] A skeleton an agent or a person can fill in (below), with Hearth's and Burst's guides as
-      the worked examples.
-- [ ] A pointer from wherever a new project's documents are listed, so a new app starts with one.
+- [ ] `workspaces/framework/skills/fw-llm-guide/SKILL.md`: when to use it (write or review an
+      app's `docs/llm-guide.md`), the steps (read the app's manual, help and settings; fill the
+      outline; add the verify loop; check against the rules), and the rules above.
+- [ ] The outline, the quality rules and the model-neutral rules, in one place in the skill
+      folder (single source), readable without Claude Code (plain Markdown).
+- [ ] A skeleton file in the skill folder, with Hearth's and Burst's guides named as worked
+      examples.
+- [ ] A review checklist in the skill: what to check in an existing guide, including the
+      model-neutral rules.
+- [ ] The skill passes the framework workspace's own checks and builds into the dev plugin.
+- [ ] Burst's guide checked against the finished rules (it was written before them); any gap
+      fixed in the Burst repo.
 
-## Open question (for Gary): where it lands
+## Acceptance
 
-ADR-009 makes `workspaces/framework/` the only design authority, and the old `framework/templates/`
-is being replaced. Options:
-
-1. **A skill in the new framework** (`workspaces/framework/skills/fw-llm-guide/`): "write or
-   review this app's LLM guide", carrying the outline, the rules and the skeleton. Fits TECH-254
-   (commands become skills) and the way the guide gets written: by an agent, from the app's code
-   and manual.
-2. **A template in the old framework** (`framework/templates/documentation/LLM-GUIDE-TEMPLATE.md`),
-   next to README-TEMPLATE and the quick starts. Ships with the current framework, but adds to the
-   layout ADR-009 is retiring.
-
-Claude's recommendation: 1, with the skill's text drafted from this item. Not started: the item
-is in backlog until Gary chooses and it moves to doing.
+- [ ] The skill's files read cleanly as plain Markdown outside Claude Code.
+- [ ] A guide produced with the skill contains no vendor or tool names (checked on Burst's).
+- [ ] Gary has tried a guide with a non-Claude assistant (e.g. Copilot) on one real task, or
+      chosen to leave that for the first app that needs it.
 
 ---
 
